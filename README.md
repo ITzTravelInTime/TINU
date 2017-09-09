@@ -17,7 +17,7 @@ Here hare some features:
  
 Coming soon features:
  - Installer customization
- - Kernel cache and boot files replacement, a feature that can be handy wile dealing with old Macs or with beta installers when you need to mod the boot files
+ - Kernelcache/prelinkedknerel and boot files replacement, a feature that can be handy while dealing with old Macs or with beta installers when you need to mod the boot files some times
  
 Features that I'd like to add in the future:
  - Install clover and configure clover
