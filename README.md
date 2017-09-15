@@ -35,6 +35,7 @@ Requirements:
  - Mac OS X El Capitan or more recent version to run on recovery mode/installer mode macOS
 
 Useful links:
+
  Thread on insanelymac.com:
   - http://www.insanelymac.com/forum/topic/326959-tinu-the-macos-installer-creator-app-mac-app/#entry2491600
   
@@ -55,5 +56,5 @@ Repository rules:
   
 Note that:
  - this software is under GNU GPL v3 license so any new branch/mod/third party release must be open source and under the same license
- - I assume no responsibility for any use of this app and this source code, and also for any kind of hardware and software damage to you computer and any device or perriferrial that may come from this app or source code during it's use and not
- - I do not guarantee support to you, this is only an open source project, not a product released by a company!
+ - I (project creator) assume no responsibility for any use of this app and this source code, and also for any kind of hardware and software damage to you computer and any device or perriferrial that may come from this app or source code during it's use and not
+ - I (project creator) do not guarantee support to you, this is only an open source project, not a product released by a company!
