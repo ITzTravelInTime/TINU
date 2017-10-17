@@ -1,0 +1,690 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C60D39B01F5E136500D94834 /* Part.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D39AF1F5E136500D94834 /* Part.swift */; };
+		C60D39B21F5E4AFC00D94834 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */; };
+		C60D39B41F5EB47000D94834 /* ContactsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D39B31F5EB47000D94834 /* ContactsWindowController.swift */; };
+		C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */; };
+		C621CFA71F4F6A6500CC6D5B /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */; };
+		C621CFAC1F4F7DF400CC6D5B /* DriveObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFAB1F4F7DF400CC6D5B /* DriveObject.swift */; };
+		C64E56371F51D917007B8CEE /* ChoseAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64E56361F51D917007B8CEE /* ChoseAppViewController.swift */; };
+		C64E56391F51E79C007B8CEE /* ConfirmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64E56381F51E79C007B8CEE /* ConfirmViewController.swift */; };
+		C64E563B1F522854007B8CEE /* InstallingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64E563A1F522854007B8CEE /* InstallingViewController.swift */; };
+		C6553A911F5F7CEA0048965D /* LicenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6553A901F5F7CEA0048965D /* LicenseViewController.swift */; };
+		C6553A931F5F83770048965D /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C6553A921F5F83770048965D /* License.rtf */; };
+		C65AA61F1F4F497A00C43223 /* SharedInstances.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65AA61E1F4F497A00C43223 /* SharedInstances.swift */; };
+		C65AA6211F4F4C0400C43223 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65AA6201F4F4C0400C43223 /* InfoViewController.swift */; };
+		C65AA6241F4F4C3400C43223 /* ChoseDriveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65AA6221F4F4C3400C43223 /* ChoseDriveViewController.swift */; };
+		C65B5EFD1F7201D10061F1A3 /* DebugScript.sh in Resources */ = {isa = PBXBuildFile; fileRef = C65B5EFB1F71FAB10061F1A3 /* DebugScript.sh */; };
+		C65B5EFF1F72099F0061F1A3 /* ScriptsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B5EFE1F72099F0061F1A3 /* ScriptsManager.swift */; };
+		C65B5F031F720D680061F1A3 /* SudoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B5F021F720D680061F1A3 /* SudoManager.swift */; };
+		C691BFEE1F6DEEA800589EF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C691BFED1F6DEEA800589EF8 /* Assets.xcassets */; };
+		C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */; };
+		C6DF04661F4F33C500D200B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF04651F4F33C500D200B1 /* AppDelegate.swift */; };
+		C6DF046D1F4F33C500D200B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6DF046B1F4F33C500D200B1 /* Main.storyboard */; };
+		C6DF04781F4F33C500D200B1 /* TINUTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF04771F4F33C500D200B1 /* TINUTests.swift */; };
+		C6DF04831F4F33C500D200B1 /* TINUUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF04821F4F33C500D200B1 /* TINUUITests.swift */; };
+		DD01EBED1F71B6BF00C94D9B /* LogWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBEC1F71B6BF00C94D9B /* LogWindowController.swift */; };
+		DD01EBEF1F71BD2A00C94D9B /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */; };
+		DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBF01F71BFE600C94D9B /* LogViewController.swift */; };
+		DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */; };
+		DDDCF67E1F63338F00CF7FE4 /* CreditsWindwController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDCF67D1F63338F00CF7FE4 /* CreditsWindwController.swift */; };
+		DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDF14631F6730DA00953634 /* SharedVariables.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C6DF04741F4F33C500D200B1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C6DF045A1F4F33C500D200B1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C6DF04611F4F33C500D200B1;
+			remoteInfo = TINU;
+		};
+		C6DF047F1F4F33C500D200B1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C6DF045A1F4F33C500D200B1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C6DF04611F4F33C500D200B1;
+			remoteInfo = TINU;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C60D39AF1F5E136500D94834 /* Part.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Part.swift; sourceTree = "<group>"; };
+		C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
+		C60D39B31F5EB47000D94834 /* ContactsWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsWindowController.swift; sourceTree = "<group>"; };
+		C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCreationFinished.swift; sourceTree = "<group>"; };
+		C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
+		C621CFAB1F4F7DF400CC6D5B /* DriveObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveObject.swift; sourceTree = "<group>"; };
+		C64E56361F51D917007B8CEE /* ChoseAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoseAppViewController.swift; sourceTree = "<group>"; };
+		C64E56381F51E79C007B8CEE /* ConfirmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmViewController.swift; sourceTree = "<group>"; };
+		C64E563A1F522854007B8CEE /* InstallingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallingViewController.swift; sourceTree = "<group>"; };
+		C64E563F1F52786F007B8CEE /* TINU-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TINU-Bridging-Header.h"; sourceTree = "<group>"; };
+		C6553A901F5F7CEA0048965D /* LicenseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LicenseViewController.swift; sourceTree = "<group>"; };
+		C6553A921F5F83770048965D /* License.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = License.rtf; sourceTree = "<group>"; };
+		C65AA61E1F4F497A00C43223 /* SharedInstances.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedInstances.swift; sourceTree = "<group>"; };
+		C65AA6201F4F4C0400C43223 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		C65AA6221F4F4C3400C43223 /* ChoseDriveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoseDriveViewController.swift; sourceTree = "<group>"; };
+		C65B5EFB1F71FAB10061F1A3 /* DebugScript.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = DebugScript.sh; sourceTree = "<group>"; };
+		C65B5EFE1F72099F0061F1A3 /* ScriptsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptsManager.swift; sourceTree = "<group>"; };
+		C65B5F021F720D680061F1A3 /* SudoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudoManager.swift; sourceTree = "<group>"; };
+		C691BFED1F6DEEA800589EF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingVariables.swift; sourceTree = "<group>"; };
+		C6DF04621F4F33C500D200B1 /* TINU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TINU.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6DF04651F4F33C500D200B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C6DF046C1F4F33C500D200B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C6DF046E1F4F33C500D200B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C6DF04731F4F33C500D200B1 /* TINUTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TINUTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6DF04771F4F33C500D200B1 /* TINUTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TINUTests.swift; sourceTree = "<group>"; };
+		C6DF04791F4F33C500D200B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C6DF047E1F4F33C500D200B1 /* TINUUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TINUUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6DF04821F4F33C500D200B1 /* TINUUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TINUUITests.swift; sourceTree = "<group>"; };
+		C6DF04841F4F33C500D200B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DD01EBEC1F71B6BF00C94D9B /* LogWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogWindowController.swift; sourceTree = "<group>"; };
+		DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
+		DD01EBF01F71BFE600C94D9B /* LogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
+		DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsViewController.swift; sourceTree = "<group>"; };
+		DDDCF67D1F63338F00CF7FE4 /* CreditsWindwController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsWindwController.swift; sourceTree = "<group>"; };
+		DDDF14631F6730DA00953634 /* SharedVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedVariables.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C6DF045F1F4F33C500D200B1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C6DF04701F4F33C500D200B1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C6DF047B1F4F33C500D200B1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C60D39B51F5EB48000D94834 /* WindowsControllers */ = {
+			isa = PBXGroup;
+			children = (
+				C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */,
+				C60D39B31F5EB47000D94834 /* ContactsWindowController.swift */,
+				DDDCF67D1F63338F00CF7FE4 /* CreditsWindwController.swift */,
+				DD01EBEC1F71B6BF00C94D9B /* LogWindowController.swift */,
+			);
+			name = WindowsControllers;
+			sourceTree = "<group>";
+		};
+		C60D39B61F5EB4A000D94834 /* OtherCode */ = {
+			isa = PBXGroup;
+			children = (
+				DD01EBEA1F71A73700C94D9B /* CustomClasses */,
+				DD01EBEB1F71A75B00C94D9B /* SharedCode */,
+			);
+			name = OtherCode;
+			sourceTree = "<group>";
+		};
+		C60D39B71F5EB4C800D94834 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */,
+				DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */,
+				C65AA6201F4F4C0400C43223 /* InfoViewController.swift */,
+				C6553A901F5F7CEA0048965D /* LicenseViewController.swift */,
+				C65AA6221F4F4C3400C43223 /* ChoseDriveViewController.swift */,
+				C64E56361F51D917007B8CEE /* ChoseAppViewController.swift */,
+				C64E56381F51E79C007B8CEE /* ConfirmViewController.swift */,
+				C64E563A1F522854007B8CEE /* InstallingViewController.swift */,
+				C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */,
+				DD01EBF01F71BFE600C94D9B /* LogViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		C6553A941F5F83DC0048965D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C6553A921F5F83770048965D /* License.rtf */,
+				C65B5EFB1F71FAB10061F1A3 /* DebugScript.sh */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		C6DF04591F4F33C500D200B1 = {
+			isa = PBXGroup;
+			children = (
+				C64E563F1F52786F007B8CEE /* TINU-Bridging-Header.h */,
+				C6DF04641F4F33C500D200B1 /* TINU */,
+				C6DF04761F4F33C500D200B1 /* TINUTests */,
+				C6DF04811F4F33C500D200B1 /* TINUUITests */,
+				C6DF04631F4F33C500D200B1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C6DF04631F4F33C500D200B1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C6DF04621F4F33C500D200B1 /* TINU.app */,
+				C6DF04731F4F33C500D200B1 /* TINUTests.xctest */,
+				C6DF047E1F4F33C500D200B1 /* TINUUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C6DF04641F4F33C500D200B1 /* TINU */ = {
+			isa = PBXGroup;
+			children = (
+				C6DF046E1F4F33C500D200B1 /* Info.plist */,
+				C691BFED1F6DEEA800589EF8 /* Assets.xcassets */,
+				C6DF046B1F4F33C500D200B1 /* Main.storyboard */,
+				C6DF04651F4F33C500D200B1 /* AppDelegate.swift */,
+				C6553A941F5F83DC0048965D /* Resources */,
+				C60D39B51F5EB48000D94834 /* WindowsControllers */,
+				C60D39B71F5EB4C800D94834 /* ViewControllers */,
+				C60D39B61F5EB4A000D94834 /* OtherCode */,
+			);
+			path = TINU;
+			sourceTree = "<group>";
+		};
+		C6DF04761F4F33C500D200B1 /* TINUTests */ = {
+			isa = PBXGroup;
+			children = (
+				C6DF04771F4F33C500D200B1 /* TINUTests.swift */,
+				C6DF04791F4F33C500D200B1 /* Info.plist */,
+			);
+			path = TINUTests;
+			sourceTree = "<group>";
+		};
+		C6DF04811F4F33C500D200B1 /* TINUUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C6DF04821F4F33C500D200B1 /* TINUUITests.swift */,
+				C6DF04841F4F33C500D200B1 /* Info.plist */,
+			);
+			path = TINUUITests;
+			sourceTree = "<group>";
+		};
+		DD01EBEA1F71A73700C94D9B /* CustomClasses */ = {
+			isa = PBXGroup;
+			children = (
+				C621CFAB1F4F7DF400CC6D5B /* DriveObject.swift */,
+				C60D39AF1F5E136500D94834 /* Part.swift */,
+			);
+			name = CustomClasses;
+			sourceTree = "<group>";
+		};
+		DD01EBEB1F71A75B00C94D9B /* SharedCode */ = {
+			isa = PBXGroup;
+			children = (
+				C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */,
+				DDDF14631F6730DA00953634 /* SharedVariables.swift */,
+				C65AA61E1F4F497A00C43223 /* SharedInstances.swift */,
+				DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */,
+				C65B5EFE1F72099F0061F1A3 /* ScriptsManager.swift */,
+				C65B5F021F720D680061F1A3 /* SudoManager.swift */,
+			);
+			name = SharedCode;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C6DF04611F4F33C500D200B1 /* TINU */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C6DF04871F4F33C500D200B1 /* Build configuration list for PBXNativeTarget "TINU" */;
+			buildPhases = (
+				C6DF045E1F4F33C500D200B1 /* Sources */,
+				C6DF045F1F4F33C500D200B1 /* Frameworks */,
+				C6DF04601F4F33C500D200B1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TINU;
+			productName = TINU;
+			productReference = C6DF04621F4F33C500D200B1 /* TINU.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C6DF04721F4F33C500D200B1 /* TINUTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C6DF048A1F4F33C500D200B1 /* Build configuration list for PBXNativeTarget "TINUTests" */;
+			buildPhases = (
+				C6DF046F1F4F33C500D200B1 /* Sources */,
+				C6DF04701F4F33C500D200B1 /* Frameworks */,
+				C6DF04711F4F33C500D200B1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C6DF04751F4F33C500D200B1 /* PBXTargetDependency */,
+			);
+			name = TINUTests;
+			productName = TINUTests;
+			productReference = C6DF04731F4F33C500D200B1 /* TINUTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C6DF047D1F4F33C500D200B1 /* TINUUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C6DF048D1F4F33C500D200B1 /* Build configuration list for PBXNativeTarget "TINUUITests" */;
+			buildPhases = (
+				C6DF047A1F4F33C500D200B1 /* Sources */,
+				C6DF047B1F4F33C500D200B1 /* Frameworks */,
+				C6DF047C1F4F33C500D200B1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C6DF04801F4F33C500D200B1 /* PBXTargetDependency */,
+			);
+			name = TINUUITests;
+			productName = TINUUITests;
+			productReference = C6DF047E1F4F33C500D200B1 /* TINUUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C6DF045A1F4F33C500D200B1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Pietro Caruso";
+				TargetAttributes = {
+					C6DF04611F4F33C500D200B1 = {
+						CreatedOnToolsVersion = 8.3.1;
+						LastSwiftMigration = 0900;
+						ProvisioningStyle = Manual;
+					};
+					C6DF04721F4F33C500D200B1 = {
+						CreatedOnToolsVersion = 8.3.1;
+						DevelopmentTeam = 9RSH5734GY;
+						LastSwiftMigration = 0900;
+						ProvisioningStyle = Automatic;
+						TestTargetID = C6DF04611F4F33C500D200B1;
+					};
+					C6DF047D1F4F33C500D200B1 = {
+						CreatedOnToolsVersion = 8.3.1;
+						DevelopmentTeam = 9RSH5734GY;
+						LastSwiftMigration = 0900;
+						ProvisioningStyle = Automatic;
+						TestTargetID = C6DF04611F4F33C500D200B1;
+					};
+				};
+			};
+			buildConfigurationList = C6DF045D1F4F33C500D200B1 /* Build configuration list for PBXProject "TINU" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C6DF04591F4F33C500D200B1;
+			productRefGroup = C6DF04631F4F33C500D200B1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C6DF04611F4F33C500D200B1 /* TINU */,
+				C6DF04721F4F33C500D200B1 /* TINUTests */,
+				C6DF047D1F4F33C500D200B1 /* TINUUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C6DF04601F4F33C500D200B1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C65B5EFD1F7201D10061F1A3 /* DebugScript.sh in Resources */,
+				C6DF046D1F4F33C500D200B1 /* Main.storyboard in Resources */,
+				C691BFEE1F6DEEA800589EF8 /* Assets.xcassets in Resources */,
+				C6553A931F5F83770048965D /* License.rtf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C6DF04711F4F33C500D200B1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C6DF047C1F4F33C500D200B1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C6DF045E1F4F33C500D200B1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C621CFA71F4F6A6500CC6D5B /* MainWindowController.swift in Sources */,
+				C621CFAC1F4F7DF400CC6D5B /* DriveObject.swift in Sources */,
+				DDDCF67E1F63338F00CF7FE4 /* CreditsWindwController.swift in Sources */,
+				C65AA61F1F4F497A00C43223 /* SharedInstances.swift in Sources */,
+				C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */,
+				C64E56391F51E79C007B8CEE /* ConfirmViewController.swift in Sources */,
+				C65B5F031F720D680061F1A3 /* SudoManager.swift in Sources */,
+				DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */,
+				C65AA6211F4F4C0400C43223 /* InfoViewController.swift in Sources */,
+				C60D39B21F5E4AFC00D94834 /* ContactsViewController.swift in Sources */,
+				DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */,
+				C65B5EFF1F72099F0061F1A3 /* ScriptsManager.swift in Sources */,
+				C60D39B01F5E136500D94834 /* Part.swift in Sources */,
+				C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */,
+				DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */,
+				C64E56371F51D917007B8CEE /* ChoseAppViewController.swift in Sources */,
+				C60D39B41F5EB47000D94834 /* ContactsWindowController.swift in Sources */,
+				C64E563B1F522854007B8CEE /* InstallingViewController.swift in Sources */,
+				C65AA6241F4F4C3400C43223 /* ChoseDriveViewController.swift in Sources */,
+				DD01EBEF1F71BD2A00C94D9B /* LogManager.swift in Sources */,
+				DD01EBED1F71B6BF00C94D9B /* LogWindowController.swift in Sources */,
+				C6553A911F5F7CEA0048965D /* LicenseViewController.swift in Sources */,
+				C6DF04661F4F33C500D200B1 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C6DF046F1F4F33C500D200B1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C6DF04781F4F33C500D200B1 /* TINUTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C6DF047A1F4F33C500D200B1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C6DF04831F4F33C500D200B1 /* TINUUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C6DF04751F4F33C500D200B1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C6DF04611F4F33C500D200B1 /* TINU */;
+			targetProxy = C6DF04741F4F33C500D200B1 /* PBXContainerItemProxy */;
+		};
+		C6DF04801F4F33C500D200B1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C6DF04611F4F33C500D200B1 /* TINU */;
+			targetProxy = C6DF047F1F4F33C500D200B1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C6DF046B1F4F33C500D200B1 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C6DF046C1F4F33C500D200B1 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C6DF04851F4F33C500D200B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C6DF04861F4F33C500D200B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		C6DF04881F4F33C500D200B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = TINU/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINU;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "TINU-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		C6DF04891F4F33C500D200B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = TINU/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINU;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "TINU-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		C6DF048B1F4F33C500D200B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 9RSH5734GY;
+				INFOPLIST_FILE = TINUTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINUTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TINU.app/Contents/MacOS/TINU";
+			};
+			name = Debug;
+		};
+		C6DF048C1F4F33C500D200B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 9RSH5734GY;
+				INFOPLIST_FILE = TINUTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINUTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TINU.app/Contents/MacOS/TINU";
+			};
+			name = Release;
+		};
+		C6DF048E1F4F33C500D200B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 9RSH5734GY;
+				INFOPLIST_FILE = TINUUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINUUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = TINU;
+			};
+			name = Debug;
+		};
+		C6DF048F1F4F33C500D200B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 9RSH5734GY;
+				INFOPLIST_FILE = TINUUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINUUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = TINU;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C6DF045D1F4F33C500D200B1 /* Build configuration list for PBXProject "TINU" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C6DF04851F4F33C500D200B1 /* Debug */,
+				C6DF04861F4F33C500D200B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C6DF04871F4F33C500D200B1 /* Build configuration list for PBXNativeTarget "TINU" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C6DF04881F4F33C500D200B1 /* Debug */,
+				C6DF04891F4F33C500D200B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C6DF048A1F4F33C500D200B1 /* Build configuration list for PBXNativeTarget "TINUTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C6DF048B1F4F33C500D200B1 /* Debug */,
+				C6DF048C1F4F33C500D200B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C6DF048D1F4F33C500D200B1 /* Build configuration list for PBXNativeTarget "TINUUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C6DF048E1F4F33C500D200B1 /* Debug */,
+				C6DF048F1F4F33C500D200B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C6DF045A1F4F33C500D200B1 /* Project object */;
+}
