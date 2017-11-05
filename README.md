@@ -3,7 +3,7 @@ TINU, the macOS install media creation tool
 
 [TINU Is Not Unibe**t]
 
-This software is intended to be used as a GUI to create a bootable mac os installer for mac and hackintosh, it's basically a GUI for the createinstallmedia executable that could be found on any mac os installation apps.
+This software is intended to be used as a GUI to create a bootable mac os installer for mac and hackintosh, it's basically a GUI for the createinstallmedia executable that could be found in any mac os installation app from Mavericks up to the latest versions.
 
 Allows you to create easily a macOS install media without messing around with command line stuff and without using disk utility. 
 
@@ -33,7 +33,7 @@ Allows you to create easily a macOS install media without messing around with co
 # Rquirements:
  - A computer that runs Mac OS X Yosemite or a more recent version (Mac OS X El Capitan is required to use TINU in a macOS recovery or installer)
  - A drive or a free partition of at least 7 GB
- - A copy of a macOS/Mac OS X installer app (You canm use any installer starting from Mavericks up to all the latest versions, any installer that contains "createinstallmedia" is supported)in the /Applications folder or in the root of any storage drive in the system (excepted the drive or volume you want to turn into your macOS install media)
+ - A copy of a macOS/Mac OS X installer app (You can use any installer starting from Mavericks up to all the latest versions, any installer that contains "createinstallmedia" is supported)in the /Applications folder or in the root of any storage drive in the system (excepted the drive or volume you want to turn into your macOS install media)
  
 # Useful links:
 
