@@ -9,16 +9,11 @@
 import Cocoa
 
 //the first screen of the app, it has just some labels and a button
-class InfoViewController: NSViewController {
-    @IBOutlet weak var background: NSVisualEffectView!
+class InfoViewController: GenericViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
         sharedStoryboard = self.storyboard
-        
-        if sharedIsOnRecovery || !sharedUseVibrant {
-            background.isHidden = true
-        }
     }
 
     @IBAction func ok(_ sender: Any) {

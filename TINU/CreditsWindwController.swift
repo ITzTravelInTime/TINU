@@ -8,24 +8,11 @@
 
 import Cocoa
 
-class CreditsWindowController: NSWindowController {
+public class CreditsWindowController: GenericWindowController {
     
-    override func windowDidLoad() {
+    override public func windowDidLoad() {
         super.windowDidLoad()
-        //sets the window
-        self.window?.isFullScreenEnaled = false
-        self.window?.title = sharedWindowTitlePrefix + ": Credits"
-        
-        if sharedUseVibrant && !sharedIsOnRecovery {
-            self.window?.titleVisibility = .hidden
-            self.window?.titlebarAppearsTransparent = true
-            self.window?.styleMask.insert(.fullSizeContentView)
-            self.window?.isMovableByWindowBackground = true
-            
-            if sharedTestingMode{
-                self.window?.titleVisibility = .visible
-            }
-        }
+        self.window?.title += ": Credits"
     }
     
     convenience init() {

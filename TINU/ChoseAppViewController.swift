@@ -8,29 +8,33 @@
 
 import Cocoa
 
-class ChoseAppViewController: NSViewController {
-    @IBOutlet weak var background: NSVisualEffectView!
-    
+class ChoseAppViewController: GenericViewController {
     private var empty: Bool = false{
         didSet{
-            scoller.frame = CGRect.init(x: 20, y: scoller.frame.origin.y, width: self.view.frame.width - 40, height: scoller.frame.height)
             if self.empty{
                 scoller.drawsBackground = false
                 scoller.borderType = .noBorder
                 ok.title = "Quit"
                 ok.isEnabled = true
             }else{
-                if sharedUseVibrant && !sharedIsOnRecovery {
-                    scoller.drawsBackground = false
-                    scoller.borderType = .noBorder
-                    scoller.frame = CGRect.init(x: 0, y: scoller.frame.origin.y, width: self.view.frame.width, height: scoller.frame.height)
-                }else{
-                    scoller.drawsBackground = true
-                    scoller.borderType = .bezelBorder
-                }
+                viewDidSetVibrantLook()
                 ok.title = "Next"
                 ok.isEnabled = false
             }
+        }
+    }
+    
+    
+    override func viewDidSetVibrantLook(){
+        super.viewDidSetVibrantLook()
+        if canUseVibrantLook || self.empty {
+            scoller.frame = CGRect.init(x: 0, y: scoller.frame.origin.y, width: self.view.frame.width, height: scoller.frame.height)
+            scoller.drawsBackground = false
+            scoller.borderType = .noBorder
+        }else{
+            scoller.frame = CGRect.init(x: 20, y: scoller.frame.origin.y, width: self.view.frame.width - 40, height: scoller.frame.height)
+            scoller.drawsBackground = true
+            scoller.borderType = .bezelBorder
         }
     }
     
@@ -63,17 +67,10 @@ class ChoseAppViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-        if sharedIsOnRecovery || !sharedUseVibrant {
-            background.isHidden = true
-        }
-        
         loadApps()
     }
     
     private func loadApps(){
-        print(sharedVolumeNeedsPartitionMethodChange)
-        //print(sharedVolumeNeedsFormat)
-        
         ps = sharedVolumeNeedsPartitionMethodChange
         //fs = sharedVolumeNeedsFormat
         

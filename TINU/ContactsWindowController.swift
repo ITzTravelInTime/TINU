@@ -8,24 +8,11 @@
 
 import Cocoa
 
-class ContactsWindowController: NSWindowController {
+public class ContactsWindowController: GenericWindowController {
 
-    override func windowDidLoad() {
+    override public func windowDidLoad() {
         super.windowDidLoad()
-        //sets window
-        self.window?.isFullScreenEnaled = false
-        self.window?.title = sharedWindowTitlePrefix + ": Contact us"
-        
-        if sharedUseVibrant && !sharedIsOnRecovery {
-            self.window?.titleVisibility = .hidden
-            self.window?.titlebarAppearsTransparent = true
-            self.window?.styleMask.insert(.fullSizeContentView)
-            self.window?.isMovableByWindowBackground = true
-            
-            if sharedTestingMode{
-                self.window?.titleVisibility = .visible
-            }
-        }
+        self.window?.title += ": Contact us"
     }
     
     convenience init() {

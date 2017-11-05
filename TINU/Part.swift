@@ -8,7 +8,7 @@
 
 import Cocoa
 
-//this is just a simple class that represents a drive
+//this is just a simple class that represents a drive, used fot the drive scan algoritm
 public class Part{
     var bsdName: String
     var name: String

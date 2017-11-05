@@ -9,16 +9,10 @@
 import Foundation
 import Cocoa
 
-class CreditsViewController: NSViewController {
-    
-    @IBOutlet weak var background: NSVisualEffectView!
-    
-    override func viewDidLoad() {
+public class CreditsViewController: NSViewController {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-        if sharedIsOnRecovery || !sharedUseVibrant {
-            background.isHidden = true
-        }
     }
     
     @IBAction func closeWindow(_ sender: Any) {

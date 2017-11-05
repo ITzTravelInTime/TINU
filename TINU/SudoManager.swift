@@ -9,9 +9,9 @@
 import Foundation
 
 fileprivate class SudoManager{
-    //this variable stores the password, and yes, i agree with you, this is not a safe way to do that, but i can't ask the passowrd to the user a lot of times, if you have a better idea to store the passowrd contact me, i think that it vould be something like the keychain, just remember that the poassord has to be converted into a string format tha could be used with sudo in a command string
+    //this variable stores the password, and yes, i agree with you, this is not a safe way to do that, but i can't ask the passowrd to the user a lot of times, if you have a better idea to store the passowrd contact me, i think that it vould be something like the keychain, just remember that the password has to be converted into a string format that could be used with sudo in a command string, something like: echo "myfancypassword" | sudo -S myfancycommand --myfancyargument
     fileprivate var pass: String!
-    //this is function the gets the password that needs to be used in the scripts
+    //this is function the gets the password that needs to be used in the scripts, do not make accessible in the outside this file/class
     fileprivate var text = "TINU needs again the password (Your account must have a password that is not empty):"
     fileprivate func askForPassword() -> String!{
         //if we are into the recovery we do not need the password
@@ -41,7 +41,7 @@ fileprivate class SudoManager{
         return p
     }
     
-    //this function checks a given password passed by argument
+    //this function checks a given password passed by argument, do not make accessible in the outside this file/class
     fileprivate func checkPassword(_ password: String!) -> Bool{
         if password == nil{
             return false
@@ -54,12 +54,12 @@ fileprivate class SudoManager{
         return !(getErr(cmd: "echo \"" + password + "\" | sudo -S echo \"correct\"").contains("Password:Sorry, try again."))
     }
     
-    //this function uses the checkPassword function to determinate if the stored password is correct
+    //this function uses the checkPassword function to determinate if the stored password is correct, do not make accessible in the outside this file/class
     fileprivate func checkPasswordStored() -> Bool{
         return checkPassword(pass)
     }
     
-    //this function return the prefix to use when performing commands that needs sudo
+    //this function return the prefix to use when performing commands that needs sudo, do not make accessible in the outside this file/class
     fileprivate func getSudoPrefix() -> String!{
         var prefix = ""
         //checks if we are not on recovery, if yes, the command must use sudo

@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ConfirmViewController: NSViewController {
+class ConfirmViewController: GenericViewController {
     
     @IBOutlet weak var driveName: NSTextField!
     @IBOutlet weak var driveImage: NSImageView!
@@ -16,7 +16,6 @@ class ConfirmViewController: NSViewController {
     @IBOutlet weak var appImage: NSImageView!
     @IBOutlet weak var appName: NSTextField!
     @IBOutlet weak var warning: NSImageView!
-    @IBOutlet weak var background: NSVisualEffectView!
     
     var notDone = false
     
@@ -26,13 +25,6 @@ class ConfirmViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-        
-        if sharedIsOnRecovery || !sharedUseVibrant {
-            background.isHidden = true
-        }
-        
-        print(sharedVolumeNeedsPartitionMethodChange)
-        //print(sharedVolumeNeedsFormat)
         
         ps = sharedVolumeNeedsPartitionMethodChange
         //fs = sharedVolumeNeedsFormat

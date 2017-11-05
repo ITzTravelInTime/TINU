@@ -8,6 +8,7 @@
 
 import Foundation
 
+//this function stars a process and then returs the objects needed to track it
 public func startCommand(cmd : String, args : [String]) -> (process: Process, errorPipe: Pipe, outputPipe: Pipe) {
     let task = Process()
     let outpipe = Pipe()
@@ -23,6 +24,7 @@ public func startCommand(cmd : String, args : [String]) -> (process: Process, er
     return (task, errpipe, outpipe)
 }
 
+//runs a process until it ends and then returs the outputs and the erros
 public func runCommand(cmd : String, args : [String]) -> (output: [String], error: [String], exitCode: Int32) {
     var output : [String] = []
     var error : [String] = []
@@ -49,6 +51,7 @@ public func runCommand(cmd : String, args : [String]) -> (output: [String], erro
     return (output, error, status)
 }
 
+//executes a process until it ends end then returns only the output/error
 fileprivate func getOutSimply(cmd: String, isErr: Bool) -> String{
     //ths function runs a command on the sh shell and it does return the output or the error produced
     var ret = [String]()
@@ -70,6 +73,7 @@ fileprivate func getOutSimply(cmd: String, isErr: Bool) -> String{
     return rett
 }
 
+//specialized versions of the previous version:
 public func getErr(cmd: String) -> String{
     //ths function runs a command on the sh shell and it does return the error output
     return getOutSimply(cmd: cmd, isErr: true)

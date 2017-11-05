@@ -6,9 +6,9 @@
 //  Copyright © 2017 Pietro Caruso. All rights reserved.
 //
 
-import Foundation
 import Cocoa
 
+//this class is an UI object used to represent a drive or a insteller app that can be selected by the user
 class DriveObject: NSView {
     
     override init(frame: NSRect){

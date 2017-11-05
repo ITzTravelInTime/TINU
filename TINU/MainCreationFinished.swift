@@ -18,15 +18,9 @@ class MainCreationFinishedViewController: NSViewController{
     
     @IBOutlet weak var continueButton: NSButton!
     
-    @IBOutlet weak var background: NSVisualEffectView!
-    
-    @IBOutlet weak var log: NSScrollView!
+    //@IBOutlet weak var log: NSScrollView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if sharedIsOnRecovery || !sharedUseVibrant {
-            background.isHidden = true
-        }
         
         if let w = sharedWindow{
             w.isClosingEnabled = true

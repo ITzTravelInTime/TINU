@@ -33,6 +33,10 @@
 		DD01EBED1F71B6BF00C94D9B /* LogWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBEC1F71B6BF00C94D9B /* LogWindowController.swift */; };
 		DD01EBEF1F71BD2A00C94D9B /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */; };
 		DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBF01F71BFE600C94D9B /* LogViewController.swift */; };
+		DD484A811FAE49B90092834A /* SettingsNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD484A801FAE49B90092834A /* SettingsNames.swift */; };
+		DD5016061F993D4500FB1407 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5016051F993D4500FB1407 /* GenericViewController.swift */; };
+		DDA7FB601F96AE510029F4F2 /* RuntimeCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */; };
+		DDA7FB621F96B13F0029F4F2 /* GenericWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */; };
 		DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */; };
 		DDDCF67E1F63338F00CF7FE4 /* CreditsWindwController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDCF67D1F63338F00CF7FE4 /* CreditsWindwController.swift */; };
 		DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDF14631F6730DA00953634 /* SharedVariables.swift */; };
@@ -89,6 +93,10 @@
 		DD01EBEC1F71B6BF00C94D9B /* LogWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogWindowController.swift; sourceTree = "<group>"; };
 		DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
 		DD01EBF01F71BFE600C94D9B /* LogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
+		DD484A801FAE49B90092834A /* SettingsNames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsNames.swift; sourceTree = "<group>"; };
+		DD5016051F993D4500FB1407 /* GenericViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericViewController.swift; sourceTree = "<group>"; };
+		DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuntimeCode.swift; sourceTree = "<group>"; };
+		DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWindowController.swift; sourceTree = "<group>"; };
 		DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsViewController.swift; sourceTree = "<group>"; };
 		DDDCF67D1F63338F00CF7FE4 /* CreditsWindwController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsWindwController.swift; sourceTree = "<group>"; };
 		DDDF14631F6730DA00953634 /* SharedVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedVariables.swift; sourceTree = "<group>"; };
@@ -224,6 +232,8 @@
 			children = (
 				C621CFAB1F4F7DF400CC6D5B /* DriveObject.swift */,
 				C60D39AF1F5E136500D94834 /* Part.swift */,
+				DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */,
+				DD5016051F993D4500FB1407 /* GenericViewController.swift */,
 			);
 			name = CustomClasses;
 			sourceTree = "<group>";
@@ -234,6 +244,8 @@
 				C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */,
 				DDDF14631F6730DA00953634 /* SharedVariables.swift */,
 				C65AA61E1F4F497A00C43223 /* SharedInstances.swift */,
+				DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */,
+				DD484A801FAE49B90092834A /* SettingsNames.swift */,
 				DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */,
 				C65B5EFE1F72099F0061F1A3 /* ScriptsManager.swift */,
 				C65B5F021F720D680061F1A3 /* SudoManager.swift */,
@@ -309,6 +321,7 @@
 				TargetAttributes = {
 					C6DF04611F4F33C500D200B1 = {
 						CreatedOnToolsVersion = 8.3.1;
+						DevelopmentTeam = 9RSH5734GY;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Manual;
 					};
@@ -392,12 +405,16 @@
 				C65AA6211F4F4C0400C43223 /* InfoViewController.swift in Sources */,
 				C60D39B21F5E4AFC00D94834 /* ContactsViewController.swift in Sources */,
 				DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */,
+				DDA7FB601F96AE510029F4F2 /* RuntimeCode.swift in Sources */,
 				C65B5EFF1F72099F0061F1A3 /* ScriptsManager.swift in Sources */,
 				C60D39B01F5E136500D94834 /* Part.swift in Sources */,
 				C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */,
 				DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */,
+				DD484A811FAE49B90092834A /* SettingsNames.swift in Sources */,
 				C64E56371F51D917007B8CEE /* ChoseAppViewController.swift in Sources */,
 				C60D39B41F5EB47000D94834 /* ContactsWindowController.swift in Sources */,
+				DD5016061F993D4500FB1407 /* GenericViewController.swift in Sources */,
+				DDA7FB621F96B13F0029F4F2 /* GenericWindowController.swift in Sources */,
 				C64E563B1F522854007B8CEE /* InstallingViewController.swift in Sources */,
 				C65AA6241F4F4C3400C43223 /* ChoseDriveViewController.swift in Sources */,
 				DD01EBEF1F71BD2A00C94D9B /* LogManager.swift in Sources */,
@@ -549,7 +566,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9RSH5734GY;
 				INFOPLIST_FILE = TINU/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -570,7 +587,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9RSH5734GY;
 				INFOPLIST_FILE = TINU/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;

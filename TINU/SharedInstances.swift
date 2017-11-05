@@ -29,6 +29,12 @@ extension NSViewController{
                 
                 self.view.window?.contentView = viewController?.view
                 
+                if !sharedIsOnRecovery{
+                    if let w = viewController?.window.windowController as? GenericWindowController{
+                        w.checkVibrant()
+                    }
+                }
+                
                 if tempPos != nil{
                     self.view.window?.setFrameOrigin(tempPos!)
                 }
@@ -57,8 +63,6 @@ extension NSViewController{
             return self.view.window
         }
     }
-    
-    
 }
 
 extension NSWindow{
@@ -178,32 +182,6 @@ class HyperTextField: NSTextField {
     }
 }
 
-public func checkAppMode(){
-    var inoffensive = false
-    
-    if simulateCreateinstallmediaFail != nil{
-        inoffensive = true
-        print("Inoffensive mode on")
-    }
-    
-    if simulateFormatFail || simulateFormatSkip || simulateNoUsableApps || simulateNoUsableDrives || simulateFirstAuthCancel || simulateAbnormalExitcode || simulateSecondAuthCancel || simulateConfirmGetDataFail || inoffensive {
-        sharedTestingMode = true
-        print("This copy of tinu is running in a testing mode")
-    }else{
-        sharedTestingMode = false
-    }
-}
-
-public func checkUser(){
-    let u = NSUserName()
-    if !FileManager.default.fileExists(atPath: "/usr/bin/sudo") && u == "root"{
-        print("Running on the root user on a mac os recovery")
-        sharedIsOnRecovery = true
-    }else{
-        print("Running on this user: " + u)
-    }
-}
-
 public func msgBox(_ title: String,_ text: String,_ style: NSAlertStyle){
     let a = NSAlert()
     a.messageText = title
@@ -238,24 +216,4 @@ public func dialogYesNo(question: String, text: String, style: NSAlertStyle) -> 
         return false
     }
     return true
-}
-
-public func getDriveNameFromBSDID(_ id: String) -> String!{
-    if let session = DASessionCreate(kCFAllocatorDefault) {
-        
-        let mountedVolumes = FileManager.default.mountedVolumeURLs(includingResourceValuesForKeys: [], options: [])!
-        for volume in mountedVolumes {
-            if let disk = DADiskCreateFromVolumePath(kCFAllocatorDefault, session, volume as CFURL) {
-                if let bsd = DADiskGetBSDName(disk){
-                    if let bsdName = String.init(utf8String: bsd) {
-                        if "/dev/" + bsdName == id{
-                            return volume.path
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    return nil
 }

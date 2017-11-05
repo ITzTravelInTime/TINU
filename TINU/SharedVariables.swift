@@ -11,6 +11,18 @@ import AppKit
 //REQUIRED TO LET THE APP TO WORK PROPERLY
 //here there are all the variables that are accessible in all the app to determinate the status of the app and what it is doing
 
+//use for settings management
+public var defaults = UserDefaults.init()
+
+//the shared variable of the main windows, it used as safe reference
+public var sharedWindow: NSWindow!
+//the shared contacts window
+public var contactsWindowController: ContactsWindowController!
+//the shared credits window
+public var creditsWindowController: CreditsWindowController!
+//public log window varivble
+var logWindow: LogWindowController!
+
 //this variable is a storyboard that is used to instanciate some windows
 public var sharedStoryboard: NSStoryboard!
 //sets if the license window has to be show
@@ -23,7 +35,7 @@ public var sharedIsOk = false
 public var sharedMessage = ""
 public var sharedTitle = ""
 
-//this variable stells if the pre-creation is in progress
+//this variable tells if the pre-creation is in progress
 public var sharedIsPreCreationInProgress = false
 
 //this tells to the rest of the app if the creation of the installer is in execution
@@ -31,6 +43,7 @@ public var sharedIsCreationInProgress = false
 
 //this variable is the drive or partition that the user has selected
 public var sharedVolume: String!
+
 //this variable is the bsd name of the drive or partition currently selected by the user
 public var sharedBSDDrive: String!
 //this is the path of the mac os installer application that the user has selected
@@ -54,7 +67,21 @@ public var sharedExecutableName: String{
 }
 
 //this variable is used to determinate if the interface must use the vibrant look, it will not be enabled if the apop is used in a mac os installer or recovery, because the effects without graphics acceleration will cause only lagg
-public var sharedUseVibrant = false
+public var sharedUseVibrant = false{
+    didSet{
+        if !sharedIsOnRecovery{
+            for i in NSApplication.shared().windows{
+                if let c = i.windowController as? GenericWindowController{
+                    c.checkVibrant()
+                }
+            }
+            defaults.set(sharedUseVibrant, forKey: sharedUseVibrantKey)
+        }
+    }
+}
+
+//this is used to know if it's really possible to use the vibrant graphics
+public var canUseVibrantLook: Bool{get{return (sharedUseVibrant && !sharedIsOnRecovery)}}
 
 //this is used to determinate if the app is running in testing mode
 public var sharedTestingMode = false
@@ -68,6 +95,26 @@ public var sharedWindowTitlePrefix: String{
         return "TINU"
     }
 }
+
+//this variable tells if the "focus area with the vibrant layout" can be used
+public var sharedUseFocusArea = false{
+    didSet{
+        if !sharedIsOnRecovery{
+            for i in NSApplication.shared().windows{
+                if let c = i.windowController as? GenericWindowController{
+                    c.checkVibrant()
+                    if let w = c.contentViewController as? GenericViewController{
+                        w.viewDidSetVibrantLook()
+                    }
+                }
+            }
+            defaults.set(sharedUseFocusArea, forKey: sharedUseFocusAreaKey)
+        }
+    }
+}
+
+//this is the verbose mode script, a copy here is leaved here just in case it's missing from the application folder
+public let verboseScript = "#!/bin/sh\n#  DebugScript.sh\n#  TINU\n#\n#  Created by Pietro Caruso on 20/09/17.\n#  Copyright © 2017 Pietro Caruso. All rights reserved.\necho \"Staring running TINU in log mode\"\n\"$(dirname \"$(dirname \"$0\")\")/MacOS/TINU\""
 
 //variables used to manage the creation process
 public var process = Process()

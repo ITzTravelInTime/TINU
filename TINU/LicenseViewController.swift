@@ -8,8 +8,8 @@
 
 import Cocoa
 
-class LicenseViewController: NSViewController {
-
+class LicenseViewController: GenericViewController {
+    
     @IBOutlet weak var continueButton: NSButton!
     
     @IBOutlet var licenseField: NSTextView!
@@ -18,16 +18,12 @@ class LicenseViewController: NSViewController {
     
     @IBOutlet weak var scroller: NSScrollView!
     
-    @IBOutlet weak var background: NSVisualEffectView!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        if sharedIsOnRecovery || !sharedUseVibrant {
-            background.isHidden = true
+    override func viewDidSetVibrantLook(){
+        super.viewDidSetVibrantLook()
+        if styleView != nil{
+            styleView.isHidden = true
         }
-        
-        if sharedUseVibrant && !sharedIsOnRecovery{
+        if canUseVibrantLook {
             scroller.frame = CGRect.init(x: 0, y: scroller.frame.origin.y, width: self.view.frame.width, height: scroller.frame.height)
             scroller.borderType = .noBorder
             //scroller.drawsBackground = false
@@ -36,6 +32,10 @@ class LicenseViewController: NSViewController {
             scroller.borderType = .bezelBorder
             //scroller.drawsBackground = true
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         spinner.isHidden = false
         spinner.startAnimation(self)
@@ -44,32 +44,36 @@ class LicenseViewController: NSViewController {
         DispatchQueue.global(qos: .userInitiated).async {
             
             
-        if let rtfPath = Bundle.main.url(forResource: "License", withExtension: "rtf") {
-            do {
-                let attributedStringWithRtf:NSAttributedString = try NSAttributedString(url: rtfPath, options: [NSDocumentTypeDocumentAttribute:NSRTFTextDocumentType], documentAttributes: nil)
-                DispatchQueue.main.sync {
-                    self.licenseField.text = attributedStringWithRtf.string
+            if let rtfPath = Bundle.main.url(forResource: "License", withExtension: "rtf") {
+                do {
+                    let attributedStringWithRtf:NSAttributedString = try NSAttributedString(url: rtfPath, options: [NSDocumentTypeDocumentAttribute:NSRTFTextDocumentType], documentAttributes: nil)
+                    DispatchQueue.main.sync {
+                        self.licenseField.text = attributedStringWithRtf.string
+                        
+                        self.spinner.isHidden = true
+                        self.spinner.stopAnimation(self)
+                        self.scroller.isHidden = false
+                    }
                     
-                    self.spinner.isHidden = true
-                    self.spinner.stopAnimation(self)
-                    self.scroller.isHidden = false
+                } catch let error {
+                    print("Get license error, skipping: \(error)")
+                    DispatchQueue.main.sync {
+                        let _ = self.openSubstituteWindow(windowStoryboardID: "ChoseDrive", sender: self)
+                    }
                 }
-                
-            } catch let error {
-                print("Get license error, skipping: \(error)")
+            }else{
+                print("Get license error, skipping: license file not found")
                 DispatchQueue.main.sync {
                     let _ = self.openSubstituteWindow(windowStoryboardID: "ChoseDrive", sender: self)
                 }
-                }
-        }else{
-            print("Get license error, skipping: license file not found")
-            DispatchQueue.main.sync {
-                let _ = self.openSubstituteWindow(windowStoryboardID: "ChoseDrive", sender: self)
             }
         }
-        }
     }
-
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+    }
+    
     @IBAction func readedChanged(_ sender: Any) {
         if let s = sender as? NSButton{
             if s.state == 1{

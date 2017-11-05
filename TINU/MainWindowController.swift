@@ -9,64 +9,32 @@
 import Cocoa
 
 //this class maages the window
-class mainWindowController: NSWindowController, NSWindowDelegate {
+public class mainWindowController: GenericWindowController {
 
-    override func windowDidLoad() {
+    override public func windowDidLoad() {
         super.windowDidLoad()
-    
-        // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+        
         window?.delegate = self
         
         window?.toolbar = NSApplication.shared().windows[0].toolbar
         
         sharedWindow = self.window
         
+        //those functions are executed here and ont into the app delegate, because this is executed first
         checkAppMode()
-        
         checkUser()
+        checkSettings()
         
-        if sharedUseVibrant && !sharedIsOnRecovery {
-            self.window?.titleVisibility = .hidden
-            self.window?.titlebarAppearsTransparent = true
-            self.window?.styleMask.insert(.fullSizeContentView)
-            self.window?.isMovableByWindowBackground = true
-        }
-        
-        if sharedTestingMode{
-            self.window?.title = sharedWindowTitlePrefix
-            if sharedUseVibrant && !sharedIsOnRecovery {
-                self.window?.titleVisibility = .visible
-            }
-        }
-        
-        
-    }
-
-    
-    func makeStandard(){
-        //self.window?.isResizable = true
-        
-        self.window?.exitFullScreen()
-        
-        self.window?.isFullScreenEnaled = false
-        
-    }
-    
-    func makeEditable(){
-        //self.window?.isResizable = false
-        
-        self.window?.makeFullScreen()
-        
-        self.window?.isFullScreenEnaled = true
+        //we have got all the needed data, so we can setup the look properly
+        self.setUI()
     }
     
     public func windowWillClose(_ notification: Notification){
-     NSApplication.shared().terminate(self)
+        NSApplication.shared().terminate(self)
     }
     
     func windowShouldClose(_ sender: Any) -> Bool {
         if sharedIsCreationInProgress{
-            
             if !dialogYesNo(question: "Stop the process?", text: "Do you want to abort the Installer cration process?", style: .informational){
                 if let w = self.contentViewController as? InstallingViewController{
                     w.stop()
@@ -74,9 +42,12 @@ class mainWindowController: NSWindowController, NSWindowDelegate {
                 }
             }
         }
+        
+        if sharedIsPreCreationInProgress{
+            return false
+        }
+        
         return true
     }
     
 }
-
-var sharedWindow: NSWindow!

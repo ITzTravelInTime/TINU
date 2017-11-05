@@ -9,7 +9,7 @@
 import Cocoa
 import SecurityFoundation
 
-class InstallingViewController: NSViewController{
+class InstallingViewController: GenericViewController{
     @IBOutlet weak var driveName: NSTextField!
     @IBOutlet weak var driveImage: NSImageView!
     
@@ -23,9 +23,6 @@ class InstallingViewController: NSViewController{
     @IBOutlet weak var logView: NSScrollView!
     
     @IBOutlet weak var cancelButton: NSButton!
-    
-    @IBOutlet weak var background: NSVisualEffectView!
-    
     //variables used to check the sucess of the authentication
     private var osStatus: OSStatus = 0
     private var osStatus2: OSStatus = 0
@@ -44,29 +41,23 @@ class InstallingViewController: NSViewController{
         super.viewDidLoad()
         // Do view setup here.
         
-        //if we are into the recoverry we don't need fancy graphics
-        if sharedIsOnRecovery || !sharedUseVibrant {
-            background.isHidden = true
-        }
-        
         //disable the close button of the window
-        
         if let w = sharedWindow{
             w.isMiniaturizeEnaled = false
             w.isClosingEnabled = false
             w.canHide = false
         }
         
- 
+        
         /*if let a = NSApplication.shared().delegate as? AppDelegate{
-            a.QuitMenuButton.isEnabled = false
-        }*/
+         a.QuitMenuButton.isEnabled = false
+         }*/
         
         //just prints some separators to allow me to see where this windows opens in the output
         print("****************************")
         print("* CREATION PROCESS STARTED *")
         print("****************************")
-
+        
         
         print("macOS install media creation window opened")
         //this code checks if the app and the drive provided are correct
@@ -262,72 +253,72 @@ class InstallingViewController: NSViewController{
                         
                     }
                 }
-            
-            //the format code is ignored for now because createinstallmedia can do it by itself, but just in case it's needed it's keeped here
-            /*
-                if let s = sharedVolumeNeedsFormat {
-                    if s{
-                        DispatchQueue.main.async {
-                            self.log("Starting volume file system format")
-                        }
-                        didChangeFS = false
-                        //format file system here
-                        
-                        var out: String!
-                        let cmd = "diskutil eraseVolume JHFS+ Installer " + sharedBSDDrive
-                        
-                        DispatchQueue.main.async {
-                            self.log("Formatting volume with the command:")
-                            self.log("      " + cmd)
-                        }
-                        
-                        out = self.getOutWithSudo(cmd: cmd)
-             
-                        //out is nil only if the authentication has failed
-                        if out == nil{
-             
-                            //since into the recovery we do not need the spacial authorization, we just free it when running on a normal mac os environment
-                            if !sharedIsOnRecovery{
-                                //we no longer need the special authorization, so it is freed
-                                if AuthorizationFree(authRef2!, authFlags) == 0{
-                                    DispatchQueue.main.async {
-                                        log("AutorizationFree executed successfully")
-                                    }
-                                }else{
-                                    DispatchQueue.main.async {
-                                        log("AutorizationFree failed")
-                                    }
-                                }
-                            }
-                            DispatchQueue.main.async {
-                                log("Get password failed")
-                                self.goBack()
-                                return
-                            }
-                        }else{
-             
-                        if out.components(separatedBy: "\n").last!.contains("Finished erase on disk"){
-                            didChangeFS = true
-                            sharedVolume = getDriveNameFromBSDID(sharedBSDDrive)
-                                DispatchQueue.main.async {
-                                    if let name = sharedVolume{
-                                        self.driveImage.image = NSWorkspace.shared().icon(forFile: name)
-                                        self.driveName.stringValue = FileManager.default.displayName(atPath: name)
-                                    }
+                
+                //the format code is ignored for now because createinstallmedia can do it by itself, but just in case it's needed it's keeped here
+                /*
+                 if let s = sharedVolumeNeedsFormat {
+                 if s{
+                 DispatchQueue.main.async {
+                 self.log("Starting volume file system format")
+                 }
+                 didChangeFS = false
+                 //format file system here
                  
-                                    log("Volume formatted with sucess")
-                                }
-                        }else{
-                            DispatchQueue.main.async {
-                                self.log("Volume format failed: ")
-                                self.log("      Format script output: " + out)
-                            }
-                        }
-                    }
-                    }
-                }
-              */
-            
+                 var out: String!
+                 let cmd = "diskutil eraseVolume JHFS+ Installer " + sharedBSDDrive
+                 
+                 DispatchQueue.main.async {
+                 self.log("Formatting volume with the command:")
+                 self.log("      " + cmd)
+                 }
+                 
+                 out = self.getOutWithSudo(cmd: cmd)
+                 
+                 //out is nil only if the authentication has failed
+                 if out == nil{
+                 
+                 //since into the recovery we do not need the spacial authorization, we just free it when running on a normal mac os environment
+                 if !sharedIsOnRecovery{
+                 //we no longer need the special authorization, so it is freed
+                 if AuthorizationFree(authRef2!, authFlags) == 0{
+                 DispatchQueue.main.async {
+                 log("AutorizationFree executed successfully")
+                 }
+                 }else{
+                 DispatchQueue.main.async {
+                 log("AutorizationFree failed")
+                 }
+                 }
+                 }
+                 DispatchQueue.main.async {
+                 log("Get password failed")
+                 self.goBack()
+                 return
+                 }
+                 }else{
+                 
+                 if out.components(separatedBy: "\n").last!.contains("Finished erase on disk"){
+                 didChangeFS = true
+                 sharedVolume = getDriveNameFromBSDID(sharedBSDDrive)
+                 DispatchQueue.main.async {
+                 if let name = sharedVolume{
+                 self.driveImage.image = NSWorkspace.shared().icon(forFile: name)
+                 self.driveName.stringValue = FileManager.default.displayName(atPath: name)
+                 }
+                 
+                 log("Volume formatted with sucess")
+                 }
+                 }else{
+                 DispatchQueue.main.async {
+                 self.log("Volume format failed: ")
+                 self.log("      Format script output: " + out)
+                 }
+                 }
+                 }
+                 }
+                 }
+                 */
+                
                 //this code simulates when the format has failed
                 if simulateFormatFail{
                     didChangePS = false
@@ -431,101 +422,101 @@ class InstallingViewController: NSViewController{
                         //now the installer creation process has finished running, so our boolean must be false now
                         
                         /*sharedIsCreationInProgress = false
-                        
-                        let outdata = r.outputPipe.fileHandleForReading.readDataToEndOfFile()
-                        if var string = String(data: outdata, encoding: .utf8) {
-                            string = string.trimmingCharacters(in: .newlines)
-                            self.output = string.components(separatedBy: "\n")
-                        }
-                        
-                        let errdata = r.errorPipe.fileHandleForReading.readDataToEndOfFile()
-                        if var string = String(data: errdata, encoding: .utf8) {
-                            string = string.trimmingCharacters(in: .newlines)
-                            self.error = string.components(separatedBy: "\n")
-                        }
-                        
-                        //now we do not need the password anymore
-                        erasePassword()
-                        
-                        //since into the recovery we do not need the spacial authorization, we just free it when running on a normal mac os environment
-                        if !sharedIsOnRecovery{
-                            //we no longer need the special authorization, so it is freed
-                            if AuthorizationFree(authRef2!, authFlags) == 0{
-                                DispatchQueue.main.async {
-                                    log("AutorizationFree executed successfully")
-                                }
-                            }else{
-                                DispatchQueue.main.async {
-                                    log("AutorizationFree failed")
-                                }
-                            }
-                        }
-                        
-                        var rc = r.process.terminationStatus
-                        
-                        if simulateAbnormalExitcode{
-                            rc = 1
-                        }
-                        
-                        
-                        DispatchQueue.main.async {
-                            
-                            //if there is a not normal code it will be logged
-                            log("Installer creation finished, createinstallmedia has finished")
-                            if rc != 0{
-                                log("Createinstallmedia exit code produced: \n      \(rc)")
-                            }
-                            
-                            log("Createinstallmedia output produced: ")
-                            //logs the output of the process
-                            for o in self.output{
-                                log("      " + o)
-                            }
-                            
-                            if !self.error.isEmpty{
-                                if !((self.error.first?.contains("Erasing Disk: 0%... 10%... 20%... 30%...100%..."))! && self.error.first == self.error.last){
-                                    log("Createinstallmedia error/s produced: ")
-                                    //logs the errors produced by the process
-                                    if !self.error.isEmpty{
-                                        for o in self.error{
-                                            log("      " + o)
-                                        }
-                                    }else{
-                                        log("      No errors found")
-                                    }
-                                }
-                            }
-                            
-                            //now we checks if the installer creation has been completed sucessfully
-                            if (self.output.last?.uppercased().contains("DONE"))!{
-                                //here createinstall media succedes in creating the installer
-                                log("Installer created successfully!")
-                                //ok the installer creation has been completed with sucess, so it sets up the final widnow and then it's showed up
-                                self.goToFinalScreen(title: "macOS install media created successfully", success: true)
-                            }else if (self.error.last?.contains("A error occurred erasing the disk."))! {
-                                //here createinstall media failed to create the installer, bacuse of a format failure
-                                log("Installer creation failed, createinstallmedia returned an error while formatting the installer, please, erase this dirve with disk utility and retry")
-                                //the installer creation has failed, so it does setup the final windows to show the failure an the error and then it's called
-                                self.goToFinalScreen(title: "macOS install media creation failed to format the target drive, check the log for details", success: false)
-                            }else if (self.error.last?.contains("does not appear to be a valid OS installer application"))!{
-                                //here createinstall media failed to create the installer, bacuse of the downloaded app not being a valid one
-                                log("Installer creation failed, createinstallmedia returned an error about the app yoiu are using, please, check your mac instalaltion app and if needed download it again")
-                                //showing tp the installer screen
-                                self.goToFinalScreen(title: "macOS install media creation failed to beacuse of a bad macOS application, check the log for details", success: false)
-                            }else{
-                                //shows different screen basing on the erros
-                                if rc == 0{
-                                    //here createinstall media failed to create the installer
-                                    log("Installer creation failed, createinstallmedia returned an error while creating the installer, please, erase this dirve with disk utility and retry")
-                                    //the installer creation has failed, so it does setup the final windows to show the failure an the error and then it's called
-                                    self.goToFinalScreen(title: "macOS install media creation failed, check the log for details", success: false)
-                                }else{
-                                    //process exite with a not nomal exit code
-                                    log("macOS install media creation exited with a not normal exit code")
-                                    self.goToFinalScreen(title: "macOS install media creation exited with not normal code, check the log for details", success: false)
-                                }
-                            }
-                        }*/
+                         
+                         let outdata = r.outputPipe.fileHandleForReading.readDataToEndOfFile()
+                         if var string = String(data: outdata, encoding: .utf8) {
+                         string = string.trimmingCharacters(in: .newlines)
+                         self.output = string.components(separatedBy: "\n")
+                         }
+                         
+                         let errdata = r.errorPipe.fileHandleForReading.readDataToEndOfFile()
+                         if var string = String(data: errdata, encoding: .utf8) {
+                         string = string.trimmingCharacters(in: .newlines)
+                         self.error = string.components(separatedBy: "\n")
+                         }
+                         
+                         //now we do not need the password anymore
+                         erasePassword()
+                         
+                         //since into the recovery we do not need the spacial authorization, we just free it when running on a normal mac os environment
+                         if !sharedIsOnRecovery{
+                         //we no longer need the special authorization, so it is freed
+                         if AuthorizationFree(authRef2!, authFlags) == 0{
+                         DispatchQueue.main.async {
+                         log("AutorizationFree executed successfully")
+                         }
+                         }else{
+                         DispatchQueue.main.async {
+                         log("AutorizationFree failed")
+                         }
+                         }
+                         }
+                         
+                         var rc = r.process.terminationStatus
+                         
+                         if simulateAbnormalExitcode{
+                         rc = 1
+                         }
+                         
+                         
+                         DispatchQueue.main.async {
+                         
+                         //if there is a not normal code it will be logged
+                         log("Installer creation finished, createinstallmedia has finished")
+                         if rc != 0{
+                         log("Createinstallmedia exit code produced: \n      \(rc)")
+                         }
+                         
+                         log("Createinstallmedia output produced: ")
+                         //logs the output of the process
+                         for o in self.output{
+                         log("      " + o)
+                         }
+                         
+                         if !self.error.isEmpty{
+                         if !((self.error.first?.contains("Erasing Disk: 0%... 10%... 20%... 30%...100%..."))! && self.error.first == self.error.last){
+                         log("Createinstallmedia error/s produced: ")
+                         //logs the errors produced by the process
+                         if !self.error.isEmpty{
+                         for o in self.error{
+                         log("      " + o)
+                         }
+                         }else{
+                         log("      No errors found")
+                         }
+                         }
+                         }
+                         
+                         //now we checks if the installer creation has been completed sucessfully
+                         if (self.output.last?.uppercased().contains("DONE"))!{
+                         //here createinstall media succedes in creating the installer
+                         log("Installer created successfully!")
+                         //ok the installer creation has been completed with sucess, so it sets up the final widnow and then it's showed up
+                         self.goToFinalScreen(title: "macOS install media created successfully", success: true)
+                         }else if (self.error.last?.contains("A error occurred erasing the disk."))! {
+                         //here createinstall media failed to create the installer, bacuse of a format failure
+                         log("Installer creation failed, createinstallmedia returned an error while formatting the installer, please, erase this dirve with disk utility and retry")
+                         //the installer creation has failed, so it does setup the final windows to show the failure an the error and then it's called
+                         self.goToFinalScreen(title: "macOS install media creation failed to format the target drive, check the log for details", success: false)
+                         }else if (self.error.last?.contains("does not appear to be a valid OS installer application"))!{
+                         //here createinstall media failed to create the installer, bacuse of the downloaded app not being a valid one
+                         log("Installer creation failed, createinstallmedia returned an error about the app yoiu are using, please, check your mac instalaltion app and if needed download it again")
+                         //showing tp the installer screen
+                         self.goToFinalScreen(title: "macOS install media creation failed to beacuse of a bad macOS application, check the log for details", success: false)
+                         }else{
+                         //shows different screen basing on the erros
+                         if rc == 0{
+                         //here createinstall media failed to create the installer
+                         log("Installer creation failed, createinstallmedia returned an error while creating the installer, please, erase this dirve with disk utility and retry")
+                         //the installer creation has failed, so it does setup the final windows to show the failure an the error and then it's called
+                         self.goToFinalScreen(title: "macOS install media creation failed, check the log for details", success: false)
+                         }else{
+                         //process exite with a not nomal exit code
+                         log("macOS install media creation exited with a not normal exit code")
+                         self.goToFinalScreen(title: "macOS install media creation exited with not normal code, check the log for details", success: false)
+                         }
+                         }
+                         }*/
                         
                         return
                     }else{
@@ -573,18 +564,19 @@ class InstallingViewController: NSViewController{
         seconds += 1
         print(String(seconds) + " seconds passed from start")
         DispatchQueue.global(qos: .background).async{
-        //log("Checking createinstallmedia status check: \(self.seconds) seconds passed")
-        /*if let string = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) {
-            DispatchQueue.main.async {
-                log(string.trimmingCharacters(in: .newlines))
-            }
-        }*/
-        /*
-        if let string = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) {
-            log(string.trimmingCharacters(in: .newlines))
-        }*/
-        
-        
+            //log("Checking createinstallmedia status check: \(self.seconds) seconds passed")
+            /*if let string = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) {
+                DispatchQueue.main.async {
+                    log(string.trimmingCharacters(in: .newlines))
+                }
+            }*/
+            /*
+             if let string = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) {
+             log(string.trimmingCharacters(in: .newlines))
+             }
+             */
+            
+            
             if !process.isRunning{
                 sharedIsCreationInProgress = false
                 DispatchQueue.main.async {
@@ -716,16 +708,16 @@ class InstallingViewController: NSViewController{
         if !sharedIsOnRecovery{
             
             if authRef2 != nil{
-            //we no longer need the special authorization, so it is freed
-            if AuthorizationFree(authRef2!, authFlags) == 0{
-                DispatchQueue.main.async {
-                    log("AutorizationFree executed successfully")
+                //we no longer need the special authorization, so it is freed
+                if AuthorizationFree(authRef2!, authFlags) == 0{
+                    DispatchQueue.main.async {
+                        log("AutorizationFree executed successfully")
+                    }
+                }else{
+                    DispatchQueue.main.async {
+                        log("AutorizationFree failed")
+                    }
                 }
-            }else{
-                DispatchQueue.main.async {
-                    log("AutorizationFree failed")
-                }
-            }
             }
         }
     }
