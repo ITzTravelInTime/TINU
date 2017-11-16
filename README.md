@@ -13,27 +13,27 @@ Allows you to create easily a macOS install media without messing around with co
   - You can use any drive or partition you want that can be erased and is at least 7 GB of size
   - Works on Mac OS recovery, so you can create a macOS install media from a bootable macOS installer or from the macOs recovery
   - All vanilla, the macOS install medias created with this tool are 100% vanilla, just like you created them using the command line "createinstallmedia" method
-  - Open source, you will know what this program does on your computer
-  - Does not requires to change your system language, just open it up, or any other special thing first!
-  - No need to go in disk utility first, TINU can format your drive for you!
+  - Open source, you will know what this program does on your computer and also you can create your own version by downloading and playing with the source code
+  - Does not requires to do anything of special first, just open the program
+  - No need to go in disk utility first, TINU can format your drive for you
   - Uses recent and more modern APIs and SDKs and Swift 3 language
- 
- Coming soon features:
-  - Advanced section, to customize your macOS install media
-  - Installer customization: Kernelcache/prelinkedknerel and boot files replacement (a feature that can be handy while dealing with old Macs or with beta installers when you need to mod or change the boot files some times)
+  - Transparent graphics style available (use alt + s on the keyboard or View->Use transparent style)
+  - Works using the latest versions of macOS and will also support newer Mac installers out of the box without needing for an update
  
  Features that I'd like to add in the future:
+   - Advanced section, to customize your macOS install media
+  - Installer customization: Kernelcache/prelinkedknerel and boot files replacement (a feature that can be handy while dealing with old Macs or with beta installers when you need to mod or change the boot files some times)
   - Install clover and configure clover
   - Install kexts inside the kexts folder of clover
   - Clover drivers customization
   - Use custom dsdt in clover
   - integrated pre-made clover config templates database from a remote and open repository
   - Support for other languages, at least Italian
-
+ 
 # Rquirements:
  - A computer that runs Mac OS X Yosemite or a more recent version (Mac OS X El Capitan is required to use TINU in a macOS recovery or installer)
- - A drive or a free partition of at least 7 GB
- - A copy of a macOS/Mac OS X installer app (You can use any installer starting from Mavericks up to all the latest versions, any installer that contains "createinstallmedia" is supported)in the /Applications folder or in the root of any storage drive in the system (excepted the drive or volume you want to turn into your macOS install media)
+ - A drive or a free partition of at least 7 GB that you want to turn into a macOS/Mac OS X installer
+ - A copy of a macOS/Mac OS X installer app (Maveriks or newer versions are supported) in the /Applications folder or in the root of any storage drive in your machine (excepted the drive or volume you want to turn into your macOS install media)
  
 # Useful links:
 
