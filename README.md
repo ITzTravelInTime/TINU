@@ -35,6 +35,11 @@ Allows you to create easily a macOS install media without messing around with co
  - A drive or a free partition of at least 7 GB that you want to turn into a macOS/Mac OS X installer
  - A copy of a macOS/Mac OS X installer app (Maveriks or newer versions are supported) in the /Applications folder or in the root of any storage drive in your machine (excepted the drive or volume you want to turn into your macOS install media)
  
+# Download:
+  - You can download the pre-made and code signed binary from the releases section of this repo that you can find here: https://github.com/ITzTravelInTime/TINU/releases
+  
+  - Or you can just build your own copy by just downloading the source code an using Xcode
+ 
 # Useful links:
 
  Thread on insanelymac.com:
