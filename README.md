@@ -39,6 +39,13 @@ Allows you to create easily a macOS install media without messing around with co
   - You can download the pre-made and code signed binary from the releases section of this repo that you can find here: https://github.com/ITzTravelInTime/TINU/releases
   
   - Or you can just build your own copy by just downloading the source code and using Xcode (requires Xcode 8)
+# Frequently asked questions
+
+https://github.com/ITzTravelInTime/TINU/wiki/FAQs
+  
+# Wiki
+
+https://github.com/ITzTravelInTime/TINU/wiki
  
 # Useful links:
 
