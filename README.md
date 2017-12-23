@@ -68,10 +68,11 @@ Contact me (project creator):
  - Contact the project creator for problems of the UI to fix, suggestions from professional designers are welcome
   
 # Note that:
- - this software is under GNU GPL v3 license so any new branch/mod/third party release must be open source and under the same license
+ - This software is under GNU GPL v3 license so any new branch/mod/third party release must be open source and under the same license
  - I (project creator) assume no responsibility for any use of this app and this source code, and also for any kind of hardware and software damage to any computer and any device or peripheral that may come from this app or source code during it's use and outside it's usage
  - I (project creator) do not guarantee support to you, this is only an open source project, not a product released by a company!
  - This project is born only for educational and demonstrative purposes, it's not intended to be used for commercial purposes and it will never be, don't use source code from this project to create apps for that aim.
+ - This is a no-profit project, born only to let people create macOS install medias in a more simple way and also to learn how to create this kind of apps.
  
  # Credits:
   - Apple for macos and installer apps and scripts
