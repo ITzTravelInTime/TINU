@@ -77,6 +77,6 @@ Contact me (project creator):
  # Credits:
   - Apple for macos and installer apps and scripts
   - People that helped me a lot:
-   Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa, Ermanno Nicoletti, Tommaso Dimatore, Michele Vitiello Bonaventura, Massimiliano Faralli, Davide Dessì, Francesco Perchiazzi
+   Francesco Perchiazzi, Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa, Ermanno Nicoletti, Tommaso Dimatore, Michele Vitiello Bonaventura, Massimiliano Faralli, Davide Dessì, Giorgio Dall'Aglio 
   - Special thanks to Italian Hackintosh group!! for help (https://www.facebook.com/groups/Italia.hackintosh/?fref=ts)
   - Pietro Caruso (ITzTravelInTime) for creating, maintaing and developing this project
