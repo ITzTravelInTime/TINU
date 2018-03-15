@@ -34,6 +34,9 @@ public var simulateFormatSkip = false
 //this tells to simulate a failure of the drive format code
 public let simulateFormatFail = false
 
+//tells to the app to not use the timer for the createinstallmedia process
+public let simulateNoTimer = false
+
 //this tells to simulate a createinstall media failure or success, if it is nil it will perform createinstallmedia as usual.
 //Here is what happens for each of the possible values:
 // - false: simulate installer creation success
@@ -42,4 +45,16 @@ public let simulateFormatFail = false
 public let simulateCreateinstallmediaFail: Bool! = nil
 
 //this tells to the application to simule an abnormal opcode result after execution of the scripts
-public var simulateAbnormalExitcode = false
+public let simulateAbnormalExitcode = false
+
+//this variable tells to the app to ignore special operations after the end of the createinstallmedia process
+public let simulateNoSpecialOperations = false
+
+//this variable is used to simulate a failure while doing advanced operations
+public let simulateSpecialOpertaionsFail = false
+
+//this is used to debug the app as it is into the recovery
+public let simulateRecovery = false
+
+//this varibale lets the app to use a plist based system to detect drives
+public let simulateDrivePlistDect = true

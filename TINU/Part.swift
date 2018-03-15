@@ -11,12 +11,16 @@ import Cocoa
 //this is just a simple class that represents a drive, used fot the drive scan algoritm
 public class Part{
     var bsdName: String
+    var apfsBDSName: String?
     var name: String
     var path: String
     var fileSystem: String
     var partScheme: String
     var hasEFI: Bool
     var totSize: Float
+    
+    var hasAPFSVolumes = false
+	var hasOriginalVolumes = false
     
     public init(){
         bsdName = "/dev/"
@@ -39,7 +43,10 @@ public class Part{
     }
     
     public func copy() -> Part{
-        return Part(partitionBSDName: bsdName, partitionName: name, partitionPath: path, partitionFileSystem: fileSystem, partitionScheme: partScheme, partitionHasEFI: hasEFI, partitionSize: totSize)
+        let p = Part(partitionBSDName: bsdName, partitionName: name, partitionPath: path, partitionFileSystem: fileSystem, partitionScheme: partScheme, partitionHasEFI: hasEFI, partitionSize: totSize)
+        p.hasAPFSVolumes = hasAPFSVolumes
+        p.apfsBDSName = apfsBDSName
+        return p
     }
     
     

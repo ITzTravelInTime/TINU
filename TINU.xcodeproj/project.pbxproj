@@ -26,6 +26,10 @@
 		C65B5F031F720D680061F1A3 /* SudoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B5F021F720D680061F1A3 /* SudoManager.swift */; };
 		C691BFEE1F6DEEA800589EF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C691BFED1F6DEEA800589EF8 /* Assets.xcassets */; };
 		C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */; };
+		C698B47E204CDAE5007B3CD8 /* MacrosReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */; };
+		C6B16958203B27AF00FD2818 /* ChooseCustomizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */; };
+		C6C1820D1FE7605300617DC2 /* ChooseSideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C1820C1FE7605300617DC2 /* ChooseSideViewController.swift */; };
+		C6C2EAA72030710A0033EF85 /* SettingsSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */; };
 		C6DF04661F4F33C500D200B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF04651F4F33C500D200B1 /* AppDelegate.swift */; };
 		C6DF046D1F4F33C500D200B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6DF046B1F4F33C500D200B1 /* Main.storyboard */; };
 		C6DF04781F4F33C500D200B1 /* TINUTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF04771F4F33C500D200B1 /* TINUTests.swift */; };
@@ -33,10 +37,16 @@
 		DD01EBED1F71B6BF00C94D9B /* LogWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBEC1F71B6BF00C94D9B /* LogWindowController.swift */; };
 		DD01EBEF1F71BD2A00C94D9B /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */; };
 		DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBF01F71BFE600C94D9B /* LogViewController.swift */; };
+		DD3AC14C1FBB974C00C71F53 /* OtherOptionsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC14B1FBB974C00C71F53 /* OtherOptionsItem.swift */; };
 		DD484A811FAE49B90092834A /* SettingsNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD484A801FAE49B90092834A /* SettingsNames.swift */; };
 		DD5016061F993D4500FB1407 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5016051F993D4500FB1407 /* GenericViewController.swift */; };
+		DD73ABE01FB4578000C7F721 /* PostCreationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD73ABDF1FB4578000C7F721 /* PostCreationCode.swift */; };
+		DD73ABE21FB46EEB00C7F721 /* PostCreationVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD73ABE11FB46EEB00C7F721 /* PostCreationVariables.swift */; };
 		DDA7FB601F96AE510029F4F2 /* RuntimeCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */; };
 		DDA7FB621F96B13F0029F4F2 /* GenericWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */; };
+		DDCC4ED51FB5C2A7007FBB6F /* CustomizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCC4ED41FB5C2A7007FBB6F /* CustomizationViewController.swift */; };
+		DDD038EB1FB7366400D22695 /* AdvancedOptionsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */; };
+		DDD038F21FB7AEC000D22695 /* BootFilesReplacementItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD038F11FB7AEC000D22695 /* BootFilesReplacementItem.swift */; };
 		DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */; };
 		DDDCF67E1F63338F00CF7FE4 /* CreditsWindwController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDCF67D1F63338F00CF7FE4 /* CreditsWindwController.swift */; };
 		DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDF14631F6730DA00953634 /* SharedVariables.swift */; };
@@ -69,7 +79,6 @@
 		C64E56361F51D917007B8CEE /* ChoseAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoseAppViewController.swift; sourceTree = "<group>"; };
 		C64E56381F51E79C007B8CEE /* ConfirmViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmViewController.swift; sourceTree = "<group>"; };
 		C64E563A1F522854007B8CEE /* InstallingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallingViewController.swift; sourceTree = "<group>"; };
-		C64E563F1F52786F007B8CEE /* TINU-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TINU-Bridging-Header.h"; sourceTree = "<group>"; };
 		C6553A901F5F7CEA0048965D /* LicenseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LicenseViewController.swift; sourceTree = "<group>"; };
 		C6553A921F5F83770048965D /* License.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = License.rtf; sourceTree = "<group>"; };
 		C65AA61E1F4F497A00C43223 /* SharedInstances.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedInstances.swift; sourceTree = "<group>"; };
@@ -80,6 +89,10 @@
 		C65B5F021F720D680061F1A3 /* SudoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudoManager.swift; sourceTree = "<group>"; };
 		C691BFED1F6DEEA800589EF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingVariables.swift; sourceTree = "<group>"; };
+		C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacrosReference.swift; sourceTree = "<group>"; };
+		C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseCustomizationViewController.swift; sourceTree = "<group>"; };
+		C6C1820C1FE7605300617DC2 /* ChooseSideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSideViewController.swift; sourceTree = "<group>"; };
+		C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSectionItem.swift; sourceTree = "<group>"; };
 		C6DF04621F4F33C500D200B1 /* TINU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TINU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6DF04651F4F33C500D200B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6DF046C1F4F33C500D200B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -93,10 +106,16 @@
 		DD01EBEC1F71B6BF00C94D9B /* LogWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogWindowController.swift; sourceTree = "<group>"; };
 		DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
 		DD01EBF01F71BFE600C94D9B /* LogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
+		DD3AC14B1FBB974C00C71F53 /* OtherOptionsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherOptionsItem.swift; sourceTree = "<group>"; };
 		DD484A801FAE49B90092834A /* SettingsNames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsNames.swift; sourceTree = "<group>"; };
 		DD5016051F993D4500FB1407 /* GenericViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericViewController.swift; sourceTree = "<group>"; };
+		DD73ABDF1FB4578000C7F721 /* PostCreationCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCreationCode.swift; sourceTree = "<group>"; };
+		DD73ABE11FB46EEB00C7F721 /* PostCreationVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCreationVariables.swift; sourceTree = "<group>"; };
 		DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuntimeCode.swift; sourceTree = "<group>"; };
 		DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWindowController.swift; sourceTree = "<group>"; };
+		DDCC4ED41FB5C2A7007FBB6F /* CustomizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomizationViewController.swift; sourceTree = "<group>"; };
+		DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedOptionsButton.swift; sourceTree = "<group>"; };
+		DDD038F11FB7AEC000D22695 /* BootFilesReplacementItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootFilesReplacementItem.swift; sourceTree = "<group>"; };
 		DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsViewController.swift; sourceTree = "<group>"; };
 		DDDCF67D1F63338F00CF7FE4 /* CreditsWindwController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsWindwController.swift; sourceTree = "<group>"; };
 		DDDF14631F6730DA00953634 /* SharedVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedVariables.swift; sourceTree = "<group>"; };
@@ -152,10 +171,13 @@
 			children = (
 				C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */,
 				DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */,
+				C6C1820C1FE7605300617DC2 /* ChooseSideViewController.swift */,
 				C65AA6201F4F4C0400C43223 /* InfoViewController.swift */,
 				C6553A901F5F7CEA0048965D /* LicenseViewController.swift */,
 				C65AA6221F4F4C3400C43223 /* ChoseDriveViewController.swift */,
 				C64E56361F51D917007B8CEE /* ChoseAppViewController.swift */,
+				C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */,
+				DDCC4ED41FB5C2A7007FBB6F /* CustomizationViewController.swift */,
 				C64E56381F51E79C007B8CEE /* ConfirmViewController.swift */,
 				C64E563A1F522854007B8CEE /* InstallingViewController.swift */,
 				C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */,
@@ -173,16 +195,24 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		C6584CE4202B093400E7F8FE /* StringsFiles */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = StringsFiles;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		C6DF04591F4F33C500D200B1 = {
 			isa = PBXGroup;
 			children = (
-				C64E563F1F52786F007B8CEE /* TINU-Bridging-Header.h */,
 				C6DF04641F4F33C500D200B1 /* TINU */,
 				C6DF04761F4F33C500D200B1 /* TINUTests */,
 				C6DF04811F4F33C500D200B1 /* TINUUITests */,
 				C6DF04631F4F33C500D200B1 /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		C6DF04631F4F33C500D200B1 /* Products */ = {
 			isa = PBXGroup;
@@ -200,7 +230,9 @@
 				C6DF046E1F4F33C500D200B1 /* Info.plist */,
 				C691BFED1F6DEEA800589EF8 /* Assets.xcassets */,
 				C6DF046B1F4F33C500D200B1 /* Main.storyboard */,
+				C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */,
 				C6DF04651F4F33C500D200B1 /* AppDelegate.swift */,
+				C6584CE4202B093400E7F8FE /* StringsFiles */,
 				C6553A941F5F83DC0048965D /* Resources */,
 				C60D39B51F5EB48000D94834 /* WindowsControllers */,
 				C60D39B71F5EB4C800D94834 /* ViewControllers */,
@@ -232,8 +264,12 @@
 			children = (
 				C621CFAB1F4F7DF400CC6D5B /* DriveObject.swift */,
 				C60D39AF1F5E136500D94834 /* Part.swift */,
+				C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */,
 				DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */,
 				DD5016051F993D4500FB1407 /* GenericViewController.swift */,
+				DDD038F11FB7AEC000D22695 /* BootFilesReplacementItem.swift */,
+				DD3AC14B1FBB974C00C71F53 /* OtherOptionsItem.swift */,
+				DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */,
 			);
 			name = CustomClasses;
 			sourceTree = "<group>";
@@ -245,6 +281,8 @@
 				DDDF14631F6730DA00953634 /* SharedVariables.swift */,
 				C65AA61E1F4F497A00C43223 /* SharedInstances.swift */,
 				DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */,
+				DD73ABDF1FB4578000C7F721 /* PostCreationCode.swift */,
+				DD73ABE11FB46EEB00C7F721 /* PostCreationVariables.swift */,
 				DD484A801FAE49B90092834A /* SettingsNames.swift */,
 				DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */,
 				C65B5EFE1F72099F0061F1A3 /* ScriptsManager.swift */,
@@ -397,24 +435,34 @@
 				C621CFA71F4F6A6500CC6D5B /* MainWindowController.swift in Sources */,
 				C621CFAC1F4F7DF400CC6D5B /* DriveObject.swift in Sources */,
 				DDDCF67E1F63338F00CF7FE4 /* CreditsWindwController.swift in Sources */,
+				DDD038F21FB7AEC000D22695 /* BootFilesReplacementItem.swift in Sources */,
 				C65AA61F1F4F497A00C43223 /* SharedInstances.swift in Sources */,
 				C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */,
 				C64E56391F51E79C007B8CEE /* ConfirmViewController.swift in Sources */,
+				DDCC4ED51FB5C2A7007FBB6F /* CustomizationViewController.swift in Sources */,
 				C65B5F031F720D680061F1A3 /* SudoManager.swift in Sources */,
 				DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */,
+				C6C2EAA72030710A0033EF85 /* SettingsSectionItem.swift in Sources */,
 				C65AA6211F4F4C0400C43223 /* InfoViewController.swift in Sources */,
 				C60D39B21F5E4AFC00D94834 /* ContactsViewController.swift in Sources */,
 				DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */,
+				C6C1820D1FE7605300617DC2 /* ChooseSideViewController.swift in Sources */,
+				DDD038EB1FB7366400D22695 /* AdvancedOptionsButton.swift in Sources */,
 				DDA7FB601F96AE510029F4F2 /* RuntimeCode.swift in Sources */,
 				C65B5EFF1F72099F0061F1A3 /* ScriptsManager.swift in Sources */,
 				C60D39B01F5E136500D94834 /* Part.swift in Sources */,
 				C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */,
+				DD73ABE01FB4578000C7F721 /* PostCreationCode.swift in Sources */,
 				DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */,
 				DD484A811FAE49B90092834A /* SettingsNames.swift in Sources */,
+				C6B16958203B27AF00FD2818 /* ChooseCustomizationViewController.swift in Sources */,
 				C64E56371F51D917007B8CEE /* ChoseAppViewController.swift in Sources */,
 				C60D39B41F5EB47000D94834 /* ContactsWindowController.swift in Sources */,
+				DD73ABE21FB46EEB00C7F721 /* PostCreationVariables.swift in Sources */,
 				DD5016061F993D4500FB1407 /* GenericViewController.swift in Sources */,
 				DDA7FB621F96B13F0029F4F2 /* GenericWindowController.swift in Sources */,
+				C698B47E204CDAE5007B3CD8 /* MacrosReference.swift in Sources */,
+				DD3AC14C1FBB974C00C71F53 /* OtherOptionsItem.swift in Sources */,
 				C64E563B1F522854007B8CEE /* InstallingViewController.swift in Sources */,
 				C65AA6241F4F4C3400C43223 /* ChoseDriveViewController.swift in Sources */,
 				DD01EBEF1F71BD2A00C94D9B /* LogManager.swift in Sources */,
@@ -562,11 +610,14 @@
 		C6DF04881F4F33C500D200B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_OPTIMIZATION = space;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9RSH5734GY;
+				GCC_OPTIMIZATION_LEVEL = fast;
 				INFOPLIST_FILE = TINU/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -574,29 +625,37 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "TINU-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
+				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
 		C6DF04891F4F33C500D200B1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_OPTIMIZATION = space;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9RSH5734GY;
+				GCC_OPTIMIZATION_LEVEL = fast;
 				INFOPLIST_FILE = TINU/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINU;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "TINU-Bridging-Header.h";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
+				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
@@ -672,7 +731,7 @@
 				C6DF04861F4F33C500D200B1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		C6DF04871F4F33C500D200B1 /* Build configuration list for PBXNativeTarget "TINU" */ = {
 			isa = XCConfigurationList;
@@ -681,7 +740,7 @@
 				C6DF04891F4F33C500D200B1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		C6DF048A1F4F33C500D200B1 /* Build configuration list for PBXNativeTarget "TINUTests" */ = {
 			isa = XCConfigurationList;
@@ -690,7 +749,7 @@
 				C6DF048C1F4F33C500D200B1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		C6DF048D1F4F33C500D200B1 /* Build configuration list for PBXNativeTarget "TINUUITests" */ = {
 			isa = XCConfigurationList;
@@ -699,7 +758,7 @@
 				C6DF048F1F4F33C500D200B1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

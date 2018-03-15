@@ -16,6 +16,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var otherApps: NSMenuItem!
     @IBOutlet weak var QuitMenuButton: NSMenuItem!
     @IBOutlet weak var focusAreaItem: NSMenuItem!
+    @IBOutlet weak var FAQItem: NSMenuItem!
+    @IBOutlet weak var FAQItemHelp: NSMenuItem!
+    @IBOutlet weak var InstallMacOSItem: NSMenuItem!
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true
@@ -23,38 +26,57 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplicationTerminateReply {
         if sharedIsPreCreationInProgress{
-            msgBox("You can't quit now", "You can't quit from TINU now, wait for the format to end or press the cancel button on the windows that asks for the password, and then quit if you want", .informational)
+            msgBoxWarning("You can't quit now", "You can't quit from TINU now, wait for the first part of the process to end or press the cancel button on the windows that asks for the password, and then quit if you want")
             return NSApplicationTerminateReply.terminateCancel
         }
         
         
         if sharedIsCreationInProgress{
-            if !dialogYesNo(question: "Installer creation in progress in progess", text: "The installer creation is inprogress do you want to quit?", style: .warning){
+           // if !dialogYesNoWarning(question: "Installer creation in progress in progess", text: "The installer creation is inprogress do you want to quit?", style: .warning){
                 if let i = sharedWindow.contentViewController as? InstallingViewController{
-                    i.stop()
+					
+					if let s = i.stopWithAsk(){
+						if s{
+                        msgBoxWarning("Error while trying to quit", "There was an error while trying to quit from the app: \n\nFailed to stop " + sharedExecutableName + " process")
+                        return NSApplicationTerminateReply.terminateCancel
+						}
+					}else{
+						return NSApplicationTerminateReply.terminateCancel
+					}
                 }
-            }else{
-                return NSApplicationTerminateReply.terminateCancel
-            }
+            //}else{
+                //return NSApplicationTerminateReply.terminateCancel
+            //}
         }
+        
         erasePassword()
         return NSApplicationTerminateReply.terminateNow
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+        
+        /*
+        if #available(OSX 10.12.2, *) {
+            NSApplication.shared().isAutomaticCustomizeTouchBarMenuItemEnabled = true
+        }
+        */
+ 
         //checkUser()
         //checkAppMode()
         
         //vibrantButton.isHidden = true
         //vibrantSeparator.isHidden = true
         focusAreaItem.isHidden = true
+        
         if sharedIsOnRecovery{
             vibrantButton.isEnabled = false
             vibrantButton.state = 0
             
             focusAreaItem.isEnabled = false
             focusAreaItem.state = 0
+            
+            FAQItem.isEnabled = false
         }else{
             vibrantButton.isEnabled = true
             if sharedUseVibrant{
@@ -70,25 +92,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }else{
                 focusAreaItem.state = 0
             }
+            
+            FAQItem.isEnabled = true
         }
         
+        FAQItemHelp.isEnabled = FAQItem.isEnabled
         
         if !sharedIsOnRecovery{
             verboseItem.isEnabled = true
             tinuRelated.isEnabled = true
             otherApps.isEnabled = true
+            
+            InstallMacOSItem.isHidden = true
         }else{
             tinuRelated.isEnabled = false
             otherApps.isEnabled = false
             verboseItem.isEnabled = false
+            
+            InstallMacOSItem.isHidden = false
             print("Verbose mode not usable under recovery")
         }
         
         if Bundle.main.url(forResource: "License", withExtension: "rtf") == nil{
-            showLicense = false
+            sharedShowLicense = false
             print("License agreement file not found")
         }else{
-            showLicense = true
+            sharedShowLicense = true
             print("License agreement file found")
         }
         
@@ -99,10 +128,75 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         if sharedIsCreationInProgress{
             if let i = sharedWindow.contentViewController as? InstallingViewController{
-                i.stop()
+                if let s = i.stop(){
+					if s{
+						msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
+					}
+				}else{
+					msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
+				}
             }
         }
     }
+    
+    @IBAction func openFAQs(_ sender: Any) {
+        if let checkURL = NSURL(string: "https://github.com/ITzTravelInTime/TINU/wiki/FAQs") {
+            if NSWorkspace.shared().open(checkURL as URL) {
+                print("url successfully opened: " + String(describing: checkURL))
+            }
+        } else {
+            print("invalid url")
+        }
+    }
+    
+    @IBAction func installMacActivate(_ sender: Any) {
+        /*
+        if !(sharedIsCreationInProgress || sharedIsPreCreationInProgress){
+            sharedInstallMac = !sharedInstallMac
+            
+            if sharedInstallMac{
+                InstallMacOSItem.title = "Use TINU to create a macOS install media"
+            }else{
+                InstallMacOSItem.title = "Use TINU to install macOS"
+            }
+            
+            sharedWindow.contentViewController?.openSubstituteWindow(windowStoryboardID: "Info", sender: sender)
+            
+            restoreOtherOptions()
+            
+            eraseReplacementFilesData()
+            
+            sharedApp = nil
+            sharedBSDDrive = nil
+            sharedVolume = nil
+        }
+        */
+        
+        swichMode(isInstall: !sharedInstallMac)
+    }
+    
+    public func swichMode(isInstall: Bool){
+        if !(sharedIsCreationInProgress || sharedIsPreCreationInProgress){
+            sharedInstallMac = isInstall
+            
+            if sharedInstallMac{
+                InstallMacOSItem.title = "Use TINU to create a macOS install media"
+            }else{
+                InstallMacOSItem.title = "Use TINU to install macOS"
+            }
+            
+            sharedWindow.contentViewController?.openSubstituteWindow(windowStoryboardID: "Info", sender: self)
+            
+            //restoreOtherOptions()
+            
+            //eraseReplacementFilesData()
+            
+            sharedApp = nil
+            sharedBSDDrive = nil
+            sharedVolume = nil
+        }
+    }
+    
     @IBAction func OpenGithub(_ sender: Any) {
         if let checkURL = NSURL(string: "https://github.com/ITzTravelInTime/TINU") {
             if NSWorkspace.shared().open(checkURL as URL) {
@@ -177,7 +271,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     }
                 }else{
                     
-                    if !dialogYesNo(question: "Diagnostics mode script missing", text: "The needed script to run TINU in diagnoistics mode is missing, do you want to create a new one?", style: .warning){
+                    if !dialogYesNoWarning(question: "Diagnostics mode script missing", text: "The needed script to run TINU in diagnoistics mode is missing, do you want to create a new one?", style: .warning){
                         do {
                             try verboseScript.write(toFile: f, atomically: true, encoding: .utf8)
                             return openVerbose(_: sender)

@@ -12,10 +12,33 @@ import Foundation
 fileprivate var logs = [String]()
 fileprivate var hasBeenUpdated = false
 
+#if usedate
+	let calendar = Calendar.current
+#endif
+
 //function you need to call if you want to log something
 public func log(_ log: Any){
-    print(log)
-    logs.append("\(log)")
+    print("log: \(log)")
+	
+	#if usedate
+		let date = Date()
+	
+		let seconds = calendar.component(.second, from: date)
+		
+		let minutes = calendar.component(.minute, from: date)
+		
+		let hour = calendar.component(.hour, from: date)
+		
+		let day = calendar.component(.day, from: date)
+	
+		let month = calendar.component(.month, from: date)
+	
+		let year = calendar.component(.year, from: date)
+	
+		logs.append("UTC \(month)/\(day)/\(year) \(hour):\(minutes):\(seconds) \(log)")
+	#else
+		logs.append("\(log)")
+	#endif
     
     hasBeenUpdated = true
 }

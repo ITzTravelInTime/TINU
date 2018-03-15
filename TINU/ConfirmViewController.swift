@@ -15,24 +15,45 @@ class ConfirmViewController: GenericViewController {
     
     @IBOutlet weak var appImage: NSImageView!
     @IBOutlet weak var appName: NSTextField!
+    
     @IBOutlet weak var warning: NSImageView!
+    
+    @IBOutlet weak var warningField: NSTextField!
     
     var notDone = false
     
     private var ps: Bool!
     //private var fs: Bool!
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        if let w = sharedWindow{
+            w.isMiniaturizeEnaled = true
+            w.isClosingEnabled = true
+            w.canHide = true
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
         
+        if sharedInstallMac{
+            warningField.stringValue = "If you go ahead, this app will modify the drive you selected, and macOS will be installed on it, if you are sure, continue at your own risk."
+            
+            if let f = sharedVolumeNeedsPartitionMethodChange{
+                if f{
+                    warningField.stringValue = "If you go ahead, this app will erase the entire drive you selected and all the data on it will be lost, if you are, continue at you own risk"
+                }
+            }
+            
+        }
+        
+        warning.image = warningIcon
+        
         ps = sharedVolumeNeedsPartitionMethodChange
         //fs = sharedVolumeNeedsFormat
-        
-        if let w = sharedWindow{
-            w.isClosingEnabled = true
-            w.isMiniaturizeEnaled = true
-        }
         
         if let a = NSApplication.shared().delegate as? AppDelegate{
             a.QuitMenuButton.isEnabled = true
@@ -42,7 +63,7 @@ class ConfirmViewController: GenericViewController {
         
         if let sa = sharedApp{
             print(sa)
-            appImage.image = NSWorkspace.shared().icon(forFile: sa)
+            appImage.image = getInstallerAppIcon(forApp: sa)
             appName.stringValue = FileManager.default.displayName(atPath: sa)
             print("Installation app that will be used is: " + sa)
         }else{
@@ -58,9 +79,13 @@ class ConfirmViewController: GenericViewController {
             
             if !FileManager.default.fileExists(atPath: sv){
                 if let sb = sharedBSDDrive{
+                    if let sd = getDriveNameFromBSDID(sb){
+                        sr = sd
+                        sharedVolume = sr
+                    }else{
+                        notDone = true
+                    }
                     
-                    sr = getDriveNameFromBSDID(sb)
-                    sharedVolume = sr
                     
                     print("corrected the name of the target volume" + sr)
                 }else{
@@ -113,6 +138,7 @@ class ConfirmViewController: GenericViewController {
         }
         
     }
+    
     @IBOutlet weak var info: NSTextField!
     @IBOutlet weak var yes: NSButton!
     @IBOutlet weak var titleLabel: NSTextField!
@@ -120,7 +146,15 @@ class ConfirmViewController: GenericViewController {
     @IBAction func goBack(_ sender: Any) {
         sharedVolumeNeedsPartitionMethodChange = ps
         //sharedVolumeNeedsFormat = fs
-        let _ = openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
+        /*if sharedInstallMac{
+            openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
+		}else{*/
+		if sharedMediaIsCustomized{
+			openSubstituteWindow(windowStoryboardID: "Customize", sender: sender)
+		}else{
+            openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
+		}
+        //}
     }
     
     @IBAction func install(_ sender: Any) {

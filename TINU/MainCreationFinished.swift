@@ -39,6 +39,8 @@ class MainCreationFinishedViewController: NSViewController{
             exitButton.title = "Quit"
             continueButton.title = "Retry"
             continueButton.isEnabled = true
+            continueButton.frame.size.width = exitButton.frame.size.width
+            continueButton.frame.origin.x = exitButton.frame.origin.x
             
             notification.title = "macOS install media creation failed"
             notification.informativeText = "The creation process of the macOS install media has failed, see log for more details"
@@ -55,8 +57,9 @@ class MainCreationFinishedViewController: NSViewController{
             notification.informativeText = "The creation process of your macOS install media has been completed with success"
             notification.contentImage = NSImage(named: "check")
         }
+        notification.hasActionButton = true
         
-        
+        notification.actionButtonTitle = "Close"
         
         notification.soundName = NSUserNotificationDefaultSoundName
         NSUserNotificationCenter.default.deliver(notification)
@@ -70,7 +73,11 @@ class MainCreationFinishedViewController: NSViewController{
         //if !sharedIsOk {
         clearLog()
         
-            let _ = openSubstituteWindow(windowStoryboardID: "Info", sender: self)
+        if sharedIsOnRecovery{
+            openSubstituteWindow(windowStoryboardID: "chooseSide", sender: self)
+        }else{
+            openSubstituteWindow(windowStoryboardID: "Info", sender: self)
+        }
         //}
     }
     

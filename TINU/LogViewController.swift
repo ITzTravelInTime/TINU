@@ -43,8 +43,9 @@ class LogViewController: GenericViewController {
     
     override func viewWillDisappear() {
         super.viewWillDisappear()
-        timer.invalidate()
-        
+        if timer.isValid{
+            timer.invalidate()
+        }
         
     }
     

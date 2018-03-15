@@ -20,9 +20,11 @@ class LicenseViewController: GenericViewController {
     
     override func viewDidSetVibrantLook(){
         super.viewDidSetVibrantLook()
+        
         if styleView != nil{
             styleView.isHidden = true
         }
+        
         if canUseVibrantLook {
             scroller.frame = CGRect.init(x: 0, y: scroller.frame.origin.y, width: self.view.frame.width, height: scroller.frame.height)
             scroller.borderType = .noBorder

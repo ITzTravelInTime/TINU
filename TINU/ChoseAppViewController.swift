@@ -36,14 +36,28 @@ class ChoseAppViewController: GenericViewController {
             scoller.drawsBackground = true
             scoller.borderType = .bezelBorder
         }
+        
+        if let document = scoller.documentView{
+            if document.identifier == spacerID{
+                document.frame = NSRect(x: 0, y: 0, width: self.scoller.frame.width - 2, height: self.scoller.frame.height - 2)
+                if let content = document.subviews.first{
+                    content.frame.origin = NSPoint(x: document.frame.width / 2 - content.frame.width / 2, y: 0)
+                }
+                self.scoller.documentView = document
+            }
+        }
     }
     
     @IBOutlet weak var ok: NSButton!
     
     @IBOutlet weak var spinner: NSProgressIndicator!
     
+    @IBOutlet weak var titleField: NSTextField!
+    
     private var ps: Bool!
     //private var fs: Bool!
+    
+    private let spacerID = "spacer"
     
     @IBAction func goBack(_ sender: Any) {
         let _ = openSubstituteWindow(windowStoryboardID: "ChoseDrive", sender: self)
@@ -53,7 +67,12 @@ class ChoseAppViewController: GenericViewController {
         if !empty{
             sharedVolumeNeedsPartitionMethodChange = ps
             //sharedVolumeNeedsFormat = fs
-            let _ = openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
+            /*if sharedInstallMac{
+             openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
+             }else{*/
+			openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
+            //openSubstituteWindow(windowStoryboardID: "Customize", sender: sender)
+            //}
         }else{
             NSApplication.shared().terminate(self)
         }
@@ -64,9 +83,53 @@ class ChoseAppViewController: GenericViewController {
     
     @IBOutlet weak var scoller: NSScrollView!
     
+    @IBAction func chooseElsewhere(_ sender: Any) {
+        let open = NSOpenPanel()
+        open.allowsMultipleSelection = false
+        open.canChooseDirectories = false
+        open.canChooseFiles = true
+        open.isExtensionHidden = false
+        open.showsHiddenFiles = true
+        open.allowedFileTypes = ["app"]
+        
+        if open.runModal() == NSModalResponseOK{
+            if !open.urls.isEmpty{
+                if let path = open.urls.first?.path{
+                    let manager = FileManager.default
+                    
+                    if manager.fileExists(atPath: path + "/Contents/Resources/" + sharedExecutableName) && manager.fileExists(atPath: path + "/Contents/SharedSupport/InstallESD.dmg") && manager.fileExists(atPath: path + "/Contents/Info.plist") {
+                        
+                        sharedApp = path
+                        
+                        sharedVolumeNeedsPartitionMethodChange = ps
+                        openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
+                        
+                    }else{
+                        if let name = open.urls.first?.lastPathComponent{
+                            msgBoxWarning("Impossible to use this app!", "The app you choosed \"\(name)\" is not usable with TINU, because it does not contains all the needed files to work with TINU")
+                        }else{
+                            msgBoxWarning("Impossible to use this app!", "The app you choosed is not usable with TINU, because it does not contains all the needed files to work with TINU")
+                        }
+                    }
+                }else{
+                    msgBoxWarning("Error while opening the file", "There was an error opening the item you choosed")
+                }
+            }else{
+                msgBoxWarning("Error while opening the file", "There was an error opening the item you choosed")
+            }
+        }
+        
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+        
+        if sharedInstallMac{
+            titleField.stringValue = "Choose the macOS installer app to use to install macOS"
+        }
+        
         loadApps()
     }
     
@@ -82,8 +145,6 @@ class ChoseAppViewController: GenericViewController {
         scoller.documentView = NSView(frame: scoller.frame)
         scoller.hasHorizontalScroller = false
         
-        var tot: CGFloat = 10
-        
         sharedApp = nil
         
         //here loads drives
@@ -95,23 +156,24 @@ class ChoseAppViewController: GenericViewController {
         
         var dirs = [String]()
         
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .background).async {
             let fm = FileManager.default
             
             var documentsUrls = [URL?]()
             
-            if !sharedIsOnRecovery{
+            if !sharedIsOnRecovery || simulateRecovery {
                 documentsUrls = [fm.urls(for: .applicationDirectory, in: .systemDomainMask).first, fm.urls(for: .desktopDirectory, in: .userDomainMask).first, fm.urls(for: .downloadsDirectory, in: .userDomainMask).first, fm.urls(for: .documentDirectory, in: .userDomainMask).first]
             }
             
-            for d in FileManager.default.mountedVolumeURLs(includingResourceValuesForKeys: [URLResourceKey.isVolumeKey], options: [.skipHiddenVolumes])!{
+            let driveb = getDriveNameFromBSDID(sharedBSDDrive)
+            for d in fm.mountedVolumeURLs(includingResourceValuesForKeys: [URLResourceKey.isVolumeKey], options: [.skipHiddenVolumes])!{
                 let p = d.path
-                if p != getDriveNameFromBSDID(sharedBSDDrive){
+                if p != driveb{
                     
                     documentsUrls.append(d)
                     
                     var isDir : ObjCBool = false
-                    if FileManager.default.fileExists(atPath: p + "/Applications", isDirectory: &isDir){
+                    if fm.fileExists(atPath: p + "/Applications", isDirectory: &isDir){
                         if isDir.boolValue && d.path != "/"{
                             documentsUrls.append(URL(fileURLWithPath: p + "/Applications"))
                         }
@@ -120,86 +182,120 @@ class ChoseAppViewController: GenericViewController {
                 }
             }
             
-            //documentsUrls += [URL(fileURLWithPath: "/Volumes/Image Volume", isDirectory: true)]
-            
             print("This contains the urls for the paths in witch we will try find the installation apps")
             print(documentsUrls)
             print("Starting installation apps scan ...")
             
+            let h = (self.scoller.frame.height) / 2 - 80
             
-            do {
-                for dd in documentsUrls{
-                    if let d = dd{
-                        print("Scanning for usable apps in \(d.path)")
-                        let fileNames = try FileManager.default.contentsOfDirectory(at: d, includingPropertiesForKeys: nil, options: []).filter{ $0.pathExtension == "app" }.map{ $0.path }
-                        for f in fileNames{
-                            if FileManager.default.fileExists(atPath: f + "/Contents/Resources/" + sharedExecutableName) && !dirs.contains(f){
-                                print("An new app that contains the createinstallmedia has been found")
-                                DispatchQueue.main.sync {
-                                    dirs.append(f)
-                                    
-                                    let drive = DriveObject(frame: NSRect(x: tot, y: 20, width: 130, height: 150))
-                                    drive.frame.origin.y = (self.scoller.frame.height - 20) / 2 - drive.frame.height / 2
-                                    drive.isApp = true
-                                    drive.applicationPath = f
-                                    print("     App path is " + f)
-                                    drive.image.image = NSWorkspace.shared().icon(forFile: f)//NSImage(named: "logo.png")
-                                    drive.volume.stringValue = FileManager.default.displayName(atPath: f)
-                                    print("     App name is " + drive.volume.stringValue)
-                                    drives.append(drive)
-                                    tot += 130
-                                }
-                            }
-                        }
-                    }
+			do {
+				for dir in documentsUrls{
+					if let d = dir{
+						print("Scanning for usable apps in \(d.path)")
+						//let fileNames = try manager.contentsOfDirectory(at: d, includingPropertiesForKeys: nil, options: []).filter{ $0.pathExtension == "app" }.map{ $0.path }
+						for appPath in (try fm.contentsOfDirectory(at: d, includingPropertiesForKeys: nil, options: []).filter{ $0.pathExtension == "app" }.map{ $0.path }) {
+							
+							if !dirs.contains(appPath){
+								if fm.fileExists(atPath: appPath + "/Contents/Resources/" + sharedExecutableName) {
+									
+									print("An new app that contains the " + sharedExecutableName + " has been found")
+									//DispatchQueue.main.sync {
+									dirs.append(appPath)
+									
+									let drive = DriveObject(frame: NSRect(x: 0, y: h, width: itmSz.width, height: itmSz.height))
+									drive.isApp = true
+									drive.applicationPath = appPath
+									print("     App path is " + appPath)
+									
+									drive.image.image = getInstallerAppIcon(forApp: appPath)
+									
+									drive.volume.stringValue = FileManager.default.displayName(atPath: appPath)
+									print("     App name is " + drive.volume.stringValue)
+									
+									/*if fp{
+									drive.isEnabled = false
+									}*/
+									
+									if !((fm.fileExists(atPath: appPath + "/Contents/SharedSupport/InstallESD.dmg") &&  fm.fileExists(atPath: appPath + "/Contents/Info.plist"))){
+										drive.isEnabled = false
+									}
+									
+									drives.append(drive)
+								}
+							}
+						}
+					}
                 }
-                
+				
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
-            
-            
+			
+			
             print("Apps scanning finished, \(dirs.count) app/s found")
-            
+			
             print("--- App detection complete")
-            
-            var content = NSView(frame: NSRect(x: 0, y: 0, width: tot, height: self.scoller.frame.size.height - 20))
-            
+			
+			
+			
             DispatchQueue.main.sync {
-                self.scoller.hasHorizontalScroller = true
+                var content = NSView(frame: NSRect(x: 0, y: 0, width: 0, height: self.scoller.frame.size.height - 2 - 20))
+				
                 self.scoller.hasVerticalScroller = false
-                
+				
                 var res = (dirs.count == 0)
-                
+				
                 //just to test the screen when there are no apps found
                 if simulateNoUsableApps{
                     res = true
                 }
-                
+				
                 self.empty = res
                 
                 if res {
                     //fail :(
                     print("No usable installation apps where found!")
-                    let label = NSTextField(frame: self.scoller.frame)
+                    
+                    self.scoller.hasHorizontalScroller = false
+                    
+                    let label = NSTextField()
                     label.stringValue = "No usable macOS installer apps found"
-                    label.frame.size.width -= 10
                     label.alignment = .center
                     label.isEditable = false
                     label.isBordered = false
+                    label.drawsBackground = false
                     label.font = NSFont.systemFont(ofSize: 20)
                     label.frame.origin = CGPoint(x: 0, y: (self.scoller.frame.size.height / 2) - 15)
-                    label.frame.size.height = 30
-                    label.drawsBackground = false
-                    content = NSView(frame: NSRect(x: 0, y: 0, width: self.scoller.frame.size.width - 10, height: self.scoller.frame.size.height - 10))
+                    label.frame.size = NSSize(width: self.scoller.frame.width - 10, height: 30)
+                    
+                    content = NSView(frame: NSRect(x: 0, y: 0, width: self.scoller.frame.size.width - 2, height: self.scoller.frame.size.height - 2))
                     content.addSubview(label)
-                    self.scoller.hasHorizontalScroller = false
+                    
+                    self.scoller.documentView = content
                 }else{
-                    for d in drives.reversed(){
-                        content.addSubview(d)
+                    self.scoller.hasHorizontalScroller = true
+                    
+                    DispatchQueue.global(qos: .background).sync {
+                        var temp: CGFloat = 10
+                        for d in drives{
+                            d.frame.origin.x = temp
+                            temp += d.frame.width
+                            content.addSubview(d)
+                        }
+                        
+                        content.frame.size.width = temp + 10
+                    }
+                    if content.frame.size.width < self.scoller.frame.width{
+                        let spacer = NSView(frame: NSRect(x: 0, y: 0, width: self.scoller.frame.width - 2, height: self.scoller.frame.height - 2))
+                        spacer.backgroundColor = NSColor.white.withAlphaComponent(0)
+                        spacer.identifier = self.spacerID
+                        content.frame.origin = NSPoint(x: spacer.frame.width / 2 - content.frame.width / 2, y: 0)
+                        spacer.addSubview(content)
+                        self.scoller.documentView = spacer
+                    }else{
+                        self.scoller.documentView = content
                     }
                 }
-                self.scoller.documentView = content
                 
                 self.spinner.stopAnimation(self)
                 self.spinner.isHidden = true

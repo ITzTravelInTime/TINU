@@ -18,15 +18,19 @@ public class mainWindowController: GenericWindowController {
         
         window?.toolbar = NSApplication.shared().windows[0].toolbar
         
-        sharedWindow = self.window
-        
-        //those functions are executed here and ont into the app delegate, because this is executed first
-        checkAppMode()
-        checkUser()
-        checkSettings()
-        
         //we have got all the needed data, so we can setup the look properly
         self.setUI()
+        
+        sharedWindow = self.window
+        
+        sharedStoryboard = self.storyboard
+        
+        //self.contentViewController?.viewDidLoad()
+        
+        /*
+        if sharedIsOnRecovery{
+            self.contentViewController?.openSubstituteWindow(windowStoryboardID: "chooseSide", sender: self)
+        }*/
     }
     
     public func windowWillClose(_ notification: Notification){
@@ -35,12 +39,11 @@ public class mainWindowController: GenericWindowController {
     
     func windowShouldClose(_ sender: Any) -> Bool {
         if sharedIsCreationInProgress{
-            if !dialogYesNo(question: "Stop the process?", text: "Do you want to abort the Installer cration process?", style: .informational){
+            //if !dialogYesNoWarning(question: "Stop the process?", text: "Do you want to abort the Installer cration process?", style: .informational){
                 if let w = self.contentViewController as? InstallingViewController{
-                    w.stop()
-                    return true
+                    return w.stopWithAsk()
                 }
-            }
+            //}
         }
         
         if sharedIsPreCreationInProgress{

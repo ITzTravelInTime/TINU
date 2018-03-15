@@ -12,7 +12,7 @@ public class CreditsWindowController: GenericWindowController {
     
     override public func windowDidLoad() {
         super.windowDidLoad()
-        self.window?.title += ": Credits"
+        self.window?.title = ""
     }
     
     convenience init() {

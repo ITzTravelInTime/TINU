@@ -21,12 +21,12 @@ public var contactsWindowController: ContactsWindowController!
 //the shared credits window
 public var creditsWindowController: CreditsWindowController!
 //public log window varivble
-var logWindow: LogWindowController!
+public var logWindow: LogWindowController!
 
 //this variable is a storyboard that is used to instanciate some windows
 public var sharedStoryboard: NSStoryboard!
 //sets if the license window has to be show
-public var showLicense = true
+public var sharedShowLicense = true
 //this varible tells if the app is running on a recovery/installer mode mac
 public var sharedIsOnRecovery = false
 
@@ -45,9 +45,81 @@ public var sharedIsCreationInProgress = false
 public var sharedVolume: String!
 
 //this variable is the bsd name of the drive or partition currently selected by the user
-public var sharedBSDDrive: String!
+public var sharedBSDDrive: String!/*{
+    didSet{
+        restoreOtherOptions()
+    }
+}*/
+
+//this variable is used to store apfs disk bsd id
+public var sharedBSDDriveAPFS: String!
+
 //this is the path of the mac os installer application that the user has selected
-public var sharedApp: String!
+public var sharedApp: String!{
+    didSet{
+        DispatchQueue.global(qos: .background).async{
+            restoreOtherOptions()
+            eraseReplacementFilesData()
+            
+            if sharedApp != nil{
+                if let version = targetAppBundleVersion(), let name = targetAppBundleName(){
+                    sharedBundleVersion = version
+                    sharedBundleName = name
+                    
+                    var supportsTINU = false
+                    
+                    if let st = sharedAppNotSupportsTINU(){
+                        supportsTINU = st
+                    }
+                    
+                    if !sharedInstallMac{
+                        for i in 0...(filesToReplace.count - 1){
+                            let item = filesToReplace[i]
+                            
+                            switch item.filename{
+                            case "prelinkedkernel":
+                                item.visible = !supportsTINU
+                            case "kernelcache":
+                                item.visible = supportsTINU
+                            default:
+                                break
+                            }
+                        }
+                    }
+                    
+                    if let item = otherOptions[otherOptionTinuCopyID]{
+                        item.isUsable = !supportsTINU
+                        item.isActivated = !supportsTINU
+                    }
+                    
+                    if sharedInstallMac{
+                        var supportsAPFS = false
+                        if let st = sharedAppNotSupportsAPFS(){
+                            supportsAPFS = st
+                        }
+                        if let item = otherOptions[otherOptionDoNotUseApfsID]{
+                            item.isVisible = !supportsAPFS
+                        }
+                    }
+                    
+                }
+                
+                if let item = otherOptions[otherOptionForceToFormatID]{
+                    if let st = sharedVolumeNeedsPartitionMethodChange{
+                        item.isUsable = !st
+                        item.isActivated = st
+                    }
+                }
+            }
+        }
+    }
+}
+//this variable tells to the app which is the bundle name of the selcted installer app
+public var sharedBundleName = ""
+
+//this is used for the app version
+public var sharedBundleVersion = ""
+
 //this varable tells to the app if the selected volume or drive needs to be reformatted using hfs+ (deprecated)
 //public var sharedVolumeNeedsFormat: Bool!
 //this variable tells to the app if the selected drive needs to be formatted using GUID partition method
@@ -69,13 +141,17 @@ public var sharedExecutableName: String{
 //this variable is used to determinate if the interface must use the vibrant look, it will not be enabled if the apop is used in a mac os installer or recovery, because the effects without graphics acceleration will cause only lagg
 public var sharedUseVibrant = false{
     didSet{
-        if !sharedIsOnRecovery{
-            for i in NSApplication.shared().windows{
-                if let c = i.windowController as? GenericWindowController{
-                    c.checkVibrant()
+        DispatchQueue.global(qos: .background).async {
+            if !sharedIsOnRecovery{
+                for i in NSApplication.shared().windows{
+                    if let c = i.windowController as? GenericWindowController{
+                        DispatchQueue.main.sync {
+                            c.checkVibrant()
+                        }
+                    }
                 }
+                defaults.set(sharedUseVibrant, forKey: settingUseVibrantKey)
             }
-            defaults.set(sharedUseVibrant, forKey: sharedUseVibrantKey)
         }
     }
 }
@@ -92,6 +168,12 @@ public var sharedWindowTitlePrefix: String{
         if sharedTestingMode{
             return "TINU (testing version)"
         }
+        
+        if sharedInstallMac{
+            return "TINU: Install macOS"
+        }
+        
+        
         return "TINU"
     }
 }
@@ -99,22 +181,81 @@ public var sharedWindowTitlePrefix: String{
 //this variable tells if the "focus area with the vibrant layout" can be used
 public var sharedUseFocusArea = false{
     didSet{
-        if !sharedIsOnRecovery{
-            for i in NSApplication.shared().windows{
-                if let c = i.windowController as? GenericWindowController{
-                    c.checkVibrant()
-                    if let w = c.contentViewController as? GenericViewController{
-                        w.viewDidSetVibrantLook()
+        DispatchQueue.global(qos: .background).async{
+            if !sharedIsOnRecovery{
+                for i in NSApplication.shared().windows{
+                    if let c = i.windowController as? GenericWindowController{
+                        DispatchQueue.main.sync {
+                            c.checkVibrant()
+                            if let w = c.contentViewController as? GenericViewController{
+                                w.viewDidSetVibrantLook()
+                                
+                            }
+                        }
                     }
+                    defaults.set(sharedUseFocusArea, forKey: settingUseFocusAreaKey)
                 }
             }
-            defaults.set(sharedUseFocusArea, forKey: sharedUseFocusAreaKey)
         }
     }
 }
 
 //this is the verbose mode script, a copy here is leaved here just in case it's missing from the application folder
 public let verboseScript = "#!/bin/sh\n#  DebugScript.sh\n#  TINU\n#\n#  Created by Pietro Caruso on 20/09/17.\n#  Copyright © 2017 Pietro Caruso. All rights reserved.\necho \"Staring running TINU in log mode\"\n\"$(dirname \"$(dirname \"$0\")\")/MacOS/TINU\""
+
+//this is the text of the readme file that is written on the macOS install media at the end of the createinstallmedia process
+public var readmeText: String {
+    get{
+        if sharedInstallMac{
+            return "Thank you for using TINU\n\nIf you want to use this macOS system on an hackintosh, please download and install the clover bootloader, you can find it here:\n https://sourceforge.net/projects/cloverefiboot/files/latest/download?source=files\n\nIf you want to use this macOS system on a standard mac, you don`t have to do extra steps, it`s ready to be used"
+        }else{
+            return "Thank you for using TINU\n\nIf you want to use this macOS install media on an hackintosh, please download and install the clover bootloader, you can find it here:\n https://sourceforge.net/projects/cloverefiboot/files/latest/download?source=files\n\nIf you want to use this macOS install media on a standard mac, you don`t have to extra steps, it`s ready to be used"
+        }
+    }
+}
+
+//warning icon used by the app
+public var warningIcon: NSImage!{
+    get{
+        return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertCautionIcon.icns", name: "warning")
+    }
+}
+
+//gets the overlay for usupported stuff
+public var unsupportedOverlay: NSImage!{
+    get{
+        return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/Unsupported.icns", name: "warning")
+    }
+}
+
+public var infoIcon: NSImage!{
+	get{
+		return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertNoteIcon.icns", name: "warning")
+	}
+}
+
+//this is used to not repeat a lot of time the user and file check
+fileprivate var tempReallyRecovery: Bool! = nil
+
+//if we are really in the recovery
+public var sharedIsReallyOnRecovery: Bool{
+    get{
+        if let v = tempReallyRecovery{
+            return v
+        }else{
+            let really = !FileManager.default.fileExists(atPath: "/usr/bin/sudo") && NSUserName() == "root"
+            tempReallyRecovery = really
+            return really
+        }
+    }
+}
+
+//this tells to the app is the install media uses custom settings
+var sharedMediaIsCustomized = false
+
+//items size for chose drive and chose app screens
+
+let itmSz: NSSize = NSSize(width: 130, height: 160)
 
 //variables used to manage the creation process
 public var process = Process()
