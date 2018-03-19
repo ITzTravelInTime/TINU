@@ -501,25 +501,29 @@ class ChoseDriveViewController: GenericViewController {
 											}
 											
 											if isAPFS{
+												cdrv?.driveType = .apfs
 												print("         Scanning new APFS container: " + (cdrv?.bsdName)!)
 											}else{
+												cdrv?.driveType = .coreStorage
 												print("         Scanning new disk container: " + (cdrv?.bsdName)!)
 											}
 											
                                             for volume in volumes{
                                                 let drv = cdrv?.copy()
 												
-                                                if sharedInstallMac{
-                                                    if let sz = volume["Size"] as? UInt64{
-                                                        if !self.checkDriveSizeUint(bytes: sz){
-                                                            print("             This volume is too small to be used")
-                                                            continue
-                                                        }
-                                                    }
-                                                }
-                                                
+												
+												if let sz = volume["Size"] as? UInt64{
+													if sharedInstallMac{
+														if !self.checkDriveSizeUint(bytes: sz){
+															print("             This volume is too small to be used")
+															continue
+														}
+													}
+													drv?.size = sz
+												}
+												
                                                 var idp = ""
-                                                
+												
                                                 if let tidp = volume["DeviceIdentifier"] as? String{
                                                     idp = tidp
                                                 }else{
@@ -719,18 +723,23 @@ class ChoseDriveViewController: GenericViewController {
                                                     continue
                                                 default:
 													
-                                                    if isGUID{
-                                                        if !self.checkDriveSizeUint(bytes: partition["Size"] as! UInt64){
-                                                            print("             Partition is too small")
-                                                            continue
-                                                        }
-                                                    }
-                                                    
-                                                    let drv = currentDrv.copy()
-                                                    
-                                                    drv.bsdName += idp
-                                                    
-                                                    print("             Partition bsd name: " + idp)
+													let drv = currentDrv.copy()
+													
+													drv.bsdName += idp
+													
+													if let sz = partition["Size"] as? UInt64 {
+														
+														if isGUID{
+															if !self.checkDriveSizeUint(bytes: sz){
+																print("             Partition is too small")
+																continue
+															}
+														}
+														
+														drv.size = sz
+													}
+													
+													print("             Partition bsd name: " + idp)
 													
 													print("             Partition file system kind: " + cont)
 													

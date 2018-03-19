@@ -107,6 +107,17 @@ public func getBSDIDFromDriveName(_ path: String) -> String!{
     return res
 }
 
+//gets the drive device name from it's device name
+public func getDeviceNameFromBSDID(_ id: String) -> String!{
+	let res = getOut(cmd: "diskutil info \"" + getDriveBSDIDFromVolumeBSDID(volumeID: id) + "\" | grep \"Device / Media Name\" | awk '{ print substr($0, index($0,$3)) }'")
+	
+	if res.isEmpty{
+		return nil
+	}
+	
+	return res
+}
+
 //checks if the drive exists if it can find it's mount point
 public func driveExists(id: String) -> Bool{
     return getDriveNameFromBSDID(id) != nil

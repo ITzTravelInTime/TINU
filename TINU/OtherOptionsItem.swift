@@ -46,21 +46,50 @@ class OtherOptionsItem: NSView {
         
         // Drawing code here.
     }
-    
-    func checked(){
-        log("Trying to change the activated value of \"\(option.id)\"")
-        /*for i in 0...(otherOptions.count - 1){
-            if otherOptions[i].id == self.option.id{
-                otherOptions[i].isActivated = (checkBox.state == 1)
-                option.isActivated = otherOptions[i].isActivated
-                log("Activated value changed sucessfully to \(option.isActivated)")
-            }
-        }*/
-        
-        if let o = otherOptions[option.id]{
-            o.isActivated = (checkBox.state == 1)
-            option.isActivated = o.isActivated
-        }
-    }
-    
+	
+	func checked(){
+		log("Trying to change the activated value of \"\(option.id)\"")
+		/*for i in 0...(otherOptions.count - 1){
+		if otherOptions[i].id == self.option.id{
+		otherOptions[i].isActivated = (checkBox.state == 1)
+		option.isActivated = otherOptions[i].isActivated
+		log("Activated value changed sucessfully to \(option.isActivated)")
+		}
+		}*/
+		
+		if let o = otherOptions[option.id]{
+			o.isActivated = (checkBox.state == 1)
+			option.isActivated = o.isActivated
+			
+			if sharedInstallMac && sharedSVReallyIsAPFS{
+				if option.id == otherOptionForceToFormatID{
+					
+					for item in (self.superview?.subviews)!{
+						if let opt = item as? OtherOptionsItem{
+							if opt.option.id == otherOptionDoNotUseApfsID{
+								log("Trying to change the activated value of \"\(opt.option.id)\"")
+								if let oo = otherOptions[otherOptionDoNotUseApfsID]{
+									oo.isActivated = o.isActivated
+									oo.isUsable = o.isActivated
+								}
+								
+								opt.option.isActivated = o.isActivated
+								opt.option.isUsable = o.isActivated
+									
+								opt.checkBox.isEnabled = o.isActivated
+								
+								if o.isActivated{
+									opt.checkBox.state = 1
+								}else{
+									opt.checkBox.state = 0
+								}
+							}
+						}
+					}
+					
+				}
+			}
+		}
+	}
+	
 }

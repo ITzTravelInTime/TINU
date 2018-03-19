@@ -54,13 +54,28 @@ class InfoViewController: GenericViewController{
             infoField.stringValue = "This is a tool that helps you to create a macOS install media and also to install macOS\nBefore starting you need:\n   - At least a 20 gb drive or partition\n   - A copy of the macOS installer app (of any version starting from El Capitan) in\n     the root of a storage device connected to the computer"
             
             driveIcon.image = NSImage(named: "Internal")
-            driveLabel.stringValue = "A 20 GB or higher drive or partition"
+			
+            driveLabel.stringValue = "A drive or partition of 20 GB or higher"
             
             appLabel.stringValue = "A macOS installer app downloaded from the App Store\n(El Capitan or more recent)"
+			
+			sloganLabel.stringValue = "TINU Is Not Unib***t: The macOS tool"
             
             //titleField.stringValue = "To install macOS you need:"
-        }
+		}else{
+			sloganLabel.stringValue = "TINU Is Not Unib***t: The macOS install media creation tool"
+		}
     }
+	
+	override func viewDidAppear() {
+		super.viewDidAppear()
+		
+		#if noFirstAuth
+			if !sharedIsOnRecovery{
+				msgBoxWarning("WARNING", "This app has been compiled with first step authentication disabled.\nIt may be less secure to use, use it at your own risk!")
+			}
+		#endif
+	}
 
     @IBAction func ok(_ sender: Any) {
         if sharedShowLicense{

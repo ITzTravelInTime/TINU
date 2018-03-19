@@ -40,6 +40,10 @@ class ChooseCustomizationViewController: GenericViewController {
     }
     
     @IBAction func goBack(_ sender: Any) {
-		openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
+		if showProcessLicense && sharedInstallMac{
+			openSubstituteWindow(windowStoryboardID: "License", sender: sender)
+		}else{
+			openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
+		}
     }
 }

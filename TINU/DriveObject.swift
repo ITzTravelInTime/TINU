@@ -29,6 +29,8 @@ class DriveObject: NSView {
     var volume = NSTextField()
     
     var overlay: NSImageView!
+	
+	var sz: String!
     /*
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
@@ -94,7 +96,7 @@ class DriveObject: NSView {
 				Swift.print("The application that the user has selected is: " + applicationPath)
 				
             }else{
-				
+				sharedSVReallyIsAPFS = false
 				
 				//sharedVolumeNeedsFormat = nil
 				sharedVolumeNeedsPartitionMethodChange = nil
@@ -127,6 +129,8 @@ class DriveObject: NSView {
 				
 				sharedBSDDriveAPFS = part.apfsBDSName
 				
+				sharedSVReallyIsAPFS = part.driveType == .apfs
+				
 				Swift.print("The volume that the user has selected is: " + volumePath)
             }
 			
@@ -145,6 +149,14 @@ class DriveObject: NSView {
     }
 	
     public func setDefaultAspect(){
+		if sz == nil{
+			if let s = part?.size{
+				sz = "Size: \(self.roundInt(number: s))"
+			}else{
+				sz = "Size: 0 Byte"
+			}
+		}
+		
         //self.layer?.backgroundColor = NSColor.white.withAlphaComponent(0).cgColor
         if isEnabled{
             self.backgroundColor = NSColor.white.withAlphaComponent(0)
@@ -159,7 +171,7 @@ class DriveObject: NSView {
 			if isApp{
 				self.toolTip = "Path: " + applicationPath
 			}else{
-				self.toolTip = ""
+				self.toolTip = sz
 			}
 			
         }else{
@@ -192,5 +204,37 @@ class DriveObject: NSView {
         volume.textColor = NSColor.selectedControlTextColor
         self.layer?.cornerRadius = 15
     }
-    
+	
+	func roundInt(number: UInt64) -> String{
+		var n = number
+		var div: UInt64 = 1
+		
+		while n > 1000 {
+			div *= 1000
+			n = number / div
+		}
+		
+		var sufx = ""
+		
+		//log10(Double(div))
+		switch log10(Double(div)) {
+		case 3:
+			sufx = "KB"
+		case 6:
+			sufx = "MB"
+		case 9:
+			sufx = "GB"
+		case 12:
+			sufx = "TB"
+		case 15:
+			sufx = "PB"
+		case 0, 1, 2:
+			sufx = "Byte"
+		default:
+			sufx = ""
+		}
+		
+		return "\(n)\(sufx)"
+	}
+	
 }

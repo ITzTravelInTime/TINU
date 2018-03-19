@@ -37,7 +37,7 @@ class ChooseSideViewController: GenericViewController {
 		#if noFirstAuth
 			if !sharedIsOnRecovery{
 				print("WARNING: this app has been compiled with the first step authentication disabled, it may be less secure to use!")
-				msgBoxWarning("WARNING", "This app has been compiled with first step authentication disabled, it may be less secure to use, use it at your own risk!")
+				//msgBoxWarning("WARNING", "This app has been compiled with first step authentication disabled, it may be less secure to use, use it at your own risk!")
 			}
 		#endif
         

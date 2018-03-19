@@ -11,6 +11,8 @@
 		C60D39B21F5E4AFC00D94834 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */; };
 		C60D39B41F5EB47000D94834 /* ContactsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D39B31F5EB47000D94834 /* ContactsWindowController.swift */; };
 		C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */; };
+		C61A3654205DA3F400350BE9 /* DownloadAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61A3653205DA3F400350BE9 /* DownloadAppViewController.swift */; };
+		C61A3656205DC86400350BE9 /* DownloadAppWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61A3655205DC86400350BE9 /* DownloadAppWindowController.swift */; };
 		C621CFA71F4F6A6500CC6D5B /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */; };
 		C621CFAC1F4F7DF400CC6D5B /* DriveObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFAB1F4F7DF400CC6D5B /* DriveObject.swift */; };
 		C64E56371F51D917007B8CEE /* ChoseAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64E56361F51D917007B8CEE /* ChoseAppViewController.swift */; };
@@ -74,6 +76,8 @@
 		C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		C60D39B31F5EB47000D94834 /* ContactsWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsWindowController.swift; sourceTree = "<group>"; };
 		C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCreationFinished.swift; sourceTree = "<group>"; };
+		C61A3653205DA3F400350BE9 /* DownloadAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadAppViewController.swift; sourceTree = "<group>"; };
+		C61A3655205DC86400350BE9 /* DownloadAppWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadAppWindowController.swift; sourceTree = "<group>"; };
 		C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		C621CFAB1F4F7DF400CC6D5B /* DriveObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveObject.swift; sourceTree = "<group>"; };
 		C64E56361F51D917007B8CEE /* ChoseAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoseAppViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +156,7 @@
 				C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */,
 				C60D39B31F5EB47000D94834 /* ContactsWindowController.swift */,
 				DDDCF67D1F63338F00CF7FE4 /* CreditsWindwController.swift */,
+				C61A3655205DC86400350BE9 /* DownloadAppWindowController.swift */,
 				DD01EBEC1F71B6BF00C94D9B /* LogWindowController.swift */,
 			);
 			name = WindowsControllers;
@@ -171,6 +176,7 @@
 			children = (
 				C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */,
 				DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */,
+				C61A3653205DA3F400350BE9 /* DownloadAppViewController.swift */,
 				C6C1820C1FE7605300617DC2 /* ChooseSideViewController.swift */,
 				C65AA6201F4F4C0400C43223 /* InfoViewController.swift */,
 				C6553A901F5F7CEA0048965D /* LicenseViewController.swift */,
@@ -439,6 +445,7 @@
 				C65AA61F1F4F497A00C43223 /* SharedInstances.swift in Sources */,
 				C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */,
 				C64E56391F51E79C007B8CEE /* ConfirmViewController.swift in Sources */,
+				C61A3656205DC86400350BE9 /* DownloadAppWindowController.swift in Sources */,
 				DDCC4ED51FB5C2A7007FBB6F /* CustomizationViewController.swift in Sources */,
 				C65B5F031F720D680061F1A3 /* SudoManager.swift in Sources */,
 				DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */,
@@ -464,6 +471,7 @@
 				C698B47E204CDAE5007B3CD8 /* MacrosReference.swift in Sources */,
 				DD3AC14C1FBB974C00C71F53 /* OtherOptionsItem.swift in Sources */,
 				C64E563B1F522854007B8CEE /* InstallingViewController.swift in Sources */,
+				C61A3654205DA3F400350BE9 /* DownloadAppViewController.swift in Sources */,
 				C65AA6241F4F4C3400C43223 /* ChoseDriveViewController.swift in Sources */,
 				DD01EBEF1F71BD2A00C94D9B /* LogManager.swift in Sources */,
 				DD01EBED1F71B6BF00C94D9B /* LogWindowController.swift in Sources */,

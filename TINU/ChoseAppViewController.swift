@@ -54,6 +54,8 @@ class ChoseAppViewController: GenericViewController {
     
     @IBOutlet weak var titleField: NSTextField!
     
+	@IBOutlet weak var DownloadApps: NSButton!
+	
     private var ps: Bool!
     //private var fs: Bool!
     
@@ -70,7 +72,15 @@ class ChoseAppViewController: GenericViewController {
             /*if sharedInstallMac{
              openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
              }else{*/
-			openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
+			
+			
+			if sharedInstallMac{
+				showProcessLicense = true
+				openSubstituteWindow(windowStoryboardID: "License", sender: sender)
+			}else{
+				openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
+			}
+			
             //openSubstituteWindow(windowStoryboardID: "Customize", sender: sender)
             //}
         }else{
@@ -125,12 +135,22 @@ class ChoseAppViewController: GenericViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+		
+		showProcessLicense = false
         
         if sharedInstallMac{
             titleField.stringValue = "Choose the macOS installer app to use to install macOS"
         }
         
         loadApps()
+    }
+    
+    @IBAction func openAppDownload(_ sender: Any) {
+		if downloadAppWindowController == nil{
+			downloadAppWindowController = DownloadAppWindowController()
+		}
+		
+		downloadAppWindowController?.showWindow(sender)
     }
     
     private func loadApps(){
@@ -144,7 +164,9 @@ class ChoseAppViewController: GenericViewController {
         print("--- Apps detection started")
         scoller.documentView = NSView(frame: scoller.frame)
         scoller.hasHorizontalScroller = false
-        
+		
+		DownloadApps.isHidden = true
+		
         sharedApp = nil
         
         //here loads drives
@@ -164,24 +186,25 @@ class ChoseAppViewController: GenericViewController {
             if !sharedIsOnRecovery || simulateRecovery {
                 documentsUrls = [fm.urls(for: .applicationDirectory, in: .systemDomainMask).first, fm.urls(for: .desktopDirectory, in: .userDomainMask).first, fm.urls(for: .downloadsDirectory, in: .userDomainMask).first, fm.urls(for: .documentDirectory, in: .userDomainMask).first]
             }
-            
-            let driveb = getDriveNameFromBSDID(sharedBSDDrive)
-            for d in fm.mountedVolumeURLs(includingResourceValuesForKeys: [URLResourceKey.isVolumeKey], options: [.skipHiddenVolumes])!{
-                let p = d.path
-                if p != driveb{
-                    
-                    documentsUrls.append(d)
-                    
-                    var isDir : ObjCBool = false
-                    if fm.fileExists(atPath: p + "/Applications", isDirectory: &isDir){
-                        if isDir.boolValue && d.path != "/"{
-                            documentsUrls.append(URL(fileURLWithPath: p + "/Applications"))
-                        }
-                    }
-                    
-                }
-            }
-            
+			
+			let driveb = getDriveNameFromBSDID(sharedBSDDrive)
+			for d in fm.mountedVolumeURLs(includingResourceValuesForKeys: [URLResourceKey.isVolumeKey], options: [.skipHiddenVolumes])!{
+				let p = d.path
+				
+				if p == driveb || (sharedIsOnRecovery && p == "/"){
+					continue
+				}
+				
+				documentsUrls.append(d)
+				
+				var isDir : ObjCBool = false
+				if fm.fileExists(atPath: p + "/Applications", isDirectory: &isDir){
+					if isDir.boolValue && p != "/"{
+						documentsUrls.append(URL(fileURLWithPath: p + "/Applications"))
+					}
+				}
+			}
+			
             print("This contains the urls for the paths in witch we will try find the installation apps")
             print(documentsUrls)
             print("Starting installation apps scan ...")
@@ -245,13 +268,26 @@ class ChoseAppViewController: GenericViewController {
 				
                 var res = (dirs.count == 0)
 				
+				/*if !res{
+					res = true
+					for a in drives{
+						res = !a.isEnabled
+					}
+				}*/
+				
                 //just to test the screen when there are no apps found
                 if simulateNoUsableApps{
                     res = true
                 }
 				
                 self.empty = res
-                
+				
+				if sharedIsOnRecovery{
+					self.DownloadApps.isHidden = true
+				}else{
+					self.DownloadApps.isHidden = !res
+				}
+				
                 if res {
                     //fail :(
                     print("No usable installation apps where found!")
@@ -270,7 +306,7 @@ class ChoseAppViewController: GenericViewController {
                     
                     content = NSView(frame: NSRect(x: 0, y: 0, width: self.scoller.frame.size.width - 2, height: self.scoller.frame.size.height - 2))
                     content.addSubview(label)
-                    
+					
                     self.scoller.documentView = content
                 }else{
                     self.scoller.hasHorizontalScroller = true

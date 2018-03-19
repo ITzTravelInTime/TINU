@@ -22,6 +22,8 @@ public var contactsWindowController: ContactsWindowController!
 public var creditsWindowController: CreditsWindowController!
 //public log window varivble
 public var logWindow: LogWindowController!
+//the variable for the app download window
+public var downloadAppWindowController: DownloadAppWindowController!
 
 //this variable is a storyboard that is used to instanciate some windows
 public var sharedStoryboard: NSStoryboard!
@@ -54,13 +56,18 @@ public var sharedBSDDrive: String!/*{
 //this variable is used to store apfs disk bsd id
 public var sharedBSDDriveAPFS: String!
 
+//used to detect if a volume relly uses apfs or it's just an internal apple volume
+public var sharedSVReallyIsAPFS = false
+
 //this is the path of the mac os installer application that the user has selected
 public var sharedApp: String!{
     didSet{
         DispatchQueue.global(qos: .background).async{
             restoreOtherOptions()
             eraseReplacementFilesData()
-            
+			
+			processLicense = ""
+			
             if sharedApp != nil{
                 if let version = targetAppBundleVersion(), let name = targetAppBundleName(){
                     sharedBundleVersion = version
@@ -99,6 +106,12 @@ public var sharedApp: String!{
                         }
                         if let item = otherOptions[otherOptionDoNotUseApfsID]{
                             item.isVisible = !supportsAPFS
+							if !sharedSVReallyIsAPFS{
+								item.isUsable = (sharedBSDDriveAPFS == nil)
+							}else{
+								item.isUsable = false
+								item.isActivated = false
+							}
                         }
                     }
                     

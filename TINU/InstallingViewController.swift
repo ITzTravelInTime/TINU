@@ -53,7 +53,7 @@ class InstallingViewController: GenericViewController{
     private var output : [String] = []
     private var error : [String] = []
     
-    private let unit: Double = 1 / 7
+    private let unit: Double = 1 / 8
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,8 +77,8 @@ class InstallingViewController: GenericViewController{
         
         activityLabel.stringValue = ""
         
-        progress.doubleValue = 0
-        
+        self.setProgressValue(0)
+		
         /*if let a = NSApplication.shared().delegate as? AppDelegate{
          a.QuitMenuButton.isEnabled = false
          }*/
@@ -204,27 +204,27 @@ class InstallingViewController: GenericViewController{
         
         return (self.osStatus == 0 && self.osStatus2 == 0)
     }
-    
-    private func startInstallProcess(){
-        self.cancelButton.isEnabled = false
-        self.enableItems(enabled: false)
-        
-        DispatchQueue.global(qos: .background).async{
+	
+	private func startInstallProcess(){
+		self.cancelButton.isEnabled = false
+		self.enableItems(enabled: false)
+		
+		DispatchQueue.global(qos: .background).async{
 			
-            
-            if sharedIsReallyOnRecovery{
-                DispatchQueue.main.sync {
-                    self.usedLA = false
-                    self.install()
-                }
-                return
+			
+			if sharedIsReallyOnRecovery{
+				DispatchQueue.main.sync {
+					self.usedLA = false
+					self.install()
+				}
+				return
 			}else{
 				self.setActivityLabelText("First step authentication")
 				log("Asking user for autentication")
 			}
 			
 			#if noFirstAuth
-			
+				
 				DispatchQueue.main.sync {
 					self.usedLA = true
 					self.install()
@@ -232,98 +232,100 @@ class InstallingViewController: GenericViewController{
 				
 				return
 				
-			#endif
-			
-            #if recovery
-                if #available(macOS 10.11, *) {
-                    if !(simulateFirstAuthCancel || sharedIsOnRecovery) {
-						
-						log("Trying to do user authentication using local authentication APIs")
-						
-                        let myContext = LAContext()
-                        
-                        let myLocalizedReasonString = "create a bootable macOS Install media"
-                        
-                        var authError: NSError?
-                        
-                        if myContext.canEvaluatePolicy(.deviceOwnerAuthentication, error: &authError){
-                            myContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: myLocalizedReasonString) { success, evaluateError in
-                                if success && !simulateFirstAuthCancel{
-                                    // User authenticated successfully, take appropriate action
-                                    log("Authentication using local authentication APIs completed with success")
-                                    //calls the install function to start the installer creation process
-                                    DispatchQueue.main.sync {
-                                        self.usedLA = true
-                                        self.install()
-                                    }
-                                } else {
-                                    // User did not authenticate successfully, look at error and take appropriate action
-									var desc = ""
-									if let e = evaluateError{
-										desc = e.localizedDescription
+			#else
+				
+				#if recovery
+					if #available(macOS 10.11, *) {
+						if !(simulateFirstAuthCancel || sharedIsOnRecovery) {
+							
+							log("Trying to do user authentication using local authentication APIs")
+							
+							let myContext = LAContext()
+							
+							let myLocalizedReasonString = "create a bootable macOS Install media"
+							
+							var authError: NSError?
+							
+							if myContext.canEvaluatePolicy(.deviceOwnerAuthentication, error: &authError){
+								myContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: myLocalizedReasonString) { success, evaluateError in
+									if success && !simulateFirstAuthCancel{
+										// User authenticated successfully, take appropriate action
+										log("Authentication using local authentication APIs completed with success")
+										//calls the install function to start the installer creation process
+										DispatchQueue.main.sync {
+											self.usedLA = true
+											self.install()
+										}
+									} else {
+										// User did not authenticate successfully, look at error and take appropriate action
+										var desc = ""
+										if let e = evaluateError{
+											desc = e.localizedDescription
+										}
+										
+										log("Authentication fail using local authentication APIs:\n     \(desc)")
+										DispatchQueue.main.sync {
+											self.goBack()
+										}
 									}
-									
-                                    log("Authentication fail using local authentication APIs:\n     \(desc)")
-                                    DispatchQueue.main.sync {
-                                        self.goBack()
-                                    }
-                                }
+									return
+								}
 								return
-                            }
-                            return
-                        }
-                    }
-                    
-                }
-            #endif
-			
-			log("Trying to do user authentication using security foundation APIs")
-            
-            if !self.askFirstAuthOldWay() || simulateFirstAuthCancel{
-                log("Authentication fail using security foundation APIs")
-                DispatchQueue.main.sync {
-                    self.goBack()
-                }
-            }else{
-                log("Authentivcation with security foundation APIs completed with success")
-                //calls the install function to start the installer creation process
-                DispatchQueue.main.sync {
-                    self.usedLA = false
-                    self.install()
-                }
-            }
-            return
-        }
-    }
+							}
+						}
+						
+					}
+				#endif
+				
+				log("Trying to do user authentication using security foundation APIs")
+				
+				if !self.askFirstAuthOldWay() || simulateFirstAuthCancel{
+					log("Authentication fail using security foundation APIs")
+					DispatchQueue.main.sync {
+						self.goBack()
+					}
+				}else{
+					log("Authentivcation with security foundation APIs completed with success")
+					//calls the install function to start the installer creation process
+					DispatchQueue.main.sync {
+						self.usedLA = false
+						self.install()
+					}
+				}
+				return
+				
+			#endif
+		}
+	}
 
     private func install(){
-        
+		
         //to have an usable UI during the install we need to use a parallel thread
         DispatchQueue.global(qos: .background).async {
-            
+			
             //self.setActivityLabelText("Process started")
             //just to avoid problems, the log function in this thred is called inside the Ui thread
             log("Starting the process ...")
-            
+			
             sharedIsPreCreationInProgress = true
-            
+			
             // variables used to determinate if the format was sucessfoul
             var didChangePS = true
             //var didChangeFS = true
-            
+			
             //chck if volume needs to be formatted, in particular if it needs to be repartitioned and completely erased
             var canFormat = false
-            
+			
             //this variables enables or not automatic apfs conversion
             var useAPFS = false
-            
+			
             //this is the name of the executable we need to use now
             let pname = sharedExecutableName
             
             self.setActivityLabelText("Closing conflicting processes")
             
             //1
-            self.progress.doubleValue = self.unit
+            self.setProgressValue(self.unit)
             
             //creates a list of processes to kill
             let processesToClose = [pname, "InstallAssistant", "InstallAssistant_plain", "InstallAssistant_springboard"]
@@ -354,7 +356,7 @@ class InstallingViewController: GenericViewController{
             log("***No conflicting processes found or confilicting processes closed with sucess")
             
             //2
-            self.progress.doubleValue += self.unit
+            self.addToProgressValue(self.unit)
                 
             self.setActivityLabelText("Unmounting \"InstallESD\"")
             
@@ -408,7 +410,7 @@ class InstallingViewController: GenericViewController{
             
             
             //4
-            self.progress.doubleValue += self.unit
+            self.addToProgressValue(self.unit)
             
             if canFormat {
                 self.setActivityLabelText("Formatting target drive")
@@ -549,13 +551,17 @@ class InstallingViewController: GenericViewController{
 			}
             
             //6
-            self.progress.doubleValue += self.unit
+            self.addToProgressValue(self.unit)
 			
+			processLicense = ""
+			
+			//7
+			self.addToProgressValue(self.unit)
             
 			//if the procdess will install mac, special operations are performed before the beginning of the "startosinstall" process
 			if sharedInstallMac{
 				
-				self.progress.doubleValue = 1
+				self.setProgressValue(1)
 				
 				self.setActivityLabelText("Applying options")
 				
@@ -569,8 +575,8 @@ class InstallingViewController: GenericViewController{
 				
 			}else{
             
-				//7
-				self.progress.doubleValue += self.unit
+				//8
+				self.addToProgressValue(self.unit)
 			
 			}
 			
@@ -623,8 +629,8 @@ class InstallingViewController: GenericViewController{
                 
             }
 			
-			self.progress.maxValue = 100
-			self.progress.doubleValue = 100
+			self.setProgressMax(100)
+			self.setProgressValue(100)
 			
 			self.progress.isIndeterminate = true
 			
@@ -638,8 +644,22 @@ class InstallingViewController: GenericViewController{
             sharedIsPreCreationInProgress = false
             sharedIsCreationInProgress = true
 			
+			var startC: (process: Process, errorPipe: Pipe, outputPipe: Pipe)!
+			
+			var noFAuth = false
+			
+			#if noFirstAuth
+				noFAuth = true
+			#endif
+			
+			if simulateCreateinstallmediaFail != nil && noFAuth{
+				startC = startCommand(cmd: "/bin/sh", args: ["-c", mainCMD])
+			}else{
+				startC = startCommandWithSudo(cmd: "/bin/sh", args: ["-c", mainCMD])
+			}
+			
             //run the script with sudo permitions and then analyze the outputs
-            if let r = startCommandWithSudo(cmd: "/bin/sh", args: ["-c", mainCMD]){
+            if let r = startC{
                 
                 log("Process started, waiting for \(pname) executable to finish ...")
                 
@@ -876,8 +896,8 @@ class InstallingViewController: GenericViewController{
 		
 		self.progress.isIndeterminate = false
 		
-		self.progress.doubleValue = 0
-		self.progress.maxValue = 100
+		self.setProgressValue(0)
+		self.setProgressMax(100)
 		
 		
         //testing code, exits from the function if we are in some particolar testing conditions
@@ -933,7 +953,7 @@ class InstallingViewController: GenericViewController{
         }
         }
 		
-		self.progress.doubleValue += step
+		self.addToProgressValue(step)
         
         if let o = otherOptions[otherOptionCreateIconID]?.canBeUsed(){
         if o{
@@ -985,7 +1005,7 @@ class InstallingViewController: GenericViewController{
         }
         }
 		
-		self.progress.doubleValue += step
+		self.addToProgressValue(step)
         
         if let o = otherOptions[otherOptionTinuCopyID]?.canBeUsed(){
         if o {
@@ -1027,7 +1047,7 @@ class InstallingViewController: GenericViewController{
         }
         }
 		
-		self.progress.doubleValue = 50
+		self.setProgressValue(50)
 		
         //}
         
@@ -1055,10 +1075,10 @@ class InstallingViewController: GenericViewController{
                 
                 ok = r
 				
-				self.progress.doubleValue += step
+				self.addToProgressValue(step)
             }
 			
-			self.progress.doubleValue = 100
+			self.setProgressValue(100)
             
             log("Extra operations finished\n\n")
             
@@ -1257,4 +1277,20 @@ class InstallingViewController: GenericViewController{
             self.activityLabel.stringValue = text
         }
     }
+	
+	func setProgressValue(_ value: Double){
+		DispatchQueue.main.async {
+			self.progress.doubleValue = value
+		}
+	}
+	
+	func addToProgressValue(_ value: Double){
+		setProgressValue(self.progress.doubleValue + value)
+	}
+	
+	func setProgressMax(_ max: Double){
+		DispatchQueue.main.async {
+			self.progress.maxValue = max
+		}
+	}
 }

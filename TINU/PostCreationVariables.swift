@@ -37,14 +37,15 @@ public let otherOptionDoNotUseApfsID  =  "4_DoNotUseAPFS______"
 
 fileprivate var otherOptionsDefault: [String: OtherOptionsObject] {
     get{
-        var dict =  [
+		var dict: [String: OtherOptionsObject] = [
             otherOptionTinuCopyID: OtherOptionsObject.init(objectID: otherOptionTinuCopyID, objectMessage: "Create a copy of TINU on the target drive", objectIsActivated: true, objectIsVisible: true),
             otherOptionCreateIconID: OtherOptionsObject.init(objectID: otherOptionCreateIconID, objectMessage: "Apply the icon of the installer to the target drive", objectIsActivated: true, objectIsVisible: true),
              otherOptionCreateReadmeID: OtherOptionsObject.init(objectID: otherOptionCreateReadmeID, objectMessage: "Create the \"README\" file on the target drive", objectIsActivated: true, objectIsVisible: true),
              otherOptionForceToFormatID: OtherOptionsObject.init(objectID: otherOptionForceToFormatID, objectMessage: "Force to format the entire target drive before starting")/*,
              otherOptionDoNotUseApfsID: OtherOptionsObject.init(objectID: otherOptionDoNotUseApfsID, objectMessage: "Install macOS avoiding automatic APFS upgrade", objectIsActivated: true, objectIsVisible: false)*/
         ]
-        
+		
+		
         if sharedInstallMac{
             dict[otherOptionDoNotUseApfsID] = OtherOptionsObject.init(objectID: otherOptionDoNotUseApfsID, objectMessage: "Install macOS avoiding automatic APFS upgrade", objectIsActivated: true, objectIsVisible: true)
         }
