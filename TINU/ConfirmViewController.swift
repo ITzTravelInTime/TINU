@@ -20,6 +20,10 @@ class ConfirmViewController: GenericViewController {
     
     @IBOutlet weak var warningField: NSTextField!
     
+    @IBOutlet weak var errorLabel: NSTextField!
+    @IBOutlet weak var errorImage: NSImageView!
+    
+    
     var notDone = false
     
     private var ps: Bool!
@@ -38,6 +42,9 @@ class ConfirmViewController: GenericViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+        
+        errorImage.isHidden = true
+        errorLabel.isHidden = true
         
         if sharedInstallMac{
             warningField.stringValue = "If you go ahead, this app will modify the drive you selected, and macOS will be installed on it, if you are sure, continue at your own risk."
@@ -119,9 +126,16 @@ class ConfirmViewController: GenericViewController {
             appImage.isHidden = true
             appName.isHidden = true
             
+            self.warning.isHidden = true
+            
+            errorImage.image = warningIcon
+            
+            errorImage.isHidden = false
+            errorLabel.isHidden =  false
+            
             titleLabel.stringValue = "Impossible to create the macOS install meadia"
             
-            let label = NSTextField(frame: NSRect(x: titleLabel.frame.origin.x, y: self.view.frame.size.height / 2 - 15, width: titleLabel.frame.size.width, height: 30))
+            /*let label = NSTextField(frame: NSRect(x: titleLabel.frame.origin.x, y: self.view.frame.size.height / 2 - 15, width: titleLabel.frame.size.width, height: 30))
             label.isEditable = false
             label.isBordered = false
             label.font = NSFont.systemFont(ofSize: 25)
@@ -130,9 +144,7 @@ class ConfirmViewController: GenericViewController {
             label.isSelectable = false
             label.drawsBackground = false
             
-            self.warning.isHidden = true
-            
-            self.view.addSubview(label)
+            self.view.addSubview(label)*/
         }else{
             print("Everything is ready to start the installer creation process")
         }

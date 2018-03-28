@@ -22,8 +22,6 @@ public var contactsWindowController: ContactsWindowController!
 public var creditsWindowController: CreditsWindowController!
 //public log window varivble
 public var logWindow: LogWindowController!
-//the variable for the app download window
-public var downloadAppWindowController: DownloadAppWindowController!
 
 //this variable is a storyboard that is used to instanciate some windows
 public var sharedStoryboard: NSStoryboard!
@@ -232,6 +230,17 @@ public var warningIcon: NSImage!{
     get{
         return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertCautionIcon.icns", name: "warning")
     }
+}
+
+//stop icon used by the app
+public var stopIcon: NSImage!{
+	get{
+		if let i = getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertStopIcon.icns", name: "warning"){
+			return i
+		}else{
+			return NSImage(named: "uncheck")
+		}
+	}
 }
 
 //gets the overlay for usupported stuff

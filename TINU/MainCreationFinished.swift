@@ -35,7 +35,7 @@ class MainCreationFinishedViewController: NSViewController{
         
         let notification = NSUserNotification()
         if !sharedIsOk{
-            image.image = NSImage(named: "uncheck")
+            image.image = stopIcon
             exitButton.title = "Quit"
             continueButton.title = "Retry"
             continueButton.isEnabled = true
@@ -45,7 +45,7 @@ class MainCreationFinishedViewController: NSViewController{
             notification.title = "macOS install media creation failed"
             notification.informativeText = "The creation process of the macOS install media has failed, see log for more details"
             
-            notification.contentImage = NSImage(named: "uncheck")
+            notification.contentImage = stopIcon
         }else{
             image.image = NSImage(named: "check")
             exitButton.title = "Quit"

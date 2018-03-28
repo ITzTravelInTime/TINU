@@ -25,9 +25,9 @@ class DownloadAppViewController: GenericViewController {
 		
     }
 	
-	@IBAction func closeClick(_ sender: Any) {
+	/*@IBAction func closeClick(_ sender: Any) {
 		self.window.close()
-	}
+	}*/
 	
 	@IBAction func hsClick(_ sender: Any) {
 		NSWorkspace.shared().open(URL(string: "macappstores://itunes.apple.com/app/macos-high-sierra/id1246284741")!)

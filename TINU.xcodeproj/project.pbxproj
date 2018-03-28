@@ -12,7 +12,6 @@
 		C60D39B41F5EB47000D94834 /* ContactsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D39B31F5EB47000D94834 /* ContactsWindowController.swift */; };
 		C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */; };
 		C61A3654205DA3F400350BE9 /* DownloadAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61A3653205DA3F400350BE9 /* DownloadAppViewController.swift */; };
-		C61A3656205DC86400350BE9 /* DownloadAppWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61A3655205DC86400350BE9 /* DownloadAppWindowController.swift */; };
 		C621CFA71F4F6A6500CC6D5B /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */; };
 		C621CFAC1F4F7DF400CC6D5B /* DriveObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFAB1F4F7DF400CC6D5B /* DriveObject.swift */; };
 		C64E56371F51D917007B8CEE /* ChoseAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64E56361F51D917007B8CEE /* ChoseAppViewController.swift */; };
@@ -28,6 +27,7 @@
 		C65B5F031F720D680061F1A3 /* SudoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B5F021F720D680061F1A3 /* SudoManager.swift */; };
 		C691BFEE1F6DEEA800589EF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C691BFED1F6DEEA800589EF8 /* Assets.xcassets */; };
 		C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */; };
+		C691D6AB20655C700083D057 /* DriveDetectInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691D6AA20655C700083D057 /* DriveDetectInfoViewController.swift */; };
 		C698B47E204CDAE5007B3CD8 /* MacrosReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */; };
 		C6B16958203B27AF00FD2818 /* ChooseCustomizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */; };
 		C6C1820D1FE7605300617DC2 /* ChooseSideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C1820C1FE7605300617DC2 /* ChooseSideViewController.swift */; };
@@ -77,7 +77,6 @@
 		C60D39B31F5EB47000D94834 /* ContactsWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsWindowController.swift; sourceTree = "<group>"; };
 		C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCreationFinished.swift; sourceTree = "<group>"; };
 		C61A3653205DA3F400350BE9 /* DownloadAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadAppViewController.swift; sourceTree = "<group>"; };
-		C61A3655205DC86400350BE9 /* DownloadAppWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadAppWindowController.swift; sourceTree = "<group>"; };
 		C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		C621CFAB1F4F7DF400CC6D5B /* DriveObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveObject.swift; sourceTree = "<group>"; };
 		C64E56361F51D917007B8CEE /* ChoseAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoseAppViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +92,7 @@
 		C65B5F021F720D680061F1A3 /* SudoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudoManager.swift; sourceTree = "<group>"; };
 		C691BFED1F6DEEA800589EF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingVariables.swift; sourceTree = "<group>"; };
+		C691D6AA20655C700083D057 /* DriveDetectInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveDetectInfoViewController.swift; sourceTree = "<group>"; };
 		C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacrosReference.swift; sourceTree = "<group>"; };
 		C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseCustomizationViewController.swift; sourceTree = "<group>"; };
 		C6C1820C1FE7605300617DC2 /* ChooseSideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSideViewController.swift; sourceTree = "<group>"; };
@@ -156,7 +156,6 @@
 				C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */,
 				C60D39B31F5EB47000D94834 /* ContactsWindowController.swift */,
 				DDDCF67D1F63338F00CF7FE4 /* CreditsWindwController.swift */,
-				C61A3655205DC86400350BE9 /* DownloadAppWindowController.swift */,
 				DD01EBEC1F71B6BF00C94D9B /* LogWindowController.swift */,
 			);
 			name = WindowsControllers;
@@ -176,6 +175,7 @@
 			children = (
 				C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */,
 				DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */,
+				C691D6AA20655C700083D057 /* DriveDetectInfoViewController.swift */,
 				C61A3653205DA3F400350BE9 /* DownloadAppViewController.swift */,
 				C6C1820C1FE7605300617DC2 /* ChooseSideViewController.swift */,
 				C65AA6201F4F4C0400C43223 /* InfoViewController.swift */,
@@ -445,11 +445,11 @@
 				C65AA61F1F4F497A00C43223 /* SharedInstances.swift in Sources */,
 				C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */,
 				C64E56391F51E79C007B8CEE /* ConfirmViewController.swift in Sources */,
-				C61A3656205DC86400350BE9 /* DownloadAppWindowController.swift in Sources */,
 				DDCC4ED51FB5C2A7007FBB6F /* CustomizationViewController.swift in Sources */,
 				C65B5F031F720D680061F1A3 /* SudoManager.swift in Sources */,
 				DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */,
 				C6C2EAA72030710A0033EF85 /* SettingsSectionItem.swift in Sources */,
+				C691D6AB20655C700083D057 /* DriveDetectInfoViewController.swift in Sources */,
 				C65AA6211F4F4C0400C43223 /* InfoViewController.swift in Sources */,
 				C60D39B21F5E4AFC00D94834 /* ContactsViewController.swift in Sources */,
 				DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */,
@@ -527,6 +527,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -553,7 +554,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -569,7 +570,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Debug;
 		};
@@ -577,6 +578,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";

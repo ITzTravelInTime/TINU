@@ -12,19 +12,41 @@ import Cocoa
 
 //cheks if any debug option is enabled, so it will turn on the mode that shows the testing mode mark on  the window's title, because they are hard coded variables, it needs to be colled only once at startup
 public func checkAppMode(){
-    var inoffensive = false
-    
-    if simulateCreateinstallmediaFail != nil{
-        inoffensive = true
-        print("Inoffensive mode on")
-    }
-    
+	
+	let testingConditions = [
+		simulateFormatFail,
+		simulateFormatSkip,
+		simulateNoUsableApps,
+		simulateNoUsableDrives,
+		simulateFirstAuthCancel,
+		simulateAbnormalExitcode,
+		simulateSecondAuthCancel,
+		simulateConfirmGetDataFail,
+		simulateCreateinstallmediaFail != nil,
+		simulateNoSpecialOperations,
+		simulateSpecialOpertaionsFail,
+		simulateRecovery
+	]
+	
+	sharedTestingMode = false
+	
+	for tc in testingConditions{
+		if tc{
+			sharedTestingMode = true
+		}
+	}
+	
+	if sharedTestingMode{
+		print("This copy of tinu is running in a testing mode")
+	}
+	
+	/*
     if simulateFormatFail || simulateFormatSkip || simulateNoUsableApps || simulateNoUsableDrives || simulateFirstAuthCancel || simulateAbnormalExitcode || simulateSecondAuthCancel || simulateConfirmGetDataFail || inoffensive || simulateNoSpecialOperations || simulateSpecialOpertaionsFail || simulateRecovery{
         sharedTestingMode = true
         print("This copy of tinu is running in a testing mode")
     }else{
         sharedTestingMode = false
-    }
+    }*/
 }
 
 //checks if teh app is running in a normal user level environment or in a root user inside the mac os recovery or installer, so it's sufficient to call it only once during the startup of the app

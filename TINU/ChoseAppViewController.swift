@@ -54,8 +54,20 @@ class ChoseAppViewController: GenericViewController {
     
     @IBOutlet weak var titleField: NSTextField!
     
+    @IBOutlet weak var refreshButton: NSButton!
+    
 	@IBOutlet weak var DownloadApps: NSButton!
 	
+    @IBOutlet weak var errorImage: NSImageView!
+    
+    @IBOutlet weak var errorLabel: NSTextField!
+    
+    @IBOutlet weak var normalOpen: NSButton!
+    
+    @IBOutlet weak var specialOpen: NSButton!
+    
+    private var tempRefresh: CGFloat = 0
+    
     private var ps: Bool!
     //private var fs: Bool!
     
@@ -142,16 +154,22 @@ class ChoseAppViewController: GenericViewController {
             titleField.stringValue = "Choose the macOS installer app to use to install macOS"
         }
         
+        tempRefresh = refreshButton.frame.origin.x
+        
         loadApps()
     }
     
-    @IBAction func openAppDownload(_ sender: Any) {
+    override func viewDidAppear() {
+        super.viewDidAppear()
+    }
+    
+    /*@IBAction func openAppDownload(_ sender: Any) {
 		if downloadAppWindowController == nil{
 			downloadAppWindowController = DownloadAppWindowController()
 		}
 		
 		downloadAppWindowController?.showWindow(sender)
-    }
+    }*/
     
     private func loadApps(){
         ps = sharedVolumeNeedsPartitionMethodChange
@@ -166,6 +184,16 @@ class ChoseAppViewController: GenericViewController {
         scoller.hasHorizontalScroller = false
 		
 		DownloadApps.isHidden = true
+        
+        self.errorLabel.isHidden = true
+        
+        self.errorImage.isHidden =  true
+        
+        self.normalOpen.isHidden = false
+        
+        self.specialOpen.isHidden = true
+        
+        self.refreshButton.frame.origin.x = self.tempRefresh
 		
         sharedApp = nil
         
@@ -262,10 +290,9 @@ class ChoseAppViewController: GenericViewController {
 			
 			
             DispatchQueue.main.sync {
-                var content = NSView(frame: NSRect(x: 0, y: 0, width: 0, height: self.scoller.frame.size.height - 2 - 20))
-				
+                
                 self.scoller.hasVerticalScroller = false
-				
+                
                 var res = (dirs.count == 0)
 				
 				/*if !res{
@@ -290,6 +317,7 @@ class ChoseAppViewController: GenericViewController {
 				
                 if res {
                     //fail :(
+                    /*
                     print("No usable installation apps where found!")
                     
                     self.scoller.hasHorizontalScroller = false
@@ -308,8 +336,30 @@ class ChoseAppViewController: GenericViewController {
                     content.addSubview(label)
 					
                     self.scoller.documentView = content
+                    */
+                    
+                    self.scoller.isHidden = true
+                    
+                    self.errorLabel.isHidden = false
+                    
+                    self.errorImage.image = warningIcon
+                    
+                    self.errorImage.isHidden =  false
+                    
+                    
+                    self.normalOpen.isHidden = true
+                    
+                    self.specialOpen.isHidden = false
+                    
+                    self.refreshButton.frame.origin.x = self.view.frame.width / 2 - self.refreshButton.frame.width / 2
+                    
                 }else{
+                    
+                    let content = NSView(frame: NSRect(x: 0, y: 0, width: 0, height: self.scoller.frame.size.height - 2 - 20))
+                    
+                    
                     self.scoller.hasHorizontalScroller = true
+                    
                     
                     DispatchQueue.global(qos: .background).sync {
                         var temp: CGFloat = 10

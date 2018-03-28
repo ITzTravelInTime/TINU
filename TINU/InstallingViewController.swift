@@ -655,7 +655,16 @@ class InstallingViewController: GenericViewController{
 			if simulateCreateinstallmediaFail != nil && noFAuth{
 				startC = startCommand(cmd: "/bin/sh", args: ["-c", mainCMD])
 			}else{
-				startC = startCommandWithSudo(cmd: "/bin/sh", args: ["-c", mainCMD])
+				if simulateUseScriptAuth{
+					startC = startCommandWithAScriptSudo(cmd: "/bin/sh", args: ["-c", mainCMD])
+				}else{
+					startC = startCommandWithSudo(cmd: "/bin/sh", args: ["-c", mainCMD])
+				}
+			}
+			
+			DispatchQueue.main.async {
+				self.progress.isHidden = true
+				self.spinner.isHidden = false
 			}
 			
             //run the script with sudo permitions and then analyze the outputs
@@ -732,7 +741,7 @@ class InstallingViewController: GenericViewController{
 		if process.isRunning{
 			
 			if seconds % 60 == 0{
-				log("Please wait, the process is still going, seconds since beginning: \(seconds)")
+				log("Please wait, the process is still going, minutes since process beginning: \(seconds / 60)")
 			}
 			
 		}else{
@@ -745,7 +754,12 @@ class InstallingViewController: GenericViewController{
     private func installFinished(){
         //now the installer creation process has finished running, so our boolean must be false now
         sharedIsCreationInProgress = false
-        
+		
+		DispatchQueue.main.async {
+			self.progress.isHidden = false
+			self.spinner.isHidden = true
+		}
+		
         self.setActivityLabelText("Interpreting the results of the process")
         
         log("process took " + String(self.seconds) + " seconds to finish")
@@ -1050,13 +1064,13 @@ class InstallingViewController: GenericViewController{
 		self.setProgressValue(50)
 		
         //}
-        
-        //simulates an error of the advanced options
-        if simulateSpecialOpertaionsFail{
-            log("\n     Simulating a failure of the advanced options\n")
-            ok = false
-        }
-        
+		
+		//simulates an error of the advanced options
+		if simulateSpecialOpertaionsFail{
+			log("\n     Simulating a failure of the advanced options\n")
+			ok = false
+		}
+		
         if !sharedInstallMac{
 			
 			
@@ -1066,14 +1080,12 @@ class InstallingViewController: GenericViewController{
             
             // boot files replacemt
             for f in filesToReplace{
-                
-                let r = f.replace()
-                
-                if !r {
+				
+                if !f.replace() {
                     log("   File \"" + f.filename + "\" replacement failed!")
-                }
-                
-                ok = r
+					
+					ok = false
+				}
 				
 				self.addToProgressValue(step)
             }
@@ -1185,7 +1197,7 @@ class InstallingViewController: GenericViewController{
         
         if let stopped = stopWithAsk(){
             if stopped{
-                if !sharedIsCreationInProgress{
+                if !(sharedIsCreationInProgress || sharedIsPreCreationInProgress){
                     goBack()
                 }
             }else{

@@ -29,12 +29,15 @@ class InfoViewController: GenericViewController{
     
     @IBOutlet weak var sep: NSBox!
     
+    @IBOutlet weak var getAppButton: NSButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
 		
 		if !sharedIsOnRecovery{
 			backButton.isHidden = true
+            getAppButton.isHidden = false
         }else{
             let delta = titleField.frame.origin.y - tinuLabel.frame.origin.y
             
@@ -48,9 +51,13 @@ class InfoViewController: GenericViewController{
             
             tinuLabel.isHidden = true
             sloganLabel.isHidden = true
+			
+			getAppButton.isHidden = true
         }
         
         if sharedInstallMac{
+            getAppButton.isHidden = true
+            
             infoField.stringValue = "This is a tool that helps you to create a macOS install media and also to install macOS\nBefore starting you need:\n   - At least a 20 gb drive or partition\n   - A copy of the macOS installer app (of any version starting from El Capitan) in\n     the root of a storage device connected to the computer"
             
             driveIcon.image = NSImage(named: "Internal")

@@ -17,6 +17,13 @@ class ChoseDriveViewController: GenericViewController {
     @IBOutlet weak var ok: NSButton!
     @IBOutlet weak var spinner: NSProgressIndicator!
     @IBOutlet weak var titleField: NSTextField!
+    
+    @IBOutlet weak var errorImage: NSImageView!
+    
+    @IBOutlet weak var errorLabel: NSTextField!
+    
+	@IBOutlet weak var detectInfoButton: NSButton!
+	
     private var empty: Bool = false{
         didSet{
             if self.empty{
@@ -80,6 +87,11 @@ class ChoseDriveViewController: GenericViewController {
         scoller.documentView = NSView()
         
         ok.isEnabled = false
+        
+        self.errorImage.isHidden = true
+        self.errorLabel.isHidden = true
+		
+		self.detectInfoButton.isHidden = true
         
         sharedVolume = nil
         sharedBSDDrive = nil
@@ -895,8 +907,6 @@ class ChoseDriveViewController: GenericViewController {
             //print(Date().timeIntervalSince(time))
             
             DispatchQueue.main.sync {
-                var content = NSView(frame: NSRect(x: 0, y: 0, width: 0, height: self.scoller.frame.size.height - 2 - 20))
-                content.backgroundColor = NSColor.white.withAlphaComponent(0)
                 
                 self.scoller.hasVerticalScroller = false
                 
@@ -911,6 +921,7 @@ class ChoseDriveViewController: GenericViewController {
                 
                 if res{
                     //fail :(
+                    /*
                     print("No usable drives found!")
                     
                     self.scoller.hasHorizontalScroller = false
@@ -928,8 +939,22 @@ class ChoseDriveViewController: GenericViewController {
                     content = NSView(frame: NSRect(x: 0, y: 0, width: self.scoller.frame.size.width - 2, height: self.scoller.frame.size.height - 2))
                     content.addSubview(label)
                     
-                    self.scoller.documentView = content
+                    self.scoller.documentView = content*/
+                    
+                    self.scoller.isHidden = true
+                    
+                    self.errorImage.isHidden = false
+                    self.errorLabel.isHidden = false
+                    
+                    self.errorImage.image = warningIcon
+					
+					self.detectInfoButton.isHidden = false
+                    
                 }else{
+                    let content = NSView(frame: NSRect(x: 0, y: 0, width: 0, height: self.scoller.frame.size.height - 2 - 20))
+                    content.backgroundColor = NSColor.white.withAlphaComponent(0)
+                    
+                    
                     self.scoller.hasHorizontalScroller = true
                     
                     var temp: CGFloat = 10

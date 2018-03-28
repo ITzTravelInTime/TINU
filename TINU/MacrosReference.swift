@@ -16,7 +16,7 @@ To enable each macro you need to go into the build settings section of the proje
 - demo
 	This is an example macro to let you test macros effects, by enableing this you will see a message of success at the app startup
 
-- debug
+- recovery
 	This is normally used to use the LocalAuthentication APIs for the first set user authentication in the app on macOS versions starting from El Capitan (older ones will still use older SecurityFoundation APIs to manage the first step auth)
 
 - usedate

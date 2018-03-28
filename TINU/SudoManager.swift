@@ -223,6 +223,44 @@ fileprivate final class SudoManager{
         }
         
     }
+	
+	fileprivate func startCommandWithAScriptSudo(cmd : String, args : [String]) -> (process: Process, errorPipe: Pipe, outputPipe: Pipe)!{
+		if sharedIsReallyOnRecovery{
+			return startCommand(cmd: cmd, args: args)
+		}
+		
+		
+		var script = ""
+		
+		for cc in cmd.characters{
+			let c = "\(cc)"
+			if c == " " || c == "\""{
+				script += "\\"
+			}
+			script += c
+		}
+		
+		script += " "
+		
+		for ccc in args{
+			for cc in ccc.characters{
+				let c = "\(cc)"
+				if c == " " || c == "\""{
+					script += "\\"
+				}
+				script += c
+			}
+			script += " "
+		}
+		
+		
+		
+		let cmdBase = "echo \"$(osascript -e 'do shell script \"\(script)\" with administrator privileges')\""
+		
+		print(cmdBase)
+		
+		return nil //startCommand(cmd: "/bin/sh",args:["-c", cmdBase])
+	}
 }
 
 fileprivate var sm = SudoManager.shared
@@ -248,3 +286,6 @@ public func getErrWithSudo(cmd: String) -> String!{
     return sm.getErrWithSudo(cmd: cmd)
 }
 
+public func startCommandWithAScriptSudo(cmd : String, args : [String]) -> (process: Process, errorPipe: Pipe, outputPipe: Pipe)!{
+	return sm.startCommandWithAScriptSudo(cmd : cmd, args : args)
+}

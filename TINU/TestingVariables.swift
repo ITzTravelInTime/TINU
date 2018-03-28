@@ -42,7 +42,7 @@ public let simulateNoTimer = false
 // - false: simulate installer creation success
 // - true: simulate installer creation fail
 // - nil: (default) executes createinstallmedia as usual
-public let simulateCreateinstallmediaFail: Bool! = nil
+public let simulateCreateinstallmediaFail: Bool! = true
 
 //this tells to the application to simule an abnormal opcode result after execution of the scripts
 public let simulateAbnormalExitcode = false
@@ -56,5 +56,10 @@ public let simulateSpecialOpertaionsFail = false
 //this is used to debug the app as it is into the recovery
 public let simulateRecovery = false
 
+//non ui testing conditions
+
 //this varibale lets the app to use a plist based system to detect drives
 public let simulateDrivePlistDect = true
+
+//this variable tells to the app to use the alternative apple script cmd for the creation process
+public let simulateUseScriptAuth = false
