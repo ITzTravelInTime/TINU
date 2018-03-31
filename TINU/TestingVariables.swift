@@ -42,7 +42,7 @@ public let simulateNoTimer = false
 // - false: simulate installer creation success
 // - true: simulate installer creation fail
 // - nil: (default) executes createinstallmedia as usual
-public let simulateCreateinstallmediaFail: Bool! = true
+public let simulateCreateinstallmediaFail: Bool! = nil
 
 //this tells to the application to simule an abnormal opcode result after execution of the scripts
 public let simulateAbnormalExitcode = false
