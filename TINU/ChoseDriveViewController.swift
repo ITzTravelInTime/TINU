@@ -424,6 +424,7 @@ class ChoseDriveViewController: GenericViewController {
                         var apfsDrivesCont = 0
 						
 						var bootDiskContainer = getDriveBSDIDFromVolumeBSDID(volumeID: boot)
+						//let selectedBoot = getDriveBSDIDFromVolumeBSDID(volumeID: getOut(cmd: "/usr/sbin/bless --info --getBoot"))
 						
 						print("Boot disks detected:")
 						print(boot)
@@ -468,7 +469,7 @@ class ChoseDriveViewController: GenericViewController {
 										if let avolumes = drive["APFSVolumes"] as? [[String: Any]]{
 											cvolumes = avolumes
 										}else{
-											if sharedIsOnRecovery{
+											//if sharedIsOnRecovery{
 												/*if let hvolumes = drive["Apple_HFS"] as? [[String: Any]]{
 												cvolumes = hvolumes
 												isAPFS = false
@@ -476,7 +477,8 @@ class ChoseDriveViewController: GenericViewController {
 												
 												cvolumes = [drive]
 												isAPFS = false
-											}else{
+											//}else{
+											/*if !sharedIsOnRecovery{
 												print("     This drive is not usable for an install media")
 												
 												if let tidp = drive["DeviceIdentifier"] as? String{
@@ -486,7 +488,7 @@ class ChoseDriveViewController: GenericViewController {
 												}
 												
 												originalContainersCont += 1
-											}
+											}*/
 										}
 										
                                         if let volumes = cvolumes{
@@ -581,12 +583,11 @@ class ChoseDriveViewController: GenericViewController {
 																count += 1
 															}
 															
+															print("     This drive is not usable for an install media or to install mac os on")
 															continue
 														}
 													}
 												}
-												
-												
 												
                                                 drv?.apfsBDSName = idp
                                                 
@@ -1095,14 +1096,14 @@ class ChoseDriveViewController: GenericViewController {
     }
     
     func checkDriveSizeUint(bytes: UInt64) -> Bool{
-        var minSize: UInt64 = 7000000000
+        var minSize: UInt64 = 6000000000
         
         if sharedInstallMac{
-            minSize = 20000000000
+            minSize = 2 * 10000000000
         }
         
         if simulateCreateinstallmediaFail != nil{
-            minSize = 500000000
+            minSize = 5 * 100000000
         }
         
         /*

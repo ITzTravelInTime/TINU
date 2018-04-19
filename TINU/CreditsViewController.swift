@@ -44,4 +44,13 @@ public class CreditsViewController: NSViewController {
             print("invalid url")
         }
     }
+	
+	@IBAction func openContacts(_ sender: Any) {
+		if contactsWindowController == nil {
+			contactsWindowController = ContactsWindowController()
+		}
+		
+		contactsWindowController?.showWindow(self)
+		
+	}
 }

@@ -19,6 +19,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var FAQItem: NSMenuItem!
     @IBOutlet weak var FAQItemHelp: NSMenuItem!
     @IBOutlet weak var InstallMacOSItem: NSMenuItem!
+	
+	@IBOutlet weak var getMacOSApp: NSMenuItem!
+	@IBOutlet weak var wMSDIND: NSMenuItem!
     
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true
@@ -70,6 +73,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         focusAreaItem.isHidden = true
         
         if sharedIsOnRecovery{
+			print("Verbose mode not usable under recovery")
+			
+			tinuRelated.isEnabled = false
+			otherApps.isEnabled = false
+			verboseItem.isEnabled = false
+			
+			InstallMacOSItem.isHidden = false
+			
             vibrantButton.isEnabled = false
             vibrantButton.state = 0
             
@@ -77,8 +88,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             focusAreaItem.state = 0
             
             FAQItem.isEnabled = false
+			
+			getMacOSApp.isEnabled = false
+			wMSDIND.isEnabled = false
         }else{
+			verboseItem.isEnabled = true
+			tinuRelated.isEnabled = true
+			otherApps.isEnabled = true
+			
+			InstallMacOSItem.isHidden = true
+			
             vibrantButton.isEnabled = true
+			
             if sharedUseVibrant{
                 focusAreaItem.isEnabled = true
                 vibrantButton.state = 1
@@ -94,25 +115,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
             
             FAQItem.isEnabled = true
+			
+			getMacOSApp.isEnabled = true
+			wMSDIND.isEnabled = true
         }
         
         FAQItemHelp.isEnabled = FAQItem.isEnabled
-        
-        if !sharedIsOnRecovery{
-            verboseItem.isEnabled = true
-            tinuRelated.isEnabled = true
-            otherApps.isEnabled = true
-            
-            InstallMacOSItem.isHidden = true
-        }else{
-            tinuRelated.isEnabled = false
-            otherApps.isEnabled = false
-            verboseItem.isEnabled = false
-            
-            InstallMacOSItem.isHidden = false
-            print("Verbose mode not usable under recovery")
-        }
-        
+		
         if Bundle.main.url(forResource: "License", withExtension: "rtf") == nil{
             sharedShowLicense = false
             print("License agreement file not found")
@@ -139,15 +148,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    @IBAction func openFAQs(_ sender: Any) {
-        if let checkURL = NSURL(string: "https://github.com/ITzTravelInTime/TINU/wiki/FAQs") {
-            if NSWorkspace.shared().open(checkURL as URL) {
-                print("url successfully opened: " + String(describing: checkURL))
-            }
-        } else {
-            print("invalid url")
-        }
-    }
+	
     
     @IBAction func installMacActivate(_ sender: Any) {
         /*
@@ -197,25 +198,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    @IBAction func OpenGithub(_ sender: Any) {
-        if let checkURL = NSURL(string: "https://github.com/ITzTravelInTime/TINU") {
-            if NSWorkspace.shared().open(checkURL as URL) {
-                print("url successfully opened: " + String(describing: checkURL))
-            }
-        } else {
-            print("invalid url")
-        }
-    }
-    
-    @IBAction func InsanelyMacThread(_ sender: Any) {
-        if let checkURL = NSURL(string: "http://www.insanelymac.com/forum/topic/326959-tinu-the-macos-installer-creator-app-mac-app/") {
-            if NSWorkspace.shared().open(checkURL as URL) {
-                print("url successfully opened: " + String(describing: checkURL))
-            }
-        } else {
-            print("invalid url")
-        }
-    }
+	
     
     @IBAction func openContacts(_ sender: Any) {
         //open here a window with all the contacts inside
@@ -238,16 +221,79 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         creditsWindowController?.showWindow(self)
         
     }
-    
+	
+	@IBAction func checkVibrantLook(_ sender: Any) {
+		if sharedUseVibrant{
+			sharedUseVibrant = false
+			vibrantButton.state = 0
+		}else{
+			sharedUseVibrant = true
+			vibrantButton.state = 1
+		}
+		
+		focusAreaItem.isEnabled = sharedUseVibrant
+		
+	}
+	
+	@IBAction func checkFocusArea(_ sender: Any) {
+		if canUseVibrantLook{
+			if sharedUseFocusArea{
+				focusAreaItem.state = 0
+			}else{
+				focusAreaItem.state = 1
+			}
+			sharedUseFocusArea = !sharedUseFocusArea
+		}
+	}
+	
+	private var wMSDINDWindow: DriveDetectInfoWindowController!
+	private var downloadAppWindow: DownloadAppWindowController!
+	
+	@IBAction func openWMSDIND(_ sender: Any) {
+		if wMSDINDWindow == nil{
+			wMSDINDWindow = DriveDetectInfoWindowController()
+		}
+		
+		wMSDINDWindow.showWindow(self)
+	}
+	
+	@IBAction func openDownloadMacApp(_ sender: Any) {
+		if downloadAppWindow == nil{
+			downloadAppWindow = DownloadAppWindowController()
+		}
+		
+		downloadAppWindow.showWindow(self)
+	}
+	
+	@IBAction func openFAQs(_ sender: Any) {
+		openURl("https://github.com/ITzTravelInTime/TINU/wiki/FAQs")
+	}
+	
+	@IBAction func OpenGithub(_ sender: Any) {
+		openURl("https://github.com/ITzTravelInTime/TINU")
+	}
+	
+	@IBAction func InsanelyMacThread(_ sender: Any) {
+		openURl("http://www.insanelymac.com/forum/topic/326959-tinu-the-macos-installer-creator-app-mac-app/")
+	}
+	
+	@IBAction func InsanelyMacThreadIta(_ sender: Any) {
+		openURl("https://www.insanelymac.com/forum/forums/topic/333261-tinu-app-per-creare-chiavette-di-installazione-di-macos-thread-in-italiano/")
+	}
+	
     @IBAction func VoodooTSCSyncConfigurator(_ sender: Any) {
-        if let checkURL = NSURL(string: "http://www.insanelymac.com/forum/files/file/744-voodootscsync-configurator/") {
-            if NSWorkspace.shared().open(checkURL as URL) {
-                print("url successfully opened: " + String(describing: checkURL))
-            }
-        } else {
-            print("invalid url")
-        }
+		openURl("http://www.insanelymac.com/forum/files/file/744-voodootscsync-configurator/")
     }
+	
+	private func openURl(_ sURL: String){
+		if let checkURL = NSURL(string: sURL) {
+			if NSWorkspace.shared().open(checkURL as URL) {
+				print("url successfully opened: " + String(describing: checkURL))
+			}
+		} else {
+			print("invalid url")
+		}
+	}
     
     @IBAction func openVerbose(_ sender: Any) {
         if !(sharedIsCreationInProgress || sharedIsPreCreationInProgress || sharedIsOnRecovery){
@@ -294,31 +340,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
     }
-    
-    @IBAction func checkVibrantLook(_ sender: Any) {
-        if sharedUseVibrant{
-            sharedUseVibrant = false
-            vibrantButton.state = 0
-        }else{
-            sharedUseVibrant = true
-            vibrantButton.state = 1
-        }
-        
-        focusAreaItem.isEnabled = sharedUseVibrant
-        
-    }
-    
-    @IBAction func checkFocusArea(_ sender: Any) {
-        if canUseVibrantLook{
-            if sharedUseFocusArea{
-                focusAreaItem.state = 0
-            }else{
-                focusAreaItem.state = 1
-            }
-            sharedUseFocusArea = !sharedUseFocusArea
-        }
-    }
-    
-    
+	
 }
 

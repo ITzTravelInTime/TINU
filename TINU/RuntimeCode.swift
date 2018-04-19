@@ -248,7 +248,17 @@ public func checkSharedBundleItems() -> Bool{
 //returns the version number of the mac os installer app, returns nil if it was not found, returns an epty string if it's an unrecognized version
 public func installerAppVersion() -> String!{
     if checkSharedBundleVersion(){
-        return String(Int(String(sharedBundleVersion.characters.prefix(2)))! - 4)
+		var subVer = String(sharedBundleVersion.characters.prefix(3))
+		
+		subVer.characters.removeFirst()
+		subVer.characters.removeFirst()
+		
+		let hexString = String(UInt8(subVer, radix: 36)! - 10)
+		
+		print(hexString)
+		
+        return String(UInt(String(sharedBundleVersion.characters.prefix(2)))! - 4) + "." + hexString
+		
     }
     
     if checkSharedBundleName(){
@@ -275,7 +285,7 @@ public func installerAppVersion() -> String!{
 }
 
 //returns if the version of the installer app is the spcified version
-public func installerAppSupportsThatVersion(version: Int) -> Bool!{
+public func installerAppSupportsThatVersion(version: Float) -> Bool!{
     /*if checkSharedBundleVersion(){
         return (Int(String(sharedBundleVersion.characters.prefix(2)))! - 4) <= version
     }
@@ -291,7 +301,7 @@ public func installerAppSupportsThatVersion(version: Int) -> Bool!{
     if let v = installerAppVersion(){
         if !v.isEmpty{
             print("detected version: \(v)")
-            if let n = Int(v){
+            if let n = Float(v){
                 return n <= version
             }
         }
@@ -310,6 +320,11 @@ public func sharedAppNotSupportsAPFS() -> Bool!{
 public func sharedAppNotSupportsTINU() -> Bool!{
     print("Checking if the isntaller app supports TINU on recovery")
     return installerAppSupportsThatVersion(version: 10)
+}
+
+public func sharedAppNeedsIABoot() -> Bool!{
+	print("Checking if the installer app needs particular boot files replacement or the creation of .IABootFiles folder")
+	return !installerAppSupportsThatVersion(version: 13.3)
 }
 
 //this funtionm terminates a process

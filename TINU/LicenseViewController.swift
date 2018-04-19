@@ -8,9 +8,9 @@
 
 import Cocoa
 
-var showProcessLicense = false
+public var showProcessLicense = false
 
-var processLicense = ""
+public var processLicense = ""
 
 class LicenseViewController: GenericViewController {
     
@@ -78,17 +78,26 @@ class LicenseViewController: GenericViewController {
 						
 						let license = getOut(cmd: cmd)
 						
-						DispatchQueue.main.async{
-							self.spinner.stopAnimation(self)
-							self.spinner.isHidden = true
-							self.scroller.isHidden = false
-						
-							self.check.isEnabled = true
-						}
+						print("Got license agreement")
 						
 						processLicense = license
 						
-						self.licenseField.text = license
+						print("set procee license variable")
+						
+						DispatchQueue.main.sync{
+							self.licenseField.text = license
+							
+							print("license assigned")
+							
+							self.spinner.stopAnimation(self)
+							print("stopped spinner")
+							self.spinner.isHidden = true
+							print("hidden spinner")
+							self.scroller.isHidden = false
+							print("scoller shown")
+							self.check.isEnabled = true
+							print("check enabled")
+						}
 					}
 				}else{
 					DispatchQueue.main.async{
@@ -99,7 +108,7 @@ class LicenseViewController: GenericViewController {
 						self.check.isEnabled = true
 					}
 					
-					self.licenseField.text = processLicense
+					self.licenseField?.string = processLicense
 				}
 			}else{
 				

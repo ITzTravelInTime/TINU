@@ -25,9 +25,19 @@ class DownloadAppViewController: GenericViewController {
 		
     }
 	
-	/*@IBAction func closeClick(_ sender: Any) {
-		self.window.close()
-	}*/
+	override func viewDidAppear() {
+		super.viewDidAppear()
+		if self.window != sharedWindow{
+			self.window.title = "Download a macOS installer app from the app store"
+			closeButton.stringValue = "Close"
+		}
+	}
+	
+	@IBAction func buttonClick(_ sender: Any) {
+		if self.window != sharedWindow{
+			self.window.close()
+		}
+	}
 	
 	@IBAction func hsClick(_ sender: Any) {
 		NSWorkspace.shared().open(URL(string: "macappstores://itunes.apple.com/app/macos-high-sierra/id1246284741")!)

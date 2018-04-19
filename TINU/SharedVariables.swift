@@ -46,9 +46,9 @@ public var sharedVolume: String!
 
 //this variable is the bsd name of the drive or partition currently selected by the user
 public var sharedBSDDrive: String!/*{
-    didSet{
-        restoreOtherOptions()
-    }
+didSet{
+restoreOtherOptions()
+}
 }*/
 
 //this variable is used to store apfs disk bsd id
@@ -59,70 +59,86 @@ public var sharedSVReallyIsAPFS = false
 
 //this is the path of the mac os installer application that the user has selected
 public var sharedApp: String!{
-    didSet{
-        DispatchQueue.global(qos: .background).async{
-            restoreOtherOptions()
-            eraseReplacementFilesData()
+	didSet{
+		DispatchQueue.global(qos: .background).async{
+			restoreOtherOptions()
+			eraseReplacementFilesData()
 			
 			processLicense = ""
 			
-            if sharedApp != nil{
-                if let version = targetAppBundleVersion(), let name = targetAppBundleName(){
-                    sharedBundleVersion = version
-                    sharedBundleName = name
-                    
-                    var supportsTINU = false
-                    
-                    if let st = sharedAppNotSupportsTINU(){
-                        supportsTINU = st
-                    }
-                    
-                    if !sharedInstallMac{
-                        for i in 0...(filesToReplace.count - 1){
-                            let item = filesToReplace[i]
-                            
-                            switch item.filename{
-                            case "prelinkedkernel":
-                                item.visible = !supportsTINU
-                            case "kernelcache":
-                                item.visible = supportsTINU
-                            default:
-                                break
-                            }
-                        }
-                    }
-                    
-                    if let item = otherOptions[otherOptionTinuCopyID]{
-                        item.isUsable = !supportsTINU
-                        item.isActivated = !supportsTINU
-                    }
-                    
-                    if sharedInstallMac{
-                        var supportsAPFS = false
-                        if let st = sharedAppNotSupportsAPFS(){
-                            supportsAPFS = st
-                        }
-                        if let item = otherOptions[otherOptionDoNotUseApfsID]{
-                            item.isVisible = !supportsAPFS
+			if sharedApp != nil{
+				if let version = targetAppBundleVersion(), let name = targetAppBundleName(){
+					sharedBundleVersion = version
+					sharedBundleName = name
+					
+					var supportsTINU = false
+					
+					if let st = sharedAppNotSupportsTINU(){
+						supportsTINU = st
+					}
+					
+					var needsIA = false
+					
+					if let na = sharedAppNeedsIABoot(){
+						needsIA = na
+					}
+					
+					if !sharedInstallMac{
+						for i in 0...(filesToReplace.count - 1){
+							let item = filesToReplace[i]
+							
+							switch item.filename{
+							case "prelinkedkernel":
+								item.visible = !supportsTINU
+							case "kernelcache":
+								item.visible = supportsTINU
+							case "immutablekernel", "BridgeVersion.bin", "SecureBoot.bundle":
+								item.visible = needsIA
+							default:
+								break
+							}
+						}
+					}
+					
+					if let item = otherOptions[otherOptionTinuCopyID]{
+						item.isUsable = !supportsTINU
+						item.isActivated = !supportsTINU
+					}
+					
+					if sharedInstallMac{
+						var supportsAPFS = false
+						if let st = sharedAppNotSupportsAPFS(){
+							supportsAPFS = st
+						}
+						if let item = otherOptions[otherOptionDoNotUseApfsID]{
+							item.isVisible = !supportsAPFS
 							if !sharedSVReallyIsAPFS{
 								item.isUsable = (sharedBSDDriveAPFS == nil)
 							}else{
 								item.isUsable = false
 								item.isActivated = false
 							}
-                        }
-                    }
-                    
-                }
-                
-                if let item = otherOptions[otherOptionForceToFormatID]{
-                    if let st = sharedVolumeNeedsPartitionMethodChange{
-                        item.isUsable = !st
-                        item.isActivated = st
-                    }
-                }
-            }
-        }
+						}
+					}else{
+						if let item = otherOptions[otherOptionCreateAIBootFID]{
+							item.isActivated = false
+						}
+						
+						if let item = otherOptions[otherOptionDeleteIAPMID]{
+							item.isActivated = false
+						}
+					}
+					
+				}
+				
+				if let item = otherOptions[otherOptionForceToFormatID]{
+					if let st = sharedVolumeNeedsPartitionMethodChange{
+						item.isUsable = !st
+						item.isActivated = st
+					}
+				}
+			}
+		}
     }
 }
 //this variable tells to the app which is the bundle name of the selcted installer app

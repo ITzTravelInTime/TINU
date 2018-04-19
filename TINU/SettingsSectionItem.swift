@@ -101,7 +101,7 @@ public class SettingsSectionItem: NSView{
 				
 				var count: CGFloat = 0
 				
-				for i in otherOptions{
+				for i in otherOptions.sorted(by: { UInt(String($0.0.characters.first!))! > UInt(String($1.0.characters.first!))! }){
 					if i.value.isVisible{
 						let item = OtherOptionsItem(frame: NSRect(x: 0, y: count, width: surface.frame.size.width, height: itemHeigth))
 						

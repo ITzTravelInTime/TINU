@@ -13,6 +13,8 @@ class OtherOptionsItem: NSView {
     var option = OtherOptionsObject()
     
     var checkBox = NSButton()
+	
+	//let mlength = "Delete the .IAPhisicalMedia file (Fixes USB installer no".characters.count
 
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
@@ -28,19 +30,19 @@ class OtherOptionsItem: NSView {
             checkBox.target = self
             checkBox.action = #selector(self.checked)
         //}
-        
+		
+		checkBox.isEnabled = option.isUsable
+		
         if option.isActivated{
             checkBox.state = 1
         }else{
             checkBox.state = 0
         }
-        
-        checkBox.isEnabled = option.isUsable
-        
-        checkBox.font = NSFont.systemFont(ofSize: 13)
-        
-        checkBox.frame.origin = NSPoint(x: 10, y: (self.frame.height / 2) - 10)
-        checkBox.frame.size = NSSize(width: self.frame.width - 30, height: 20)
+		
+		checkBox.font = NSFont.systemFont(ofSize: 13)
+		
+        checkBox.frame.origin = NSPoint(x: 10, y: 5 / 2)
+        checkBox.frame.size = NSSize(width: self.frame.width - 30, height: self.frame.height - 5)
         
         self.addSubview(checkBox)
         

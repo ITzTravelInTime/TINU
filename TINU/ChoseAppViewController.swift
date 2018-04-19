@@ -238,7 +238,9 @@ class ChoseAppViewController: GenericViewController {
             print("Starting installation apps scan ...")
             
             let h = (self.scoller.frame.height) / 2 - 80
-            
+			
+			let ex = sharedExecutableName
+			
 			do {
 				for dir in documentsUrls{
 					if let d = dir{
@@ -247,9 +249,9 @@ class ChoseAppViewController: GenericViewController {
 						for appPath in (try fm.contentsOfDirectory(at: d, includingPropertiesForKeys: nil, options: []).filter{ $0.pathExtension == "app" }.map{ $0.path }) {
 							
 							if !dirs.contains(appPath){
-								if fm.fileExists(atPath: appPath + "/Contents/Resources/" + sharedExecutableName) {
+								if fm.fileExists(atPath: appPath + "/Contents/Resources/" + ex) {
 									
-									print("An new app that contains the " + sharedExecutableName + " has been found")
+									print("An new app that contains the " + ex + " has been found")
 									//DispatchQueue.main.sync {
 									dirs.append(appPath)
 									
@@ -267,11 +269,34 @@ class ChoseAppViewController: GenericViewController {
 									drive.isEnabled = false
 									}*/
 									
-									if !((fm.fileExists(atPath: appPath + "/Contents/SharedSupport/InstallESD.dmg") &&  fm.fileExists(atPath: appPath + "/Contents/Info.plist"))){
+									print("     Checking app's info.plist")
+									if !fm.fileExists(atPath: appPath + "/Contents/Info.plist"){
+										print("       No app's info.plist found!")
+										drive.isEnabled = false
+									}else{
+										print("     App's info.plist checked")
+									}
+									
+								    print("     Checking app's SharedSupport directory")
+									if fm.fileExists(atPath: appPath + "/Contents/SharedSupport"){
+										
+									    print("       Checking SharedSupport/InstallESD.dmg")
+										if !fm.fileExists(atPath: appPath + "/Contents/SharedSupport/InstallESD.dmg"){
+											print("       SharedSupport/InstallESD.dmg does not exists!")
+											drive.isEnabled = false
+										}else{
+											print("       SharedSupport/InstallESD.dmg present")
+										}
+										
+										print("     App's SharedSupport directory check ended")
+									}else{
+										print("     App's SharedSupport directory does not exists!")
 										drive.isEnabled = false
 									}
 									
+									print("     Adding app to the apps list")
 									drives.append(drive)
+									print("     App added to the apps list")
 								}
 							}
 						}

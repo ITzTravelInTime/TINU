@@ -13,7 +13,11 @@ class DriveObject: NSView {
     
     var isEnabled = true{
         didSet{
-            setDefaultAspect()
+			
+			//if !sharedIsOnRecovery{
+			DispatchQueue.main.async {
+				self.setDefaultAspect()
+			}
         }
     }
 

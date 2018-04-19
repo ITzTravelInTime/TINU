@@ -375,7 +375,8 @@ class InstallingViewController: GenericViewController{
             }
             
             //3
-            self.progress.doubleValue += self.unit
+			
+            self.addToProgressValue(self.unit)
             
             self.setActivityLabelText("Applying options")
             
@@ -632,7 +633,9 @@ class InstallingViewController: GenericViewController{
 			self.setProgressMax(100)
 			self.setProgressValue(100)
 			
-			self.progress.isIndeterminate = true
+			DispatchQueue.main.sync {
+				self.progress.isIndeterminate = true
+			}
 			
             self.setActivityLabelText("Second step authentication")
             
@@ -908,7 +911,9 @@ class InstallingViewController: GenericViewController{
     //this function manages some special operations done after createinstallmedia finishes
     private func performSpeacialOperations() -> Bool{
 		
-		self.progress.isIndeterminate = false
+		DispatchQueue.main.sync {
+			self.progress.isIndeterminate = false
+		}
 		
 		self.setProgressValue(0)
 		self.setProgressMax(100)
@@ -938,7 +943,7 @@ class InstallingViewController: GenericViewController{
         //a file manager, usefoul for the operation that we need later in this function
         let manager = FileManager.default
 		
-		var step: Double = 50 / 3
+		var step: Double = 50 / 5
         
         log("\n\nStarting extra operations: ")
         
@@ -966,6 +971,70 @@ class InstallingViewController: GenericViewController{
             
         }
         }
+		
+		self.addToProgressValue(step)
+		
+		if let o = otherOptions[otherOptionCreateAIBootFID]?.canBeUsed(){
+			if o && !sharedInstallMac{
+				let iaFolder = sharedVolume + "/.IABootFiles"
+				
+				do{
+					
+					if !manager.fileExists(atPath: iaFolder){
+						log("   .IABootFiles folder creation needed")
+						
+						try manager.createDirectory(atPath: iaFolder, withIntermediateDirectories: true, attributes: [:])
+						
+						let folders = ["/System/Library/CoreServices", "/System/Library/PrelinkedKernels", "/usr/standalone/i386"]
+						
+						for f in folders{
+							let folder = sharedVolume + f
+							log("      Copying files from folder \(folder)")
+							for ff in try manager.contentsOfDirectory(atPath: folder){
+								let file = folder + "/" + ff
+								if manager.fileExists(atPath: file){
+									log("      Copying file \(file)")
+									try manager.copyItem(atPath: file, toPath: iaFolder + "/" + ff)
+								}
+							}
+						}
+						
+					}else{
+						log("   .IABootFiles folder already exists")
+					}
+					
+				}catch let error{
+					log("   .IABootFiles folder creation failed, error: \n\(error)")
+					ok = false
+				}
+			}
+		}
+		
+		self.addToProgressValue(step)
+		
+		if let o = otherOptions[otherOptionDeleteIAPMID]?.canBeUsed(){
+			if o && !sharedInstallMac{
+				let iaFile = sharedVolume + "/.IAPhysicalMedia"
+				
+				do{
+					
+					if manager.fileExists(atPath: iaFile){
+						log("   removing .IAPhysicalMedia file")
+						
+						try manager.removeItem(atPath: iaFile)
+						
+						
+						log("   .IAPhysicalMedia removed successfoully")
+					}else{
+						log("   .IAPhysicalMedia file does not exists, this step is not needed")
+					}
+					
+				}catch let error{
+					log("   .IAPhysicalMedia remove failed, error: \n\(error)")
+					ok = false
+				}
+			}
+		}
 		
 		self.addToProgressValue(step)
         

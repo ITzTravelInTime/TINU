@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		C60D39B01F5E136500D94834 /* Part.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D39AF1F5E136500D94834 /* Part.swift */; };
 		C60D39B21F5E4AFC00D94834 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */; };
-		C60D39B41F5EB47000D94834 /* ContactsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D39B31F5EB47000D94834 /* ContactsWindowController.swift */; };
 		C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */; };
 		C61A3654205DA3F400350BE9 /* DownloadAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61A3653205DA3F400350BE9 /* DownloadAppViewController.swift */; };
 		C621CFA71F4F6A6500CC6D5B /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */; };
@@ -25,6 +24,7 @@
 		C65B5EFD1F7201D10061F1A3 /* DebugScript.sh in Resources */ = {isa = PBXBuildFile; fileRef = C65B5EFB1F71FAB10061F1A3 /* DebugScript.sh */; };
 		C65B5EFF1F72099F0061F1A3 /* ScriptsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B5EFE1F72099F0061F1A3 /* ScriptsManager.swift */; };
 		C65B5F031F720D680061F1A3 /* SudoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B5F021F720D680061F1A3 /* SudoManager.swift */; };
+		C66411052077A80100454292 /* InfoWindowsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66411042077A80100454292 /* InfoWindowsControllers.swift */; };
 		C691BFEE1F6DEEA800589EF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C691BFED1F6DEEA800589EF8 /* Assets.xcassets */; };
 		C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */; };
 		C691D6AB20655C700083D057 /* DriveDetectInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691D6AA20655C700083D057 /* DriveDetectInfoViewController.swift */; };
@@ -36,7 +36,6 @@
 		C6DF046D1F4F33C500D200B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6DF046B1F4F33C500D200B1 /* Main.storyboard */; };
 		C6DF04781F4F33C500D200B1 /* TINUTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF04771F4F33C500D200B1 /* TINUTests.swift */; };
 		C6DF04831F4F33C500D200B1 /* TINUUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF04821F4F33C500D200B1 /* TINUUITests.swift */; };
-		DD01EBED1F71B6BF00C94D9B /* LogWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBEC1F71B6BF00C94D9B /* LogWindowController.swift */; };
 		DD01EBEF1F71BD2A00C94D9B /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */; };
 		DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBF01F71BFE600C94D9B /* LogViewController.swift */; };
 		DD3AC14C1FBB974C00C71F53 /* OtherOptionsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC14B1FBB974C00C71F53 /* OtherOptionsItem.swift */; };
@@ -50,7 +49,6 @@
 		DDD038EB1FB7366400D22695 /* AdvancedOptionsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */; };
 		DDD038F21FB7AEC000D22695 /* BootFilesReplacementItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD038F11FB7AEC000D22695 /* BootFilesReplacementItem.swift */; };
 		DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */; };
-		DDDCF67E1F63338F00CF7FE4 /* CreditsWindwController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDCF67D1F63338F00CF7FE4 /* CreditsWindwController.swift */; };
 		DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDF14631F6730DA00953634 /* SharedVariables.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,7 +72,6 @@
 /* Begin PBXFileReference section */
 		C60D39AF1F5E136500D94834 /* Part.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Part.swift; sourceTree = "<group>"; };
 		C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
-		C60D39B31F5EB47000D94834 /* ContactsWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsWindowController.swift; sourceTree = "<group>"; };
 		C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCreationFinished.swift; sourceTree = "<group>"; };
 		C61A3653205DA3F400350BE9 /* DownloadAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadAppViewController.swift; sourceTree = "<group>"; };
 		C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
@@ -90,6 +87,7 @@
 		C65B5EFB1F71FAB10061F1A3 /* DebugScript.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = DebugScript.sh; sourceTree = "<group>"; };
 		C65B5EFE1F72099F0061F1A3 /* ScriptsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptsManager.swift; sourceTree = "<group>"; };
 		C65B5F021F720D680061F1A3 /* SudoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudoManager.swift; sourceTree = "<group>"; };
+		C66411042077A80100454292 /* InfoWindowsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoWindowsControllers.swift; sourceTree = "<group>"; };
 		C691BFED1F6DEEA800589EF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingVariables.swift; sourceTree = "<group>"; };
 		C691D6AA20655C700083D057 /* DriveDetectInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveDetectInfoViewController.swift; sourceTree = "<group>"; };
@@ -107,7 +105,6 @@
 		C6DF047E1F4F33C500D200B1 /* TINUUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TINUUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6DF04821F4F33C500D200B1 /* TINUUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TINUUITests.swift; sourceTree = "<group>"; };
 		C6DF04841F4F33C500D200B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DD01EBEC1F71B6BF00C94D9B /* LogWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogWindowController.swift; sourceTree = "<group>"; };
 		DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
 		DD01EBF01F71BFE600C94D9B /* LogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
 		DD3AC14B1FBB974C00C71F53 /* OtherOptionsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherOptionsItem.swift; sourceTree = "<group>"; };
@@ -121,7 +118,6 @@
 		DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedOptionsButton.swift; sourceTree = "<group>"; };
 		DDD038F11FB7AEC000D22695 /* BootFilesReplacementItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootFilesReplacementItem.swift; sourceTree = "<group>"; };
 		DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsViewController.swift; sourceTree = "<group>"; };
-		DDDCF67D1F63338F00CF7FE4 /* CreditsWindwController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsWindwController.swift; sourceTree = "<group>"; };
 		DDDF14631F6730DA00953634 /* SharedVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedVariables.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -154,9 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */,
-				C60D39B31F5EB47000D94834 /* ContactsWindowController.swift */,
-				DDDCF67D1F63338F00CF7FE4 /* CreditsWindwController.swift */,
-				DD01EBEC1F71B6BF00C94D9B /* LogWindowController.swift */,
+				C66411042077A80100454292 /* InfoWindowsControllers.swift */,
 			);
 			name = WindowsControllers;
 			sourceTree = "<group>";
@@ -440,7 +434,6 @@
 			files = (
 				C621CFA71F4F6A6500CC6D5B /* MainWindowController.swift in Sources */,
 				C621CFAC1F4F7DF400CC6D5B /* DriveObject.swift in Sources */,
-				DDDCF67E1F63338F00CF7FE4 /* CreditsWindwController.swift in Sources */,
 				DDD038F21FB7AEC000D22695 /* BootFilesReplacementItem.swift in Sources */,
 				C65AA61F1F4F497A00C43223 /* SharedInstances.swift in Sources */,
 				C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */,
@@ -464,7 +457,6 @@
 				DD484A811FAE49B90092834A /* SettingsNames.swift in Sources */,
 				C6B16958203B27AF00FD2818 /* ChooseCustomizationViewController.swift in Sources */,
 				C64E56371F51D917007B8CEE /* ChoseAppViewController.swift in Sources */,
-				C60D39B41F5EB47000D94834 /* ContactsWindowController.swift in Sources */,
 				DD73ABE21FB46EEB00C7F721 /* PostCreationVariables.swift in Sources */,
 				DD5016061F993D4500FB1407 /* GenericViewController.swift in Sources */,
 				DDA7FB621F96B13F0029F4F2 /* GenericWindowController.swift in Sources */,
@@ -474,7 +466,7 @@
 				C61A3654205DA3F400350BE9 /* DownloadAppViewController.swift in Sources */,
 				C65AA6241F4F4C3400C43223 /* ChoseDriveViewController.swift in Sources */,
 				DD01EBEF1F71BD2A00C94D9B /* LogManager.swift in Sources */,
-				DD01EBED1F71B6BF00C94D9B /* LogWindowController.swift in Sources */,
+				C66411052077A80100454292 /* InfoWindowsControllers.swift in Sources */,
 				C6553A911F5F7CEA0048965D /* LicenseViewController.swift in Sources */,
 				C6DF04661F4F33C500D200B1 /* AppDelegate.swift in Sources */,
 			);
