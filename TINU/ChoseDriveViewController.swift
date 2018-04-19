@@ -506,7 +506,13 @@ class ChoseDriveViewController: GenericViewController {
 													print("         Can't get the original disk for this drive")
 													continue
 												}
-												cdrv = originalContainers[originalContainersCont]
+												
+												if content == "Apple_HFS"{
+													cdrv = originalContainers[originalContainersCont]
+												}else{
+													cdrv = currentDrv.copy()
+													cdrv?.hasEFI = false
+												}
 											}
 											
 											if cdrv == nil{
@@ -589,8 +595,12 @@ class ChoseDriveViewController: GenericViewController {
 													}
 												}
 												
-                                                drv?.apfsBDSName = idp
-                                                
+												if content == "Apple_HFS" || content == "Apple_APFS"{
+													drv?.apfsBDSName = idp
+												}else{
+													drv?.bsdName = idp
+												}
+												
                                                 var shouldCorrectName = false
                                                 
                                                 if let pn = volume["VolumeName"] as? String{
