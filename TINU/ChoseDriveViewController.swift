@@ -92,10 +92,14 @@ class ChoseDriveViewController: GenericViewController {
         self.errorLabel.isHidden = true
 		
 		self.detectInfoButton.isHidden = true
+		
+		let man = FileManager.default
         
         sharedVolume = nil
         sharedBSDDrive = nil
         sharedBSDDriveAPFS = nil
+		
+		sharedDoTimeMachineWarn = false
         
         //sharedVolumeNeedsFormat = nil
         sharedVolumeNeedsPartitionMethodChange = nil
@@ -501,6 +505,7 @@ class ChoseDriveViewController: GenericViewController {
 													continue
 												}
 												cdrv = apfsDrives[apfsDrivesCont]
+												
 											}else{
 												if originalContainers.isEmpty{
 													print("         Can't get the original disk for this drive")
@@ -559,10 +564,12 @@ class ChoseDriveViewController: GenericViewController {
 													
 													if "/dev/" + idp == boot{
 														print("                 Boot partition can't be used")
-														bootDiskContainer = getDriveBSDIDFromVolumeBSDID(volumeID: idp)
+														bootDiskContainer = getDriveBSDIDFromVolumeBSDID(volumeID: (drv?.bsdName)!)
 														
 														isOnBoot = true
 													}
+													
+													print(bootDiskContainer)
 													
 													let bd = getDriveBSDIDFromVolumeBSDID(volumeID: boot)
 													let cd = getDriveBSDIDFromVolumeBSDID(volumeID: (drv?.bsdName)!)
@@ -590,8 +597,10 @@ class ChoseDriveViewController: GenericViewController {
 															}
 															
 															print("     This drive is not usable for an install media or to install mac os on")
-															continue
+															
 														}
+														
+														continue
 													}
 												}
 												
@@ -667,7 +676,11 @@ class ChoseDriveViewController: GenericViewController {
                                                         continue
                                                     }
                                                 }
-                                                
+												
+												if man.fileExists(atPath: (drv?.path)! + "/tmbootpicker.efi") || man.fileExists(atPath: (drv?.path)! + "/Backups.backupdb"){
+													drv?.tmDisk = true
+												}
+												
                                                 let drivei = DriveObject(frame: NSRect(x: 0, y: h, width: itmSz.width, height: itmSz.height))
                                                 drivei.isApp = false
                                                 drivei.volumePath = (drv?.path)!
@@ -706,20 +719,26 @@ class ChoseDriveViewController: GenericViewController {
 											
 											if !sharedInstallMac{
 												
-												//if is the boot partition
+												
+												var isOnBoot = false
+												
 												if "/dev/" + idp == boot{
+													print("                 Boot partition can't be used")
 													bootDiskContainer = getDriveBSDIDFromVolumeBSDID(volumeID: idp)
-													print("             Boot partition can't be used")
-													continue
+													
+													isOnBoot = true
 												}
 												
-												//if is on the same drive as the boot partition
-												
+												let bd = getDriveBSDIDFromVolumeBSDID(volumeID: boot)
 												let vd = getDriveBSDIDFromVolumeBSDID(volumeID: idp)
 												
-												if vd == bootDiskContainer{
+												if vd == bootDiskContainer || vd == bd{
 													print("                 This volume is on the boot drive and can't be used")
-													continue
+													isOnBoot = true
+												}
+												
+												if isOnBoot{
+													return
 												}
 												
 											}
@@ -871,6 +890,10 @@ class ChoseDriveViewController: GenericViewController {
                                                             continue
                                                         }
                                                     }
+													
+													if man.fileExists(atPath: drv.path + "/tmbootpicker.efi") || man.fileExists(atPath: drv.path + "/Backups.backupdb"){
+														drv.tmDisk = true
+													}
                                                     
                                                     let drivei = DriveObject(frame: NSRect(x: 0, y: h, width: itmSz.width, height: itmSz.height))
                                                     drivei.isApp = false
@@ -1024,6 +1047,13 @@ class ChoseDriveViewController: GenericViewController {
                     }
                 }
             }
+			
+			if sharedDoTimeMachineWarn{
+				if dialogYesNoWarning(question: "This is a Time Machine disk, Are you sure?", text: "This volume is used a s time machine backup volume, and may contain usefoul backup data, that will be lost if you continue, are you sure?", style: .warning){
+					return
+				}
+			}
+			
             let _ = openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: self)
         }else{
             NSApplication.shared().terminate(sender)

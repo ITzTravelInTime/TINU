@@ -31,6 +31,8 @@ public class Part{
     var hasAPFSVolumes = false
 	var hasOriginalVolumes = false
 	
+	var tmDisk = false
+	
 	var size: UInt64! = 0
 	
     public init(){
@@ -56,9 +58,13 @@ public class Part{
     public func copy() -> Part{
         let p = Part(partitionBSDName: bsdName, partitionName: name, partitionPath: path, partitionFileSystem: fileSystem, partitionScheme: partScheme, partitionHasEFI: hasEFI, partitionSize: totSize)
         p.hasAPFSVolumes = hasAPFSVolumes
+		p.hasOriginalVolumes = hasOriginalVolumes
         p.apfsBDSName = apfsBDSName
 		p.driveType = driveType
 		p.size = size
+		
+		p.tmDisk = tmDisk
+		
         return p
     }
     

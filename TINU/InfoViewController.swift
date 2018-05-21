@@ -60,11 +60,19 @@ class InfoViewController: GenericViewController{
             
             appLabel.stringValue = "A macOS installer app downloaded from the App Store\n(El Capitan or more recent)"
 			
-			sloganLabel.stringValue = "TINU Is Not Unib***t: The macOS tool"
+			#if macOnlyMode
+				sloganLabel.stringValue = "TINU: The macOS tool"
+			#else
+				sloganLabel.stringValue = "TINU Is Not Unib***t: The macOS tool"
+			#endif
             
             //titleField.stringValue = "To install macOS you need:"
 		}else{
-			sloganLabel.stringValue = "TINU Is Not Unib***t: The macOS install media creation tool"
+			#if macOnlyMode
+				sloganLabel.stringValue = "TINU: The macOS install media creation tool"
+			#else
+				sloganLabel.stringValue = "TINU Is Not Unib***t: The macOS install media creation tool"
+			#endif
 		}
     }
 	

@@ -75,7 +75,7 @@ class CustomizationViewController: GenericViewController {
 		
 		sections.append(generalOptionsSection)
 		
-		
+		#if !macOnlyMode
 		//bootfiles
 		if !sharedInstallMac{
 			let bootFielsRepSection = SettingsSectionItem(frame: NSRect(x: 0, y: 0, width: sectionsScrollView.frame.size.width - 2, height: itemsHeight))
@@ -88,6 +88,7 @@ class CustomizationViewController: GenericViewController {
 		
 			sections.append(bootFielsRepSection)
 		}
+		#endif
 		
 		
 		//adding items to the view
@@ -108,10 +109,17 @@ class CustomizationViewController: GenericViewController {
 		
 		sectionsScrollView.documentView = container
 		
+		if container.frame.size.height <= sectionsScrollView.frame.height{
+			sectionsScrollView.verticalScrollElasticity = .none
+		}else{
+			sectionsScrollView.verticalScrollElasticity = .allowed
+		}
+		
 		if !sections.isEmpty{
 			sections.first?.makeSelected()
 			sections.first?.addSettingsToScrollView()
 		}
+		
 		
     }
     
@@ -125,5 +133,21 @@ class CustomizationViewController: GenericViewController {
     @IBAction func goNext(_ sender: Any) {
         openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
         sharedVolumeNeedsPartitionMethodChange = ps
+    }
+    
+    @IBAction func resetOptions(_ sender: Any) {
+        checkOtherOptions()
+		
+		if let sections = sectionsScrollView.documentView?.subviews as? [SettingsSectionItem]{
+		
+		if !sections.isEmpty{
+			for s in sections{
+				if s.isSelected{
+					s.addSettingsToScrollView()
+				}
+			}
+		}
+		
+		}
     }
 }

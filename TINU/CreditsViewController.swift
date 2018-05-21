@@ -16,6 +16,8 @@ public class CreditsViewController: NSViewController {
     @IBOutlet weak var sourceButton: NSButton!
     @IBOutlet weak var contactButton: NSButton!
     
+	@IBOutlet weak var italianHackGroupLabel: NSTextField!
+	
     override public func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
@@ -27,6 +29,10 @@ public class CreditsViewController: NSViewController {
             contactButton.isEnabled = false
             sourceButton.isEnabled = false
         }
+		
+		#if macOnlyMode
+			italianHackGroupLabel.isHidden = true
+		#endif
     }
     
     @IBAction func closeWindow(_ sender: Any) {

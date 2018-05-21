@@ -25,6 +25,9 @@ To enable each macro you need to go into the build settings section of the proje
 - noFirstAuth
 	This will disable first step authentication
 
+- macOnlyMode
+	This will hide and/or disable all the hackintosh-specific stuff and hackintosh references, made to make this app to be pubblishable on the app-store
+
 */
 
 #if demo

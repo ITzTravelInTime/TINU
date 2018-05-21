@@ -364,6 +364,87 @@ public func terminateProcess(name: String) -> Bool!{
     //return false
 }
 
+//checks for the options
+public func checkOtherOptions(){
+	DispatchQueue.global(qos: .background).async{
+		restoreOtherOptions()
+		eraseReplacementFilesData()
+		
+		processLicense = ""
+		
+		if sharedApp != nil{
+			if let version = targetAppBundleVersion(), let name = targetAppBundleName(){
+				sharedBundleVersion = version
+				sharedBundleName = name
+				
+				var supportsTINU = false
+				
+				if let st = sharedAppNotSupportsTINU(){
+					supportsTINU = st
+				}
+				
+				var needsIA = false
+				
+				if let na = sharedAppNeedsIABoot(){
+					needsIA = na
+				}
+				
+				if !sharedInstallMac{
+					for i in 0...(filesToReplace.count - 1){
+						let item = filesToReplace[i]
+						
+						switch item.filename{
+						case "prelinkedkernel":
+							item.visible = !supportsTINU
+						case "kernelcache":
+							item.visible = supportsTINU
+						case "immutablekernel", "BridgeVersion.bin", "SecureBoot.bundle":
+							item.visible = needsIA
+						default:
+							break
+						}
+					}
+				}
+				
+				if let item = otherOptions[otherOptionTinuCopyID]{
+					item.isUsable = !supportsTINU
+					item.isActivated = !supportsTINU
+				}
+				
+				if sharedInstallMac{
+					var supportsAPFS = false
+					if let st = sharedAppNotSupportsAPFS(){
+						supportsAPFS = st
+					}
+					if let item = otherOptions[otherOptionDoNotUseApfsID]{
+						item.isVisible = !supportsAPFS
+						item.isActivated = !sharedSVReallyIsAPFS
+						item.isUsable = !sharedSVReallyIsAPFS
+						
+					}
+				}else{
+					if let item = otherOptions[otherOptionCreateAIBootFID]{
+							item.isActivated = false
+					}
+					
+					if let item = otherOptions[otherOptionDeleteIAPMID]{
+							item.isActivated = false
+					}
+				}
+				
+			}
+			
+			if let item = otherOptions[otherOptionForceToFormatID]{
+				if let st = sharedVolumeNeedsPartitionMethodChange{
+					item.isUsable = !st
+					item.isActivated = st
+				}
+			}
+		}
+	}
+
+}
+
 //return the icon of thespecified installer app
 
 func getInstallerAppIcon(forApp app: String) ->NSImage{

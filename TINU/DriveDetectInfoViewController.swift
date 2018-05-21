@@ -26,16 +26,17 @@ public class DriveDetectInfoViewController: NSViewController {
 	
 	override public func viewDidAppear() {
 		super.viewDidAppear()
-		if self.window != sharedWindow{
+		if self.presenting == nil{
+		//if self.window != sharedWindow{
 			self.window.title = "Why my storage device is not detected?"
-			button.stringValue = "Close"
+			self.button.stringValue = "Close"
+			self.button.title = "Close"
+			self.button.alternateTitle = "Close"
 		}
 	}
     
     @IBAction func buttonClick(_ sender: Any) {
-        if self.window != sharedWindow{
             self.window.close()
-        }
     }
 }
 
@@ -57,7 +58,7 @@ extension DriveDetectInfoViewController{
 		}else{
 			text.append("• TINU will detect only drives which are usable to create a macOS install media, all the others drives will not be detected by TINU")
 			
-			text.append("• Make sure that your device does not contains the partition from which you have booted the system and that it,s not the internal ssd/hard disk of your mac")
+			text.append("• Make sure that your device does not contains the partition from which you have booted the system and that it's not the internal ssd/hard disk of your mac")
 			
 			text.append("• Make sure the device or the partition you want o to use is at least 8 GB, if your drive is big enought but the partition you want to use is not big enuogth, you have to go in disk utility and create a partition of at least 8 GB in that device, or you have to make bigger enougth the partition you want to use")
 		}

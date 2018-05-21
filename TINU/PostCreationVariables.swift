@@ -62,10 +62,13 @@ fileprivate var otherOptionsDefault: [String: OtherOptionsObject] {
         if sharedInstallMac{
             dict[otherOptionDoNotUseApfsID] = OtherOptionsObject.init(objectID: otherOptionDoNotUseApfsID, objectMessage: "Install macOS avoiding automatic APFS upgrade", objectIsActivated: true, objectIsVisible: true)
 		}else{
+			#if !macOnlyMode
+				
 			dict[otherOptionCreateAIBootFID] = OtherOptionsObject.init(objectID: otherOptionCreateAIBootFID, objectMessage: "Create the .AIBootFiles folder, if it's not present", objectIsActivated: false, objectIsVisible: true)
 			
 			dict[otherOptionDeleteIAPMID] = OtherOptionsObject.init(objectID: otherOptionDeleteIAPMID, objectMessage: "Delete the .IAPhisicalMedia file", objectIsActivated: false, objectIsVisible: true)
 			
+			#endif
 			//dict[otherOptionAddBFRScriptID] = OtherOptionsObject.init(objectID: otherOptionAddBFRScriptID, objectMessage: "Add a script to replace boot files in the macOS system", objectIsActivated: true, objectIsVisible: true)
 		}
 		
@@ -78,6 +81,7 @@ public func restoreOtherOptions(){
     log("Trying to restore the other options to the default values")
     otherOptions.removeAll()
     otherOptions = otherOptionsDefault
+	
     log("Other options restored to the original values")
 }
 

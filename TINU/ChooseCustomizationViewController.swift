@@ -21,29 +21,35 @@ class ChooseCustomizationViewController: GenericViewController {
         infoImage.image = infoIcon
 		
 		if sharedInstallMac{
-			titleLabel.stringValue = "Choose macOS installation type"
-			infoText.stringValue = "The default settings will: install macOS, apply the icon of the installer app to the target volume, copy TINU in /Applications, create the \"README\" file, and reboot the computer"
+			titleLabel.stringValue = "Choose the options for the macOS installation"
+			infoText.stringValue = "The reccommended default options will: install macOS, apply the icon of the installer app to the target volume, copy create a copy of TINU in /Applications, create the \"README\" file, and reboot the computer"
 		}
     }
     
     @IBAction func useCustom(_ sender: Any) {
-		sharedMediaIsCustomized = true
-		openSubstituteWindow(windowStoryboardID: "Customize", sender: sender)
+		DispatchQueue.main.async {
+			sharedMediaIsCustomized = true
+			self.openSubstituteWindow(windowStoryboardID: "Customize", sender: sender)
+		}
     }
     
     @IBAction func useDefault(_ sender: Any) {
-		restoreOtherOptions()
-		eraseReplacementFilesData()
+		DispatchQueue.main.async {
+			//restoreOtherOptions()
+			checkOtherOptions()
 		
-		sharedMediaIsCustomized = false
-		openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
+			sharedMediaIsCustomized = false
+			self.openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
+		}
     }
     
     @IBAction func goBack(_ sender: Any) {
-		if showProcessLicense && sharedInstallMac{
-			openSubstituteWindow(windowStoryboardID: "License", sender: sender)
-		}else{
-			openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
+		DispatchQueue.main.async {
+			if showProcessLicense && sharedInstallMac{
+				self.openSubstituteWindow(windowStoryboardID: "License", sender: sender)
+			}else{
+				self.openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
+			}
 		}
     }
 }

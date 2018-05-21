@@ -9,9 +9,18 @@
 import Cocoa
 
 public class ContactsViewController: NSViewController {
+	@IBOutlet weak var italianHackGroupLabel: NSTextField!
+	@IBOutlet weak var italianHackGroupLinkLabel: HyperTextField!
+	
     override public func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+		
+		#if macOnlyMode
+			italianHackGroupLabel.stringValue = "Facebook group (Italian):"
+			//italianHackGroupLinkLabel.stringValue = ""
+		#endif
+		
     }
     
     @IBAction func closeWindow(_ sender: Any) {

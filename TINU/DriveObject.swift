@@ -105,6 +105,8 @@ class DriveObject: NSView {
 				//sharedVolumeNeedsFormat = nil
 				sharedVolumeNeedsPartitionMethodChange = nil
 				
+				sharedDoTimeMachineWarn = false
+				
 				if part != nil{
 					if part.partScheme != "GUID_partition_scheme" || !part.hasEFI{
 						sharedVolumeNeedsPartitionMethodChange = true
@@ -119,6 +121,11 @@ class DriveObject: NSView {
 					if sharedInstallMac && (part.fileSystem == "Other" || !part.hasEFI){
 						sharedVolumeNeedsPartitionMethodChange = true
 					}
+					
+					if part.tmDisk{
+						sharedDoTimeMachineWarn = true
+					}
+					
 					
 					/*
 					if part.fileSystem == "Other" && !sharedVolumeNeedsPartitionMethodChange{

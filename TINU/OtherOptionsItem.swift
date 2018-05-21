@@ -70,6 +70,7 @@ class OtherOptionsItem: NSView {
 						if let opt = item as? OtherOptionsItem{
 							if opt.option.id == otherOptionDoNotUseApfsID{
 								log("Trying to change the activated value of \"\(opt.option.id)\"")
+								
 								if let oo = otherOptions[otherOptionDoNotUseApfsID]{
 									oo.isActivated = o.isActivated
 									oo.isUsable = o.isActivated

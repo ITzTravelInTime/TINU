@@ -27,16 +27,17 @@ class DownloadAppViewController: GenericViewController {
 	
 	override func viewDidAppear() {
 		super.viewDidAppear()
-		if self.window != sharedWindow{
+		if self.presenting == nil{
+		//if self.window != sharedWindow{
 			self.window.title = "Download a macOS installer app from the app store"
 			closeButton.stringValue = "Close"
+			closeButton.title = "Close"
+			closeButton.alternateTitle = "Close"
 		}
 	}
 	
 	@IBAction func buttonClick(_ sender: Any) {
-		if self.window != sharedWindow{
 			self.window.close()
-		}
 	}
 	
 	@IBAction func hsClick(_ sender: Any) {

@@ -17,6 +17,8 @@ class ChooseSideViewController: GenericViewController {
     
     @IBOutlet weak var titleField: NSTextField!
     
+    @IBOutlet weak var sloganLabel: NSTextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
@@ -33,6 +35,11 @@ class ChooseSideViewController: GenericViewController {
         #if recovery
             print("Running with Local Authentication APIs supported")
         #endif
+		
+		#if macOnlyMode
+			print("This version of the app is compiled to be App Store Friendly!")
+            sloganLabel.stringValue = "TINU: The macOS tool"
+		#endif
 		
 		#if noFirstAuth
 			if !sharedIsOnRecovery{

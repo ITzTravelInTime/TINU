@@ -60,86 +60,8 @@ public var sharedSVReallyIsAPFS = false
 //this is the path of the mac os installer application that the user has selected
 public var sharedApp: String!{
 	didSet{
-		DispatchQueue.global(qos: .background).async{
-			restoreOtherOptions()
-			eraseReplacementFilesData()
-			
-			processLicense = ""
-			
-			if sharedApp != nil{
-				if let version = targetAppBundleVersion(), let name = targetAppBundleName(){
-					sharedBundleVersion = version
-					sharedBundleName = name
-					
-					var supportsTINU = false
-					
-					if let st = sharedAppNotSupportsTINU(){
-						supportsTINU = st
-					}
-					
-					var needsIA = false
-					
-					if let na = sharedAppNeedsIABoot(){
-						needsIA = na
-					}
-					
-					if !sharedInstallMac{
-						for i in 0...(filesToReplace.count - 1){
-							let item = filesToReplace[i]
-							
-							switch item.filename{
-							case "prelinkedkernel":
-								item.visible = !supportsTINU
-							case "kernelcache":
-								item.visible = supportsTINU
-							case "immutablekernel", "BridgeVersion.bin", "SecureBoot.bundle":
-								item.visible = needsIA
-							default:
-								break
-							}
-						}
-					}
-					
-					if let item = otherOptions[otherOptionTinuCopyID]{
-						item.isUsable = !supportsTINU
-						item.isActivated = !supportsTINU
-					}
-					
-					if sharedInstallMac{
-						var supportsAPFS = false
-						if let st = sharedAppNotSupportsAPFS(){
-							supportsAPFS = st
-						}
-						if let item = otherOptions[otherOptionDoNotUseApfsID]{
-							item.isVisible = !supportsAPFS
-							if !sharedSVReallyIsAPFS{
-								item.isUsable = (sharedBSDDriveAPFS == nil)
-							}else{
-								item.isUsable = false
-								item.isActivated = false
-							}
-						}
-					}else{
-						if let item = otherOptions[otherOptionCreateAIBootFID]{
-							item.isActivated = false
-						}
-						
-						if let item = otherOptions[otherOptionDeleteIAPMID]{
-							item.isActivated = false
-						}
-					}
-					
-				}
-				
-				if let item = otherOptions[otherOptionForceToFormatID]{
-					if let st = sharedVolumeNeedsPartitionMethodChange{
-						item.isUsable = !st
-						item.isActivated = st
-					}
-				}
-			}
-		}
-    }
+		checkOtherOptions()
+	}
 }
 //this variable tells to the app which is the bundle name of the selcted installer app
 public var sharedBundleName = ""
@@ -151,6 +73,9 @@ public var sharedBundleVersion = ""
 //public var sharedVolumeNeedsFormat: Bool!
 //this variable tells to the app if the selected drive needs to be formatted using GUID partition method
 public var sharedVolumeNeedsPartitionMethodChange: Bool!
+
+//thi is used to determinate if there is the need for the time machine warn
+public var sharedDoTimeMachineWarn = false
 
 //this variable tells to the app to install macos on the targetvolume using the target app (experimental, to keep disabled at the moment because it does not seems to work)
 public var sharedInstallMac: Bool = false
@@ -233,11 +158,16 @@ public let verboseScript = "#!/bin/sh\n#  DebugScript.sh\n#  TINU\n#\n#  Created
 //this is the text of the readme file that is written on the macOS install media at the end of the createinstallmedia process
 public var readmeText: String {
     get{
+		#if macOnlyMode
+			return "Thank you for using TINU"
+		#else
+			
         if sharedInstallMac{
             return "Thank you for using TINU\n\nIf you want to use this macOS system on an hackintosh, please download and install the clover bootloader, you can find it here:\n https://sourceforge.net/projects/cloverefiboot/files/latest/download?source=files\n\nIf you want to use this macOS system on a standard mac, you don`t have to do extra steps, it`s ready to be used"
         }else{
-            return "Thank you for using TINU\n\nIf you want to use this macOS install media on an hackintosh, please download and install the clover bootloader, you can find it here:\n https://sourceforge.net/projects/cloverefiboot/files/latest/download?source=files\n\nIf you want to use this macOS install media on a standard mac, you don`t have to extra steps, it`s ready to be used"
+            return "Thank you for using TINU\n\nIf you want to use this macOS install media on an hackintosh, please download and install the clover bootloader, you can find it here:\n https://sourceforge.net/projects/cloverefiboot/files/latest/download?source=files\n\nIf you want to use this macOS install media on a standard mac, you don`t have to do extra steps, it`s ready to be used"
         }
+		#endif
     }
 }
 
