@@ -676,9 +676,9 @@ class InstallingViewController: GenericViewController{
                 log("Process started, waiting for \(pname) executable to finish ...")
                 
                 if sharedInstallMac{
-                    self.setActivityLabelText("Installing macOS (may take from 5 to 30 minutes)")
+                    self.setActivityLabelText("Installing macOS\n(may take from 5 to 30 minutes)")
                 }else{
-                    self.setActivityLabelText("Creating bootable macOS installer (may take from 10 to 45 minutes)")
+                    self.setActivityLabelText("Creating bootable macOS installer\n(may take from 5 to 30 minutes)")
                 }
                 
                 DispatchQueue.main.async {

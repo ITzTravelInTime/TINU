@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C60B646B20B4464200FEDAA6 /* EFIFolderReplcament.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60B646A20B4464200FEDAA6 /* EFIFolderReplcament.swift */; };
 		C60D39B01F5E136500D94834 /* Part.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D39AF1F5E136500D94834 /* Part.swift */; };
 		C60D39B21F5E4AFC00D94834 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */; };
 		C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */; };
@@ -70,6 +71,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C60B646A20B4464200FEDAA6 /* EFIFolderReplcament.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EFIFolderReplcament.swift; sourceTree = "<group>"; };
 		C60D39AF1F5E136500D94834 /* Part.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Part.swift; sourceTree = "<group>"; };
 		C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCreationFinished.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */,
 				DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */,
 				DD5016051F993D4500FB1407 /* GenericViewController.swift */,
+				C60B646A20B4464200FEDAA6 /* EFIFolderReplcament.swift */,
 				DDD038F11FB7AEC000D22695 /* BootFilesReplacementItem.swift */,
 				DD3AC14B1FBB974C00C71F53 /* OtherOptionsItem.swift */,
 				DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */,
@@ -451,6 +454,7 @@
 				DDA7FB601F96AE510029F4F2 /* RuntimeCode.swift in Sources */,
 				C65B5EFF1F72099F0061F1A3 /* ScriptsManager.swift in Sources */,
 				C60D39B01F5E136500D94834 /* Part.swift in Sources */,
+				C60B646B20B4464200FEDAA6 /* EFIFolderReplcament.swift in Sources */,
 				C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */,
 				DD73ABE01FB4578000C7F721 /* PostCreationCode.swift in Sources */,
 				DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */,

@@ -6,8 +6,9 @@
 //  Copyright © 2017 Pietro Caruso. All rights reserved.
 //
 
-let idBFR = "0_BootFielsReplacemnt__"
-let idGO = "1_GeneralOptions_______"
+let idBFR = "1_BootFielsReplacemnt__"
+let idGO =  "0_GeneralOptions_______"
+let idEFI = "2_EFIFolderReplacement_"
 
 import Cocoa
 
@@ -23,6 +24,8 @@ class CustomizationViewController: GenericViewController {
     @IBOutlet weak var descriptionField: NSTextField!
     
     @IBOutlet weak var titleField: NSTextField!
+	
+	let itemsHeight: CGFloat = 50
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,10 +39,13 @@ class CustomizationViewController: GenericViewController {
 		
 		infoImageView.image = infoIcon
         
-        let sPath = "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ToolbarCustomizeIcon.icns"
-        let fPath = "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ExecutableBinaryIcon.icns"
+        let customizeIconPath = "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ToolbarCustomizeIcon.icns"
+        let bootFilesIconPath = "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ExecutableBinaryIcon.icns"
 		
-		
+		#if useEFIReplacement
+			let efiFolderIconPath = "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericFolderIcon.icns"
+		#endif
+			
         if sharedInstallMac{
 			
 			//otherOperationsButton.frame.origin = NSPoint(x: self.view.frame.width / 2 - otherOperationsButton.frame.height / 2, y: otherOperationsButton.frame.origin.y)
@@ -58,16 +64,16 @@ class CustomizationViewController: GenericViewController {
         }
 		
 		
-		let itemsHeight: CGFloat = 50
+		
 		
 		var sections = [SettingsSectionItem]()
 		
 		
 		//general options
 		
-		let generalOptionsSection = SettingsSectionItem(frame: NSRect(x: 0, y: 0, width: sectionsScrollView.frame.size.width - 2, height: itemsHeight))
+		let generalOptionsSection = getSectionItem()
 		
-		generalOptionsSection.image.image = getIconFor(path: sPath, alternate: NSWorkspace.shared().icon(forFileType: ""))
+		generalOptionsSection.image.image = getIconFor(path: customizeIconPath, alternate: NSWorkspace.shared().icon(forFileType: ""))
 		
 		generalOptionsSection.name.stringValue = "General options"
 		
@@ -76,28 +82,50 @@ class CustomizationViewController: GenericViewController {
 		sections.append(generalOptionsSection)
 		
 		#if !macOnlyMode
-		//bootfiles
-		if !sharedInstallMac{
-			let bootFielsRepSection = SettingsSectionItem(frame: NSRect(x: 0, y: 0, width: sectionsScrollView.frame.size.width - 2, height: itemsHeight))
-		
-			bootFielsRepSection.image.image = getIconFor(path: fPath, name: "options")
-		
-			bootFielsRepSection.name.stringValue = "Boot files replacement"
-		
-			bootFielsRepSection.id = idBFR
-		
-			sections.append(bootFielsRepSection)
-		}
+			
+			#if useEFIReplacement
+				//efi replacement
+				
+				let efiReplacement = getSectionItem()
+				
+				efiReplacement.image.image = getIconFor(path: efiFolderIconPath, alternate: NSWorkspace.shared().icon(forFile: "/Volumes"))
+				
+				efiReplacement.name.stringValue = "Replace EFI folder"
+				
+				efiReplacement.id = idEFI
+				
+				sections.append(efiReplacement)
+				
+			#endif
+			//bootfiles
+			if !sharedInstallMac{
+				let bootFielsRepSection = getSectionItem()
+				
+				bootFielsRepSection.image.image = getIconFor(path: bootFilesIconPath, name: "options")
+				
+				bootFielsRepSection.name.stringValue = "Boot files replacement"
+				
+				bootFielsRepSection.id = idBFR
+				
+				sections.append(bootFielsRepSection)
+			}
 		#endif
 		
 		
 		//adding items to the view
 		
-		let container = NSView(frame: NSRect(x: 2, y: 2, width: sectionsScrollView.frame.width - 2, height: sectionsScrollView.frame.height - 2))
+		let container = NSView(frame: NSRect(x: 2, y: 2, width: sectionsScrollView.frame.width - 2, height: itemsHeight * CGFloat(sections.count)))
 		
-		var h: CGFloat = sectionsScrollView.frame.height - 2 - itemsHeight
+		if container.frame.size.height <= sectionsScrollView.frame.height{
+			container.frame.size.height = sectionsScrollView.frame.height - 2
+			sectionsScrollView.verticalScrollElasticity = .none
+		}else{
+			sectionsScrollView.verticalScrollElasticity = .allowed
+		}
 		
-		for i in sections{
+		var h: CGFloat = container.frame.size.height - itemsHeight
+		
+		for i in sections.sorted(by: { UInt(String($0.id.characters.first!))! < UInt(String($1.id.characters.first!))! }){
 			i.frame.origin.y = h
 			
 			i.itemsScrollView = settingsScrollView
@@ -109,12 +137,6 @@ class CustomizationViewController: GenericViewController {
 		
 		sectionsScrollView.documentView = container
 		
-		if container.frame.size.height <= sectionsScrollView.frame.height{
-			sectionsScrollView.verticalScrollElasticity = .none
-		}else{
-			sectionsScrollView.verticalScrollElasticity = .allowed
-		}
-		
 		if !sections.isEmpty{
 			sections.first?.makeSelected()
 			sections.first?.addSettingsToScrollView()
@@ -122,6 +144,10 @@ class CustomizationViewController: GenericViewController {
 		
 		
     }
+	
+	private func getSectionItem() -> SettingsSectionItem{
+		return SettingsSectionItem(frame: NSRect(x: 0, y: 0, width: sectionsScrollView.frame.size.width - 2, height: itemsHeight))
+	}
     
     
     @IBAction func goBack(_ sender: Any) {

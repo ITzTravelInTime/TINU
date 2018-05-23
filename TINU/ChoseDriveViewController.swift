@@ -738,7 +738,7 @@ class ChoseDriveViewController: GenericViewController {
 												}
 												
 												if isOnBoot{
-													return
+													continue
 												}
 												
 											}

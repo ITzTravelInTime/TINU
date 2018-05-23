@@ -1106,7 +1106,7 @@ Gw
                                 </connections>
                             </button>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="kEG-HT-hbI">
-                                <rect key="frame" x="53" y="143" width="514" height="5"/>
+                                <rect key="frame" x="53" y="143" width="514" height="4"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </box>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="SLg-3D-02o">
@@ -1991,6 +1991,20 @@ Gw
                                 </buttonCell>
                                 <connections>
                                     <action selector="copyLog:" target="ep3-ie-0pp" id="iRM-ZI-28H"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ebp-EG-VhX">
+                                <rect key="frame" x="350" y="25" width="128" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="push" title="Save log ..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mZk-kn-6RJ">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="copyLog:" target="ep3-ie-0pp" id="2Ao-AQ-WIk"/>
                                 </connections>
                             </button>
                         </subviews>

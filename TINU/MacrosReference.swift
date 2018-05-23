@@ -28,6 +28,9 @@ To enable each macro you need to go into the build settings section of the proje
 - macOnlyMode
 	This will hide and/or disable all the hackintosh-specific stuff and hackintosh references, made to make this app to be pubblishable on the app-store
 
+- useEFIReplacement
+	This is used to compile and show stuff related to the "Copy EFI Folder" advanced setting
+
 */
 
 #if demo

@@ -44,7 +44,7 @@ class LicenseViewController: GenericViewController {
         }
     }
     
-    override func viewDidLoad() {
+	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		spinner.isHidden = false
@@ -68,15 +68,38 @@ class LicenseViewController: GenericViewController {
 							noAPFSSupport = ap
 						}
 						
+						var license = ""
+						var counter = 0
+						
+						var prios = [0,1,2]
+						
 						if noAPFSSupport{
-							cmd = "\"" + app + "/Contents/Resources/" + sharedExecutableName + "\" --applicationpath \"" + app + "\" --volume \"" + volume + "\" --license"
-						}else{
-							cmd = "\"" + app + "/Contents/Resources/" + sharedExecutableName + "\"  --license"
+							prios = [1, 2, 0]
 						}
 						
-						print("Getting installer license with the command: " + cmd)
-						
-						let license = getOut(cmd: cmd)
+						while(license.isEmpty){
+							
+							switch(counter % 3){
+							case prios[0]:
+								cmd = "\"" + app + "/Contents/Resources/" + sharedExecutableName + "\" --applicationpath \"" + app + "\" --volume \"" + volume + "\" --license"
+							case prios[1]:
+								cmd = "\"" + app + "/Contents/Resources/" + sharedExecutableName + "\" --applicationpath \"" + app + "\" --license"
+							case prios[2]:
+								cmd = "\"" + app + "/Contents/Resources/" + sharedExecutableName + "\"  --license"
+							default:
+								cmd = "\"" + app + "/Contents/Resources/" + sharedExecutableName + "\" --applicationpath \"" + app + "\" --volume \"" + volume + "\" --license"
+							}
+							
+							print("Getting installer license with the command: " + cmd)
+							
+							license = getOut(cmd: cmd)
+							
+							counter += 1
+							
+							if counter == 20{
+								license = "Impossible to get the macOS license agreement"
+							}
+						}
 						
 						print("Got license agreement")
 						

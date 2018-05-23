@@ -214,6 +214,21 @@ public class SettingsSectionItem: NSView{
 				}
 				
 				scrollView.documentView = surface
+				
+				
+			case idEFI:
+				//efi replacement menu
+				#if useEFIReplacement
+					
+					let surface = EFIReplacementView.init(frame: NSRect(origin: CGPoint.zero, size: NSSize(width: scrollView.frame.size.width - 2, height: scrollView.frame.size.height - 2)))
+					
+					scrollView.documentView = surface
+					
+				#else
+				
+					break
+					
+				#endif
 			default:
 				break
 			}

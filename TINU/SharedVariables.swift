@@ -90,6 +90,13 @@ public var sharedExecutableName: String{
     }
 }
 
+#if useEFIReplacement
+// this is used to store data for efi folder replacement
+
+public var sharedEFIFolderTempData: Data!
+	
+#endif
+
 //this variable is used to determinate if the interface must use the vibrant look, it will not be enabled if the apop is used in a mac os installer or recovery, because the effects without graphics acceleration will cause only lagg
 public var sharedUseVibrant = false{
     didSet{
@@ -163,9 +170,9 @@ public var readmeText: String {
 		#else
 			
         if sharedInstallMac{
-            return "Thank you for using TINU\n\nIf you want to use this macOS system on an hackintosh, please download and install the clover bootloader, you can find it here:\n https://sourceforge.net/projects/cloverefiboot/files/latest/download?source=files\n\nIf you want to use this macOS system on a standard mac, you don`t have to do extra steps, it`s ready to be used"
+            return "Thank you for using TINU\n\nIf you want to use this macOS system on an hackintosh, please download and install the clover bootloader, you can find it here:\n https://sourceforge.net/projects/cloverefiboot/files/latest/download?source=files\n\nIf you want to use this macOS system on a standard mac, you don`t have to do any extra steps, it`s ready to be used"
         }else{
-            return "Thank you for using TINU\n\nIf you want to use this macOS install media on an hackintosh, please download and install the clover bootloader, you can find it here:\n https://sourceforge.net/projects/cloverefiboot/files/latest/download?source=files\n\nIf you want to use this macOS install media on a standard mac, you don`t have to do extra steps, it`s ready to be used"
+            return "Thank you for using TINU\n\nIf you want to use this macOS install media on an hackintosh, please download and install the clover bootloader, you can find it here:\n https://sourceforge.net/projects/cloverefiboot/files/latest/download?source=files\n\nIf you want to use this macOS install media on a standard mac, you don`t have to do any extra steps, it`s ready to be used"
         }
 		#endif
     }

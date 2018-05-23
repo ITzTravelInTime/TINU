@@ -310,21 +310,48 @@ public func installerAppSupportsThatVersion(version: Float) -> Bool!{
     return nil
 }
 
+//returns if the installer app version is earlyer than the specified one
+
+public func installerAppGoesUpToThatVersion(version: Float) -> Bool!{
+	/*if checkSharedBundleVersion(){
+	return (Int(String(sharedBundleVersion.characters.prefix(2)))! - 4) <= version
+	}
+	
+	if checkSharedBundleName(){
+	
+	
+	if let n = Int(installerAppVersion()){
+	return n <= version
+	}
+	}*/
+	
+	if let v = installerAppVersion(){
+		if !v.isEmpty{
+			print("detected version: \(v)")
+			if let n = Float(v){
+				return n < version
+			}
+		}
+	}
+	
+	return nil
+}
+
 //checks if the selected macOS installer application version has apfs support
 public func sharedAppNotSupportsAPFS() -> Bool!{
     print("Checking if the installer app supports APFS")
-    return installerAppSupportsThatVersion(version: 12)
+    return installerAppGoesUpToThatVersion(version: 13)
 }
 
 //checks if the selected mac os installer application does support using tinu from the recovery
 public func sharedAppNotSupportsTINU() -> Bool!{
     print("Checking if the isntaller app supports TINU on recovery")
-    return installerAppSupportsThatVersion(version: 10)
+    return installerAppGoesUpToThatVersion(version: 11)
 }
 
 public func sharedAppNeedsIABoot() -> Bool!{
 	print("Checking if the installer app needs particular boot files replacement or the creation of .IABootFiles folder")
-	return !installerAppSupportsThatVersion(version: 13.3)
+	return !installerAppGoesUpToThatVersion(version: 13.4)
 }
 
 //this funtionm terminates a process
@@ -413,22 +440,25 @@ public func checkOtherOptions(){
 				
 				if sharedInstallMac{
 					var supportsAPFS = false
+					
 					if let st = sharedAppNotSupportsAPFS(){
 						supportsAPFS = st
 					}
+					
 					if let item = otherOptions[otherOptionDoNotUseApfsID]{
 						item.isVisible = !supportsAPFS
 						item.isActivated = !sharedSVReallyIsAPFS
 						item.isUsable = !sharedSVReallyIsAPFS
-						
 					}
 				}else{
 					if let item = otherOptions[otherOptionCreateAIBootFID]{
 							item.isActivated = false
+							item.isVisible = needsIA
 					}
 					
 					if let item = otherOptions[otherOptionDeleteIAPMID]{
 							item.isActivated = false
+							item.isVisible = needsIA
 					}
 				}
 				
