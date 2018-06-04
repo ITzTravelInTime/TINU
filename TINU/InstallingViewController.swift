@@ -358,18 +358,18 @@ class InstallingViewController: GenericViewController{
             //2
             self.addToProgressValue(self.unit)
                 
-            self.setActivityLabelText("Unmounting \"InstallESD\"")
+            self.setActivityLabelText("Unmounting conflicting volumes")
             
             //trys to unmount possible conficting drives that may interfear, like install esd
-            log("\n\n###Trying to unmount \"InstallESD\"")
+            log("\n\n###Trying to unmount conficting volumes")
             
             //trys to unmount install esd because it can create
             if self.unmountConflictingDrive(){
-                log("###\"InstallESD\" unmounted with success or already unmounted")
+                log("###Conflicting volumes unmounted with success or already unmounted")
             }else{
-                log("###Failed to unmount \"InstallESD\"!!!")
+                log("###Failed to unmount conflicting volumes!!!")
                 DispatchQueue.main.sync {
-                    self.goToFinalScreen(title: "TINU failed to unmount \"InstallESD\", check the log for more details", success: false)
+                    self.goToFinalScreen(title: "TINU failed to unmount conflicting volumes, check the log for more details", success: false)
                 }
                 return
             }
@@ -754,6 +754,26 @@ class InstallingViewController: GenericViewController{
 		}
 	}
 	
+	#if useEFIReplacement && !macOnlyMode
+	
+	private var startProgress: Double = 0
+	
+	private var progressRate: Double = 0
+	
+	private var EFICopyEnded = false
+	
+		@objc func checkEFIFolderCopyProcess(_ sender: AnyObject){
+			if EFICopyEnded{
+				timer.invalidate()
+			}
+			
+			if let p = EFIFolderReplacementManager.shared.copyProcessProgress{
+				self.progress.doubleValue = startProgress + (progressRate * p)
+			}
+		}
+	
+	#endif
+	
     private func installFinished(){
         //now the installer creation process has finished running, so our boolean must be false now
         sharedIsCreationInProgress = false
@@ -881,10 +901,10 @@ class InstallingViewController: GenericViewController{
             
             self.goToFinalScreen(title: "macOS install media creation failed: The target drive is no longer available, check the log for details", success: false)
 			
-		}else if (error.first?.contains("The copy of the installer app failed"))! || (error.last?.contains("The copy of the installer app failed"))!{
-			log("macOS install media creation failed because the process failed to copy some elements on it, mainly the installer app or it's content, can't be copied or failed to be copied, please check that your target driver is working properly and just in case erase it with disk utility")
+		}else if (error.first?.contains("The copy of the installer app failed"))! || (error.last?.contains("The copy of the installer app failed"))! || (error[1].contains("The copy of the installer app failed")){
+			log("macOS install media creation failed because the process failed to copy some elements on it, mainly the installer app or it's content, can't be copied or failed to be copied, please check that your target driver is working properly and just in case erase it with disk utility, if that does not work, use another working target device")
 			
-			self.goToFinalScreen(title: "macOS install media creation failed: Error while copying needed files, check the log for more details", success: false)
+			self.goToFinalScreen(title: "macOS install media creation failed: Error while copying files, check that you usb thumb drive is working correctly, more details in the log", success: false)
 
         }else{
             //shows different screen basing on the erros
@@ -940,15 +960,102 @@ class InstallingViewController: GenericViewController{
 		
 		print(sharedVolume)
 		
-        //a file manager, usefoul for the operation that we need later in this function
-        let manager = FileManager.default
+		//a file manager, usefoul for the operation that we need later in this function
+		let manager = FileManager.default
 		
-		var step: Double = 50 / 5
-        
-        log("\n\nStarting extra operations: ")
-        
-        //for o in otherOptions{
-        if let o = otherOptions[otherOptionCreateReadmeID]?.canBeUsed(){
+		let baseDivision: Double = 80
+		
+		var step: Double = baseDivision / 5
+		
+		
+		log("\n\nStarting extra operations: ")
+		
+		
+		#if useEFIReplacement && !macOnlyMode
+			step = baseDivision / 7
+			
+			self.addToProgressValue(step)
+			
+			let efiMan = EFIPartitionManager.shared
+			
+			let efiRepMan = EFIFolderReplacementManager.shared
+			
+			DispatchQueue.main.async {
+				
+				self.EFICopyEnded = false
+				
+				self.startProgress = self.progress.doubleValue
+				
+				self.progressRate = step
+				
+				self.timer.invalidate()
+				self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.checkEFIFolderCopyProcess(_:)), userInfo: nil, repeats: true)
+			}
+			
+			if let f = efiRepMan.checkSavedEFIFolder(){
+				if f{
+					log("There is a saved clover EFI folder, trying to copy it into the EFI partition of the target drive")
+					
+					log("  Trying to mount the EFI partition of the tagret drive")
+					
+					let bsdid = getDriveBSDIDFromVolumeBSDID(volumeID: sharedBSDDrive) + "s1"
+					
+					log("    The EFI partition of the target drive is: \(bsdid)")
+					
+					if efiMan.mountPartition(bsdid){
+						log("    EFI partition \(bsdid) mounted with success")
+						
+						if let mount = getDriveNameFromBSDID(bsdid){
+							
+							if FileManager.default.fileExists(atPath: mount){
+								log("    Mount point for the EFI partition \(bsdid) is: \(mount)")
+								
+								log("    Trying to copy the saved EFI folder in \(mount)")
+								
+								if !efiRepMan.saveEFIFolder(mount + "/EFI"){
+									log("Error while copying the clover EFI folder, operation canceled")
+									ok = false
+								}
+								
+								if ok{
+									log("    EFI folder copied with success")
+								}
+							}else{
+								ok = false
+								log("    The mount poit of the EFI partition does not exist!!!")
+							}
+							
+						}else{
+							log("    Impossible to get a proper mount point for the mounted EFI partition")
+							ok = false
+						}
+						
+					}else{
+						log("    EFI partition not mounted!!")
+						ok = false
+					}
+					
+				}else{
+					log("    Saved EFI folder is not a proper clover 64 bit EFI folder, impossible to copy it on the target drive's EFI partition")
+					ok = false
+				}
+			}else{
+				log("There isn't any saved clover EFI folder, skipping EFI partition mount and EFI folder copying")
+			}
+			
+			DispatchQueue.main.async {
+				
+				self.EFICopyEnded = false
+			
+			}
+			
+			//self.addToProgressValue(step)
+		#endif
+		
+		
+		
+		//for o in otherOptions{
+		if let o = otherOptions[otherOptionCreateReadmeID]?.canBeUsed(){
         if o {
             //creates a readme file into the target drive
             do{
@@ -1130,7 +1237,7 @@ class InstallingViewController: GenericViewController{
         }
         }
 		
-		self.setProgressValue(50)
+		self.setProgressValue(baseDivision)
 		
         //}
 		
@@ -1143,7 +1250,7 @@ class InstallingViewController: GenericViewController{
         if !sharedInstallMac{
 			
 			
-			step = 50 / Double(filesToReplace.count)
+			step = baseDivision / Double(filesToReplace.count)
 			
             self.setActivityLabelText("Replacing boot files")
             
@@ -1243,12 +1350,21 @@ class InstallingViewController: GenericViewController{
         sharedTitle = title
         sharedIsOk = success
         
-        //we no longer need that data
-        eraseReplacementFilesData()
-        
-        //we no longer need to use customized special options
-        restoreOtherOptions()
-        
+        checkOtherOptions()
+		
+		#if !macOnlyMode
+			var unmount = true
+			
+			if let o = otherOptions[otherOptionKeepEFIpartID]?.canBeUsed(){
+				unmount = !o
+			}
+			
+			if unmount{
+				let _ = unmountConflictingDrive()
+			}
+			
+		#endif
+		
         self.openSubstituteWindow(windowStoryboardID: "MainDone", sender: self)
     }
     
@@ -1281,11 +1397,44 @@ class InstallingViewController: GenericViewController{
     
     //this function trys to unmount installesd is it'f mounted because it can create problems with the install process
     public func unmountConflictingDrive() -> Bool{
+		//unmount drive efi partition
+		
+		var res = true
+		
+		#if !macOnlyMode
+			
+			let efiMan = EFIPartitionManager.shared
+			
+			log("    Unmounting EFI partitions")
+			
+			if let ps = efiMan.listPartitions(){
+			
+				for p in ps{
+					log("      Unmounting EFI partition \(p)")
+					if !efiMan.unmounPartition(p){
+						res = false
+						log("      Unmounting EFI partition \(p) failed!!!")
+					}
+				}
+			
+			}
+			
+			if res{
+				log("    EFI partitions unmounted correctly")
+			}
+			
+		#endif
+		
+		log("    Unmounting \"InstallESD\"")
         if driveExists(path: "/Volumes/InstallESD") {
-            return NSWorkspace.shared().unmountAndEjectDevice(atPath: "/Volumes/InstallESD")
-        }else{
-            return true
+			if !NSWorkspace.shared().unmountAndEjectDevice(atPath: "/Volumes/InstallESD"){
+				res = false
+			}else{
+				log("    \"InstallESD\" unmounted correctly or already unmounted")
+			}
         }
+		
+		return res
     }
     
     //this function stops the current executable from running and , it does runs sudo using the password stored in memory

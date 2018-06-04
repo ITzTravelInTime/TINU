@@ -61,4 +61,29 @@ class LogViewController: GenericViewController {
         pasteBoard.clearContents()
         pasteBoard.writeObjects([text.text as NSString])
     }
+    
+    @IBAction func saveLog(_ sender: Any) {
+		let open = NSSavePanel()
+		open.isExtensionHidden = false
+		open.showsHiddenFiles = true
+		
+		open.allowedFileTypes = ["txt"]
+		
+		if open.runModal() == NSModalResponseOK{
+			if let u = open.url?.path{
+				do{
+					
+					try text.text.write(toFile: u, atomically: true, encoding: .utf8)
+					
+				}catch let error{
+					log(error.localizedDescription)
+					msgBoxWarning("Error while saving the log file", "There was an error while saving the log file: \n\n" + error.localizedDescription)
+				}
+			}
+		}
+
+    }
+	
+	
+	
 }

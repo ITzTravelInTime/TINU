@@ -12,6 +12,7 @@
 		C60D39B21F5E4AFC00D94834 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */; };
 		C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */; };
 		C61A3654205DA3F400350BE9 /* DownloadAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61A3653205DA3F400350BE9 /* DownloadAppViewController.swift */; };
+		C61AE89420C2F16400229FEC /* OtherOptionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61AE89320C2F16400229FEC /* OtherOptionInfoViewController.swift */; };
 		C621CFA71F4F6A6500CC6D5B /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */; };
 		C621CFAC1F4F7DF400CC6D5B /* DriveObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFAB1F4F7DF400CC6D5B /* DriveObject.swift */; };
 		C64E56371F51D917007B8CEE /* ChoseAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64E56361F51D917007B8CEE /* ChoseAppViewController.swift */; };
@@ -31,6 +32,8 @@
 		C691D6AB20655C700083D057 /* DriveDetectInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691D6AA20655C700083D057 /* DriveDetectInfoViewController.swift */; };
 		C698B47E204CDAE5007B3CD8 /* MacrosReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */; };
 		C6B16958203B27AF00FD2818 /* ChooseCustomizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */; };
+		C6B74D0A20B8E76A001CAD4D /* EFIFolderReplacementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B74D0920B8E76A001CAD4D /* EFIFolderReplacementManager.swift */; };
+		C6B74D0C20BA2A79001CAD4D /* EFIPartitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B74D0B20BA2A79001CAD4D /* EFIPartitionManager.swift */; };
 		C6C1820D1FE7605300617DC2 /* ChooseSideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C1820C1FE7605300617DC2 /* ChooseSideViewController.swift */; };
 		C6C2EAA72030710A0033EF85 /* SettingsSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */; };
 		C6DF04661F4F33C500D200B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF04651F4F33C500D200B1 /* AppDelegate.swift */; };
@@ -76,6 +79,7 @@
 		C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCreationFinished.swift; sourceTree = "<group>"; };
 		C61A3653205DA3F400350BE9 /* DownloadAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadAppViewController.swift; sourceTree = "<group>"; };
+		C61AE89320C2F16400229FEC /* OtherOptionInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherOptionInfoViewController.swift; sourceTree = "<group>"; };
 		C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		C621CFAB1F4F7DF400CC6D5B /* DriveObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveObject.swift; sourceTree = "<group>"; };
 		C64E56361F51D917007B8CEE /* ChoseAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoseAppViewController.swift; sourceTree = "<group>"; };
@@ -95,6 +99,8 @@
 		C691D6AA20655C700083D057 /* DriveDetectInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveDetectInfoViewController.swift; sourceTree = "<group>"; };
 		C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacrosReference.swift; sourceTree = "<group>"; };
 		C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseCustomizationViewController.swift; sourceTree = "<group>"; };
+		C6B74D0920B8E76A001CAD4D /* EFIFolderReplacementManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EFIFolderReplacementManager.swift; sourceTree = "<group>"; };
+		C6B74D0B20BA2A79001CAD4D /* EFIPartitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EFIPartitionManager.swift; sourceTree = "<group>"; };
 		C6C1820C1FE7605300617DC2 /* ChooseSideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSideViewController.swift; sourceTree = "<group>"; };
 		C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSectionItem.swift; sourceTree = "<group>"; };
 		C6DF04621F4F33C500D200B1 /* TINU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TINU.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -180,6 +186,7 @@
 				C64E56361F51D917007B8CEE /* ChoseAppViewController.swift */,
 				C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */,
 				DDCC4ED41FB5C2A7007FBB6F /* CustomizationViewController.swift */,
+				C61AE89320C2F16400229FEC /* OtherOptionInfoViewController.swift */,
 				C64E56381F51E79C007B8CEE /* ConfirmViewController.swift */,
 				C64E563A1F522854007B8CEE /* InstallingViewController.swift */,
 				C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */,
@@ -281,6 +288,8 @@
 			isa = PBXGroup;
 			children = (
 				C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */,
+				C6B74D0920B8E76A001CAD4D /* EFIFolderReplacementManager.swift */,
+				C6B74D0B20BA2A79001CAD4D /* EFIPartitionManager.swift */,
 				DDDF14631F6730DA00953634 /* SharedVariables.swift */,
 				C65AA61E1F4F497A00C43223 /* SharedInstances.swift */,
 				DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */,
@@ -453,6 +462,7 @@
 				DDD038EB1FB7366400D22695 /* AdvancedOptionsButton.swift in Sources */,
 				DDA7FB601F96AE510029F4F2 /* RuntimeCode.swift in Sources */,
 				C65B5EFF1F72099F0061F1A3 /* ScriptsManager.swift in Sources */,
+				C61AE89420C2F16400229FEC /* OtherOptionInfoViewController.swift in Sources */,
 				C60D39B01F5E136500D94834 /* Part.swift in Sources */,
 				C60B646B20B4464200FEDAA6 /* EFIFolderReplcament.swift in Sources */,
 				C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */,
@@ -463,6 +473,8 @@
 				C64E56371F51D917007B8CEE /* ChoseAppViewController.swift in Sources */,
 				DD73ABE21FB46EEB00C7F721 /* PostCreationVariables.swift in Sources */,
 				DD5016061F993D4500FB1407 /* GenericViewController.swift in Sources */,
+				C6B74D0A20B8E76A001CAD4D /* EFIFolderReplacementManager.swift in Sources */,
+				C6B74D0C20BA2A79001CAD4D /* EFIPartitionManager.swift in Sources */,
 				DDA7FB621F96B13F0029F4F2 /* GenericWindowController.swift in Sources */,
 				C698B47E204CDAE5007B3CD8 /* MacrosReference.swift in Sources */,
 				DD3AC14C1FBB974C00C71F53 /* OtherOptionsItem.swift in Sources */,
@@ -631,7 +643,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG useEFIReplacement";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;

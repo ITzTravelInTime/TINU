@@ -56,7 +56,7 @@ class BootFilesReplacementItem: NSView {
         deleteButton.font = NSFont.boldSystemFont(ofSize: (openButton.font?.pointSize)!)
         deleteButton.isContinuous = openButton.isContinuous
         deleteButton.target = self
-        deleteButton.action = #selector(deleteClick)
+        deleteButton.action = #selector(BootFilesReplacementItem.deleteClick)
         
         self.addSubview(deleteButton)
 		

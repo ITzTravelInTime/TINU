@@ -22,32 +22,37 @@ class ChooseSideViewController: GenericViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-        
-        //those functions are executed here and not into the app delegate, because this is executed first
-        checkAppMode()
-        checkUser()
-        checkSettings()
+		DispatchQueue.global(qos: .background).sync {
+			//those functions are executed here and not into the app delegate, because this is executed first
+			checkAppMode()
+			checkUser()
+			checkSettings()
 		
-		#if demo
-			print("You have sucessfully enbled the \"demo\" macro!")
-		#endif
+			#if demo
+				print("You have sucessfully enbled the \"demo\" macro!")
+			#endif
 		
-        #if recovery
-            print("Running with Local Authentication APIs supported")
-        #endif
+			#if recovery
+				print("Running with Local Authentication APIs supported")
+			#endif
+		
+			#if macOnlyMode
+				print("This version of the app is compiled to be App Store Friendly!")
+			#endif
+		
+			#if noFirstAuth
+				if !sharedIsOnRecovery{
+					print("WARNING: this app has been compiled with the first step authentication disabled, it may be less secure to use!")
+					//msgBoxWarning("WARNING", "This app has been compiled with first step authentication disabled, it may be less secure to use, use it at your own risk!")
+				}
+			#endif
+			
+		}
 		
 		#if macOnlyMode
-			print("This version of the app is compiled to be App Store Friendly!")
-            sloganLabel.stringValue = "TINU: The macOS tool"
+			sloganLabel.stringValue = "TINU: The macOS tool"
 		#endif
 		
-		#if noFirstAuth
-			if !sharedIsOnRecovery{
-				print("WARNING: this app has been compiled with the first step authentication disabled, it may be less secure to use!")
-				//msgBoxWarning("WARNING", "This app has been compiled with first step authentication disabled, it may be less secure to use, use it at your own risk!")
-			}
-		#endif
-        
         //code setup
         
         if let w = sharedWindow{

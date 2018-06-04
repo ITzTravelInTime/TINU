@@ -98,24 +98,29 @@ public func getDriveNameFromBSDID(_ id: String) -> String!{
             }
         }
     }*/
-    let res = getOut(cmd: "diskutil info \"" + id + "\" | grep \"Mount Point\" | awk '{ print substr($0, index($0,$3)) }'")
+	
+    /*let res = getOut(cmd: "diskutil info \"" + id + "\" | grep \"Mount Point\" | awk '{ print substr($0, index($0,$3)) }'")
     
     if res.isEmpty{
         return nil
     }
     
-    return res
+    return res*/
+	
+	return getDevicePropertyInfo(id, propertyName: "Mount Point")
 }
 
 //return the display name of drive from it's bsd id, used in different screens, called potentially many times during the app execution
 public func getDeviceBSDIDFromMountPoint(_ mountPoint: String) -> String!{
-	let res = getOut(cmd: "diskutil info \"" + mountPoint + "\" | grep \"Device Node\" | awk '{ print substr($0, index($0,$3)) }'")
+	/*let res = getOut(cmd: "diskutil info \"" + mountPoint + "\" | grep \"Device Node\" | awk '{ print substr($0, index($0,$3)) }'")
 	
 	if res.isEmpty{
 		return nil
 	}
 	
 	return res
+	*/
+	return getDevicePropertyInfo(mountPoint, propertyName: "Device Node")
 }
 
 //gets the drive mount point from it's bsd name
@@ -131,7 +136,24 @@ public func getBSDIDFromDriveName(_ path: String) -> String!{
 
 //gets the drive device name from it's device name
 public func getDeviceNameFromBSDID(_ id: String) -> String!{
-	let res = getOut(cmd: "diskutil info \"" + getDriveBSDIDFromVolumeBSDID(volumeID: id) + "\" | grep \"Device / Media Name\" | awk '{ print substr($0, index($0,$3)) }'")
+	 return getDeviceNameFromSpecificBSDID(getDriveBSDIDFromVolumeBSDID(volumeID: id))
+}
+
+
+public func getDeviceNameFromSpecificBSDID(_ id: String) -> String!{
+	/*let res = getOut(cmd: "diskutil info \"" + id + "\" | grep \"Device / Media Name\" | awk '{ print substr($0, index($0,$3)) }'")
+	
+	if res.isEmpty{
+		return nil
+	}
+	
+	return res*/
+	
+	return getDevicePropertyInfo(id, propertyName: "Device / Media Name")
+}
+
+public func getDevicePropertyInfo(_ id: String, propertyName: String) -> String!{
+	let res = getOut(cmd: "diskutil info \"" + id + "\" | grep \"\(propertyName)\" | awk '{ print substr($0, index($0,$3)) }'")
 	
 	if res.isEmpty{
 		return nil
@@ -396,6 +418,12 @@ public func checkOtherOptions(){
 	DispatchQueue.global(qos: .background).async{
 		restoreOtherOptions()
 		eraseReplacementFilesData()
+		
+		#if useEFIReplacement && !macOnlyMode
+			
+			let _ = EFIFolderReplacementManager.shared.unloadEFIFolder()
+			
+		#endif
 		
 		processLicense = ""
 		

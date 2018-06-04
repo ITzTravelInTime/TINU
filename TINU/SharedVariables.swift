@@ -90,12 +90,6 @@ public var sharedExecutableName: String{
     }
 }
 
-#if useEFIReplacement
-// this is used to store data for efi folder replacement
-
-public var sharedEFIFolderTempData: Data!
-	
-#endif
 
 //this variable is used to determinate if the interface must use the vibrant look, it will not be enabled if the apop is used in a mac os installer or recovery, because the effects without graphics acceleration will cause only lagg
 public var sharedUseVibrant = false{

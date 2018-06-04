@@ -90,7 +90,7 @@ class CustomizationViewController: GenericViewController {
 				
 				efiReplacement.image.image = getIconFor(path: efiFolderIconPath, alternate: NSWorkspace.shared().icon(forFile: "/Volumes"))
 				
-				efiReplacement.name.stringValue = "Replace EFI folder"
+				efiReplacement.name.stringValue = "Install Clover EFI folder"
 				
 				efiReplacement.id = idEFI
 				
@@ -103,7 +103,7 @@ class CustomizationViewController: GenericViewController {
 				
 				bootFielsRepSection.image.image = getIconFor(path: bootFilesIconPath, name: "options")
 				
-				bootFielsRepSection.name.stringValue = "Boot files replacement"
+				bootFielsRepSection.name.stringValue = "Replace macOS\nboot files"
 				
 				bootFielsRepSection.id = idBFR
 				
