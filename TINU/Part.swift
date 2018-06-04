@@ -10,7 +10,17 @@ import Cocoa
 
 //this is just a simple class that represents a drive, used fot the drive scan algoritm
 public class Part{
+	
+	enum driveTrypes{
+		case normal
+		case apfs
+		case coreStorage
+	}
+	
+	var driveType: driveTrypes = .normal
+	
     var bsdName: String
+    var apfsBDSName: String?
     var name: String
     var path: String
     var fileSystem: String
@@ -18,6 +28,13 @@ public class Part{
     var hasEFI: Bool
     var totSize: Float
     
+    var hasAPFSVolumes = false
+	var hasOriginalVolumes = false
+	
+	var tmDisk = false
+	
+	var size: UInt64! = 0
+	
     public init(){
         bsdName = "/dev/"
         name = ""
@@ -39,7 +56,16 @@ public class Part{
     }
     
     public func copy() -> Part{
-        return Part(partitionBSDName: bsdName, partitionName: name, partitionPath: path, partitionFileSystem: fileSystem, partitionScheme: partScheme, partitionHasEFI: hasEFI, partitionSize: totSize)
+        let p = Part(partitionBSDName: bsdName, partitionName: name, partitionPath: path, partitionFileSystem: fileSystem, partitionScheme: partScheme, partitionHasEFI: hasEFI, partitionSize: totSize)
+        p.hasAPFSVolumes = hasAPFSVolumes
+		p.hasOriginalVolumes = hasOriginalVolumes
+        p.apfsBDSName = apfsBDSName
+		p.driveType = driveType
+		p.size = size
+		
+		p.tmDisk = tmDisk
+		
+        return p
     }
     
     

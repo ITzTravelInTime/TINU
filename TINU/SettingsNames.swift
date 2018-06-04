@@ -8,5 +8,5 @@
 
 import Foundation
 
-let sharedUseVibrantKey = "useVibrant"
-let sharedUseFocusAreaKey = "useFocus"
+let settingUseVibrantKey = "useVibrant"
+let settingUseFocusAreaKey = "useFocus"
