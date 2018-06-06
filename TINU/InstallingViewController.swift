@@ -321,6 +321,8 @@ class InstallingViewController: GenericViewController{
 			
             //this is the name of the executable we need to use now
             let pname = sharedExecutableName
+			
+			let isMojave = installerAppSupportsThatVersion(version: 14.0)!
             
             self.setActivityLabelText("Closing conflicting processes")
             
@@ -587,7 +589,11 @@ class InstallingViewController: GenericViewController{
             log("The target drive is: " + sharedVolume!)
             
             //this strting is used to define the main command to use, then the prefix is added
-            var mainCMD = "\"\(sharedApp!)/Contents/Resources/\(pname)\" --volume \"\(sharedVolume!)\" --applicationpath \"\(sharedApp!)\""
+            var mainCMD = "\"\(sharedApp!)/Contents/Resources/\(pname)\" --volume \"\(sharedVolume!)\""
+			
+			if !isMojave{
+				mainCMD += " --applicationpath \"\(sharedApp!)\""
+			}
             
             //if tinu have to create a mac os installation on the selected drive
             if sharedInstallMac{
@@ -601,7 +607,7 @@ class InstallingViewController: GenericViewController{
                 }
                 
                 //the command is adjusted if the version of the installer supports apfs and if the user prefers to avoid upgrading to apfs
-                if noAPFSSupport{
+                if noAPFSSupport && isMojave{
                     mainCMD += " --agreetolicense;exit;"
                 }else{
                     if useAPFS || sharedBSDDriveAPFS != nil{
@@ -627,7 +633,11 @@ class InstallingViewController: GenericViewController{
                 }else{
                     mainCMD = "echo \"failed test\""
                 }
-                
+				
+				if isMojave{
+					mainCMD = "echo \"Install media now available at \"\(sharedVolume)\"\""
+				}
+				
             }
 			
 			self.setProgressMax(100)
@@ -833,7 +843,7 @@ class InstallingViewController: GenericViewController{
         
         //if the output is empty opr if it's just the standard output of the creation process, it's not logged
         if !self.error.isEmpty{
-            if !((self.error.first?.contains("Erasing Disk: 0%... 10%... 20%... 30%...100%..."))! && self.error.first == self.error.last){
+            if !((self.error.first?.contains("Erasing Disk: 0%... 10%... 20%... 30%...100%"))! && self.error.first == self.error.last){
                 
                 log("process error/s produced: ")
                 //logs the errors produced by the process
@@ -854,7 +864,10 @@ class InstallingViewController: GenericViewController{
         }
         
         //now we checks if the installer creation has been completed sucessfully
-        if (self.output.last?.lowercased().contains("done"))!{
+		
+		let out = self.output.last?.lowercased()
+		
+        if (out?.contains("done"))! || (out?.contains("install media now available at "))!{
             DispatchQueue.global(qos: .background).async {
                 //here createinstall media succedes in creating the installer
                 log("macOS install media created successfully!")

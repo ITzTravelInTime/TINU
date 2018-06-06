@@ -285,6 +285,9 @@ public func installerAppVersion() -> String!{
     
     if checkSharedBundleName(){
         let lc = sharedBundleName.lowercased()
+		if lc.contains("mojave") || lc.contains("10.14"){
+			return "14"
+		}
         if lc.contains("high sierra") || lc.contains("10.13"){
             return "13"
         }
@@ -363,6 +366,12 @@ public func installerAppGoesUpToThatVersion(version: Float) -> Bool!{
 public func sharedAppNotSupportsAPFS() -> Bool!{
     print("Checking if the installer app supports APFS")
     return installerAppGoesUpToThatVersion(version: 13)
+}
+
+//checks if the installer app is a macOS mojave app
+public func sharedAppNotIsMojave() -> Bool!{
+	print("Checking if the installer app is MacOS Mojave")
+	return installerAppGoesUpToThatVersion(version: 14)
 }
 
 //checks if the selected mac os installer application does support using tinu from the recovery
@@ -472,6 +481,13 @@ public func checkOtherOptions(){
 					if let st = sharedAppNotSupportsAPFS(){
 						supportsAPFS = st
 					}
+					
+					if let st = sharedAppNotIsMojave(){
+						if !st{
+							supportsAPFS = true
+						}
+					}
+					
 					
 					if let item = otherOptions[otherOptionDoNotUseApfsID]{
 						item.isVisible = !supportsAPFS

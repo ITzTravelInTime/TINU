@@ -604,7 +604,7 @@ class ChoseDriveViewController: GenericViewController {
 													}
 												}
 												
-												if content == "Apple_HFS" || content == "Apple_APFS"{
+												if content == "Apple_HFS" || content == "Apple_APFS" || isAPFS{
 													drv?.apfsBDSName = idp
 												}else{
 													drv?.bsdName = idp
@@ -631,7 +631,7 @@ class ChoseDriveViewController: GenericViewController {
 														if p == "/"{
 															print("                 Partition is mounted as / , it can't be used")
 															continue
-														}else if p == ""{
+														}else if p.isEmpty{
 															print("                 Partition needs to get a proper mount point")
 															shouldCorrectName =  true
 														}
@@ -644,7 +644,7 @@ class ChoseDriveViewController: GenericViewController {
 													}
 													
                                                     drv?.path = p
-                                                    print("             Partition mount point: " + (drv?.path)!)
+                                                    print("             Partition mount point: " + p)
                                                     
                                                 }else{
                                                     print("             Partition mount point needs to be correct")

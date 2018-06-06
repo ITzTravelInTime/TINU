@@ -22,7 +22,7 @@ class ChooseSideViewController: GenericViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-		DispatchQueue.global(qos: .background).sync {
+		//DispatchQueue.global(qos: .background).sync {
 			//those functions are executed here and not into the app delegate, because this is executed first
 			checkAppMode()
 			checkUser()
@@ -47,7 +47,7 @@ class ChooseSideViewController: GenericViewController {
 				}
 			#endif
 			
-		}
+		//}
 		
 		#if macOnlyMode
 			sloganLabel.stringValue = "TINU: The macOS tool"

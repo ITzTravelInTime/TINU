@@ -60,12 +60,18 @@ class LicenseViewController: GenericViewController {
 				
 				if processLicense == ""{
 					if let app = sharedApp, let volume = sharedVolume{
+						var cmd = ""
 						
 						var noAPFSSupport = true
-						var cmd = ""
 						
 						if let ap = sharedAppNotSupportsAPFS(){
 							noAPFSSupport = ap
+						}
+						
+						var mojaveSupport = true
+						
+						if let ms = sharedAppNotIsMojave(){
+							mojaveSupport = !ms
 						}
 						
 						var license = ""
@@ -74,6 +80,10 @@ class LicenseViewController: GenericViewController {
 						var prios = [0,1,2]
 						
 						if noAPFSSupport{
+							prios = [1, 2, 0]
+						}
+						
+						if mojaveSupport{
 							prios = [1, 2, 0]
 						}
 						
