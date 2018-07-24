@@ -322,7 +322,7 @@ class InstallingViewController: GenericViewController{
             //this is the name of the executable we need to use now
             let pname = sharedExecutableName
 			
-			let isMojave = installerAppSupportsThatVersion(version: 14.0)!
+			let isNotMojave = installerAppGoesUpToThatVersion(version: 14.0)! //installerAppSupportsThatVersion(version: 14.0)!
             
             self.setActivityLabelText("Closing conflicting processes")
             
@@ -591,7 +591,8 @@ class InstallingViewController: GenericViewController{
             //this strting is used to define the main command to use, then the prefix is added
             var mainCMD = "\"\(sharedApp!)/Contents/Resources/\(pname)\" --volume \"\(sharedVolume!)\""
 			
-			if !isMojave{
+			if isNotMojave{
+				print("Old installer app, needs the --applicationpath argument")
 				mainCMD += " --applicationpath \"\(sharedApp!)\""
 			}
             
@@ -607,7 +608,7 @@ class InstallingViewController: GenericViewController{
                 }
                 
                 //the command is adjusted if the version of the installer supports apfs and if the user prefers to avoid upgrading to apfs
-                if noAPFSSupport && isMojave{
+                if noAPFSSupport && !isNotMojave{
                     mainCMD += " --agreetolicense;exit;"
                 }else{
                     if useAPFS || sharedBSDDriveAPFS != nil{
@@ -634,8 +635,8 @@ class InstallingViewController: GenericViewController{
                     mainCMD = "echo \"failed test\""
                 }
 				
-				if isMojave{
-					mainCMD = "echo \"Install media now available at \"\(sharedVolume)\"\""
+				if !isNotMojave{
+					mainCMD = "echo \"Install media now available at \"\(sharedVolume!)\"\""
 				}
 				
             }
