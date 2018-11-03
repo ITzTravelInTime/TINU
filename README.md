@@ -9,7 +9,7 @@ Allows you to create easily a macOS install media without messing around with co
 
 # Features:
   - Simple to use UI that allows you to easily start the macOS install media creation process
-  - It can work with every Mac OS installer app that has the createinstallmedia executable inside of it's resources folder (including also beta and newly released installers)
+  - It can work with every Mac OS installer app that has the createinstallmedia executable inside of its resources folder (including also beta and newly released installers)
   - You can use any drive or partition you want that can be erased and is at least 7 GB of size
   - Works on Mac OS recovery, so you can create a macOS install media from a bootable macOS installer or from the macOs recovery, and you can use TINU to install macOS too.
   - All vanilla, the macOS install medias created with this tool are 100% vanilla, just like you created them using the command line "createinstallmedia" method in the terminal, with also some extra optiona features
