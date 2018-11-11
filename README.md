@@ -68,9 +68,9 @@ Contact me (project creator):
 # Repository rules:
  - Pease trust only official releases of this software, to avoid using any third party modified or recompiled versions, because third party developers can easily hide malweres inside of it
  - If you want to create your own spin-off version of TINU please let the project creator to know!
- - Distribute your spin-off version of TINU on GitHub please!
- - If you believe that your changes may help with the main branch, create your own fork instead and then create a pull/merge request instead to let the changes to be applyed more easily
- - Contact the project creator for problems, bugs and missplacements to fix, suggestions from designers and developers are always welcome
+ - Distribute your spin-off version of TINU on GitHub and respect the license please!
+ - If you believe that your changes may help with the main branch, create your own fork, apply the changes to it and then create a pull/merge request to the main branch here to let the changes to be applyed more easily by the repository maintainers
+ - Contact the project creator for any problems, bugs, spell/grammar errors and missplacements to fix in the main repo, suggestions from designers and developers are always welcome
   
 # Note that:
  - This software is under GNU GPL v3 license so any new branch/mod/third party release must be open source and under the same license
