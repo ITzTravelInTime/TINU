@@ -31,31 +31,33 @@ class MainCreationFinishedViewController: NSViewController{
             a.QuitMenuButton.isEnabled = true
         }
         
-        myTitle.stringValue = sharedTitle
+        myTitle.stringValue = FinalScreenSmallManager.shared.sharedTitle
         
         let notification = NSUserNotification()
-        if !sharedIsOk{
-            image.image = stopIcon
+        if !FinalScreenSmallManager.shared.sharedIsOk{
+            image.image = IconsManager.shared.stopIcon
             exitButton.title = "Quit"
             continueButton.title = "Retry"
             continueButton.isEnabled = true
             continueButton.frame.size.width = exitButton.frame.size.width
             continueButton.frame.origin.x = exitButton.frame.origin.x
+			
+			exitButton.isHidden = true
             
-            notification.title = "macOS install media creation failed"
-            notification.informativeText = "The creation process of the macOS install media has failed, see log for more details"
+            notification.title = "Bootable macOS installer creation failed"
+            notification.informativeText = "The creation process of the bootable macOS installer has failed, see log for more details"
             
-            notification.contentImage = stopIcon
+            notification.contentImage = IconsManager.shared.stopIcon
         }else{
-            image.image = NSImage(named: "check")
+            image.image = NSImage(named: "checkVector")
             exitButton.title = "Quit"
-            continueButton.title = "Create another installer"
+            continueButton.title = "Main menu"
             continueButton.isEnabled = true
             continueButton.isHidden = false
             
-            notification.title = "macOS install media creation finished"
-            notification.informativeText = "The creation process of your macOS install media has been completed with success"
-            notification.contentImage = NSImage(named: "check")
+            notification.title = "Bootable macOS installer creation finished"
+            notification.informativeText = "The creation process of your bootable macOS installer has been completed with success"
+            notification.contentImage = NSImage(named: "checkVector")
         }
         notification.hasActionButton = true
         
@@ -73,11 +75,11 @@ class MainCreationFinishedViewController: NSViewController{
         //if !sharedIsOk {
         clearLog()
         
-        if sharedIsOnRecovery{
+       // if sharedIsOnRecovery{
             openSubstituteWindow(windowStoryboardID: "chooseSide", sender: self)
-        }else{
+        /*}else{
             openSubstituteWindow(windowStoryboardID: "Info", sender: self)
-        }
+        }*/
         //}
     }
     

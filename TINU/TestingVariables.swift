@@ -53,13 +53,17 @@ public let simulateNoSpecialOperations = false
 //this variable is used to simulate a failure while doing advanced operations
 public let simulateSpecialOpertaionsFail = false
 
+//this is used when simulateCreateinstallmediaFail != nil and it uses a custom test print for the test command
+public let simulateCreateinstallmediaFailCustomMessage: String = ""
+
 //this is used to debug the app as it is into the recovery
 public let simulateRecovery = false
 
+
+//this used to disale the new shadow UI
+public let simulateDisableShadows = !false
+
 //non ui testing conditions
 
-//this varibale lets the app to use a plist based system to detect drives
-public let simulateDrivePlistDect = true
-
 //this variable tells to the app to use the alternative apple script cmd for the creation process
-public let simulateUseScriptAuth = false
+public let simulateUseScriptAuth = !false

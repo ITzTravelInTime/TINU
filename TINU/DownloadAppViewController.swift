@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class DownloadAppViewController: GenericViewController {
+public class DownloadAppViewController: GenericViewController {
 
 	@IBOutlet weak var closeButton: NSButton!
 	
@@ -18,26 +18,34 @@ class DownloadAppViewController: GenericViewController {
 	
 	@IBOutlet weak var elButton: NSButton!
 	
-    override func viewDidLoad() {
+	override public func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
 		
 		
     }
 	
-	override func viewDidAppear() {
+	override public func viewDidAppear() {
 		super.viewDidAppear()
 		if self.presenting == nil{
 		//if self.window != sharedWindow{
-			self.window.title = "Download a macOS installer app from the app store"
 			closeButton.stringValue = "Close"
 			closeButton.title = "Close"
 			closeButton.alternateTitle = "Close"
 		}
 	}
 	
+	override func viewDidSetVibrantLook() {
+		super.viewDidSetVibrantLook()
+		
+	}
+	
 	@IBAction func buttonClick(_ sender: Any) {
 			self.window.close()
+	}
+	
+	@IBAction func mjClick(_ sender: Any) {
+		NSWorkspace.shared().open(URL(string: "macappstores://itunes.apple.com/app/macos-mojave/id1398502828")!)
 	}
 	
 	@IBAction func hsClick(_ sender: Any) {

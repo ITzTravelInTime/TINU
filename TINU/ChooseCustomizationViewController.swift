@@ -18,7 +18,7 @@ class ChooseCustomizationViewController: GenericViewController {
         super.viewDidLoad()
         // Do view setup here.
         
-        infoImage.image = infoIcon
+        infoImage.image = IconsManager.shared.infoIcon
 		
 		if sharedInstallMac{
 			titleLabel.stringValue = "Choose the options for the macOS installation"
@@ -28,17 +28,19 @@ class ChooseCustomizationViewController: GenericViewController {
     
     @IBAction func useCustom(_ sender: Any) {
 		DispatchQueue.main.async {
-			sharedMediaIsCustomized = true
+			
+			cvm.shared.sharedMediaIsCustomized = true
 			self.openSubstituteWindow(windowStoryboardID: "Customize", sender: sender)
 		}
     }
     
     @IBAction func useDefault(_ sender: Any) {
 		DispatchQueue.main.async {
+			
 			//restoreOtherOptions()
 			checkOtherOptions()
 		
-			sharedMediaIsCustomized = false
+			cvm.shared.sharedMediaIsCustomized = false
 			self.openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
 		}
     }

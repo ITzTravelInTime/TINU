@@ -23,23 +23,25 @@ extension NSViewController{
             
             //self.dismiss(sender)
             //self.view.window?.windowController?.close()
-            
+			
             if self.view.window != nil{
                 self.view.window?.contentViewController = viewController
                 
                 self.view.window?.contentView = viewController?.view
                 
+                #if !isTool
                 if !sharedIsOnRecovery{
                     if let w = viewController?.window.windowController as? GenericWindowController{
                         w.checkVibrant()
                     }
                 }
+                #endif
                 
                 if tempPos != nil{
                     self.view.window?.setFrameOrigin(tempPos!)
                 }
                 
-                self.view.exitFullScreenMode(options: nil)
+				//self.view.exitFullScreenMode(options: [:])
                 
                 self.dismiss(self)
             }else{
@@ -157,9 +159,27 @@ extension NSView {
 }
 
 extension String{
-    public func copy()-> String{
-        return String(self.characters)
+    @inline(__always) public func copy()-> String{
+        return String("\(self)")
     }
+    
+    func deletingPrefix(_ prefix: String) -> String {
+        guard self.hasPrefix(prefix) else { return self }
+        return String(self.dropFirst(prefix.count))
+    }
+    
+    func deletingSuffix(_ suffix: String) -> String {
+        guard self.hasSuffix(suffix) else { return self }
+        return String(self.dropLast(suffix.count))
+    }
+	
+	@inline(__always) mutating func deletePrefix(_ prefix: String){
+		 self = self.deletingPrefix(prefix)
+	}
+	
+	@inline(__always) mutating func deleteSuffix(_ suffix: String){
+		self = self.deletingSuffix(suffix)
+	}
 }
 
 @IBDesignable
@@ -182,79 +202,24 @@ class HyperTextField: NSTextField {
     }
 }
 
-public func msgBox(_ title: String,_ text: String,_ style: NSAlertStyle){
-    let a = NSAlert()
-    a.messageText = title
-    a.informativeText = text
-    a.alertStyle = style
-    a.runModal()
-}
-
-public func msgBoxWarning(_ title: String,_ text: String){
-    let a = NSAlert()
-    a.messageText = title
-    a.informativeText = text
-    a.alertStyle = .warning
-    a.icon = warningIcon
-    a.runModal()
-}
-
-public func dialogOKCancel(question: String, text: String, style: NSAlertStyle) -> Bool {
-    let myPopup: NSAlert = NSAlert()
-    myPopup.messageText = question
-    myPopup.informativeText = text
-    myPopup.alertStyle = style
-    myPopup.addButton(withTitle: "OK")
-    myPopup.addButton(withTitle: "Cancel")
-    let res = myPopup.runModal()
-    if res == NSAlertFirstButtonReturn {
-        return false
-    }
-    return true
-}
-
-public func dialogYesNo(question: String, text: String, style: NSAlertStyle) -> Bool {
-    let myPopup: NSAlert = NSAlert()
-    myPopup.messageText = question
-    myPopup.informativeText = text
-    myPopup.alertStyle = style
-    myPopup.addButton(withTitle: "Yes")
-    myPopup.addButton(withTitle: "No")
-    let res = myPopup.runModal()
-    if res == NSAlertFirstButtonReturn {
-        return false
-    }
-    return true
-}
-
-public func dialogOKCancelWarning(question: String, text: String, style: NSAlertStyle) -> Bool {
-    let myPopup: NSAlert = NSAlert()
-    myPopup.messageText = question
-    myPopup.informativeText = text
-    myPopup.alertStyle = style
-    myPopup.addButton(withTitle: "OK")
-    myPopup.addButton(withTitle: "Cancel")
-    myPopup.icon = warningIcon
-    let res = myPopup.runModal()
-    if res == NSAlertFirstButtonReturn {
-        return false
-    }
-    return true
-}
-
-public func dialogYesNoWarning(question: String, text: String, style: NSAlertStyle) -> Bool {
-    let myPopup: NSAlert = NSAlert()
-    myPopup.messageText = question
-    myPopup.informativeText = text
-    myPopup.alertStyle = style
-    myPopup.addButton(withTitle: "Yes")
-    myPopup.addButton(withTitle: "No")
-    myPopup.icon = warningIcon
-    let res = myPopup.runModal()
-    if res == NSAlertFirstButtonReturn {
-        return false
-    }
-    return true
+@IBDesignable
+public class HyperMenuItem: NSMenuItem {
+	@IBInspectable var href: String = ""
+	
+	override public func awakeFromNib() {
+		super.awakeFromNib()
+		
+		action = #selector(HyperMenuItem.click(_:))
+		target = self
+	}
+	
+	@objc func click(_ sender: Any){
+		NSWorkspace.shared().open(URL(string: self.href)!)
+	}
+	
+	//func mouseDown(with event: NSEvent) {
+		//NSWorkspace.shared().open(URL(string: self.href)!)
+	//}
 }
 
 extension Bundle {
@@ -276,9 +241,9 @@ extension NSColor {
 		if rgbaHex.hasPrefix("#") {
 			var hexColor: String = rgbaHex.copy()
 			
-			hexColor.characters.removeFirst()
+			hexColor.removeFirst()
 			
-			if hexColor.characters.count == 8 {
+			if hexColor.count == 8 {
 				let scanner = Scanner(string: hexColor)
 				var hexNumber: UInt64 = 0
 				
@@ -303,9 +268,9 @@ extension NSColor {
 		if rgbHex.hasPrefix("#") {
 			var hexColor: String = rgbHex.copy()
 			
-			hexColor.characters.removeFirst()
+			hexColor.removeFirst()
 			
-			if hexColor.characters.count == 8 {
+			if hexColor.count == 8 {
 				let scanner = Scanner(string: hexColor)
 				var hexNumber: UInt64 = 0
 				

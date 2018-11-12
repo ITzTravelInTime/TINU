@@ -8,13 +8,15 @@
 
 import Cocoa
 
-public class OtherOptionsInfoViewController: NSViewController {
+public class OtherOptionsInfoViewController: GenericViewController {
 	
 	@IBOutlet var textView: NSTextView!
 	
 	@IBOutlet weak var button: NSButton!
 	
 	@IBOutlet weak var titleView: NSTextField!
+	
+	@IBOutlet weak var scroller: NSScrollView!
 	
 	public var associatedOption: OtherOptionsObject!
 	
@@ -29,10 +31,14 @@ public class OtherOptionsInfoViewController: NSViewController {
 			}
 		}
 		
+		textView.textColor = NSColor.textColor
+		
 	}
 	
 	override public func viewDidAppear() {
 		super.viewDidAppear()
+		
+		textView.textColor = NSColor.textColor
 		
 		if associatedOption == nil{
 			self.window.close()
@@ -45,5 +51,17 @@ public class OtherOptionsInfoViewController: NSViewController {
 	
 	@IBAction func buttonClick(_ sender: Any) {
 		self.window.close()
+	}
+	
+	override func viewDidSetVibrantLook() {
+		if canUseVibrantLook {
+			scroller.frame = CGRect.init(x: 0, y: scroller.frame.origin.y, width: self.view.frame.width, height: scroller.frame.height)
+			scroller.borderType = .noBorder
+			//scroller.drawsBackground = false
+		}else{
+			scroller.frame = CGRect.init(x: 20, y: scroller.frame.origin.y, width: self.view.frame.width - 40, height: scroller.frame.height)
+			scroller.borderType = .bezelBorder
+			//scroller.drawsBackground = true
+		}
 	}
 }

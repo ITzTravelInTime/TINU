@@ -6,40 +6,66 @@
 //  Copyright © 2018 Pietro Caruso. All rights reserved.
 //
 
-import Cocoa
+import Foundation
 
 #if !macOnlyMode
 	
-	public final class EFIPartitionManager{
+	public class EFIPartitionManager{
 		static var shared = EFIPartitionManager()
 		
+		private var partitionsCache: [String]!
+		
 		public func mountPartition(_ withBSDID: String) -> Bool{
-			print("Try to mount the EFI partition: \(withBSDID)")
+			log("Try to mount the EFI partition: \(withBSDID)")
 			if checkPartition(withBSDID){
 				
-				var text = ""
+				var res = false
 				
-				if installerAppSupportsThatVersion(version: 13.6){
+                var text: String!
+				
+				if #available(OSX 10.13.6, *){
 					text = getOutWithSudo(cmd: "diskutil mount \(withBSDID)")
 				}else{
 					text = getOut(cmd: "diskutil mount \(withBSDID)")
 				}
 				
-				if !(text.contains("mounted") && text.contains("Volume EFI on")){
-					log("    EFI Partition mount error: \(text)")
+				print(text)
+                
+                if text == nil{
+                    return false
+                }
+                
+                
+				
+				res = (text.contains("mounted") && (text.contains("Volume EFI on") || text.contains("Volume (null) on") || (text.contains("Volume ") && text.contains("on")))) || (text.isEmpty)
+				
+				if res{
+					log("EFI partition mounted with success: \(withBSDID)")
 				}else{
-					print("EFI partition mounted with success: \(withBSDID)")
-					return true
+					log("EFI Partition not mounted, error generated: \(text!)")
 				}
 				
+				return res
 				
 			}
 			
 			return false
 		}
 		
-		public func unmounPartition(_ withBSDID: String) -> Bool{
-			print("Try to unmount the EFI partition: \(withBSDID)")
+		public func clearPartitionsCache(){
+			partitionsCache = nil
+		}
+		
+		public func buildPartitionsCache(){
+			partitionsCache = nil
+			partitionsCache = listPartitions()
+		}
+		
+		public func unmountPartition(_ withBSDID: String) -> Bool{
+			log("Try to unmount the EFI partition: \(withBSDID)")
+			if partitionsCache == nil{
+				partitionsCache = []
+			}
 			if checkPartition(withBSDID){
 				/*
 				let id = getDriveNameFromBSDID(withBSDID)
@@ -52,14 +78,26 @@ import Cocoa
 				}
 				*/
 				
-				var res = false//NSWorkspace.shared().unmountAndEjectDevice(atPath: id!)
+				//NSWorkspace.shared().unmountAndEjectDevice(atPath: id!)
 				
-				let text = getOut(cmd: "diskutil unmount \(withBSDID)")
+				if dm.getDriveNameFromBSDID(withBSDID) == nil{
+					log("EFI partition already unmounted: \(withBSDID)")
+					return true
+				}
 				
-				res = (text.contains("unmounted") && text.contains("Volume EFI on")) || (text == "")
+				var res = false
+				
+				var text = ""
+				/*if #available(OSX 10.13.6, *){
+					text = getOutWithSudo(cmd: "diskutil unmount \(withBSDID)")
+				}else{*/
+					text = getOut(cmd: "diskutil unmount \(withBSDID)")
+				//}
+				
+				res = (text.contains("unmounted") && (text.contains("Volume EFI on") || text.contains("Volume (null) on") || (text.contains("Volume ") && text.contains("on")))) || (text.isEmpty)
 				
 				if res{
-					print("EFI partition unmounted with success: \(withBSDID)")
+					log("EFI partition unmounted with success: \(withBSDID)")
 				}else{
 					log("EFI Partition not unmounted, error generated: \(text)")
 				}
@@ -73,7 +111,17 @@ import Cocoa
 		}
 		
 		public func checkPartition(_ withBSDID: String) -> Bool{
-			let res = listPartitions().contains(withBSDID)
+			
+			var res = false
+			
+			if partitionsCache == nil{
+				res = listPartitions().contains(withBSDID)
+			}else{
+				if partitionsCache == []{
+					partitionsCache = listPartitions()
+				}
+				res = partitionsCache.contains(withBSDID)
+			}
 			
 			if !res{
 				print("    Invalid EFI partition: \(withBSDID)")
@@ -84,6 +132,15 @@ import Cocoa
 		
 		public func listPartitions() -> [String]!{
 			
+		if partitionsCache != nil{
+			
+			if partitionsCache == []{
+				buildPartitionsCache()
+			}
+			
+			return partitionsCache
+		}
+			
 			let usableDrives: [String]!
 			
 			do{
@@ -91,14 +148,18 @@ import Cocoa
 				
 				usableDrives = []
 				
-				if let diskutilData = try (decodeXMLDictionaryOpt(xml: getOut(cmd: "diskutil list -plist")) as? [String: Any]){
+				if let diskutilData = try (PlistXMLManager.decodeXMLDictionaryOpt(xml: getOut(cmd: "diskutil list -plist")) as? [String: Any]){
 					
 					print("Got drives data")
 					
 					if let drives = diskutilData["AllDisks"] as? [String]{
 						for drive in drives{
 							
-							if let partType = getDevicePropertyInfo(drive, propertyName: "Partition Type"){
+							var type: String!
+							
+							type = dm.getDevicePropertyInfo(drive, propertyName: "Content")
+							
+							if let partType = type{
 							
 								if partType == "EFI"{
 								
@@ -106,10 +167,15 @@ import Cocoa
 								
 									print("    New EFI partition found: \(drive)")
 								
+								}else{
+									continue
 								}
 								
+							}else{
+								continue
 							}
 						}
+						
 					}else{
 						print("    Wrong disks data!!!")
 						return nil

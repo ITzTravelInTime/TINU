@@ -14,8 +14,6 @@ public var processLicense = ""
 
 class LicenseViewController: GenericViewController {
     
-    @IBOutlet weak var continueButton: NSButton!
-    
     @IBOutlet var licenseField: NSTextView!
     
     @IBOutlet weak var spinner: NSProgressIndicator!
@@ -26,6 +24,10 @@ class LicenseViewController: GenericViewController {
 	
 	@IBOutlet weak var check: NSButton!
 	
+	@IBOutlet weak var continueButton: NSButton!
+	
+	@IBOutlet weak var backButton: NSButton!
+	
     override func viewDidSetVibrantLook(){
         super.viewDidSetVibrantLook()
         
@@ -33,7 +35,7 @@ class LicenseViewController: GenericViewController {
             styleView.isHidden = true
         }
         
-        if canUseVibrantLook {
+        /*if canUseVibrantLook {
             scroller.frame = CGRect.init(x: 0, y: scroller.frame.origin.y, width: self.view.frame.width, height: scroller.frame.height)
             scroller.borderType = .noBorder
             //scroller.drawsBackground = false
@@ -41,7 +43,7 @@ class LicenseViewController: GenericViewController {
             scroller.frame = CGRect.init(x: 20, y: scroller.frame.origin.y, width: self.view.frame.width - 40, height: scroller.frame.height)
             scroller.borderType = .bezelBorder
             //scroller.drawsBackground = true
-        }
+        }*/
     }
     
 	override func viewDidLoad() {
@@ -53,19 +55,46 @@ class LicenseViewController: GenericViewController {
 		
 		check.isEnabled = false
 		
+		if !(sharedIsOnRecovery || simulateDisableShadows){
+			scroller.frame = CGRect.init(x: 0, y: scroller.frame.origin.y, width: self.view.frame.width, height: scroller.frame.height)
+			scroller.borderType = .noBorder
+			//scroller.drawsBackground = false
+			
+			setShadowViewsTopBottomOnly(respectTo: scroller, topBottomViewsShadowRadius: 5)
+			setOtherViews(respectTo: scroller)
+			
+			self.topView.isHidden = false
+			self.bottomView.isHidden = false
+			
+			/*
+			self.lView.isHidden = false
+			self.rView.isHidden = false
+			*/
+		}
+		
 		DispatchQueue.global(qos: .background).async {
 			
 			if showProcessLicense && sharedInstallMac{
-				self.titleField.stringValue = "macOS License Agreement"
+				DispatchQueue.main.async {
+					self.titleField.stringValue = "macOS License Agreement"
+					
+					self.backButton.title = "Disagree"
+				}
 				
-				if processLicense == ""{
-					if let app = sharedApp, let volume = sharedVolume{
-						
-						var noAPFSSupport = true
+				if processLicense.isEmpty{
+					if let app = cvm.shared.sharedApp, let volume = cvm.shared.sharedVolume{
 						var cmd = ""
 						
-						if let ap = sharedAppNotSupportsAPFS(){
+						var noAPFSSupport = true
+						
+						if let ap = iam.shared.sharedAppNotSupportsAPFS(){
 							noAPFSSupport = ap
+						}
+						
+						var mojaveSupport = true
+						
+						if let ms = iam.shared.sharedAppNotIsMojave(){
+							mojaveSupport = !ms
 						}
 						
 						var license = ""
@@ -77,9 +106,13 @@ class LicenseViewController: GenericViewController {
 							prios = [1, 2, 0]
 						}
 						
+						if mojaveSupport{
+							prios = [1, 2, 0]
+						}
+						
 						while(license.isEmpty){
 							
-							switch(counter % 3){
+							switch(counter % prios.count){
 							case prios[0]:
 								cmd = "\"" + app + "/Contents/Resources/" + sharedExecutableName + "\" --applicationpath \"" + app + "\" --volume \"" + volume + "\" --license"
 							case prios[1]:
@@ -120,6 +153,8 @@ class LicenseViewController: GenericViewController {
 							print("scoller shown")
 							self.check.isEnabled = true
 							print("check enabled")
+							
+							print("License shown")
 						}
 					}
 				}else{
@@ -167,6 +202,8 @@ class LicenseViewController: GenericViewController {
 	
     override func viewDidAppear() {
         super.viewDidAppear()
+		
+		licenseField.textColor = NSColor.textColor
     }
 	
     @IBAction func readedChanged(_ sender: Any) {
@@ -180,28 +217,36 @@ class LicenseViewController: GenericViewController {
     }
 	
     @IBAction func continuePressed(_ sender: Any) {
+		DispatchQueue.main.async {
 		self.spinner.isHidden = true
 		self.spinner.stopAnimation(self)
 		self.scroller.isHidden = false
 		if showProcessLicense && sharedInstallMac{
-			let _ = openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
+			#if skipChooseCustomization
+				let _ = self.openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
+			#else
+				let _ = self.openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
+			#endif
 		}else{
-			let _ = openSubstituteWindow(windowStoryboardID: "ChoseDrive", sender: sender)
+			let _ = self.openSubstituteWindow(windowStoryboardID: "ChoseDrive", sender: sender)
+		}
 		}
     }
     
     @IBAction func backPressed(_ sender: Any) {
 		
-		
+		DispatchQueue.main.async {
 		self.spinner.isHidden = true
 		self.spinner.stopAnimation(self)
 		self.scroller.isHidden = false
 		if showProcessLicense && sharedInstallMac{
 			showProcessLicense = false
-			let _ = openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
+			let _ = self.openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
 		}else{
 			showProcessLicense = false
-			let _ = openSubstituteWindow(windowStoryboardID: "Info", sender: sender)
+			let _ = self.openSubstituteWindow(windowStoryboardID: "Info", sender: sender)
 		}
+		}
+		
     }
 }

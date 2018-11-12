@@ -12,13 +12,14 @@ public class DriveDetectInfoWindowController: GenericWindowController {
 	
 	override public func windowDidLoad() {
 		super.windowDidLoad()
+		self.window?.title += ": Why my storage device is not detected?"
 	}
 	
 	convenience init() {
 		//creates an instace of the window
-		self.init(window: NSWindow.init(contentViewController: (sharedStoryboard.instantiateController(withIdentifier: "DriveDetectionInfoViewController") as! NSViewController)))
+		self.init(window: (sharedStoryboard.instantiateController(withIdentifier: "DriveDetectionInfo") as! NSWindowController).window)
 		
-		self.window?.isFullScreenEnaled = false
+		//self.window?.isFullScreenEnaled = false
 		//self.init(windowNibName: "ContactsWindowController")
 	}
 	
@@ -28,13 +29,13 @@ public class DownloadAppWindowController: GenericWindowController {
 	
 	override public func windowDidLoad() {
 		super.windowDidLoad()
+		self.window?.title += ": Download a macOS installer app from the app store"
 	}
 	
 	convenience init() {
 		//creates an instace of the window
-		self.init(window: NSWindow.init(contentViewController: (sharedStoryboard.instantiateController(withIdentifier: "DownloadAppViewController") as! NSViewController)))
-		
-		self.window?.isFullScreenEnaled = false
+		self.init(window: (sharedStoryboard.instantiateController(withIdentifier: "DownloadApp") as! NSWindowController).window)
+		//self.window?.isFullScreenEnaled = false
 		//self.init(windowNibName: "ContactsWindowController")
 	}
 	
@@ -75,6 +76,8 @@ public class LogWindowController: GenericWindowController {
 	override public func windowDidLoad() {
 		super.windowDidLoad()
 		self.window?.title += ": Log"
+		
+		self.window?.isFullScreenEnaled = !true
 	}
 	
 	convenience init() {

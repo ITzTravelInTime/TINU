@@ -6,7 +6,7 @@
 //  Copyright © 2018 Pietro Caruso. All rights reserved.
 //
 
-import Cocoa
+import Foundation
 
 
 #if useEFIReplacement && !macOnlyMode
@@ -27,6 +27,8 @@ import Cocoa
 		
 		private var oDirectory: String!
 		
+		private var missingFile: String!
+		
 		public var openedDirectory: String!{
 			get{
 				return oDirectory
@@ -39,13 +41,25 @@ import Cocoa
 			}
 		}
 		
-		private let contentToCheck = ["/BOOT/BOOTX64.efi", "/CLOVER/CLOVERX64.efi", "/CLOVER/config.plist", "/CLOVER/kexts", "/CLOVER/kexts/Other", "/CLOVER/drivers64UEFI", "/CLOVER/drivers64"]
+		public var filesCount: Double!{
+			get{
+				return Double(sharedEFIFolderTempData.count)
+			}
+		}
+		
+		public var missingFileFromOpenedFolder: String!{
+			get{
+				return missingFile
+			}
+		}
+		
+		private let contentToCheck = ["/BOOT/BOOTX64.efi", "/CLOVER/CLOVERX64.efi", "/CLOVER/config.plist", "/CLOVER/kexts", "/CLOVER/kexts/Other", "/CLOVER/drivers64UEFI" /*, "/CLOVER/drivers64"*/ ]
 		
 		public func saveEFIFolder(_ toPath: String) -> Bool{
 			if let c = checkSavedEFIFolder(){
 				if c{
 					
-					let unit = 1 / Double(sharedEFIFolderTempData.count)
+					let unit = 1 / filesCount
 					
 					cProgress = 0
 					
@@ -129,15 +143,23 @@ import Cocoa
 		public func unloadEFIFolder() -> Bool{
 		
 			if sharedEFIFolderTempData != nil{
-				for f in sharedEFIFolderTempData{
-					print("Removing value from the saved EFI folder: \(f.key)")
+				for var f in sharedEFIFolderTempData{
+					if var data = sharedEFIFolderTempData[f.key]{
+						print("Removing value from the saved EFI folder: \(f.key)")
+						
+						data?.removeAll()
+						data = nil
+					}
+					
 					sharedEFIFolderTempData.removeValue(forKey: f.key)
+					
+					f.key = ""
 				}
 				
-					sharedEFIFolderTempData.removeAll()
-					sharedEFIFolderTempData = nil
+				sharedEFIFolderTempData.removeAll()
+				sharedEFIFolderTempData = nil
 				
-					print("Saved EFI folder cleaned and reset")
+				print("Saved EFI folder cleaned and reset")
 				
 				oDirectory = nil
 			}
@@ -153,7 +175,8 @@ import Cocoa
 			
 			for c in contentToCheck{
 				if !fm.fileExists(atPath: fromPath + c){
-					print("Folder does not contains this needed file: \(c)")
+					print("Folder does not contain this needed file: \(c)")
+					missingFile = c
 					return nil
 				}
 			}
@@ -209,8 +232,10 @@ import Cocoa
 						
 						if id.boolValue{
 							
-							if url.lastPathComponent == "APPLE"{
-								continue
+							if url.deletingLastPathComponent().path == firstDir{
+								if url.lastPathComponent != "BOOT" && url.lastPathComponent != "CLOVER"{
+									continue
+								}
 							}
 							
 							r = scanDir(file)
@@ -263,6 +288,7 @@ import Cocoa
 			for c in contentToCheck{
 				if sharedEFIFolderTempData[c] == nil{
 					print("        Needed file missing from the saved clover EFI folder: " + c)
+					missingFile = c
 					res = false
 				}
 			}
@@ -274,6 +300,10 @@ import Cocoa
 			}
 			
 			return res
+		}
+		
+		public func resetMissingFileFromOpenedFolder(){
+			missingFile = nil
 		}
 		
 	}

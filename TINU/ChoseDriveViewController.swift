@@ -35,6 +35,14 @@ class ChoseDriveViewController: GenericViewController {
                 viewDidSetVibrantLook()
                 ok.title = "Next"
                 ok.isEnabled = false
+				
+				if !(sharedIsOnRecovery || simulateDisableShadows){
+					scoller.drawsBackground = false
+					scoller.borderType = .noBorder
+				}else{
+					scoller.drawsBackground = true
+					scoller.borderType = .bezelBorder
+				}
             }
         }
     }
@@ -42,15 +50,15 @@ class ChoseDriveViewController: GenericViewController {
     
     override func viewDidSetVibrantLook(){
         super.viewDidSetVibrantLook()
-        if canUseVibrantLook || self.empty {
+        /*if canUseVibrantLook || self.empty {
             scoller.frame = CGRect.init(x: 0, y: scoller.frame.origin.y, width: self.view.frame.width, height: scoller.frame.height)
             scoller.drawsBackground = false
             scoller.borderType = .noBorder
-        }else{
+          }else{
             scoller.frame = CGRect.init(x: 20, y: scoller.frame.origin.y, width: self.view.frame.width - 40, height: scoller.frame.height)
             scoller.drawsBackground = true
             scoller.borderType = .bezelBorder
-        }
+        }*/
         
         if let document = scoller.documentView{
             if document.identifier == "spacer"{
@@ -61,6 +69,9 @@ class ChoseDriveViewController: GenericViewController {
                 self.scoller.documentView = document
             }
         }
+		
+		//self.empty.toggle()
+		//self.empty.toggle()
     }
     
     @IBAction func refresh(_ sender: Any) {
@@ -70,9 +81,32 @@ class ChoseDriveViewController: GenericViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-        
+		
+		if !sharedIsOnRecovery && !simulateDisableShadows{
+			scoller.frame = CGRect.init(x: 0, y: scoller.frame.origin.y, width: self.view.frame.width, height: scoller.frame.height)
+			scoller.drawsBackground = false
+			scoller.borderType = .noBorder
+			
+			/*
+			if !simulateDisableShadows{
+			setShadowViewsAll(respectTo: scoller, topBottomViewsShadowRadius: 5, sideViewsShadowRadius: 3)
+			setOtherViews(respectTo: scoller)
+			
+			self.uView.isHidden = true
+			self.bView.isHidden = true
+			
+			self.lView.isHidden = true
+			self.rView.isHidden = true
+			}*/
+			
+		}else{
+			scoller.frame = CGRect.init(x: 20, y: scoller.frame.origin.y, width: self.view.frame.width - 40, height: scoller.frame.height)
+			scoller.drawsBackground = true
+			scoller.borderType = .bezelBorder
+		}
+		
         if sharedInstallMac{
-            titleField.stringValue = "Choose a drive or a partition to install macOS on"
+            titleField.stringValue = "Choose a partition to install macOS on"
         }
         
         updateDrives()
@@ -94,15 +128,13 @@ class ChoseDriveViewController: GenericViewController {
 		self.detectInfoButton.isHidden = true
 		
 		let man = FileManager.default
-        
-        sharedVolume = nil
-        sharedBSDDrive = nil
-        sharedBSDDriveAPFS = nil
 		
-		sharedDoTimeMachineWarn = false
+		cvm.shared.sharedDoTimeMachineWarn = false
         
         //sharedVolumeNeedsFormat = nil
-        sharedVolumeNeedsPartitionMethodChange = nil
+        cvm.shared.sharedVolumeNeedsPartitionMethodChange = nil
+		
+		cvm.shared.currentPart = nil
         
         //here loads drives
         //let keys: [URLResourceKey] = [.volumeNameKey, .volumeIsRemovableKey]
@@ -112,7 +144,7 @@ class ChoseDriveViewController: GenericViewController {
         self.ok.isEnabled = false
         
         //this code just does the parsing of the diskutil list command
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .background).async {
             
             var drvs = [Part]()
             var currentDrv: Part!
@@ -123,293 +155,19 @@ class ChoseDriveViewController: GenericViewController {
                 print("We are on High Sierra or a more recent version of mac, let's activate APFS support")
                 otherFS = "Apple_APFS"
             }
-            
-            let h = (self.scoller.frame.height) / 2 - 80
+			var h: CGFloat = 0
+			
+			DispatchQueue.main.sync {
+            	h = ((self.scoller.frame.height - 17) / 2) - (DriveObject.itemSize.height / 2)
+			}
             
             //just need to know which is the boot volume, to not allow the user to choose it
-            let boot = getDeviceBSDIDFromMountPoint("/")!//getOut(cmd: "/usr/sbin/bless --info --getBoot")
-            
-            if !simulateDrivePlistDect{
-                
-                //let output = getOut(cmd: "diskutil list").components(separatedBy: "\n")
-                let (output, _, _) = runCommand(cmd: "/bin/sh", args: ["-c", "diskutil list"])
-                
-                //print(output)
-                //print(error)
-                //print(status)
-                
-                //let time = Date()
-                
-                
-                
-                for i in output{
-                    var c = i.components(separatedBy: CharacterSet.whitespacesAndNewlines).split(separator: "")
-                    //print(c)
-                    if !c.isEmpty{
-                        if let d = c.first?.first{
-                            if d.contains("/dev/disk"){
-                                currentDrv = Part()
-                                print("Scanning new drive")
-                                continue
-                            }
-                        }
-                        c.removeFirst()
-                        
-                        if let f = c.first?.first{
-                            
-                            switch f{
-                            case "TYPE", "":
-                                continue
-                            case "Apple_Boot", "Apple_CoreStorage", "Apple_partition_map" /*,"Linux", "Linux_Swap"*/:
-                                print("         volume not usable")
-                                continue
-                            case guid:
-                                print("     this drive is guid")
-                                currentDrv.partScheme = f
-                            case mbr, applePS:
-                                currentDrv.partScheme = f
-                                print("     this drive is not guid: " + f)
-                                if !self.checkDriveSize(c, true){
-                                    currentDrv.partScheme = ""
-                                    continue
-                                }
-                            case "EFI":
-                                if c.first?.count == 2{
-                                    if c.first?.last == "EFI"{
-                                        currentDrv.hasEFI = true
-                                        print("     this drive has an efi partition")
-                                    }else{
-                                        currentDrv.hasEFI = false
-                                        print("     invalid efi partition")
-                                    }
-                                }
-                            default:
-                                if currentDrv.partScheme.isEmpty{
-                                    print("     this drive is not usable")
-                                    continue
-                                }else if currentDrv.partScheme == guid{
-                                    if !self.checkDriveSize(c, false) {
-                                        continue
-                                    }
-                                }
-                                
-                                /*if !currentDrv.hasEFI{
-                                 print("         Volume skypped because of a wrong or missing EFI partition")
-                                 continue
-                                 }*/
-                                
-                                var bsd = ""
-                                
-                                if let b = (c.last?.last){
-                                    bsd = b
-                                }else{
-                                    print("         impossible to get the correct BSD name for the volume")
-                                }
-                                
-                                print("         volume BSD name is: " + bsd)
-                                
-                                if boot == "/dev/" + bsd{
-                                    print("         the volume is the boot volume, it will not be added")
-                                    continue
-                                }
-                                
-                                print("     this volume will be added:")
-                                
-                                let drv = currentDrv.copy()
-                                
-                                drv.bsdName += bsd
-                                
-                                
-                                switch f{
-                                case "Apple_HFS":
-                                    drv.fileSystem = "HFS+"
-                                    print("         volume File System is HFS")
-                                case otherFS:
-                                    drv.fileSystem = otherFS
-                                    print("         volume File System is APFS")
-                                default:
-                                    drv.fileSystem = "Other"
-                                    if sharedInstallMac{
-                                        print("         volume File System is not HFS+ or APFS, it needs to be formatted to be used to install macOS on it")
-                                    }else{
-                                        print("         volume File System is not HFS+ or APFS")
-                                    }
-                                }
-                                
-                                c.remove(at: c.count - 1)
-                                
-                                if c.count == 1{
-                                    var d = c.first!
-                                    c.removeFirst()
-                                    d.removeFirst()
-                                    d.removeLast()
-                                    d.removeLast()
-                                    c.append(d)
-                                }else{
-                                    c.removeLast()
-                                    var d = c.first!
-                                    c.removeFirst()
-                                    d.removeFirst()
-                                    c.append(d)
-                                }
-                                
-                                if let cc = c.first{
-                                    for ccc in cc{
-                                        
-                                        drv.name += ccc + " "
-                                    }
-                                    if !drv.name.isEmpty{
-                                        drv.name.characters.removeLast(1)
-                                    }else{
-                                        continue
-                                    }
-                                }
-                                
-                                
-                                drv.path += drv.name
-                                
-                                if drv.name.contains("...") || !FileManager.default.fileExists(atPath: drv.path){
-                                    print("         volume needs a fix for it's name")
-                                    if let path = getDriveNameFromBSDID(drv.bsdName){
-                                        drv.path = path
-                                        drv.name = FileManager.default.displayName(atPath: path)
-                                    }
-                                }
-                                
-                                print("         volume name is " + drv.name)
-                                
-                                let drive = DriveObject(frame: NSRect(x: 0, y: h, width: itmSz.width, height: itmSz.height))
-                                drive.isApp = false
-                                drive.volumePath = drv.path
-                                drive.image.image = NSWorkspace.shared().icon(forFile: drv.path)//NSImage(named: "logo.png")
-                                drive.volume.stringValue = drv.name
-                                drive.volumeBSD = drv.bsdName
-                                drive.part = drv
-                                
-                                drives.append(drive)
-                                drvs.append(drv)
-                            }
-                            
-                            /*
-                             if f == "TYPE" || f.isEmpty {
-                             continue
-                             }else if f == "Apple_Boot" || f == "Apple_CoreStorage" || f == "Apple_partition_map" /*|| f == "Linux" || f == "Linux_Swap"*/{
-                             print("         volume not usable")
-                             continue
-                             }else if f == guid{
-                             currentDrv.partScheme = guid
-                             print("     this drive is guid")
-                             }else if f == mbr || f == applePS{
-                             currentDrv.partScheme = f
-                             print("     this drive is not guid: " + f)
-                             
-                             if !self.checkDriveSize(c, true){
-                             currentDrv.partScheme = ""
-                             continue
-                             }
-                             }else if f == "EFI"{
-                             if c.first?.count == 2{
-                             var cc = c.first!
-                             cc.remove(at: cc.startIndex)
-                             if cc.first == "EFI"{
-                             currentDrv.hasEFI = true
-                             print("     this drive has an efi partition")
-                             }
-                             }
-                             }else{
-                             if currentDrv.partScheme.isEmpty{
-                             print("     this drive is not usable")
-                             continue
-                             }else if currentDrv.partScheme == guid{
-                             if !self.checkDriveSize(c, false) {
-                             continue
-                             }
-                             }
-                             
-                             let drv = currentDrv.copy()
-                             
-                             drv.bsdName += (c.last?.last)!
-                             print("         volume BSD name is: " + drv.bsdName)
-                             
-                             print("     this volume will be added:")
-                             if f == "Apple_HFS"{
-                             drv.fileSystem = "HFS+"
-                             print("         volume File System is HFS")
-                             }else if f == otherFS{
-                             drv.fileSystem = otherFS
-                             print("         volume File System is APFS")
-                             }else{
-                             drv.fileSystem = "Other"
-                             print("         volume File System is not HFS+ or APFS")
-                             }
-                             
-                             
-                             c.remove(at: c.count - 1)
-                             
-                             if c.count == 1{
-                             var d = c.first!
-                             c.remove(at: 0)
-                             d.remove(at: d.startIndex)
-                             d.remove(at: d.endIndex - 1)
-                             d.remove(at: d.endIndex - 1)
-                             c.append(d)
-                             }else{
-                             c.remove(at: c.count - 1)
-                             var d = c.first!
-                             c.remove(at: 0)
-                             d.remove(at: d.startIndex)
-                             c.append(d)
-                             }
-                             
-                             if let cc = c.first{
-                             for ccc in cc{
-                             
-                             drv.name += ccc + " "
-                             }
-                             if !drv.name.isEmpty{
-                             drv.name.characters.removeLast(1)
-                             }else{
-                             continue
-                             }
-                             }
-                             
-                             
-                             drv.path += drv.name
-                             
-                             if drv.name.contains("...") || !FileManager.default.fileExists(atPath: drv.path){
-                             print("         volume needs a fix for it's name")
-                             if let path = getDriveNameFromBSDID(drv.bsdName){
-                             drv.path = path
-                             drv.name = FileManager.default.displayName(atPath: path)
-                             }
-                             }
-                             
-                             print("         volume name is " + drv.name)
-                             
-                             let drive = DriveObject(frame: NSRect(x: 0, y: (self.scoller.frame.height) / 2 - 80, width: 130, height: 150))
-                             drive.isApp = false
-                             drive.volumePath = drv.path
-                             drive.image.image = NSWorkspace.shared().icon(forFile: drv.path)//NSImage(named: "logo.png")
-                             drive.volume.stringValue = drv.name
-                             drive.volumeBSD = drv.bsdName
-                             drive.part = drv
-                             
-                             drives.append(drive)
-                             drvs.append(drv)
-                             
-                             }*/
-                        }else{
-                            continue
-                        }
-                    }
-                    
-                }
-                
-            }else{
+            let boot = dm.getDeviceBSDIDFromMountPoint("/")!//getOut(cmd: "/usr/sbin/bless --info --getBoot")
+			
                 do{
 					print("Waiting for the drives data ...")
 					
-                    if let diskutilData = try (decodeXMLDictionaryOpt(xml: getOut(cmd: "diskutil list -plist")) as? [String: Any]){
+                    if let diskutilData = try (PlistXMLManager.decodeXMLDictionaryOpt(xml: getOut(cmd: "diskutil list -plist")) as? [String: Any]){
 						
 						print("Drives data got with success")
                         
@@ -427,7 +185,7 @@ class ChoseDriveViewController: GenericViewController {
                         var apfsDrives = [Part]()
                         var apfsDrivesCont = 0
 						
-						var bootDiskContainer = getDriveBSDIDFromVolumeBSDID(volumeID: boot)
+						var bootDiskContainer = dm.getDriveBSDIDFromVolumeBSDID(volumeID: boot)
 						//let selectedBoot = getDriveBSDIDFromVolumeBSDID(volumeID: getOut(cmd: "/usr/sbin/bless --info --getBoot"))
 						
 						print("Boot disks detected:")
@@ -564,16 +322,14 @@ class ChoseDriveViewController: GenericViewController {
 													
 													if "/dev/" + idp == boot{
 														print("                 Boot partition can't be used")
-														bootDiskContainer = getDriveBSDIDFromVolumeBSDID(volumeID: (drv?.bsdName)!)
+														bootDiskContainer = dm.getDriveBSDIDFromVolumeBSDID(volumeID: (drv?.bsdName)!)
 														
 														isOnBoot = true
 													}
 													
-													print(bootDiskContainer)
-													
-													let bd = getDriveBSDIDFromVolumeBSDID(volumeID: boot)
-													let cd = getDriveBSDIDFromVolumeBSDID(volumeID: (drv?.bsdName)!)
-													let vd = getDriveBSDIDFromVolumeBSDID(volumeID: idp)
+													let bd = dm.getDriveBSDIDFromVolumeBSDID(volumeID: boot)
+													let cd = dm.getDriveBSDIDFromVolumeBSDID(volumeID: (drv?.bsdName)!)
+													let vd = dm.getDriveBSDIDFromVolumeBSDID(volumeID: idp)
 													
 													if cd == bootDiskContainer || vd == bootDiskContainer || cd == bd || vd == bd{
 														print("                 This volume is on the boot drive and can't be used")
@@ -585,9 +341,11 @@ class ChoseDriveViewController: GenericViewController {
 															var removed = 0
 															var count = 0
 															for d in drives{
-																let dd = getDriveBSDIDFromVolumeBSDID(volumeID: d.volumeBSD)
+																let dd = dm.getDriveBSDIDFromVolumeBSDID(volumeID: d.part.bsdName!)
 																if dd == cd{
-																	print("                 removing \"\(d.volume.stringValue)\" from usable drives list because it's in the boot drive")
+																	DispatchQueue.main.sync {
+																		print("                 removing \"\(d.volume.stringValue)\" from usable drives list because it's in the boot drive")
+																	}
 																	
 																	drives.remove(at: count - removed)
 																	removed += 1
@@ -604,7 +362,7 @@ class ChoseDriveViewController: GenericViewController {
 													}
 												}
 												
-												if content == "Apple_HFS" || content == "Apple_APFS"{
+												if content == "Apple_HFS" || content == "Apple_APFS" || isAPFS{
 													drv?.apfsBDSName = idp
 												}else{
 													drv?.bsdName = idp
@@ -631,7 +389,7 @@ class ChoseDriveViewController: GenericViewController {
 														if p == "/"{
 															print("                 Partition is mounted as / , it can't be used")
 															continue
-														}else if p == ""{
+														}else if p.isEmpty{
 															print("                 Partition needs to get a proper mount point")
 															shouldCorrectName =  true
 														}
@@ -644,7 +402,7 @@ class ChoseDriveViewController: GenericViewController {
 													}
 													
                                                     drv?.path = p
-                                                    print("             Partition mount point: " + (drv?.path)!)
+                                                    print("             Partition mount point: " + p)
                                                     
                                                 }else{
                                                     print("             Partition mount point needs to be correct")
@@ -653,7 +411,7 @@ class ChoseDriveViewController: GenericViewController {
                                                 
                                                 if shouldCorrectName{
                                                     print("             Partition needs a fix for it's name")
-                                                    if let path = getDriveNameFromBSDID((drv?.apfsBDSName!)!){
+                                                    if let path = dm.getDriveNameFromBSDID((drv?.apfsBDSName!)!){
 														
 														if path == "/"{
 															print("                 Partition is mounted as / , it can't be used")
@@ -681,17 +439,20 @@ class ChoseDriveViewController: GenericViewController {
 													drv?.tmDisk = true
 												}
 												
-                                                let drivei = DriveObject(frame: NSRect(x: 0, y: h, width: itmSz.width, height: itmSz.height))
+												DispatchQueue.main.sync {
+												
+                                                let drivei = DriveObject(frame: NSRect(x: 0, y: h, width: DriveObject.itemSize.width, height: DriveObject.itemSize.height))
                                                 drivei.isApp = false
-                                                drivei.volumePath = (drv?.path)!
                                                 drivei.image.image = NSWorkspace.shared().icon(forFile: (drv?.path)!)//NSImage(named: "logo.png")
                                                 drivei.volume.stringValue = (drv?.name)!
-                                                drivei.volumeBSD = (drv?.bsdName)!
                                                 drivei.part = drv
                                                 
                                                 drives.append(drivei)
+													
+												}
                                                 
                                             }
+											
 											if isAPFS{
 												apfsDrivesCont += 1
 											}else{
@@ -724,13 +485,13 @@ class ChoseDriveViewController: GenericViewController {
 												
 												if "/dev/" + idp == boot{
 													print("                 Boot partition can't be used")
-													bootDiskContainer = getDriveBSDIDFromVolumeBSDID(volumeID: idp)
+													bootDiskContainer = dm.getDriveBSDIDFromVolumeBSDID(volumeID: idp)
 													
 													isOnBoot = true
 												}
 												
-												let bd = getDriveBSDIDFromVolumeBSDID(volumeID: boot)
-												let vd = getDriveBSDIDFromVolumeBSDID(volumeID: idp)
+												let bd = dm.getDriveBSDIDFromVolumeBSDID(volumeID: boot)
+												let vd = dm.getDriveBSDIDFromVolumeBSDID(volumeID: idp)
 												
 												if vd == bootDiskContainer || vd == bd{
 													print("                 This volume is on the boot drive and can't be used")
@@ -747,7 +508,7 @@ class ChoseDriveViewController: GenericViewController {
                                                 switch cont{
                                                 case "EFI":
                                                     if let name = partition["VolumeName"] as? String{
-                                                        if name == "EFI" && String(describing: idp.characters.last!) == "1"{
+                                                        if name == "EFI" && String(describing: idp.last!) == "1"{
                                                             currentDrv.hasEFI = true
                                                             print("             Drive does contains an EFI partition")
                                                         }else{
@@ -767,7 +528,7 @@ class ChoseDriveViewController: GenericViewController {
 													
 													let drv = currentDrv.copy()
 													
-													drv.bsdName += idp
+													drv.bsdName = drv.bsdName! + idp
 													
 													if let sz = partition["Size"] as? UInt64 {
 														
@@ -841,7 +602,7 @@ class ChoseDriveViewController: GenericViewController {
                                                     
                                                     if let p = partition["MountPoint"] as? String{
                                                         if p == "/"{
-															bootDiskContainer = getDriveBSDIDFromVolumeBSDID(volumeID: idp)
+															bootDiskContainer = dm.getDriveBSDIDFromVolumeBSDID(volumeID: idp)
 															print("                 Partition is mounted as / , it can't be used")
 															continue
                                                         }else if p == ""{
@@ -857,7 +618,7 @@ class ChoseDriveViewController: GenericViewController {
 														}
                                                         
                                                         drv.path = p
-                                                        print("             Partition mount point: " + drv.path)
+                                                        print("             Partition mount point: " + drv.path!)
                                                         
                                                     }else{
                                                         print("             Partition mount point needs to be correct")
@@ -866,10 +627,10 @@ class ChoseDriveViewController: GenericViewController {
                                                     
                                                     if shouldCorrectName{
                                                         print("             Partition needs a fix for it's name")
-                                                        if let path = getDriveNameFromBSDID(drv.bsdName){
+                                                        if let path = dm.getDriveNameFromBSDID(drv.bsdName!){
 															
 															if path == "/"{
-																bootDiskContainer = getDriveBSDIDFromVolumeBSDID(volumeID: idp)
+																bootDiskContainer = dm.getDriveBSDIDFromVolumeBSDID(volumeID: idp)
 																print("                 Partition is mounted as / , it can't be used")
 																continue
 															}
@@ -882,30 +643,29 @@ class ChoseDriveViewController: GenericViewController {
 															}
 															
                                                             drv.path = path
-                                                            print("             Correct name of the partition: " + drv.path)
+                                                            print("             Correct name of the partition: " + drv.path!)
                                                             drv.name = FileManager.default.displayName(atPath: path)
-                                                            print("             Correct mount point of the partition: " + drv.path)
+                                                            print("             Correct mount point of the partition: " + drv.path!)
                                                         }else{
                                                             print("             Impossible to get the correct name and mountpoint for the partition")
                                                             continue
                                                         }
                                                     }
 													
-													if man.fileExists(atPath: drv.path + "/tmbootpicker.efi") || man.fileExists(atPath: drv.path + "/Backups.backupdb"){
+													if man.fileExists(atPath: drv.path! + "/tmbootpicker.efi") || man.fileExists(atPath: drv.path! + "/Backups.backupdb"){
 														drv.tmDisk = true
 													}
+													DispatchQueue.main.sync {
+                                                    	let drivei = DriveObject(frame: NSRect(x: 0, y: h, width: DriveObject.itemSize.width, height: DriveObject.itemSize.height))
+                                                    	drivei.isApp = false
+                                                    	drivei.image.image = NSWorkspace.shared().icon(forFile: drv.path!)//NSImage(named: "logo.png")
+                                                    	drivei.volume.stringValue = drv.name
+                                                    	drivei.part = drv
                                                     
-                                                    let drivei = DriveObject(frame: NSRect(x: 0, y: h, width: itmSz.width, height: itmSz.height))
-                                                    drivei.isApp = false
-                                                    drivei.volumePath = drv.path
-                                                    drivei.image.image = NSWorkspace.shared().icon(forFile: drv.path)//NSImage(named: "logo.png")
-                                                    drivei.volume.stringValue = drv.name
-                                                    drivei.volumeBSD = drv.bsdName
-                                                    drivei.part = drv
-                                                    
-                                                    drives.append(drivei)
-                                                    drvs.append(drv)
-                                                    
+                                                    	drives.append(drivei)
+                                                    	drvs.append(drv)
+														
+													}
                                                 }
                                             }else{
                                                 
@@ -934,13 +694,8 @@ class ChoseDriveViewController: GenericViewController {
                 }catch{
                     print("Error: " + error.localizedDescription)
                 }
-            }
-            
-            
-            
-            //print(Date().timeIntervalSince(time))
-            
-            DispatchQueue.main.sync {
+			
+			DispatchQueue.main.sync {
                 
                 self.scoller.hasVerticalScroller = false
                 
@@ -952,6 +707,12 @@ class ChoseDriveViewController: GenericViewController {
                 }
                 
                 self.empty = res
+				
+				self.topView.isHidden = res || sharedIsOnRecovery
+				self.bottomView.isHidden = res || sharedIsOnRecovery
+				
+				self.leftView.isHidden = res || sharedIsOnRecovery
+				self.rightView.isHidden = res || sharedIsOnRecovery
                 
                 if res{
                     //fail :(
@@ -980,35 +741,51 @@ class ChoseDriveViewController: GenericViewController {
                     self.errorImage.isHidden = false
                     self.errorLabel.isHidden = false
                     
-                    self.errorImage.image = warningIcon
+                    self.errorImage.image = IconsManager.shared.warningIcon
 					
 					self.detectInfoButton.isHidden = false
-                    
                 }else{
-                    let content = NSView(frame: NSRect(x: 0, y: 0, width: 0, height: self.scoller.frame.size.height - 2 - 20))
+                    let content = NSView(frame: NSRect(x: 0, y: 0, width: 0, height: self.scoller.frame.size.height - 17))
                     content.backgroundColor = NSColor.white.withAlphaComponent(0)
-                    
                     
                     self.scoller.hasHorizontalScroller = true
                     
-                    var temp: CGFloat = 10
+                    var temp: CGFloat = 20
                     for d in drives.reversed(){
                         d.frame.origin.x = temp
-                        temp += d.frame.width
+						if !(sharedIsOnRecovery || simulateDisableShadows){
+                        	temp += d.frame.width + 15
+						}else{
+							temp += d.frame.width
+						}
                         content.addSubview(d)
                     }
-                    content.frame.size.width = temp + 10
+					
+					if !(sharedIsOnRecovery || simulateDisableShadows){
+                    	content.frame.size.width = temp + 5
+					}else{
+						content.frame.size.width = temp + 20
+					}
                     
                     if content.frame.size.width < self.scoller.frame.width{
                         let spacer = NSView(frame: NSRect(x: 0, y: 0, width: self.scoller.frame.width - 2, height: self.scoller.frame.height - 2))
                         spacer.backgroundColor = NSColor.white.withAlphaComponent(0)
+						
                         spacer.identifier = "spacer"
-                        content.frame.origin = NSPoint(x: spacer.frame.width / 2 - content.frame.width / 2, y: 0)
+						
+                        content.frame.origin = NSPoint(x: spacer.frame.width / 2 - content.frame.width / 2, y: 15 / 2)
                         spacer.addSubview(content)
                         self.scoller.documentView = spacer
                     }else{
                         self.scoller.documentView = content
                     }
+					
+					if let documentView = self.scoller.documentView{
+						documentView.scroll(NSPoint.init(x: 0, y: documentView.bounds.size.height))
+					}
+					
+					self.scoller.usesPredominantAxisScrolling = true
+					
                 }
                 
                 self.scoller.isHidden = false
@@ -1029,27 +806,27 @@ class ChoseDriveViewController: GenericViewController {
     
     @IBAction func next(_ sender: Any) {
         if !empty{
-            if sharedVolumeNeedsPartitionMethodChange != nil /*&& sharedVolumeNeedsFormat != nil*/{
-                var dialogText = "This drive does not uses the GUID partition table or a supported file system.\nTo be used to craete a macOS install media it needs to be completely erased and converted into the rigth format, do you want to format it?\n\nNote that if you choose yes, all the data on it will be lost when you start the macOS install media creation process!"
+			
+			let dname = dm.getCurrentDriveName()!
+			
+            if cvm.shared.sharedVolumeNeedsPartitionMethodChange != nil /*&& sharedVolumeNeedsFormat != nil*/{
+				
+				var dialogText = "The drive \"\(dname)\" needs to be formatted entirely to be used to create a bootable macOS installer, because it does not use the GUID partition table"
                 
                 if sharedInstallMac{
-                    dialogText = "This drive does not uses the GUID partition table or a supported file system.\nTo install macOS on it, it needs to be completely erased and converted in the rigth format, do you want to format it?\n\nNote that if you choose yes, all the data on it will be lost when you start the macOS install media creation process!"
+                    dialogText = "The drive \"\(dname)\" needs to be formatted entirely to install macOS on it, because it does not use the GUID partition table"
                 }
-                
-                /*
-                 if sharedVolumeNeedsFormat{
-                 if dialogOKCancel(question: "Format the volume?", text: "This volume will be erased to be used to create a macOS install media, this will permanently erase all the data on it, do you want to continue?", style: .warning){
-                 return
-                 }
-                 }else*/ if sharedVolumeNeedsPartitionMethodChange{
-                    if dialogYesNoWarning(question: "Format the drive?", text: dialogText, style: .warning){
+				
+				if cvm.shared.sharedVolumeNeedsPartitionMethodChange{
+					if !dialogCustomWarning(question: "Format \"\(dname)\"?", text: dialogText, style: .warning, mainButtonText: "Don't format", secondButtonText: "Format"){
                         return
                     }
                 }
             }
 			
-			if sharedDoTimeMachineWarn{
-				if dialogYesNoWarning(question: "This is a Time Machine disk, Are you sure?", text: "This volume is used a s time machine backup volume, and may contain usefoul backup data, that will be lost if you continue, are you sure?", style: .warning){
+			if cvm.shared.sharedDoTimeMachineWarn{
+				let pname = cvm.shared.currentPart.name
+				if !dialogCustomWarning(question: "Format \"\(pname)\"?", text: "The partition \"\(pname)\" is used for time machine backups, and may contain usefoul backup data, that will be lost if you use it", style: .warning, mainButtonText: "Don't format", secondButtonText: "Format"){
 					return
 				}
 			}
@@ -1081,9 +858,9 @@ class ChoseDriveViewController: GenericViewController {
         
         if var n = c.last?.first{
             if isDrive{
-                n.characters.remove(at: n.startIndex)
+                n.remove(at: n.startIndex)
             }else{
-                let s = String(describing: n.characters.first)
+                let s = String(describing: n.first)
                 if s == "*" || s == "+"{
                     print("         volume size is not fixed, skipping it")
                     return false

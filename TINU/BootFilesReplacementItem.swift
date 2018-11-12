@@ -8,6 +8,8 @@
 
 import Cocoa
 
+#if !macOnlyMode
+
 class BootFilesReplacementItem: NSView {
     var textField = NSTextField()
     
@@ -19,12 +21,21 @@ class BootFilesReplacementItem: NSView {
     
     var chosedText = NSTextField()
     
-    var replaceFile: ReplaceFileObject!
+    var replaceFile: BootFilesReplacementManager.ReplaceFileObject!
     
     var isInPlace = false
+	
+	var isGray = false
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
+		
+		//F5F5F5
+		if isGray{
+			self.backgroundColor = NSColor.controlAlternatingRowBackgroundColors[0]
+		}else{
+			self.backgroundColor = NSColor.controlAlternatingRowBackgroundColors[1]
+		}
 		
 		let fieldHeigth: CGFloat = 17
 		let buttonsHeigth: CGFloat = 32
@@ -110,9 +121,9 @@ class BootFilesReplacementItem: NSView {
     }
     
     func deleteClick(){
-        for f in 0...(filesToReplace.count - 1){
-            if filesToReplace[f].filename == replaceFile.filename{
-                filesToReplace[f].data = nil
+        for f in 0...(BootFilesReplacementManager.shared.filesToReplace.count - 1){
+            if BootFilesReplacementManager.shared.filesToReplace[f].filename == replaceFile.filename{
+                BootFilesReplacementManager.shared.filesToReplace[f].data = nil
                 isInPlace = false
                 log("Value removed successfully from \"" + replaceFile.filename + "\"")
             }
@@ -148,9 +159,9 @@ class BootFilesReplacementItem: NSView {
                     
                     //replaceFile.data = try Data.init(contentsOf: open.urls.first!)
                     
-                    for f in 0...(filesToReplace.count - 1){
-                        if filesToReplace[f].filename == replaceFile.filename{
-                            filesToReplace[f].data = try Data.init(contentsOf: open.urls.first!)
+                    for f in 0...(BootFilesReplacementManager.shared.filesToReplace.count - 1){
+                        if BootFilesReplacementManager.shared.filesToReplace[f].filename == replaceFile.filename{
+                            BootFilesReplacementManager.shared.filesToReplace[f].data = try Data.init(contentsOf: open.urls.first!)
                             isInPlace = true
                             log("Value gived sucessfullty!")
                         }
@@ -174,3 +185,5 @@ class BootFilesReplacementItem: NSView {
         }
     }
 }
+
+#endif

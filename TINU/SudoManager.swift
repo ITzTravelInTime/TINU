@@ -8,7 +8,47 @@
 
 import Foundation
 
+#if TINU
+
+import Cocoa
+
+#endif
+
 fileprivate final class SudoManager{
+	
+	#if TINU
+	private var notification: NSUserNotification!
+	#endif
+	
+	@inline(__always) private func sendAuthNotification(){
+		#if TINU
+		if (CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress) && !sharedIsOnRecovery{
+			
+			notification = NSUserNotification()
+			
+			notification.title = "TINU: Please log in"
+			notification.informativeText = "To complete the creation process of your bootable macOS installer TINU needs that you do the login"
+			notification.contentImage = NSImage(named: "AppIcon")
+			
+			notification.hasActionButton = true
+			
+			notification.actionButtonTitle = "Close"
+			
+			notification.soundName = NSUserNotificationDefaultSoundName
+			NSUserNotificationCenter.default.deliver(notification)
+			
+		}
+		#endif
+	}
+	
+	@inline(__always) private func retireAuthNotification(){
+		#if TINU
+		if let noti = notification{
+			NSUserNotificationCenter.default.removeDeliveredNotification(noti)
+		}
+		#endif
+	}
+	
     //this is a singleton bitch
     static let shared = SudoManager()
     
@@ -102,7 +142,7 @@ fileprivate final class SudoManager{
             print(" str value \(pass) has address: \($0)")
         }*/
         if pass != nil{
-            let replaced = String(describing: pass.characters.map {
+            let replaced = String(describing: pass.map {
                 $0 == "\n"
             })
             pass = replaced
@@ -128,20 +168,79 @@ fileprivate final class SudoManager{
     }
     
     fileprivate func getOutWithSudo(cmd: String) -> String!{
-        if let p = getSudoPrefix(){
-            //ths function runs a command on the sh shell and it does return the output
-            return getOut(cmd: p + cmd)
+		
+		if sharedIsReallyOnRecovery{
+			return getOut(cmd: cmd)
+		}
+		
+        #if EFIPM
+        
+        let extra = " with administrator privileges"
+        
+        let theScript = "do shell script \"echo $(\(cmd))\"" + extra
+        let appleScript = NSAppleScript(source: theScript)
+		
+        if let eventResult = appleScript?.executeAndReturnError(nil){
+            return eventResult.stringValue
         }else{
             return nil
         }
+        
+        #else
+		
+		sendAuthNotification()
+		
+		if simulateUseScriptAuth{
+			var ncmd = ""
+			
+			for c in cmd{
+				if String(c) == "\""{
+					ncmd.append("\'")
+				}else{
+					ncmd.append(c)
+				}
+			}
+			
+			let extra = " with administrator privileges"
+			
+			let theScript = "do shell script \"echo $(\(ncmd))\"" + extra
+			
+			print(theScript)
+			
+			let appleScript = NSAppleScript(source: theScript)
+			
+			if let eventResult = appleScript?.executeAndReturnError(nil){
+				retireAuthNotification()
+				return eventResult.stringValue
+			}else{
+				retireAuthNotification()
+				return nil
+			}
+		}else{
+        	if let p = getSudoPrefix(){
+            	//ths function runs a command on the sh shell and it does return the output
+				retireAuthNotification()
+            	return getOut(cmd: p + cmd)
+        	}else{
+				retireAuthNotification()
+            	return nil
+        	}
+		}
+		
+		
+        
+        #endif
     }
     
     fileprivate func runCommandWithSudo(cmd : String, args : [String]) -> (output: [String], error: [String], exitCode: Int32)! {
+		
         if sharedIsReallyOnRecovery{
             return runCommand(cmd: cmd, args: args)
         }
-        
-        if let p = getSudoPrefix(){
+		
+		sendAuthNotification()
+		
+        /*if let p = getSudoPrefix(){
             log("Password got with success")
             var arg = [String]()
             var isc = false
@@ -176,7 +275,37 @@ fileprivate final class SudoManager{
             return runCommand(cmd: cmd, args: arg)
         }else{
             return nil
-        }
+        }*/
+		
+		var output : [String] = []
+		var error : [String] = []
+		var status = Int32()
+		//runs a process object and then return the outputs
+		
+		if let p = startCommandWithSudo(cmd: cmd, args: args){
+		
+		p.process.waitUntilExit()
+			
+		retireAuthNotification()
+		
+		let outdata = p.outputPipe.fileHandleForReading.readDataToEndOfFile()
+		if var string = String(data: outdata, encoding: .utf8) {
+			string = string.trimmingCharacters(in: .newlines)
+			output = string.components(separatedBy: "\n")
+		}
+		
+		let errdata = p.errorPipe.fileHandleForReading.readDataToEndOfFile()
+		if var string = String(data: errdata, encoding: .utf8) {
+			string = string.trimmingCharacters(in: .newlines)
+			error = string.components(separatedBy: "\n")
+		}
+		
+		status = p.process.terminationStatus
+		
+		return (output, error, status)
+		}else{
+			return nil
+		}
         
     }
     
@@ -184,6 +313,12 @@ fileprivate final class SudoManager{
         if sharedIsReallyOnRecovery{
             return startCommand(cmd: cmd, args: args)
         }
+		
+		if simulateUseScriptAuth{
+			return startCommandWithSecurity(cmd: cmd,args: args)
+		}
+		
+		sendAuthNotification()
         
         if let p = getSudoPrefix(){
             log("Password got with success")
@@ -217,49 +352,61 @@ fileprivate final class SudoManager{
              }
              }
              }*/
+			
+			retireAuthNotification()
+			
             return startCommand(cmd: cmd, args: arg)
         }else{
+			retireAuthNotification()
+			
             return nil
         }
         
     }
 	
-	fileprivate func startCommandWithAScriptSudo(cmd : String, args : [String]) -> (process: Process, errorPipe: Pipe, outputPipe: Pipe)!{
+    fileprivate func startCommandWithSecurity(cmd : String, args: [String]) -> (process: Process, errorPipe: Pipe, outputPipe: Pipe)!{
 		if sharedIsReallyOnRecovery{
 			return startCommand(cmd: cmd, args: args)
 		}
 		
+		sendAuthNotification()
 		
-		var script = ""
+		/*
+        
+        var ags = ["execute-with-privileges", cmd]
+        
+        ags.append(contentsOf: args)
 		
-		for cc in cmd.characters{
-			let c = "\(cc)"
-			if c == " " || c == "\""{
-				script += "\\"
+		return startCommand(cmd: "/usr/bin/security", args: ags)*/
+		
+		var pcmd = ""
+		
+		//var isInScript = false
+		
+		for i in args[1]{
+			
+			/*if i == ";" {
+				isInScript = true
+			}*/
+			
+			if i == "\"" /*&& !isInScript*/{
+				pcmd += "\'\"\'\"\'"
+			}else{
+				pcmd += String(i)
 			}
-			script += c
 		}
 		
-		script += " "
+		pcmd += ""
 		
-		for ccc in args{
-			for cc in ccc.characters{
-				let c = "\(cc)"
-				if c == " " || c == "\""{
-					script += "\\"
-				}
-				script += c
-			}
-			script += " "
-		}
+		let baseCMD = "osascript -e \'do shell script \"\(pcmd)\" with administrator privileges\'"
 		
+		print(baseCMD)
 		
+		let start = startCommand(cmd: cmd, args: [args[0], baseCMD])
 		
-		let cmdBase = "echo \"$(osascript -e 'do shell script \"\(script)\" with administrator privileges')\""
+		retireAuthNotification()
 		
-		print(cmdBase)
-		
-		return nil //startCommand(cmd: "/bin/sh",args:["-c", cmdBase])
+		return start
 	}
 }
 
@@ -286,6 +433,6 @@ public func getErrWithSudo(cmd: String) -> String!{
     return sm.getErrWithSudo(cmd: cmd)
 }
 
-public func startCommandWithAScriptSudo(cmd : String, args : [String]) -> (process: Process, errorPipe: Pipe, outputPipe: Pipe)!{
-	return sm.startCommandWithAScriptSudo(cmd : cmd, args : args)
+public func startCommandWithSecurity(cmd : String, args: [String]) -> (process: Process, errorPipe: Pipe, outputPipe: Pipe)!{
+    return sm.startCommandWithSecurity(cmd : cmd, args: args)
 }

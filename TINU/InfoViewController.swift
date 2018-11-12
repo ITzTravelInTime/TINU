@@ -2,7 +2,7 @@
 //  InfoViewController.swift
 //  TINU
 //
-//  Created by Pietro Caruso on 24/08/17.
+//  Created by Pietro Caruso on 24/08/17. <-- this app is in development since this day
 //  Copyright © 2017 Pietro Caruso. All rights reserved.
 //
 
@@ -33,9 +33,9 @@ class InfoViewController: GenericViewController{
         super.viewDidLoad()
         // Do view setup here.
 		
-		if !sharedIsOnRecovery{
-			backButton.isHidden = true
-        }else{
+		/*if !sharedIsOnRecovery{
+			//backButton.isHidden = true
+        }else{*/
             let delta = titleField.frame.origin.y - tinuLabel.frame.origin.y
             
             titleField.frame.origin.y -= delta
@@ -48,11 +48,17 @@ class InfoViewController: GenericViewController{
             
             tinuLabel.isHidden = true
             sloganLabel.isHidden = true
-        }
+        //}
+		
+		#if macOnlyMode
+		if !sharedIsOnRecovery{
+			backButton.isHidden = true
+		}
+		#endif
         
         if sharedInstallMac{
             
-            infoField.stringValue = "This is a tool that helps you to create a macOS install media and also to install macOS\nBefore starting you need:\n   - At least a 20 gb drive or partition\n   - A copy of the macOS installer app (of any version starting from El Capitan) in\n     the root of a storage device connected to the computer"
+            infoField.stringValue = "This is a tool that helps you to create a bootable macOS installer and also to install macOS\nBefore starting you need:\n   - At least a 20 gb drive or partition\n   - A copy of the macOS installer app (of any version starting from El Capitan) in\n     the root of a storage device connected to the computer"
             
             driveIcon.image = NSImage(named: "Internal")
 			
@@ -69,9 +75,9 @@ class InfoViewController: GenericViewController{
             //titleField.stringValue = "To install macOS you need:"
 		}else{
 			#if macOnlyMode
-				sloganLabel.stringValue = "TINU: The macOS install media creation tool"
+				sloganLabel.stringValue = "TINU: The bootable macOS installer creation tool"
 			#else
-				sloganLabel.stringValue = "TINU Is Not Unib***t: The macOS install media creation tool"
+				sloganLabel.stringValue = "TINU Is Not Unib***t: The bootable macOS installer creation tool"
 			#endif
 		}
     }

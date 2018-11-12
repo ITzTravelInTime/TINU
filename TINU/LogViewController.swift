@@ -10,6 +10,7 @@ import Cocoa
 
 //the view controller of the log window
 class LogViewController: GenericViewController {
+	
     @IBOutlet var text: NSTextView!
     @IBOutlet weak var scroller: NSScrollView!
     
@@ -17,10 +18,24 @@ class LogViewController: GenericViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+		
+		self.view.superview?.wantsLayer = true
+		self.view.wantsLayer = true
+		
+		text.font = NSFont(name: "Menlo", size: 12)
+		
+		if !(sharedIsOnRecovery || simulateDisableShadows){
+			scroller.frame = CGRect.init(x: 0, y: scroller.frame.origin.y, width: self.view.frame.width, height: scroller.frame.height)
+			scroller.borderType = .noBorder
+			//scroller.drawsBackground = false
+			
+			setShadowViewsTopBottomOnly(respectTo: scroller, topBottomViewsShadowRadius: 5)
+			setOtherViews(respectTo: scroller)
+		}
     }
     
     override func viewDidSetVibrantLook() {
-        if canUseVibrantLook {
+        /*if canUseVibrantLook {
             scroller.frame = CGRect.init(x: 0, y: scroller.frame.origin.y, width: self.view.frame.width, height: scroller.frame.height)
             scroller.borderType = .noBorder
             //scroller.drawsBackground = false
@@ -28,11 +43,14 @@ class LogViewController: GenericViewController {
             scroller.frame = CGRect.init(x: 20, y: scroller.frame.origin.y, width: self.view.frame.width - 40, height: scroller.frame.height)
             scroller.borderType = .bezelBorder
             //scroller.drawsBackground = true
-        }
+        }*/
     }
     
     override func viewDidAppear() {
         super.viewDidAppear()
+		
+		text.textColor = NSColor.textColor
+		
         timer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(self.updateLog(_:)), userInfo: nil, repeats: true)
     }
     

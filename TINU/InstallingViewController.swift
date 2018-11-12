@@ -34,7 +34,8 @@ class InstallingViewController: GenericViewController{
 	@IBOutlet weak var infoImageView: NSImageView!
     
     @IBOutlet weak var progress: NSProgressIndicator!
-    
+	
+	#if !installManager
     //is used to determnate if old or new auth pis were used
     private var usedLA = false
     
@@ -54,6 +55,7 @@ class InstallingViewController: GenericViewController{
     private var error : [String] = []
     
     private let unit: Double = 1 / 8
+	#endif
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +68,7 @@ class InstallingViewController: GenericViewController{
             w.canHide = false
         }
 		
-		infoImageView.image = infoIcon
+		infoImageView.image = IconsManager.shared.infoIcon
         
         //setup of the window if the app is in install macOS mode
         if sharedInstallMac{
@@ -76,6 +78,10 @@ class InstallingViewController: GenericViewController{
         }
         
         activityLabel.stringValue = ""
+		
+		#if installManager
+			self.setProgressMax(InstallMediaCreationManager.shared.progressMaxVal)
+		#endif
         
         self.setProgressValue(0)
 		
@@ -94,8 +100,8 @@ class InstallingViewController: GenericViewController{
         //this code checks if the app and the drive provided are correct
         var notDone = false
         
-        if let sa = sharedApp{
-            appImage.image = getInstallerAppIcon(forApp: sa)
+        if let sa = cvm.shared.sharedApp{
+            appImage.image = IconsManager.shared.getInstallerAppIcon(forApp: sa)
             appName.stringValue = FileManager.default.displayName(atPath: sa)
             print("Installer app that will be used is: " + sa)
         }else{
@@ -103,24 +109,24 @@ class InstallingViewController: GenericViewController{
         }
         
         setActivityLabelText("Checking target drive")
-        if let sv = sharedVolume{
+        if let sv = cvm.shared.sharedVolume{
             var sr = sv
             
             
             if !FileManager.default.fileExists(atPath: sv){
-				if sharedBSDDrive != nil{
-                if let sb = sharedBSDDrive{
+				if cvm.shared.sharedBSDDrive != nil{
+                if let sb = cvm.shared.sharedBSDDrive{
                     
-                    sr = getDriveNameFromBSDID(sb)
-                    sharedVolume = sr
+                    sr = dm.getDriveNameFromBSDID(sb)
+                    cvm.shared.sharedVolume = sr
                     print("Corrected the name of the target volume" + sr)
                 }else{
                     notDone = true
                 }
 				}else{
-					if let sa = sharedBSDDriveAPFS{
-						sr = getDriveNameFromBSDID(sa)
-						sharedVolume = sr
+					if let sa = cvm.shared.sharedBSDDriveAPFS{
+						sr = dm.getDriveNameFromBSDID(sa)
+						cvm.shared.sharedVolume = sr
 					}else{
 						notDone = true
 					}
@@ -145,31 +151,40 @@ class InstallingViewController: GenericViewController{
             setActivityLabelText("Error with inst. app or target drive")
             print("Couldn't get valid info about the installer app and/or the drive")
             //temporary dialong util a soulution for the go back in the view controller problem is solved
-            if !dialogYesNoWarning(question: "Quit the app?", text: "There was an error while trying to get drive or installer app data, do you want to quit the app?", style: .critical){
+            /*if !dialogYesNoWarning(question: "Quit the app?", text: "There was an error while trying to get drive or installer app data, do you want to quit the app?", style: .critical){
                 NSApplication.shared().terminate(self)
-            }else{
+            }else{*/
 				DispatchQueue.global(qos: .background).async{
 					DispatchQueue.main.async {
 						self.goBack()
 					}
 				}
-            }
+            //}
         }else{
-            print("Everything is ready to start the macOS install media creation process")
-            
-            spinner.startAnimation(self)
-            
+            print("Everything is ready to start the creation/installation process")
+			
+			#if installManager
+			InstallMediaCreationManager.shared.reset()
+			InstallMediaCreationManager.shared.startInstallProcess()
+			#else
+			spinner.startAnimation(self)
             startInstallProcess()
+			#endif
         }
     }
     
     //just to be sure, if the view does disappear the installer creation is stopped
     override func viewWillDisappear() {
-        if sharedIsCreationInProgress || sharedIsPreCreationInProgress{
-            let _ = stop()
+        if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress{
+			#if installManager
+				let _ = InstallMediaCreationManager.shared.stop()
+			#else
+            	let _ = stop()
+			#endif
         }
     }
-    
+	
+	#if !installManager
     private func askFirstAuthOldWay() -> Bool{
         let b = Bundle.main
         
@@ -204,13 +219,22 @@ class InstallingViewController: GenericViewController{
         
         return (self.osStatus == 0 && self.osStatus2 == 0)
     }
+	#endif
 	
+	#if !installManager
 	private func startInstallProcess(){
 		self.cancelButton.isEnabled = false
 		self.enableItems(enabled: false)
 		
 		DispatchQueue.global(qos: .background).async{
 			
+			if simulateUseScriptAuth{
+				DispatchQueue.main.sync {
+					self.usedLA = false
+					self.install()
+				}
+				return
+			}
 			
 			if sharedIsReallyOnRecovery{
 				DispatchQueue.main.sync {
@@ -242,7 +266,7 @@ class InstallingViewController: GenericViewController{
 							
 							let myContext = LAContext()
 							
-							let myLocalizedReasonString = "create a bootable macOS Install media"
+							let myLocalizedReasonString = "Create a bootable macOS Installer"
 							
 							var authError: NSError?
 							
@@ -297,7 +321,9 @@ class InstallingViewController: GenericViewController{
 			#endif
 		}
 	}
+	#endif
 
+	#if !installManager
     private func install(){
 		
         //to have an usable UI during the install we need to use a parallel thread
@@ -305,9 +331,9 @@ class InstallingViewController: GenericViewController{
 			
             //self.setActivityLabelText("Process started")
             //just to avoid problems, the log function in this thred is called inside the Ui thread
-            log("Starting the process ...")
+            log("\nStarting the process ...")
 			
-            sharedIsPreCreationInProgress = true
+            CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress = true
 			
             // variables used to determinate if the format was sucessfoul
             var didChangePS = true
@@ -321,6 +347,8 @@ class InstallingViewController: GenericViewController{
 			
             //this is the name of the executable we need to use now
             let pname = sharedExecutableName
+			
+			let isNotMojave = iam.shared.installerAppGoesUpToThatVersion(version: 14.0)!
             
             self.setActivityLabelText("Closing conflicting processes")
             
@@ -353,7 +381,7 @@ class InstallingViewController: GenericViewController{
                     return
                 }
             }
-            log("***No conflicting processes found or confilicting processes closed with sucess")
+            log("***No conflicting processes found or conflicting processes closed with sucess")
             
             //2
             self.addToProgressValue(self.unit)
@@ -384,12 +412,12 @@ class InstallingViewController: GenericViewController{
             
             //checks the options to use in this function
             if !simulateFormatSkip{
-                if let s = sharedVolumeNeedsPartitionMethodChange {
+                if let s = cvm.shared.sharedVolumeNeedsPartitionMethodChange {
                     canFormat = s
                 }
                 
                 if !canFormat {
-                    if let o = otherOptions[otherOptionForceToFormatID]?.canBeUsed(){
+                    if let o = oom.shared.otherOptions[oom.shared.ids.otherOptionForceToFormatID]?.canBeUsed(){
                         if o && !simulateFormatSkip{
                             canFormat = true
                             log("   Forced drive erase enabled")
@@ -399,7 +427,7 @@ class InstallingViewController: GenericViewController{
             }
             
             if sharedInstallMac{
-                if let o = otherOptions[otherOptionDoNotUseApfsID]?.canBeUsed(){
+                if let o = oom.shared.otherOptions[oom.shared.ids.otherOptionDoNotUseApfsID]?.canBeUsed(){
                     if o {
                         useAPFS = false
                         log("   Forced APFS automatic upgrade enabled")
@@ -422,15 +450,15 @@ class InstallingViewController: GenericViewController{
                 didChangePS = false
                 
                 //this code gets the bsd name of the drive from the bsd name of the partition selcted
-                let tmpBSDName = getDriveBSDIDFromVolumeBSDID(volumeID: sharedBSDDrive)
+                let tmpBSDName = dm.shared.getDriveBSDIDFromVolumeBSDID(volumeID: cvm.shared.sharedBSDDrive)
                 
-                if sharedBSDDriveAPFS != nil{
+                if cvm.shared.sharedBSDDriveAPFS != nil{
                     //NSWorkspace.shared().unmountAndEjectDevice(atPath: sharedVolume)
                     
                     let unmountComm = "diskutil unmountDisk " + tmpBSDName
                     
                     log("APFS Disks unmount will be done with coomand: \n    \(unmountComm)")
-                    
+					
                     if let out = getOutWithSudo(cmd: unmountComm){
                         
                         print(out)
@@ -455,8 +483,8 @@ class InstallingViewController: GenericViewController{
                 
                 var newVolumeName = "Installer"
                 
-                if checkSharedBundleName() {
-                    newVolumeName = sharedBundleName
+                if iam.shared.checkSharedBundleName() {
+                    newVolumeName = cvm.shared.sharedBundleName
                 }
                 
                 //this is the command used to erase the disk and create on just one partition with the GUID table
@@ -467,33 +495,35 @@ class InstallingViewController: GenericViewController{
                 //gets the output of the format script
                 //out is nil only if the authentication has failed
                 if let out = getOutWithSudo(cmd: cmd){
-                    
+					
+					print(out)
+					
                     //output separated in parts
                     let c = out.components(separatedBy: "\n")
                     //the text we are looking for
                     let finishedMark = "Finished erase on disk"
                     
                     if !c.isEmpty{
-                        if !(c.count == 1 && (c.first?.isEmpty)!){
+                        if !(c.count <= 1 && (c.first?.isEmpty)!){
                             //checks if the erase has been completed with success
-                            if c[c.count - 2].contains(finishedMark) || c.last!.contains(finishedMark){
+                            if c.last!.contains(finishedMark){
                                 //we can set this boolean to true because the process has been successfoul
                                 didChangePS = true
                                 //setup variables for the \createinstall media, the target partition is always the second partition into the drive, the first one is the EFI partition
-                                sharedBSDDrive = "/dev/" + tmpBSDName + "s2"
+                                cvm.shared.sharedBSDDrive = "/dev/" + tmpBSDName + "s2"
 								
 								if sharedInstallMac{
-									sharedBSDDriveAPFS = nil
+									cvm.shared.sharedBSDDriveAPFS = nil
 								}
 								
-                                sharedVolume = getDriveNameFromBSDID(sharedBSDDrive)
+                                cvm.shared.sharedVolume = dm.shared.getDriveNameFromBSDID(cvm.shared.sharedBSDDrive)
 								
-                                if sharedVolume == nil{
-                                    sharedVolume = "/Volumes/" + newVolumeName
+                                if cvm.shared.sharedVolume == nil{
+                                    cvm.shared.sharedVolume = "/Volumes/" + newVolumeName
                                 }
                                 
                                 DispatchQueue.main.async {
-                                    if let name = sharedVolume{
+                                    if let name = cvm.shared.sharedVolume{
                                         self.driveImage.image = NSWorkspace.shared().icon(forFile: name)
                                         self.driveName.stringValue = FileManager.default.displayName(atPath: name)
                                     }
@@ -543,7 +573,7 @@ class InstallingViewController: GenericViewController{
                     if sharedInstallMac{
                         self.goToFinalScreen(title: "macOS installer process failed to format the target drive, check the log for details", success: false)
                     }else{
-                        self.goToFinalScreen(title: "macOS install media creation failed to format the target drive, check the log for details", success: false)
+                        self.goToFinalScreen(title: "Bootable macOS installer creation failed to format the target drive, check the log for details", success: false)
                     }
                 }
                 
@@ -566,11 +596,7 @@ class InstallingViewController: GenericViewController{
 				
 				self.setActivityLabelText("Applying options")
 				
-				if !self.performSpeacialOperations(){
-					DispatchQueue.main.sync {
-						log("Failed to perform special operations before installing macOS")
-						self.goToFinalScreen(title: "macOS installer failed to apply the custom options, check the log for more details", success: false)
-					}
+				if !self.manageSpecialOperations(false){
 					return
 				}
 				
@@ -583,11 +609,17 @@ class InstallingViewController: GenericViewController{
 			
             self.setActivityLabelText("Building " + pname + " command string")
             
-            log("The application that will be used is: " + sharedApp!)
-            log("The target drive is: " + sharedVolume!)
+            log("The application that will be used is: " + cvm.shared.sharedApp!)
+            log("The target drive is: " + cvm.shared.sharedVolume!)
             
             //this strting is used to define the main command to use, then the prefix is added
-            var mainCMD = "\"\(sharedApp!)/Contents/Resources/\(pname)\" --volume \"\(sharedVolume!)\" --applicationpath \"\(sharedApp!)\""
+            var mainCMD = "\"\(cvm.shared.sharedApp!)/Contents/Resources/\(pname)\" --volume \"\(cvm.shared.sharedVolume!)\""
+			
+			//mojave instalelr do not supports this argument
+			if isNotMojave{
+				log("This is an older macOS installer app, it needs the --applicationpath argument to use " + pname)
+				mainCMD += " --applicationpath \"\(cvm.shared.sharedApp!)\""
+			}
             
             //if tinu have to create a mac os installation on the selected drive
             if sharedInstallMac{
@@ -596,18 +628,20 @@ class InstallingViewController: GenericViewController{
                 var noAPFSSupport = true
                 
                 //check if the version of the installer does not supports apfs
-                if let ap = sharedAppNotSupportsAPFS(){
+                if let ap = iam.shared.sharedAppNotSupportsAPFS(){
                     noAPFSSupport = ap
                 }
+				
+				mainCMD += " --agreetolicense"
                 
                 //the command is adjusted if the version of the installer supports apfs and if the user prefers to avoid upgrading to apfs
-                if noAPFSSupport{
-                    mainCMD += " --agreetolicense;exit;"
+                if noAPFSSupport && !isNotMojave{
+                    mainCMD += ";exit;"
                 }else{
-                    if useAPFS || sharedBSDDriveAPFS != nil{
-                        mainCMD += " --agreetolicense --converttoapfs YES;exit;"
+                    if useAPFS || cvm.shared.sharedBSDDriveAPFS != nil{
+                        mainCMD += " --converttoapfs YES;exit;"
                     }else{
-                        mainCMD += " --agreetolicense --converttoapfs NO;exit;"
+                        mainCMD += " --converttoapfs NO;exit;"
                     }
                 }
             }else{
@@ -617,17 +651,27 @@ class InstallingViewController: GenericViewController{
             
             //this code is used to simulate results of createinstallmedia, saves time hen tesing the fial screen
             if let scf = simulateCreateinstallmediaFail{
+				
+				//just for debug, prints the real command generated by the code
+				log("Real command: " + mainCMD)
+				
+				if simulateCreateinstallmediaFailCustomMessage.isEmpty{
                 
-                //just for debug, prints the real command generated by the code
-                log("Real command: " + mainCMD)
-                
-                //replace with the test commands
-                if !scf{
-                    mainCMD = "echo \"done test\""
-                }else{
-                    mainCMD = "echo \"failed test\""
-                }
-                
+                	//replace with the test commands
+                	if !scf{
+						if !isNotMojave{
+							mainCMD = "echo \"Install media now available at \"\(cvm.shared.sharedVolume!)\"\""
+						}else{
+                    		mainCMD = "echo \"done test\""
+						}
+                	}else{
+                    	mainCMD = "echo \"failed test\""
+                	}
+				
+				}else{
+					mainCMD = "echo \"\(simulateCreateinstallmediaFailCustomMessage)\""
+				}
+				
             }
 			
 			self.setProgressMax(100)
@@ -638,14 +682,15 @@ class InstallingViewController: GenericViewController{
 			}
 			
             self.setActivityLabelText("Second step authentication")
+			
             
             //logs the performed script and takes care of hiding the password
             log("The script that will be performed is: " + mainCMD)
             
             
             //sswitches state because now we are starting the process of the real creation / instllation
-            sharedIsPreCreationInProgress = false
-            sharedIsCreationInProgress = true
+            CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress = false
+            CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress = true
 			
 			var startC: (process: Process, errorPipe: Pipe, outputPipe: Pipe)!
 			
@@ -658,11 +703,7 @@ class InstallingViewController: GenericViewController{
 			if simulateCreateinstallmediaFail != nil && noFAuth{
 				startC = startCommand(cmd: "/bin/sh", args: ["-c", mainCMD])
 			}else{
-				if simulateUseScriptAuth{
-					startC = startCommandWithAScriptSudo(cmd: "/bin/sh", args: ["-c", mainCMD])
-				}else{
-					startC = startCommandWithSudo(cmd: "/bin/sh", args: ["-c", mainCMD])
-				}
+				startC = startCommandWithSudo(cmd: "/bin/sh", args: ["-c", mainCMD])
 			}
 			
 			DispatchQueue.main.async {
@@ -707,9 +748,9 @@ class InstallingViewController: GenericViewController{
                 }else{
                     //here insted just uses a timer to see if the process has finished and stops this thread
                     //assign processes variables
-                    process = r.process
-                    errorPipe = r.errorPipe
-                    outputPipe = r.outputPipe
+                    CreateinstallmediaSmallManager.shared.process = r.process
+                    CreateinstallmediaSmallManager.shared.errorPipe = r.errorPipe
+                    CreateinstallmediaSmallManager.shared.outputPipe = r.outputPipe
                     
                     DispatchQueue.main.async {
                         self.timer.invalidate()
@@ -723,7 +764,7 @@ class InstallingViewController: GenericViewController{
                 self.freeAuth()
                 
                 //now the installer creation process has finished running, so our boolean must be false now
-                sharedIsPreCreationInProgress = false
+                CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress = false
                 
                 DispatchQueue.main.sync {
                     log("Get password failed")
@@ -741,14 +782,14 @@ class InstallingViewController: GenericViewController{
 	@objc func checkProcessFinished(_ sender: AnyObject){
 		seconds += 1
 		print(String(seconds) + " seconds passed from start")
-		if process.isRunning{
+		if CreateinstallmediaSmallManager.shared.process.isRunning{
 			
 			if seconds % 60 == 0{
 				log("Please wait, the process is still going, minutes since process beginning: \(seconds / 60)")
 			}
 			
 		}else{
-			sharedIsCreationInProgress = false
+			CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress = false
 			self.timer.invalidate()
 			self.installFinished()
 		}
@@ -776,12 +817,7 @@ class InstallingViewController: GenericViewController{
 	
     private func installFinished(){
         //now the installer creation process has finished running, so our boolean must be false now
-        sharedIsCreationInProgress = false
-		
-		DispatchQueue.main.async {
-			self.progress.isHidden = false
-			self.spinner.isHidden = true
-		}
+        CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress = false
 		
         self.setActivityLabelText("Interpreting the results of the process")
         
@@ -795,34 +831,21 @@ class InstallingViewController: GenericViewController{
         }
         
         //this code get's the output of teh process
-        let outdata = outputPipe.fileHandleForReading.readDataToEndOfFile()
+        let outdata = CreateinstallmediaSmallManager.shared.outputPipe.fileHandleForReading.readDataToEndOfFile()
         if var string = String(data: outdata, encoding: .utf8) {
             string = string.trimmingCharacters(in: .newlines)
             self.output = string.components(separatedBy: "\n")
         }
         
         //this code gets the errors of the process
-        let errdata = errorPipe.fileHandleForReading.readDataToEndOfFile()
+        let errdata = CreateinstallmediaSmallManager.shared.errorPipe.fileHandleForReading.readDataToEndOfFile()
         if var string = String(data: errdata, encoding: .utf8) {
             string = string.trimmingCharacters(in: .newlines)
             self.error = string.components(separatedBy: "\n")
         }
-        
-        //gets the termination status for comparison
-        var rc = process.terminationStatus
-        
-        //code used to test if the process has exited with an abnormal code
-        if simulateAbnormalExitcode{
-            rc = 1
-        }
 
         //if there is a not normal code it will be logged
-        log("macOS install media creation finished, createinstallmedia has finished")
-        
-        //if the exit code produced is not normal, it's logged
-        if rc != 0{
-            log("process exit code produced: \n      \(rc)")
-        }
+		log("The process of \(sharedExecutableName) has finished")
         
         log("process output produced: ")
         
@@ -833,7 +856,7 @@ class InstallingViewController: GenericViewController{
         
         //if the output is empty opr if it's just the standard output of the creation process, it's not logged
         if !self.error.isEmpty{
-            if !((self.error.first?.contains("Erasing Disk: 0%... 10%... 20%... 30%...100%..."))! && self.error.first == self.error.last){
+            if !((self.error.first?.contains("Erasing Disk: 0%... 10%... 20%... 30%...100%"))! && self.error.first == self.error.last){
                 
                 log("process error/s produced: ")
                 //logs the errors produced by the process
@@ -842,7 +865,17 @@ class InstallingViewController: GenericViewController{
                 }
             }
         }
-        
+		
+		
+		self.analizeError()
+		
+		/*
+		
+		DispatchQueue.main.async {
+		self.progress.isHidden = false
+		self.spinner.isHidden = true
+		}
+		
         //in case we are installing mac
         if sharedInstallMac{
 			if rc == 0{
@@ -854,7 +887,10 @@ class InstallingViewController: GenericViewController{
         }
         
         //now we checks if the installer creation has been completed sucessfully
-        if (self.output.last?.lowercased().contains("done"))!{
+		
+		let out = self.output.last?.lowercased()
+		
+        if (out?.contains("done"))! || (out?.contains("install media now available at "))!{
             DispatchQueue.global(qos: .background).async {
                 //here createinstall media succedes in creating the installer
                 log("macOS install media created successfully!")
@@ -863,18 +899,15 @@ class InstallingViewController: GenericViewController{
                 //trys to apply special options
                 
                 self.setActivityLabelText("Applaying custom options")
-                let ok = self.performSpeacialOperations()
-                
-                DispatchQueue.main.sync {
-                    if ok{
-                        //ok the installer creation has been completed with sucess, so it sets up the final widnow and then it's showed up
-                        self.goToFinalScreen(title: "macOS install media created successfully", success: true)
-                    }else{
-                        //installer creation failed, bacause of an error with the advanced options
-                        self.goToFinalScreen(title: "macOS install media creation failed to apply the advanced options, check the log for details", success: false)
-                    }
-                }
+				
+				let res = self.manageSpecialOperations(false)
+				
+				if !res{
+					print("Advanced options fails")
+				}
+				
             }
+			
             return
             
         }else if (self.error.last?.contains("A error occurred erasing the disk."))! || (self.output.last?.contains("A error occurred erasing the disk."))! {
@@ -925,11 +958,330 @@ class InstallingViewController: GenericViewController{
                 
             }
         }
-        
+        */
     }
-    
-    //this function manages some special operations done after createinstallmedia finishes
-    private func performSpeacialOperations() -> Bool{
+	
+	private struct CheckItem{
+		
+		enum Operations{
+			case contains
+			case equal
+			case different
+		}
+		
+		let stringsToCheck: [String?]
+		let valuesToCheck: [String]
+		let printMessage: String
+		let message: String
+		let notError: Bool
+		
+		var operation: Operations = .contains
+		
+		var isBack = false
+	}
+	
+	private func analizeError(){
+		
+		DispatchQueue.global(qos: .background).async {
+			
+			//gets the termination status for comparison
+			var rc = CreateinstallmediaSmallManager.shared.process.terminationStatus
+			
+			//code used to test if the process has exited with an abnormal code
+			if simulateAbnormalExitcode{
+				rc = 1
+			}
+			
+			//if the exit code produced is not normal, it's logged
+			if rc != 0{
+				log("process exit code produced: \n      \(rc)")
+			}
+			
+			var dname = dm.getCurrentDriveName()
+			
+			self.setActivityLabelText("Checking previous operations")
+			log("cheking the \(sharedExecutableName) process")
+			
+			if sharedInstallMac{
+				DispatchQueue.main.sync {
+					
+					if rc == 0{
+						self.goToFinalScreen(title: "macOS installed successfully", success: true)
+					}else{
+						self.goToFinalScreen(title: "macOS installation error: check the log for details", success: false)
+					}
+					
+				}
+				
+				return
+			}
+			
+			var fe: String!
+			var me: String!
+			var le: String!
+			
+			//let fo = ""
+			var lo: String!
+			
+			var llo: String!
+			
+			var tt: String!
+			
+			if !simulateCreateinstallmediaFailCustomMessage.isEmpty && simulateAbnormalExitcode{
+				tt = simulateCreateinstallmediaFailCustomMessage
+			}
+			
+			DispatchQueue.main.sync{
+				
+				fe = self.error.first
+				if self.error.indices.contains(1){
+					me = self.error[1]
+				}else{
+					me = nil
+				}
+				le = self.error.last
+				
+				
+				//fo = self.output.first
+				lo = self.output.last
+				
+				llo = self.output.last?.lowercased()
+				
+			}
+			
+			var errorsList: [CheckItem] = []
+	
+			if rc != 0 || simulateUseScriptAuth{
+				
+				//add new known errors here
+				
+				//   |   |   |   |   |
+				//  \/  \/  \/  \/  \/
+				
+				
+				
+				//   /\  /\  /\  /\  /\
+				//   |   |   |   |   |
+				
+				//checks for known errors first
+				
+				if simulateUseScriptAuth{
+					errorsList.append(CheckItem(stringsToCheck: [fe], valuesToCheck: ["NO"], printMessage: "script auth cancelled by user", message: "", notError: false, operation: .contains, isBack: true))
+					
+					if rc != 0{
+					errorsList.append(CheckItem(stringsToCheck: [le], valuesToCheck: ["execution error:", "(-128)"], printMessage: "Apple script operation cancelled, going to previous screen", message: "", notError: false, operation: .contains, isBack: true))
+					}
+					
+					//then checks if the process was completed correctly
+					errorsList.append(CheckItem(stringsToCheck: [llo], valuesToCheck: ["done", "install media now available at "], printMessage: "Bootable macOS installer created successfully!", message: "Bootable macOS installer created successfully", notError: true, operation: .contains, isBack: false))
+				}
+				
+				errorsList.append(CheckItem(stringsToCheck: [tt, le, lo], valuesToCheck: ["A error occurred erasing the disk."], printMessage: "Bootable macOS installer creation failed, createinstallmedia returned an error while formatting the target drive, please, erase this dirve with disk utility and retry", message: "TINU failed to format \"\(dname)\"", notError: false, operation: .contains, isBack: false))
+				
+				errorsList.append(CheckItem(stringsToCheck: [tt, fe, le, me, lo], valuesToCheck: ["does not appear to be a valid OS installer application"], printMessage: "bootable macOS installer creation failed, createinstallmedia returned an error about the app you are using, please, check your mac installaltion app and if needed download it again. Many thimes this appens ,because the installer downloaded from the mac app store, does not contains all the needed files or contanins wrong or corrupted files, in many cases the mac app store on a virtual machine does not downloads the full macOS installer application", message: "Bootable macOS installer creation failed because the selected macOS installer app is damaged", notError: false, operation: .contains, isBack: false))
+				
+				errorsList.append(CheckItem(stringsToCheck: [tt, fe, le, me, lo], valuesToCheck: ["is not a valid volume mount point"], printMessage: "Bootable macOS installer creation failed because the selected volume is no longer available", message: "Bootable macOS installer creation failed because the drive \"\(dname)\" is no longer available", notError: false, operation: .contains, isBack: false))
+				
+				errorsList.append(CheckItem(stringsToCheck: [tt, fe, le, me, lo], valuesToCheck: ["The copy of the installer app failed"], printMessage: "Bootable macOS installer creation creation failed because the process failed to copy some elements on it, mainly the installer app or it's content, can't be copied or failed to be copied, please check that your target driver is working properly and just in case erase it with disk utility, if that does not work, use another drive which is known to be working", message: "Bootable macOS installer creation failed because of an error while copying needed files, check if \"\(dname)\" is working correctly", notError: false, operation: .contains, isBack: false))
+				
+				//then checks for unknown errors
+				errorsList.append(CheckItem(stringsToCheck: ["\(rc)"], valuesToCheck: ["0"], printMessage: "Bootable macOS installer creation creation exited with a not normal exit code, see previous lines in the log to get more info about the error", message: "Bootable macOS installer creation creation failed because of an unknown error, check the log for details", notError: false, operation: .different, isBack: false))
+				
+				if simulateUseScriptAuth{
+					//then if the proces has not been completed correclty, probably we have an error output or an unknown output
+					errorsList.append(CheckItem(stringsToCheck: ["\(rc)"], valuesToCheck: ["0"], printMessage: "Bootable macOS installer creation failed, unknown output from \"createinstallmedia\" while creating the installer, please, erase this dirve with disk utility and retry", message: "Bootable macOS installer creation failed because of an unknown output from \"\(sharedExecutableName)\", check the log for details", notError: false, operation: .equal, isBack: false))
+				}
+				
+			}else{
+				
+				//then checks if the process was completed correctly
+				errorsList.append(CheckItem(stringsToCheck: [llo], valuesToCheck: ["done", "install media now available at "], printMessage: "macOS install media created successfully!", message: "macOS install media created successfully", notError: true, operation: .contains, isBack: false))
+				
+				//then if the proces has not been completed correclty, probably we have an error output or an unknown output
+				errorsList.append(CheckItem(stringsToCheck: ["\(rc)"], valuesToCheck: ["0"], printMessage: "macOS install media creation failed, unknown output from \"\(sharedExecutableName)\" while creating the installer, please, erase this dirve with disk utility and retry", message: "Bootable macOS installer creation failed because of an unknown output from \"\(sharedExecutableName)\", check the log for details", notError: false, operation: .equal, isBack: false))
+				
+			}
+			
+			//checks the conditions of the errorlist array to see if the operation has been complited with success
+			for item in errorsList{
+				for value in item.valuesToCheck{
+					
+					if self.checkMatch(item.stringsToCheck, value, operation: item.operation){
+						
+						log("\n\(item.printMessage)\n")
+						
+						if item.notError{
+							var res = false
+							
+							DispatchQueue.main.async {
+								self.progress.isHidden = false
+								self.spinner.isHidden = true
+							}
+							
+							DispatchQueue.global(qos: .background).sync {
+								//here createinstall media succedes in creating the installer
+								log("\(sharedExecutableName) process ended with success")
+								log("Bootable macOS installer created successfully!")
+								
+								//extra operations here
+								//trys to apply special options
+								
+								self.setActivityLabelText("Applaying custom options")
+								
+								res = self.manageSpecialOperations(true)
+							}
+							
+							if !res{
+								print("Advanced options fails")
+								return
+							}
+							
+						}
+						
+						if item.isBack{
+							DispatchQueue.main.sync {
+								self.goBack()
+							}
+						}else{
+							DispatchQueue.main.sync {
+								self.goToFinalScreen(title: item.message, success: item.notError)
+							}
+						}
+						
+						
+						return
+					}
+				}
+			}
+			
+		}
+		
+	}
+	
+	private func checkMatch(_ stringsToCheck: [String?], _ valueToCheck: String, operation: CheckItem.Operations) -> Bool{
+		var ret = false
+		
+		for ss in stringsToCheck{
+			if let s = ss{
+				switch operation{
+				case .different:
+					
+					if s != valueToCheck{
+						ret = true
+					}
+					
+				case .equal:
+					
+					if s == valueToCheck{
+						ret = true
+					}
+					
+				default:
+					
+					if s.contains(valueToCheck){
+						ret = true
+					}
+				}
+				
+			}
+		}
+		
+		return ret
+	}
+	
+	private func manageSpecialOperations(_ usesNewMethod: Bool) -> Bool{
+		var ret = true
+		DispatchQueue.global(qos: .background).sync {
+			
+			prepareToPerformSpecialOperations()
+			
+			let ok = self.performSpeacialOperations()
+			
+			#if !macOnlyMode
+			
+			var unmount = true
+			
+			if let o = oom.shared.otherOptions[oom.shared.ids.otherOptionKeepEFIpartID]?.canBeUsed(){
+				unmount = !o
+			}
+			
+			if unmount{
+				self.setActivityLabelText("Unmounting partitions")
+				DispatchQueue.global(qos: .background).sync {
+					let _ = self.unmountConflictingDrive()
+				}
+			}
+			
+			#endif
+			
+			self.setActivityLabelText("Process ended, exiting ...")
+			
+			DispatchQueue.main.sync {
+				if ok.success{
+					//ok the installer creation has been completed with sucess, so it sets up the final widnow and then it's showed up
+					if !sharedInstallMac && !usesNewMethod{
+						self.goToFinalScreen(title: "Bootable macOS installer created successfully", success: true)
+					}
+					
+				}else{
+					
+					ret = false
+					
+					//installer creation failed, bacause of an error with the advanced options
+					
+					if sharedInstallMac{
+						
+						log("\nOne or more errors detected during the execution of the options, the macOS installation process has been canceld, check the messages printed before this one for more details abut that erros\n")
+						
+					}else{
+						
+						log("\nOne or more errors detected during the execution of the advanced options, the bootable macOS installer will probably not work properly, so we sugegst you to restart the whole install media creation process and eventually to format the target drive using terminal or disk utility before using TINU, check the messages printed before this one for more details about that erros\n")
+						
+					}
+					
+					
+					if let msg = ok.errorMessage{
+						
+						self.goToFinalScreen(title: msg, success: false)
+						
+					}else{
+						
+						self.goToFinalScreen(title: "Bootable macOS installer creation failed to apply the advanced options, check the log for details", success: false)
+					}
+				}
+			}
+			
+		}
+		
+		return ret
+	}
+	
+	private func prepareToPerformSpecialOperations(){
+		if sharedInstallMac{
+			if let a = cvm.shared.sharedBSDDriveAPFS{
+				cvm.shared.sharedVolume = dm.shared.getDriveNameFromBSDID(a)
+			}else{
+				cvm.shared.sharedVolume = dm.shared.getDriveNameFromBSDID(cvm.shared.sharedBSDDrive!)
+			}
+		}else{
+			cvm.shared.sharedVolume = dm.shared.getDriveNameFromBSDID(cvm.shared.sharedBSDDrive!)
+		}
+		
+		print(cvm.shared.sharedVolume)
+	}
+	
+	private func checkOperationResult(operation: (result: Bool, message: String?), res: inout Bool) -> String?{
+		if !operation.result{
+			res = false
+			
+			return operation.message
+		}
+		
+		return nil
+	}
+	
+	//this function manages some special operations done after createinstallmedia finishes
+	private func performSpeacialOperations() -> (success: Bool, errorMessage: String?){
 		
 		DispatchQueue.main.sync {
 			self.progress.isIndeterminate = false
@@ -939,365 +1291,124 @@ class InstallingViewController: GenericViewController{
 		self.setProgressMax(100)
 		
 		
-        //testing code, exits from the function if we are in some particolar testing conditions
-        if simulateNoSpecialOperations{
-            //self.goToFinalScreen(title: "macOS install media created successfully", success: true)
-            return true
-        }
-        
-        //DispatchQueue.global(qos: .background).async{
-		
-		var ok = true
-		if sharedInstallMac{
-			if let a = sharedBSDDriveAPFS{
-				sharedVolume = getDriveNameFromBSDID(a)
-			}else{
-				sharedVolume = getDriveNameFromBSDID(sharedBSDDrive!)
-			}
-		}else{
-			sharedVolume = getDriveNameFromBSDID(sharedBSDDrive!)
+		//testing code, exits from the function if we are in some particolar testing conditions
+		if simulateNoSpecialOperations{
+			return (true, nil)
 		}
 		
-		print(sharedVolume)
+		//DispatchQueue.global(qos: .background).async{
 		
-		//a file manager, usefoul for the operation that we need later in this function
-		let manager = FileManager.default
+		var ok = true
 		
 		let baseDivision: Double = 80
 		
-		var step: Double = baseDivision / 5
-		
+		var step: Double = baseDivision / 6
 		
 		log("\n\nStarting extra operations: ")
 		
-		
-		#if useEFIReplacement && !macOnlyMode
-			step = baseDivision / 7
-			
-			self.addToProgressValue(step)
-			
-			let efiMan = EFIPartitionManager.shared
-			
-			let efiRepMan = EFIFolderReplacementManager.shared
-			
-			DispatchQueue.main.async {
-				
-				self.EFICopyEnded = false
-				
-				self.startProgress = self.progress.doubleValue
-				
-				self.progressRate = step
-				
-				self.timer.invalidate()
-				self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.checkEFIFolderCopyProcess(_:)), userInfo: nil, repeats: true)
-			}
-			
-			if let f = efiRepMan.checkSavedEFIFolder(){
-				if f{
-					log("There is a saved clover EFI folder, trying to copy it into the EFI partition of the target drive")
-					
-					log("  Trying to mount the EFI partition of the tagret drive")
-					
-					let bsdid = getDriveBSDIDFromVolumeBSDID(volumeID: sharedBSDDrive) + "s1"
-					
-					log("    The EFI partition of the target drive is: \(bsdid)")
-					
-					if efiMan.mountPartition(bsdid){
-						log("    EFI partition \(bsdid) mounted with success")
-						
-						if let mount = getDriveNameFromBSDID(bsdid){
-							
-							if FileManager.default.fileExists(atPath: mount){
-								log("    Mount point for the EFI partition \(bsdid) is: \(mount)")
-								
-								log("    Trying to copy the saved EFI folder in \(mount)")
-								
-								if !efiRepMan.saveEFIFolder(mount + "/EFI"){
-									log("Error while copying the clover EFI folder, operation canceled")
-									ok = false
-								}
-								
-								if ok{
-									log("    EFI folder copied with success")
-								}
-							}else{
-								ok = false
-								log("    The mount poit of the EFI partition does not exist!!!")
-							}
-							
-						}else{
-							log("    Impossible to get a proper mount point for the mounted EFI partition")
-							ok = false
-						}
-						
-					}else{
-						log("    EFI partition not mounted!!")
-						ok = false
-					}
-					
-				}else{
-					log("    Saved EFI folder is not a proper clover 64 bit EFI folder, impossible to copy it on the target drive's EFI partition")
-					ok = false
-				}
-			}else{
-				log("There isn't any saved clover EFI folder, skipping EFI partition mount and EFI folder copying")
-			}
-			
-			DispatchQueue.main.async {
-				
-				self.EFICopyEnded = false
-			
-			}
-			
-			//self.addToProgressValue(step)
-		#endif
-		
-		
-		
-		//for o in otherOptions{
-		if let o = otherOptions[otherOptionCreateReadmeID]?.canBeUsed(){
-        if o {
-            //creates a readme file into the target drive
-            do{
-                log("   Creating the readme file")
-                if let sv = sharedVolume{
-                //trys to write the readme file on the target drive using the text stored into a special variable
-                try readmeText.write(toFile: sv + "/README.txt", atomically: true, encoding: .utf8)
-                
-                //trys to change the file attributes of the readme file to make it visible
-                let e = getErr(cmd: "chflags nohidden \"" + sv + "/README.txt\"")
-                if (e != "" && e != "Password:"){
-                    log("       The readme file file can'be maked visible")
-                }
-                }
-                //error handeling
-            }catch let error{
-                log("  Readme file creation failed, error: \n\(error)")
-                ok = false
-            }
-            
-        }
-        }
-		
-		self.addToProgressValue(step)
-		
-		if let o = otherOptions[otherOptionCreateAIBootFID]?.canBeUsed(){
-			if o && !sharedInstallMac{
-				let iaFolder = sharedVolume + "/.IABootFiles"
-				
-				do{
-					
-					if !manager.fileExists(atPath: iaFolder){
-						log("   .IABootFiles folder creation needed")
-						
-						try manager.createDirectory(atPath: iaFolder, withIntermediateDirectories: true, attributes: [:])
-						
-						let folders = ["/System/Library/CoreServices", "/System/Library/PrelinkedKernels", "/usr/standalone/i386"]
-						
-						for f in folders{
-							let folder = sharedVolume + f
-							log("      Copying files from folder \(folder)")
-							for ff in try manager.contentsOfDirectory(atPath: folder){
-								let file = folder + "/" + ff
-								if manager.fileExists(atPath: file){
-									log("      Copying file \(file)")
-									try manager.copyItem(atPath: file, toPath: iaFolder + "/" + ff)
-								}
-							}
-						}
-						
-					}else{
-						log("   .IABootFiles folder already exists")
-					}
-					
-				}catch let error{
-					log("   .IABootFiles folder creation failed, error: \n\(error)")
-					ok = false
-				}
-			}
-		}
-		
-		self.addToProgressValue(step)
-		
-		if let o = otherOptions[otherOptionDeleteIAPMID]?.canBeUsed(){
-			if o && !sharedInstallMac{
-				let iaFile = sharedVolume + "/.IAPhysicalMedia"
-				
-				do{
-					
-					if manager.fileExists(atPath: iaFile){
-						log("   removing .IAPhysicalMedia file")
-						
-						try manager.removeItem(atPath: iaFile)
-						
-						
-						log("   .IAPhysicalMedia removed successfoully")
-					}else{
-						log("   .IAPhysicalMedia file does not exists, this step is not needed")
-					}
-					
-				}catch let error{
-					log("   .IAPhysicalMedia remove failed, error: \n\(error)")
-					ok = false
-				}
-			}
-		}
-		
-		self.addToProgressValue(step)
-        
-        if let o = otherOptions[otherOptionCreateIconID]?.canBeUsed(){
-        if o{
-            
-            //trys to create a volumeicon on the target drive if there isn't any, it's used mainly for versions of macOS installer older than 10.13
-            do{
-                log("   Trying to create the icon on the macOS install media")
-                let origin = sharedApp + "/Contents/Resources/ProductPageIcon.icns"
-                
-                if manager.fileExists(atPath: origin){
-                    
-                    let destination = sharedVolume + "/.VolumeIcon"
-                    
-                    //trys to copy the volumeicon from the install app to the target volume, if it's already in place, it will be skipped
-                    
-                    /*
-                     if manager.fileExists(atPath: destination){
-                     log("   Removing existing icon file")
-                     try manager.removeItem(atPath: destination)
-                     }
-                     
-                     log("   Creating the icon file")
-                     try manager.copyItem(atPath: origin, toPath: destination)
-                     */
-                    
-                    if manager.fileExists(atPath: destination + ".icns"){
-                        log("       Removing existing icon file")
-                        try manager.removeItem(atPath: destination + ".icns")
-                        log("       Existing icon file removed sucessfully")
-                    }
-                    
-                    log("       Creating the icon file")
-                    try manager.copyItem(atPath: origin, toPath: destination + ".icns")
-                    
-                    NSWorkspace.shared().setIcon(NSImage.init(contentsOf: URL.init(fileURLWithPath: origin)), forFile: sharedVolume, options: NSWorkspaceIconCreationOptions.excludeQuickDrawElementsIconCreationOption)
-                    
-                    log("   Icon file created sucessfully")
-                }else{
-                    log("   Icon creation failed, the original icon from the macOS installer app was not found")
-                    ok = false
-                }
-                
-                //error handeling
-            }catch let error{
-                log("   VolumeIcon file creation failed, error: \n\(error)")
-                ok = false
-            }
-            
-        }
-        }
-		
-		self.addToProgressValue(step)
-        
-        if let o = otherOptions[otherOptionTinuCopyID]?.canBeUsed(){
-        if o {
-            //trys to crerate a copy of this app on the mac os install media
-            do{
-                log("   Trying to create a copy of this app on the macOS install media")
-                
-                var path = sharedVolume + "/" + (Bundle.main.bundleURL.lastPathComponent)
-                
-                var canCopy = true
-                
-                //if we have to put the app on a mac os installation, we need to use the app directory
-                if sharedInstallMac{
-                    try manager.createDirectory(atPath: sharedVolume + "/Applications", withIntermediateDirectories: true, attributes: [:])
-                    
-                    path = sharedVolume + "/Applications/" + (Bundle.main.bundleURL.lastPathComponent)
-                }else{
-                    canCopy = (path != sharedVolume + "/" + URL.init(fileURLWithPath: sharedApp, isDirectory: true).lastPathComponent)
-                }
-                
-                if canCopy{
-                    if manager.fileExists(atPath: path){
-                        log("       Trying to remove an existing copy of the app on the macOS install media")
-                        try manager.removeItem(atPath: path)
-                        log("       Existing copy of the app removed sucessfully from the mac os install media")
-                    }
-                    
-                    log("       Trying to copy this app on the macOS install media")
-                    try manager.copyItem(at: Bundle.main.bundleURL, to: URL.init(fileURLWithPath: path, isDirectory: true))
-                    log("   This app has been copied sucessfully on the macOS install media")
-                }else{
-                    log("   The name of this app and the name of the installer app are the same, it's too dangerous to contiune, this operation has been cancelled")
-                    ok = false
-                }
-            }catch let error{
-                log("   Copy of this app the macOS install media failed, error: \n\(error)")
-                ok = false
-            }
-        }
-        }
-		
-		self.setProgressValue(baseDivision)
-		
-        //}
-		
-		//simulates an error of the advanced options
 		if simulateSpecialOpertaionsFail{
 			log("\n     Simulating a failure of the advanced options\n")
 			ok = false
 		}
 		
-        if !sharedInstallMac{
+		#if useEFIReplacement && !macOnlyMode
+			step = baseDivision / 8
+		
+		DispatchQueue.main.sync {
 			
+			self.setProgressValue(step)
 			
-			step = baseDivision / Double(filesToReplace.count)
+			self.EFICopyEnded = false
 			
-            self.setActivityLabelText("Replacing boot files")
-            
-            // boot files replacemt
-            for f in filesToReplace{
-				
-                if !f.replace() {
-                    log("   File \"" + f.filename + "\" replacement failed!")
-					
-					ok = false
-				}
-				
-				self.addToProgressValue(step)
-            }
+			self.startProgress = self.progress.doubleValue
 			
-			self.setProgressValue(100)
-            
-            log("Extra operations finished\n\n")
-            
-            /*if ok{
-             //ok the installer creation has been completed with sucess, so it sets up the final widnow and then it's showed up
-             //self.goToFinalScreen(title: "macOS install media created successfully", success: true)
-             }else*/if !ok {
-                log("One or more errors detected during the execution of the advanced options, your macOS install media will probably work, but not all the features and mods you choosed in the advanced options will work, check the messages printed before this one for more details abut that erros")
-                //self.goToFinalScreen(title: "macOS install media creation failed to apply the advanced options, check the log for details", success: false)
-            }
+			self.progressRate = step
 			
-            self.setActivityLabelText("Process ended, exiting ...")
-        }else{
+			self.timer.invalidate()
+			self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.checkEFIFolderCopyProcess(_:)), userInfo: nil, repeats: true)
+		}
+		
+		if let m = checkOperationResult(operation: OptionalOperations.shared.mountEFIPartAndCopyEFIFolder(), res: &ok){
+			return (ok, m)
+		}
+		
+		DispatchQueue.main.sync {
 			
+			self.EFICopyEnded = false
 			
-			
-            log("Extra operations finished\n\n")
-            
-            if !ok{
-                log("One or more errors detected during the execution of the  options, macOS installation has been canceld, check the messages printed before this one for more details abut that erros")
-                
-            }
-        }
-        return ok
+		}
+			//self.addToProgressValue(step)
+		#else
+			self.setProgressValue(step * 2)
+			self.addToProgressValue(step)
+		#endif
+		
+		self.addToProgressValue(step)
+		
+		//create readme
+		if let m = checkOperationResult(operation: OptionalOperations.shared.createReadme(), res: &ok){
+			return (ok, m)
+		}
+		
+		self.addToProgressValue(step)
+		
+		#if !macOnlyMode
+		//create IABootFiles folder
+		if let m = checkOperationResult(operation: OptionalOperations.shared.createAIBootFiles(), res: &ok){
+			return (ok, m)
+		}
+		#endif
+		
+		self.addToProgressValue(step)
+		
+		#if !macOnlyMode
+		//delete the IAPhysicalMedia file
+		if let m = checkOperationResult(operation: OptionalOperations.shared.deleteIAPMID(), res: &ok){
+			return (ok, m)
+		}
+		#endif
+		
+		self.addToProgressValue(step)
+		
+		//gives to the install media the icon of the mac os installer app
+		if let m = checkOperationResult(operation: OptionalOperations.shared.createIcon(), res: &ok){
+			return (ok, m)
+		}
+		
+		self.addToProgressValue(step)
+		
+		//copyes this app on the mac os install media
+		if let m = checkOperationResult(operation: OptionalOperations.shared.createTINUCopy(), res: &ok){
+			return (ok, m)
+		}
+		
+		self.setProgressValue(baseDivision)
+		
+		#if !macOnlyMode
+		
+		step = (100 - baseDivision) / Double(BootFilesReplacementManager.shared.filesToReplace.count)
+		
+		self.setActivityLabelText("Replacing boot files")
+		
+		
+		if let m = checkOperationResult(operation: OptionalOperations.shared.replaceBootFiles(step: step), res: &ok){
+			return (ok, m)
+		}
+		
+		#endif
+		
+		self.setProgressValue(100)
+		
+		self.setActivityLabelText("Checking partitions")
+		
+        return (ok, nil)
     }
     
     //this functrion frees the auth from apis
     private func freeAuth(){
         //free auth is called only when the processes are finished, so let's make them false
-        sharedIsPreCreationInProgress = false
-        sharedIsCreationInProgress = false
+        CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress = false
+        CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress = false
         
         //since into the recovery we do not need the spacial authorization, we just free it when running on a normal mac os environment
         if !sharedIsOnRecovery{
@@ -1319,6 +1430,7 @@ class InstallingViewController: GenericViewController{
             }
         }
     }
+	#endif
     
     private func restoreWindow(){
         //resets window
@@ -1331,14 +1443,18 @@ class InstallingViewController: GenericViewController{
         }
         
         enableItems(enabled: true)
-        
-        //we no longer need authorizations, so they are feed
-        freeAuth()
+		
+		#if !installManager
+        	//we no longer need authorizations, so they are feed
+        	freeAuth()
+		#else
+			InstallMediaCreationManager.shared.freeAuth()
+		#endif
     }
     
-    private func goToFinalScreen(title: String, success: Bool){
+	func goToFinalScreen(title: String, success: Bool){
         //this code opens the final window
-        log("macOS install media creation process ended")
+        log("Bootable macOS installer creation process ended")
         //resets window and auths
         restoreWindow()
         
@@ -1347,42 +1463,58 @@ class InstallingViewController: GenericViewController{
         }
         
         //fixes shared variables
-        sharedTitle = title
-        sharedIsOk = success
-        
-        checkOtherOptions()
+        FinalScreenSmallManager.shared.sharedTitle = title
+        FinalScreenSmallManager.shared.sharedIsOk = success
 		
-		#if !macOnlyMode
-			var unmount = true
-			
-			if let o = otherOptions[otherOptionKeepEFIpartID]?.canBeUsed(){
-				unmount = !o
-			}
-			
-			if unmount{
-				let _ = unmountConflictingDrive()
-			}
-			
-		#endif
+		CreationVariablesManager.shared.currentPart = Part()
+		
+		InstallerAppManager.shared.resetCachedAppInfo()
+		
+        checkOtherOptions()
 		
         self.openSubstituteWindow(windowStoryboardID: "MainDone", sender: self)
     }
     
-    private func goBack(){
+    func goBack(){
         //this code opens the previus window
-        
+		
+		if (CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress) && !sharedIsOnRecovery{
+		
+		let notification = NSUserNotification()
+		
+		notification.title = "TINU: bootable macOS installer creation calnceled"
+		notification.informativeText = "The creation of the bootable macOS installer has been canceled, please check the tinu window if you want to try again"
+		notification.contentImage = NSImage(named: "AppIcon")
+		
+		notification.hasActionButton = true
+		
+		notification.actionButtonTitle = "Close"
+		
+		notification.soundName = NSUserNotificationDefaultSoundName
+		NSUserNotificationCenter.default.deliver(notification)
+		
+		}
+		
         //resets window and auths
         restoreWindow()
-        
+		
         self.openSubstituteWindow(windowStoryboardID: "Confirm", sender: self)
     }
     
     @IBAction func cancel(_ sender: Any) {
         //displays a dialog to check if the user is sure that user wants to stop the installer creation
+		
+		var spd: Bool!
+		
+		#if installManager
+		spd = InstallMediaCreationManager.shared.stopWithAsk()
+		#else
+		spd = stopWithAsk()
+		#endif
         
-        if let stopped = stopWithAsk(){
+        if let stopped = spd{
             if stopped{
-                if !(sharedIsCreationInProgress || sharedIsPreCreationInProgress){
+                if !(CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress){
                     goBack()
                 }
             }else{
@@ -1394,39 +1526,46 @@ class InstallingViewController: GenericViewController{
             msgBoxWarning("Error while trying to exit from the process", "There was an error while trying to close the creation process: \n\nFailed to obtain authentication")
         }
     }
-    
+	
+	#if !installManager
     //this function trys to unmount installesd is it'f mounted because it can create problems with the install process
     public func unmountConflictingDrive() -> Bool{
 		//unmount drive efi partition
-		
 		var res = true
 		
 		#if !macOnlyMode
-			
+		
+		DispatchQueue.global(qos: .background).sync {
+		
 			let efiMan = EFIPartitionManager.shared
 			
 			log("    Unmounting EFI partitions")
-			
+		
+			efiMan.buildPartitionsCache()
+		
 			if let ps = efiMan.listPartitions(){
 			
 				for p in ps{
 					log("      Unmounting EFI partition \(p)")
-					if !efiMan.unmounPartition(p){
+					if !efiMan.unmountPartition(p){
 						res = false
 						log("      Unmounting EFI partition \(p) failed!!!")
 					}
 				}
 			
 			}
+		
+			efiMan.clearPartitionsCache()
 			
 			if res{
 				log("    EFI partitions unmounted correctly")
 			}
-			
+		}
+		
 		#endif
 		
 		log("    Unmounting \"InstallESD\"")
-        if driveExists(path: "/Volumes/InstallESD") {
+        if dm.shared.driveExists(path: "/Volumes/InstallESD") {
 			if !NSWorkspace.shared().unmountAndEjectDevice(atPath: "/Volumes/InstallESD"){
 				res = false
 			}else{
@@ -1444,8 +1583,8 @@ class InstallingViewController: GenericViewController{
                 //if we need to stop the process ...
                 if mustStop{
                     //just tell to the rest of the app that the installer creation is no longer running
-                    sharedIsPreCreationInProgress = false
-                    sharedIsCreationInProgress = false
+                    CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress = false
+                    CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress = false
                     
                     //dispose timer, bacause it's no longer needed
                     timer.invalidate()
@@ -1471,19 +1610,21 @@ class InstallingViewController: GenericViewController{
     
     //asks if the suer wants to stop the process
     func stopWithAsk() -> Bool!{
-        var text = "Do you want to cancel the Installer cration process?"
+		var dTitle = "Stop the bootable macOS installer creation?"
+        var text = "Do you want to cancel the bootable macOS installer cration process?"
         
         if sharedInstallMac{
+			dTitle = "Stop the macOS installation?"
             text = "Do you want to stop the macOS installation process?"
         }
         
-        if !dialogYesNoWarning(question: "Stop the process?", text: text, style: .informational){
+		if dialogCustomWarning(question: dTitle, text: text, style: .informational, mainButtonText: "Continue", secondButtonText: "Stop" ){
             return stop(mustStop: true)
         }else{
             return true
         }
     }
-    
+	#endif
     //shows the log window
     @IBAction func showLog(_ sender: Any) {
         if logWindow == nil {
@@ -1493,34 +1634,67 @@ class InstallingViewController: GenericViewController{
         logWindow!.showWindow(self)
     }
     
-    private func enableItems(enabled: Bool){
+	func enableItems(enabled: Bool){
         if let apd = NSApplication.shared().delegate as? AppDelegate{
             if sharedIsOnRecovery{
                 apd.InstallMacOSItem.isEnabled = enabled
             }
             apd.verboseItem.isEnabled = enabled
+			apd.toolsMenuItem.isEnabled = enabled
         }
-    }
-    
-    func setActivityLabelText(_ text: String){
-        DispatchQueue.main.async {
-            self.activityLabel.stringValue = text
-        }
+		
+		#if !macOnlyMode
+		if let tool = EFIPartitionMonuterTool{
+			tool.close()
+		}
+		#endif
     }
 	
+	#if installManager
+	public func setActivityLabelText(_ text: String){
+		self.activityLabel.stringValue = text
+		print("Set activity label text: \(text)")
+	}
+	
 	func setProgressValue(_ value: Double){
-		DispatchQueue.main.async {
+		self.progress.doubleValue = value
+		print("Set progress value: \(value)")
+	}
+	
+	func addToProgressValue(_ value: Double){
+		self.setProgressValue(self.progress.doubleValue + value)
+	}
+	
+	func setProgressMax(_ max: Double){
+		self.progress.maxValue = max
+		print("Set progress max: \(max)")
+	}
+	#else
+	public func setActivityLabelText(_ text: String){
+		DispatchQueue.main.async{
+			self.activityLabel.stringValue = text
+			print("Set activity label text: \(text)")
+		}
+	}
+	
+	func setProgressValue(_ value: Double){
+		DispatchQueue.main.async{
 			self.progress.doubleValue = value
+			print("Set progress value: \(value)")
 		}
 	}
 	
 	func addToProgressValue(_ value: Double){
-		setProgressValue(self.progress.doubleValue + value)
+		DispatchQueue.main.async{
+			self.setProgressValue(self.progress.doubleValue + value)
+		}
 	}
 	
 	func setProgressMax(_ max: Double){
-		DispatchQueue.main.async {
+		DispatchQueue.main.async{
 			self.progress.maxValue = max
+			print("Set progress max: \(max)")
 		}
 	}
+	#endif
 }

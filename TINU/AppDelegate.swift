@@ -22,20 +22,35 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	
 	@IBOutlet weak var getMacOSApp: NSMenuItem!
 	@IBOutlet weak var wMSDIND: NSMenuItem!
-    
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+	
+	@IBOutlet weak var otherAppsSeparator: NSMenuItem!
+	
+	@IBOutlet weak var toolsMenuItem: NSMenuItem!
+	@IBOutlet weak var efiMounterMenuItem: NSMenuItem!
+	
+	func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true
     }
     
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplicationTerminateReply {
-        if sharedIsPreCreationInProgress{
+        if CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress{
             msgBoxWarning("You can't quit now", "You can't quit from TINU now, wait for the first part of the process to end or press the cancel button on the windows that asks for the password, and then quit if you want")
             return NSApplicationTerminateReply.terminateCancel
         }
         
         
-        if sharedIsCreationInProgress{
+        if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress{
            // if !dialogYesNoWarning(question: "Installer creation in progress in progess", text: "The installer creation is inprogress do you want to quit?", style: .warning){
+			#if installManager
+			if let s = InstallMediaCreationManager.shared.stopWithAsk(){
+				if s{
+					msgBoxWarning("Error while trying to quit", "There was an error while trying to quit from the app: \n\nFailed to stop " + sharedExecutableName + " process")
+					return NSApplicationTerminateReply.terminateCancel
+				}
+			}else{
+				return NSApplicationTerminateReply.terminateCancel
+			}
+			#else
                 if let i = sharedWindow.contentViewController as? InstallingViewController{
 					
 					if let s = i.stopWithAsk(){
@@ -47,6 +62,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 						return NSApplicationTerminateReply.terminateCancel
 					}
                 }
+			#endif
             //}else{
                 //return NSApplicationTerminateReply.terminateCancel
             //}
@@ -71,6 +87,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //vibrantButton.isHidden = true
         //vibrantSeparator.isHidden = true
         focusAreaItem.isHidden = true
+		
+		toolsMenuItem.isEnabled = true
+		toolsMenuItem.isHidden = false
+		
+		efiMounterMenuItem.isEnabled = true
         
         if sharedIsOnRecovery{
 			print("Verbose mode not usable under recovery")
@@ -122,6 +143,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         FAQItemHelp.isEnabled = FAQItem.isEnabled
 		
+		#if macOnlyMode
+			otherApps.isHidden = true
+			otherAppsSeparator.isHidden = true
+			toolsMenuItem.isHidden = true
+		#endif
+		
         if Bundle.main.url(forResource: "License", withExtension: "rtf") == nil{
             sharedShowLicense = false
             print("License agreement file not found")
@@ -135,7 +162,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
         
-        if sharedIsCreationInProgress{
+        if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress{
+			#if installManager
+			if let s = InstallMediaCreationManager.shared.stop(){
+				if s{
+					msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
+				}
+			}else{
+				msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
+			}
+			#else
             if let i = sharedWindow.contentViewController as? InstallingViewController{
                 if let s = i.stop(){
 					if s{
@@ -145,6 +181,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 					msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
 				}
             }
+			#endif
         }
     }
     
@@ -177,25 +214,40 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     public func swichMode(isInstall: Bool){
-        if !(sharedIsCreationInProgress || sharedIsPreCreationInProgress){
+		let cim = CreateinstallmediaSmallManager.shared
+		
+		print("got createinstallmedia manager")
+		
+        if !(cim.sharedIsCreationInProgress || cim.sharedIsPreCreationInProgress){
+			
+			print("conditions matches")
+			
             sharedInstallMac = isInstall
+			
+			print("sharedInstallMac set")
             
             if sharedInstallMac{
-                InstallMacOSItem.title = "Use TINU to create a macOS install media"
+                InstallMacOSItem.title = "Use TINU to create a bootable macOS installer"
             }else{
                 InstallMacOSItem.title = "Use TINU to install macOS"
             }
+			
+			print("menu item title set")
             
             sharedWindow.contentViewController?.openSubstituteWindow(windowStoryboardID: "Info", sender: self)
-            
+			
+			print("Window switched")
+			
             //restoreOtherOptions()
             
             //eraseReplacementFilesData()
-            
-            sharedApp = nil
-            sharedBSDDrive = nil
-            sharedVolume = nil
+			
+			cvm.shared.currentPart = Part()
+			
+			print("Variables reset")
+			
         }
+		
     }
     
 	
@@ -246,8 +298,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		}
 	}
 	
-	private var wMSDINDWindow: DriveDetectInfoWindowController!
-	private var downloadAppWindow: DownloadAppWindowController!
+	@IBAction func openEFIPartitionTool(_ sender: Any) {
+		
+		#if !macOnlyMode
+		
+		if EFIPartitionMonuterTool == nil{
+			EFIPartitionMonuterTool = EFIPartitionMounterWindowController()
+		}
+		
+		EFIPartitionMonuterTool.showWindow(self)
+		
+		#endif
+	}
 	
 	@IBAction func openWMSDIND(_ sender: Any) {
 		if wMSDINDWindow == nil{
@@ -296,12 +358,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	}
     
     @IBAction func openVerbose(_ sender: Any) {
-        if !(sharedIsCreationInProgress || sharedIsPreCreationInProgress || sharedIsOnRecovery){
+        if !(CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress || sharedIsOnRecovery){
+			/*
             if let b = Bundle.main.resourcePath{
                 let f = b + "/DebugScript.sh"
                 if FileManager.default.fileExists(atPath: f){
                     print("Trying to fix script permitions")
-                    if let e = getErrWithSudo(cmd: "chmod -R 771 \"" + f + "\""){
+                    if let e = getOutWithSudo(cmd: "chmod -R 771 \"" + f + "\""){
                         if e == "" || e == "Password:\n" || e == "Password:" {
                             print("Script permitions fixed with success")
                             print("Restarting app with log in the terminal")
@@ -331,12 +394,42 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                      msgBox("Impossible to switch mode!", "The needed script to run TINU in diagnostics mode is missing, try to downlaod again the app", .warning)
                      */
                 }
-            }
+            }*/
+			
+			print("trying to use diagnostics mode")
+			if let scriptPath = Bundle.main.url(forResource: "DebugScript", withExtension: "sh") {
+				let theScript = "do shell script \"chmod -R 771 \'" + scriptPath.path + "\'\" with administrator privileges"
+				
+				print(theScript)
+				
+				let appleScript = NSAppleScript(source: theScript)
+				
+				if let eventResult = appleScript?.executeAndReturnError(nil){
+					if let result = eventResult.stringValue{
+						if result.isEmpty || result == "\n" || result == "Password:"{
+							NSWorkspace.shared().openFile(scriptPath.path, withApplication: "Terminal")
+							NSApplication.shared().terminate(self)
+						}else{
+							print("error with the script output: " + result)
+							msgBoxWarning("Impossible to use diagnostics mode", "Something went wrong when preparing TINU to be run in diagnostics mode.\n\n[error code: 0]\n\nScript output: \(result)")
+						}
+					}
+				}else{
+					print("impossible to execute the apple script to prepare the app")
+					
+					msgBoxWarning("Impossible to use diagnostics mode", "Impossible to prepare TINU to run in diagnostics mode.\n\n[error code: 1]")
+				}
+			}else{
+				print("no debug file found!")
+				
+				msgBoxWarning("Impossible to use diagnostics mode", "Needed files inside TINU are missing, so the diagnostics mode can't be used, try to download again this app and then retry.")
+			}
+			
         }else{
-            if sharedIsCreationInProgress || sharedIsPreCreationInProgress{
-                msgBox("You can't switch mode now", "The macOS install media creation process is currenly running, please cancel the operation or wait the end of the operation before switching mode", .warning)
+            if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress{
+                msgBox("You can't switch mode now", "The bootable macOS installer creation process is currenly running, please cancel the operation or wait the end of the operation before switching mode", .warning)
             }else if sharedIsOnRecovery{
-                msgBox("You can't switch mode now", "Switching the mode in witch TINU is running, is now allowed while running TINU on a Mac recovery/istaller", .warning)
+                msgBoxWarning("You can't switch mode now", "Switching the mode in witch TINU is running, is not allowed while running TINU on a Mac recovery/istaller")
             }
         }
     }

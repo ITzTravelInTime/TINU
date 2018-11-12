@@ -9,17 +9,17 @@
 // This is used to manage somw views that needs to change when the graphcis mode is changed
 import Cocoa
 
-class GenericViewController: NSViewController {
+public class GenericViewController: ShadowViewController {
     
     var styleView: NSView!
     
-    override func viewDidLoad() {
+	override public func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
         viewDidSetVibrantLook()
     }
     
-    override func viewDidAppear() {
+	override public func viewDidAppear() {
         viewDidSetVibrantLook()
     }
     /**Function called when the aspect mode of tyhe window is changed, you can override it as well, just remember to call super.viewDidSetVibrantLook()*/
@@ -47,4 +47,24 @@ class GenericViewController: NSViewController {
             }
         }
     }
+	
+	override public func shouldPerformSegue(withIdentifier identifier: NSStoryboardSegue.Identifier,
+											sender: Any?) -> Bool{
+		if sharedUseVibrant{
+			if let w =  self.window.windowController as? GenericWindowController{
+				w.deactivateVibrantWindow()
+			}
+		}
+		
+		return true
+	}
+	
+	override public func viewWillDisappear() {
+		if sharedUseVibrant{
+			if let w = sharedWindow.windowController as? GenericWindowController{
+				w.activateVibrantWindow()
+			}
+		}
+	}
+	
 }
