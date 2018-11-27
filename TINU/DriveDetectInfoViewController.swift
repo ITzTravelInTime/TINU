@@ -61,23 +61,23 @@ extension DriveDetectInfoViewController{
 	func getTextContent() -> [String]{
 		var text = [String]()
 		
-		text.append("• Verify that your device is correctly working and correctly connected to the machine")
-		text.append("• Verify that any adapters, cables or devices you use to attach your device to the computer are correctly plugged in, working, and if needed, correctly installed, and that your version of macOS does work with the particular devices, adapters or peripherals you are using")
+		text.append("• Make sure that your disk device is working, e.g. by copying files to it.") // Don't say "correctly" unless you document what correctly is - a layman will not known what correct is unless you explain.
+		text.append("• Verify that any adapters, cables or devices you use to attach your disk device to the computer are correctly plugged in, working, and if needed, correctly installed, and that your version of macOS does work with these particular devices, adapters or peripherals you are using.")
 		
-		text.append("• Make sure your device is a physical device and not a virtual device, virtual devices may not work properly with this app")
+		text.append("• Make sure the disk device you have chosen is a physical device and not a virtual device. Virtual devices may not work properly with this app.")
 		
-		text.append("• Try to format it in disk utility using macOS extended (journaled), before using it with this app")
+		text.append("• Try to format it in Disk Utility using the \"macOS Extended (journaled)\" format before using it with this app.")
 		
 		if sharedInstallMac{
-			text.append("• TINU will detect only drives which are usable to install macOS, all the others drives will not be detected by TINU")
+			text.append("• TINU will only detect drives that can be used to install macOS.") // no need to be redundant by also saying the opposize. It only adds needless text.
 			
-			text.append("• Make sure the device or the partition you want to use is at least 20 GB, if your drive is big enough but the partition you want to use is not big enuogh, you have to go in disk utility and create a partition of at least 20 GB in that device, or you have to make bigger enougth the partition you want to use")
+			text.append("• Make sure the disk device (drive) or the partition you want to use is at least 20 GB. If your drive is big enough but the partition you want to use is not, you have to use Disk Utility to create a partition of at least 20 GB on that drive, or you have resize the partition you want to use.")
 		}else{
-			text.append("• TINU will detect only drives which are usable to create a bootable macOS installer, all the others drives will not be detected by TINU")
+			text.append("• TINU will detect only disk devices that are usable to create a bootable macOS installer.")	// again, no need to be redundant
 			
-			text.append("• Make sure that your device does not contain the partition from which you have booted the system and that it's not the internal ssd/hard disk of your mac")
+			text.append("• Make sure that the chosen disk does not contain the partition from which you have booted the system and that it's not the internal SSD or hard disk of your Mac.")	// TODO: TINU could look into the ioregistry to see whether the chosen disk is internal or external, or simply run "diskutil list" and fetch the info from there.
 			
-			text.append("• Make sure that the device or the partition you want to use is at least 8 GB, if your drive is big enough but the partition you want to use is not big enuogh, you have to go in disk utility and create a partition of at least 8 GB in that device, or you have to make bigger enough the partition you want to use")
+			text.append("• Make sure that the disk device (drive) or the partition you want to use is at least 8 GB. If your drive is big enough but the partition you want to use is not, you have to use Disk Utility to create a partition of at least 8 GB on that drive, or you have resize the partition you want to use.")
 		}
 		
 		return text

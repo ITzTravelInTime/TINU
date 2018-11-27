@@ -51,7 +51,7 @@ public let simulateAbnormalExitcode = false
 public let simulateNoSpecialOperations = false
 
 //this variable is used to simulate a failure while doing advanced operations
-public let simulateSpecialOpertaionsFail = false
+public let simulateSpecialOperationsFail = false
 
 //this is used when simulateCreateinstallmediaFail != nil and it uses a custom test print for the test command
 public let simulateCreateinstallmediaFailCustomMessage: String = ""

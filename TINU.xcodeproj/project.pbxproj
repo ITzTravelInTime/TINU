@@ -20,7 +20,7 @@
 		C60D39B21F5E4AFC00D94834 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */; };
 		C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */; };
 		C615B813216AEF7A00913BFF /* MediaCreationManagerPreProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C615B812216AEF7A00913BFF /* MediaCreationManagerPreProcess.swift */; };
-		C615B815216AF04D00913BFF /* MediaCreationManagerProcesses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C615B814216AF04D00913BFF /* MediaCreationManagerProcesses.swift */; };
+		C615B815216AF04D00913BFF /* MediaCreationManagerFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C615B814216AF04D00913BFF /* MediaCreationManagerFunctions.swift */; };
 		C615B817216B0B8900913BFF /* MediaCreationManagerErrorChecking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C615B816216B0B8900913BFF /* MediaCreationManagerErrorChecking.swift */; };
 		C615B819216B0E9400913BFF /* MediaCreationManagerTimers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C615B818216B0E9400913BFF /* MediaCreationManagerTimers.swift */; };
 		C615B81B216B30D000913BFF /* MediaCreationManagerPostProcesses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C615B81A216B30D000913BFF /* MediaCreationManagerPostProcesses.swift */; };
@@ -115,7 +115,7 @@
 		C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCreationFinished.swift; sourceTree = "<group>"; };
 		C615B812216AEF7A00913BFF /* MediaCreationManagerPreProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCreationManagerPreProcess.swift; sourceTree = "<group>"; };
-		C615B814216AF04D00913BFF /* MediaCreationManagerProcesses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCreationManagerProcesses.swift; sourceTree = "<group>"; };
+		C615B814216AF04D00913BFF /* MediaCreationManagerFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCreationManagerFunctions.swift; sourceTree = "<group>"; };
 		C615B816216B0B8900913BFF /* MediaCreationManagerErrorChecking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCreationManagerErrorChecking.swift; sourceTree = "<group>"; };
 		C615B818216B0E9400913BFF /* MediaCreationManagerTimers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCreationManagerTimers.swift; sourceTree = "<group>"; };
 		C615B81A216B30D000913BFF /* MediaCreationManagerPostProcesses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCreationManagerPostProcesses.swift; sourceTree = "<group>"; };
@@ -282,7 +282,7 @@
 			children = (
 				C676D196215EB20E00E900E9 /* MediaCreationManagerMain.swift */,
 				C615B812216AEF7A00913BFF /* MediaCreationManagerPreProcess.swift */,
-				C615B814216AF04D00913BFF /* MediaCreationManagerProcesses.swift */,
+				C615B814216AF04D00913BFF /* MediaCreationManagerFunctions.swift */,
 				C615B818216B0E9400913BFF /* MediaCreationManagerTimers.swift */,
 				C615B816216B0B8900913BFF /* MediaCreationManagerErrorChecking.swift */,
 				C615B81A216B30D000913BFF /* MediaCreationManagerPostProcesses.swift */,
@@ -410,11 +410,11 @@
 		DD01EBEB1F71A75B00C94D9B /* SharedCode */ = {
 			isa = PBXGroup;
 			children = (
-				C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */,
-				DDDF14631F6730DA00953634 /* SharedVariables.swift */,
-				C65AA61E1F4F497A00C43223 /* ClassExtensions.swift */,
 				C60B6C8220F80FCC0088B658 /* AllertFunctions.swift */,
+				C65AA61E1F4F497A00C43223 /* ClassExtensions.swift */,
 				DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */,
+				DDDF14631F6730DA00953634 /* SharedVariables.swift */,
+				C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */,
 			);
 			name = SharedCode;
 			sourceTree = "<group>";
@@ -567,7 +567,7 @@
 				DDD038F21FB7AEC000D22695 /* BootFilesReplacementItem.swift in Sources */,
 				C65AA61F1F4F497A00C43223 /* ClassExtensions.swift in Sources */,
 				C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */,
-				C615B815216AF04D00913BFF /* MediaCreationManagerProcesses.swift in Sources */,
+				C615B815216AF04D00913BFF /* MediaCreationManagerFunctions.swift in Sources */,
 				C6D9EE59210AED4700019818 /* Reachability.swift in Sources */,
 				C64E56391F51E79C007B8CEE /* ConfirmViewController.swift in Sources */,
 				DDCC4ED51FB5C2A7007FBB6F /* CustomizationViewController.swift in Sources */,

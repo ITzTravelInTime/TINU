@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -89,6 +89,11 @@
                                         <menuItem title="Diagnostic Mode" keyEquivalent="d" id="qpo-04-kkH">
                                             <connections>
                                                 <action selector="openVerbose:" target="Voe-Tx-rLC" id="gcx-Dm-xVc"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Process Log" keyEquivalent="l" id="09g-wy-2rt">
+                                            <connections>
+                                                <action selector="showLog:" target="Voe-Tx-rLC" id="i0L-2J-07b"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Use TINU to Install MacOS" id="yxk-al-dbr">
@@ -416,13 +421,13 @@
                                                 <action selector="openFAQs:" target="Voe-Tx-rLC" id="Ac7-xs-J1Y"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Why my storage device is not detected?" id="t4Z-eO-Otu">
+                                        <menuItem title="Why is my storage device not detected?" id="t4Z-eO-Otu">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openWMSDIND:" target="Voe-Tx-rLC" id="fiJ-0w-Urb"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Get a macOS Installer App" id="ujX-5E-vhx">
+                                        <menuItem title="Download macOS Installer…" id="ujX-5E-vhx">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openDownloadMacApp:" target="Voe-Tx-rLC" id="zHa-3i-Sfj"/>
@@ -442,6 +447,7 @@
                         <outlet property="FAQItem" destination="FbI-OH-25A" id="Dm5-CW-Zpn"/>
                         <outlet property="FAQItemHelp" destination="3Mm-4Z-mGB" id="q6N-zR-4IQ"/>
                         <outlet property="InstallMacOSItem" destination="yxk-al-dbr" id="Q6E-ge-g3D"/>
+                        <outlet property="LogItem" destination="09g-wy-2rt" id="D75-er-mVJ"/>
                         <outlet property="QuitMenuButton" destination="4sb-4s-VLi" id="Hqz-MU-ipf"/>
                         <outlet property="efiMounterMenuItem" destination="h6A-oj-VQy" id="uKs-fC-dDf"/>
                         <outlet property="focusAreaItem" destination="2Ty-vw-f8q" id="esz-Mm-1hn"/>
@@ -559,7 +565,7 @@
                             <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gge-Zo-3ww">
                                 <rect key="frame" x="169" y="70" width="283" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="bevel" title="Why my storage device is not detected?" bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="B1n-px-r2u">
+                                <buttonCell key="cell" type="bevel" title="Why is my storage device not detected?" bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="B1n-px-r2u">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system" size="14"/>
                                 </buttonCell>
@@ -643,7 +649,7 @@
                 </windowController>
                 <customObject id="780-ZK-2AD" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2652" y="223"/>
+            <point key="canvasLocation" x="-2652" y="222.5"/>
         </scene>
         <!--Credits View Controller-->
         <scene sceneID="q53-Jx-mMW">
@@ -2192,23 +2198,89 @@ Gw
         <scene sceneID="mEA-w8-BgO">
             <objects>
                 <windowController storyboardIdentifier="Log" id="Tob-PB-uNY" customClass="LogWindowController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="TINU: Log" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="logWindow" tabbingMode="disallowed" id="099-rA-qV0">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-                        <rect key="contentRect" x="100" y="323" width="480" height="270"/>
+                    <window key="window" title="TINU: Log" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="logWindow" tabbingMode="disallowed" titlebarAppearsTransparent="YES" id="099-rA-qV0">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
+                        <rect key="contentRect" x="100" y="323" width="544" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1080"/>
                         <value key="minSize" type="size" width="480" height="270"/>
                         <value key="minFullScreenContentSize" type="size" width="480" height="270"/>
+                        <toolbar key="toolbar" implicitIdentifier="552F0390-FE61-44F6-8F46-A52E108EA7C0" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="KgM-mo-rea">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="8mS-qe-P8C"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="yaM-n8-mrS"/>
+                                <toolbarItem implicitItemIdentifier="88799477-C95F-4DFE-A253-7D8B56B4910D" label="Save Log" paletteLabel="Save Log" tag="-1" id="VGs-cV-tWl">
+                                    <connections>
+                                        <action selector="saveLog:" target="Tob-PB-uNY" id="Gkk-GV-7Bt"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="3B5F0828-0798-4234-A959-3382A4BBDAC3" label="Copy Log" paletteLabel="Copy Log" tag="-1" id="jHC-wI-0sg">
+                                    <connections>
+                                        <action selector="copyLog:" target="Tob-PB-uNY" id="lgP-FO-5Mo"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="64CA9669-0C34-46C7-BF8D-523B2C8022C2" label="Save Log" paletteLabel="Save Log" sizingBehavior="auto" id="AMe-9S-K90">
+                                    <nil key="toolTip"/>
+                                    <button key="view" verticalHuggingPriority="750" id="V2W-XC-cpU">
+                                        <rect key="frame" x="0.0" y="14" width="87" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" title="Save Log" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AGZ-oz-tpi">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="saveLog:" target="Tob-PB-uNY" id="aeJ-Mo-4ew"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="CEA91573-4BC2-4C1E-9283-FBFE6070F003" label="Copy Log" paletteLabel="Copy Log" sizingBehavior="auto" id="H35-H9-wOQ">
+                                    <nil key="toolTip"/>
+                                    <button key="view" verticalHuggingPriority="750" id="krk-1k-tsr">
+                                        <rect key="frame" x="0.0" y="14" width="91" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" title="Copy Log" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Qg4-tw-J4N">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="copyLog:" target="Tob-PB-uNY" id="4rq-ko-PZC"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="FD0C7701-C2F5-4702-9A01-ABCBC134D1F6" label="Share" paletteLabel="Share" image="NSShareTemplate" sizingBehavior="auto" id="zgF-8l-bYF">
+                                    <nil key="toolTip"/>
+                                    <button key="view" verticalHuggingPriority="750" id="4JQ-le-Uo9">
+                                        <rect key="frame" x="0.0" y="14" width="46" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSShareTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UqS-Le-FBu">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="shareLog:" target="Tob-PB-uNY" id="epw-aN-fOg"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="AMe-9S-K90"/>
+                                <toolbarItem reference="H35-H9-wOQ"/>
+                                <toolbarItem reference="yaM-n8-mrS"/>
+                                <toolbarItem reference="zgF-8l-bYF"/>
+                            </defaultToolbarItems>
+                        </toolbar>
                         <connections>
                             <outlet property="delegate" destination="Tob-PB-uNY" id="Peu-0Y-ouD"/>
                         </connections>
                     </window>
                     <connections>
+                        <outlet property="CopyToolBarButton" destination="jHC-wI-0sg" id="ULa-rf-gpF"/>
+                        <outlet property="SaveToolBarButton" destination="VGs-cV-tWl" id="j6g-86-uwg"/>
                         <segue destination="ep3-ie-0pp" kind="relationship" relationship="window.shadowedContentViewController" id="QW8-ey-xIw"/>
                     </connections>
                 </windowController>
                 <customObject id="Xep-RG-UUI" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3243" y="222"/>
+            <point key="canvasLocation" x="-3211" y="222"/>
         </scene>
         <!--Log View Controller-->
         <scene sceneID="H4P-V1-qaQ">
@@ -2218,20 +2290,20 @@ Gw
                         <rect key="frame" x="0.0" y="0.0" width="620" height="330"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7OD-AH-9mk">
-                                <rect key="frame" x="20" y="66" width="580" height="212"/>
+                            <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7OD-AH-9mk">
+                                <rect key="frame" x="0.0" y="20" width="620" height="310"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="BoY-aL-VEi">
-                                    <rect key="frame" x="1" y="1" width="578" height="210"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="620" height="310"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView ambiguous="YES" editable="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="YjC-b1-CdR">
-                                            <rect key="frame" x="0.0" y="0.0" width="578" height="210"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="620" height="310"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="578" height="210"/>
-                                            <size key="maxSize" width="618" height="10000000"/>
+                                            <size key="minSize" width="620" height="310"/>
+                                            <size key="maxSize" width="620" height="10000000"/>
                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         </textView>
                                     </subviews>
@@ -2241,7 +2313,7 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Ijx-19-zkH">
-                                    <rect key="frame" x="563" y="1" width="16" height="210"/>
+                                    <rect key="frame" x="604" y="0.0" width="16" height="310"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -2254,7 +2326,7 @@ Gw
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="emf-S5-cVb">
+                            <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="emf-S5-cVb">
                                 <rect key="frame" x="14" y="18" width="128" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="paR-zk-smg">
@@ -2268,9 +2340,18 @@ Gw
                                     <action selector="Close:" target="ep3-ie-0pp" id="ywy-om-wWy"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OmF-oJ-C5d">
+                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J6b-fs-spx">
+                                <rect key="frame" x="18" y="286" width="584" height="24"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Bootable macOS installer creation log:" id="wXT-Ka-AVY">
+                                    <font key="font" metaFont="systemBold" size="14"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OmF-oJ-C5d">
                                 <rect key="frame" x="478" y="18" width="128" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="Copy log" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Smh-U8-by4">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -2282,9 +2363,9 @@ Gw
                                     <action selector="copyLog:" target="ep3-ie-0pp" id="iRM-ZI-28H"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ebp-EG-VhX">
-                                <rect key="frame" x="350" y="18" width="128" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                            <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ebp-EG-VhX">
+                                <rect key="frame" x="342" y="18" width="128" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="Save log ..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mZk-kn-6RJ">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -2296,15 +2377,6 @@ Gw
                                     <action selector="saveLog:" target="ep3-ie-0pp" id="rFn-aH-wo4"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J6b-fs-spx">
-                                <rect key="frame" x="18" y="286" width="584" height="24"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Bootable macOS installer creation log:" id="wXT-Ka-AVY">
-                                    <font key="font" metaFont="systemBold" size="14"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                         </subviews>
                     </view>
                     <connections>
@@ -2498,7 +2570,7 @@ Gw
                 </windowController>
                 <customObject id="19y-GF-9Dx" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="689" y="-214"/>
+            <point key="canvasLocation" x="689" y="-279"/>
         </scene>
         <!--Drive Detect Info View Controller-->
         <scene sceneID="gyA-tO-Uu1">
@@ -2673,7 +2745,7 @@ Gw
                 </windowController>
                 <customObject id="8Ym-W7-XPP" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1393" y="-642"/>
+            <point key="canvasLocation" x="1393" y="-279"/>
         </scene>
     </scenes>
     <resources>
@@ -2682,13 +2754,14 @@ Gw
         <image name="High_Sierra" width="512" height="512"/>
         <image name="InstallApp" width="512" height="512"/>
         <image name="Mojave" width="512" height="512"/>
+        <image name="NSShareTemplate" width="11" height="16"/>
         <image name="Removable" width="512" height="512"/>
         <image name="Sierra" width="512" height="512"/>
         <image name="checkVector" width="495" height="375"/>
         <image name="warning" width="409.60000610351562" height="409.60000610351562"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nx8-HB-rqT"/>
+        <segue reference="bVK-rx-zgF"/>
         <segue reference="fLT-cJ-H3F"/>
     </inferredMetricsTieBreakers>
 </document>

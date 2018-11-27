@@ -139,9 +139,9 @@ class ChoseAppViewController: GenericViewController {
 							path = newPath
 						}else{
 							if let name = open.urls.first?.lastPathComponent{
-								msgBoxWarning("Impossible to use this app!", "The app you choosed \"\(name)\" is not usable, because it's impossible to resolve it's file alias'")
+								msgBoxWarning("Invalid file", "The app you chose, \"\(name)\", is not usable because its Finder Alias can't be resolved.")
 							}else{
-								msgBoxWarning("Impossible to use this app!", "The app you choosed is not usable, because it's impossible to resove it's file alias")
+								msgBoxWarning("Invalid file", "The app you chose is not usable because its Finder Alias can't be resolved.")
 							}
 						}
 					}
@@ -160,16 +160,16 @@ class ChoseAppViewController: GenericViewController {
                         
                     }else{
                         if let name = open.urls.first?.lastPathComponent{
-                            msgBoxWarning("Impossible to use this app!", "The app you choosed \"\(name)\" is not usable to create macOS installers/ macOS installations, because it does not contains all the needed files to do that")
+                            msgBoxWarning("Invalid file", "The app you chose, \"\(name)\", is not usable to create macOS installers or macOS installations because it does not contain all the needed files to do that or it isn't a macOS installer.")
                         }else{
-                            msgBoxWarning("Impossible to use this app!", "The app you choosed is not usable to create macOS installers/ macOS installations, because it does not contains all the needed files to do that")
+                            msgBoxWarning("Invalid file", "The app you chose is not usable to create macOS installers or macOS installations because it does not contain all the needed files to do that or it isn't a macOS installer.")
                         }
                     }
                 }else{
                     msgBoxWarning("Error while opening the file", "Impossible to obtain the file's location")
                 }
             }else{
-                msgBoxWarning("Error while opening the file", "No files choosed")
+                msgBoxWarning("Error while opening the file", "No files choosen")
             }
         }
         
@@ -289,9 +289,9 @@ class ChoseAppViewController: GenericViewController {
 				}
 			}
 			
-			print("This contains the urls for the paths in witch we will try find the installation apps")
+			print("This contains the URLs for the paths in which we will try find the installer apps:")
 			print(documentsUrls)
-			print("Starting installation apps scan ...")
+			print("Starting installer apps scan ...")
 			
 			var h: CGFloat = 0
 			
@@ -326,6 +326,7 @@ class ChoseAppViewController: GenericViewController {
 									appPath = FileAliasManager.resolveFinderAlias(at: appOriginPath)!
 									
 									print("Alias resolved: \n        alias path: \(appOriginPath) \n        file path:  \(appPath)")
+									
 								}
 							}else{
 								continue
@@ -339,7 +340,7 @@ class ChoseAppViewController: GenericViewController {
 								continue
 							}
 							
-							print("An new app that contains the needed \"" + ex + "\" executable has been found")
+							print("A new app that contains the needed \"" + ex + "\" executable has been found")
 							//DispatchQueue.main.sync {
 							dirs.append(appPath)
 							

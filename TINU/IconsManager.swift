@@ -43,6 +43,18 @@ public final class IconsManager{
 		}
 	}
 	
+	public var copyIcon: NSImage!{
+		get{
+			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/MultipleItemsIcon.icns", name: "warning")
+		}
+	}
+	
+	public var saveIcon: NSImage!{
+		get{
+			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericDocumentIcon.icns", name: "warning")
+		}
+	}
+	
 	
 	//return the icon of thespecified installer app
 	

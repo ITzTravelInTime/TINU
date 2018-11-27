@@ -13,6 +13,8 @@ import Cocoa
 class EFIPartitionMounterViewController: AppViewController {
 	
 	@IBOutlet weak var scrollView: NSScrollView!
+	@IBOutlet weak var scrollHeight: NSLayoutConstraint!
+	
 	@IBOutlet weak var spinner: NSProgressIndicator!
 	
 	@IBOutlet weak var refreshButton: NSButton!
@@ -82,7 +84,9 @@ class EFIPartitionMounterViewController: AppViewController {
     #if !isTool// && EFIPM
     override func viewWillAppear() {
         super.viewWillAppear()
-		//self.window.isFullScreenEnaled = true
+		self.window.isFullScreenEnaled = false
+		
+		self.window.styleMask.insert(.resizable)
     }
     #endif
     
@@ -90,6 +94,8 @@ class EFIPartitionMounterViewController: AppViewController {
 		super.viewDidAppear()
         
         print("Main view view did appear triggered")
+        
+        self.window?.collectionBehavior.subtract(.fullScreenPrimary)
         
         #if isTool
         
@@ -109,17 +115,19 @@ class EFIPartitionMounterViewController: AppViewController {
         
         
         if barMode{
-            iconModeButton.title = "Window mode"
+            iconModeButton.title = "Window Mode"
         }else{
-            iconModeButton.title = "Tool bar mode"
+            iconModeButton.title = "Toolbar Mode"
         }
         
         if !self.barMode && startsAsMenu{
-            print("the app is starting as menu item, avoiding loosing tiome on a window which will be closed")
+            print("the app is starting as menu item, avoiding losing tiome on a window which will be closed")
             return
         }
         
         #endif
+        
+        
 		
 		setScrollView()
         
@@ -230,7 +238,7 @@ class EFIPartitionMounterViewController: AppViewController {
 						
 						background.frame.size.height += 5
                         
-                        if background.frame.height < self.scrollView.frame.height - 2{
+                        /*if background.frame.height < self.scrollView.frame.height - 2{
                             let newView = NSView(frame: NSRect(x: 0, y: 0, width: background.frame.width, height: self.scrollView.frame.height - 2))
                             
                             //newView.backgroundColor = .green
@@ -241,9 +249,11 @@ class EFIPartitionMounterViewController: AppViewController {
                             newView.addSubview(background)
                             
                             self.scrollView.documentView = newView
-                        }else{
+                        }else{*/
                             self.scrollView.documentView = background
-                        }
+                        //}
+						
+						self.scrollHeight.constant = self.scrollView.documentView!.frame.height	// limit window height to the available content in the scroll view
 						
 						self.scrollView.isHidden = false
 						

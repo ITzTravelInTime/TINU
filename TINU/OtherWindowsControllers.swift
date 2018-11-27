@@ -12,7 +12,7 @@ public class DriveDetectInfoWindowController: GenericWindowController {
 	
 	override public func windowDidLoad() {
 		super.windowDidLoad()
-		self.window?.title += ": Why my storage device is not detected?"
+		self.window?.title += ": Why is my storage device not detected?"
 	}
 	
 	convenience init() {
@@ -29,7 +29,7 @@ public class DownloadAppWindowController: GenericWindowController {
 	
 	override public func windowDidLoad() {
 		super.windowDidLoad()
-		self.window?.title += ": Download a macOS installer app from the app store"
+		self.window?.title += ": Download a macOS installer app from the App Store"
 	}
 	
 	convenience init() {
@@ -73,11 +73,37 @@ public class CreditsWindowController: GenericWindowController {
 
 public class LogWindowController: GenericWindowController {
 	
+	@IBOutlet weak var SaveToolBarButton: NSToolbarItem!
+	@IBOutlet weak var CopyToolBarButton: NSToolbarItem!
+	
+	@IBAction func copyLog(_ sender: Any) {
+		if let vc = contentViewController as? LogViewController{
+			vc.copyLog(sender)
+		}
+	}
+	
+	@IBAction func saveLog(_ sender: Any) {
+		if let vc = contentViewController as? LogViewController{
+			vc.saveLog(sender)
+		}
+	}
+	
+	@IBAction func shareLog(_ sender: Any) {
+		if let vc = contentViewController as? LogViewController{
+			vc.shareLog(sender)
+		}
+	}
+	
 	override public func windowDidLoad() {
 		super.windowDidLoad()
 		self.window?.title += ": Log"
 		
-		self.window?.isFullScreenEnaled = !true
+		self.window?.isFullScreenEnaled = true
+		
+		SaveToolBarButton.image = IconsManager.shared.saveIcon
+		CopyToolBarButton.image = IconsManager.shared.copyIcon
+		
+		self.window?.titleVisibility = .hidden
 	}
 	
 	convenience init() {

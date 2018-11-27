@@ -135,7 +135,7 @@ extension InstallMediaCreationManager{
 		
 		log("\n\nStarting extra operations: ")
 		
-		if simulateSpecialOpertaionsFail{
+		if simulateSpecialOperationsFail{
 			log("\n     Simulating a failure of the advanced options\n")
 			ok = false
 		}

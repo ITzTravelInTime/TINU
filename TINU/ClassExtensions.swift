@@ -190,7 +190,7 @@ class HyperTextField: NSTextField {
         super.awakeFromNib()
         
         let attributes: [String: AnyObject] = [
-            NSForegroundColorAttributeName: NSColor.blue
+            NSForegroundColorAttributeName: NSColor.linkColor
             ,NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue as AnyObject, NSCursorAttributeName: NSCursor.pointingHand()
         ]
         self.attributedStringValue = NSAttributedString(string: self.stringValue, attributes: attributes)

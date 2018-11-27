@@ -24,7 +24,14 @@ extension InstallMediaCreationManager{
 		let processesToClose = [sharedExecutableName, "InstallAssistant", "InstallAssistant_plain", "InstallAssistant_springboard"]
 		
 		//try to terminate a process that may be still active in backgruound, maybe for a previuos crash of the app or the system
-		log("\n\n***Trying to close conflicting processes")
+		log("""
+			
+			***Trying to close conflicting processes
+			   If those confliction processes are present,
+			   they may interfere with the success of
+			   the \"\(sharedExecutableName)\" operation
+			
+			""")
 		
 		for p in processesToClose{
 			//trys to terminate the process
@@ -52,8 +59,16 @@ extension InstallMediaCreationManager{
 	}
 	
 	func unmountConfictingVolumes() -> Bool{
-		//trys to unmount possible conficting drives that may interfear, like install esd
-		log("\n\n###Trying to unmount conficting volumes")
+		//trys to unmount possible conficting drives that may interfere, like install esd
+		log("""
+			
+			###Trying to unmount conficting volumes
+			   Those volumes may be mounted images
+			   from inside the macOS installer app
+			   and may interfere with the success of
+			   the \"\(sharedExecutableName)\" operation
+			
+			""")
 		
 		//trys to unmount install esd because it can create
 		if self.unmountConflictingDrive(){
@@ -75,20 +90,22 @@ extension InstallMediaCreationManager{
 		
 		if canFormat {
 			DispatchQueue.main.sync {
-			self.setActivityLabelText("Formatting target drive")
+			self.setActivityLabelText("\nFormatting target drive\n")
 			}
 			
-			log("---Starting drive format process")
+			log("@@@ Starting drive format process")
 			
 			//this code gets the bsd name of the drive from the bsd name of the partition selcted
 			let tmpBSDName = dm.getDriveBSDIDFromVolumeBSDID(volumeID: cvm.shared.sharedBSDDrive)
 			
-			if cvm.shared.sharedBSDDriveAPFS != nil{
+			//if cvm.shared.sharedBSDDriveAPFS != nil{
 				//NSWorkspace.shared().unmountAndEjectDevice(atPath: sharedVolume)
-				
+			
+				log("    The disk needs to be unmounted, in order to be formatted")
+			
 				let unmountComm = "diskutil unmountDisk " + tmpBSDName
 				
-				log("APFS Disks unmount will be done with coomand: \n    \(unmountComm)")
+				log("    Disks unmount will be done with coomand: \n    \(unmountComm)")
 				
 				if let out = getOutWithSudo(cmd: unmountComm){
 					
@@ -96,7 +113,7 @@ extension InstallMediaCreationManager{
 					
 					if !out.contains("was successful"){
 						DispatchQueue.main.sync {
-							log("---Filed to eject apfs volumes\n\n")
+							log("@@@ Failed to unmount the disk\n\n")
 							self.viewController.goToFinalScreen(title: "Volume format failed to unmount APFS disks, check log for more details", success: false)
 						}
 						return false
@@ -104,13 +121,13 @@ extension InstallMediaCreationManager{
 				}else{
 					print(getOut(cmd: "diskutil mount " + tmpBSDName))
 					
-					log("---Filed to authenticate to eject apfs drive\n\n")
+					log("@@@ Failed to authenticate to eject the drive!!!!\n[The drive has been re-mounted to let the user to use it]\n\n")
 					DispatchQueue.main.sync {
 						self.viewController.goBack()
 					}
 					return false
 				}
-			}
+			//}
 			
 			var newVolumeName = "Installer"
 			
@@ -159,7 +176,7 @@ extension InstallMediaCreationManager{
 									self.viewController.driveName.stringValue = FileManager.default.displayName(atPath: name)
 								}
 								
-								log("---Volume format process ended wiuth success\n\n")
+								log("@@@Volume format process ended wiuth success\n\n")
 							}
 						}else{
 							//the format has failed, so the boolean is false and a screen with installer creation failed will be displayed
@@ -215,7 +232,7 @@ extension InstallMediaCreationManager{
 	}
 	
 	public func OtherOptionsBeforeformat(canFormat: inout Bool, useAPFS: inout Bool){
-		log("\n\nStarting extra opertaions before launching the executable")
+		log("\n\nStarting extra operations before launching the executable")
 		
 		//checks the options to use in this function
 		if !simulateFormatSkip{
@@ -242,7 +259,7 @@ extension InstallMediaCreationManager{
 			}
 		}
 		
-		log("Finished extra opertaions before launching the executable\n\n")
+		log("Finished extra operations before launching the executable\n\n")
 	}
 	
 	func buildCommandString(useMojave isNotMojave: Bool, useAPFS: Bool) -> String{
@@ -368,7 +385,7 @@ extension InstallMediaCreationManager{
 #else
 
 public func OtherOptionsBeforeformat(canFormat: inout Bool, useAPFS: inout Bool){
-	log("\n\nStarting extra opertaions before launching the executable")
+	log("\n\nStarting extra operations before launching the executable")
 	
 	//checks the options to use in this function
 	if !simulateFormatSkip{
@@ -395,7 +412,7 @@ public func OtherOptionsBeforeformat(canFormat: inout Bool, useAPFS: inout Bool)
 		}
 	}
 	
-	log("Finished extra opertaions before launching the executable\n\n")
+	log("Finished extra operations before launching the executable\n\n")
 }
 
 #endif

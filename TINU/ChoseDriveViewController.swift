@@ -881,7 +881,7 @@ class ChoseDriveViewController: GenericViewController {
                 sz *= 1024 * 1024
             }else if n != "MB"{
                 if isDrive{
-                    print("     this drive has a size unit unkown, skipping this drive")
+                    print("     this drive has an unknown size unit, skipping this drive")
                 }else{
                     print("         volume size unit unkown, skipping this volume")
                 }
@@ -904,7 +904,7 @@ class ChoseDriveViewController: GenericViewController {
             if isDrive{
                 print("     this drive is too small to be used for a macOS installer, skipping this drive")
             }else{
-                print("     this volume too small for a macOS installer")
+                print("     this volume is too small for a macOS installer")
             }
             return false
         }

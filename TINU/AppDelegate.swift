@@ -19,6 +19,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var FAQItem: NSMenuItem!
     @IBOutlet weak var FAQItemHelp: NSMenuItem!
     @IBOutlet weak var InstallMacOSItem: NSMenuItem!
+    
+    @IBOutlet weak var LogItem: NSMenuItem!
 	
 	@IBOutlet weak var getMacOSApp: NSMenuItem!
 	@IBOutlet weak var wMSDIND: NSMenuItem!
@@ -216,41 +218,34 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     public func swichMode(isInstall: Bool){
 		let cim = CreateinstallmediaSmallManager.shared
 		
-		print("got createinstallmedia manager")
 		
         if !(cim.sharedIsCreationInProgress || cim.sharedIsPreCreationInProgress){
 			
-			print("conditions matches")
-			
             sharedInstallMac = isInstall
 			
-			print("sharedInstallMac set")
-            
             if sharedInstallMac{
                 InstallMacOSItem.title = "Use TINU to create a bootable macOS installer"
             }else{
                 InstallMacOSItem.title = "Use TINU to install macOS"
             }
-			
-			print("menu item title set")
-            
             sharedWindow.contentViewController?.openSubstituteWindow(windowStoryboardID: "Info", sender: self)
-			
-			print("Window switched")
 			
             //restoreOtherOptions()
             
             //eraseReplacementFilesData()
 			
 			cvm.shared.currentPart = Part()
-			
-			print("Variables reset")
-			
         }
 		
     }
     
-	
+    @IBAction func showLog(_ sender: Any) {
+        if logWindow == nil {
+            logWindow = LogWindowController()
+        }
+        
+        logWindow!.showWindow(self)
+    }
     
     @IBAction func openContacts(_ sender: Any) {
         //open here a window with all the contacts inside
@@ -422,15 +417,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			}else{
 				print("no debug file found!")
 				
-				msgBoxWarning("Impossible to use diagnostics mode", "Needed files inside TINU are missing, so the diagnostics mode can't be used, try to download again this app and then retry.")
+				msgBoxWarning("Impossible to use diagnostics mode", "Needed files inside TINU are missing, so the diagnostics mode can't be used. Download this app again and then try again.")
 			}
 			
         }else{
-            if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress{
-                msgBox("You can't switch mode now", "The bootable macOS installer creation process is currenly running, please cancel the operation or wait the end of the operation before switching mode", .warning)
-            }else if sharedIsOnRecovery{
-                msgBoxWarning("You can't switch mode now", "Switching the mode in witch TINU is running, is not allowed while running TINU on a Mac recovery/istaller")
-            }
+			if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress{
+				msgBox("You can't switch mode now", "The bootable macOS installer creation process is currenly running. Please cancel the operation or wait for the operation to end before switching the mode.", .warning)
+			}else if sharedIsOnRecovery{
+				msgBoxWarning("You can't switch the mode right now", "Switching the mode in which TINU is running is not possible while running TINU from this recovery/installer system.")
+			}
         }
     }
 	

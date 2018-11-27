@@ -46,7 +46,7 @@ public func checkAppMode(){
 		simulateConfirmGetDataFail,
 		simulateCreateinstallmediaFail != nil,
 		simulateNoSpecialOperations,
-		simulateSpecialOpertaionsFail,
+		simulateSpecialOperationsFail,
 		simulateRecovery
 	]
 	

@@ -69,6 +69,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             statusItem.length = 40
             
             
+            
         if let button = statusItem.button {
             button.title = "EFI"
             

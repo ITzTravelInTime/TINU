@@ -111,6 +111,8 @@ public class ShadowViewController: NSViewController{
 		topView.useShadow = true
 		topView.layer?.zPosition = startZpos + 1
 		
+		topView.autoresizingMask = [.viewWidthSizable, .viewMinYMargin, .viewMinXMargin, .viewMaxXMargin]
+		
 		/*
 		NSLayoutConstraint(item: topView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0.0).isActive = true
 		NSLayoutConstraint(item: topView, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1.0, constant: 0.0).isActive = true
@@ -122,6 +124,8 @@ public class ShadowViewController: NSViewController{
 		bottomView.customShadowRadius = topBottomViewsShadowRadius
 		bottomView.useShadow = true
 		bottomView.layer?.zPosition = startZpos + 1
+		
+		bottomView.autoresizingMask = [.viewWidthSizable] 
 		
 		/*NSLayoutConstraint(item: bottomView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: 0.0).isActive = true
 		NSLayoutConstraint(item: bottomView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0.0).isActive = true

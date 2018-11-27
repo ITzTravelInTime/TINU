@@ -122,7 +122,7 @@ extension InstallMediaCreationManager{
 			DispatchQueue.main.sync {
 			self.setActivityLabelText("Checking previous operations")
 			}
-			log("cheking the \(sharedExecutableName) process")
+			log("Checking the \(sharedExecutableName) process")
 			
 			if sharedInstallMac{
 				DispatchQueue.main.sync {
@@ -201,6 +201,14 @@ extension InstallMediaCreationManager{
 			var errorsList: [CheckItem] = []
 			
 			if rc != 0 || px != 0{
+				
+				/*
+
+
+				WARNINING: do not change the text of the arrays after valuesToCheck: in the errors list append, those are essential to let the errors of createinstallmedia to be detected.
+
+
+				*/
 				
 				//add new known errors here
 				

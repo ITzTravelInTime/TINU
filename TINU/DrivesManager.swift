@@ -82,6 +82,7 @@ public final class DrivesManager{
 		return getDevicePropertyInfo(id, propertyName: "MediaName")
 	}
 	
+    #if TINU
 	class func getCurrentDriveName() -> String!{
 		
 		var retname: String!
@@ -101,6 +102,7 @@ public final class DrivesManager{
 		
 		return retname
 	}
+    #endif
 	
 	class func getDevicePropertyInfo(_ id: String, propertyName: String) -> String!{
 		return getDevicePropertyInfoNew(_: id, propertyName: propertyName)

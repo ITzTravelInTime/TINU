@@ -15,11 +15,13 @@ public class EFIPartitionMounterWindowController: AppWindowController {
 	override public func windowDidLoad() {
 		super.windowDidLoad()
         
-        #if !isTool
+        #if TINU
+        
 		self.window?.title += ": EFI partition mounter"
         
-        
         #else
+        
+        
         self.window?.title = "EFI partition mounter"
         
         //self.window = (NSStoryboard(name: "EFIPartitionMounterStoryboard", bundle: Bundle.main).instantiateController(withIdentifier: "EFIMounterWindow") as! NSWindowController).window
