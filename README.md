@@ -30,7 +30,7 @@ Features that are planned for some future versions:
 - integrated pre-made clover config templates database from a remote and open repository
 - Support for other languages, at least Italian
 
-# Rquirements:
+# Requirements:
 - A computer that runs Mac OS X Yosemite or a more recent version (Mac OS X El Capitan is required to use TINU in a macOS recovery or installer)
 - A drive or a free partition (on a drive which already supports GUID) of at least 7 GB that you want to turn into a macOS/Mac OS X installer
 - A copy of a macOS/Mac OS X installer app (Maveriks or newer versions are supported) in the /Applications folder or in the root of any storage drive in your machine (excepted the drive or volume you want to turn into your macOS install media)
