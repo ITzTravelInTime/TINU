@@ -6,8 +6,6 @@
 //  Copyright © 2018 Pietro Caruso. All rights reserved.
 //
 
-#if installManager
-
 import Cocoa
 import SecurityFoundation
 
@@ -270,5 +268,3 @@ extension InstallMediaCreationManager{
 	}
 
 }
-
-#endif

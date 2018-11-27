@@ -128,8 +128,56 @@ class ChoseAppViewController: GenericViewController {
         open.isExtensionHidden = false
         open.showsHiddenFiles = true
         open.allowedFileTypes = ["app"]
+		
+		open.beginSheetModal(for: self.window, completionHandler: {response in
+			
+			if response == NSModalResponseOK{
+				if !open.urls.isEmpty{
+					if var path = open.urls.first?.path{
+						let manager = FileManager.default
+						
+						if FileAliasManager.isAlias(open.urls.first!){
+							if let newPath = FileAliasManager.resolveFinderAlias(at: open.urls.first!){
+								path = newPath
+							}else{
+								if let name = open.urls.first?.lastPathComponent{
+									msgBoxWarning("Invalid file", "The app you chose, \"\(name)\", is not usable because its Finder Alias can't be resolved.")
+								}else{
+									msgBoxWarning("Invalid file", "The app you chose is not usable because its Finder Alias can't be resolved.")
+								}
+							}
+						}
+						
+						if manager.fileExists(atPath: path + "/Contents/Resources/" + sharedExecutableName) && manager.fileExists(atPath: path + "/Contents/SharedSupport/InstallESD.dmg") && manager.fileExists(atPath: path + "/Contents/Info.plist") {
+							
+							cvm.shared.sharedApp = path
+							
+							cvm.shared.sharedVolumeNeedsPartitionMethodChange = self.ps
+							
+							#if skipChooseCustomization
+							let _ = self.openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
+							#else
+							let _ = self.openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
+							#endif
+							
+						}else{
+							if let name = open.urls.first?.lastPathComponent{
+								msgBoxWarning("Invalid file", "The app you chose, \"\(name)\", is not usable to create macOS installers or macOS installations because it does not contain all the needed files to do that or it isn't a macOS installer.")
+							}else{
+								msgBoxWarning("Invalid file", "The app you chose is not usable to create macOS installers or macOS installations because it does not contain all the needed files to do that or it isn't a macOS installer.")
+							}
+						}
+					}else{
+						msgBoxWarning("Error while opening the file", "Impossible to obtain the file's location")
+					}
+				}else{
+					msgBoxWarning("Error while opening the file", "No files choosen")
+				}
+			}
+			
+		})
         
-        if open.runModal() == NSModalResponseOK{
+        /*if open.runModal() == NSModalResponseOK{
             if !open.urls.isEmpty{
                 if var path = open.urls.first?.path{
                     let manager = FileManager.default
@@ -173,7 +221,7 @@ class ChoseAppViewController: GenericViewController {
             }
         }
         
-        
+        */
     }
     
     override func viewDidLoad() {

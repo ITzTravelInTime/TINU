@@ -8,7 +8,7 @@
 
 import Cocoa
 
-//this class maages the window
+//this class manages the window
 public class mainWindowController: GenericWindowController {
 
     override public func windowDidLoad() {

@@ -6,8 +6,6 @@
 //  Copyright © 2018 Pietro Caruso. All rights reserved.
 //
 
-#if installManager
-
 import Cocoa
 import SecurityFoundation
 
@@ -323,7 +321,7 @@ public final class InstallMediaCreationManager{
 			text = "Do you want to stop the macOS installation process?"
 		}
 		
-		if dialogCustomWarning(question: dTitle, text: text, style: .informational, mainButtonText: "Continue", secondButtonText: "Stop" ){
+		if dialogCriticalWarning(question: dTitle, text: text, style: .informational, proceedButtonText: "Don't Stop", cancelButtonText: "Stop" ){
 			return stop(mustStop: true)
 		}else{
 			return true
@@ -364,4 +362,3 @@ public final class InstallMediaCreationManager{
 	
 }
 
-#endif

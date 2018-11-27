@@ -97,3 +97,21 @@ public func dialogCustomWarning(question: String, text: String, style: NSAlertSt
 	}
 	return true
 }
+
+public func dialogCriticalWarning(question: String, text: String, style: NSAlertStyle, proceedButtonText: String, cancelButtonText: String) -> Bool {
+	let myPopup: NSAlert = NSAlert()
+	myPopup.messageText = question
+	myPopup.informativeText = text
+	myPopup.alertStyle = style
+	myPopup.icon = IconsManager.shared.warningIcon
+	myPopup.addButton(withTitle: proceedButtonText)
+	myPopup.addButton(withTitle: cancelButtonText)
+	// Make the left button the Default button.
+	myPopup.buttons[0].keyEquivalent = "";
+	myPopup.buttons[1].keyEquivalent = "\r"	// Return key
+	let res = myPopup.runModal()
+	if res == NSAlertFirstButtonReturn {
+		return true	// proceed
+	}
+	return false
+}

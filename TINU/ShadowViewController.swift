@@ -34,9 +34,7 @@ public class ShadowViewController: NSViewController{
 		topView.useShadow = true
 		topView.layer?.zPosition = startZpos + 1
 		
-		NSLayoutConstraint(item: topView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0.0).isActive = true
-		NSLayoutConstraint(item: topView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0.0).isActive = true
-		NSLayoutConstraint(item: topView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0.0).isActive = true
+		topView.autoresizingMask = [.viewWidthSizable, .viewMinYMargin, .viewMinXMargin, .viewMaxXMargin]
 		
 		self.view.addSubview(topView)
 		
@@ -45,9 +43,7 @@ public class ShadowViewController: NSViewController{
 		bottomView.useShadow = true
 		bottomView.layer?.zPosition = startZpos + 1
 		
-		NSLayoutConstraint(item: bottomView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: 0.0).isActive = true
-		NSLayoutConstraint(item: bottomView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0.0).isActive = true
-		NSLayoutConstraint(item: bottomView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0.0).isActive = true
+		bottomView.autoresizingMask = [.viewWidthSizable]
 		
 		self.view.addSubview(bottomView)
 		

@@ -597,7 +597,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="75" y="799"/>
+            <point key="canvasLocation" x="75" y="754"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="zdo-jT-Jwi">
@@ -759,6 +759,24 @@
                                 <rect key="frame" x="342" y="175" width="228" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Pablo Melo prcmelo@gmail.com (App Icon), Apple (macOS system Icons)" id="ZTR-Au-hvS">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D1X-KD-zc0">
+                                <rect key="frame" x="301" y="153" width="269" height="14"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Special thanks to:" id="fFi-GT-a69">
+                                    <font key="font" metaFont="smallSystemBold"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iEJ-71-jy7">
+                                <rect key="frame" x="342" y="131" width="228" height="14"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Thomas Tempelmann" id="xRZ-TI-Scz">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1174,6 +1192,6 @@
         <image name="EFIIcon" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="GfO-gk-L1j"/>
+        <segue reference="uhE-p4-tyX"/>
     </inferredMetricsTieBreakers>
 </document>

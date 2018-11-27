@@ -729,7 +729,7 @@
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RtS-qT-7Vu">
                                 <rect key="frame" x="18" y="275" width="444" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Development, distribution, maintaining:" id="TvO-Ld-v0Z">
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Development:" id="TvO-Ld-v0Z">
                                     <font key="font" metaFont="smallSystemBold"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -738,7 +738,7 @@
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z1Z-Ka-mbC">
                                 <rect key="frame" x="66" y="254" width="395" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Pietro Caruso (ITzTravelInTime)" id="7vv-ZS-5eD">
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Pietro Caruso (ITzTravelInTime), Thomas Tempelmann" id="7vv-ZS-5eD">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -803,7 +803,7 @@
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jF5-h9-cPE">
                                 <rect key="frame" x="66" y="90" width="396" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Francesco Perchiazzi, Thomas Tempelmann, Peter Paul Chato" id="DH7-Se-hcg">
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Francesco Perchiazzi, Peter Paul Chato" id="DH7-Se-hcg">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -2280,7 +2280,7 @@ Gw
                 </windowController>
                 <customObject id="Xep-RG-UUI" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3211" y="222"/>
+            <point key="canvasLocation" x="-3243" y="222"/>
         </scene>
         <!--Log View Controller-->
         <scene sceneID="H4P-V1-qaQ">

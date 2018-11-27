@@ -191,9 +191,9 @@ class InstallingViewController: GenericViewController{
 			
 			let notification = NSUserNotification()
 			
-			notification.title = "TINU: bootable macOS installer creation calnceled"
-			notification.informativeText = "The creation of the bootable macOS installer has been canceled, please check the tinu window if you want to try again"
-			notification.contentImage = NSImage(named: "AppIcon")
+			notification.title = "TINU: bootable macOS installer creation canceled"
+			notification.informativeText = "The creation of the bootable macOS installer has been canceled, please check the TINU window if you want to try again"
+			notification.contentImage = IconsManager.shared.warningIcon
 			
 			notification.hasActionButton = true
 			

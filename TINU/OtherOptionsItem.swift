@@ -84,7 +84,7 @@ class OtherOptionsItem: NSView {
 		if otherOptions[i].id == self.option.id{
 		otherOptions[i].isActivated = (checkBox.state == 1)
 		option.isActivated = otherOptions[i].isActivated
-		log("Activated value changed sucessfully to \(option.isActivated)")
+		log("Activated value changed successfully to \(option.isActivated)")
 		}
 		}*/
 		

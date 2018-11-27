@@ -6,8 +6,6 @@
 //  Copyright © 2018 Pietro Caruso. All rights reserved.
 //
 
-#if installManager
-
 import Cocoa
 import SecurityFoundation
 
@@ -27,7 +25,7 @@ extension InstallMediaCreationManager{
 		log("""
 			
 			***Trying to close conflicting processes
-			   If those confliction processes are present,
+			   If those conflicting processes are running,
 			   they may interfere with the success of
 			   the \"\(sharedExecutableName)\" operation
 			
@@ -105,7 +103,7 @@ extension InstallMediaCreationManager{
 			
 				let unmountComm = "diskutil unmountDisk " + tmpBSDName
 				
-				log("    Disks unmount will be done with coomand: \n    \(unmountComm)")
+				log("    Disks unmount will be done with command: \n    \(unmountComm)")
 				
 				if let out = getOutWithSudo(cmd: unmountComm){
 					
@@ -176,7 +174,7 @@ extension InstallMediaCreationManager{
 									self.viewController.driveName.stringValue = FileManager.default.displayName(atPath: name)
 								}
 								
-								log("@@@Volume format process ended wiuth success\n\n")
+								log("@@@Volume format process ended with success\n\n")
 							}
 						}else{
 							//the format has failed, so the boolean is false and a screen with installer creation failed will be displayed
@@ -301,7 +299,7 @@ extension InstallMediaCreationManager{
 			}
 		}else{
 			//we are just on the standard createinstallmedia, so let's add what is missing
-			mainCMD += " --nointeraction;exit;"
+			mainCMD += " --nointeraction"
 		}
 		
 		//this code is used to simulate results of createinstallmedia, saves time hen tesing the fial screen
@@ -381,38 +379,3 @@ extension InstallMediaCreationManager{
 	}
 	
 }
-
-#else
-
-public func OtherOptionsBeforeformat(canFormat: inout Bool, useAPFS: inout Bool){
-	log("\n\nStarting extra operations before launching the executable")
-	
-	//checks the options to use in this function
-	if !simulateFormatSkip{
-		if let s = cvm.shared.sharedVolumeNeedsPartitionMethodChange {
-			canFormat = s
-		}
-		
-		if !canFormat {
-			if let o = oom.shared.otherOptions[oom.shared.ids.otherOptionForceToFormatID]?.canBeUsed(){
-				if o && !simulateFormatSkip{
-					canFormat = true
-					log("   Forced drive erase enabled")
-				}
-			}
-		}
-	}
-	
-	if sharedInstallMac{
-		if let o = oom.shared.otherOptions[oom.shared.ids.otherOptionDoNotUseApfsID]?.canBeUsed(){
-			if o {
-				useAPFS = false
-				log("   Forced APFS automatic upgrade enabled")
-			}
-		}
-	}
-	
-	log("Finished extra operations before launching the executable\n\n")
-}
-
-#endif

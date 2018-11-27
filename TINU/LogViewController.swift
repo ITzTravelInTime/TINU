@@ -9,7 +9,7 @@
 import Cocoa
 
 //the view controller of the log window
-class LogViewController: GenericViewController, NSSharingServicePickerDelegate {
+class LogViewController: NSViewController, NSSharingServicePickerDelegate, NSSharingServiceDelegate {
 	
     @IBOutlet var text: NSTextView!
     @IBOutlet weak var scroller: NSScrollView!
@@ -35,8 +35,8 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate {
 		}*/
     }
     
-    override func viewDidSetVibrantLook() {
-        /*if canUseVibrantLook {
+    /*override func viewDidSetVibrantLook() {
+        if canUseVibrantLook {
             scroller.frame = CGRect.init(x: 0, y: scroller.frame.origin.y, width: self.view.frame.width, height: scroller.frame.height)
             scroller.borderType = .noBorder
             //scroller.drawsBackground = false
@@ -44,8 +44,8 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate {
             scroller.frame = CGRect.init(x: 20, y: scroller.frame.origin.y, width: self.view.frame.width - 40, height: scroller.frame.height)
             scroller.borderType = .bezelBorder
             //scroller.drawsBackground = true
-        }*/
-    }
+        }
+    }*/
     
     override func viewDidAppear() {
         super.viewDidAppear()
@@ -101,10 +101,8 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate {
 			}
 		}*/
 		
-		open.begin { (result) -> Void in
-			
-			if result == NSFileHandlingPanelOKButton {
-				
+		open.beginSheetModal(for: self.window, completionHandler: { response in
+			if response == NSModalResponseOK{
 				if let u = open.url?.path{
 					do{
 						
@@ -115,20 +113,41 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate {
 						msgBoxWarning("Error while saving the log file", "There was an error while saving the log file: \n\n" + error.localizedDescription)
 					}
 				}
-				
-			} else {
-				NSBeep()
 			}
-		}
+			
+			})
 
     }
 	
 	@IBAction func shareLog(_ sender: Any) {
-		let service = NSSharingServicePicker(items: [text.text])
+		
+		if let sen = sender as? NSView{
+		
+		let service = NSSharingServicePicker(items: [text.attributedString()])
 		
 		service.delegate = self
 		
-		service.show(relativeTo: NSZeroRect, of: sender as! NSView, preferredEdge: .minY)
+		service.show(relativeTo: sen.bounds, of: sen, preferredEdge: .minY)
+			
+		}
+	}
+	
+	public func sharingServicePicker(_ sharingServicePicker: NSSharingServicePicker, didChoose service: NSSharingService?){
+		if let serv = service{
+			serv.delegate = self
+			
+		}
+	}
+	
+	public func sharingServicePicker(_ sharingServicePicker: NSSharingServicePicker, delegateFor sharingService: NSSharingService) -> NSSharingServiceDelegate?{
+		
+		return self
+	}
+	
+	func sharingService(_ sharingService: NSSharingService,
+							   sourceWindowForShareItems items: [Any],
+							   sharingContentScope: UnsafeMutablePointer<NSSharingService.SharingContentScope>) -> NSWindow?{
+		return self.window
 	}
 	
 	

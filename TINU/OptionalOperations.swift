@@ -28,7 +28,7 @@ public final class OptionalOperations{
 			if f{
 				log("There is a saved clover EFI folder, trying to copy it into the EFI partition of the target drive")
 				
-				log("  Trying to mount the EFI partition of the tagret drive")
+				log("  Trying to mount the EFI partition of the target drive")
 				
 				let bsdid = dm.getDriveBSDIDFromVolumeBSDID(volumeID: cvm.shared.sharedBSDDrive) + "s1"
 				
@@ -208,7 +208,7 @@ public final class OptionalOperations{
 						try manager.removeItem(atPath: iaFile)
 						
 						
-						log("   .IAPhysicalMedia removed successfoully")
+						log("   .IAPhysicalMedia removed successfully")
 					}else{
 						log("   .IAPhysicalMedia file does not exists, this step is not needed")
 					}
@@ -261,7 +261,7 @@ public final class OptionalOperations{
 						if manager.fileExists(atPath: destination + ".icns"){
 							log("       Removing existing icon file")
 							try manager.removeItem(atPath: destination + ".icns")
-							log("       Existing icon file removed sucessfully")
+							log("       Existing icon file removed successfully")
 						}
 						
 						log("       Creating the icon file")
@@ -269,7 +269,7 @@ public final class OptionalOperations{
 						
 						NSWorkspace.shared().setIcon(NSImage.init(contentsOf: URL.init(fileURLWithPath: origin)), forFile: cvm.shared.sharedVolume, options: NSWorkspaceIconCreationOptions.excludeQuickDrawElementsIconCreationOption)
 						
-						log("   Icon file created sucessfully")
+						log("   Icon file created successfully")
 					}else{
 						log("   Icon creation failed, the original icon from the macOS installer app was not found")
 						ok = false
@@ -323,12 +323,12 @@ public final class OptionalOperations{
 						if manager.fileExists(atPath: path){
 							log("       Trying to remove an existing copy of the app")
 							try manager.removeItem(atPath: path)
-							log("       Existing copy of the app removed sucessfully")
+							log("       Existing copy of the app removed successfully")
 						}
 						
 						log("       Trying to copy this app")
 						try manager.copyItem(at: Bundle.main.bundleURL, to: URL.init(fileURLWithPath: path, isDirectory: true))
-						log("       This app has been copied sucessfully")
+						log("       This app has been copied successfully")
 					
 				}catch let error{
 					log("   Copy of this app failed, error: \n\(error)")

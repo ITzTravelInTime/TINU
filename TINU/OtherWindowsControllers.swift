@@ -71,7 +71,7 @@ public class CreditsWindowController: GenericWindowController {
 	
 }
 
-public class LogWindowController: GenericWindowController {
+public class LogWindowController: NSWindowController {
 	
 	@IBOutlet weak var SaveToolBarButton: NSToolbarItem!
 	@IBOutlet weak var CopyToolBarButton: NSToolbarItem!
@@ -93,6 +93,7 @@ public class LogWindowController: GenericWindowController {
 			vc.shareLog(sender)
 		}
 	}
+	
 	
 	override public func windowDidLoad() {
 		super.windowDidLoad()

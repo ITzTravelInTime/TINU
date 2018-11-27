@@ -42,7 +42,7 @@ class ChooseSideViewController: GenericViewController {
 			AppManager.shared.checkSettings()
 		
 			#if demo
-				print("You have sucessfully enbled the \"demo\" macro!")
+				print("You have successfully enbled the \"demo\" macro!")
 			#endif
 		
 			#if recovery

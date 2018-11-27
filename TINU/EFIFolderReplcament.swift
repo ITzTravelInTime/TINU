@@ -146,6 +146,42 @@ public class EFIReplacementView: NSView{
 		open.isExtensionHidden = false
 		open.showsHiddenFiles = true
 		
+		open.beginSheetModal(for: self.window!, completionHandler: {response in
+			if response == NSModalResponseOK{
+				if !open.urls.isEmpty{
+					DispatchQueue.global(qos: .background).async{
+						if let opener = EFIFolderReplacementManager.shared.loadEFIFolder(open.urls.first!.path){
+							if !opener{
+								DispatchQueue.main.async {
+									msgBoxWarning("Impossible to open the EFI folder", "there was an unkown error while trying to open the selcted EFI folder")
+								}
+							}else{
+								DispatchQueue.main.async {
+									//set ui
+									
+									//msgBox("TINU: EFI folder correctly opened", "EFI folder opened correctly, as it should be", .informational)
+									
+									self.resetButton.isEnabled = true
+									self.openButton.isEnabled = false
+									
+									self.checkOriginFolder()
+								}
+							}
+						}else{
+							DispatchQueue.main.async {
+								
+								msgBoxWarning("The folder \"\(open.urls.first!.path)\" is not a proper clover efi folder", "The folder you selected \"\(open.urls.first!.path)\" does not contain the required element \"\(EFIFolderReplacementManager.shared.missingFileFromOpenedFolder!)\", make sure to open just the folder named EFI and that it cointains all the needed elements")
+								
+								EFIFolderReplacementManager.shared.resetMissingFileFromOpenedFolder()
+								
+							}
+						}
+					}
+				}
+			}
+		})
+		
+		/*
 		if open.runModal() == NSModalResponseOK{
 			if !open.urls.isEmpty{
 				DispatchQueue.global(qos: .background).async{
@@ -178,7 +214,7 @@ public class EFIReplacementView: NSView{
 				}
 			}
 		}
-	
+	*/
 	}
 	
 	func resetClick(){
