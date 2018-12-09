@@ -8,7 +8,7 @@
 
 import Cocoa
 
-//this class maages the window
+//this class manages the window
 public class mainWindowController: GenericWindowController {
 
     override public func windowDidLoad() {
@@ -33,20 +33,25 @@ public class mainWindowController: GenericWindowController {
         }*/
     }
     
-    public func windowWillClose(_ notification: Notification){
+    override public func windowWillClose(_ notification: Notification){
         NSApplication.shared().terminate(self)
     }
     
     func windowShouldClose(_ sender: Any) -> Bool {
-        if sharedIsCreationInProgress{
+        if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress{
             //if !dialogYesNoWarning(question: "Stop the process?", text: "Do you want to abort the Installer cration process?", style: .informational){
+			
+			#if installManager
+				return InstallMediaCreationManager.shared.stopWithAsk()
+			#else
                 if let w = self.contentViewController as? InstallingViewController{
                     return w.stopWithAsk()
                 }
+			#endif
             //}
         }
         
-        if sharedIsPreCreationInProgress{
+        if CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress{
             return false
         }
         

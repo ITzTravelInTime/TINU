@@ -8,18 +8,21 @@
 
 import Foundation
 
+#if !isTool
 //this code manages the log system and the log window
-fileprivate var logs = [String]()
-fileprivate var hasBeenUpdated = false
+public var logs = [String]()
+public var logHasBeenUpdated = false
 
 #if usedate
 	let calendar = Calendar.current
 #endif
+#endif
 
 //function you need to call if you want to log something
-public func log(_ log: Any){
+@inline(__always) public func log(_ log: Any){
     print("\(log)")
 	
+    #if !isTool
 	#if usedate
 		let date = Date()
 		
@@ -43,12 +46,15 @@ public func log(_ log: Any){
 		logs.append("\(log)")
 	#endif
     
-    hasBeenUpdated = true
+    logHasBeenUpdated = true
+    
+    #endif
 }
 
+#if !isTool
 //returs the whole log, if you do not have alreay read it, it's better to not use it
-public func readLog() -> String!{
-    if !hasBeenUpdated{
+@inline(__always) public func readLog() -> String!{
+    if !logHasBeenUpdated{
         return nil
     }else{
         return readAllLog()
@@ -56,23 +62,23 @@ public func readLog() -> String!{
 }
 
 //returs the whole log, but it will always return the log
-public func readAllLog() -> String{
+@inline(__always) public func readAllLog() -> String{
         var ret = ""
         for i in logs{
             ret += i + "\n"
         }
-        hasBeenUpdated = false
+        logHasBeenUpdated = false
         return ret
 }
 
 //returns the latest log line
-public func readAllLatestLog() -> String!{
+@inline(__always) public func readAllLatestLog() -> String!{
     return logs.last
 }
 
 
 //returs the latest log line only if you don't have alreay read it, it's better to not use it because it's used by the log window thaty will not work without
-public func readLatestLog() -> String!{
+@inline(__always) public func readLatestLog() -> String!{
     if !logs.isEmpty{
         return readAllLatestLog()
     }
@@ -80,12 +86,14 @@ public func readLatestLog() -> String!{
 }
 
 //resets the initial state of the log control
-public func clearLog(){
+@inline(__always) public func clearLog(){
     logs = []
-    hasBeenUpdated = false
+    logHasBeenUpdated = false
     if let lw = logWindow{
         if (lw.window?.isVisible)!{
-            hasBeenUpdated = true
+            logHasBeenUpdated = true
         }
     }
 }
+
+#endif

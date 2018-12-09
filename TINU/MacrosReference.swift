@@ -31,6 +31,21 @@ To enable each macro you need to go into the build settings section of the proje
 - useEFIReplacement
 	This is used to compile and show stuff related to the "Copy EFI Folder" advanced setting
 
+- useOldDriveDetection
+	This will use a system based on the interpretation of the output of diskutil list instead of diskutil list -plist to get info to detect the storage devices, leaved as a retrocompatibility feature
+
+- skipChooseCustomization
+	This will skip the screen that prompts for the customization options and instead shoing the confirm screen with a button which allows to customize the advanced settings
+
+- TINU
+	This tells to compile the "TINU only" code
+
+- isTool
+	This tells if code i being compiled by tinu or by a tool which uses tinu code
+
+- installManager
+	Uses a new separate module for media creation/macOS installation proces
+
 */
 
 #if demo

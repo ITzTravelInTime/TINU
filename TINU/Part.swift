@@ -19,10 +19,10 @@ public class Part{
 	
 	var driveType: driveTrypes = .normal
 	
-    var bsdName: String
-    var apfsBDSName: String?
+    var bsdName: String!
+    var apfsBDSName: String!
     var name: String
-    var path: String
+    var path: String!
     var fileSystem: String
     var partScheme: String
     var hasEFI: Bool
@@ -45,7 +45,7 @@ public class Part{
         totSize = 0
     }
     
-    public init(partitionBSDName: String, partitionName: String, partitionPath: String, partitionFileSystem: String, partitionScheme: String, partitionHasEFI: Bool, partitionSize: Float){
+    public init(partitionBSDName: String?, partitionName: String, partitionPath: String?, partitionFileSystem: String, partitionScheme: String, partitionHasEFI: Bool, partitionSize: Float){
         bsdName = partitionBSDName
         name = partitionName
         path = partitionPath
@@ -56,7 +56,17 @@ public class Part{
     }
     
     public func copy() -> Part{
-        let p = Part(partitionBSDName: bsdName, partitionName: name, partitionPath: path, partitionFileSystem: fileSystem, partitionScheme: partScheme, partitionHasEFI: hasEFI, partitionSize: totSize)
+		//let p = Part(partitionBSDName: bsdName, partitionName: name, partitionPath: path, partitionFileSystem: fileSystem, partitionScheme: partScheme, partitionHasEFI: hasEFI, partitionSize: totSize)
+		let p = Part()
+		
+		p.bsdName = bsdName
+		p.name = name
+		p.path = path
+		p.fileSystem = fileSystem
+		p.partScheme = partScheme
+		p.hasEFI = hasEFI
+		p.totSize = totSize
+		
         p.hasAPFSVolumes = hasAPFSVolumes
 		p.hasOriginalVolumes = hasOriginalVolumes
         p.apfsBDSName = apfsBDSName

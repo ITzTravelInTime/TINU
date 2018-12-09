@@ -1,0 +1,624 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C6353AC6213618B6000AEEC3 /* SanFranciscoText-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C6353AC5213618B6000AEEC3 /* SanFranciscoText-Regular.otf */; };
+		C647B35E211CEA430024B9A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B35D211CEA430024B9A1 /* AppDelegate.swift */; };
+		C647B362211CEA440024B9A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C647B361211CEA440024B9A1 /* Assets.xcassets */; };
+		C647B365211CEA440024B9A1 /* EFIPartitionMounterTool.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C647B363211CEA440024B9A1 /* EFIPartitionMounterTool.storyboard */; };
+		C647B389211CEF9E0024B9A1 /* EFIPartitionMounterTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B383211CEF9E0024B9A1 /* EFIPartitionMounterTypes.swift */; };
+		C647B38A211CEF9E0024B9A1 /* EFIPartitionMounterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B384211CEF9E0024B9A1 /* EFIPartitionMounterViewController.swift */; };
+		C647B38B211CEF9E0024B9A1 /* EFIPartitionMounterWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B385211CEF9E0024B9A1 /* EFIPartitionMounterWindowController.swift */; };
+		C647B38D211CEF9E0024B9A1 /* EFIPartitionMounterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B387211CEF9E0024B9A1 /* EFIPartitionMounterModel.swift */; };
+		C647B38E211CEF9E0024B9A1 /* EFIPartitionMounterUIClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B388211CEF9E0024B9A1 /* EFIPartitionMounterUIClasses.swift */; };
+		C647B3AC211D12650024B9A1 /* ToolsBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B3AB211D12650024B9A1 /* ToolsBridge.swift */; };
+		C6482034212B1F9A00BC3B43 /* EFIPartitionMounterLicenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6482033212B1F9A00BC3B43 /* EFIPartitionMounterLicenseViewController.swift */; };
+		C6482036212B231100BC3B43 /* DebugScript.sh in Resources */ = {isa = PBXBuildFile; fileRef = C6482035212B231100BC3B43 /* DebugScript.sh */; };
+		C6482038212B233C00BC3B43 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C6482037212B233B00BC3B43 /* License.rtf */; };
+		C65C9824212475F8005ECAF1 /* EFIPartitionMounterMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65C9823212475F8005ECAF1 /* EFIPartitionMounterMonitor.swift */; };
+		C6662576212E6BC800173770 /* AllertFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6662575212E6BC800173770 /* AllertFunctions.swift */; };
+		C676D195215E2BCF00E900E9 /* ShadowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676D194215E2BCF00E900E9 /* ShadowViewController.swift */; };
+		C6CF8E1B211D816800760E67 /* EFIPartitionMounterCompletingViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF8E1A211D816800760E67 /* EFIPartitionMounterCompletingViewControllers.swift */; };
+		C6CF8E32211D9FBE00760E67 /* SudoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF8E2B211D9FBE00760E67 /* SudoManager.swift */; };
+		C6CF8E33211D9FBE00760E67 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF8E2C211D9FBE00760E67 /* LogManager.swift */; };
+		C6CF8E34211D9FBE00760E67 /* ClassExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF8E2D211D9FBE00760E67 /* ClassExtensions.swift */; };
+		C6CF8E35211D9FBE00760E67 /* EFIPartitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF8E2E211D9FBE00760E67 /* EFIPartitionManager.swift */; };
+		C6CF8E36211D9FBE00760E67 /* ScriptsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF8E2F211D9FBE00760E67 /* ScriptsManager.swift */; };
+		C6CF8E37211D9FBE00760E67 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF8E30211D9FBE00760E67 /* AppManager.swift */; };
+		C6CF8E38211D9FBE00760E67 /* SmallManagers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF8E31211D9FBE00760E67 /* SmallManagers.swift */; };
+		C6CF8E3A211D9FEA00760E67 /* PlistXMLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF8E39211D9FEA00760E67 /* PlistXMLManager.swift */; };
+		C6CF8E3E211DA05400760E67 /* DrivesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF8E3D211DA05400760E67 /* DrivesManager.swift */; };
+		C6CF8E40211DA06F00760E67 /* IconsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF8E3F211DA06F00760E67 /* IconsManager.swift */; };
+		C6DD51252144A818009829D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DD51242144A818009829D9 /* AppDelegate.swift */; };
+		C6DD51292144A819009829D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6DD51282144A819009829D9 /* Assets.xcassets */; };
+		C6DD512C2144A819009829D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6DD512A2144A819009829D9 /* Main.storyboard */; };
+		C6DD51332144B6E9009829D9 /* EFIPartitionMounterSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DD51322144B6E9009829D9 /* EFIPartitionMounterSettingsViewController.swift */; };
+		C6DD51352144BA04009829D9 /* EFIPartitionMounterLauncher.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6DD51222144A818009829D9 /* EFIPartitionMounterLauncher.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DDF9A56B2159AFD700389F78 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF9A56A2159AFD700389F78 /* ShadowView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C6DD51342144B9D3009829D9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+				C6DD51352144BA04009829D9 /* EFIPartitionMounterLauncher.app in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		C6353AC5213618B6000AEEC3 /* SanFranciscoText-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoText-Regular.otf"; sourceTree = "<group>"; };
+		C647B35A211CEA430024B9A1 /* EFI Partition Mounter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EFI Partition Mounter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C647B35D211CEA430024B9A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C647B361211CEA440024B9A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C647B364211CEA440024B9A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/EFIPartitionMounterTool.storyboard; sourceTree = "<group>"; };
+		C647B366211CEA440024B9A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C647B383211CEF9E0024B9A1 /* EFIPartitionMounterTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EFIPartitionMounterTypes.swift; path = "EFI Partition Mounter/EFIPartitionMounterTypes.swift"; sourceTree = SOURCE_ROOT; };
+		C647B384211CEF9E0024B9A1 /* EFIPartitionMounterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EFIPartitionMounterViewController.swift; path = "EFI Partition Mounter/EFIPartitionMounterViewController.swift"; sourceTree = SOURCE_ROOT; };
+		C647B385211CEF9E0024B9A1 /* EFIPartitionMounterWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EFIPartitionMounterWindowController.swift; path = "EFI Partition Mounter/EFIPartitionMounterWindowController.swift"; sourceTree = SOURCE_ROOT; };
+		C647B387211CEF9E0024B9A1 /* EFIPartitionMounterModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EFIPartitionMounterModel.swift; path = "EFI Partition Mounter/EFIPartitionMounterModel.swift"; sourceTree = SOURCE_ROOT; };
+		C647B388211CEF9E0024B9A1 /* EFIPartitionMounterUIClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EFIPartitionMounterUIClasses.swift; path = "EFI Partition Mounter/EFIPartitionMounterUIClasses.swift"; sourceTree = SOURCE_ROOT; };
+		C647B3AB211D12650024B9A1 /* ToolsBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToolsBridge.swift; path = ../../ToolsBridge.swift; sourceTree = "<group>"; };
+		C647B3B2211D242D0024B9A1 /* EFI Partition Mounter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "EFI Partition Mounter.entitlements"; sourceTree = "<group>"; };
+		C6482033212B1F9A00BC3B43 /* EFIPartitionMounterLicenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EFIPartitionMounterLicenseViewController.swift; sourceTree = "<group>"; };
+		C6482035212B231100BC3B43 /* DebugScript.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = DebugScript.sh; sourceTree = "<group>"; };
+		C6482037212B233B00BC3B43 /* License.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = License.rtf; sourceTree = "<group>"; };
+		C65C9823212475F8005ECAF1 /* EFIPartitionMounterMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EFIPartitionMounterMonitor.swift; sourceTree = "<group>"; };
+		C6662575212E6BC800173770 /* AllertFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AllertFunctions.swift; path = ../../TINU/AllertFunctions.swift; sourceTree = "<group>"; };
+		C676D194215E2BCF00E900E9 /* ShadowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShadowViewController.swift; path = ../../TINU/ShadowViewController.swift; sourceTree = "<group>"; };
+		C6CF8E1A211D816800760E67 /* EFIPartitionMounterCompletingViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EFIPartitionMounterCompletingViewControllers.swift; sourceTree = "<group>"; };
+		C6CF8E2B211D9FBE00760E67 /* SudoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SudoManager.swift; path = ../../TINU/SudoManager.swift; sourceTree = "<group>"; };
+		C6CF8E2C211D9FBE00760E67 /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogManager.swift; path = ../../TINU/LogManager.swift; sourceTree = "<group>"; };
+		C6CF8E2D211D9FBE00760E67 /* ClassExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClassExtensions.swift; path = ../../TINU/ClassExtensions.swift; sourceTree = "<group>"; };
+		C6CF8E2E211D9FBE00760E67 /* EFIPartitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EFIPartitionManager.swift; path = ../../TINU/EFIPartitionManager.swift; sourceTree = "<group>"; };
+		C6CF8E2F211D9FBE00760E67 /* ScriptsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScriptsManager.swift; path = ../../TINU/ScriptsManager.swift; sourceTree = "<group>"; };
+		C6CF8E30211D9FBE00760E67 /* AppManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppManager.swift; path = ../../TINU/AppManager.swift; sourceTree = "<group>"; };
+		C6CF8E31211D9FBE00760E67 /* SmallManagers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SmallManagers.swift; path = ../../TINU/SmallManagers.swift; sourceTree = "<group>"; };
+		C6CF8E39211D9FEA00760E67 /* PlistXMLManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlistXMLManager.swift; path = ../../TINU/PlistXMLManager.swift; sourceTree = "<group>"; };
+		C6CF8E3D211DA05400760E67 /* DrivesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrivesManager.swift; path = ../../TINU/DrivesManager.swift; sourceTree = "<group>"; };
+		C6CF8E3F211DA06F00760E67 /* IconsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IconsManager.swift; path = ../../TINU/IconsManager.swift; sourceTree = "<group>"; };
+		C6DD51222144A818009829D9 /* EFIPartitionMounterLauncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EFIPartitionMounterLauncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6DD51242144A818009829D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C6DD51282144A819009829D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C6DD512B2144A819009829D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C6DD512D2144A819009829D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C6DD512E2144A819009829D9 /* EFIPartitionMounterLauncher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EFIPartitionMounterLauncher.entitlements; sourceTree = "<group>"; };
+		C6DD51322144B6E9009829D9 /* EFIPartitionMounterSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EFIPartitionMounterSettingsViewController.swift; sourceTree = "<group>"; };
+		DDF9A56A2159AFD700389F78 /* ShadowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShadowView.swift; path = ../../TINU/ShadowView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C647B357211CEA430024B9A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C6DD511F2144A818009829D9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C647B351211CEA430024B9A1 = {
+			isa = PBXGroup;
+			children = (
+				C647B35C211CEA430024B9A1 /* EFI Partition Mounter */,
+				C6DD51232144A818009829D9 /* EFIPartitionMounterLauncher */,
+				C647B35B211CEA430024B9A1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C647B35B211CEA430024B9A1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C647B35A211CEA430024B9A1 /* EFI Partition Mounter.app */,
+				C6DD51222144A818009829D9 /* EFIPartitionMounterLauncher.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C647B35C211CEA430024B9A1 /* EFI Partition Mounter */ = {
+			isa = PBXGroup;
+			children = (
+				C647B3B2211D242D0024B9A1 /* EFI Partition Mounter.entitlements */,
+				C647B361211CEA440024B9A1 /* Assets.xcassets */,
+				C647B3AB211D12650024B9A1 /* ToolsBridge.swift */,
+				C647B35D211CEA430024B9A1 /* AppDelegate.swift */,
+				C647B366211CEA440024B9A1 /* Info.plist */,
+				C647B363211CEA440024B9A1 /* EFIPartitionMounterTool.storyboard */,
+				C6DD51322144B6E9009829D9 /* EFIPartitionMounterSettingsViewController.swift */,
+				C65C9823212475F8005ECAF1 /* EFIPartitionMounterMonitor.swift */,
+				C6CF8E1A211D816800760E67 /* EFIPartitionMounterCompletingViewControllers.swift */,
+				C6482033212B1F9A00BC3B43 /* EFIPartitionMounterLicenseViewController.swift */,
+				C647B387211CEF9E0024B9A1 /* EFIPartitionMounterModel.swift */,
+				C647B383211CEF9E0024B9A1 /* EFIPartitionMounterTypes.swift */,
+				C647B388211CEF9E0024B9A1 /* EFIPartitionMounterUIClasses.swift */,
+				C647B384211CEF9E0024B9A1 /* EFIPartitionMounterViewController.swift */,
+				C647B385211CEF9E0024B9A1 /* EFIPartitionMounterWindowController.swift */,
+				C6CF8E2A211D9FA500760E67 /* FilesFromTINU */,
+				C6482039212B235200BC3B43 /* Resourches */,
+			);
+			path = "EFI Partition Mounter";
+			sourceTree = "<group>";
+		};
+		C6482039212B235200BC3B43 /* Resourches */ = {
+			isa = PBXGroup;
+			children = (
+				C6482037212B233B00BC3B43 /* License.rtf */,
+				C6482035212B231100BC3B43 /* DebugScript.sh */,
+				C6353AC5213618B6000AEEC3 /* SanFranciscoText-Regular.otf */,
+			);
+			name = Resourches;
+			sourceTree = "<group>";
+		};
+		C6CF8E2A211D9FA500760E67 /* FilesFromTINU */ = {
+			isa = PBXGroup;
+			children = (
+				C6CF8E30211D9FBE00760E67 /* AppManager.swift */,
+				C6CF8E2D211D9FBE00760E67 /* ClassExtensions.swift */,
+				C6CF8E3D211DA05400760E67 /* DrivesManager.swift */,
+				C6CF8E2E211D9FBE00760E67 /* EFIPartitionManager.swift */,
+				C6CF8E3F211DA06F00760E67 /* IconsManager.swift */,
+				C6CF8E2C211D9FBE00760E67 /* LogManager.swift */,
+				C6CF8E39211D9FEA00760E67 /* PlistXMLManager.swift */,
+				C6CF8E2F211D9FBE00760E67 /* ScriptsManager.swift */,
+				C6CF8E31211D9FBE00760E67 /* SmallManagers.swift */,
+				C6CF8E2B211D9FBE00760E67 /* SudoManager.swift */,
+				C6662575212E6BC800173770 /* AllertFunctions.swift */,
+				C676D194215E2BCF00E900E9 /* ShadowViewController.swift */,
+				DDF9A56A2159AFD700389F78 /* ShadowView.swift */,
+			);
+			name = FilesFromTINU;
+			sourceTree = "<group>";
+		};
+		C6DD51232144A818009829D9 /* EFIPartitionMounterLauncher */ = {
+			isa = PBXGroup;
+			children = (
+				C6DD51242144A818009829D9 /* AppDelegate.swift */,
+				C6DD51282144A819009829D9 /* Assets.xcassets */,
+				C6DD512A2144A819009829D9 /* Main.storyboard */,
+				C6DD512D2144A819009829D9 /* Info.plist */,
+				C6DD512E2144A819009829D9 /* EFIPartitionMounterLauncher.entitlements */,
+			);
+			path = EFIPartitionMounterLauncher;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C647B359211CEA430024B9A1 /* EFI Partition Mounter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C647B36A211CEA440024B9A1 /* Build configuration list for PBXNativeTarget "EFI Partition Mounter" */;
+			buildPhases = (
+				C647B356211CEA430024B9A1 /* Sources */,
+				C647B357211CEA430024B9A1 /* Frameworks */,
+				C647B358211CEA430024B9A1 /* Resources */,
+				C6DD51342144B9D3009829D9 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "EFI Partition Mounter";
+			productName = "EFI Partition Mounter";
+			productReference = C647B35A211CEA430024B9A1 /* EFI Partition Mounter.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C6DD51212144A818009829D9 /* EFIPartitionMounterLauncher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C6DD51312144A819009829D9 /* Build configuration list for PBXNativeTarget "EFIPartitionMounterLauncher" */;
+			buildPhases = (
+				C6DD511E2144A818009829D9 /* Sources */,
+				C6DD511F2144A818009829D9 /* Frameworks */,
+				C6DD51202144A818009829D9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EFIPartitionMounterLauncher;
+			productName = EFIPartitionMounterLauncher;
+			productReference = C6DD51222144A818009829D9 /* EFIPartitionMounterLauncher.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C647B352211CEA430024B9A1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1000;
+				LastUpgradeCheck = 1000;
+				ORGANIZATIONNAME = "Pietro Caruso";
+				TargetAttributes = {
+					C647B359211CEA430024B9A1 = {
+						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = "";
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
+					};
+					C6DD51212144A818009829D9 = {
+						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = "";
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = C647B355211CEA430024B9A1 /* Build configuration list for PBXProject "EFI Partition Mounter" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C647B351211CEA430024B9A1;
+			productRefGroup = C647B35B211CEA430024B9A1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C647B359211CEA430024B9A1 /* EFI Partition Mounter */,
+				C6DD51212144A818009829D9 /* EFIPartitionMounterLauncher */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C647B358211CEA430024B9A1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C6353AC6213618B6000AEEC3 /* SanFranciscoText-Regular.otf in Resources */,
+				C6482038212B233C00BC3B43 /* License.rtf in Resources */,
+				C6482036212B231100BC3B43 /* DebugScript.sh in Resources */,
+				C647B362211CEA440024B9A1 /* Assets.xcassets in Resources */,
+				C647B365211CEA440024B9A1 /* EFIPartitionMounterTool.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C6DD51202144A818009829D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C6DD51292144A819009829D9 /* Assets.xcassets in Resources */,
+				C6DD512C2144A819009829D9 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C647B356211CEA430024B9A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C6CF8E1B211D816800760E67 /* EFIPartitionMounterCompletingViewControllers.swift in Sources */,
+				C647B38A211CEF9E0024B9A1 /* EFIPartitionMounterViewController.swift in Sources */,
+				C6CF8E3E211DA05400760E67 /* DrivesManager.swift in Sources */,
+				C6482034212B1F9A00BC3B43 /* EFIPartitionMounterLicenseViewController.swift in Sources */,
+				C647B3AC211D12650024B9A1 /* ToolsBridge.swift in Sources */,
+				C647B38D211CEF9E0024B9A1 /* EFIPartitionMounterModel.swift in Sources */,
+				C647B389211CEF9E0024B9A1 /* EFIPartitionMounterTypes.swift in Sources */,
+				C6CF8E34211D9FBE00760E67 /* ClassExtensions.swift in Sources */,
+				C65C9824212475F8005ECAF1 /* EFIPartitionMounterMonitor.swift in Sources */,
+				C647B35E211CEA430024B9A1 /* AppDelegate.swift in Sources */,
+				C6CF8E37211D9FBE00760E67 /* AppManager.swift in Sources */,
+				C6CF8E3A211D9FEA00760E67 /* PlistXMLManager.swift in Sources */,
+				C6CF8E36211D9FBE00760E67 /* ScriptsManager.swift in Sources */,
+				DDF9A56B2159AFD700389F78 /* ShadowView.swift in Sources */,
+				C6CF8E33211D9FBE00760E67 /* LogManager.swift in Sources */,
+				C6662576212E6BC800173770 /* AllertFunctions.swift in Sources */,
+				C6CF8E40211DA06F00760E67 /* IconsManager.swift in Sources */,
+				C6CF8E32211D9FBE00760E67 /* SudoManager.swift in Sources */,
+				C676D195215E2BCF00E900E9 /* ShadowViewController.swift in Sources */,
+				C6CF8E35211D9FBE00760E67 /* EFIPartitionManager.swift in Sources */,
+				C6CF8E38211D9FBE00760E67 /* SmallManagers.swift in Sources */,
+				C647B38B211CEF9E0024B9A1 /* EFIPartitionMounterWindowController.swift in Sources */,
+				C6DD51332144B6E9009829D9 /* EFIPartitionMounterSettingsViewController.swift in Sources */,
+				C647B38E211CEF9E0024B9A1 /* EFIPartitionMounterUIClasses.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C6DD511E2144A818009829D9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C6DD51252144A818009829D9 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C647B363211CEA440024B9A1 /* EFIPartitionMounterTool.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C647B364211CEA440024B9A1 /* Base */,
+			);
+			name = EFIPartitionMounterTool.storyboard;
+			sourceTree = "<group>";
+		};
+		C6DD512A2144A819009829D9 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C6DD512B2144A819009829D9 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C647B368211CEA440024B9A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C647B369211CEA440024B9A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		C647B36B211CEA440024B9A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDark;
+				CODE_SIGN_ENTITLEMENTS = "EFI Partition Mounter/EFI Partition Mounter.entitlements";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 9RSH5734GY;
+				GCC_OPTIMIZATION_LEVEL = s;
+				INFOPLIST_FILE = "EFI Partition Mounter/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pietrocaruso.TINU.EFIPartitionMounter;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG isTool EFIPM";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 3.0;
+				VALID_ARCHS = x86_64;
+			};
+			name = Debug;
+		};
+		C647B36C211CEA440024B9A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDark;
+				CODE_SIGN_ENTITLEMENTS = "EFI Partition Mounter/EFI Partition Mounter.entitlements";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 9RSH5734GY;
+				INFOPLIST_FILE = "EFI Partition Mounter/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pietrocaruso.TINU.EFIPartitionMounter;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "isTool EFIPM";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 3.0;
+				VALID_ARCHS = x86_64;
+			};
+			name = Release;
+		};
+		C6DD512F2144A819009829D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 9RSH5734GY;
+				GCC_OPTIMIZATION_LEVEL = fast;
+				INFOPLIST_FILE = EFIPartitionMounterLauncher/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pietrocaruso.TINU.EFIPartitionMounterLauncher;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Osize";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		C6DD51302144A819009829D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 9RSH5734GY;
+				GCC_OPTIMIZATION_LEVEL = fast;
+				INFOPLIST_FILE = EFIPartitionMounterLauncher/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pietrocaruso.TINU.EFIPartitionMounterLauncher;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Osize";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C647B355211CEA430024B9A1 /* Build configuration list for PBXProject "EFI Partition Mounter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C647B368211CEA440024B9A1 /* Debug */,
+				C647B369211CEA440024B9A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C647B36A211CEA440024B9A1 /* Build configuration list for PBXNativeTarget "EFI Partition Mounter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C647B36B211CEA440024B9A1 /* Debug */,
+				C647B36C211CEA440024B9A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C6DD51312144A819009829D9 /* Build configuration list for PBXNativeTarget "EFIPartitionMounterLauncher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C6DD512F2144A819009829D9 /* Debug */,
+				C6DD51302144A819009829D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C647B352211CEA430024B9A1 /* Project object */;
+}

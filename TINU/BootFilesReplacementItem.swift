@@ -8,6 +8,8 @@
 
 import Cocoa
 
+#if !macOnlyMode
+
 class BootFilesReplacementItem: NSView {
     var textField = NSTextField()
     
@@ -19,12 +21,21 @@ class BootFilesReplacementItem: NSView {
     
     var chosedText = NSTextField()
     
-    var replaceFile: ReplaceFileObject!
+    var replaceFile: BootFilesReplacementManager.ReplaceFileObject!
     
     var isInPlace = false
+	
+	var isGray = false
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
+		
+		//F5F5F5
+		if isGray{
+			self.backgroundColor = NSColor.controlAlternatingRowBackgroundColors[0]
+		}else{
+			self.backgroundColor = NSColor.controlAlternatingRowBackgroundColors[1]
+		}
 		
 		let fieldHeigth: CGFloat = 17
 		let buttonsHeigth: CGFloat = 32
@@ -110,9 +121,9 @@ class BootFilesReplacementItem: NSView {
     }
     
     func deleteClick(){
-        for f in 0...(filesToReplace.count - 1){
-            if filesToReplace[f].filename == replaceFile.filename{
-                filesToReplace[f].data = nil
+        for f in 0...(BootFilesReplacementManager.shared.filesToReplace.count - 1){
+            if BootFilesReplacementManager.shared.filesToReplace[f].filename == replaceFile.filename{
+                BootFilesReplacementManager.shared.filesToReplace[f].data = nil
                 isInPlace = false
                 log("Value removed successfully from \"" + replaceFile.filename + "\"")
             }
@@ -138,39 +149,82 @@ class BootFilesReplacementItem: NSView {
         open.showsHiddenFiles = true
         open.allowedFileTypes = [ext]
         
-        if open.runModal() == NSModalResponseOK{
-            if !open.urls.isEmpty{
-                do{
-                    
-                    log("Trying to give a value at the item: \(replaceFile.filename)")
-                    
-                    //log(open.urls.first!)
-                    
-                    //replaceFile.data = try Data.init(contentsOf: open.urls.first!)
-                    
-                    for f in 0...(filesToReplace.count - 1){
-                        if filesToReplace[f].filename == replaceFile.filename{
-                            filesToReplace[f].data = try Data.init(contentsOf: open.urls.first!)
-                            isInPlace = true
-                            log("Value gived sucessfullty!")
-                        }
-                    }
-                    
-                    checkButtonsVisibility()
-                    
-                    /*for i in filesToReplace{
-                        var isnil = false
-                        if i.data == nil{
-                            isnil = true
-                        }
-                        log("item " + i.filename + " data " + String(isnil))
-                    }*/
-                    
-                }catch let error{
-                    log(error.localizedDescription)
-                    msgBox("Error while opening the file", "There was an error while opening the file you choosed: \n" + error.localizedDescription, NSAlertStyle.critical)
-                }
-            }
-        }
+        open.beginSheetModal(for: CustomizationWindowManager.shared.referenceWindow , completionHandler: {response in
+			
+			if response == NSModalResponseOK{
+				if !open.urls.isEmpty{
+					do{
+						
+						log("Trying to give a value at the item: \(self.replaceFile.filename)")
+						
+						//log(open.urls.first!)
+						
+						//replaceFile.data = try Data.init(contentsOf: open.urls.first!)
+						
+						for f in 0...(BootFilesReplacementManager.shared.filesToReplace.count - 1){
+							if BootFilesReplacementManager.shared.filesToReplace[f].filename == self.replaceFile.filename{
+								BootFilesReplacementManager.shared.filesToReplace[f].data = try Data.init(contentsOf: open.urls.first!)
+								self.isInPlace = true
+								log("Value gived successfully!")
+							}
+						}
+						
+						self.checkButtonsVisibility()
+						
+						/*for i in filesToReplace{
+						var isnil = false
+						if i.data == nil{
+						isnil = true
+						}
+						log("item " + i.filename + " data " + String(isnil))
+						}*/
+						
+					}catch let error{
+						log(error.localizedDescription)
+						msgBox("Error while opening the file", "There was an error while opening the file you choosed: \n" + error.localizedDescription, NSAlertStyle.critical)
+					}
+				}
+			}
+			
+		})
+		
+		/*
+		if open.runModal() == NSModalResponseOK{
+		if !open.urls.isEmpty{
+		do{
+		
+		log("Trying to give a value at the item: \(replaceFile.filename)")
+		
+		//log(open.urls.first!)
+		
+		//replaceFile.data = try Data.init(contentsOf: open.urls.first!)
+		
+		for f in 0...(BootFilesReplacementManager.shared.filesToReplace.count - 1){
+		if BootFilesReplacementManager.shared.filesToReplace[f].filename == replaceFile.filename{
+		BootFilesReplacementManager.shared.filesToReplace[f].data = try Data.init(contentsOf: open.urls.first!)
+		isInPlace = true
+		log("Value gived successfully!")
+		}
+		}
+		
+		checkButtonsVisibility()
+		
+		/*for i in filesToReplace{
+		var isnil = false
+		if i.data == nil{
+		isnil = true
+		}
+		log("item " + i.filename + " data " + String(isnil))
+		}*/
+		
+		}catch let error{
+		log(error.localizedDescription)
+		msgBox("Error while opening the file", "There was an error while opening the file you choosed: \n" + error.localizedDescription, NSAlertStyle.critical)
+		}
+		}
+		}
+		*/
     }
 }
+
+#endif

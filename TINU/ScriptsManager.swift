@@ -34,6 +34,7 @@ public func runCommand(cmd : String, args : [String]) -> (output: [String], erro
     let p = startCommand(cmd: cmd, args: args)
     
     p.process.waitUntilExit()
+    
     let outdata = p.outputPipe.fileHandleForReading.readDataToEndOfFile()
     if var string = String(data: outdata, encoding: .utf8) {
         string = string.trimmingCharacters(in: .newlines)
@@ -47,13 +48,14 @@ public func runCommand(cmd : String, args : [String]) -> (output: [String], erro
     }
     
     status = p.process.terminationStatus
-
+    
     return (output, error, status)
 }
 
 //executes a process until it ends end then returns only the output/error
 fileprivate func getOutSimply(cmd: String, isErr: Bool) -> String{
     //ths function runs a command on the sh shell and it does return the output or the error produced
+
     var ret = [String]()
     
     if isErr{
@@ -67,7 +69,7 @@ fileprivate func getOutSimply(cmd: String, isErr: Bool) -> String{
         rett += r + "\n"
     }
     if !rett.isEmpty{
-        rett.characters.removeLast()
+        rett.removeLast()
     }
     
     return rett

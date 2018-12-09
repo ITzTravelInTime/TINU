@@ -9,7 +9,13 @@
 import Cocoa
 
 //this class is an UI object used to represent a drive or a insteller app that can be selected by the user
-class DriveObject: NSView {
+class DriveObject: ShadowView {
+	
+	//items size for chose drive and chose app screens
+	
+	static let itemSize: NSSize = NSSize(width: 130, height: 155)
+	
+	let cm = cvm.shared
     
     var isEnabled = true{
         didSet{
@@ -20,31 +26,64 @@ class DriveObject: NSView {
 			}
         }
     }
+	
+	var isSelected = false
 
     public var isApp = false
-    
-    public var volumePath = ""
-    public var volumeBSD = ""
     public var applicationPath = ""
     
     public var part: Part!
     
     var image = NSImageView()
     var volume = NSTextField()
+	
+	var warnImage: NSImageView!
+	var warnText: NSTextField!
     
     var overlay: NSImageView!
 	
 	var sz: String!
-    /*
+	
+	override func updateLayer() {
+		super.updateLayer()
+		
+		//self.appearance = sharedWindow.effectiveAppearance
+		
+		if isSelected{
+			self.backgroundColor = NSColor.selectedControlColor
+		}
+		
+		if self.isEnabled{
+			self.volume.textColor = NSColor.textColor
+		/*}else{
+			self.volume.textColor = NSColor.lightGray*/
+		}
+		
+	}
+	
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
+		
+		self.appearance = sharedWindow.effectiveAppearance
+		
         //refreshUI()
+		
+		self.updateLayer()
+		
+		
+		
     }
-    */
-    
+	
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
+		
+		self.appearance = sharedWindow.effectiveAppearance
+		
         refreshUI()
+		
+		//self.wantsLayer = true
+		self.needsLayout = true
+		self.needsDisplay = true
     }
     
     required init?(coder: NSCoder) {
@@ -58,7 +97,12 @@ class DriveObject: NSView {
     private func refreshUI(){
         //self.borderColor = NSColor.red.cgColor
         //self.backgroundColor = NSColor.blue
-        self.layer?.cornerRadius = 15
+		
+		if (sharedIsOnRecovery || simulateDisableShadows){
+			self.canShadow = false
+			self.wantsLayer = true
+			self.layer?.cornerRadius = 15
+		}
         
         image = NSImageView(frame: NSRect(x: 15, y: 55, width: self.frame.size.width - 30, height: self.frame.size.height - 60))
         image.isEditable = false
@@ -72,7 +116,7 @@ class DriveObject: NSView {
         volume.isEditable = false
         volume.isBordered = false
         volume.alignment = .center
-        volume.backgroundColor = NSColor.white.withAlphaComponent(0)
+        (volume as NSView).backgroundColor = NSColor.white.withAlphaComponent(0)
         
         //volume.isSelectable = false
         self.addSubview(volume)
@@ -96,34 +140,34 @@ class DriveObject: NSView {
             setSelectedAspect()
             
             if isApp{
-				sharedApp = applicationPath
+				cm.sharedApp = applicationPath
 				Swift.print("The application that the user has selected is: " + applicationPath)
 				
             }else{
-				sharedSVReallyIsAPFS = false
+				cm.sharedSVReallyIsAPFS = false
 				
 				//sharedVolumeNeedsFormat = nil
-				sharedVolumeNeedsPartitionMethodChange = nil
+				cm.sharedVolumeNeedsPartitionMethodChange = nil
 				
-				sharedDoTimeMachineWarn = false
+				cm.sharedDoTimeMachineWarn = false
 				
 				if part != nil{
 					if part.partScheme != "GUID_partition_scheme" || !part.hasEFI{
-						sharedVolumeNeedsPartitionMethodChange = true
+						cm.sharedVolumeNeedsPartitionMethodChange = true
 						/*}else{
 						sharedVolumeNeedsPartitionMethodChange = false*/
 					}
 					
 					if !sharedInstallMac && part.fileSystem == "APFS"{
-						sharedVolumeNeedsPartitionMethodChange = true
+						cm.sharedVolumeNeedsPartitionMethodChange = true
 					}
 					
 					if sharedInstallMac && (part.fileSystem == "Other" || !part.hasEFI){
-						sharedVolumeNeedsPartitionMethodChange = true
+						cm.sharedVolumeNeedsPartitionMethodChange = true
 					}
 					
 					if part.tmDisk{
-						sharedDoTimeMachineWarn = true
+						cm.sharedDoTimeMachineWarn = true
 					}
 					
 					
@@ -135,14 +179,11 @@ class DriveObject: NSView {
 					}*/
 				}
 				
-				sharedVolume = volumePath
-				sharedBSDDrive = volumeBSD
+				cm.sharedSVReallyIsAPFS = part.driveType == .apfs
 				
-				sharedBSDDriveAPFS = part.apfsBDSName
+				cm.currentPart = part
 				
-				sharedSVReallyIsAPFS = part.driveType == .apfs
-				
-				Swift.print("The volume that the user has selected is: " + volumePath)
+				Swift.print("The volume that the user has selected is: " + part.path!)
             }
 			
 		}
@@ -160,60 +201,109 @@ class DriveObject: NSView {
     }
 	
     public func setDefaultAspect(){
-		if sz == nil{
-			if let s = part?.size{
-				sz = "Size: \(self.roundInt(number: s))"
-			}else{
-				sz = "Size: 0 Byte"
+		
+		if !isApp{
+			if sz == nil{
+				if let s = part?.size{
+					sz = "Size: \(self.roundInt(number: s))"
+				}else{
+					sz = "Size: 0 Byte"
+				}
 			}
 		}
 		
+		DispatchQueue.main.async {
         //self.layer?.backgroundColor = NSColor.white.withAlphaComponent(0).cgColor
-        if isEnabled{
-            self.backgroundColor = NSColor.white.withAlphaComponent(0)
-            volume.textColor = NSColor.textColor
-            
-            if overlay != nil{
-                overlay.image = NSImage()
-                overlay.removeFromSuperview()
-                overlay = nil
-            }
+		self.isSelected = false
+		
+			self.appearance = sharedWindow.effectiveAppearance
+			self.updateLayer()
 			
-			if isApp{
-				self.toolTip = "Path: " + applicationPath
+        if self.isEnabled{
+            if self.overlay != nil{
+                self.overlay.image = NSImage()
+                self.overlay.removeFromSuperview()
+                self.overlay = nil
+			}
+			
+			if self.warnText != nil{
+				self.warnText.removeFromSuperview()
+				self.warnText = nil
+			}
+			
+			if self.warnImage != nil{
+				self.warnImage.removeFromSuperview()
+				self.warnImage = nil
+			}
+				
+			if self.volume.superview == nil{
+				self.addSubview(self.volume)
+			}
+			
+			
+			if self.isApp{
+				self.toolTip = "Path: " + self.applicationPath
 			}else{
-				self.toolTip = sz
+				self.toolTip = self.sz
 			}
 			
         }else{
-            //self.backgroundColor = NSColor.lightGray
-            self.backgroundColor = NSColor.white.withAlphaComponent(0)
-            volume.textColor = NSColor.lightGray
-            self.layer?.cornerRadius = 15
-            
-            overlay = NSImageView(frame: self.image.frame)
-            overlay.image = unsupportedOverlay
-            
-            self.addSubview(overlay)
 			
-			if isApp{
-				self.toolTip = "This app is not usable bacause it's incomplete, you need the full installer app \nwhich weigths more than 5 gb\n\nPath: " + applicationPath
+			/*
+           	self.overlay = NSImageView(frame: self.image.frame)
+            self.overlay.image = IconsManager.shared.unsupportedOverlay
+			self.overlay.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
+			self.overlay.imageAlignment = .alignBottom
+            
+            self.addSubview(self.overlay)
+			*/
+			
+			//let y: CGFloat = 15//self.volume.frame.origin.y + ((self.volume.frame.size.width / 2) - ((self.frame.width / 5) / 2))
+			//let h: CGFloat = self.image.frame.origin.y - 15 - 3//height: self.frame.width / 5
+			let w: CGFloat = self.frame.width / 3
+			let margin: CGFloat = 15
+			
+			self.warnImage = NSImageView(frame: NSRect(x: self.frame.width - w - margin, y: self.image.frame.origin.y, width: w, height: w))
+			self.warnImage.image = IconsManager.shared.warningIcon
+			self.warnImage.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
+			
+			self.addSubview(self.warnImage)
+			
+			self.warnText = NSTextField(frame: self.volume.frame)
+			self.warnText.font = self.volume.font
+			self.warnText.stringValue = "Damaged app: " + self.volume.stringValue
+			self.warnText.isEditable = false
+			self.warnText.isBordered = false
+			self.warnText.alignment = .center
+			self.warnText.textColor = .systemYellow
+			(self.warnText as NSView).backgroundColor = NSColor.white.withAlphaComponent(0)
+			
+			//volume.isSelectable = false
+			self.addSubview(self.warnText)
+			
+			self.volume.removeFromSuperview()
+			
+			if self.isApp{
+				self.toolTip = "This macOS installer app is not usable bacause it's incomplete, you need the full installer app \nwhich weigths more than 5 gb\n\nPath: " + self.applicationPath
 			}else{
 				if sharedInstallMac{
 					self.toolTip = "This drive can't be used to\ninstall macOS in it now."
 				}else{
-					self.toolTip = "This drive can't be used to\ncreate a macOS install media"
+					self.toolTip = "This drive can't be used to\ncreate a bootable macOS installer"
 				}
 			}
         }
+		}
         
     }
     
     public func setSelectedAspect(){
-        //self.layer?.backgroundColor = NSColor.blue.cgColor
-        self.backgroundColor = NSColor.selectedControlColor
-        volume.textColor = NSColor.selectedControlTextColor
-        self.layer?.cornerRadius = 15
+		//DispatchQueue.main.async {
+			self.isSelected = true
+			
+			self.updateLayer()
+			
+		//}
     }
 	
 	func roundInt(number: UInt64) -> String{
@@ -225,27 +315,27 @@ class DriveObject: NSView {
 			n = number / div
 		}
 		
-		var sufx = ""
+		var suffix = ""
 		
 		//log10(Double(div))
 		switch log10(Double(div)) {
 		case 3:
-			sufx = "KB"
+			suffix = "KB"
 		case 6:
-			sufx = "MB"
+			suffix = "MB"
 		case 9:
-			sufx = "GB"
+			suffix = "GB"
 		case 12:
-			sufx = "TB"
+			suffix = "TB"
 		case 15:
-			sufx = "PB"
+			suffix = "PB"
 		case 0, 1, 2:
-			sufx = "Byte"
+			suffix = "Byte"
 		default:
-			sufx = ""
+			suffix = ""
 		}
 		
-		return "\(n)\(sufx)"
+		return "\(n)\(suffix)"
 	}
 	
 }

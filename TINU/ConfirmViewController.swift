@@ -9,6 +9,8 @@
 import Cocoa
 
 class ConfirmViewController: GenericViewController {
+	
+	let cm = cvm.shared
     
     @IBOutlet weak var driveName: NSTextField!
     @IBOutlet weak var driveImage: NSImageView!
@@ -23,7 +25,8 @@ class ConfirmViewController: GenericViewController {
     @IBOutlet weak var errorLabel: NSTextField!
     @IBOutlet weak var errorImage: NSImageView!
     
-    
+	@IBOutlet weak var advancedOptionsButton: NSButton!
+	
     var notDone = false
     
     private var ps: Bool!
@@ -42,24 +45,20 @@ class ConfirmViewController: GenericViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+		
+		var useAlternate = false
+		var apfs = false
         
         errorImage.isHidden = true
         errorLabel.isHidden = true
+		
+		#if !skipChooseCustomization
+			advancedOptionsButton.isHidden = true
+		#endif
         
-        if sharedInstallMac{
-            warningField.stringValue = "If you go ahead, this app will modify the drive you selected, and macOS will be installed on it, if you are sure, continue at your own risk."
-            
-            if let f = sharedVolumeNeedsPartitionMethodChange{
-                if f{
-                    warningField.stringValue = "If you go ahead, this app will erase the entire drive you selected and all the data on it will be lost, if you are, continue at you own risk"
-                }
-            }
-            
-        }
+        warning.image = IconsManager.shared.warningIcon
         
-        warning.image = warningIcon
-        
-        ps = sharedVolumeNeedsPartitionMethodChange
+        ps = cm.sharedVolumeNeedsPartitionMethodChange
         //fs = sharedVolumeNeedsFormat
         
         if let a = NSApplication.shared().delegate as? AppDelegate{
@@ -68,9 +67,9 @@ class ConfirmViewController: GenericViewController {
         
         notDone = false
         
-        if let sa = sharedApp{
+        if let sa = cm.sharedApp{
             print(sa)
-            appImage.image = getInstallerAppIcon(forApp: sa)
+            appImage.image = IconsManager.shared.getInstallerAppIcon(forApp: sa)
             appName.stringValue = FileManager.default.displayName(atPath: sa)
             print("Installation app that will be used is: " + sa)
         }else{
@@ -79,16 +78,16 @@ class ConfirmViewController: GenericViewController {
         
         
         
-        if let sv = sharedVolume{
+        if let sv = cm.sharedVolume{
             print(sv)
             var sr = sv
             
             
             if !FileManager.default.fileExists(atPath: sv){
-                if let sb = sharedBSDDrive{
-                    if let sd = getDriveNameFromBSDID(sb){
+                if let sb = cm.sharedBSDDrive{
+                    if let sd = dm.getDriveNameFromBSDID(sb){
                         sr = sd
-                        sharedVolume = sr
+                        cm.sharedVolume = sr
                     }else{
                         notDone = true
                     }
@@ -98,10 +97,18 @@ class ConfirmViewController: GenericViewController {
                 }else{
                     notDone = true
                 }
-            }
+			}else{
+			
+				InstallMediaCreationManager.shared.OtherOptionsBeforeformat(canFormat: &useAlternate, useAPFS: &apfs)
+				
+			}
             
             driveImage.image = NSWorkspace.shared().icon(forFile: sr)
             driveName.stringValue = FileManager.default.displayName(atPath: sr)
+			
+			if useAlternate{
+				driveName.stringValue += " \n(The entire drive \"\(dm.getCurrentDriveName()!)\" will be used)"
+			}
             
             print("The target volume is: " + sr)
         }else{
@@ -114,6 +121,9 @@ class ConfirmViewController: GenericViewController {
         }
         
         if notDone {
+			
+			advancedOptionsButton.isHidden = true
+			
             print("Couldn't get valid info about the installation app and/or the drive")
             //yes.isEnabled = false
             
@@ -128,7 +138,7 @@ class ConfirmViewController: GenericViewController {
             
             self.warning.isHidden = true
             
-            errorImage.image = warningIcon
+            errorImage.image = IconsManager.shared.warningIcon
             
             errorImage.isHidden = false
             errorLabel.isHidden =  false
@@ -146,6 +156,19 @@ class ConfirmViewController: GenericViewController {
             
             self.view.addSubview(label)*/
         }else{
+			
+			if useAlternate{
+				warningField.stringValue = "If you go ahead, this app will erase the drive \"\(dm.getCurrentDriveName()!)\"! It will be erased because the volume you selected \"\(cvm.shared.currentPart.name)\" belongs to it, but it doesn't use the required GUID format. If you are sure, continue at your own risk."
+			}else{
+				if sharedInstallMac{
+					warningField.stringValue = "If you go ahead, this app will modify the volume you selected \"\(cvm.shared.currentPart.name)\", and macOS will be installed on it. If you are sure, continue at your own risk."
+					
+				}else{
+					warningField.stringValue = "If you go ahead, this app will erase the volume \"\(cvm.shared.currentPart.name)\", so all the data on it will be lost and replaced with the bootable macOS installer. If you are sure, continue at your own risk."
+					
+				}
+			}
+			
             print("Everything is ready to start the installer creation process")
         }
         
@@ -156,21 +179,26 @@ class ConfirmViewController: GenericViewController {
     @IBOutlet weak var titleLabel: NSTextField!
     
     @IBAction func goBack(_ sender: Any) {
-        sharedVolumeNeedsPartitionMethodChange = ps
+        cm.sharedVolumeNeedsPartitionMethodChange = ps
         //sharedVolumeNeedsFormat = fs
         /*if sharedInstallMac{
             openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
 		}else{*/
-		if sharedMediaIsCustomized{
-			openSubstituteWindow(windowStoryboardID: "Customize", sender: sender)
-		}else{
-            openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
-		}
+		#if skipChooseCustomization
+			cm.sharedMediaIsCustomized = false
+			openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
+		#else
+			if cm.sharedMediaIsCustomized{
+				openSubstituteWindow(windowStoryboardID: "Customize", sender: sender)
+			}else{
+            	openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
+			}
+		#endif
         //}
     }
     
     @IBAction func install(_ sender: Any) {
-        sharedVolumeNeedsPartitionMethodChange = ps
+        cm.sharedVolumeNeedsPartitionMethodChange = ps
         //sharedVolumeNeedsFormat = fs
         if notDone{
             NSApp.terminate(sender)
@@ -181,4 +209,22 @@ class ConfirmViewController: GenericViewController {
         
     }
     
+	@IBAction func openAdvancedOptions(_ sender: Any) {
+		#if skipChooseCustomization
+			//cm.sharedMediaIsCustomized = true
+			//openSubstituteWindow(windowStoryboardID: "Customize", sender: sender)
+		
+		let win = sharedStoryboard.instantiateController(withIdentifier: "Customize") as! GenericViewController
+		
+		self.presentViewControllerAsSheet(win)
+		
+		win.window.isFullScreenEnaled = false
+		
+		if sharedUseVibrant{
+			if let w = sharedWindow.windowController as? GenericWindowController{
+				w.deactivateVibrantWindow()
+			}
+		}
+		#endif
+	}
 }

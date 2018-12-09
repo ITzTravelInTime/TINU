@@ -11,8 +11,8 @@ import Cocoa
 
 public class GenericWindowController: NSWindowController, NSWindowDelegate {
     
-    let backgroundDefaultMaterial = NSVisualEffectMaterial.titlebar
-    let backgroundUnselectedMaterial = NSVisualEffectMaterial.light
+   public let backgroundDefaultMaterial = NSVisualEffectMaterial.titlebar
+   public let backgroundUnselectedMaterial = NSVisualEffectMaterial.light
     
     var background: NSVisualEffectView!
     
@@ -47,18 +47,19 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
         }
     }
     
-    private func activateVibrantWindow(){
-        self.window?.titleVisibility = .hidden
+    func activateVibrantWindow(){
         self.window?.titlebarAppearsTransparent = true
         self.window?.styleMask.insert(.fullSizeContentView)
         self.window?.isMovableByWindowBackground = true
         
-        if sharedTestingMode{
+        if AppManager.shared.sharedTestingMode{
             self.window?.titleVisibility = .visible
-        }
+		}else{
+			self.window?.titleVisibility = .hidden
+		}
     }
     
-    private func deactivateVibrantWindow(){
+	func deactivateVibrantWindow(){
         self.window?.titlebarAppearsTransparent = false
         self.window?.isMovableByWindowBackground = false
         self.window?.titleVisibility = .visible
@@ -107,6 +108,14 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
         
         self.window?.isFullScreenEnaled = true
     }
+	
+	public func windowWillClose(_ notification: Notification) {
+		if sharedUseVibrant{
+			if let w = sharedWindow.windowController as? GenericWindowController{
+				w.activateVibrantWindow()
+			}
+		}
+	}
     
     /*
     private func changeBackgroundMaterial(_ material: NSVisualEffectMaterial){

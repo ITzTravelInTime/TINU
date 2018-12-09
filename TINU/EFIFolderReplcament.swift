@@ -36,7 +36,7 @@ public class EFIReplacementView: NSView{
 		
 		let fieldHeigth: CGFloat = 20
 		
-		let imgSide: CGFloat = 30
+		let imgSide: CGFloat = 40
 		
 		//titles
 		titleLabel.isEditable = false
@@ -61,11 +61,15 @@ public class EFIReplacementView: NSView{
 		expLabel.isBezeled = false
 		expLabel.alignment = .left
 		
-		expLabel.frame.origin = NSPoint(x: 5, y: self.frame.size.height - fieldHeigth * 4 - 5)
-		expLabel.frame.size = NSSize(width: self.frame.size.width - 10 , height: fieldHeigth * 3)
+		expLabel.frame.origin = NSPoint(x: 5, y: self.frame.size.height - fieldHeigth * 5 - 5)
+		expLabel.frame.size = NSSize(width: self.frame.size.width - 10 , height: fieldHeigth * 4)
 		expLabel.font = NSFont.systemFont(ofSize: 13)
 		
-		expLabel.stringValue = "This option automatically installs the selected Clover EFI folder inside the EFI partition of the target drive.\nOnly UEFI 64Bits Clover EFI folders are supported."
+		if let drive = dm.getCurrentDriveName(){
+		
+			expLabel.stringValue = "This option automatically installs the selected Clover EFI folder inside the EFI partition of the drive \"\(drive)\".\nOnly UEFI 64Bits Clover EFI folders are supported."
+			
+		}
 		
 		self.addSubview(expLabel)
 		
@@ -86,7 +90,7 @@ public class EFIReplacementView: NSView{
 		
 		self.addSubview(pathLabel)
 		
-		checkImage.image = NSImage(named: "check")
+		checkImage.image = NSImage(named: "checkVector")
 		checkImage.frame.size = NSSize(width: imgSide, height: imgSide)
 		checkImage.frame.origin = NSPoint(x: self.frame.size.width - 5 - imgSide, y: pathLabel.frame.origin.y + (pathLabel.frame.height / 2) - (imgSide / 2))
 		checkImage.imageScaling = .scaleProportionallyUpOrDown
@@ -95,7 +99,7 @@ public class EFIReplacementView: NSView{
 		self.addSubview(checkImage)
 		
 		//buttons
-		openButton.title = "Open a folder ..."
+		openButton.title = "Choose Folder ..."
 		openButton.bezelStyle = .rounded
 		openButton.setButtonType(.momentaryPushIn)
 		
@@ -110,7 +114,7 @@ public class EFIReplacementView: NSView{
 		
 		self.addSubview(openButton)
 		
-		resetButton.title = "Delete"
+		resetButton.title = "Remove"
 		resetButton.bezelStyle = .rounded
 		resetButton.setButtonType(.momentaryPushIn)
 		
@@ -146,13 +150,46 @@ public class EFIReplacementView: NSView{
 		open.isExtensionHidden = false
 		open.showsHiddenFiles = true
 		
+		open.beginSheetModal(for: CustomizationWindowManager.shared.referenceWindow, completionHandler: {response in
+			if response == NSModalResponseOK{
+				if !open.urls.isEmpty{
+					DispatchQueue.global(qos: .background).async{
+						if let opener = EFIFolderReplacementManager.shared.loadEFIFolder(open.urls.first!.path){
+							if !opener{
+								DispatchQueue.main.async {
+									msgBoxWarning("Impossible to open the EFI folder", "There was an unkown error while trying to open the selcted EFI folder")
+								}
+							}else{
+								DispatchQueue.main.async {
+									//set ui
+									self.resetButton.isEnabled = true
+									self.openButton.isEnabled = false
+									
+									self.checkOriginFolder()
+								}
+							}
+						}else{
+							DispatchQueue.main.async {
+								
+								msgBoxWarning("The folder \"\(open.urls.first!.path)\" is not a proper clover efi folder", "The folder you selected \"\(open.urls.first!.path)\" does not contain the required element \"\(EFIFolderReplacementManager.shared.missingFileFromOpenedFolder!)\", make sure to open just the folder named EFI and that it cointains all the needed elements")
+								
+								EFIFolderReplacementManager.shared.resetMissingFileFromOpenedFolder()
+								
+							}
+						}
+					}
+				}
+			}
+		})
+		
+		/*
 		if open.runModal() == NSModalResponseOK{
 			if !open.urls.isEmpty{
 				DispatchQueue.global(qos: .background).async{
-					if let oper = EFIFolderReplacementManager.shared.loadEFIFolder(open.urls.first!.path){
-					if !oper{
+					if let opener = EFIFolderReplacementManager.shared.loadEFIFolder(open.urls.first!.path){
+					if !opener{
 						DispatchQueue.main.async {
-							msgBoxWarning("TINU: Impossible to open the EFI folder", "Error while opening the selcted EFI folder")
+							msgBoxWarning("Impossible to open the EFI folder", "there was an unkown error while trying to open the selcted EFI folder")
 						}
 					}else{
 						DispatchQueue.main.async {
@@ -169,13 +206,16 @@ public class EFIReplacementView: NSView{
 					}else{
 						DispatchQueue.main.async {
 							
-							msgBoxWarning("TINU: EFI folder is not a proper clover efi folder", "EFI folder not opened, it does not seems to be a proper clover efi folder")
+							msgBoxWarning("The folder \"\(open.urls.first!.path)\" is not a proper clover efi folder", "The folder you selected \"\(open.urls.first!.path)\" does not contain the required element \"\(EFIFolderReplacementManager.shared.missingFileFromOpenedFolder!)\", make sure to open just the folder named EFI and that it cointains all the needed elements")
+							
+							EFIFolderReplacementManager.shared.resetMissingFileFromOpenedFolder()
+							
 						}
 					}
 				}
 			}
 		}
-	
+	*/
 	}
 	
 	func resetClick(){
@@ -201,7 +241,16 @@ public class EFIReplacementView: NSView{
 			pathLabel.stringValue = ""
 			checkImage.isHidden = true
 		}else{
-			pathLabel.stringValue = EFIFolderReplacementManager.shared.openedDirectory!
+			
+			var str = EFIFolderReplacementManager.shared.openedDirectory!
+			
+			let cnt = str.count
+			
+			if cnt > 45{
+				str = str[0...45] + "..."
+			}
+			
+			pathLabel.stringValue = str
 			checkImage.isHidden = false
 		}
 	}
