@@ -40,17 +40,19 @@ public class OtherOptionsInfoViewController: GenericViewController {
 		
 		textView.textColor = NSColor.textColor
 		
-		if associatedOption == nil{
-			self.window.close()
-		}
-		
-		if associatedOption.description == nil{
-			self.window.close()
+		if associatedOption == nil || associatedOption.description == nil{
+			goBack()
 		}
 	}
 	
 	@IBAction func buttonClick(_ sender: Any) {
-		self.window.close()
+		
+		goBack()
+	}
+	
+	@inline(__always) func goBack(){
+		//CustomizationWindowManager.shared.referenceWindow = self.window.sheetParent
+		CustomizationWindowManager.shared.referenceWindow.endSheet(self.window!)
 	}
 	
 	override func viewDidSetVibrantLook() {

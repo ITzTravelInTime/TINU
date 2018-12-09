@@ -125,11 +125,11 @@ class OtherOptionsItem: NSView {
 	}
 	
 	@objc func showInfo(){
-		let win = sharedStoryboard.instantiateController(withIdentifier: "OtherOptionInfoViewController") as! OtherOptionsInfoViewController
+		let vc = sharedStoryboard.instantiateController(withIdentifier: "OtherOptionInfoViewController") as! OtherOptionsInfoViewController
 		
-		win.associatedOption = option
+		vc.associatedOption = option
 		
-		self.superview?.superview?.window?.contentViewController?.presentViewControllerAsSheet(win)
+		CustomizationWindowManager.shared.referenceWindow.contentViewController?.presentViewControllerAsSheet(vc)
 		
 		if sharedUseVibrant{
 			if let w = sharedWindow.windowController as? GenericWindowController{

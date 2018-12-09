@@ -35,7 +35,7 @@ public final class InstallMediaCreationManager{
 	//is used to determnate if old or new auth pis were used
 	var usedLA = false
 	
-	//variables used to check the sucess of the authentication
+	//variables used to check the success of the authentication
 	private var osStatus: OSStatus = 0
 	private var osStatus2: OSStatus = 0
 	
@@ -123,7 +123,7 @@ public final class InstallMediaCreationManager{
 			self.osStatus2 = 1
 		}
 		
-		//checks if the authentication is sucessfoul
+		//checks if the authentication is successfoul
 		/*if self.osStatus != 0 || self.osStatus2 != 0{
 		//the user does not gives the authentication, so we came back to previous window
 		DispatchQueue.main.sync {

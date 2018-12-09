@@ -70,6 +70,8 @@ class DriveObject: ShadowView {
 		
 		self.updateLayer()
 		
+		
+		
     }
 	
     override init(frame frameRect: NSRect) {

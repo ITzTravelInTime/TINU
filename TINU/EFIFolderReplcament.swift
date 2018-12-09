@@ -65,7 +65,11 @@ public class EFIReplacementView: NSView{
 		expLabel.frame.size = NSSize(width: self.frame.size.width - 10 , height: fieldHeigth * 4)
 		expLabel.font = NSFont.systemFont(ofSize: 13)
 		
-		expLabel.stringValue = "This option automatically installs the selected Clover EFI folder inside the EFI partition of the drive \"\(dm.getCurrentDriveName()!)\".\nOnly UEFI 64Bits Clover EFI folders are supported."
+		if let drive = dm.getCurrentDriveName(){
+		
+			expLabel.stringValue = "This option automatically installs the selected Clover EFI folder inside the EFI partition of the drive \"\(drive)\".\nOnly UEFI 64Bits Clover EFI folders are supported."
+			
+		}
 		
 		self.addSubview(expLabel)
 		
@@ -146,21 +150,18 @@ public class EFIReplacementView: NSView{
 		open.isExtensionHidden = false
 		open.showsHiddenFiles = true
 		
-		open.beginSheetModal(for: self.window!, completionHandler: {response in
+		open.beginSheetModal(for: CustomizationWindowManager.shared.referenceWindow, completionHandler: {response in
 			if response == NSModalResponseOK{
 				if !open.urls.isEmpty{
 					DispatchQueue.global(qos: .background).async{
 						if let opener = EFIFolderReplacementManager.shared.loadEFIFolder(open.urls.first!.path){
 							if !opener{
 								DispatchQueue.main.async {
-									msgBoxWarning("Impossible to open the EFI folder", "there was an unkown error while trying to open the selcted EFI folder")
+									msgBoxWarning("Impossible to open the EFI folder", "There was an unkown error while trying to open the selcted EFI folder")
 								}
 							}else{
 								DispatchQueue.main.async {
 									//set ui
-									
-									//msgBox("TINU: EFI folder correctly opened", "EFI folder opened correctly, as it should be", .informational)
-									
 									self.resetButton.isEnabled = true
 									self.openButton.isEnabled = false
 									
@@ -240,7 +241,16 @@ public class EFIReplacementView: NSView{
 			pathLabel.stringValue = ""
 			checkImage.isHidden = true
 		}else{
-			pathLabel.stringValue = EFIFolderReplacementManager.shared.openedDirectory!
+			
+			var str = EFIFolderReplacementManager.shared.openedDirectory!
+			
+			let cnt = str.count
+			
+			if cnt > 45{
+				str = str[0...45] + "..."
+			}
+			
+			pathLabel.stringValue = str
 			checkImage.isHidden = false
 		}
 	}

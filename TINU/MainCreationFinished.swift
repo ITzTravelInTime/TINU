@@ -31,10 +31,10 @@ class MainCreationFinishedViewController: NSViewController{
             a.QuitMenuButton.isEnabled = true
         }
         
-        myTitle.stringValue = FinalScreenSmallManager.shared.sharedTitle
+        myTitle.stringValue = FinalScreenSmallManager.shared.title
         
         let notification = NSUserNotification()
-        if !FinalScreenSmallManager.shared.sharedIsOk{
+        if !FinalScreenSmallManager.shared.isOk{
             image.image = IconsManager.shared.stopIcon
             exitButton.title = "Quit"
             continueButton.title = "Retry"

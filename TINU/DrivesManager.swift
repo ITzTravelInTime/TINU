@@ -87,7 +87,7 @@ public final class DrivesManager{
 		
 		var retname: String!
 		
-		if let bsdID = cvm.shared.currentPart.bsdName{
+		if let bsdID = cvm.shared.currentPart?.bsdName{
 			
 			let driveID = getDriveBSDIDFromVolumeBSDID(volumeID: bsdID)
 		

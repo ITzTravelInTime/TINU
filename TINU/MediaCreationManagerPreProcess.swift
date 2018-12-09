@@ -63,7 +63,7 @@ extension InstallMediaCreationManager{
 			
 			self.setActivityLabelText("Unmounting conflicting volumes")
 			}
-			isFailed = self.unmountConfictingVolumes()
+			isFailed = self.unmountConflictingVolumes()
 			
 			if !isFailed{
 				return

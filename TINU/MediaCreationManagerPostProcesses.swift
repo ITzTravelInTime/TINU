@@ -54,7 +54,7 @@ extension InstallMediaCreationManager{
 			self.setActivityLabelText("Process ended, exiting ...")
 			
 				if ok.success{
-					//ok the installer creation has been completed with sucess, so it sets up the final widnow and then it's showed up
+					//ok the installer creation has been completed with success, so it sets up the final widnow and then it's showed up
 					if !sharedInstallMac && !usesNewMethod{
 						self.viewController.goToFinalScreen(title: "Bootable macOS installer created successfully", success: true)
 					}

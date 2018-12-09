@@ -9,6 +9,9 @@
 import Foundation
 
 #if !isTool
+
+import Cocoa
+
 public final class CreateinstallmediaSmallManager{
 	
 	public static let shared = CreateinstallmediaSmallManager()
@@ -29,9 +32,15 @@ public final class FinalScreenSmallManager{
     static let shared =  FinalScreenSmallManager()
     
     //just some shared variables to setup the final result window
-    public var sharedIsOk = false
-    public var sharedMessage = ""
-    public var sharedTitle = ""
+    var isOk = false
+    var message = ""
+    var title = ""
+}
+
+public final class CustomizationWindowManager{
+	static let shared = CustomizationWindowManager()
+	
+	var referenceWindow: NSWindow!
 }
 #endif
 

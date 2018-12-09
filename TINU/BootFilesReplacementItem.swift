@@ -149,7 +149,7 @@ class BootFilesReplacementItem: NSView {
         open.showsHiddenFiles = true
         open.allowedFileTypes = [ext]
         
-        open.beginSheetModal(for: self.window!, completionHandler: {response in
+        open.beginSheetModal(for: CustomizationWindowManager.shared.referenceWindow , completionHandler: {response in
 			
 			if response == NSModalResponseOK{
 				if !open.urls.isEmpty{
@@ -165,7 +165,7 @@ class BootFilesReplacementItem: NSView {
 							if BootFilesReplacementManager.shared.filesToReplace[f].filename == self.replaceFile.filename{
 								BootFilesReplacementManager.shared.filesToReplace[f].data = try Data.init(contentsOf: open.urls.first!)
 								self.isInPlace = true
-								log("Value gived sucessfullty!")
+								log("Value gived successfully!")
 							}
 						}
 						
@@ -203,7 +203,7 @@ class BootFilesReplacementItem: NSView {
 		if BootFilesReplacementManager.shared.filesToReplace[f].filename == replaceFile.filename{
 		BootFilesReplacementManager.shared.filesToReplace[f].data = try Data.init(contentsOf: open.urls.first!)
 		isInPlace = true
-		log("Value gived sucessfullty!")
+		log("Value gived successfully!")
 		}
 		}
 		

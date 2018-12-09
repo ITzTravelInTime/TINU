@@ -172,8 +172,8 @@ class InstallingViewController: GenericViewController{
 		}
 		
 		//fixes shared variables
-		FinalScreenSmallManager.shared.sharedTitle = title
-		FinalScreenSmallManager.shared.sharedIsOk = success
+		FinalScreenSmallManager.shared.title = title
+		FinalScreenSmallManager.shared.isOk = success
 		
 		CreationVariablesManager.shared.currentPart = Part()
 		

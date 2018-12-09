@@ -35,7 +35,7 @@ extension InstallMediaCreationManager{
 			//trys to terminate the process
 			if let success = terminateProcess(name: p){
 				if success{
-					log("*** \"" + p + "\" closed with sucess or already closed")
+					log("*** \"" + p + "\" closed with success or already closed")
 				}else{
 					log("***Failed to close conflicting processes \(p)!!!")
 					DispatchQueue.main.sync {
@@ -51,16 +51,16 @@ extension InstallMediaCreationManager{
 				return false
 			}
 		}
-		log("***No conflicting processes found or conflicting processes closed with sucess")
+		log("***No conflicting processes found or conflicting processes closed with success")
 		
 		return true
 	}
 	
-	func unmountConfictingVolumes() -> Bool{
-		//trys to unmount possible conficting drives that may interfere, like install esd
+	func unmountConflictingVolumes() -> Bool{
+		//trys to unmount possible conflicting drives that may interfere, like install esd
 		log("""
 			
-			###Trying to unmount conficting volumes
+			###Trying to unmount conflicting volumes
 			   Those volumes may be mounted images
 			   from inside the macOS installer app
 			   and may interfere with the success of
@@ -117,7 +117,7 @@ extension InstallMediaCreationManager{
 						return false
 					}
 				}else{
-					print(getOut(cmd: "diskutil mount " + tmpBSDName))
+					print(getOut(cmd: "diskutil mount " + cvm.shared.sharedBSDDrive))
 					
 					log("@@@ Failed to authenticate to eject the drive!!!!\n[The drive has been re-mounted to let the user to use it]\n\n")
 					DispatchQueue.main.sync {
@@ -194,6 +194,9 @@ extension InstallMediaCreationManager{
 				}
 			}else{
 				log("Failed to perform needed authentication to format target drive\n\n")
+				
+				print(getOut(cmd: "diskutil mount " + cvm.shared.sharedBSDDrive))
+				
 				DispatchQueue.main.sync {
 					self.viewController.goBack()
 				}

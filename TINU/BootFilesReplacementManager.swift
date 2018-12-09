@@ -133,7 +133,7 @@ public final class BootFilesReplacementManager{
 				
 				try newItem.write(to: path, options: .atomic)
 				
-				log("       Replace in path \"" + p + "\" ended with sucess")
+				log("       Replace in path \"" + p + "\" ended with success")
 				
 			}catch let error{
 				log("       Item replace failed in path: \(p) \n            error details: \n               \(error)")

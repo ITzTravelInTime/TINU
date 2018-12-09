@@ -150,6 +150,7 @@ class CustomizationViewController: GenericViewController {
 		
 		if let win = self.window{
 			win.isFullScreenEnaled = false
+			CustomizationWindowManager.shared.referenceWindow = win
 		}
 		
 		if !sections.isEmpty{
@@ -158,7 +159,7 @@ class CustomizationViewController: GenericViewController {
 		}
 	}
 	
-	private func getSectionItem() -> SettingsSectionItem{
+	@inline(__always) private func getSectionItem() -> SettingsSectionItem{
 		let sec = SettingsSectionItem(frame: NSRect(x: 0, y: 0, width: sectionsScrollView.frame.size.width - 2, height: itemsHeight))
 		sec.needsLayout = true
 		return sec
@@ -166,14 +167,20 @@ class CustomizationViewController: GenericViewController {
     
     
     @IBAction func goBack(_ sender: Any) {
-		openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
-        //openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
         cvm.shared.sharedVolumeNeedsPartitionMethodChange = ps
+		
+		CustomizationWindowManager.shared.referenceWindow = nil
+		
+		openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
+		//openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
     }
     
     @IBAction func goNext(_ sender: Any) {
+		
+		CustomizationWindowManager.shared.referenceWindow = nil
+		
 		#if skipChooseCustomization
-			self.window.close()
+			self.window.sheetParent?.endSheet(self.window)
 		#else
         	openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
         	cvm.shared.sharedVolumeNeedsPartitionMethodChange = ps
