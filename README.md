@@ -16,13 +16,13 @@ It allows you to easily create a macOS install USB stick or other installer medi
 - Open Source: You can verify what this program does on your computer and you can create your own version by downloading and playing with the source code.
 - Does not require any special preparations. Just open the program, make sure you have a USB drive plugged in and have a macOS installer app on your disk.
 - No need to use Disk Utility. TINU can format your drive or partition for you.
+- Integrated EFI partition mounter tool.
 - Uses recent, modern, APIs and SDKs and the Swift 3 language.
 - Transparent graphics style available (type alt-S or choose from the menu bar: View -> Use transparent style).
 - Works using the latest versions of macOS and will also support newer Mac installers out of the box without requiring an update.
 - Offers advanced features to customize your bootable macOS installer.
 
 Features that are planned for future versions:
-- Integrated EFI partition mounter tool (TINU can already mount EFI partitions since version 2.0, but a dedicated section which allows to mount every EFI partition in the system will be added).
 - Install and configure [Clover](https://sourceforge.net/projects/cloverefiboot/).
 - Install kexts into Clover's kexts folder.
 - Clover drivers customization
@@ -57,6 +57,9 @@ Thread (italian) on insanelymac.com:
 
 Thread (english-german) on hackintosh-forum.de:
 - https://www.hackintosh-forum.de/index.php/Thread/33630-TINU/ 
+
+Post on Reddit:
+- https://www.reddit.com/r/hackintosh/comments/a1h61d/tinu_vanilla_bootable_macos_installer_creation/
 
 Facebook hackintosh help and beta testing (Italian only):
 - https://www.facebook.com/groups/Italia.hackintosh/?fref=ts
