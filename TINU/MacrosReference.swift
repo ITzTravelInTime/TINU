@@ -41,11 +41,7 @@ To enable each macro you need to go into the build settings section of the proje
 	This tells to compile the "TINU only" code
 
 - isTool
-	This tells if code i being compiled by tinu or by a tool which uses tinu code
-
-- installManager
-	Uses a new separate module for media creation/macOS installation proces
-
+	This tells if code is being compiled by tinu or by a tool which uses tinu code
 */
 
 #if demo

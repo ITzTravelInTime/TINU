@@ -42,8 +42,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         
         if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress{
-           // if !dialogYesNoWarning(question: "Installer creation in progress in progess", text: "The installer creation is inprogress do you want to quit?", style: .warning){
-			#if installManager
 			if let s = InstallMediaCreationManager.shared.stopWithAsk(){
 				if s{
 					msgBoxWarning("Error while trying to quit", "There was an error while trying to quit from the app: \n\nFailed to stop " + sharedExecutableName + " process")
@@ -52,22 +50,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			}else{
 				return NSApplicationTerminateReply.terminateCancel
 			}
-			#else
-                if let i = sharedWindow.contentViewController as? InstallingViewController{
-					
-					if let s = i.stopWithAsk(){
-						if s{
-                        msgBoxWarning("Error while trying to quit", "There was an error while trying to quit from the app: \n\nFailed to stop " + sharedExecutableName + " process")
-                        return NSApplicationTerminateReply.terminateCancel
-						}
-					}else{
-						return NSApplicationTerminateReply.terminateCancel
-					}
-                }
-			#endif
-            //}else{
-                //return NSApplicationTerminateReply.terminateCancel
-            //}
         }
         
         erasePassword()
@@ -165,7 +147,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to tear down your application
         
         if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress{
-			#if installManager
 			if let s = InstallMediaCreationManager.shared.stop(){
 				if s{
 					msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
@@ -173,17 +154,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			}else{
 				msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
 			}
-			#else
-            if let i = sharedWindow.contentViewController as? InstallingViewController{
-                if let s = i.stop(){
-					if s{
-						msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
-					}
-				}else{
-					msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
-				}
-            }
-			#endif
         }
     }
     
