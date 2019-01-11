@@ -35,20 +35,20 @@ Features that are planned for future versions:
 - A drive or a free partition (on a drive which already supports GUID) of least 7 GB that you want to turn into a macOS/Mac OS X installer.
 - A copy of a macOS/Mac OS X installer app (Maveriks or newer versions are supported) in the /Applications folder or in the root of any storage drive on your machine (excepted the drive or volume you want to turn into your macOS install media).
 
+Note that to compile (or create) a copy this app uing this source code, is required Xcode 10 and it's recommended to also codesign it, but it can work without signing.
+
 # Download:
-- You can download the pre-made and code signed binary from the releases section of this repo that you can find here: https://github.com/ITzTravelInTime/TINU/releases
+- You can download the pre-made and code signed app from the releases section of this repo that you can find here: https://github.com/ITzTravelInTime/TINU/releases
 
-- Or you can just build your own copy by just downloading the source code and then using Xcode (requires Xcode 8)
+- Or you can just build your own copy by just downloading the source code and then using Xcode (requires Xcode 10)
+
 # Frequently asked questions
-
 https://github.com/ITzTravelInTime/TINU/wiki/FAQs
 
 # Wiki
-
 https://github.com/ITzTravelInTime/TINU/wiki
 
 # Useful links:
-
 Thread (english) on insanelymac.com:
 - http://www.insanelymac.com/forum/topic/326959-tinu-the-macos-installer-creator-app-mac-app/
 
