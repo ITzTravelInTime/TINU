@@ -65,9 +65,10 @@ Post on Reddit:
 Facebook hackintosh help and beta testing (Italian only):
 - https://www.facebook.com/groups/Italia.hackintosh/?fref=ts
 
-Contact me (project creator):
+Contact me (Pietro Caruso, the project creator):
 - Insanelymac.com profile: http://www.insanelymac.com/forum/user/1390153-itztravelintime/
-- email: piecaruso97@gmail.com
+- Reddit profile:          https://www.reddit.com/user/ITzTravelInTime
+- email:                   piecaruso97@gmail.com
 
 # Repository rules:
 - Pease trust only official releases of this software, to avoid using any third party modified or recompiled versions, because third party developers can easily hide malweres inside of it
