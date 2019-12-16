@@ -14,17 +14,24 @@ import Cocoa
 public func checkOtherOptions(){
 	DispatchQueue.global(qos: .background).async{
 		oom.shared.restoreOtherOptions()
+		
 		#if !macOnlyMode
 			BootFilesReplacementManager.shared.eraseReplacementFilesData()
-		#endif
 		
-		#if useEFIReplacement && !macOnlyMode
-			
-			let _ = EFIFolderReplacementManager.shared.unloadEFIFolder()
-			
+			#if useEFIReplacement
+				let _ = EFIFolderReplacementManager.shared.unloadEFIFolder()
+			#endif
+		
 		#endif
 		
 		processLicense = ""
+		
+		if let item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionForceToFormatID]{
+			if let st = cvm.shared.sharedVolumeNeedsPartitionMethodChange{
+				item.isUsable = !st
+				item.isActivated = st
+			}
+		}
 		
 		if cvm.shared.sharedApp != nil{
 			if let version = iam.shared.targetAppBundleVersion(), let name = iam.shared.targetAppBundleName(){
@@ -43,7 +50,7 @@ public func checkOtherOptions(){
 					needsIA = na
 				}
 				
-				if let item = oom.shared.otherOptions[oom.shared.ids.otherOptionTinuCopyID]{
+				if let item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionTinuCopyID]{
 					item.isUsable = !supportsTINU
 					item.isActivated = !supportsTINU
 				}
@@ -62,7 +69,7 @@ public func checkOtherOptions(){
 					}
 					
 					
-					if let item = oom.shared.otherOptions[oom.shared.ids.otherOptionDoNotUseApfsID]{
+					if let item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionDoNotUseApfsID]{
 						item.isVisible = !supportsAPFS
 						item.isActivated = !cvm.shared.sharedSVReallyIsAPFS
 						item.isUsable = !cvm.shared.sharedSVReallyIsAPFS
@@ -90,12 +97,12 @@ public func checkOtherOptions(){
 					
 					#if !macOnlyMode
 					
-					if let item = oom.shared.otherOptions[oom.shared.ids.otherOptionCreateAIBootFID]{
+					if let item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionCreateAIBootFID]{
 							item.isActivated = false
 							item.isVisible = needsIA
 					}
 					
-					if let item = oom.shared.otherOptions[oom.shared.ids.otherOptionDeleteIAPMID]{
+					if let item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionDeleteIAPMID]{
 							item.isActivated = false
 							item.isVisible = needsIA
 					}
@@ -105,50 +112,11 @@ public func checkOtherOptions(){
 				
 			}
 			
-			if let item = oom.shared.otherOptions[oom.shared.ids.otherOptionForceToFormatID]{
-				if let st = cvm.shared.sharedVolumeNeedsPartitionMethodChange{
-					item.isUsable = !st
-					item.isActivated = st
-				}
-			}
+			
+			
+			
 		}
 	}
 
 }
 
-//this funtionm terminates a process
-public func terminateProcess(name: String) -> Bool!{
-	
-	let pid = getOut(cmd:"ps -Ac -o pid,comm | awk '/^ *[0-9]+ " + name + "$/ {print $1}'")
-	
-	if pid.isEmpty{
-		log("Process \"" + name + "\" does not needs to be closed")
-		return true
-	}else{
-		if let res = runCommandWithSudo(cmd: "/bin/sh", args: ["-c", "kill " + pid]){
-			
-			if res.exitCode != 0{
-				log("Failed to close \"\(name)\" because the closing process has exited with a code that is not 0: \n     exit code: \(res.exitCode)\n    output: \(res.output)\n     error/s produced: \(res.error)")
-				return false
-			}
-			
-			if let f = res.output.first{
-				if (f.isEmpty || f == "Password:" || f == "\n"){
-					log("Process \"\(name)\" stopped with success")
-					return true
-				}else{
-					log("Failed to close \"\(name)\": \n     exit code: \(res.exitCode)\n    output: \(res.output)\n     error/s produced: \(res.error)")
-					return false
-				}
-			}else{
-				log("Failed to close \"\(name)\" because is not possible to get the output of the termination process")
-				return false
-			}
-		}else{
-			log("Failed to close \"\(name)\" because of an authentication failure")
-			return nil
-		}
-	}
-	
-	//return false
-}

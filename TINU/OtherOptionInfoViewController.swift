@@ -14,8 +14,6 @@ public class OtherOptionsInfoViewController: GenericViewController {
 	
 	@IBOutlet weak var button: NSButton!
 	
-	@IBOutlet weak var titleView: NSTextField!
-	
 	@IBOutlet weak var scroller: NSScrollView!
 	
 	public var associatedOption: OtherOptionsObject!
@@ -23,8 +21,14 @@ public class OtherOptionsInfoViewController: GenericViewController {
 	override public func viewDidLoad() {
 		super.viewDidLoad()
 		
+		scroller.frame = CGRect.init(x: 20, y: scroller.frame.origin.y, width: self.view.frame.width - 40, height: scroller.frame.height)
+		scroller.borderType = .bezelBorder
+		
+		self.setTitleLabel(text: "")
+		showTitleLabel()
+		
 		if let option = associatedOption{
-			titleView.stringValue = "Info about: " + option.displayMessage
+			titleLabel.stringValue = "Info about: " + option.title
 			
 			if let desc = associatedOption?.description{
 				textView.text = desc
@@ -55,7 +59,7 @@ public class OtherOptionsInfoViewController: GenericViewController {
 		CustomizationWindowManager.shared.referenceWindow.endSheet(self.window!)
 	}
 	
-	override func viewDidSetVibrantLook() {
+	/*override func viewDidSetVibrantLook() {
 		if canUseVibrantLook {
 			scroller.frame = CGRect.init(x: 0, y: scroller.frame.origin.y, width: self.view.frame.width, height: scroller.frame.height)
 			scroller.borderType = .noBorder
@@ -65,5 +69,5 @@ public class OtherOptionsInfoViewController: GenericViewController {
 			scroller.borderType = .bezelBorder
 			//scroller.drawsBackground = true
 		}
-	}
+	}*/
 }

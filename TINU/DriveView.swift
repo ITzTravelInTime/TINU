@@ -1,5 +1,5 @@
 //
-//  DriveObject.swift
+//  DriveView.swift
 //  TINU
 //
 //  Created by Pietro Caruso on 24/08/17.
@@ -9,7 +9,7 @@
 import Cocoa
 
 //this class is an UI object used to represent a drive or a insteller app that can be selected by the user
-class DriveObject: ShadowView {
+class DriveView: ShadowView {
 	
 	//items size for chose drive and chose app screens
 	
@@ -129,7 +129,7 @@ class DriveObject: ShadowView {
     override func mouseDown(with event: NSEvent) {
         
         for c in (self.superview?.subviews)!{
-            if let d = c as? DriveObject{
+            if let d = c as? DriveView{
                 if d != self{
                     d.setDefaultAspect()
                 }
@@ -152,17 +152,17 @@ class DriveObject: ShadowView {
 				cm.sharedDoTimeMachineWarn = false
 				
 				if part != nil{
-					if part.partScheme != "GUID_partition_scheme" || !part.hasEFI{
+					if part.partScheme != .gUID || !part.hasEFI{
 						cm.sharedVolumeNeedsPartitionMethodChange = true
 						/*}else{
 						sharedVolumeNeedsPartitionMethodChange = false*/
 					}
 					
-					if !sharedInstallMac && part.fileSystem == "APFS"{
+					if !sharedInstallMac && part.fileSystem == .aPFS{
 						cm.sharedVolumeNeedsPartitionMethodChange = true
 					}
 					
-					if sharedInstallMac && (part.fileSystem == "Other" || !part.hasEFI){
+					if sharedInstallMac && (part.fileSystem == .other || !part.hasEFI){
 						cm.sharedVolumeNeedsPartitionMethodChange = true
 					}
 					
@@ -179,7 +179,7 @@ class DriveObject: ShadowView {
 					}*/
 				}
 				
-				cm.sharedSVReallyIsAPFS = part.driveType == .apfs
+				cm.sharedSVReallyIsAPFS = part.fileSystem == .aPFS_container
 				
 				cm.currentPart = part
 				
@@ -284,7 +284,7 @@ class DriveObject: ShadowView {
 			self.volume.removeFromSuperview()
 			
 			if self.isApp{
-				self.toolTip = "This macOS installer app is not usable bacause it's incomplete, you need the full installer app \nwhich weigths more than 5 gb\n\nPath: " + self.applicationPath
+				self.toolTip = "This macOS installer app is not usable bacause it's incomplete, you need the full installer app \nwhich weights more than 5 gb\n\nPath: " + self.applicationPath
 			}else{
 				if sharedInstallMac{
 					self.toolTip = "This drive can't be used to\ninstall macOS in it now."

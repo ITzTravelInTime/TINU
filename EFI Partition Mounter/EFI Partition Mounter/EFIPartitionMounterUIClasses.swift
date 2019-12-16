@@ -36,10 +36,13 @@ public class EFIPartitionToolInterface{
 		var partitions: [PartitionItem] = []
         
         var isBar = false
+        
+        var alreadyDrwn = false
 		
 		public override func draw(_ dirtyRect: NSRect) {
 			super.draw(dirtyRect)
 			
+            if !alreadyDrwn{
 			let buttonWidth: CGFloat = 170
 			let buttonsHeigth: CGFloat = 32
 			
@@ -187,7 +190,7 @@ public class EFIPartitionToolInterface{
 			}else{
 				
                 var alternate: CGFloat = 0
-				var prev = titleLabel.frame.origin.y - self.tileHeight - 15
+				var startsAsVibrant = titleLabel.frame.origin.y - self.tileHeight - 15
 				
 				Swift.print("Adding tiles for drive: \(titleLabel.stringValue)")
                 
@@ -203,12 +206,12 @@ public class EFIPartitionToolInterface{
 				for partition in partitions{
 					partition.frame.size = CGSize(width: tileWidth, height: tileHeight)
 					
-					partition.frame.origin.y = prev
+					partition.frame.origin.y = startsAsVibrant
 					
                     partition.frame.origin.x = (tileWidth * alternate) + (margin * (alternate + 1)) + distance
                     
                     if alternate == 2{
-                        prev -= self.tileHeight + margin
+                        startsAsVibrant -= self.tileHeight + margin
                         alternate = 0
                     }else{
                         alternate += 1
@@ -230,6 +233,10 @@ public class EFIPartitionToolInterface{
                 
                 //c.backgroundColor = .red
             }*/
+                
+                alreadyDrwn.toggle()
+                
+            }
             
             checkMounted()
 		}
@@ -240,24 +247,22 @@ public class EFIPartitionToolInterface{
         }
 		
 		@objc private func mountPartition(_ sender: Any){
-            Swift.print("--button clicked")
-            
             if let controller = self.window?.contentViewController as? EFIPartitionMounterViewController{
-                Swift.print("--got controller")
                 changeLoadMode(enabled: true)
-                Swift.print("--enabled load")
 				DispatchQueue.global(qos: .background).async {
-                    Swift.print("--entered background process")
+                    
+                    controller.watcherSkip = true
+                    
 					self.isMounted = controller.eFIManager.mountPartition(self.bsdid)
+                    
                     if !self.hasConfig && self.isMounted{
                         if let mountPoint = dm.getDevicePropertyInfoNew(self.bsdid, propertyName: "MountPoint"){
                             self.hasConfig = FileManager.default.fileExists(atPath: mountPoint + "/EFI/CLOVER/config.plist")
                         }
                     }
-                    Swift.print("--mount called")
+                    
                     DispatchQueue.main.async {
                         self.checkMounted()
-                        Swift.print("--mounted checked")
                     }
                 }
             }
@@ -267,7 +272,11 @@ public class EFIPartitionToolInterface{
             if let controller = self.window?.contentViewController as? EFIPartitionMounterViewController{
                 changeLoadMode(enabled: true)
                 DispatchQueue.global(qos: .background).async {
+                    
+                    controller.watcherSkip = true
+                    
                     self.isMounted = !controller.eFIManager.unmountPartition(self.bsdid)
+                    
                     DispatchQueue.main.async {
                         self.checkMounted()
                     }
@@ -315,60 +324,70 @@ public class EFIPartitionToolInterface{
             }
         }
         #endif
-        
+		
         @objc private func ejectDrive(_ sender: Any){
             changeLoadMode(enabled: true)
-            DispatchQueue.global(qos: .background).async{
-                
-                let driveID = dm.getDriveBSDIDFromVolumeBSDID(volumeID: self.bsdid)
-                
-                var res = false
-                
-                var text = ""
-                
-                text = getOut(cmd: "diskutil unmountDisk \(driveID)")
-                
-                res = (text.contains("Unmount of all volumes on") && text.contains("was successful")) || (text.isEmpty)
-                
-                if res{
-                    log("Drive unmounted with success: \(driveID)")
+			
+			var controller : EFIPartitionMounterViewController!
+			
+			controller = self.window?.windowController?.contentViewController as? EFIPartitionMounterViewController
+			
+			if controller != nil {
+			
+            	DispatchQueue.global(qos: .background).async{
+					
+                    let driveID = dm.getDriveBSDIDFromVolumeBSDID(volumeID: self.bsdid)
                     
-                    DispatchQueue.main.async {
+                    var res = false
+                    
+                    var text = ""
+                    
+					DispatchQueue.global(qos: .background).sync{
+						controller.watcherSkip = true
+					}
+                    
+                    text = getOut(cmd: "diskutil unmountDisk \(driveID)")
+                    
+                    res = (text.contains("Unmount of all volumes on") && text.contains("was successful")) || (text.isEmpty)
+                    
+                    if res{
+                        log("Drive unmounted with success: \(driveID)")
                         
-                        
-                        if let controler = self.window?.windowController?.contentViewController as? EFIPartitionMounterViewController{
+                        DispatchQueue.main.sync {
                             
                             let disk = self.titleLabel.stringValue
                             msgBox("You can remove \"\(disk)\"", "Now it's safe to remove \"\(disk)\" from the computer", .informational)
                             
                             self.checkMounted()
                             
-                            controler.refresh(controler)
-                        }else{
-                        
-                            self.checkMounted()
+							controller.refresh(controller)
                             
                         }
                         
+                    }else{
+                        log("Drive not unmounted, error generated: \(text)")
                         
+                        msgBoxWarning("Impossible to eject \"\(driveID)\"", "There was an error while trying to eject this disk: \(driveID)\n\nDiagnostics info: \n\nCommand executed: diskutil unmountDisk \(driveID)\nOutput: \(text)")
                     }
                     
-                }else{
-                    log("Drive not unmounted, error generated: \(text)")
-                    
-                    msgBoxWarning("Impossible to eject \"\(driveID)\"", "There was an error while trying to eject this disk: \(driveID)\n\nDiagnostics info: \n\nCommand executed: diskutil unmountDisk \(driveID)\nOutput: \(text)")
-                }
-            }
+				
+            	}
+				
+			}else{
+				
+				self.checkMounted()
+				
+			}
         }
         
-		func checkMounted(){
-			
+        func checkMounted(){
+            
             changeLoadMode(enabled: false)
             
-			showInFinderButton.isHidden = !isMounted || sharedIsOnRecovery
-			unmountButton.isHidden = !isMounted
-			
-			mountButton.isHidden = isMounted
+            showInFinderButton.isHidden = !isMounted || sharedIsOnRecovery
+            unmountButton.isHidden = !isMounted
+            
+            mountButton.isHidden = isMounted
             
             editConfigButton.isHidden = !(isMounted && hasConfig && !sharedIsOnRecovery)
             
@@ -421,7 +440,7 @@ public class EFIPartitionToolInterface{
 			
 			var h: CGFloat = 22
 			
-            let div = Int(nameLabel.stringValue.count / 16)
+            let div = nameLabel.stringValue.count / 16
             
             if div < 3{
 				h *= CGFloat(div + 1)

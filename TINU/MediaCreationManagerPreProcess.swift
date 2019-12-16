@@ -19,173 +19,133 @@ extension InstallMediaCreationManager{
 	
 	func install(){
 		
+		log("\nStarting the process ...")
+		
 		//to have an usable UI during the install we need to use a parallel thread
 		DispatchQueue.global(qos: .background).async {
-			
-			//self.setActivityLabelText("Process started")
-			//just to avoid problems, the log function in this thred is called inside the Ui thread
-			log("\nStarting the process ...")
-			
 			CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress = true
 			
-			var isFailed = false
+			var canFormat = false //chck if volume needs to be formatted, in particular if it needs to be repartitioned and completely erased
+			var useAPFS = false //this variables enables or not automatic apfs conversion
 			
-			//chck if volume needs to be formatted, in particular if it needs to be repartitioned and completely erased
-			var canFormat = false
-			
-			//this variables enables or not automatic apfs conversion
-			var useAPFS = false
+			var tCMD = ""
 			
 			let pname = sharedExecutableName
-			
 			let isNotMojave = iam.shared.installerAppGoesUpToThatVersion(version: 14.0)!
 			
-			//1
+			self.dname = dm.getCurrentDriveName()
+			
 			DispatchQueue.main.sync {
+				self.setProgressValue(0)
+			}
 			
-			self.setProgressValue(0)
-			
-			self.addToProgressValue(self.unit)
-			
-			self.setActivityLabelText("Closing conflicting processes")
+			for i in 1...9{
+				var userText = ""
+				var isFailed = true
 				
-			}
-			
-			isFailed = self.killConflictingPrcesses()
-			
-			if !isFailed{
-				return
-			}
-			
-			//2
-			DispatchQueue.main.sync {
-			self.addToProgressValue(self.unit)
-			
-			self.setActivityLabelText("Unmounting conflicting volumes")
-			}
-			isFailed = self.unmountConflictingVolumes()
-			
-			if !isFailed{
-				return
-			}
-			
-			//3
-			DispatchQueue.main.sync {
-			self.addToProgressValue(self.unit)
-			
-			self.setActivityLabelText("Applying options")
-			}
-			
-			self.OtherOptionsBeforeformat(canFormat: &canFormat, useAPFS: &useAPFS)
-			
-			//4
-			DispatchQueue.main.sync {
-			self.addToProgressValue(self.unit)
-			}
-			
-			if canFormat{
-				isFailed = self.formatTargetDrive(canFormat: canFormat, useAPFS: useAPFS)
+				switch i{
+				case 1:
+					userText = "Closing conflicting processes"
+				case 2:
+					userText = "Unmounting conflicting volumes"
+				case 3:
+					userText = "Applying options"
+				case 4:
+					userText = ""
+				case 5:
+					userText = ""
+				case 6:
+					userText = ""
+				case 7:
+					userText = "Building " + pname + " command string"
+				default:
+					break
+				}
+				
+				DispatchQueue.main.sync {
+					self.addToProgressValue(self.unit)
+					if !userText.isEmpty{
+						self.setActivityLabelText(userText)
+					}
+				}
+				
+				switch i{
+				case 1:
+					isFailed = self.killConflictingPrcesses()
+				case 2:
+					isFailed = self.unmountConflictingVolumes()
+				case 3:
+					self.OtherOptionsBeforeformat(canFormat: &canFormat, useAPFS: &useAPFS)
+				case 4:
+					isFailed = canFormat ? self.formatTargetDrive(canFormat: canFormat, useAPFS: useAPFS) : isFailed
+				case 5:
+					processLicense = ""
+				case 6:
+					//if the process will install mac, special operations are performed before the beginning of the "startosinstall" process
+					if sharedInstallMac{
+						self.setProgressValue(1)
+						self.setActivityLabelText("Applying options")
+						if !self.manageSpecialOperations(false){
+							return
+						}
+					}
+				case 7:
+					tCMD = self.buildCommandString(useMojave: isNotMojave, useAPFS: useAPFS)
+					
+					log("The application that will be used is: " + cvm.shared.sharedApp!)
+					log("The target drive is: " + cvm.shared.sharedVolume!)
+					log("The script that will be performed is (including quotes): " + tCMD)
+					
+					//switches state because now we are starting the process of the real creation / instllation
+					CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress = false
+					CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress = true
+					
+				default:
+					break
+				}
 				
 				if !isFailed{
 					return
 				}
 			}
 			
-			//5
 			DispatchQueue.main.sync {
-			self.addToProgressValue(self.unit)
+				self.setProgressValue(self.processUnit)
 			}
 			
-			print("Resetting license")
-			
-			processLicense = ""
-			
-			//6
-			DispatchQueue.main.sync {
-			self.addToProgressValue(self.unit)
-			}
-			
-			//if the procdess will install mac, special operations are performed before the beginning of the "startosinstall" process
-			if sharedInstallMac{
-				
-				self.setProgressValue(1)
-				
-				self.setActivityLabelText("Applying options")
-				
-				if !self.manageSpecialOperations(false){
-					return
-				}
-				
-			}
-				
-			//7
-			DispatchQueue.main.sync {
-			self.addToProgressValue(self.unit)
-			
-			self.setActivityLabelText("Building " + pname + " command string")
-			}
-			
-			log("The application that will be used is: " + cvm.shared.sharedApp!)
-			log("The target drive is: " + cvm.shared.sharedVolume!)
-			
-			let mainCMD = self.buildCommandString(useMojave: isNotMojave, useAPFS: useAPFS)
-			
-			/*if simulateUseScriptAuth{
-				mainCMD = "\(mainCMD)"
-			}*/
-			
-			//8
-			DispatchQueue.main.sync {
-			self.addToProgressValue(self.unit)
-			
-			self.setActivityLabelText("Second step authentication")
-			}
-			
-			
-			//logs the performed script and takes care of hiding the password
-			log("The script that will be performed is: " + mainCMD)
-			
-			
-			//sswitches state because now we are starting the process of the real creation / instllation
-			CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress = false
-			CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress = true
-			
-			var startC: (process: Process, errorPipe: Pipe, outputPipe: Pipe)!
-			
-			var noFAuth = false
+			let args = ["-c", tCMD]
+			let exec = "/bin/sh"
 			
 			#if noFirstAuth
-			noFAuth = true
+			let noFAuth = true
+			#else
+			let noFAuth = false
 			#endif
 			
-			//9
-			DispatchQueue.main.sync {
-			self.addToProgressValue(self.unit)
+			let startC = (simulateCreateinstallmediaFail != nil && noFAuth) ? startCommand(cmd: exec, args: args) : startCommandWithSudo(cmd: exec, args: args)
 			
-			self.setProgressValue(self.processUnit)
-			}
-			
-			if simulateCreateinstallmediaFail != nil && noFAuth{
-				startC = startCommand(cmd: "/bin/sh", args: ["-c", mainCMD])
-			}else{
-				startC = startCommandWithSudo(cmd: "/bin/sh", args: ["-c", mainCMD])
-			}
-			
-			/*DispatchQueue.main.async {
-				self.viewController.progress.isHidden = true
-				self.viewController.spinner.isHidden = false
-			}*/
-			
-			//run the script with sudo permitions and then analyze the outputs
 			if let r = startC{
 				
-				log("Process started, waiting for \(pname) executable to finish ...")
+				if sharedInstallMac{
+					log("\n\nmacOS installation process started\n")
+				}else{
+					log("\n\nInstaller creation process started\n")
+				}
 				
+				log(TextManager.helpfoulMessage)
+					
+				log("""
+					
+					Waiting for the \(pname) executable to finish ...
+					
+					""")
+				
+				//UI setup
 				DispatchQueue.main.sync {
 				if sharedInstallMac{
-					self.setActivityLabelText("Installing macOS\n(may take from 5 to 30 minutes)")
+					self.setActivityLabelText("Installing macOS\n(may take from 5 to 50 minutes)")
 				}else{
-					self.setActivityLabelText("Creating bootable macOS installer\n(may take from 5 to 30 minutes)")
+					self.setActivityLabelText("Creating bootable macOS installer\n(may take from 5 to 50 minutes)")
 				}
 					//cancel button and the close button can be restored
 					self.viewController.cancelButton.isEnabled = true
@@ -197,7 +157,7 @@ extension InstallMediaCreationManager{
 					}
 				}
 				
-				//2 different aproces of handeling the process
+				//2 different aproces of handeling the process end detection
 				if simulateNoTimer{
 					//code used if the timer is not used
 					
@@ -224,17 +184,13 @@ extension InstallMediaCreationManager{
 					}
 				}
 				
-				return
 			}else{
 				
 				//here the auth is failed or some execution error
 				DispatchQueue.main.sync {
-					log("Get password failed")
+					log("User authentication failed or aborted")
 					self.viewController.goBack()
-					
 				}
-				
-				return
 			}
 		}
 	}

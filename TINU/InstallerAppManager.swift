@@ -20,7 +20,7 @@ public final class InstallerAppManager{
 		if let sa = cvm.shared.sharedApp{
 			if FileManager.default.fileExists(atPath: sa + "/Contents/Info.plist"){
 				do{
-					let result = try PlistXMLManager.decodeXMLDictionary(xml: try String.init(contentsOfFile: sa + "/Contents/Info.plist")) as? [String: Any]
+					let result = try DecodeManager.decodePlistDictionary(xml: try String.init(contentsOfFile: sa + "/Contents/Info.plist")) as? [String: Any]
 					
 					if let r = result{
 						

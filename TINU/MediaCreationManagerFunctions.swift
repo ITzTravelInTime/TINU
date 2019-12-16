@@ -19,7 +19,7 @@ extension InstallMediaCreationManager{
 
 	func killConflictingPrcesses() -> Bool{
 		//creates a list of processes to kill
-		let processesToClose = [sharedExecutableName, "InstallAssistant", "InstallAssistant_plain", "InstallAssistant_springboard"]
+		let processesToClose = ["InstallAssistant", "InstallAssistant_plain", "InstallAssistant_springboard"]
 		
 		//try to terminate a process that may be still active in backgruound, maybe for a previuos crash of the app or the system
 		log("""
@@ -31,26 +31,41 @@ extension InstallMediaCreationManager{
 			
 			""")
 		
-		for p in processesToClose{
+		var p: String?
 			//trys to terminate the process
-			if let success = terminateProcess(name: p){
-				if success{
-					log("*** \"" + p + "\" closed with success or already closed")
-				}else{
-					log("***Failed to close conflicting processes \(p)!!!")
+			if let success = TaskKillManager.terminateAppsWithAsk(byCommonParameter: processesToClose, parameterKind: .executableName, mustBeEqual: true, firstFailedToCloseName: &p){
+				if !success{
+					log("***Failed to close conflicting processes \(p!)!!!")
 					DispatchQueue.main.sync {
-						self.viewController.goToFinalScreen(title: "TINU failed to stop conflicting process \"\(p)\"\nTry to restart the computer and try again", success: false)
+						self.viewController.goToFinalScreen(title: "TINU failed to stop conflicting process \"\(p!)\"", success: false)
 					}
 					return false
 				}
 			}else{
-				log("***Failed to terminate conflicting process: \"" + p + "\" because of a failed 2nd step authentication attempt\n\n")
+				log("***Failed to terminate conflicting process: \"" + p! + "\" because the user denid to close it\n\n")
 				DispatchQueue.main.sync {
 					self.viewController.goBack()
 				}
 				return false
 			}
+		
+		if let success = TaskKillManager.terminateProcessWithAsk(name: sharedExecutableName){
+			if !success{
+				log("***Failed to close conflicting processes \(sharedExecutableName)!!!")
+				DispatchQueue.main.sync {
+					self.viewController.goToFinalScreen(title: "TINU failed to stop conflicting process \"\(sharedExecutableName)\"\nTry to restart the computer and try again", success: false)
+				}
+				return false
+			}
+		}else{
+			log("***Failed to terminate conflicting process: \"" + sharedExecutableName + "\" because the user denid to close it\n\n")
+			DispatchQueue.main.sync {
+				self.viewController.goBack()
+			}
+			return false
 		}
+		
+		
 		log("***No conflicting processes found or conflicting processes closed with success")
 		
 		return true
@@ -242,7 +257,7 @@ extension InstallMediaCreationManager{
 			}
 			
 			if !canFormat {
-				if let o = oom.shared.otherOptions[oom.shared.ids.otherOptionForceToFormatID]?.canBeUsed(){
+				if let o = oom.shared.otherOptions[oom.OtherOptionID.otherOptionForceToFormatID]?.canBeUsed(){
 					if o && !simulateFormatSkip{
 						canFormat = true
 						log("   Forced drive erase enabled")
@@ -252,7 +267,7 @@ extension InstallMediaCreationManager{
 		}
 		
 		if sharedInstallMac{
-			if let o = oom.shared.otherOptions[oom.shared.ids.otherOptionDoNotUseApfsID]?.canBeUsed(){
+			if let o = oom.shared.otherOptions[oom.OtherOptionID.otherOptionDoNotUseApfsID]?.canBeUsed(){
 				if o {
 					useAPFS = false
 					log("   Forced APFS automatic upgrade enabled")
@@ -342,7 +357,7 @@ extension InstallMediaCreationManager{
 		
 		DispatchQueue.global(qos: .background).sync {
 			
-			let efiMan = EFIPartitionManager.shared
+			let efiMan = EFIPartitionManager()
 			
 			log("    Unmounting EFI partitions")
 			

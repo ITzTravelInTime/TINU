@@ -14,7 +14,7 @@ public final class BootFilesReplacementManager{
 	
 	static let shared = BootFilesReplacementManager()
 	
-	public var replacementProcessProgress: Double!
+	var replacementProcessProgress: Double!
 	
 	private final class FilesPaths{
 		
@@ -106,7 +106,7 @@ public final class BootFilesReplacementManager{
 			
 			if p == "/.IABootFiles"{
 				if let bf = bfa{
-					if bf && !oom.shared.otherOptions[oom.shared.ids.otherOptionCreateAIBootFID]!.canBeUsed(){
+					if bf && !oom.shared.otherOptions[oom.OtherOptionID.otherOptionCreateAIBootFID]!.canBeUsed(){
 						print("       The .IABootFiles folder is not present, skipping it")
 						continue
 					}

@@ -9,11 +9,13 @@
 import Cocoa
 
 #if (!macOnlyMode && TINU) || (!TINU && isTool)
-public class EFIPartitionToolTypes{
+public final class EFIPartitionToolTypes{
 
-    public typealias PartitionStandard = (drivePartDisplayName: String, drivePartIcon: NSImage)
+	public struct PartitionStandard {var drivePartDisplayName: String = ""; var drivePartIcon: NSImage = NSImage()}
 
-    public typealias EFIPartitionStandard = (displayName: String, bsdName: String, isRemovable: Bool, isMounted: Bool, hasConfig: Bool, completeDrivePartitions: [PartitionStandard])
+	public struct EFIPartitionStandard {var displayName: String = ""; var bsdName: String = ""; var isRemovable: Bool = false; var isMounted: Bool = false; var hasConfig: Bool = false; var completeDrivePartitions: [PartitionStandard] = []}
+	
+	public struct VolumeStandard {var id: String = ""; var isEFI: Bool = false}
 
 }
 #endif

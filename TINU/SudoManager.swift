@@ -16,9 +16,8 @@ import Cocoa
 
 fileprivate final class SudoManager{
 	
-	#if TINU
+	
 	private var notification: NSUserNotification!
-	#endif
 	
 	@inline(__always) private func sendAuthNotification(){
 		#if TINU
@@ -51,7 +50,8 @@ fileprivate final class SudoManager{
 	
     //this is a singleton bitch
     static let shared = SudoManager()
-    
+	
+	/*
     //this variable stores the password during the install media creation process, it's not the safest way to store it but i am using lots of meausres to keep it safe, this needs to be stored into a way that we can use in a command string like this: echo "myfancypassword" | sudo -S myfancycommand --myfancyargument
     private var pass: String!
     //this is function the gets the password that needs to be used in the scripts, do not make accessible in the outside this file/class
@@ -165,7 +165,7 @@ fileprivate final class SudoManager{
         }else{
             return nil
         }
-    }
+    }*/
     
     fileprivate func getOutWithSudo(cmd: String) -> String!{
 		
@@ -190,7 +190,7 @@ fileprivate final class SudoManager{
 		
 		sendAuthNotification()
 		
-		if simulateUseScriptAuth{
+		//if simulateUseScriptAuth{
 			var ncmd = ""
 			
 			for c in cmd{
@@ -216,7 +216,8 @@ fileprivate final class SudoManager{
 				retireAuthNotification()
 				return nil
 			}
-		}else{
+		/*}else{
+		
         	if let p = getSudoPrefix(){
             	//ths function runs a command on the sh shell and it does return the output
 				retireAuthNotification()
@@ -225,7 +226,8 @@ fileprivate final class SudoManager{
 				retireAuthNotification()
             	return nil
         	}
-		}
+		
+		}*/
 		
 		
         
@@ -314,12 +316,15 @@ fileprivate final class SudoManager{
             return startCommand(cmd: cmd, args: args)
         }
 		
-		if simulateUseScriptAuth{
-			return startCommandWithSecurity(cmd: cmd,args: args)
-		}
-		
 		sendAuthNotification()
-        
+		
+		//if simulateUseScriptAuth{
+			return startCommandWithSecurity(cmd: cmd,args: args)
+		//}
+		
+		
+		
+		/*
         if let p = getSudoPrefix(){
             log("Password got with success")
             var arg = [String]()
@@ -360,7 +365,7 @@ fileprivate final class SudoManager{
 			retireAuthNotification()
 			
             return nil
-        }
+        }*/
         
     }
 	
@@ -377,19 +382,13 @@ fileprivate final class SudoManager{
         
         ags.append(contentsOf: args)
 		
-		return startCommand(cmd: "/usr/bin/security", args: ags)*/
+		return startCommand(cmd: "/usr/bin/security", args: ags)
+		*/
 		
 		var pcmd = ""
 		
-		//var isInScript = false
-		
 		for i in args[1]{
-			
-			/*if i == ";" {
-				isInScript = true
-			}*/
-			
-			if i == "\"" /*&& !isInScript*/{
+			if i == "\""{
 				pcmd += "\'\"\'\"\'"
 			}else{
 				pcmd += String(i)
@@ -411,28 +410,30 @@ fileprivate final class SudoManager{
 }
 
 fileprivate var sm = SudoManager.shared
+
+/*
 //shared functions for sensible tasks
 public func erasePassword(){
     sm.erasePassword()
 }
 
+public func getErrWithSudo(cmd: String) -> String!{
+	return sm.getErrWithSudo(cmd: cmd)
+}
+*/
 
 public func startCommandWithSudo(cmd : String, args : [String]) -> (process: Process, errorPipe: Pipe, outputPipe: Pipe)! {
-    return sm.startCommandWithSudo(cmd: cmd, args: args)
-}
-
-public func runCommandWithSudo(cmd : String, args : [String]) -> (output: [String], error: [String], exitCode: Int32)! {
-    return sm.runCommandWithSudo(cmd: cmd, args: args)
-}
-
-public func getOutWithSudo(cmd: String) -> String!{
-    return sm.getOutWithSudo(cmd: cmd)
-}
-
-public func getErrWithSudo(cmd: String) -> String!{
-    return sm.getErrWithSudo(cmd: cmd)
+	return sm.startCommandWithSudo(cmd: cmd, args: args)
 }
 
 public func startCommandWithSecurity(cmd : String, args: [String]) -> (process: Process, errorPipe: Pipe, outputPipe: Pipe)!{
     return sm.startCommandWithSecurity(cmd : cmd, args: args)
+}
+
+public func getOutWithSudo(cmd: String) -> String!{
+	return sm.getOutWithSudo(cmd: cmd)
+}
+
+public func runCommandWithSudo(cmd : String, args : [String]) -> (output: [String], error: [String], exitCode: Int32)! {
+	return sm.runCommandWithSudo(cmd: cmd, args: args)
 }

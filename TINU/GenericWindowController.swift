@@ -15,6 +15,7 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
    public let backgroundUnselectedMaterial = NSVisualEffectMaterial.light
     
     var background: NSVisualEffectView!
+	var alreadyFullScreen: Bool = false
     
     override public func windowDidLoad() {
         super.windowDidLoad()
@@ -33,41 +34,63 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
     
     func checkVibrant(){
         if !sharedIsOnRecovery{
-            if sharedUseVibrant {
-                activateVibrantBackground()
-                activateVibrantWindow()
-            }else{
-                deactivateVibrantBackground()
-                deactivateVibrantWindow()
-            }
-            
+			
+			if (self.window?.styleMask.contains(.fullSizeContentView))! && self.window!.titlebarAppearsTransparent{
+				alreadyFullScreen = true
+				self.window?.isMovableByWindowBackground = true
+				
+				if AppManager.shared.sharedTestingMode{
+					self.window?.titleVisibility = .visible
+				}else{
+					self.window?.titleVisibility = .hidden
+				}
+			}
+			
+			/*
+			if !alreadyFullScreen{
+            	if sharedUseVibrant {
+                	activateVibrantBackground()
+                	activateVibrantWindow()
+            	}else{
+                	deactivateVibrantBackground()
+                	deactivateVibrantWindow()
+            	}
+			}*/
+			
+			/*
             if let c = self.window?.contentViewController as? GenericViewController{
                 c.viewDidSetVibrantLook()
             }
+			*/
         }
     }
-    
+	
+	
     func activateVibrantWindow(){
-        self.window?.titlebarAppearsTransparent = true
-        self.window?.styleMask.insert(.fullSizeContentView)
-        self.window?.isMovableByWindowBackground = true
-        
-        if AppManager.shared.sharedTestingMode{
-            self.window?.titleVisibility = .visible
+		self.window?.titlebarAppearsTransparent = true
+		self.window?.styleMask.insert(.fullSizeContentView)
+		self.window?.isMovableByWindowBackground = true
+		
+		if AppManager.shared.sharedTestingMode{
+			self.window?.titleVisibility = .visible
 		}else{
 			self.window?.titleVisibility = .hidden
 		}
+		
     }
     
 	func deactivateVibrantWindow(){
-        self.window?.titlebarAppearsTransparent = false
-        self.window?.isMovableByWindowBackground = false
-        self.window?.titleVisibility = .visible
-        if (self.window?.styleMask.contains(.fullSizeContentView))!{
-            self.window?.styleMask.remove(.fullSizeContentView)
-        }
+		self.window?.titlebarAppearsTransparent = false
+		self.window?.isMovableByWindowBackground = false
+		
+		if (self.window?.styleMask.contains(.fullSizeContentView))!{
+			self.window?.styleMask.remove(.fullSizeContentView)
+		}
+		
+		self.window?.titleVisibility = .visible
     }
-    
+	
+	/*
     private func activateVibrantBackground(){
         background = NSVisualEffectView.init(frame: CGRect.init(origin: CGPoint.zero, size: (self.window?.contentView?.frame.size)!))
         background.material = backgroundDefaultMaterial
@@ -90,7 +113,7 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
             }
         }
         
-    }
+    }*/
     
     func makeStandard(){
         //self.window?.isResizable = true
@@ -109,14 +132,42 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
         self.window?.isFullScreenEnaled = true
     }
 	
+	
 	public func windowWillClose(_ notification: Notification) {
-		if sharedUseVibrant{
+		/*if sharedUseVibrant{
 			if let w = sharedWindow.windowController as? GenericWindowController{
 				w.activateVibrantWindow()
 			}
-		}
+		}*/
 	}
-    
+	
+	
+	
+	public func windowWillBeginSheet(_ notification: Notification) {
+		
+		if alreadyFullScreen{
+			deactivateVibrantWindow()
+		}
+		
+		/*
+		if sharedUseVibrant || alreadyFullScreen{
+			self.deactivateVibrantWindow()
+		}*/
+	}
+	
+	public func windowDidEndSheet(_ notification: Notification) {
+		
+		if alreadyFullScreen{
+			activateVibrantWindow()
+		}
+		
+		/*
+		if sharedUseVibrant || alreadyFullScreen{
+			self.activateVibrantWindow()
+		}*/
+		
+	}
+	
     /*
     private func changeBackgroundMaterial(_ material: NSVisualEffectMaterial){
         if canUseVibrantLook{

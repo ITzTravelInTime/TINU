@@ -65,7 +65,7 @@ extension InstallMediaCreationManager{
 				DispatchQueue.main.sync {
 					self.addToProgressValue(self.installerProgressValueFast)
 				}
-			}else if minutes <= self.processMinutesToChange{
+			}else if minutes > self.processMinutesToChange{
 				DispatchQueue.main.sync {
 					self.addToProgressValue(self.installerProgressValueSlow)
 				}

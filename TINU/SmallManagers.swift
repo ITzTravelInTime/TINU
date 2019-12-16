@@ -56,7 +56,12 @@ public final class RecoveryModeManager{
 			if let v = tempReallyRecovery{
 				return v
 			}else{
-				let really = !FileManager.default.fileExists(atPath: "/usr/bin/sudo") && NSUserName() == "root"
+				var really = false
+				
+				if NSUserName() == "root"{
+					really = !FileManager.default.fileExists(atPath: "/usr/bin/sudo")
+				}
+				
 				tempReallyRecovery = really
 				return really
 			}

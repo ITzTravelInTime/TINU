@@ -16,13 +16,13 @@ import LocalAuthentication
 #endif
 
 fileprivate let pMaxVal: Double = 1000
-fileprivate let pMaxMins: UInt64 = 30
-fileprivate let pMidMins: UInt64 = 15
+fileprivate let pMaxMins: UInt64 = 40
+fileprivate let pMidMins: UInt64 = 30
 
 fileprivate let uDen: Double = 5
 
-fileprivate let pMidDuration = (pMaxVal * (1/uDen) * (uDen - 2))
-fileprivate let pExtDuration = (pMaxVal * (1/uDen))
+fileprivate let pMidDuration = ((pMaxVal * (uDen - 2)) / uDen)
+fileprivate let pExtDuration = (pMaxVal / uDen)
 
 public final class InstallMediaCreationManager{
 	
@@ -32,6 +32,7 @@ public final class InstallMediaCreationManager{
 		InstallMediaCreationManager.shared = InstallMediaCreationManager()
 	}
 	
+	/*
 	//is used to determnate if old or new auth pis were used
 	var usedLA = false
 	
@@ -42,7 +43,8 @@ public final class InstallMediaCreationManager{
 	//references we need to free the permitions later
 	private var authRef2: AuthorizationRef?
 	private var authFlags = AuthorizationFlags([])
-	
+	*/
+
 	//timer to trace the process
 	var timer = Timer()
 	
@@ -50,35 +52,15 @@ public final class InstallMediaCreationManager{
 	var output : [String] = []
 	var error : [String] = []
 	
-	var progressMaxVal: Double{
-		get{
-			return pMaxVal
-		}
-	}
+	let  progressMaxVal: Double = pMaxVal
 	
-	var processEstimatedMinutes: UInt64{
-		get{
-			return pMaxMins
-		}
-	}
+	let processEstimatedMinutes: UInt64 = pMaxMins
 	
-	var processMinutesToChange: UInt64{
-		get{
-			return pMidMins
-		}
-	}
+	let processMinutesToChange: UInt64 = pMidMins
 	
-	var processUnit: Double{
-		get{
-			return pExtDuration
-		}
-	}
+	let processUnit: Double = pExtDuration
 	
-	var processDenominator: Double{
-		get{
-			return uDen
-		}
-	}
+	let processDenominator: Double = uDen
 	
 	let unit: Double = pExtDuration / 9
 	
@@ -101,7 +83,7 @@ public final class InstallMediaCreationManager{
 	
 	#endif
 	
-	func askFirstAuthOldWay() -> Bool{
+	/*func askFirstAuthOldWay() -> Bool{
 		let b = Bundle.main
 		
 		var authRef: AuthorizationRef? = nil
@@ -134,7 +116,7 @@ public final class InstallMediaCreationManager{
 		}*/
 		
 		return (self.osStatus == 0 && self.osStatus2 == 0)
-	}
+	}*/
 	
 	func startInstallProcess(){
 		
@@ -152,10 +134,17 @@ public final class InstallMediaCreationManager{
 		viewController.cancelButton.isEnabled = false
 		viewController.enableItems(enabled: false)
 		
-		DispatchQueue.global(qos: .background).async{
+		self.install()
+		
+		/*DispatchQueue.global(qos: .background).async{
+			
+			DispatchQueue.main.sync {
+				self.usedLA = false
+				self.install()
+			}
 			
 			//let driveID = DrivesManager.getCurrentDriveName()
-			
+		
 			if simulateUseScriptAuth{
 				DispatchQueue.main.sync {
 					self.usedLA = false
@@ -187,6 +176,7 @@ public final class InstallMediaCreationManager{
 			return
 			
 			#else
+			
 			
 			#if recovery
 			if #available(macOS 10.11, *) {
@@ -249,7 +239,9 @@ public final class InstallMediaCreationManager{
 			return
 			
 			#endif
-		}
+
+
+		}*/
 	}
 	
 	//this functrion frees the auth from apis
@@ -258,6 +250,7 @@ public final class InstallMediaCreationManager{
 		CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress = false
 		CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress = false
 		
+		/*
 		//since into the recovery we do not need the spacial authorization, we just free it when running on a normal mac os environment
 		if !sharedIsOnRecovery{
 			erasePassword()
@@ -276,12 +269,12 @@ public final class InstallMediaCreationManager{
 					}
 				}
 			}
-		}
+		}*/
 	}
 	
 	//this function stops the current executable from running and , it does runs sudo using the password stored in memory
 	public func stop(mustStop: Bool) -> Bool!{
-		if let success = terminateProcess(name: sharedExecutableName){
+		if let success = TaskKillManager.terminateProcess(name: sharedExecutableName){
 			if success{
 				//if we need to stop the process ...
 				if mustStop{
@@ -321,7 +314,7 @@ public final class InstallMediaCreationManager{
 			text = "Do you want to stop the macOS installation process?"
 		}
 		
-		if dialogCriticalWarning(question: dTitle, text: text, style: .informational, proceedButtonText: "Don't Stop", cancelButtonText: "Stop" ){
+		if !dialogCritical(question: dTitle, text: text, style: .informational, proceedButtonText: "Don't Stop", cancelButtonText: "Stop" ){
 			return stop(mustStop: true)
 		}else{
 			return true
@@ -329,35 +322,19 @@ public final class InstallMediaCreationManager{
 	}
 	
 	public func setActivityLabelText(_ text: String){
-		/*DispatchQueue.global(qos: .background).sync {
-			DispatchQueue.main.sync {*/
-				self.viewController.setActivityLabelText(text)
-			/*}
-		}*/
+		self.viewController.setActivityLabelText(text)
 	}
 	
 	func setProgressValue(_ value: Double){
-		/*DispatchQueue.global(qos: .background).sync {
-			DispatchQueue.main.sync {*/
-				self.viewController.setProgressValue(value)
-			/*}
-		}*/
+		self.viewController.setProgressValue(value)
 	}
 	
 	func addToProgressValue(_ value: Double){
-		/*DispatchQueue.global(qos: .background).sync {
-			DispatchQueue.main.sync {*/
-				self.viewController.addToProgressValue(value)
-			/*}
-		}*/
+		self.viewController.addToProgressValue(value)
 	}
 	
 	func setProgressMax(_ max: Double){
-		/*DispatchQueue.global(qos: .background).sync {
-			DispatchQueue.main.sync {*/
-				self.viewController.setProgressMax(max)
-			/*}
-		}*/
+		self.viewController.setProgressMax(max)
 	}
 	
 }

@@ -22,7 +22,7 @@ public class DownloadAppViewController: GenericViewController {
         super.viewDidLoad()
         // Do view setup here.
 		
-		
+		self.setTitleLabel(text: "Download a macOS installer app from the App Store")
     }
 	
 	override public func viewDidAppear() {
@@ -33,15 +33,23 @@ public class DownloadAppViewController: GenericViewController {
 			closeButton.title = "Close"
 			closeButton.alternateTitle = "Close"
 		}
+		
+		self.showTitleLabel()
 	}
 	
+	/*
 	override func viewDidSetVibrantLook() {
 		super.viewDidSetVibrantLook()
 		
 	}
-	
+	*/
+
 	@IBAction func buttonClick(_ sender: Any) {
+		if self.presenting == nil{
 			self.window.close()
+		}else{
+			self.window.sheetParent?.endSheet(self.window)
+		}
 	}
 	
 	@IBAction func mjClick(_ sender: Any) {

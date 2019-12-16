@@ -244,9 +244,7 @@ public class EFIReplacementView: NSView{
 			
 			var str = EFIFolderReplacementManager.shared.openedDirectory!
 			
-			let cnt = str.count
-			
-			if cnt > 45{
+			if str.count > 45{
 				str = str[0...45] + "..."
 			}
 			

@@ -61,9 +61,9 @@ public let simulateRecovery = false
 
 
 //this used to disale the new shadow UI
-public let simulateDisableShadows = !false
+public let simulateDisableShadows = false
 
 //non ui testing conditions
 
 //this variable tells to the app to use the alternative apple script cmd for the creation process
-public let simulateUseScriptAuth = !false
+//public let simulateUseScriptAuth = !false

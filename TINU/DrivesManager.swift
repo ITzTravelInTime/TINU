@@ -87,7 +87,9 @@ public final class DrivesManager{
 		
 		var retname: String!
 		
-		if let bsdID = cvm.shared.currentPart?.bsdName{
+		let rawID = cvm.shared.currentPart?.bsdName
+		
+		if let bsdID = rawID{
 			
 			let driveID = getDriveBSDIDFromVolumeBSDID(volumeID: bsdID)
 		
@@ -104,39 +106,70 @@ public final class DrivesManager{
 	}
     #endif
 	
-	class func getDevicePropertyInfo(_ id: String, propertyName: String) -> String!{
+	class func getDriveName(from deviceid: String) -> String!{
+		var name: String!
+	
+		if #available(OSX 10.12, *){
+			name = getDevicePropertyInfoNew(deviceid, propertyName: "IORegistryEntryName")
+		}else{
+			name = getDevicePropertyInfoNew(deviceid, propertyName: "MediaName")
+		}
+	
+		if name != nil{
+		
+			if #available(OSX 10.12, *){
+				name = name!.deletingSuffix(" Media")
+			}
+		
+			name = name!.isEmpty ? "Untitled drive" : name
+		
+			print("------------Drive name: \(name!)")
+		}else{
+			print("------------Can't get the drive name for this drive")
+		}
+		
+		return name
+	}
+	
+	@inline(__always) class func getDevicePropertyInfo(_ id: String, propertyName: String) -> String!{
 		return getDevicePropertyInfoNew(_: id, propertyName: propertyName)
 	}
+	
+	private static var _id: String = ""
+	private static var _out: String! = ""
 	
 	class func getDevicePropertyInfoNew(_ id: String, propertyName: String) -> String!{
 		
 		do{
-            let out = getOut(cmd: "diskutil info -plist \"" + id + "\"")
-			
-            
-            
-			if let dict = try PlistXMLManager.decodeXMLDictionary(xml: out) as? [String: Any]{
-				
-				if let pitm = dict[propertyName]{
-					let itm = "\(pitm)"
-					
-					if itm.isEmpty{
-						return nil
-					}
-					
-					return itm
-					
-				}else{
-					return nil
-				}
-			}else{
+			if id.isEmpty{
 				return nil
+			}
+			
+			if _id != id || _out == nil{
+				_id = id
+            	_out = getOut(cmd: "diskutil info -plist \"" + id + "\"")
+			}
+			
+			if _out != nil{
+            
+				if let dict = try DecodeManager.decodePlistDictionary(xml: _out) as? [String: Any]{
+				
+					if let pitm = dict[propertyName]{
+						let itm = "\(pitm)"
+					
+						if !itm.isEmpty{
+							return itm
+						}
+					}
+				}
+				
 			}
 			
 		}catch let err{
 			print("Getting diskutil info property decoding error: \(err.localizedDescription)")
-			return nil
 		}
+		
+		return nil
 	}
     
     class func getDevicePropertyInfoBoolNew(_ id: String, propertyName: String) -> Bool!{
@@ -146,7 +179,7 @@ public final class DrivesManager{
             
             
             
-            if let dict = try PlistXMLManager.decodeXMLDictionary(xml: out) as? [String: Any]{
+            if let dict = try DecodeManager.decodePlistDictionary(xml: out) as? [String: Any]{
                 
                 if let pitm = dict[propertyName]{
                     return pitm as? Bool
@@ -162,6 +195,7 @@ public final class DrivesManager{
             print("Getting diskutil info property decoding error: \(err.localizedDescription)")
             return nil
         }
+		
     }
 	
 	class func getDevicePropertyInfoOld(_ id: String, propertyName: String) -> String!{

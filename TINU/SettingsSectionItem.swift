@@ -15,7 +15,7 @@ public class SettingsSectionItem: NSView{
 	
 	var isSelected = false
 	
-	var id = ""
+	var id = CustomizationViewController.SectionsID(rawValue: 0)!
 	
 	var itemsScrollView: NSScrollView?
 	
@@ -121,7 +121,7 @@ public class SettingsSectionItem: NSView{
 			scrollView.verticalScroller?.isHidden = false
 			
 			switch id{
-			case idGO:
+			case CustomizationViewController.SectionsID.generalOptions:
 				let surface = NSView()
 				let itemHeigth: CGFloat = 30//scrollView.frame.size.height / CGFloat(filesToReplace.count) - 1
 				
@@ -135,7 +135,7 @@ public class SettingsSectionItem: NSView{
 				
 				var count: CGFloat = 0
 				
-				for i in oom.shared.otherOptions.sorted(by: { UInt(String($0.0.first!))! > UInt(String($1.0.first!))! }){
+				for i in oom.shared.otherOptions.sorted(by: { $0.0.rawValue > $1.0.rawValue }){
 					if i.value.isVisible{
 						let item = OtherOptionsItem(frame: NSRect(x: 0, y: count, width: surface.frame.size.width, height: itemHeigth))
 						
@@ -187,7 +187,7 @@ public class SettingsSectionItem: NSView{
 				scrollView.documentView = surface
 				
 				
-			case idBFR:
+			case CustomizationViewController.SectionsID.bootFilesReplacement:
 				
 				#if !macOnlyMode
 				
@@ -280,15 +280,17 @@ public class SettingsSectionItem: NSView{
 					break
 				#endif
 				
-			case idEFI:
+			case CustomizationViewController.SectionsID.eFIfolderReplacement:
 				//efi replacement menu
 				#if useEFIReplacement && !macOnlyMode
 					
 					let surface = EFIReplacementView.init(frame: NSRect(origin: CGPoint.zero, size: NSSize(width: scrollView.frame.size.width - 17, height: scrollView.frame.size.height - 2)))
-					
+				
 					scrollView.documentView = surface
 					
 					scrollView.verticalScrollElasticity = .none
+				
+					surface.draw(surface.frame)
 					
 				#else
 				

@@ -8,13 +8,16 @@
 
 import Cocoa
 
-public class ContactsViewController: NSViewController {
+public class ContactsViewController: GenericViewController {
 	@IBOutlet weak var italianHackGroupLabel: NSTextField!
 	@IBOutlet weak var italianHackGroupLinkLabel: HyperTextField!
 	
     override public func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+		
+		self.setTitleLabel(text: "TINU: Contact us")
+		self.showTitleLabel()
 		
 		#if macOnlyMode
 			italianHackGroupLabel.stringValue = "Facebook group (Italian):"

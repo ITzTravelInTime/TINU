@@ -22,9 +22,6 @@ class ConfirmViewController: GenericViewController {
     
     @IBOutlet weak var warningField: NSTextField!
     
-    @IBOutlet weak var errorLabel: NSTextField!
-    @IBOutlet weak var errorImage: NSImageView!
-    
 	@IBOutlet weak var advancedOptionsButton: NSButton!
 	
     var notDone = false
@@ -39,6 +36,8 @@ class ConfirmViewController: GenericViewController {
             w.isClosingEnabled = true
             w.canHide = true
         }
+		
+		self.showTitleLabel()
     }
     
     
@@ -46,11 +45,13 @@ class ConfirmViewController: GenericViewController {
         super.viewDidLoad()
         // Do view setup here.
 		
+		self.setTitleLabel(text: "The volume and macOS installer below will be used, are you sure?")
+		
 		var useAlternate = false
 		var apfs = false
         
-        errorImage.isHidden = true
-        errorLabel.isHidden = true
+        self.hideFailureImage()
+		self.hideFailureLabel()
 		
 		#if !skipChooseCustomization
 			advancedOptionsButton.isHidden = true
@@ -75,9 +76,7 @@ class ConfirmViewController: GenericViewController {
         }else{
             notDone = true
         }
-        
-        
-        
+		
         if let sv = cm.sharedVolume{
             print(sv)
             var sr = sv
@@ -98,19 +97,20 @@ class ConfirmViewController: GenericViewController {
                     notDone = true
                 }
 			}else{
-			
 				InstallMediaCreationManager.shared.OtherOptionsBeforeformat(canFormat: &useAlternate, useAPFS: &apfs)
-				
 			}
             
             driveImage.image = NSWorkspace.shared().icon(forFile: sr)
-            driveName.stringValue = FileManager.default.displayName(atPath: sr)
 			
 			if useAlternate{
-				driveName.stringValue += " \n(The entire drive \"\(dm.getCurrentDriveName()!)\" will be used)"
+				driveName.stringValue = "\(dm.getCurrentDriveName()!)"
+				self.setTitleLabel(text: "The drive and macOS installer below will be used, are you sure?")
+			}else{
+				driveName.stringValue = FileManager.default.displayName(atPath: sr)
 			}
             
             print("The target volume is: " + sr)
+			
         }else{
             notDone = true
         }
@@ -137,35 +137,24 @@ class ConfirmViewController: GenericViewController {
             appName.isHidden = true
             
             self.warning.isHidden = true
-            
-            errorImage.image = IconsManager.shared.warningIcon
-            
-            errorImage.isHidden = false
-            errorLabel.isHidden =  false
-            
+			
+			if self.failureImageView == nil || self.failureLabel == nil{
+				self.setFailureImage(image: IconsManager.shared.warningIcon)
+				self.setFailureLabel(text: "Error while getting volume/drive and installer app information")
+			}
+			
+			self.showFailureImage()
+			self.showFailureLabel()
+			
             titleLabel.stringValue = "Impossible to create the macOS install meadia"
-            
-            /*let label = NSTextField(frame: NSRect(x: titleLabel.frame.origin.x, y: self.view.frame.size.height / 2 - 15, width: titleLabel.frame.size.width, height: 30))
-            label.isEditable = false
-            label.isBordered = false
-            label.font = NSFont.systemFont(ofSize: 25)
-            label.stringValue = "There was an error while getting app and drive data 🙁"
-            label.alignment = .center
-            label.isSelectable = false
-            label.drawsBackground = false
-            
-            self.view.addSubview(label)*/
         }else{
 			
-			if useAlternate{
-				warningField.stringValue = "If you go ahead, this app will erase the drive \"\(dm.getCurrentDriveName()!)\"! It will be erased because the volume you selected \"\(cvm.shared.currentPart.name)\" belongs to it, but it doesn't use the required GUID format. If you are sure, continue at your own risk."
-			}else{
+			let vname = useAlternate ? dm.getCurrentDriveName()! : cvm.shared.currentPart.name
+			warningField.stringValue = "If you go ahead, this app will erase \"\(vname)\"! All the data on it will be lost and replaced with the bootable macOS installer. If you are sure, continue at your own risk."
+			
+			if !useAlternate{
 				if sharedInstallMac{
 					warningField.stringValue = "If you go ahead, this app will modify the volume you selected \"\(cvm.shared.currentPart.name)\", and macOS will be installed on it. If you are sure, continue at your own risk."
-					
-				}else{
-					warningField.stringValue = "If you go ahead, this app will erase the volume \"\(cvm.shared.currentPart.name)\", so all the data on it will be lost and replaced with the bootable macOS installer. If you are sure, continue at your own risk."
-					
 				}
 			}
 			
@@ -176,7 +165,6 @@ class ConfirmViewController: GenericViewController {
     
     @IBOutlet weak var info: NSTextField!
     @IBOutlet weak var yes: NSButton!
-    @IBOutlet weak var titleLabel: NSTextField!
     
     @IBAction func goBack(_ sender: Any) {
         cm.sharedVolumeNeedsPartitionMethodChange = ps
@@ -219,12 +207,6 @@ class ConfirmViewController: GenericViewController {
 		self.presentViewControllerAsSheet(win)
 		
 		win.window.isFullScreenEnaled = false
-		
-		if sharedUseVibrant{
-			if let w = sharedWindow.windowController as? GenericWindowController{
-				w.deactivateVibrantWindow()
-			}
-		}
 		#endif
 	}
 }

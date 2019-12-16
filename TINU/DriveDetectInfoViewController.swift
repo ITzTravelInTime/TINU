@@ -29,6 +29,9 @@ public class DriveDetectInfoViewController: GenericViewController {
 	override public func viewDidAppear() {
 		super.viewDidAppear()
 		
+		self.setTitleLabel(text: "To make sure that your storage device will be detected:")
+		self.showTitleLabel()
+		
 		textView.textColor = NSColor.textColor
 		
 		if self.presenting == nil{
@@ -39,7 +42,7 @@ public class DriveDetectInfoViewController: GenericViewController {
 		}
 	}
 	
-	override func viewDidSetVibrantLook() {
+	/*override func viewDidSetVibrantLook() {
 		super.viewDidSetVibrantLook()
 		if canUseVibrantLook {
 			scroller.frame = CGRect.init(x: 0, y: scroller.frame.origin.y, width: self.view.frame.width, height: scroller.frame.height)
@@ -50,13 +53,18 @@ public class DriveDetectInfoViewController: GenericViewController {
 			scroller.borderType = .bezelBorder
 			//scroller.drawsBackground = true
 		}
-	}
+	}*/
 	
     @IBAction func buttonClick(_ sender: Any) {
-            self.window.close()
+		if self.presenting == nil{
+			self.window.close()
+		}else{
+			self.window.sheetParent?.endSheet(self.window)
+		}
     }
 }
 
+//it's outside the main function class just for ordering purposes
 extension DriveDetectInfoViewController{
 	func getTextContent() -> [String]{
 		var text = [String]()

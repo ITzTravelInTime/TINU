@@ -91,33 +91,42 @@ public var creditsWindowController: CreditsWindowController!
 
 public var wMSDINDWindow: DriveDetectInfoWindowController!
 public var downloadAppWindow: DownloadAppWindowController!
+
 #if !macOnlyMode
 public var EFIPartitionMonuterTool: EFIPartitionMounterWindowController!
 #endif
+
 //public log window varivble
 public var logWindow: LogWindowController!
-
 //this variable is a storyboard that is used to instanciate some windows
 public var sharedStoryboard: NSStoryboard!
 //sets if the license window has to be show
 public var sharedShowLicense = true
-
 //this variable tells to the app to install macos on the targetvolume using the target app (experimental, to keep disabled at the moment because it does not seems to work)
 public var sharedInstallMac: Bool = false
 
 //this variable returns the name of the current executable used by the app
 public var sharedExecutableName: String{
-    get{
+	/*
+		var res = "createinstallmedia"
         if sharedInstallMac{
-            return "startosinstall"
+            res = "startosinstall"
         }
-        return "createinstallmedia"
-    }
+		log(res)
+        return res
+	*/
+	if sharedInstallMac{
+		return "startosinstall"
+	}
+	return "createinstallmedia"
 }
 
 
+//suff to be deprecated
+
+
 //this variable is used to determinate if the interface must use the vibrant look, it will not be enabled if the apop is used in a mac os installer or recovery, because the effects without graphics acceleration will cause only lagg
-public var sharedUseVibrant = false{
+/*public var sharedUseVibrant = false{
     didSet{
         DispatchQueue.global(qos: .background).async {
             if !sharedIsOnRecovery{
@@ -132,10 +141,10 @@ public var sharedUseVibrant = false{
             }
         }
     }
-}
+}*/
 
 //this is used to know if it's really possible to use the vibrant graphics
-public var canUseVibrantLook: Bool{get{return (sharedUseVibrant && !sharedIsOnRecovery)}}
+//public var canUseVibrantLook: Bool{get{return (sharedUseVibrant && !sharedIsOnRecovery)}}
 
 //this gives the prefix for the window title
 public var sharedWindowTitlePrefix: String{
@@ -144,17 +153,12 @@ public var sharedWindowTitlePrefix: String{
             return "TINU (testing version)"
         }
         
-        if sharedInstallMac{
-            return "TINU: Install macOS"
-        }
-        
-        
         return "TINU"
     }
 }
 
 //this variable tells if the "focus area with the vibrant layout" can be used
-public var sharedUseFocusArea = false{
+/*public var sharedUseFocusArea = false{
     didSet{
         DispatchQueue.global(qos: .background).async{
             if !sharedIsOnRecovery{
@@ -173,4 +177,4 @@ public var sharedUseFocusArea = false{
             }
         }
     }
-}
+}*/

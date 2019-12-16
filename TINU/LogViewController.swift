@@ -9,7 +9,7 @@
 import Cocoa
 
 //the view controller of the log window
-class LogViewController: NSViewController, NSSharingServicePickerDelegate, NSSharingServiceDelegate {
+class LogViewController: GenericViewController, NSSharingServicePickerDelegate, NSSharingServiceDelegate {
 	
     @IBOutlet var text: NSTextView!
     @IBOutlet weak var scroller: NSScrollView!
@@ -55,7 +55,7 @@ class LogViewController: NSViewController, NSSharingServicePickerDelegate, NSSha
         timer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(self.updateLog(_:)), userInfo: nil, repeats: true)
     }
     
-    @IBAction func Close(_ sender: Any) {
+    func Close(_ sender: Any) {
         timer.invalidate()
         self.window.close()
     }
@@ -75,16 +75,35 @@ class LogViewController: NSViewController, NSSharingServicePickerDelegate, NSSha
         }
     }
     
-    @IBAction func copyLog(_ sender: Any) {
+    @objc public func copyLog(_ sender: Any) {
         let pasteBoard = NSPasteboard.general()
         pasteBoard.clearContents()
         pasteBoard.writeObjects([text.text as NSString])
+		
+		DispatchQueue.global(qos: .background).sync {
+		let notification = NSUserNotification()
+		
+		notification.identifier = "org.tinu.TINU_LOG_COPY"
+		
+		notification.title = "Log copied"
+		notification.informativeText = "TINU's log successfully copied to the clipboard"
+		
+		notification.hasActionButton = true
+		notification.actionButtonTitle = "Ok"
+		
+		notification.soundName = NSUserNotificationDefaultSoundName
+		
+		NSUserNotificationCenter.default.deliver(notification)
+		}
+		
+		print("Log copied to clipboard")
+		
     }
     
-    @IBAction func saveLog(_ sender: Any) {
+    @objc public func saveLog(_ sender: Any) {
 		let open = NSSavePanel()
 		open.isExtensionHidden = false
-		open.showsHiddenFiles = true
+		//open.showsHiddenFiles = true
 		
 		open.allowedFileTypes = ["txt"]
 		
@@ -119,7 +138,7 @@ class LogViewController: NSViewController, NSSharingServicePickerDelegate, NSSha
 
     }
 	
-	@IBAction func shareLog(_ sender: Any) {
+	@objc public func shareLog(_ sender: Any) {
 		
 		if let sen = sender as? NSView{
 		
@@ -149,6 +168,4 @@ class LogViewController: NSViewController, NSSharingServicePickerDelegate, NSSha
 							   sharingContentScope: UnsafeMutablePointer<NSSharingService.SharingContentScope>) -> NSWindow?{
 		return self.window
 	}
-	
-	
 }

@@ -171,7 +171,7 @@ extension InstallMediaCreationManager{
 				
 			//}
 			
-			if simulateUseScriptAuth{
+			//if simulateUseScriptAuth{
 				
 				var mol = 1
 				
@@ -194,7 +194,7 @@ extension InstallMediaCreationManager{
 				}
 				
 				log("Main process exit code: \(px)")
-			}
+			//}
 			
 			var errorsList: [CheckItem] = []
 			
@@ -220,6 +220,7 @@ extension InstallMediaCreationManager{
 				
 				//checks for known errors first
 				
+				
 				errorsList.append(CheckItem(stringsToCheck: [tt, fe, le, lo], valuesToCheck: ["A error occurred erasing the disk."], printMessage: "Bootable macOS installer creation failed, createinstallmedia returned an error while formatting the installer, please, erase this dirve with disk utility and retry", message: "TINU creation failed to format \"\(self.dname)\"", notError: false, operation: .contains, isBack: false))
 				
 				errorsList.append(CheckItem(stringsToCheck: [tt, fe, le, me, lo], valuesToCheck: ["does not appear to be a valid OS installer application"], printMessage: "macOS install media creation failed, createinstallmedia returned an error about the app you are using, please, check your mac installaltion app and if needed download it again. Many thimes this appens ,because the installer downloaded from the mac app store, does not contains all the needed files or contanins wrong or corrupted files, in many cases the mac app store on a virtual machine does not downloads the full macOS installer application", message: "Bootable macOS installer creation failed because the selected macOS installer app is damaged or invalid", notError: false, operation: .contains, isBack: false))
@@ -232,7 +233,7 @@ extension InstallMediaCreationManager{
 				
 				
 				
-				if simulateUseScriptAuth{
+				//if simulateUseScriptAuth{
 					/*
 					//then if the proces has not been completed correclty, probably we have an error output or an unknown output
 					errorsList.append(CheckItem(stringsToCheck: ["\(rc)", "\(px)"], valuesToCheck: ["0"], printMessage: "macOS install media creation failed, unknown output from \"createinstallmedia\" while creating the installer, please, erase this dirve with disk utility and retry", message: "macOS install media creation failed because of an unknown output from \"\(sharedExecutableName)\", check the log for details", notError: false, operation: .equal, isBack: false))
@@ -243,7 +244,7 @@ extension InstallMediaCreationManager{
 					
 					errorsList.append(CheckItem(stringsToCheck: [le], valuesToCheck: ["execution error:", "(-128)"], printMessage: "Apple script operation cancelled, going to previous screen", message: "", notError: false, operation: .contains, isBack: true))
 					
-				}
+				//}
 				
 				
 				//then checks for unknown errors
@@ -290,7 +291,9 @@ extension InstallMediaCreationManager{
 								res = self.manageSpecialOperations(true)
 							}
 							
-							if !res{
+							if res{
+								
+							}else{
 								print("Advanced options fails")
 								return
 							}

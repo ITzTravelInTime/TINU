@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C6322576221C18C0003A56D4 /* FilesystemObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6322575221C18C0003A56D4 /* FilesystemObserver.swift */; };
 		C6353AC6213618B6000AEEC3 /* SanFranciscoText-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C6353AC5213618B6000AEEC3 /* SanFranciscoText-Regular.otf */; };
 		C647B35E211CEA430024B9A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B35D211CEA430024B9A1 /* AppDelegate.swift */; };
 		C647B362211CEA440024B9A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C647B361211CEA440024B9A1 /* Assets.xcassets */; };
@@ -23,6 +24,8 @@
 		C65C9824212475F8005ECAF1 /* EFIPartitionMounterMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65C9823212475F8005ECAF1 /* EFIPartitionMounterMonitor.swift */; };
 		C6662576212E6BC800173770 /* AllertFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6662575212E6BC800173770 /* AllertFunctions.swift */; };
 		C676D195215E2BCF00E900E9 /* ShadowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676D194215E2BCF00E900E9 /* ShadowViewController.swift */; };
+		C685B3B923496D94000BB275 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C685B3B823496D94000BB275 /* GenericViewController.swift */; };
+		C685B3BB23496E08000BB275 /* CopyrightLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C685B3BA23496E08000BB275 /* CopyrightLabel.swift */; };
 		C6CF8E1B211D816800760E67 /* EFIPartitionMounterCompletingViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF8E1A211D816800760E67 /* EFIPartitionMounterCompletingViewControllers.swift */; };
 		C6CF8E32211D9FBE00760E67 /* SudoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF8E2B211D9FBE00760E67 /* SudoManager.swift */; };
 		C6CF8E33211D9FBE00760E67 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CF8E2C211D9FBE00760E67 /* LogManager.swift */; };
@@ -38,7 +41,6 @@
 		C6DD51292144A819009829D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6DD51282144A819009829D9 /* Assets.xcassets */; };
 		C6DD512C2144A819009829D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6DD512A2144A819009829D9 /* Main.storyboard */; };
 		C6DD51332144B6E9009829D9 /* EFIPartitionMounterSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DD51322144B6E9009829D9 /* EFIPartitionMounterSettingsViewController.swift */; };
-		C6DD51352144BA04009829D9 /* EFIPartitionMounterLauncher.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6DD51222144A818009829D9 /* EFIPartitionMounterLauncher.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		DDF9A56B2159AFD700389F78 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF9A56A2159AFD700389F78 /* ShadowView.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,13 +51,13 @@
 			dstPath = Contents/Library/LoginItems;
 			dstSubfolderSpec = 1;
 			files = (
-				C6DD51352144BA04009829D9 /* EFIPartitionMounterLauncher.app in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C6322575221C18C0003A56D4 /* FilesystemObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilesystemObserver.swift; path = ../../TINU/FilesystemObserver.swift; sourceTree = "<group>"; };
 		C6353AC5213618B6000AEEC3 /* SanFranciscoText-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoText-Regular.otf"; sourceTree = "<group>"; };
 		C647B35A211CEA430024B9A1 /* EFI Partition Mounter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EFI Partition Mounter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C647B35D211CEA430024B9A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +77,8 @@
 		C65C9823212475F8005ECAF1 /* EFIPartitionMounterMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EFIPartitionMounterMonitor.swift; sourceTree = "<group>"; };
 		C6662575212E6BC800173770 /* AllertFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AllertFunctions.swift; path = ../../TINU/AllertFunctions.swift; sourceTree = "<group>"; };
 		C676D194215E2BCF00E900E9 /* ShadowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShadowViewController.swift; path = ../../TINU/ShadowViewController.swift; sourceTree = "<group>"; };
+		C685B3B823496D94000BB275 /* GenericViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericViewController.swift; path = ../../TINU/GenericViewController.swift; sourceTree = "<group>"; };
+		C685B3BA23496E08000BB275 /* CopyrightLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CopyrightLabel.swift; path = ../../TINU/CopyrightLabel.swift; sourceTree = "<group>"; };
 		C6CF8E1A211D816800760E67 /* EFIPartitionMounterCompletingViewControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EFIPartitionMounterCompletingViewControllers.swift; sourceTree = "<group>"; };
 		C6CF8E2B211D9FBE00760E67 /* SudoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SudoManager.swift; path = ../../TINU/SudoManager.swift; sourceTree = "<group>"; };
 		C6CF8E2C211D9FBE00760E67 /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogManager.swift; path = ../../TINU/LogManager.swift; sourceTree = "<group>"; };
@@ -173,6 +177,7 @@
 				C6CF8E2D211D9FBE00760E67 /* ClassExtensions.swift */,
 				C6CF8E3D211DA05400760E67 /* DrivesManager.swift */,
 				C6CF8E2E211D9FBE00760E67 /* EFIPartitionManager.swift */,
+				C6322575221C18C0003A56D4 /* FilesystemObserver.swift */,
 				C6CF8E3F211DA06F00760E67 /* IconsManager.swift */,
 				C6CF8E2C211D9FBE00760E67 /* LogManager.swift */,
 				C6CF8E39211D9FEA00760E67 /* PlistXMLManager.swift */,
@@ -180,6 +185,8 @@
 				C6CF8E31211D9FBE00760E67 /* SmallManagers.swift */,
 				C6CF8E2B211D9FBE00760E67 /* SudoManager.swift */,
 				C6662575212E6BC800173770 /* AllertFunctions.swift */,
+				C685B3BA23496E08000BB275 /* CopyrightLabel.swift */,
+				C685B3B823496D94000BB275 /* GenericViewController.swift */,
 				C676D194215E2BCF00E900E9 /* ShadowViewController.swift */,
 				DDF9A56A2159AFD700389F78 /* ShadowView.swift */,
 			);
@@ -329,10 +336,13 @@
 				C6CF8E36211D9FBE00760E67 /* ScriptsManager.swift in Sources */,
 				DDF9A56B2159AFD700389F78 /* ShadowView.swift in Sources */,
 				C6CF8E33211D9FBE00760E67 /* LogManager.swift in Sources */,
+				C6322576221C18C0003A56D4 /* FilesystemObserver.swift in Sources */,
 				C6662576212E6BC800173770 /* AllertFunctions.swift in Sources */,
 				C6CF8E40211DA06F00760E67 /* IconsManager.swift in Sources */,
+				C685B3B923496D94000BB275 /* GenericViewController.swift in Sources */,
 				C6CF8E32211D9FBE00760E67 /* SudoManager.swift in Sources */,
 				C676D195215E2BCF00E900E9 /* ShadowViewController.swift in Sources */,
+				C685B3BB23496E08000BB275 /* CopyrightLabel.swift in Sources */,
 				C6CF8E35211D9FBE00760E67 /* EFIPartitionManager.swift in Sources */,
 				C6CF8E38211D9FBE00760E67 /* SmallManagers.swift in Sources */,
 				C647B38B211CEF9E0024B9A1 /* EFIPartitionMounterWindowController.swift in Sources */,
@@ -489,7 +499,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDark;
 				CODE_SIGN_ENTITLEMENTS = "EFI Partition Mounter/EFI Partition Mounter.entitlements";
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -517,7 +527,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDark;
 				CODE_SIGN_ENTITLEMENTS = "EFI Partition Mounter/EFI Partition Mounter.entitlements";
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9RSH5734GY;

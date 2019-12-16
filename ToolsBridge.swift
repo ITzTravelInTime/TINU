@@ -12,7 +12,7 @@ import Cocoa
 	public typealias AppViewController   =  GenericViewController
 	public typealias AppWindowController =  GenericWindowController
 #elseif EFIPM
-	public typealias AppViewController   =  ShadowViewController
+	public typealias AppViewController   =  GenericViewController
 	public typealias AppWindowController =  NSWindowController
 #else
 	public typealias AppViewController   =  NSViewController
@@ -32,5 +32,17 @@ public var toolMainViewController: NSViewController!
 #if EFIPM
 
 public var startsAsMenu = true
+
+public class AppVC: ShadowViewController{
+	
+    override public func viewDidLoad(){
+        super.viewDidLoad()
+        
+		let copyright = CopyrightLabel()
+		self.view.addSubview(copyright)
+		copyright.awakeFromNib()
+	}
+	
+}
 
 #endif

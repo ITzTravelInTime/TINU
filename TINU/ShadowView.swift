@@ -17,6 +17,14 @@ public class ShadowView: NSView{
         
         self.needsDisplay = true
         self.needsLayout = true
+		
+		if canShadow{
+			self.layer?.shadowColor = isDarkMode ? CGColor.black : CGColor.init(gray: 0.4, alpha: 1);
+			self.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
+		}else{
+			self.layer?.backgroundColor = NSColor.white.withAlphaComponent(0).cgColor
+		}
+		
 	}
 	
 	override public func draw(_ dirtyRect: NSRect) {
@@ -28,14 +36,18 @@ public class ShadowView: NSView{
 		
 		if canShadow{
 			
-		self.shadow = NSShadow()
+			self.shadow = NSShadow()
 		
-		self.layer?.shadowColor = CGColor.black
-		self.layer?.shadowRadius = 10
-		self.layer?.shadowOffset = CGSize()
-		self.layer?.cornerRadius = 15
-		self.layer?.shadowPath = CGPath(roundedRect: self.bounds, cornerWidth: 15, cornerHeight: 15, transform: nil)
+			self.layer?.shadowColor = isDarkMode ? CGColor.black : CGColor.init(gray: 0.4, alpha: 1);
+			self.layer?.shadowRadius = 7
+			self.layer?.shadowOffset = CGSize()
+			self.layer?.cornerRadius = 15
+			self.layer?.shadowPath = CGPath(roundedRect: self.bounds, cornerWidth: 15, cornerHeight: 15, transform: nil)
 		
+			self.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
+			
+		}else{
+			self.layer?.backgroundColor = NSColor.white.withAlphaComponent(0).cgColor
 		}
 		
 		updateLayer()
@@ -44,16 +56,19 @@ public class ShadowView: NSView{
 	override public func updateLayer() {
 		super.updateLayer()
 		
-		if self.canShadow{
-			self.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
-		}else{
-			self.layer?.backgroundColor = NSColor.white.withAlphaComponent(0).cgColor
-		}
-		
+		viewDidChangeEffectiveAppearance()
 	}
 }
 
 public class ShadowPanel: NSView{
+	
+	override public func updateLayer() {
+		super.updateLayer()
+	
+		useShadow.toggle()
+		useShadow.toggle()
+		
+	}
 	
 	var customShadowRadius: CGFloat = 7{
 		didSet{
@@ -69,11 +84,11 @@ public class ShadowPanel: NSView{
 				self.wantsLayer = true
 				
 				self.shadow = NSShadow()
-				
-				self.layer?.shadowColor = CGColor.black
 				self.layer?.shadowRadius = customShadowRadius
 				self.layer?.shadowOffset = CGSize()
 				self.layer?.shadowPath = CGPath(rect: self.bounds, transform: nil)
+				
+				draw(self.bounds)
 			}
 		}
 	}
@@ -81,5 +96,8 @@ public class ShadowPanel: NSView{
 	override public func draw(_ dirtyRect: NSRect) {
 		self.backgroundColor = NSColor.windowBackgroundColor
 		
+		if useShadow{
+			self.layer?.shadowColor = isDarkMode ? CGColor.black : CGColor.init(gray: 0.4, alpha: 1)
+		}
 	}
 }

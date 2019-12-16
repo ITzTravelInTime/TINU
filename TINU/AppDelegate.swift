@@ -11,11 +11,11 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var verboseItem: NSMenuItem!
-    @IBOutlet weak var vibrantButton: NSMenuItem!
+    //@IBOutlet weak var vibrantButton: NSMenuItem!
     @IBOutlet weak var tinuRelated: NSMenuItem!
     @IBOutlet weak var otherApps: NSMenuItem!
     @IBOutlet weak var QuitMenuButton: NSMenuItem!
-    @IBOutlet weak var focusAreaItem: NSMenuItem!
+    //@IBOutlet weak var focusAreaItem: NSMenuItem!
     @IBOutlet weak var FAQItem: NSMenuItem!
     @IBOutlet weak var FAQItemHelp: NSMenuItem!
     @IBOutlet weak var InstallMacOSItem: NSMenuItem!
@@ -70,30 +70,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             //}
         }
         
-        erasePassword()
+        //erasePassword()
         return NSApplicationTerminateReply.terminateNow
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
-        
-        /*
-        if #available(OSX 10.12.2, *) {
-            NSApplication.shared().isAutomaticCustomizeTouchBarMenuItemEnabled = true
-        }
-        */
- 
-        //checkUser()
-        //checkAppMode()
-        
-        //vibrantButton.isHidden = true
-        //vibrantSeparator.isHidden = true
-        focusAreaItem.isHidden = true
 		
 		toolsMenuItem.isEnabled = true
 		toolsMenuItem.isHidden = false
 		
 		efiMounterMenuItem.isEnabled = true
+		
+		//focusAreaItem.isHidden = true
+		//vibrantButton.isHidden = true
         
         if sharedIsOnRecovery{
 			print("Verbose mode not usable under recovery")
@@ -104,12 +94,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			
 			InstallMacOSItem.isHidden = false
 			
+			/*
             vibrantButton.isEnabled = false
             vibrantButton.state = 0
             
             focusAreaItem.isEnabled = false
             focusAreaItem.state = 0
-            
+            */
+			
             FAQItem.isEnabled = false
 			
 			getMacOSApp.isEnabled = false
@@ -121,9 +113,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			
 			InstallMacOSItem.isHidden = true
 			
-            vibrantButton.isEnabled = true
+            //vibrantButton.isEnabled = false
 			
-            if sharedUseVibrant{
+            /*if sharedUseVibrant{
                 focusAreaItem.isEnabled = true
                 vibrantButton.state = 1
             }else{
@@ -135,7 +127,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 focusAreaItem.state = 1
             }else{
                 focusAreaItem.state = 0
-            }
+            }*/
             
             FAQItem.isEnabled = true
 			
@@ -269,6 +261,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
     }
 	
+	/*
 	@IBAction func checkVibrantLook(_ sender: Any) {
 		if sharedUseVibrant{
 			sharedUseVibrant = false
@@ -291,7 +284,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			}
 			sharedUseFocusArea = !sharedUseFocusArea
 		}
-	}
+	}*/
 	
 	@IBAction func openEFIPartitionTool(_ sender: Any) {
 		

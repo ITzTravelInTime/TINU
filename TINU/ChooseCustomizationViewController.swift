@@ -9,14 +9,15 @@
 import Cocoa
 
 class ChooseCustomizationViewController: GenericViewController {
-
-    @IBOutlet weak var titleLabel: NSTextField!
 	@IBOutlet weak var infoText: NSTextField!
     @IBOutlet weak var infoImage: NSImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+		
+		self.setTitleLabel(text: "")
+		self.showTitleLabel()
         
         infoImage.image = IconsManager.shared.infoIcon
 		

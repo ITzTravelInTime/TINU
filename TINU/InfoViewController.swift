@@ -14,13 +14,13 @@ class InfoViewController: GenericViewController{
     
     @IBOutlet weak var backButton: NSButton!
     
-    @IBOutlet weak var driveIcon: NSImageView!
+	@IBOutlet weak var getInstallerButton: NSButton!
+	
+	@IBOutlet weak var driveIcon: NSImageView!
     @IBOutlet weak var appIcon: NSImageView!
     
     @IBOutlet weak var driveLabel: NSTextField!
     @IBOutlet weak var appLabel: NSTextField!
-    
-    @IBOutlet weak var titleField: NSTextField!
     
     @IBOutlet weak var tinuLabel: NSTextField!
     @IBOutlet weak var sloganLabel: NSTextField!
@@ -36,9 +36,14 @@ class InfoViewController: GenericViewController{
 		/*if !sharedIsOnRecovery{
 			//backButton.isHidden = true
         }else{*/
-            let delta = titleField.frame.origin.y - tinuLabel.frame.origin.y
+			self.setTitleLabel(text: "Requirements")
+			self.showTitleLabel()
+		
+			self.titleLabel.frame.origin.y = 229
+		
+            let delta = titleLabel.frame.origin.y - tinuLabel.frame.origin.y
             
-            titleField.frame.origin.y -= delta
+            titleLabel.frame.origin.y -= delta
             
             stuffContainer.frame.origin.y = sep.frame.origin.y - stuffContainer.frame.size.height
             
@@ -48,6 +53,8 @@ class InfoViewController: GenericViewController{
             
             tinuLabel.isHidden = true
             sloganLabel.isHidden = true
+		
+			getInstallerButton.isHidden = true//sharedIsOnRecovery
         //}
 		
 		#if macOnlyMode

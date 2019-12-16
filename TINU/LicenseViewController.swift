@@ -12,15 +12,13 @@ public var showProcessLicense = false
 
 public var processLicense = ""
 
-class LicenseViewController: GenericViewController {
+class LicenseViewController: ShadowViewController {
     
     @IBOutlet var licenseField: NSTextView!
     
     @IBOutlet weak var spinner: NSProgressIndicator!
     
     @IBOutlet weak var scroller: NSScrollView!
-    
-	@IBOutlet weak var titleField: NSTextField!
 	
 	@IBOutlet weak var check: NSButton!
 	
@@ -28,7 +26,7 @@ class LicenseViewController: GenericViewController {
 	
 	@IBOutlet weak var backButton: NSButton!
 	
-    override func viewDidSetVibrantLook(){
+    /*override func viewDidSetVibrantLook(){
         super.viewDidSetVibrantLook()
         
         if styleView != nil{
@@ -44,10 +42,13 @@ class LicenseViewController: GenericViewController {
             scroller.borderType = .bezelBorder
             //scroller.drawsBackground = true
         }*/
-    }
+    }*/
     
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		self.setTitleLabel(text: "License agreement")
+		self.showTitleLabel()
 		
 		spinner.isHidden = false
 		spinner.startAnimation(self)
@@ -76,7 +77,7 @@ class LicenseViewController: GenericViewController {
 			
 			if showProcessLicense && sharedInstallMac{
 				DispatchQueue.main.async {
-					self.titleField.stringValue = "macOS License Agreement"
+					self.titleLabel.stringValue = "macOS License Agreement"
 					
 					self.backButton.title = "Disagree"
 				}

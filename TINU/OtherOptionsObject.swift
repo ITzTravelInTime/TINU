@@ -10,8 +10,8 @@ import Cocoa
 
 //other options
 public class OtherOptionsObject{
-	var id: String
-	var displayMessage: String
+	var id: OtherOptionsManager.OtherOptionID
+	var title: String
 	var isActivated = false
 	var isVisible = true
 	
@@ -19,7 +19,7 @@ public class OtherOptionsObject{
 	
 	var description: String! = ""
 	
-	func canBeUsed(_ referenceID: String) -> Bool{
+	func canBeUsed(_ referenceID: OtherOptionsManager.OtherOptionID) -> Bool{
 		return (id == referenceID) && isActivated && isVisible
 	}
 	
@@ -28,24 +28,24 @@ public class OtherOptionsObject{
 	}
 	
 	func copy() -> OtherOptionsObject{
-		return OtherOptionsObject.init(objectID: id, objectMessage: displayMessage, objectDescription: description, objectIsActivated: isActivated, objectIsVisible: isVisible)
+		return OtherOptionsObject.init(objectID: id, objectTitle: title, objectDescription: description, objectIsActivated: isActivated, objectIsVisible: isVisible)
 	}
 	
 	init(){
-		id             = ""
-		displayMessage = "This is an option"
+		id             = OtherOptionsManager.OtherOptionID.unknown
+		title = "This is an option"
 		description    = "This is the description of this option"
 	}
 	
-	init(objectID: String, objectMessage: String, objectDescription: String!) {
+	init(objectID: OtherOptionsManager.OtherOptionID, objectTitle: String, objectDescription: String!) {
 		id = objectID
-		displayMessage = objectMessage
+		title = objectTitle
 		description = objectDescription
 	}
 	
-	init(objectID: String, objectMessage: String, objectDescription: String? ,objectIsActivated: Bool, objectIsVisible: Bool) {
+	init(objectID: OtherOptionsManager.OtherOptionID, objectTitle: String, objectDescription: String? ,objectIsActivated: Bool, objectIsVisible: Bool) {
 		id = objectID
-		displayMessage = objectMessage
+		title = objectTitle
 		isActivated = objectIsActivated
 		isVisible = objectIsVisible
 		description = objectDescription

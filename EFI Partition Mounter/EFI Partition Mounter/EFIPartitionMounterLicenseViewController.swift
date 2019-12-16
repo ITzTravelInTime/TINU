@@ -8,10 +8,10 @@
 
 import Cocoa
 
-public class EFIPartitionMounterLicenseViewController: NSViewController{
+public class EFIPartitionMounterLicenseViewController: AppVC{
     
-    @IBOutlet weak var warningImage: NSImageView!
-    @IBOutlet weak var warningLabel: NSTextField!
+    //@IBOutlet weak var warningImage: NSImageView!
+    //@IBOutlet weak var warningLabel: NSTextField!
     @IBOutlet weak var spinner: NSProgressIndicator!
     
     @IBOutlet weak var scroller: NSScrollView!
@@ -24,6 +24,9 @@ public class EFIPartitionMounterLicenseViewController: NSViewController{
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+        
+        setTitleLabel(text: "License")
+        showTitleLabel()
         
         self.scroller.isHidden = true
         
@@ -62,10 +65,15 @@ public class EFIPartitionMounterLicenseViewController: NSViewController{
     }
     
     func setWarning(){
-        warningImage.image = IconsManager.shared.warningIcon
-        warningImage.isHidden = false
+        //warningImage.image = IconsManager.shared.warningIcon
+        //warningImage.isHidden = false
         
-        warningLabel.isHidden = false
+        //warningLabel.isHidden = false
+        
+        setFailureImage(image: IconsManager.shared.warningIcon)
+        setFailureLabel(text: "Can't load the license agreement")
+        showFailureImage()
+        showFailureLabel()
         
         licenseInfoLink.isHidden = false
         

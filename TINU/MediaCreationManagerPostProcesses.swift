@@ -34,7 +34,7 @@ extension InstallMediaCreationManager{
 			
 			var unmount = true
 			
-			if let o = oom.shared.otherOptions[oom.shared.ids.otherOptionKeepEFIpartID]?.canBeUsed(){
+			if let o = oom.shared.otherOptions[oom.OtherOptionID.otherOptionKeepEFIpartID]?.canBeUsed(){
 				unmount = !o
 			}
 			
@@ -163,7 +163,7 @@ extension InstallMediaCreationManager{
 		
 		DispatchQueue.main.sync {
 			
-			self.EFICopyEnded = false
+			self.EFICopyEnded = true
 			
 			self.setProgressValue(self.startProgress + self.unit)
 			
@@ -246,13 +246,15 @@ extension InstallMediaCreationManager{
 			self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.checkBootFilesReplacementProcess(_:)), userInfo: nil, repeats: true)
 		}
 		
-		if let m = checkOperationResult(operation: OptionalOperations.shared.replaceBootFiles(step: 0), res: &ok){
+		if let m = checkOperationResult(operation: OptionalOperations.shared.replaceBootFiles(), res: &ok){
 			return (ok, m)
 		}
 		
 		DispatchQueue.main.sync {
 			
-			self.EFICopyEnded = false
+			self.EFICopyEnded = true
+			
+			self.setProgressValue(self.startProgress + self.unit)
 			
 		}
 		#endif

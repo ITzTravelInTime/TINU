@@ -55,20 +55,13 @@ public func checkAppMode(){
 	for tc in testingConditions{
 		if tc{
 			sharedTestingMode = true
+			break
 		}
 	}
 	
 	if sharedTestingMode{
 		print("This copy of tinu is running in a testing mode")
 	}
-	
-	/*
-	if simulateFormatFail || simulateFormatSkip || simulateNoUsableApps || simulateNoUsableDrives || simulateFirstAuthCancel || simulateAbnormalExitcode || simulateSecondAuthCancel || simulateConfirmGetDataFail || inoffensive || simulateNoSpecialOperations || simulateSpecialOpertaionsFail || simulateRecovery{
-	sharedTestingMode = true
-	print("This copy of tinu is running in a testing mode")
-	}else{
-	sharedTestingMode = false
-	}*/
 }
     
     #endif
@@ -97,7 +90,7 @@ public func checkUser(){
 public func checkSettings(){
 	if !sharedIsOnRecovery {
         #if !isTool && TINU
-		setSingleSettingBool(key: SettingsKeys().useVibrantKey, variable: &sharedUseVibrant)
+		//setSingleSettingBool(key: SettingsKeys().useVibrantKey, variable: &sharedUseVibrant)
 		//setSingleSettingBool(key: settingUseFocusAreaKey, variable: &sharedUseFocusArea)
         #else
             #if EFIPM

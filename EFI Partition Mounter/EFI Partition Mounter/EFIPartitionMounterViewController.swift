@@ -10,31 +10,34 @@ import Cocoa
 
 #if (!macOnlyMode && TINU) || (!TINU && isTool)
 
-class EFIPartitionMounterViewController: AppViewController {
+class EFIPartitionMounterViewController: ShadowViewController {
 	
-	@IBOutlet weak var scrollView: NSScrollView!
-	@IBOutlet weak var scrollHeight: NSLayoutConstraint!
+	@IBOutlet weak var scrollView:         NSScrollView!
+	@IBOutlet weak var scrollHeight:       NSLayoutConstraint!
 	
-	@IBOutlet weak var spinner: NSProgressIndicator!
+	@IBOutlet weak var spinner:            NSProgressIndicator!
 	
-	@IBOutlet weak var refreshButton: NSButton!
-	@IBOutlet weak var closeButton: NSButton!
+	@IBOutlet weak var refreshButton:      NSButton!
+	@IBOutlet weak var closeButton:        NSButton!
+
 	
-	@IBOutlet weak var errorImage: NSImageView!
-    @IBOutlet weak var errorLabel: NSTextField!
-    @IBOutlet weak var errorRefreshButton: NSButton!
+    @IBOutlet weak var iconModeButton:     NSButton!
     
-	@IBOutlet weak var baseLabel: NSTextField!
-	@IBOutlet weak var titleLabel: NSTextField!
-	
-    @IBOutlet weak var iconModeButton: NSButton!
-    public let eFIManager = EFIPartitionManager()
     
-    public var barMode = false
-    public var popover: NSPopover!
+    
+    public let         eFIManager:         EFIPartitionManager      = EFIPartitionManager()
+    
+    public var         barMode:            Bool                     = false
+    public var         popover:            NSPopover!
+    
+    private var        watcher:            DirectoryObserver!
+    private var        watcherTriggerd:    Bool                     = false
+    
+    public var         watcherSkip:        Bool                     = false
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        
         
         #if isTool
         
@@ -73,7 +76,17 @@ class EFIPartitionMounterViewController: AppViewController {
 		scrollView.drawsBackground = false
 		
 		setShadowViewsTopBottomOnly(respectTo: scrollView, topBottomViewsShadowRadius: 5)
+        
+        self.setTitleLabel(text: "EFI Partition Mounter")
+        self.showTitleLabel()
+        
+        
 		setOtherViews(respectTo: scrollView)
+        
+        
+        
+        
+        
 		
 		#if !isTool
 			closeButton.title = "Close"
@@ -81,38 +94,45 @@ class EFIPartitionMounterViewController: AppViewController {
 		#endif
 	}
 	
+    
     #if !isTool// && EFIPM
+    
     override func viewWillAppear() {
         super.viewWillAppear()
+    
 		self.window.isFullScreenEnaled = false
 		
 		self.window.styleMask.insert(.resizable)
-    }
+    }    
     #endif
+    
     
 	override func viewDidAppear() {
 		super.viewDidAppear()
         
         print("Main view view did appear triggered")
         
-        self.window?.collectionBehavior.subtract(.fullScreenPrimary)
-        
         #if isTool
         
         if !barMode{
+            
+            if startsAsMenu{
+                print("the app is starting as menu item, avoiding loosing time on a window which will be closed")
+                return
+            }
+            
             toolMainViewController = self
         }
         
         for c in self.view.subviews{
             if let l = c as? NSTextField{
                 l.drawsBackground = true
-                (l as NSView).backgroundColor = (l.superview! as NSView).backgroundColor
+                c.backgroundColor = (c.superview! as NSView).backgroundColor
             }
         }
         
         self.spinner.isDisplayedWhenStopped = false
         self.spinner.usesThreadedAnimation = true
-        
         
         if barMode{
             iconModeButton.title = "Window Mode"
@@ -120,24 +140,42 @@ class EFIPartitionMounterViewController: AppViewController {
             iconModeButton.title = "Toolbar Mode"
         }
         
-        if !self.barMode && startsAsMenu{
-            print("the app is starting as menu item, avoiding losing tiome on a window which will be closed")
-            return
-        }
-        
         #endif
         
+        self.window?.collectionBehavior.subtract(.fullScreenPrimary)
         
-		
-		setScrollView()
+        self.spinner.isHidden = false
+        self.spinner.startAnimation(self)
         
-		DispatchQueue.global(qos: .background).async {
-			self.eFIManager.buildPartitionsCache()
-		}
+        DispatchQueue.global(qos: .background).async {
+            
+            self.watcher = DirectoryObserver(URL: URL(fileURLWithPath: "/Volumes", isDirectory: false), block: {
+                
+                print("Change in /Volumes")
+                
+                if self.watcherTriggerd{
+                    if self.watcherSkip {
+                        self.watcherSkip.toggle()
+                    }else{
+                        DispatchQueue.main.async {
+                            print("Refreshing list because of a new volume")
+                            self.refresh(self)
+                        }
+                    }
+                }
+                
+                self.watcherTriggerd.toggle()
+                
+            })
+            
+        }
+        
+        self.setScrollView()
 	}
 	
 	override func viewWillDisappear() {
-        #if !isTool
+        /*
+		#if !isTool
             if !(CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress){
                 erasePassword()
             }
@@ -147,8 +185,13 @@ class EFIPartitionMounterViewController: AppViewController {
             print("will disappear")
         
         #endif
-		
+		*/
+
 		scrollView.documentView = nil
+        
+        watcher = nil
+        watcherTriggerd = false
+        watcherSkip = false
 	}
     
     @IBAction func toggleIconMode(_ sender: Any) {
@@ -163,23 +206,19 @@ class EFIPartitionMounterViewController: AppViewController {
 		#endif
     }
     
-	@IBAction func refresh(_ sender: Any) {
+	@objc @IBAction func refresh(_ sender: Any) {
 		scrollView.isHidden = true
 		
-		errorImage.isHidden = true
-		
-		errorLabel.isHidden = true
-		
-		errorRefreshButton.isHidden = true
+		hideFailureImage()
+        hideFailureLabel()
+        hideFailureButtons()
 		
 		refreshButton.isHidden = true
-		
-		setScrollView()
-		
-		DispatchQueue.global(qos: .background).async {
-			self.eFIManager.clearPartitionsCache()
-			self.eFIManager.buildPartitionsCache()
-		}
+        
+        self.spinner.isHidden = false
+        self.spinner.startAnimation(self)
+        
+        setScrollView()
 		
 	}
 	
@@ -193,10 +232,11 @@ class EFIPartitionMounterViewController: AppViewController {
 	
     private func setScrollView(){
 		//DispatchQueue.main.sync{
-		
+		/*
 		self.spinner.isHidden = false
 		self.spinner.startAnimation(self)
-		
+		*/
+        
 		var empty = false
 		
 		createEFIPartitionItems(response: { response in
@@ -281,13 +321,17 @@ class EFIPartitionMounterViewController: AppViewController {
 					
 					self.scrollView.isHidden = true
 					
-					self.errorImage.image = IconsManager.shared.warningIcon
-					
-					self.errorImage.isHidden = false
-					
-					self.errorLabel.isHidden = false
-					
-					self.errorRefreshButton.isHidden = false
+					self.setFailureImage(image: IconsManager.shared.warningIcon)
+                    self.showFailureImage()
+                    
+					self.setFailureLabel(text: "No EFI partitions found")
+					self.showFailureLabel()
+                    
+                    if self.failureButtons.count == 0{
+                        self.addFailureButton(buttonTitle: "Try again", target: self, selector: #selector(self.refresh(_:)))
+                    }
+                    
+                    self.showFailureButtons()
 					
 					self.refreshButton.isHidden = true
 					
@@ -305,20 +349,26 @@ class EFIPartitionMounterViewController: AppViewController {
 	}
 	
 	private func createEFIPartitionItems(response: @escaping ([EFIPartitionToolInterface.EFIPartitionItem]?) -> Void){
+        
 		typealias EFIItem = EFIPartitionToolInterface.EFIPartitionItem
 		typealias PartItem = EFIPartitionToolInterface.PartitionItem
 		
 		EFIPartitionMounterModel.shared.getEFIPartitionsAndSubprtitions(response: { resp in
 			
 			var items: [EFIItem]! = nil
-			
+            
 			if let eFIData = resp{
+                
+                var EFIParts = [String]()
+                
 				for drive in eFIData{
 					DispatchQueue.main.sync {
 					let item = EFIItem()
 					
 					item.titleLabel.stringValue = drive.displayName
 					item.bsdid = drive.bsdName
+                        
+                    EFIParts.append(drive.bsdName)
 					
 					item.frame.size.height = 100
 					
@@ -363,6 +413,10 @@ class EFIPartitionMounterViewController: AppViewController {
 						
 					}
 				}
+                
+                if EFIParts != []{
+                    self.eFIManager.buildPartitionsCache(fromPartitionsList: EFIParts)
+                }
 			}
 			
 			response(items)

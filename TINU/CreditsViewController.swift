@@ -9,7 +9,7 @@
 import Foundation
 import Cocoa
 
-public class CreditsViewController: NSViewController {
+public class CreditsViewController: GenericViewController {
     @IBOutlet weak var versionLabel: NSTextField!
     @IBOutlet weak var copyrigthLabel: NSTextField!
     

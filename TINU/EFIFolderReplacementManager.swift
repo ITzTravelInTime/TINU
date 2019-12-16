@@ -53,7 +53,7 @@ import Foundation
 			}
 		}
 		
-		private let contentToCheck = ["/BOOT/BOOTX64.efi", "/CLOVER/CLOVERX64.efi", "/CLOVER/config.plist", "/CLOVER/kexts", "/CLOVER/kexts/Other", "/CLOVER/drivers64UEFI" /*, "/CLOVER/drivers64"*/ ]
+		private let contentToCheck = [["/BOOT/BOOTX64.efi"], ["/CLOVER/CLOVERX64.efi"], ["/CLOVER/config.plist"], ["/CLOVER/kexts"], ["/CLOVER/kexts/Other"], ["/CLOVER/drivers64UEFI", "/CLOVER/drivers/UEFI"] /*, "/CLOVER/drivers64"*/ ]
 		
 		public func saveEFIFolder(_ toPath: String) -> Bool{
 			if let c = checkSavedEFIFolder(){
@@ -174,12 +174,20 @@ import Foundation
 			let _ = unloadEFIFolder()
 			
 			for c in contentToCheck{
-				if !fm.fileExists(atPath: fromPath + c){
-					print("Folder does not contain this needed file: \(c)")
-					missingFile = c
+				var check: Bool = false
+				
+				for i in c{
+					check = check || fm.fileExists(atPath: fromPath + i)
+					missingFile = i
+				}
+				
+				if !check{
+					log("EFI Folder does not contain this needed element: \(missingFile!)")
 					return nil
 				}
 			}
+			
+			missingFile = nil
 			
 			sharedEFIFolderTempData = [:]
 			
@@ -286,15 +294,21 @@ import Foundation
 			var res = true
 			
 			for c in contentToCheck{
-				if sharedEFIFolderTempData[c] == nil{
-					print("        Needed file missing from the saved clover EFI folder: " + c)
-					missingFile = c
-					res = false
+				for i in c{
+					res = res || sharedEFIFolderTempData[i] == nil
+					missingFile = i
 				}
+				
+				if !res{
+					res = false
+					print("        Needed file missing from the saved clover EFI folder: " + missingFile)
+				}
+				
 			}
 			
 			if res{
 				print("Saved clover EFI folder checked and seems to be a proper clover EFI folder")
+				missingFile = nil
 			}else{
 				print("Saved clover EFI folder checked and does not seems to be a proper clover EFI folder")
 			}

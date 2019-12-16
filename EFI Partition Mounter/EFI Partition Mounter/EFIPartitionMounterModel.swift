@@ -38,14 +38,16 @@ public final class EFIPartitionMounterModel{
                     print("    volumes data is empty")
                 }else{
                     
-                    if let diskutilData = try (PlistXMLManager.decodeXMLDictionaryOpt(xml: commandData) as? [String: Any]){
+                    if let diskutilData = try (DecodeManager.decodePlistDictionaryOpt(xml: commandData) as? [String: Any]){
                         
                         //print(diskutilData)
                         
                         print("    Got drives data for the tool")
                         
-                        var apfsContainers = [(id: String, isEFI: Bool)]()
-                        var coreStorageContainers = [(id: String, isEFI: Bool)]()
+                        var apfsContainers = [EFIPartitionToolTypes.VolumeStandard]()
+                        var coreStorageContainers = [EFIPartitionToolTypes.VolumeStandard]()
+						
+						
                         
                         if let drives = diskutilData["AllDisksAndPartitions"] as? [[String: Any]]{
                             print("        Scanning disk and partitions to look for EFI partitions")
@@ -77,8 +79,7 @@ public final class EFIPartitionMounterModel{
                                 
                                 if let parts = volumes["Partitions"] as? [[String: Any]]{
                                     
-                                    var tempResult: EFIPartitionToolTypes.EFIPartitionStandard = (displayName: "", bsdName: "", isRemovable: false ,isMounted: false, hasConfig: false,  completeDrivePartitions: [])
-                                    
+                                    var tempResult = EFIPartitionToolTypes.EFIPartitionStandard()
                                     print("                Scanning all the partitions of this drive")
                                     
                                     partitionFor: for part in parts{
@@ -98,11 +99,11 @@ public final class EFIPartitionMounterModel{
                                                 
                                             case "Apple_APFS":
                                                 print("                    This partition is an APFS volumes container, adding it to the volumes container list")
-                                                apfsContainers.append((id: partition, isEFI: isEFI))
+												apfsContainers.append(EFIPartitionToolTypes.VolumeStandard(id: partition, isEFI: isEFI))
                                                 continue partitionFor
                                             case "Apple_CoreStorage":
                                                 print("                    This partition is a Core Storage disk container, it will be added to the list of core storage disk containers")
-                                                coreStorageContainers.append((id: partition, isEFI: isEFI))
+                                                coreStorageContainers.append(EFIPartitionToolTypes.VolumeStandard(id: partition, isEFI: isEFI))
                                                 continue partitionFor
                                             case "EFI":
                                                 print("                    This partition is an EFI partition")
@@ -127,34 +128,20 @@ public final class EFIPartitionMounterModel{
                                                 print("------------Getting info about this drive, because it has an EFI partition")
                                                 
                                                 tempResult.bsdName = partition
-                                                
-                                                var name: String!
+												
                                                 var removable: Bool!
                                                 
                                                 if #available(OSX 10.12, *){
-                                                    name = dm.getDevicePropertyInfoNew(drive, propertyName: "IORegistryEntryName")
                                                     removable = dm.getDevicePropertyInfoBoolNew(drive, propertyName: "RemovableMediaOrExternalDevice")
                                                 }else{
-													
-                                                    name = dm.getDevicePropertyInfoNew(drive, propertyName: "MediaName")
 													removable = dm.getDevicePropertyInfoBoolNew(drive, propertyName: "Ejectable")
                                                 }
-                                                
 												
-                                                
-                                                if let driveDisplayName = name{
-                                                    
-                                                    if #available(OSX 10.12, *){
-                                                        tempResult.displayName = driveDisplayName.deletingSuffix(" Media")
-                                                    }else{
-                                                        tempResult.displayName = driveDisplayName
-                                                    }
-                                                    
-                                                    print("------------Drive name: \(tempResult.displayName)")
-                                                }else{
-                                                    print("------------Can't get the drive name for this drive")
-                                                    continue volumeFor
-                                                }
+												if let name = dm.getDriveName(from: drive){
+													tempResult.displayName = name
+												}else{
+													continue volumeFor
+												}
                                                 
                                                 if let isDriveRemovable = removable{
                                                     tempResult.isRemovable = isDriveRemovable
@@ -196,23 +183,40 @@ public final class EFIPartitionMounterModel{
                                     
                                     var container = ""
                                     
-                                    var source = [(id: String, isEFI: Bool)]()
+                                    var source = [EFIPartitionToolTypes.VolumeStandard]()
                                     
                                     if isContainer{
                                         source = coreStorageContainers
                                     }else{
                                         source = apfsContainers
                                     }
-                                    
+									
                                     if !source.isEmpty{
-                                        let testContainer = source.first!
-                                        
-                                        source.removeFirst()
+										
+										var testContainer = source.first!
+										
+										if let stores = volumes["APFSPhysicalStores"] as? [[String: String]] {
+											if let store = stores[0]["DeviceIdentifier"]{
+												var count = 0
+												for cont in source{
+													
+													if cont.id == store{
+														testContainer = cont
+														source.remove(at: count)
+													}
+													count += 1
+												}
+											}
+										}else{
+										
+                                        	testContainer = source.first!
+                                        	source.removeFirst()
+											
+										}
                                         
                                         if testContainer.isEFI{
                                             container = testContainer.id
                                             print("                Detected container partition: \(container)")
-                                            
                                         }else{
                                             print("                This container partition, so this apfs virtual drive do not blongs to a drive with an EFI partition, so they will be skipped")
                                             continue volumeFor
@@ -247,7 +251,7 @@ public final class EFIPartitionMounterModel{
                                     }
                                     
                                     if tempResult == nil{
-                                        print("                There aren't any matching EFI partition opbjects in the stored collection")
+                                        print("                There aren't any matching EFI partition objects in the stored collection")
                                         continue volumeFor
                                     }
                                     
@@ -317,11 +321,14 @@ public final class EFIPartitionMounterModel{
 		
 		print("                    Adding a partition to the partitions list of: \(item.displayName)")
 		
-		var tempPartition: EFIPartitionToolTypes.PartitionStandard = (drivePartDisplayName: "", drivePartIcon: NSImage())
+		var tempPartition = EFIPartitionToolTypes.PartitionStandard()
+		
+		var mount = ""
 		
 		if let mp = array["MountPoint"] as? String{
 			print("                        Partiton mount point is: \(mp)")
 			
+			mount = mp
 			
 			tempPartition.drivePartIcon = NSWorkspace.shared().icon(forFile: mp)
 			
@@ -332,20 +339,16 @@ public final class EFIPartitionMounterModel{
 		
 		if let mp = array["VolumeName"] as? String{
 			
-			tempPartition.drivePartDisplayName = FileManager.default.displayName(atPath: mp)
+			tempPartition.drivePartDisplayName = mp
 			
 		}else{
 			
-			let extracted = FileManager.default.displayName(atPath: (array["MountPoint"] as! String))
+			let extracted = FileManager.default.displayName(atPath: mount)
+			tempPartition.drivePartDisplayName = extracted
 			
-			if extracted.isEmpty{
-				print("                        Impossible to get a name for this partiton, it will not be added to the list")
-				
-				return false
-			}else{
-				tempPartition.drivePartDisplayName = extracted
-			}
 		}
+		
+		tempPartition.drivePartDisplayName = tempPartition.drivePartDisplayName.isEmpty ? "[Unititled]" : tempPartition.drivePartDisplayName
 		
 		print("                        Partiton name is: \(tempPartition.drivePartDisplayName)")
 		

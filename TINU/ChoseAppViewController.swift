@@ -17,7 +17,18 @@ class ChoseAppViewController: GenericViewController {
                 ok.title = "Quit"
                 ok.isEnabled = true
             }else{
-                viewDidSetVibrantLook()
+                //viewDidSetVibrantLook()
+				
+				if let document = scoller.documentView{
+					if document.identifier == spacerID{
+						document.frame = NSRect(x: 0, y: 0, width: self.scoller.frame.width - 2, height: self.scoller.frame.height - 2)
+						if let content = document.subviews.first{
+							content.frame.origin = NSPoint(x: document.frame.width / 2 - content.frame.width / 2, y: 0)
+						}
+						self.scoller.documentView = document
+					}
+				}
+				
 				ok.title = "Next"
                 ok.isEnabled = false
 				
@@ -33,18 +44,8 @@ class ChoseAppViewController: GenericViewController {
     }
     
     
-    override func viewDidSetVibrantLook(){
+    /*override func viewDidSetVibrantLook(){
         super.viewDidSetVibrantLook()
-        /*if canUseVibrantLook || self.empty {
-            scoller.frame = CGRect.init(x: 0, y: scoller.frame.origin.y, width: self.view.frame.width, height: scoller.frame.height)
-            scoller.drawsBackground = false
-            scoller.borderType = .noBorder
-        }else{
-            scoller.frame = CGRect.init(x: 20, y: scoller.frame.origin.y, width: self.view.frame.width - 40, height: scoller.frame.height)
-            scoller.drawsBackground = true
-            scoller.borderType = .bezelBorder
-        }*/
-        
         if let document = scoller.documentView{
             if document.identifier == spacerID{
                 document.frame = NSRect(x: 0, y: 0, width: self.scoller.frame.width - 2, height: self.scoller.frame.height - 2)
@@ -55,27 +56,17 @@ class ChoseAppViewController: GenericViewController {
             }
         }
 		
-		//self.empty.toggle()
-		//self.empty.toggle()
-    }
+    }*/
     
     @IBOutlet weak var ok: NSButton!
     
     @IBOutlet weak var spinner: NSProgressIndicator!
     
-    @IBOutlet weak var titleField: NSTextField!
-    
     @IBOutlet weak var refreshButton: NSButton!
-    
-	@IBOutlet weak var DownloadApps: NSButton!
 	
-    @IBOutlet weak var errorImage: NSImageView!
-    
-    @IBOutlet weak var errorLabel: NSTextField!
+	@IBOutlet weak var DownloadAppsAlways: NSButton!
     
     @IBOutlet weak var normalOpen: NSButton!
-    
-    @IBOutlet weak var specialOpen: NSButton!
     
     private var tempRefresh: CGFloat = 0
     
@@ -119,8 +110,12 @@ class ChoseAppViewController: GenericViewController {
     }
     
     @IBOutlet weak var scoller: NSScrollView!
-    
-    @IBAction func chooseElsewhere(_ sender: Any) {
+	
+	@IBAction func chooseElsewere( _ sender: Any){
+		chooseExternal()
+	}
+	
+    func chooseExternal() {
         let open = NSOpenPanel()
         open.allowsMultipleSelection = false
         open.canChooseDirectories = false
@@ -136,15 +131,16 @@ class ChoseAppViewController: GenericViewController {
 					if var path = open.urls.first?.path{
 						let manager = FileManager.default
 						
-						if FileAliasManager.isAlias(open.urls.first!){
-							if let newPath = FileAliasManager.resolveFinderAlias(at: open.urls.first!){
-								path = newPath
+						var tmpURL: URL?
+						if let isAlias = FileAliasManager.finderAlias(open.urls.first!, resolvedURL: &tmpURL){
+							if isAlias{
+								path = tmpURL!.path
+							}
+						}else{
+							if let name = open.urls.first?.lastPathComponent{
+								msgBoxWarning("Invalid file", "The app you chose, \"\(name)\", is not usable because it's Finder Alias can't be resolved.")
 							}else{
-								if let name = open.urls.first?.lastPathComponent{
-									msgBoxWarning("Invalid file", "The app you chose, \"\(name)\", is not usable because its Finder Alias can't be resolved.")
-								}else{
-									msgBoxWarning("Invalid file", "The app you chose is not usable because its Finder Alias can't be resolved.")
-								}
+								msgBoxWarning("Invalid file", "The app you chose is not usable because it's Finder Alias can't be resolved.")
 							}
 						}
 						
@@ -155,9 +151,9 @@ class ChoseAppViewController: GenericViewController {
 							cvm.shared.sharedVolumeNeedsPartitionMethodChange = self.ps
 							
 							#if skipChooseCustomization
-							let _ = self.openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
+							let _ = self.openSubstituteWindow(windowStoryboardID: "Confirm", sender: self)
 							#else
-							let _ = self.openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
+							let _ = self.openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: self)
 							#endif
 							
 						}else{
@@ -176,75 +172,20 @@ class ChoseAppViewController: GenericViewController {
 			}
 			
 		})
-        
-        /*if open.runModal() == NSModalResponseOK{
-            if !open.urls.isEmpty{
-                if var path = open.urls.first?.path{
-                    let manager = FileManager.default
-					
-					if FileAliasManager.isAlias(open.urls.first!){
-						if let newPath = FileAliasManager.resolveFinderAlias(at: open.urls.first!){
-							path = newPath
-						}else{
-							if let name = open.urls.first?.lastPathComponent{
-								msgBoxWarning("Invalid file", "The app you chose, \"\(name)\", is not usable because its Finder Alias can't be resolved.")
-							}else{
-								msgBoxWarning("Invalid file", "The app you chose is not usable because its Finder Alias can't be resolved.")
-							}
-						}
-					}
-                    
-                    if manager.fileExists(atPath: path + "/Contents/Resources/" + sharedExecutableName) && manager.fileExists(atPath: path + "/Contents/SharedSupport/InstallESD.dmg") && manager.fileExists(atPath: path + "/Contents/Info.plist") {
-                        
-                        cvm.shared.sharedApp = path
-                        
-                        cvm.shared.sharedVolumeNeedsPartitionMethodChange = ps
-						
-						#if skipChooseCustomization
-						let _ = self.openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
-						#else
-						let _ = self.openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
-						#endif
-                        
-                    }else{
-                        if let name = open.urls.first?.lastPathComponent{
-                            msgBoxWarning("Invalid file", "The app you chose, \"\(name)\", is not usable to create macOS installers or macOS installations because it does not contain all the needed files to do that or it isn't a macOS installer.")
-                        }else{
-                            msgBoxWarning("Invalid file", "The app you chose is not usable to create macOS installers or macOS installations because it does not contain all the needed files to do that or it isn't a macOS installer.")
-                        }
-                    }
-                }else{
-                    msgBoxWarning("Error while opening the file", "Impossible to obtain the file's location")
-                }
-            }else{
-                msgBoxWarning("Error while opening the file", "No files choosen")
-            }
-        }
-        
-        */
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
 		
+		self.setTitleLabel(text: "Choose the macOS installer app to use for the bootable macOS installer")
+		self.showTitleLabel()
+		
 		if !sharedIsOnRecovery && !simulateDisableShadows{
 			scoller.frame = CGRect.init(x: 0, y: scoller.frame.origin.y, width: self.view.frame.width, height: scoller.frame.height)
 			scoller.drawsBackground = false
 			scoller.borderType = .noBorder
 			
-			/*if !simulateDisableShadows{
-				
-				setShadowViewsAll(respectTo: scoller, topBottomViewsShadowRadius: 5, sideViewsShadowRadius: 3)
-				setOtherViews(respectTo: scoller)
-			
-				self.uView.isHidden = true
-				self.bView.isHidden = true
-				
-				self.lView.isHidden = true
-				self.rView.isHidden = true
-			
-			}*/
 		}else{
 			scoller.frame = CGRect.init(x: 20, y: scoller.frame.origin.y, width: self.view.frame.width - 40, height: scoller.frame.height)
 			scoller.drawsBackground = true
@@ -254,7 +195,7 @@ class ChoseAppViewController: GenericViewController {
 		showProcessLicense = false
         
         if sharedInstallMac{
-            titleField.stringValue = "Choose the macOS installer app to use to install macOS"
+            titleLabel.stringValue = "Choose the macOS installer app to use to install macOS"
         }
         
         tempRefresh = refreshButton.frame.origin.x
@@ -273,6 +214,10 @@ class ChoseAppViewController: GenericViewController {
 		
 		downloadAppWindowController?.showWindow(sender)
     }*/
+	
+	func openGetAnApp(){
+		self.presentViewControllerAsSheet(sharedStoryboard.instantiateController(withIdentifier: "DownloadAppVC") as! NSViewController)
+	}
     
     private func loadApps(){
         ps = cvm.shared.sharedVolumeNeedsPartitionMethodChange
@@ -286,15 +231,13 @@ class ChoseAppViewController: GenericViewController {
         scoller.documentView = NSView(frame: scoller.frame)
         scoller.hasHorizontalScroller = false
 		
-		DownloadApps.isHidden = true
-        
-        self.errorLabel.isHidden = true
-        
-        self.errorImage.isHidden =  true
+		self.DownloadAppsAlways.isHidden = sharedIsOnRecovery
+		
+		self.hideFailureLabel()
+		self.hideFailureImage()
+		self.hideFailureButtons()
         
         self.normalOpen.isHidden = false
-        
-        self.specialOpen.isHidden = true
         
         self.refreshButton.frame.origin.x = self.tempRefresh
 		
@@ -303,54 +246,102 @@ class ChoseAppViewController: GenericViewController {
         //here loads drives
         //let keys: [URLResourceKey] = [.volumeNameKey, .volumeIsRemovableKey]
         
-        var drives = [DriveObject]()
-        
         ok.isEnabled = false
-        
-        var dirs = [String]()
-        
+		
         DispatchQueue.global(qos: .background).async {
             let fm = FileManager.default
             
-            var documentsUrls = [URL?]()
+            var foldersURLS = [URL?]()
+			
+			//TINU looks for installer apps in those folders: /Applications ~/Desktop /~Downloads ~/Documents
             
             if !sharedIsReallyOnRecovery{
-                documentsUrls = [fm.urls(for: .applicationDirectory, in: .systemDomainMask).first, fm.urls(for: .desktopDirectory, in: .userDomainMask).first, fm.urls(for: .downloadsDirectory, in: .userDomainMask).first, fm.urls(for: .documentDirectory, in: .userDomainMask).first]
+                foldersURLS = [URL(fileURLWithPath: "/Applications"), fm.urls(for: .applicationDirectory, in: .systemDomainMask).first, fm.urls(for: .desktopDirectory, in: .userDomainMask).first, fm.urls(for: .downloadsDirectory, in: .userDomainMask).first, fm.urls(for: .documentDirectory, in: .userDomainMask).first, fm.urls(for: .allApplicationsDirectory, in: .systemDomainMask).first, fm.urls(for: .allApplicationsDirectory, in: .userDomainMask).first]
             }
+			
+			
 			
 			let driveb = dm.getDriveNameFromBSDID(cvm.shared.sharedBSDDrive)
 			
 			for d in fm.mountedVolumeURLs(includingResourceValuesForKeys: [URLResourceKey.isVolumeKey], options: [.skipHiddenVolumes])!{
 				let p = d.path
 				
-				if p == driveb || (sharedIsOnRecovery && p == "/"){
+				if p == driveb || sharedIsOnRecovery{
 					continue
 				}
 				
-				documentsUrls.append(d)
+				foldersURLS.append(d)
 				
 				var isDir : ObjCBool = false
+				
 				if fm.fileExists(atPath: p + "/Applications", isDirectory: &isDir){
 					if isDir.boolValue && p != "/"{
-						documentsUrls.append(URL(fileURLWithPath: p + "/Applications"))
+						foldersURLS.append(URL(fileURLWithPath: p + "/Applications"))
 					}
 				}
+				
+				isDir = false
+				
+				if fm.fileExists(atPath: p + "/System/Applications", isDirectory: &isDir){
+					if isDir.boolValue && p != "/"{
+						foldersURLS.append(URL(fileURLWithPath: p + "/System/Applications"))
+					}
+				}
+				
 			}
 			
+			print("TINU will look for installer apps in: ")
+			
+			for pathURL in foldersURLS{
+				
+				if let p = pathURL{
+					print("    " + p.path)
+					
+					do{
+						
+						for content in (try fm.contentsOfDirectory(at: p, includingPropertiesForKeys: nil, options: []).filter{ fm.directoryExistsAtPath($0.path) }){
+							print("    " + content.path)
+							foldersURLS.append(content)
+							
+						}
+						
+					} catch let err{
+						print("Error while trying to retrive subfolders of: " + p.path + "\n" + err.localizedDescription)
+					}
+					
+				}
+				
+			}
+			
+			/*
 			print("This contains the URLs for the paths in which we will try find the installer apps:")
-			print(documentsUrls)
+			print("[")
+			
+			for f in foldersURLS{
+				if let ff = f{
+					print("\(ff), ")
+				}
+			}
+			print("]\n\n")
+			*/
+
 			print("Starting installer apps scan ...")
 			
 			var h: CGFloat = 0
 			
 			DispatchQueue.main.sync {
-				h = ((self.scoller.frame.height - 17) / 2) - (DriveObject.itemSize.height / 2)
+				h = ((self.scoller.frame.height - 17) / 2) - (DriveView.itemSize.height / 2)
 			}
 			
 			let ex = sharedExecutableName
 			
+			print("Current executable name: \(ex)")
+			
+			var dirs = [String]()
+			var drives = [DriveView]()
+			
 			do {
-				for dir in documentsUrls{
+				for dir in foldersURLS{
 					if let d = dir{
 						
 						if !fm.fileExists(atPath: d.path){
@@ -364,19 +355,16 @@ class ChoseAppViewController: GenericViewController {
 							
 							var appPath = appOriginPath
 							
+							var tempPath: String?
 							
-							
-							if let isAlias = FileAliasManager.isAlias(appOriginPath){
+							if let isAlias = FileAliasManager.finderAlias(appOriginPath, resolvedPath: &tempPath){
 								if isAlias{
-									
-									print("This applications \"\(appOriginPath)\" is an alias")
-									
-									appPath = FileAliasManager.resolveFinderAlias(at: appOriginPath)!
-									
+									print("This application \"\(appOriginPath)\" is an alias")
+									appPath = tempPath!
 									print("Alias resolved: \n        alias path: \(appOriginPath) \n        file path:  \(appPath)")
-									
 								}
 							}else{
+								print("Alias resolution for \"\(appOriginPath)\" has failed, skipping it")
 								continue
 							}
 							
@@ -394,7 +382,7 @@ class ChoseAppViewController: GenericViewController {
 							
 							DispatchQueue.main.sync {
 								
-								let drive = DriveObject(frame: NSRect(x: 0, y: h, width: DriveObject.itemSize.width, height: DriveObject.itemSize.height))
+								let drive = DriveView(frame: NSRect(x: 0, y: h, width: DriveView.itemSize.width, height: DriveView.itemSize.height))
 								drive.isApp = true
 								drive.applicationPath = appPath
 								print("     App path is " + appPath)
@@ -451,81 +439,36 @@ class ChoseAppViewController: GenericViewController {
 			print("--- App detection complete")
 			
 			
-			
 			DispatchQueue.main.sync {
 				
 				self.scoller.hasVerticalScroller = false
 				
-				var res = (dirs.count == 0)
+				self.empty = simulateNoUsableApps ? true : (dirs.count == 0)
 				
-				/*if !res{
-				res = true
-				for a in drives{
-				res = !a.isEnabled
-				}
-				}*/
-				
-				//just to test the screen when there are no apps found
-				if simulateNoUsableApps{
-					res = true
+				if !sharedIsOnRecovery{
+					self.DownloadAppsAlways.isHidden = self.empty
 				}
 				
-				self.empty = res
-				
-				if sharedIsOnRecovery{
-					self.DownloadApps.isHidden = true
-				}else{
-					self.DownloadApps.isHidden = !res
-				}
-				
-				self.topView.isHidden = res || sharedIsOnRecovery
-				self.bottomView.isHidden = res || sharedIsOnRecovery
-				
-				self.leftView.isHidden = res || sharedIsOnRecovery
-				self.rightView.isHidden = res || sharedIsOnRecovery
-				
-				if res {
-					//fail :(
-					/*
-					print("No usable installation apps where found!")
-					
-					self.scoller.hasHorizontalScroller = false
-					
-					let label = NSTextField()
-					label.stringValue = "No usable macOS installer apps found"
-					label.alignment = .center
-					label.isEditable = false
-					label.isBordered = false
-					label.drawsBackground = false
-					label.font = NSFont.systemFont(ofSize: 20)
-					label.frame.origin = CGPoint(x: 0, y: (self.scoller.frame.size.height / 2) - 15)
-					label.frame.size = NSSize(width: self.scoller.frame.width - 10, height: 30)
-					
-					content = NSView(frame: NSRect(x: 0, y: 0, width: self.scoller.frame.size.width - 2, height: self.scoller.frame.size.height - 2))
-					content.addSubview(label)
-					
-					self.scoller.documentView = content
-					*/
+				if self.empty {
 					
 					self.scoller.isHidden = true
-					
-					self.errorLabel.isHidden = false
-					
-					self.errorImage.image = IconsManager.shared.warningIcon
-					
-					self.errorImage.isHidden =  false
-					
-					
 					self.normalOpen.isHidden = true
 					
-					self.specialOpen.isHidden = false
-					
-					self.refreshButton.frame.origin.x = self.view.frame.width / 2 - self.refreshButton.frame.width / 2
-					
-					if sharedIsOnRecovery{
-						self.specialOpen.frame.origin.x = self.view.frame.width / 2 - self.specialOpen.frame.width / 2
+					if self.failureLabel == nil || self.failureImageView == nil || self.failureButtons.isEmpty{
+						self.setFailureImage(image: IconsManager.shared.warningIcon)
+						self.setFailureLabel(text: "No macOS Installer apps where detected")
+						
+						if !sharedIsOnRecovery{
+							self.addFailureButton(buttonTitle: "Get an Installer", target: self, selector: #selector(ChoseAppViewController.openGetAnApp))
+						}
+						self.addFailureButton(buttonTitle: "Open an installer ...", target: self, selector: #selector(ChoseAppViewController.chooseExternal))
 					}
 					
+					self.showFailureImage()
+					self.showFailureLabel()
+					self.showFailureButtons()
+					
+					self.refreshButton.frame.origin.x = self.view.frame.width / 2 - self.refreshButton.frame.width / 2
 				}else{
 
 					

@@ -6,14 +6,21 @@
 //  Copyright © 2017 Pietro Caruso. All rights reserved.
 //
 
-let idBFR = "1_BootFielsReplacemnt__"
-let idGO =  "0_GeneralOptions_______"
-let idEFI = "2_EFIFolderReplacement_"
+
 
 import Cocoa
 
 class CustomizationViewController: GenericViewController {
-
+	
+	public enum SectionsID: UInt8{
+		
+		case generalOptions = 1
+		case bootFilesReplacement = 2
+		case eFIfolderReplacement = 3
+		
+		case undefined = 0
+	}
+	
     private var ps: Bool!
 	
 	@IBOutlet weak var infoImageView: NSImageView!
@@ -22,8 +29,6 @@ class CustomizationViewController: GenericViewController {
 	@IBOutlet weak var settingsScrollView: NSScrollView!
 	
     @IBOutlet weak var descriptionField: NSTextField!
-    
-    @IBOutlet weak var titleField: NSTextField!
 	
 	@IBOutlet weak var backButton: NSButton!
 	@IBOutlet weak var nextButton: NSButton!
@@ -34,6 +39,9 @@ class CustomizationViewController: GenericViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		self.setTitleLabel(text: "Advanced options")
+		self.showTitleLabel()
 		
 		sections.removeAll()
         //avoids some porblems of sharedVolumeNeedsPartitionMethodChange being nill when it should not be
@@ -46,11 +54,11 @@ class CustomizationViewController: GenericViewController {
 		
 		infoImageView.image = IconsManager.shared.infoIcon
         
-        let customizeIconPath = "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ToolbarCustomizeIcon.icns"
+        //let customizeIconPath = "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ToolbarCustomizeIcon.icns"
         let bootFilesIconPath = "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ExecutableBinaryIcon.icns"
 		
 		#if useEFIReplacement
-			let efiFolderIconPath = "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericFolderIcon.icns"
+			//let efiFolderIconPath = "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericFolderIcon.icns"
 		#endif
 			
         if sharedInstallMac{
@@ -74,11 +82,11 @@ class CustomizationViewController: GenericViewController {
 		
 		let generalOptionsSection = getSectionItem()
 		
-		generalOptionsSection.image.image = IconsManager.shared.getIconFor(path: customizeIconPath, alternate: NSWorkspace.shared().icon(forFileType: ""))
+		generalOptionsSection.image.image = NSImage(named: NSImageNamePreferencesGeneral)//IconsManager.shared.getIconFor(path: customizeIconPath, alternate: NSWorkspace.shared().icon(forFileType: ""))
 		
 		generalOptionsSection.name.stringValue = "General options"
 		
-		generalOptionsSection.id = idGO
+		generalOptionsSection.id = SectionsID.generalOptions
 		
 		sections.append(generalOptionsSection)
 		
@@ -89,11 +97,11 @@ class CustomizationViewController: GenericViewController {
 				
 				let efiReplacement = getSectionItem()
 				
-				efiReplacement.image.image = IconsManager.shared.getIconFor(path: efiFolderIconPath, alternate: NSWorkspace.shared().icon(forFile: "/Volumes"))
+				efiReplacement.image.image = NSImage(named: NSImageNameFolder)//IconsManager.shared.getIconFor(path: efiFolderIconPath, alternate: NSWorkspace.shared().icon(forFile: "/Volumes"))
 				
 				efiReplacement.name.stringValue = "Install Clover EFI folder\n(Experimental)"
 				
-				efiReplacement.id = idEFI
+				efiReplacement.id = SectionsID.eFIfolderReplacement
 				
 				sections.append(efiReplacement)
 				
@@ -107,7 +115,7 @@ class CustomizationViewController: GenericViewController {
 				
 				bootFielsRepSection.name.stringValue = "Replace macOS\nboot files"
 				
-				bootFielsRepSection.id = idBFR
+				bootFielsRepSection.id = SectionsID.bootFilesReplacement
 				
 				sections.append(bootFielsRepSection)
 			}
@@ -127,7 +135,7 @@ class CustomizationViewController: GenericViewController {
 		
 		var h: CGFloat = container.frame.size.height - itemsHeight
 		
-		for i in sections.sorted(by: { UInt(String($0.id.first!))! < UInt(String($1.id.first!))! }){
+		for i in sections.sorted(by: { $0.id.rawValue < $1.id.rawValue }){
 			i.frame.origin.y = h
 			
 			i.itemsScrollView = settingsScrollView

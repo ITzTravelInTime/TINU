@@ -73,44 +73,44 @@ public class CreditsWindowController: GenericWindowController {
 
 public class LogWindowController: NSWindowController {
 	
-	@IBOutlet weak var SaveToolBarButton: NSToolbarItem!
-	@IBOutlet weak var CopyToolBarButton: NSToolbarItem!
-	
-	@IBAction func copyLog(_ sender: Any) {
-		if let vc = contentViewController as? LogViewController{
-			vc.copyLog(sender)
-		}
-	}
-	
-	@IBAction func saveLog(_ sender: Any) {
-		if let vc = contentViewController as? LogViewController{
-			vc.saveLog(sender)
-		}
-	}
-	
-	@IBAction func shareLog(_ sender: Any) {
-		if let vc = contentViewController as? LogViewController{
-			vc.shareLog(sender)
-		}
-	}
-	
+	@IBOutlet weak var saveLogItem: NSToolbarItem!
+	@IBOutlet weak var copyLogItem: NSToolbarItem!
+	@IBOutlet weak var shareLogItem: NSToolbarItem!
 	
 	override public func windowDidLoad() {
 		super.windowDidLoad()
-		self.window?.title += ": Log"
+		//self.window?.title += ": Log"
 		
 		self.window?.isFullScreenEnaled = true
 		
-		SaveToolBarButton.image = IconsManager.shared.saveIcon
-		CopyToolBarButton.image = IconsManager.shared.copyIcon
-		
-		self.window?.titleVisibility = .hidden
+		//this is to make sure we have a valid content view controller, because we don't have a windowdidappear function tom do this stuff, this asically waits in a background thread until we have a valid view controller to work with
+		DispatchQueue.global(qos: .background).async {
+			var ok = false
+			
+			while(!ok){
+				DispatchQueue.main.sync {
+					
+					//in here we are sure we have a valid view controller so we do what we will do in a windowdidappear
+					if let vc = self.contentViewController as? LogViewController{
+						ok = true
+						
+						//associate buttons with acrtions in the view controller
+						self.saveLogItem.target = vc
+						self.copyLogItem.target = vc
+						self.shareLogItem.target = vc
+						
+						self.saveLogItem.action = #selector(vc.saveLog(_:))
+						self.copyLogItem.action = #selector(vc.copyLog(_:))
+						self.shareLogItem.action = #selector(vc.shareLog(_:))
+					}
+				}
+			}
+		}
 	}
 	
 	convenience init() {
 		//creates an instace of the window
 		self.init(window: (sharedStoryboard.instantiateController(withIdentifier: "Log") as! NSWindowController).window)
-		//self.init(windowNibName: "ContactsWindowController")
 	}
 	
 }

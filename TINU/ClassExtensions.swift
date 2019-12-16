@@ -9,7 +9,7 @@
 import Foundation
 import AppKit
 
-//this file just contains some usefoul extensions and methos for the UI
+//this file just contains some usefoul extensions and methods for system classes
 
 extension NSViewController{
     public func openSubstituteWindow(windowStoryboardID: String, sender: Any){
@@ -126,6 +126,14 @@ extension NSWindow{
     }
 }
 
+extension FileManager{
+	func directoryExistsAtPath(_ path: String) -> Bool {
+		var isDirectory = ObjCBool(true)
+		let exists = self.fileExists(atPath: path, isDirectory: &isDirectory)
+		return exists && isDirectory.boolValue
+	}
+}
+
 extension NSTextView{
     public var text: String{
         set{
@@ -194,6 +202,26 @@ extension String{
 	@inline(__always) mutating func deleteSuffix(_ suffix: String){
 		self = self.deletingSuffix(suffix)
 	}
+	
+	var isNumber: Bool {
+		return !isEmpty && Int(self) != nil
+	}
+	
+	var number: Int! {
+		return Int(self)
+	}
+	
+	var isUnsignedNumber: Bool {
+		return !isEmpty && UInt(self) != nil
+	}
+	
+	var unsignedNumber: UInt! {
+		return UInt(self)
+	}
+	
+	func contains(_ str: String) -> Bool{
+		return self.range(of: str) != nil
+	}
 }
 
 @IBDesignable
@@ -246,6 +274,9 @@ extension Bundle {
     var copyright: String? {
         return infoDictionary?["NSHumanReadableCopyright"] as? String
     }
+	var name: String? {
+		return infoDictionary?["CFBundleName"] as? String
+	}
 }
 
 extension NSColor {

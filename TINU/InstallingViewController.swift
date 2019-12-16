@@ -19,7 +19,6 @@ class InstallingViewController: GenericViewController{
 	@IBOutlet weak var spinner: NSProgressIndicator!
 	
 	@IBOutlet weak var descriptionField: NSTextField!
-	@IBOutlet weak var titleField: NSTextField!
 	
 	@IBOutlet weak var activityLabel: NSTextField!
 	
@@ -32,6 +31,9 @@ class InstallingViewController: GenericViewController{
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do view setup here.
+		
+		self.setTitleLabel(text: "Bootable macOS installer creation")
+		self.showTitleLabel()
 		
 		//disable the close button of the window
 		if let w = sharedWindow{
@@ -46,7 +48,7 @@ class InstallingViewController: GenericViewController{
 		if sharedInstallMac{
 			descriptionField.stringValue = "macOS installation in progress, please wait until the computer reboots and leave the windows as is, after that you should boot from \"macOS install\""
 			
-			titleField.stringValue = "macOS installation in progress"
+			titleLabel.stringValue = "macOS installation in progress"
 		}
 		
 		activityLabel.stringValue = ""

@@ -8,7 +8,7 @@
 
 import Cocoa
 
-public class ShadowViewController: NSViewController{
+public class ShadowViewController: AppViewController{
 	let startZpos: CGFloat = 30
 	
 	var topView = ShadowPanel()

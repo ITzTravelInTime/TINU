@@ -16,74 +16,66 @@ public final class OptionalOperations{
 	#if useEFIReplacement && !macOnlyMode
 	func mountEFIPartAndCopyEFIFolder() -> (result: Bool, message: String?){
 		
-		var ok = true
-		
-		let efiMan = EFIPartitionManager.shared
+		let efiMan = EFIPartitionManager()
 		
 		let efiRepMan = EFIFolderReplacementManager.shared
 		
-		
-		
 		if let f = efiRepMan.checkSavedEFIFolder(){
-			if f{
-				log("There is a saved clover EFI folder, trying to copy it into the EFI partition of the target drive")
+			
+			let badReturn: (result: Bool, message: String?) = (false, "TINU failed to mount the EFI partition or to copy the EFI folder inside of it")
+			
+			if !f{
 				
-				log("  Trying to mount the EFI partition of the target drive")
-				
-				let bsdid = dm.getDriveBSDIDFromVolumeBSDID(volumeID: cvm.shared.sharedBSDDrive) + "s1"
-				
-				log("    The EFI partition of the target drive is: \(bsdid)")
-				
-				if efiMan.mountPartition(bsdid){
-					log("    EFI partition \(bsdid) mounted with success")
-					
-					if let mount = dm.getDriveNameFromBSDID(bsdid){
-						
-						if FileManager.default.fileExists(atPath: mount){
-							log("    Mount point for the EFI partition \(bsdid) is: \(mount)")
-							
-							log("    Trying to copy the saved EFI folder in \(mount)")
-							
-							if !efiRepMan.saveEFIFolder(mount + "/EFI"){
-								log("Error while copying the clover EFI folder, operation canceled")
-								ok = false
-							}
-							
-							if ok{
-								log("    EFI folder copied with success")
-							}
-						}else{
-							ok = false
-							log("    The mount poit of the EFI partition does not exist!!!")
-						}
-						
-					}else{
-						log("    Impossible to get a proper mount point for the mounted EFI partition")
-						ok = false
-					}
-					
-				}else{
-					log("    EFI partition not mounted!!!")
-					ok = false
-				}
-				
-			}else{
 				log("    Saved EFI folder is not a proper clover 64 bit EFI folder, impossible to copy it on the target drive's EFI partition")
-				ok = false
+				return badReturn
 			}
 			
-			if !ok{
-				log("!!Error while mounting the EFI partition or while copying the clover's EFI folder inside of it")
+			log("There is a saved clover EFI folder, trying to copy it into the EFI partition of the target drive")
+			
+			log("  Trying to mount the EFI partition of the target drive")
+			
+			let bsdid = dm.getDriveBSDIDFromVolumeBSDID(volumeID: cvm.shared.sharedBSDDrive) + "s1"
+			
+			log("    The EFI partition of the target drive is: \(bsdid)")
+			
+			if !efiMan.mountPartition(bsdid){
 				
+				log("    EFI partition not mounted!!!")
+				return badReturn
 				
-					return (ok, "TINU failed to mount the EFI partition or to copy the EFI folder inside of it")
+			}
+			
+			log("    EFI partition \(bsdid) mounted with success")
+			
+			if let mount = dm.getDriveNameFromBSDID(bsdid){
+				
+				if !FileManager.default.fileExists(atPath: mount){
+					
+					log("    The mount point of the EFI partition does not exist!!!")
+					return badReturn
+				}
+				
+				log("    Mount point for the EFI partition \(bsdid) is: \(mount)")
+				
+				log("    Trying to copy the saved EFI folder in \(mount)")
+				
+				if !efiRepMan.saveEFIFolder(mount + "/EFI"){
+					log("Error while copying the clover EFI folder, operation canceled")
+					return badReturn
+				}
+				
+				log("    EFI folder copied with success")
+				
+			}else{
+				log("    Impossible to get a proper mount point for the mounted EFI partition")
+				return badReturn
 			}
 			
 		}else{
 			log("There isn't any saved clover EFI folder, skipping EFI partition mount and EFI folder copying")
 		}
 		
-		return (ok, nil)
+		return (true, nil)
 	}
 	#endif
 	
@@ -91,14 +83,14 @@ public final class OptionalOperations{
 		
 		var ok = true
 		
-		if let o = oom.shared.otherOptions[oom.shared.ids.otherOptionCreateReadmeID]?.canBeUsed(){
+		if let o = oom.shared.otherOptions[oom.OtherOptionID.otherOptionCreateReadmeID]?.canBeUsed(){
 			if o {
 				//creates a readme file into the target drive
 				do{
 					log("   Creating the readme file")
 					if let sv = cvm.shared.sharedVolume{
 						//trys to write the readme file on the target drive using the text stored into a special variable
-						try readmeText.write(toFile: sv + "/README.txt", atomically: true, encoding: .utf8)
+						try TextManager.readmeText.write(toFile: sv + "/README.txt", atomically: true, encoding: .utf8)
 						
 						//trys to change the file attributes of the readme file to make it visible
 						let e = getErr(cmd: "chflags nohidden \"" + sv + "/README.txt\"")
@@ -131,7 +123,7 @@ public final class OptionalOperations{
 		
 		var ok = true
 		
-		if let o = oom.shared.otherOptions[oom.shared.ids.otherOptionCreateAIBootFID]?.canBeUsed(){
+		if let o = oom.shared.otherOptions[oom.OtherOptionID.otherOptionCreateAIBootFID]?.canBeUsed(){
 			if o && !sharedInstallMac{
 				let iaFolder = cvm.shared.sharedVolume + "/.IABootFiles"
 				
@@ -196,7 +188,7 @@ public final class OptionalOperations{
 	func deleteIAPMID() -> (result: Bool, message: String?){
 		var ok = true
 		
-		if let o = oom.shared.otherOptions[oom.shared.ids.otherOptionDeleteIAPMID]?.canBeUsed(){
+		if let o = oom.shared.otherOptions[oom.OtherOptionID.otherOptionDeleteIAPMID]?.canBeUsed(){
 			if o && !sharedInstallMac{
 				let iaFile = cvm.shared.sharedVolume + "/.IAPhysicalMedia"
 				
@@ -233,7 +225,7 @@ public final class OptionalOperations{
 	func createIcon() -> (result: Bool, message: String?){
 		var ok = true
 		
-		if let o = oom.shared.otherOptions[oom.shared.ids.otherOptionCreateIconID]?.canBeUsed(){
+		if let o = oom.shared.otherOptions[oom.OtherOptionID.otherOptionCreateIconID]?.canBeUsed(){
 			if o{
 				
 				//trys to create a volumeicon on the target drive if there isn't any, it's used mainly for versions of macOS installer older than 10.13
@@ -297,7 +289,7 @@ public final class OptionalOperations{
 	func createTINUCopy() -> (result: Bool, message: String?){
 		var ok = true
 		
-		if let o = oom.shared.otherOptions[oom.shared.ids.otherOptionTinuCopyID]?.canBeUsed(){
+		if let o = oom.shared.otherOptions[oom.OtherOptionID.otherOptionTinuCopyID]?.canBeUsed(){
 			if o {
 				//trys to crerate a copy of this app on the mac os install media
 				do{
@@ -347,15 +339,23 @@ public final class OptionalOperations{
 	}
 	
 	#if !macOnlyMode
-	func replaceBootFiles(step: Double) -> (result: Bool, message: String?){
+	func replaceBootFiles() -> (result: Bool, message: String?){
 		var ok = true
 		if !sharedInstallMac{
 			
-			#if installManager
-			let unit = 1 / Double(BootFilesReplacementManager.shared.filesToReplace.count)
+			var tempName = ""
 			
+			let c = Double(BootFilesReplacementManager.shared.filesToReplace.count)
+			
+			if c>0 {
+			
+			log("Replacing Boot Files")
+			
+			let step = 1 / c
+				
 			BootFilesReplacementManager.shared.replacementProcessProgress = 0
-			#endif
+				
+				
 			
 			// boot files replacemt
 			for f in BootFilesReplacementManager.shared.filesToReplace{
@@ -363,32 +363,25 @@ public final class OptionalOperations{
 				if !f.replace() {
 					log("   File \"" + f.filename + "\" replacement failed!")
 					
+					tempName = f.filename
+					
 					ok = false
 				}
 				
 				
-					#if installManager
-					BootFilesReplacementManager.shared.replacementProcessProgress! += unit
-					#else
-				if let s = sharedWindow.contentViewController as? InstallingViewController{
-					s.addToProgressValue(step)
-				}
-					#endif
-					
-				
-				
+				BootFilesReplacementManager.shared.replacementProcessProgress += step
+			}
+				log("Boot files replacemnt finished\n\n")
 			}
 			
-			log("Extra operations finished\n\n")
-			
-			#if installManager
 			BootFilesReplacementManager.shared.replacementProcessProgress = nil
-			#endif
+			
+			log("Extra operations finished\n\n")
 			
 			if !ok {
 				log("!!Error while replacing boot files: ")
 				
-				return (ok, "TINU failed to apply the advanced options on the bootable macOS installer")
+				return (ok, "TINU failed to replace the boot file: \"" + tempName + "\"")
 			}
 		}
 		

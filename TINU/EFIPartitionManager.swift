@@ -11,12 +11,22 @@ import Foundation
 #if !macOnlyMode
 	
 	public class EFIPartitionManager{
-		static var shared = EFIPartitionManager()
 		
 		private var partitionsCache: [String]!
+        
+        private var isUpdatingPartitionsCache = false
+        
+        deinit {
+            clearPartitionsCache()
+        }
 		
 		public func mountPartition(_ withBSDID: String) -> Bool{
 			log("Try to mount the EFI partition: \(withBSDID)")
+            
+            /*if partitionsCache == nil{
+                partitionsCache = []
+            }*/
+            
 			if checkPartition(withBSDID){
 				
 				var res = false
@@ -56,16 +66,23 @@ import Foundation
 			partitionsCache = nil
 		}
 		
-		public func buildPartitionsCache(){
-			partitionsCache = nil
-			partitionsCache = listPartitions()
+		@inline(__always) public func buildPartitionsCache(){
+            self.buildPartitionsCache(fromPartitionsList: self.listPartitions())
 		}
+        
+        public func buildPartitionsCache(fromPartitionsList list: [String]!){
+			if !isUpdatingPartitionsCache{
+                partitionsCache = nil
+                partitionsCache = list
+            }
+        }
 		
 		public func unmountPartition(_ withBSDID: String) -> Bool{
 			log("Try to unmount the EFI partition: \(withBSDID)")
-			if partitionsCache == nil{
+			/*if partitionsCache == nil{
 				partitionsCache = []
-			}
+			}*/
+            
 			if checkPartition(withBSDID){
 				/*
 				let id = getDriveNameFromBSDID(withBSDID)
@@ -109,90 +126,138 @@ import Foundation
 			
 			return false
 		}
-		
-		public func checkPartition(_ withBSDID: String) -> Bool{
+        
+        public func checkPartition(_ withBSDID: String) -> Bool{
+            
+            var res = false
 			
-			var res = false
+			var source: [String]!
 			
-			if partitionsCache == nil{
-				res = listPartitions().contains(withBSDID)
+			if partitionsCache == nil || partitionsCache == []{
+				source = listPartitions()
 			}else{
-				if partitionsCache == []{
-					partitionsCache = listPartitions()
-				}
-				res = partitionsCache.contains(withBSDID)
+				source = partitionsCache
 			}
 			
-			if !res{
-				print("    Invalid EFI partition: \(withBSDID)")
+			if let result = source?.contains(withBSDID){
+				res = result
+			}else{
+				res = false
+			}
+            
+            if !res{
+                print("    Invalid EFI partition: \(withBSDID)")
+            }
+            
+            return res
+        }
+        
+        public func listPartitions() -> [String]!{
+			
+			if !(partitionsCache == nil || partitionsCache == []){
+                	return partitionsCache
 			}
 			
-			return res
-		}
-		
-		public func listPartitions() -> [String]!{
+			isUpdatingPartitionsCache = true
+            
+            var usableDrives: [String]! = nil
+            
+            do{
+                print("Waiting for the drives data ...")
+                
+                let out = getOut(cmd: "diskutil list -plist")
+                
+                //print(out)
+                
+                if let diskutilData = try (DecodeManager.decodePlistDictionaryOpt(xml: out) as? [String: Any]){
+                    
+                    print("Got drives data")
+                    
+                    /*if let drives = diskutilData["AllDisks"] as? [String]{
+                        for drive in drives{
+                            
+                            if !drive.hasSuffix("s1"){
+                                continue
+                            }
+                            
+                            var type: String!
+                            
+                            type = dm.getDevicePropertyInfo(drive, propertyName: "Content")
+                            
+                            if let partType = type{
+                                
+                                if partType == "EFI"{
+                                    
+                                    usableDrives.append(drive)
+                                    
+                                    print("    New EFI partition found: \(drive)")
+                                    
+                                }else{
+                                    continue
+                                }
+                                
+                            }else{
+                                continue
+                            }
+                        }
+                        
+                    }else{
+                        print("    Wrong disks data!!! 1")
+                        return nil
+                    }*/
+                    
+                    if let drives = diskutilData["AllDisksAndPartitions"] as? [[String: Any]]{
+                        for drive in drives{
+                            
+                            if !((drive["Content"] as? String) == "GUID_partition_scheme"){
+                                continue
+                            }
+                            
+                            if let partitions = drive["Partitions"] as? [[String: Any]]{
+                                for partition in partitions{
+                                    if let content = partition["Content"] as? String{
+                                        if content == "EFI"{
+											
+											if let id = partition["DeviceIdentifier"] as? String{
+											
+												if usableDrives == nil{
+													usableDrives = []
+												}
+												
+                                            	usableDrives.append(id)
+                                            	print("    New EFI partition found: \(id)")
+												
+											}
+											
+                                        }
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }else{
+                        print("    Wrong disks data!!! 2")
+                        return nil
+                    }
+                    
+                }else{
+                    print("    Wrong diskutil data!!!")
+                    return nil
+                }
+                
+            }catch let err{
+                print("EFI partitions listing error: \(err)")
+                return nil
+            }
+            
+            isUpdatingPartitionsCache = false
 			
-		if partitionsCache != nil{
-			
-			if partitionsCache == []{
-				buildPartitionsCache()
+			if usableDrives != nil && partitionsCache == []{
+				partitionsCache = usableDrives
 			}
-			
-			return partitionsCache
-		}
-			
-			let usableDrives: [String]!
-			
-			do{
-				print("Waiting for the drives data ...")
-				
-				usableDrives = []
-				
-				if let diskutilData = try (PlistXMLManager.decodeXMLDictionaryOpt(xml: getOut(cmd: "diskutil list -plist")) as? [String: Any]){
-					
-					print("Got drives data")
-					
-					if let drives = diskutilData["AllDisks"] as? [String]{
-						for drive in drives{
-							
-							var type: String!
-							
-							type = dm.getDevicePropertyInfo(drive, propertyName: "Content")
-							
-							if let partType = type{
-							
-								if partType == "EFI"{
-								
-									usableDrives.append(drive)
-								
-									print("    New EFI partition found: \(drive)")
-								
-								}else{
-									continue
-								}
-								
-							}else{
-								continue
-							}
-						}
-						
-					}else{
-						print("    Wrong disks data!!!")
-						return nil
-					}
-					
-				}else{
-					print("    Wrong diskutil data!!!")
-					return nil
-				}
-				
-			}catch let err{
-				print("EFI partitions listing error: \(err)")
-				return nil
-			}
-			
-			return usableDrives
-		}
-	}
-	
+            
+            return usableDrives
+        }
+}
+
 #endif

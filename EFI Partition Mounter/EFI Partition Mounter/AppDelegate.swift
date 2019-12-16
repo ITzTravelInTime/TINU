@@ -117,7 +117,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 //showPopover(sender: self)
                 
                 DispatchQueue.main.async {
-                    toolMainViewController.window.orderOut(self)
+                    if toolMainViewController != nil{
+                        toolMainViewController.window.orderOut(self)
+                    }
                 }
                 
                 NSApp.setActivationPolicy(.accessory)
@@ -135,7 +137,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             NSApp.setActivationPolicy(.regular)
             
-            toolMainViewController.window.makeKeyAndOrderFront(self)
+            if toolMainViewController != nil{
+                toolMainViewController.window.makeKeyAndOrderFront(self)
+            }else{
+                //toolMainViewController = (NSStoryboard(name: "EFIPartitionMounterTool", bundle: Bundle.main).instantiateInitialController() as? NSWindowController)?.contentViewController
+                //toolMainViewController!.window.windowController!.showWindow(nil)
+            }
+            
             NSApp.activate(ignoringOtherApps: true)
             
             toggleStartsAsMenu()

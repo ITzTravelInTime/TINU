@@ -28,7 +28,10 @@
 		C61AACC1215B0EE6002D8F89 /* ShadowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61AACC0215B0EE6002D8F89 /* ShadowViewController.swift */; };
 		C61AE89420C2F16400229FEC /* OtherOptionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61AE89320C2F16400229FEC /* OtherOptionInfoViewController.swift */; };
 		C621CFA71F4F6A6500CC6D5B /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */; };
-		C621CFAC1F4F7DF400CC6D5B /* DriveObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFAB1F4F7DF400CC6D5B /* DriveObject.swift */; };
+		C621CFAC1F4F7DF400CC6D5B /* DriveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */; };
+		C6322574221C1883003A56D4 /* FilesystemObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6322573221C1883003A56D4 /* FilesystemObserver.swift */; };
+		C63DD0282265D921007944A5 /* TaskKillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63DD0272265D921007944A5 /* TaskKillManager.swift */; };
+		C6409AC7226D35D200E63762 /* CopyrightLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6409AC6226D35D200E63762 /* CopyrightLabel.swift */; };
 		C647B350211CE2C00024B9A1 /* ToolsBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B34F211CE2C00024B9A1 /* ToolsBridge.swift */; };
 		C647B39B211CF2C40024B9A1 /* EFIPartitionMounterTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B395211CF2C40024B9A1 /* EFIPartitionMounterTypes.swift */; };
 		C647B39C211CF2C40024B9A1 /* EFIPartitionMounterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B396211CF2C40024B9A1 /* EFIPartitionMounterViewController.swift */; };
@@ -54,6 +57,7 @@
 		C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */; };
 		C691D6AB20655C700083D057 /* DriveDetectInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691D6AA20655C700083D057 /* DriveDetectInfoViewController.swift */; };
 		C698B47E204CDAE5007B3CD8 /* MacrosReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */; };
+		C6AD9345239A684D0004704C /* DiskutilListCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AD9344239A684D0004704C /* DiskutilListCodable.swift */; };
 		C6B16958203B27AF00FD2818 /* ChooseCustomizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */; };
 		C6B74D0A20B8E76A001CAD4D /* EFIFolderReplacementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B74D0920B8E76A001CAD4D /* EFIFolderReplacementManager.swift */; };
 		C6B74D0C20BA2A79001CAD4D /* EFIPartitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B74D0B20BA2A79001CAD4D /* EFIPartitionManager.swift */; };
@@ -74,6 +78,7 @@
 		DD3AC14C1FBB974C00C71F53 /* OtherOptionsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC14B1FBB974C00C71F53 /* OtherOptionsItem.swift */; };
 		DD5016061F993D4500FB1407 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5016051F993D4500FB1407 /* GenericViewController.swift */; };
 		DD73ABE21FB46EEB00C7F721 /* BootFilesReplacementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD73ABE11FB46EEB00C7F721 /* BootFilesReplacementManager.swift */; };
+		DD7C7CC5235E26DC000CC2E0 /* DarkModeDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7C7CC4235E26DC000CC2E0 /* DarkModeDetection.swift */; };
 		DDA7FB601F96AE510029F4F2 /* RuntimeCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */; };
 		DDA7FB621F96B13F0029F4F2 /* GenericWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */; };
 		DDCC4ED51FB5C2A7007FBB6F /* CustomizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCC4ED41FB5C2A7007FBB6F /* CustomizationViewController.swift */; };
@@ -123,7 +128,10 @@
 		C61AACC0215B0EE6002D8F89 /* ShadowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowViewController.swift; sourceTree = "<group>"; };
 		C61AE89320C2F16400229FEC /* OtherOptionInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherOptionInfoViewController.swift; sourceTree = "<group>"; };
 		C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
-		C621CFAB1F4F7DF400CC6D5B /* DriveObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveObject.swift; sourceTree = "<group>"; };
+		C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveView.swift; sourceTree = "<group>"; };
+		C6322573221C1883003A56D4 /* FilesystemObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesystemObserver.swift; sourceTree = "<group>"; };
+		C63DD0272265D921007944A5 /* TaskKillManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskKillManager.swift; sourceTree = "<group>"; };
+		C6409AC6226D35D200E63762 /* CopyrightLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyrightLabel.swift; sourceTree = "<group>"; };
 		C647B34F211CE2C00024B9A1 /* ToolsBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsBridge.swift; sourceTree = SOURCE_ROOT; };
 		C647B395211CF2C40024B9A1 /* EFIPartitionMounterTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EFIPartitionMounterTypes.swift; path = "EFI Partition Mounter/EFI Partition Mounter/EFIPartitionMounterTypes.swift"; sourceTree = SOURCE_ROOT; };
 		C647B396211CF2C40024B9A1 /* EFIPartitionMounterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EFIPartitionMounterViewController.swift; path = "EFI Partition Mounter/EFI Partition Mounter/EFIPartitionMounterViewController.swift"; sourceTree = SOURCE_ROOT; };
@@ -149,6 +157,7 @@
 		C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingVariables.swift; sourceTree = "<group>"; };
 		C691D6AA20655C700083D057 /* DriveDetectInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveDetectInfoViewController.swift; sourceTree = "<group>"; };
 		C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacrosReference.swift; sourceTree = "<group>"; };
+		C6AD9344239A684D0004704C /* DiskutilListCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskutilListCodable.swift; sourceTree = "<group>"; };
 		C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseCustomizationViewController.swift; sourceTree = "<group>"; };
 		C6B74D0920B8E76A001CAD4D /* EFIFolderReplacementManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EFIFolderReplacementManager.swift; sourceTree = "<group>"; };
 		C6B74D0B20BA2A79001CAD4D /* EFIPartitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EFIPartitionManager.swift; sourceTree = "<group>"; };
@@ -175,6 +184,7 @@
 		DD3AC14B1FBB974C00C71F53 /* OtherOptionsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherOptionsItem.swift; sourceTree = "<group>"; };
 		DD5016051F993D4500FB1407 /* GenericViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericViewController.swift; sourceTree = "<group>"; };
 		DD73ABE11FB46EEB00C7F721 /* BootFilesReplacementManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootFilesReplacementManager.swift; sourceTree = "<group>"; };
+		DD7C7CC4235E26DC000CC2E0 /* DarkModeDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkModeDetection.swift; sourceTree = "<group>"; };
 		DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuntimeCode.swift; sourceTree = "<group>"; };
 		DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWindowController.swift; sourceTree = "<group>"; };
 		DDCC4ED41FB5C2A7007FBB6F /* CustomizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomizationViewController.swift; sourceTree = "<group>"; };
@@ -216,10 +226,12 @@
 				C60C40BB20CCA2BB00258574 /* AppManager.swift */,
 				DD73ABE11FB46EEB00C7F721 /* BootFilesReplacementManager.swift */,
 				C60C40BF20CCA9DC00258574 /* CreationVariablesManager.swift */,
+				C6AD9344239A684D0004704C /* DiskutilListCodable.swift */,
 				C60C40C620CCAE6200258574 /* DrivesManager.swift */,
 				C6B74D0B20BA2A79001CAD4D /* EFIPartitionManager.swift */,
 				C6B74D0920B8E76A001CAD4D /* EFIFolderReplacementManager.swift */,
 				C6E32EA6218142EA006D4BEB /* FileAliasManager.swift */,
+				C6322573221C1883003A56D4 /* FilesystemObserver.swift */,
 				C60C40C120CCAA9900258574 /* InstallerAppManager.swift */,
 				C615B811216AEF3F00913BFF /* MediaCreationManager */,
 				DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */,
@@ -230,6 +242,7 @@
 				C6F68E8A20D0277B00F7A0F4 /* SmallManagers.swift */,
 				C65B5EFE1F72099F0061F1A3 /* ScriptsManager.swift */,
 				C65B5F021F720D680061F1A3 /* SudoManager.swift */,
+				C63DD0272265D921007944A5 /* TaskKillManager.swift */,
 				C60C40B920CCA24000258574 /* TextsManager.swift */,
 			);
 			name = Managers;
@@ -391,17 +404,18 @@
 		DD01EBEA1F71A73700C94D9B /* CustomClasses */ = {
 			isa = PBXGroup;
 			children = (
-				C621CFAB1F4F7DF400CC6D5B /* DriveObject.swift */,
-				C60D39AF1F5E136500D94834 /* Part.swift */,
-				C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */,
+				DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */,
+				DDD038F11FB7AEC000D22695 /* BootFilesReplacementItem.swift */,
+				C6409AC6226D35D200E63762 /* CopyrightLabel.swift */,
+				C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */,
+				C60B646A20B4464200FEDAA6 /* EFIFolderReplcament.swift */,
 				DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */,
 				DD5016051F993D4500FB1407 /* GenericViewController.swift */,
-				C61AACC0215B0EE6002D8F89 /* ShadowViewController.swift */,
-				C60B646A20B4464200FEDAA6 /* EFIFolderReplcament.swift */,
-				DDD038F11FB7AEC000D22695 /* BootFilesReplacementItem.swift */,
 				DD3AC14B1FBB974C00C71F53 /* OtherOptionsItem.swift */,
 				C6D82A6920D802E700A5B5BE /* OtherOptionsObject.swift */,
-				DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */,
+				C60D39AF1F5E136500D94834 /* Part.swift */,
+				C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */,
+				C61AACC0215B0EE6002D8F89 /* ShadowViewController.swift */,
 				DDF9A5682159A05800389F78 /* ShadowView.swift */,
 			);
 			name = CustomClasses;
@@ -412,6 +426,7 @@
 			children = (
 				C60B6C8220F80FCC0088B658 /* AllertFunctions.swift */,
 				C65AA61E1F4F497A00C43223 /* ClassExtensions.swift */,
+				DD7C7CC4235E26DC000CC2E0 /* DarkModeDetection.swift */,
 				DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */,
 				DDDF14631F6730DA00953634 /* SharedVariables.swift */,
 				C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */,
@@ -430,6 +445,7 @@
 				C6DF045F1F4F33C500D200B1 /* Frameworks */,
 				C6DF04601F4F33C500D200B1 /* Resources */,
 				C6C47E6E21B006F7001A5F26 /* Increment Build Number automatically script */,
+				C6461B56234A384B00D391C6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -559,6 +575,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		C6461B56234A384B00D391C6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
 		C6C47E6E21B006F7001A5F26 /* Increment Build Number automatically script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -585,7 +618,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C621CFA71F4F6A6500CC6D5B /* MainWindowController.swift in Sources */,
-				C621CFAC1F4F7DF400CC6D5B /* DriveObject.swift in Sources */,
+				C621CFAC1F4F7DF400CC6D5B /* DriveView.swift in Sources */,
 				DDD038F21FB7AEC000D22695 /* BootFilesReplacementItem.swift in Sources */,
 				C65AA61F1F4F497A00C43223 /* ClassExtensions.swift in Sources */,
 				C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */,
@@ -603,6 +636,7 @@
 				C647B350211CE2C00024B9A1 /* ToolsBridge.swift in Sources */,
 				C6C2EAA72030710A0033EF85 /* SettingsSectionItem.swift in Sources */,
 				C691D6AB20655C700083D057 /* DriveDetectInfoViewController.swift in Sources */,
+				C63DD0282265D921007944A5 /* TaskKillManager.swift in Sources */,
 				C65AA6211F4F4C0400C43223 /* InfoViewController.swift in Sources */,
 				C60D39B21F5E4AFC00D94834 /* ContactsViewController.swift in Sources */,
 				C6D82A6A20D802E700A5B5BE /* OtherOptionsObject.swift in Sources */,
@@ -618,16 +652,20 @@
 				C60C40BA20CCA24000258574 /* TextsManager.swift in Sources */,
 				C61AACC1215B0EE6002D8F89 /* ShadowViewController.swift in Sources */,
 				C60B6C8320F80FCC0088B658 /* AllertFunctions.swift in Sources */,
+				C6AD9345239A684D0004704C /* DiskutilListCodable.swift in Sources */,
 				C60D39B01F5E136500D94834 /* Part.swift in Sources */,
+				C6409AC7226D35D200E63762 /* CopyrightLabel.swift in Sources */,
 				C60B646B20B4464200FEDAA6 /* EFIFolderReplcament.swift in Sources */,
 				C60C40C720CCAE6200258574 /* DrivesManager.swift in Sources */,
 				C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */,
 				C60C40C220CCAA9900258574 /* InstallerAppManager.swift in Sources */,
+				DD7C7CC5235E26DC000CC2E0 /* DarkModeDetection.swift in Sources */,
 				DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */,
 				C60C40C420CCACB600258574 /* PlistXMLManager.swift in Sources */,
 				C60C40B820CC9E4800258574 /* IconsManager.swift in Sources */,
 				C6B16958203B27AF00FD2818 /* ChooseCustomizationViewController.swift in Sources */,
 				C6E32EA7218142EA006D4BEB /* FileAliasManager.swift in Sources */,
+				C6322574221C1883003A56D4 /* FilesystemObserver.swift in Sources */,
 				C64E56371F51D917007B8CEE /* ChoseAppViewController.swift in Sources */,
 				C615B813216AEF7A00913BFF /* MediaCreationManagerPreProcess.swift in Sources */,
 				DD73ABE21FB46EEB00C7F721 /* BootFilesReplacementManager.swift in Sources */,
@@ -823,6 +861,7 @@
 				ASSETCATALOG_COMPILER_OPTIMIZATION = space;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -853,9 +892,11 @@
 				ASSETCATALOG_COMPILER_OPTIMIZATION = space;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9RSH5734GY;
+				ENABLE_TESTABILITY = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = TINU/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";

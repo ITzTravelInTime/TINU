@@ -21,20 +21,10 @@ class OtherOptionsItem: NSView {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 		
-		
-		//let buttonsHeigth: CGFloat = 25
-
-        /*
-        if #available(OSX 10.12, *) {
-            checkBox = NSButton(checkboxWithTitle: option.displayMessage, target: self, action: #selector(self.checked))
-        } else {
-            */
-            //checkBox = NSButton()
             checkBox.setButtonType(.switch)
-            checkBox.title = option.displayMessage
+            checkBox.title = option.title
             checkBox.target = self
             checkBox.action = #selector(OtherOptionsItem.checked)
-        //}
 		
 		checkBox.isEnabled = option.isUsable
 		
@@ -51,17 +41,8 @@ class OtherOptionsItem: NSView {
 
         self.addSubview(checkBox)
 		
-		/*if #available(OSX 10.14.0, *){
-			infoButton.title = "?"
-			infoButton.bezelStyle = .circular
-			//infoButton.setButtonType(.momentaryPushIn)
-		
-			
-		}else{*/
 			infoButton.title = ""
 			infoButton.bezelStyle = .helpButton
-			
-		//}
 		
 		infoButton.frame.size = NSSize(width: 25, height: 25)
 		
@@ -73,13 +54,10 @@ class OtherOptionsItem: NSView {
 		infoButton.action = #selector(OtherOptionsItem.showInfo)
 		
 		self.addSubview(infoButton)
-		
-        // Drawing code here.
-
     }
 	
 	func checked(){
-		log("Trying to change the activated value of \"\(option.id)\"")
+		log("Trying to change the value of \"\(option.id)\"")
 		/*for i in 0...(otherOptions.count - 1){
 		if otherOptions[i].id == self.option.id{
 		otherOptions[i].isActivated = (checkBox.state == 1)
@@ -93,14 +71,14 @@ class OtherOptionsItem: NSView {
 			option.isActivated = o.isActivated
 			
 			if sharedInstallMac && cvm.shared.sharedSVReallyIsAPFS{
-				if option.id == oom.shared.ids.otherOptionForceToFormatID{
+				if option.id == oom.OtherOptionID.otherOptionForceToFormatID{
 					
 					for item in (self.superview?.subviews)!{
 						if let opt = item as? OtherOptionsItem{
-							if opt.option.id == oom.shared.ids.otherOptionDoNotUseApfsID{
-								log("Trying to change the activated value of \"\(opt.option.id)\"")
+							if opt.option.id == oom.OtherOptionID.otherOptionDoNotUseApfsID{
+								log("Trying to change the value of \"\(opt.option.id)\"")
 								
-								if let oo = oom.shared.otherOptions[oom.shared.ids.otherOptionDoNotUseApfsID]{
+								if let oo = oom.shared.otherOptions[opt.option.id]{
 									oo.isActivated = o.isActivated
 									oo.isUsable = o.isActivated
 								}
@@ -131,11 +109,11 @@ class OtherOptionsItem: NSView {
 		
 		CustomizationWindowManager.shared.referenceWindow.contentViewController?.presentViewControllerAsSheet(vc)
 		
-		if sharedUseVibrant{
+		/*if sharedUseVibrant{
 			if let w = sharedWindow.windowController as? GenericWindowController{
 				w.deactivateVibrantWindow()
 			}
-		}
+		}*/
 		
 	}
 }

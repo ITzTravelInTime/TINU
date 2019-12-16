@@ -11,48 +11,53 @@ import Cocoa
 //this is just a simple class that represents a drive, used fot the drive scan algoritm
 public class Part{
 	
-	enum driveTrypes{
-		case normal
-		case apfs
-		case coreStorage
+	public enum FileSystem{
+		case blank
+		case other
+		case hFS
+		case aPFS
+		case aPFS_container
+		case coreStorage_container
 	}
 	
-	var driveType: driveTrypes = .normal
+	public enum PartScheme{
+		case blank
+		case gUID
+		case mBR
+		case aPPLE
+	}
 	
     var bsdName: String!
     var apfsBDSName: String!
     var name: String
     var path: String!
-    var fileSystem: String
-    var partScheme: String
+    var fileSystem: FileSystem
+    var partScheme: PartScheme
     var hasEFI: Bool
-    var totSize: Float
-    
-    var hasAPFSVolumes = false
-	var hasOriginalVolumes = false
 	
 	var tmDisk = false
 	
-	var size: UInt64! = 0
+	var size: UInt64 = 0
+	
+	var usable = false
 	
     public init(){
         bsdName = "/dev/"
         name = ""
-        path = "/Volumes/"
-        fileSystem = ""
-        partScheme = ""
+        path = ""
+        fileSystem = .blank
+        partScheme = .blank
         hasEFI = false
-        totSize = 0
     }
     
-    public init(partitionBSDName: String?, partitionName: String, partitionPath: String?, partitionFileSystem: String, partitionScheme: String, partitionHasEFI: Bool, partitionSize: Float){
+    public init(partitionBSDName: String?, partitionName: String, partitionPath: String?, partitionFileSystem: FileSystem, partitionScheme: PartScheme, partitionHasEFI: Bool, partitionSize: UInt64){
         bsdName = partitionBSDName
         name = partitionName
         path = partitionPath
         fileSystem = partitionFileSystem
         partScheme = partitionScheme
         hasEFI = partitionHasEFI
-        totSize = partitionSize
+        size = partitionSize
     }
     
     public func copy() -> Part{
@@ -65,15 +70,11 @@ public class Part{
 		p.fileSystem = fileSystem
 		p.partScheme = partScheme
 		p.hasEFI = hasEFI
-		p.totSize = totSize
-		
-        p.hasAPFSVolumes = hasAPFSVolumes
-		p.hasOriginalVolumes = hasOriginalVolumes
         p.apfsBDSName = apfsBDSName
-		p.driveType = driveType
 		p.size = size
 		
 		p.tmDisk = tmDisk
+		p.usable = usable
 		
         return p
     }

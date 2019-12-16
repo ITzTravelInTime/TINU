@@ -8,7 +8,7 @@
 
 import Cocoa
 
-public class AboutEFIPartitionMounter: AppViewController{
+public class AboutEFIPartitionMounter: AppVC{
     @IBOutlet weak var versionLabel: NSTextField!
     @IBOutlet weak var copyrigthLabel: NSTextField!
     
@@ -39,7 +39,7 @@ public class AboutEFIPartitionMounter: AppViewController{
     }
 }
 
-public class ContactUsEFIPartitionMounter: AppViewController{
+public class ContactUsEFIPartitionMounter: AppVC{
     public override func viewDidLoad() {
         super.viewDidLoad()
     }

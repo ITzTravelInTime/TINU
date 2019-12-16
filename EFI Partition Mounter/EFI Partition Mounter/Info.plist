@@ -23,7 +23,7 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Created by Peitro Caruso (ITzTravelInTime) 2018, Please do not redistribute. Released under the GNU GPL V3 license</string>
+	<string>Created by Peitro Caruso (ITzTravelInTime) 2018-2019, Please do not redistribute. Released under the GNU GPL V3 license</string>
 	<key>NSMainStoryboardFile</key>
 	<string>EFIPartitionMounterTool</string>
 	<key>NSPrincipalClass</key>
