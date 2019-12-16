@@ -38,17 +38,13 @@ Features that are planned for future versions:
 # Building/Compiling requirements: 
 - To compile (or create) a copy this app using the source code provvided in this repo, Xcode 10.2.x is required and so a machine running at least high sierra is needed.
 
-- Or you can just build your own copy by just downloading the source code and then using Xcode (requires Xcode 8)
 # Frequently asked questions
-
 https://github.com/ITzTravelInTime/TINU/wiki/FAQs
 
 # Wiki
-
 https://github.com/ITzTravelInTime/TINU/wiki
 
 # Useful links:
-
 Thread (english) on insanelymac.com:
 - http://www.insanelymac.com/forum/topic/326959-tinu-the-macos-installer-creator-app-mac-app/
 
