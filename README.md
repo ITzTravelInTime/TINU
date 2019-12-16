@@ -36,7 +36,7 @@ Features that are planned for future versions:
 - Or you can just build your own copy by just downloading the source code provvided here and then using Xcode (see the building/compiling requirements)
 
 # Building/Compiling requirements: 
-- To compile (or create) a copy this app using the source code provvided in this repo, Xcode 10.2.x is required and so a machine running at least high sierra is needed.
+- To compile (or create) a copy this app using the source code provvided in this repo, Xcode 10.1.x is required and so a machine running at least high sierra is needed.
 
 # Frequently asked questions
 https://github.com/ITzTravelInTime/TINU/wiki/FAQs
