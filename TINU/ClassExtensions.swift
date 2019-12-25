@@ -12,11 +12,11 @@ import AppKit
 //this file just contains some usefoul extensions and methods for system classes
 
 extension NSViewController{
-    public func openSubstituteWindow(windowStoryboardID: String, sender: Any){
+    public func sawpCurrentViewController(with storyboardID: String, sender: Any){
         
         let tempPos = self.view.window?.frame.origin
         
-        let viewController: NSViewController? = storyboard?.instantiateController(withIdentifier: windowStoryboardID) as? NSViewController
+        let viewController: NSViewController? = storyboard?.instantiateController(withIdentifier: storyboardID) as? NSViewController
         
         if viewController != nil{
             //presentViewControllerAsModalWindow(viewController!)
@@ -164,6 +164,13 @@ extension NSView {
             self.layer?.backgroundColor = newValue?.cgColor
         }
     }
+}
+
+//english grammar
+extension Character{
+	func isVowel() -> Bool{
+		return "aeiou".contains("\(self)".lowercased())
+	}
 }
 
 extension String {

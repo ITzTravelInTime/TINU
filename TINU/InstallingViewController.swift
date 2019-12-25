@@ -142,9 +142,9 @@ class InstallingViewController: GenericViewController{
 	
 	//just to be sure, if the view does disappear the installer creation is stopped
 	override func viewWillDisappear() {
-		if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress{
+		/*if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress{
 			let _ = InstallMediaCreationManager.shared.stop()
-		}
+		}*/
 	}
 	
 	private func restoreWindow(){
@@ -160,7 +160,7 @@ class InstallingViewController: GenericViewController{
 		enableItems(enabled: true)
 		
 		//no more need for auth
-		InstallMediaCreationManager.shared.freeAuth()
+		InstallMediaCreationManager.shared.makeProcessNotInExecution()
 	}
 	
 	func goToFinalScreen(title: String, success: Bool){
@@ -183,7 +183,7 @@ class InstallingViewController: GenericViewController{
 		
 		checkOtherOptions()
 		
-		self.openSubstituteWindow(windowStoryboardID: "MainDone", sender: self)
+		self.sawpCurrentViewController(with: "MainDone", sender: self)
 	}
 	
 	func goBack(){
@@ -209,7 +209,7 @@ class InstallingViewController: GenericViewController{
 		//resets window and auths
 		restoreWindow()
 		
-		self.openSubstituteWindow(windowStoryboardID: "Confirm", sender: self)
+		self.sawpCurrentViewController(with: "Confirm", sender: self)
 	}
 	
 	@IBAction func cancel(_ sender: Any) {
@@ -228,9 +228,6 @@ class InstallingViewController: GenericViewController{
 				log("Error while trying to close " + sharedExecutableName + " try to stop it from the termianl or from Activity monitor")
 				msgBoxWarning("Error while trying to exit from the process", "There was an error while trying to close the creation process: \n\nFailed to stop " + sharedExecutableName + " process")
 			}
-		}else{
-			log("Error while trying to close " + sharedExecutableName + " : bad authentication")
-			msgBoxWarning("Error while trying to exit from the process", "There was an error while trying to close the creation process: \n\nFailed to obtain authentication")
 		}
 	}
 	

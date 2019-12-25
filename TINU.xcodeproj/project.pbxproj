@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C60A461523A8571E009ADF4D /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60A461423A8571E009ADF4D /* ToDo.swift */; };
+		C60A461723A942E4009ADF4D /* SupportedEFIFolders.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60A461623A942E4009ADF4D /* SupportedEFIFolders.swift */; };
 		C60B646B20B4464200FEDAA6 /* EFIFolderReplcament.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60B646A20B4464200FEDAA6 /* EFIFolderReplcament.swift */; };
 		C60B6C8320F80FCC0088B658 /* AllertFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60B6C8220F80FCC0088B658 /* AllertFunctions.swift */; };
 		C60C40B820CC9E4800258574 /* IconsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60C40B720CC9E4800258574 /* IconsManager.swift */; };
@@ -75,7 +77,7 @@
 		C6F68E8B20D0277B00F7A0F4 /* SmallManagers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F68E8A20D0277B00F7A0F4 /* SmallManagers.swift */; };
 		DD01EBEF1F71BD2A00C94D9B /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */; };
 		DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBF01F71BFE600C94D9B /* LogViewController.swift */; };
-		DD3AC14C1FBB974C00C71F53 /* OtherOptionsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC14B1FBB974C00C71F53 /* OtherOptionsItem.swift */; };
+		DD3AC14C1FBB974C00C71F53 /* OtherOptionCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC14B1FBB974C00C71F53 /* OtherOptionCheckBox.swift */; };
 		DD5016061F993D4500FB1407 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5016051F993D4500FB1407 /* GenericViewController.swift */; };
 		DD73ABE21FB46EEB00C7F721 /* BootFilesReplacementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD73ABE11FB46EEB00C7F721 /* BootFilesReplacementManager.swift */; };
 		DD7C7CC5235E26DC000CC2E0 /* DarkModeDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7C7CC4235E26DC000CC2E0 /* DarkModeDetection.swift */; };
@@ -107,6 +109,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C60A461423A8571E009ADF4D /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
+		C60A461623A942E4009ADF4D /* SupportedEFIFolders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedEFIFolders.swift; sourceTree = "<group>"; };
 		C60B646A20B4464200FEDAA6 /* EFIFolderReplcament.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EFIFolderReplcament.swift; sourceTree = "<group>"; };
 		C60B6C8220F80FCC0088B658 /* AllertFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllertFunctions.swift; sourceTree = "<group>"; };
 		C60C40B720CC9E4800258574 /* IconsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsManager.swift; sourceTree = "<group>"; };
@@ -181,7 +185,7 @@
 		C6F68E8A20D0277B00F7A0F4 /* SmallManagers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallManagers.swift; sourceTree = "<group>"; };
 		DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
 		DD01EBF01F71BFE600C94D9B /* LogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
-		DD3AC14B1FBB974C00C71F53 /* OtherOptionsItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherOptionsItem.swift; sourceTree = "<group>"; };
+		DD3AC14B1FBB974C00C71F53 /* OtherOptionCheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherOptionCheckBox.swift; sourceTree = "<group>"; };
 		DD5016051F993D4500FB1407 /* GenericViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericViewController.swift; sourceTree = "<group>"; };
 		DD73ABE11FB46EEB00C7F721 /* BootFilesReplacementManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootFilesReplacementManager.swift; sourceTree = "<group>"; };
 		DD7C7CC4235E26DC000CC2E0 /* DarkModeDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkModeDetection.swift; sourceTree = "<group>"; };
@@ -373,6 +377,7 @@
 				C6DF046B1F4F33C500D200B1 /* Main.storyboard */,
 				C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */,
 				C6DF04651F4F33C500D200B1 /* AppDelegate.swift */,
+				C60A461423A8571E009ADF4D /* ToDo.swift */,
 				C649CC8F211A4ECF00A6B47B /* Tools */,
 				C6584CE4202B093400E7F8FE /* StringsFiles */,
 				C6553A941F5F83DC0048965D /* Resources */,
@@ -411,12 +416,13 @@
 				C60B646A20B4464200FEDAA6 /* EFIFolderReplcament.swift */,
 				DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */,
 				DD5016051F993D4500FB1407 /* GenericViewController.swift */,
-				DD3AC14B1FBB974C00C71F53 /* OtherOptionsItem.swift */,
+				DD3AC14B1FBB974C00C71F53 /* OtherOptionCheckBox.swift */,
 				C6D82A6920D802E700A5B5BE /* OtherOptionsObject.swift */,
 				C60D39AF1F5E136500D94834 /* Part.swift */,
 				C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */,
 				C61AACC0215B0EE6002D8F89 /* ShadowViewController.swift */,
 				DDF9A5682159A05800389F78 /* ShadowView.swift */,
+				C60A461623A942E4009ADF4D /* SupportedEFIFolders.swift */,
 			);
 			name = CustomClasses;
 			sourceTree = "<group>";
@@ -631,6 +637,7 @@
 				C615B819216B0E9400913BFF /* MediaCreationManagerTimers.swift in Sources */,
 				C682BBE320FFB23600410370 /* OptionalOperations.swift in Sources */,
 				DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */,
+				C60A461523A8571E009ADF4D /* ToDo.swift in Sources */,
 				C647B39C211CF2C40024B9A1 /* EFIPartitionMounterViewController.swift in Sources */,
 				C647B39B211CF2C40024B9A1 /* EFIPartitionMounterTypes.swift in Sources */,
 				C647B350211CE2C00024B9A1 /* ToolsBridge.swift in Sources */,
@@ -641,6 +648,7 @@
 				C60D39B21F5E4AFC00D94834 /* ContactsViewController.swift in Sources */,
 				C6D82A6A20D802E700A5B5BE /* OtherOptionsObject.swift in Sources */,
 				C6D82A6C20D80C7600A5B5BE /* OtherOptionsManager.swift in Sources */,
+				C60A461723A942E4009ADF4D /* SupportedEFIFolders.swift in Sources */,
 				DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */,
 				C6C1820D1FE7605300617DC2 /* ChooseSideViewController.swift in Sources */,
 				DDD038EB1FB7366400D22695 /* AdvancedOptionsButton.swift in Sources */,
@@ -680,7 +688,7 @@
 				C698B47E204CDAE5007B3CD8 /* MacrosReference.swift in Sources */,
 				C676D197215EB20E00E900E9 /* MediaCreationManagerMain.swift in Sources */,
 				C647B3A0211CF2C40024B9A1 /* EFIPartitionMounterUIClasses.swift in Sources */,
-				DD3AC14C1FBB974C00C71F53 /* OtherOptionsItem.swift in Sources */,
+				DD3AC14C1FBB974C00C71F53 /* OtherOptionCheckBox.swift in Sources */,
 				C615B817216B0B8900913BFF /* MediaCreationManagerErrorChecking.swift in Sources */,
 				C64E563B1F522854007B8CEE /* InstallingViewController.swift in Sources */,
 				C61A3654205DA3F400350BE9 /* DownloadAppViewController.swift in Sources */,
@@ -875,7 +883,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG useEFIReplacement skipChooseCustomization TINU installManager";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG useEFIReplacement skipChooseCustomization TINU";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = on;
 				SWIFT_OBJC_BRIDGING_HEADER = "";

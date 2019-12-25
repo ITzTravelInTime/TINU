@@ -101,13 +101,13 @@ class InfoViewController: GenericViewController{
 
     @IBAction func ok(_ sender: Any) {
         if sharedShowLicense{
-            let _ = openSubstituteWindow(windowStoryboardID: "License", sender: self)
+            let _ = sawpCurrentViewController(with: "License", sender: self)
         }else{
-            let _ = openSubstituteWindow(windowStoryboardID: "ChoseDrive", sender: self)
+            let _ = sawpCurrentViewController(with: "ChoseDrive", sender: self)
         }
     }
 
     @IBAction func back(_ sender: Any) {
-        openSubstituteWindow(windowStoryboardID: "chooseSide", sender: sender)
+        sawpCurrentViewController(with: "chooseSide", sender: sender)
     }
 }

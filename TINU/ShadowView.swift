@@ -84,7 +84,7 @@ public class ShadowPanel: NSView{
 				self.wantsLayer = true
 				
 				self.shadow = NSShadow()
-				self.layer?.shadowRadius = customShadowRadius
+				self.layer?.shadowRadius = self.customShadowRadius
 				self.layer?.shadowOffset = CGSize()
 				self.layer?.shadowPath = CGPath(rect: self.bounds, transform: nil)
 				

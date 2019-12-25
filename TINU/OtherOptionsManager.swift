@@ -9,25 +9,24 @@
 import Foundation
 
 public final class OtherOptionsManager{
-	public enum OtherOptionID: UInt8 {
+	public enum OtherOptionID: UInt8, CaseIterable {
+		case unknown = 0
 		
 		case otherOptionTinuCopyID      =  1
-		case otherOptionCreateReadmeID  =  2
-		case otherOptionCreateIconID    =  3
-		case otherOptionForceToFormatID =  4
-		case otherOptionDoNotUseApfsID  =  5
+		case otherOptionCreateReadmeID
+		case otherOptionCreateIconID
+		case otherOptionForceToFormatID
+		case otherOptionDoNotUseApfsID
 		
 		#if !macOnlyMode
-		case otherOptionCreateAIBootFID =  6
-		case otherOptionDeleteIAPMID    =  7
-		case otherOptionAddBFRScriptID  =  8
+		case otherOptionCreateAIBootFID
+		case otherOptionDeleteIAPMID
+		case otherOptionAddBFRScriptID
 		#endif
 		
 		#if useEFIReplacement && !macOnlyMode
-		case otherOptionKeepEFIpartID   =  9
+		case otherOptionKeepEFIpartID
 		#endif
-		
-		case unknown = 0
 	}
 	
 	typealias OtherOptionString = (title: String, desc: String)
@@ -50,9 +49,9 @@ public final class OtherOptionsManager{
 		log("Other options restored to the original values")
 	}
 	
-	@inline(__always) private func addOtheroOption(_ r: inout OtherOptionRaps, id: OtherOptionID, activated: Bool, visible: Bool){
+	@inline(__always) private func addOtheroOption(_ r: inout OtherOptionRaps, id: OtherOptionID, activated: Bool, visible: Bool, isAdvanced: Bool){
 		if let t = r.objects[id]{
-			r.tmpDict[id] = OtherOptionsObject.init(objectID: id, objectTitle: t.title, objectDescription: t.desc, objectIsActivated: activated, objectIsVisible: visible)
+			r.tmpDict[id] = OtherOptionsObject.init(id: id, title: t.title, isActivated: activated, isVisible: visible, isUsable: visible, isAdvanced: isAdvanced, description: t.desc)
 		}
 	}
 	
@@ -68,24 +67,24 @@ public final class OtherOptionsManager{
 			r.objects = getStrings()
 			r.tmpDict = [:]
 			
-			addOtheroOption(&r, id: OtherOptionID.otherOptionTinuCopyID, activated: true, visible: true)
-			addOtheroOption(&r, id: OtherOptionID.otherOptionCreateIconID, activated: true, visible: true)
-			addOtheroOption(&r, id: OtherOptionID.otherOptionCreateReadmeID, activated: true, visible: true)
-			addOtheroOption(&r, id: OtherOptionID.otherOptionForceToFormatID, activated: false, visible: true)
+			addOtheroOption(&r, id: OtherOptionID.otherOptionTinuCopyID, activated: true, visible: true, isAdvanced: false)
+			addOtheroOption(&r, id: OtherOptionID.otherOptionCreateIconID, activated: true, visible: true, isAdvanced: false)
+			addOtheroOption(&r, id: OtherOptionID.otherOptionCreateReadmeID, activated: true, visible: true, isAdvanced: false)
+			addOtheroOption(&r, id: OtherOptionID.otherOptionForceToFormatID, activated: false, visible: true, isAdvanced: true)
 			
-			addOtheroOption(&r, id: OtherOptionID.otherOptionDoNotUseApfsID, activated: true, visible: true)
+			addOtheroOption(&r, id: OtherOptionID.otherOptionDoNotUseApfsID, activated: true, visible: true, isAdvanced: true)
 			
 			#if !macOnlyMode
 				
-				addOtheroOption(&r, id: OtherOptionID.otherOptionCreateAIBootFID, activated: false, visible: true)
-				addOtheroOption(&r, id: OtherOptionID.otherOptionDeleteIAPMID, activated: false, visible: true)
+			addOtheroOption(&r, id: OtherOptionID.otherOptionCreateAIBootFID, activated: false, visible: true, isAdvanced: true)
+			addOtheroOption(&r, id: OtherOptionID.otherOptionDeleteIAPMID, activated: false, visible: true, isAdvanced: true)
 				
 			#endif
 			
 			
 			#if useEFIReplacement && !macOnlyMode
 			
-				addOtheroOption(&r, id: OtherOptionID.otherOptionKeepEFIpartID, activated: false, visible: true)
+			addOtheroOption(&r, id: OtherOptionID.otherOptionKeepEFIpartID, activated: false, visible: true, isAdvanced: true)
 			
 			#endif
 			

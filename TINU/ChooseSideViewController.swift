@@ -45,10 +45,6 @@ class ChooseSideViewController: GenericViewController {
 				print("You have successfully enbled the \"demo\" macro!")
 			#endif
 		
-			#if recovery
-				print("Running with Local Authentication APIs supported")
-			#endif
-		
 			#if macOnlyMode
 				print("This version of the app is compiled to be App Store Friendly!")
 			#endif
@@ -171,7 +167,7 @@ class ChooseSideViewController: GenericViewController {
 					self.stopAnimationAndShowbuttons()
 					
 					
-					self.openSubstituteWindow(windowStoryboardID: "Info", sender: self.view)
+					self.sawpCurrentViewController(with: "Info", sender: self.view)
 				}
 			}
 		}else{

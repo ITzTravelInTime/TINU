@@ -174,7 +174,7 @@ class ConfirmViewController: GenericViewController {
 		}else{*/
 		#if skipChooseCustomization
 			cm.sharedMediaIsCustomized = false
-			openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
+			sawpCurrentViewController(with: "ChoseApp", sender: sender)
 		#else
 			if cm.sharedMediaIsCustomized{
 				openSubstituteWindow(windowStoryboardID: "Customize", sender: sender)
@@ -193,7 +193,7 @@ class ConfirmViewController: GenericViewController {
             return
         }
         
-        let _ = openSubstituteWindow(windowStoryboardID: "Install", sender: sender)
+        let _ = sawpCurrentViewController(with: "Install", sender: sender)
         
     }
     

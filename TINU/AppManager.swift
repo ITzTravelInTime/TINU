@@ -33,7 +33,7 @@ public final class AppManager{
 //cheks if any debug option is enabled, so it will turn on the mode that shows the testing mode mark on  the window's title, because they are hard coded variables, it needs to be colled only once at startup
 public func checkAppMode(){
 	
-	print(banner)
+	print(AppBanner.banner)
 	
 	let testingConditions = [
 		simulateFormatFail,

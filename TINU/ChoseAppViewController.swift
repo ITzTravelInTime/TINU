@@ -76,7 +76,7 @@ class ChoseAppViewController: GenericViewController {
     private let spacerID = "spacer"
     
     @IBAction func goBack(_ sender: Any) {
-        let _ = openSubstituteWindow(windowStoryboardID: "ChoseDrive", sender: self)
+        let _ = sawpCurrentViewController(with: "ChoseDrive", sender: self)
     }
     
     @IBAction func next(_ sender: Any) {
@@ -90,10 +90,10 @@ class ChoseAppViewController: GenericViewController {
 			
 			if sharedInstallMac{
 				showProcessLicense = true
-				openSubstituteWindow(windowStoryboardID: "License", sender: sender)
+				sawpCurrentViewController(with: "License", sender: sender)
 			}else{
 				#if skipChooseCustomization
-				let _ = self.openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
+				let _ = self.sawpCurrentViewController(with: "Confirm", sender: sender)
 				#else
 				let _ = self.openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
 				#endif
@@ -151,7 +151,7 @@ class ChoseAppViewController: GenericViewController {
 							cvm.shared.sharedVolumeNeedsPartitionMethodChange = self.ps
 							
 							#if skipChooseCustomization
-							let _ = self.openSubstituteWindow(windowStoryboardID: "Confirm", sender: self)
+							let _ = self.sawpCurrentViewController(with: "Confirm", sender: self)
 							#else
 							let _ = self.openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: self)
 							#endif
@@ -178,7 +178,7 @@ class ChoseAppViewController: GenericViewController {
         super.viewDidLoad()
         // Do view setup here.
 		
-		self.setTitleLabel(text: "Choose the macOS installer app to use for the bootable macOS installer")
+		self.setTitleLabel(text: "Choose the macOS installer app to use for the macOS installer")
 		self.showTitleLabel()
 		
 		if !sharedIsOnRecovery && !simulateDisableShadows{

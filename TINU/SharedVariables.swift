@@ -12,8 +12,8 @@ import AppKit
 //here there are all the variables that are accessible in all the app to determinate the status of the app and what it is doing
 
 
-
-public let banner = "\n" + """
+public final class AppBanner{
+public static let banner = "\n" + """
 \(getRow(isUP: true))
 \u{2551}                                     \u{2551}
 \u{2551}        _/_ o                        \u{2551}
@@ -32,7 +32,7 @@ public let banner = "\n" + """
 \(getRow(isUP: false))
 """ + "\n"
 
-fileprivate func getSpaces() -> String{
+fileprivate static func getSpaces() -> String{
 	let spacel = 20
 	
 	let version = Bundle.main.version!
@@ -57,7 +57,7 @@ fileprivate func getSpaces() -> String{
 	return res
 }
 
-fileprivate func getRow(isUP: Bool) -> String{
+fileprivate static func getRow(isUP: Bool) -> String{
 	let length = 36
 	
 	var res = "\u{2554}"
@@ -77,6 +77,8 @@ fileprivate func getRow(isUP: Bool) -> String{
 	}
 	
 	return res
+}
+	
 }
 
 //use for settings management

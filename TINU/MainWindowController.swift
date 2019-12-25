@@ -39,16 +39,11 @@ public class mainWindowController: GenericWindowController {
     
     func windowShouldClose(_ sender: Any) -> Bool {
         if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress{
-            //if !dialogYesNoWarning(question: "Stop the process?", text: "Do you want to abort the Installer cration process?", style: .informational){
-			
-			#if installManager
-				return InstallMediaCreationManager.shared.stopWithAsk()
-			#else
-                if let w = self.contentViewController as? InstallingViewController{
-                    return w.stopWithAsk()
-                }
-			#endif
-            //}
+			if let d = InstallMediaCreationManager.shared.stopWithAsk(){
+				return d
+			}else{
+				return false
+			}
         }
         
         if CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress{

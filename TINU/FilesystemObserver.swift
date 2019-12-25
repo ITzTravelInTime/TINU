@@ -17,6 +17,7 @@ class DirectoryObserver {
 		
 		self.source.cancel()
 		close(fileDescriptor)
+		
 	}
 	
 	init(URL: URL, block: @escaping ()->Void) {

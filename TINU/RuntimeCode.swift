@@ -26,7 +26,7 @@ public func checkOtherOptions(){
 		
 		processLicense = ""
 		
-		if let item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionForceToFormatID]{
+		if var item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionForceToFormatID]{
 			if let st = cvm.shared.sharedVolumeNeedsPartitionMethodChange{
 				item.isUsable = !st
 				item.isActivated = st
@@ -50,7 +50,7 @@ public func checkOtherOptions(){
 					needsIA = na
 				}
 				
-				if let item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionTinuCopyID]{
+				if var item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionTinuCopyID]{
 					item.isUsable = !supportsTINU
 					item.isActivated = !supportsTINU
 				}
@@ -69,7 +69,7 @@ public func checkOtherOptions(){
 					}
 					
 					
-					if let item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionDoNotUseApfsID]{
+					if var item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionDoNotUseApfsID]{
 						item.isVisible = !supportsAPFS
 						item.isActivated = !cvm.shared.sharedSVReallyIsAPFS
 						item.isUsable = !cvm.shared.sharedSVReallyIsAPFS
@@ -97,12 +97,12 @@ public func checkOtherOptions(){
 					
 					#if !macOnlyMode
 					
-					if let item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionCreateAIBootFID]{
+					if var item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionCreateAIBootFID]{
 							item.isActivated = false
 							item.isVisible = needsIA
 					}
 					
-					if let item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionDeleteIAPMID]{
+					if var item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionDeleteIAPMID]{
 							item.isActivated = false
 							item.isVisible = needsIA
 					}

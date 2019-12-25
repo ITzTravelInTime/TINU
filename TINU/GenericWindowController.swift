@@ -33,18 +33,16 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
     }
     
     func checkVibrant(){
-        if !sharedIsOnRecovery{
-			
-			if (self.window?.styleMask.contains(.fullSizeContentView))! && self.window!.titlebarAppearsTransparent{
-				alreadyFullScreen = true
-				self.window?.isMovableByWindowBackground = true
+		if (self.window?.styleMask.contains(.fullSizeContentView))! || self.window!.titlebarAppearsTransparent{
+			alreadyFullScreen = true
+			self.window?.isMovableByWindowBackground = true
 				
-				if AppManager.shared.sharedTestingMode{
-					self.window?.titleVisibility = .visible
-				}else{
-					self.window?.titleVisibility = .hidden
-				}
+			if AppManager.shared.sharedTestingMode{
+				self.window?.titleVisibility = .visible
+			}else{
+				self.window?.titleVisibility = .hidden
 			}
+		}
 			
 			/*
 			if !alreadyFullScreen{
@@ -62,7 +60,6 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
                 c.viewDidSetVibrantLook()
             }
 			*/
-        }
     }
 	
 	

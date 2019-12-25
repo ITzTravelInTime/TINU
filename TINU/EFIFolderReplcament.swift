@@ -12,24 +12,31 @@ import Cocoa
 public class EFIReplacementView: NSView{
 	//titles
 	let titleLabel = NSTextField()
-	
 	let expLabel = NSTextField()
 	
 	//folder opened
 	let pathLabel = NSTextField()
-	
 	let checkImage = NSImageView()
-	
 	
 	//buttons
 	let openButton = NSButton()
-	
 	let resetButton = NSButton()
 	
 	//draw code
 	
 	override public func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
+		viewDidMoveToSuperview()
+	}
+	
+	var bootloader: SupportedEFIFolders = .clover{
+		didSet{
+			viewDidMoveToSuperview()
+		}
+	}
+	
+	override public func viewDidMoveToSuperview() {
+		super.viewDidMoveToSuperview()
 		
 		//size constants
 		let buttonsHeigth: CGFloat = 32
@@ -49,9 +56,6 @@ public class EFIReplacementView: NSView{
 		titleLabel.frame.origin = NSPoint(x: 5, y: self.frame.size.height - fieldHeigth - 5)
 		titleLabel.frame.size = NSSize(width: self.frame.size.width - 10 , height: fieldHeigth)
 		titleLabel.font = NSFont.boldSystemFont(ofSize: 13)
-		
-		titleLabel.stringValue = "Clover EFI folder installer"
-		
 		self.addSubview(titleLabel)
 		
 		expLabel.isEditable = false
@@ -66,9 +70,8 @@ public class EFIReplacementView: NSView{
 		expLabel.font = NSFont.systemFont(ofSize: 13)
 		
 		if let drive = dm.getCurrentDriveName(){
-		
-			expLabel.stringValue = "This option automatically installs the selected Clover EFI folder inside the EFI partition of the drive \"\(drive)\".\nOnly UEFI 64Bits Clover EFI folders are supported."
-			
+			titleLabel.stringValue = "\(bootloader.rawValue) EFI folder installer"
+			expLabel.stringValue = "This option automatically installs the selected \(bootloader.rawValue) EFI folder inside the EFI partition of the drive \"\(drive)\".\nOnly UEFI 64Bits \(bootloader.rawValue) EFI folders are supported."
 		}
 		
 		self.addSubview(expLabel)
@@ -129,6 +132,7 @@ public class EFIReplacementView: NSView{
 		
 		self.addSubview(resetButton)
 		
+		checkOriginFolder()
 		
 		//check states
 		if EFIFolderReplacementManager.shared.checkSavedEFIFolder() == nil{
@@ -138,8 +142,6 @@ public class EFIReplacementView: NSView{
 			resetButton.isEnabled = true
 			openButton.isEnabled = false
 		}
-		
-		checkOriginFolder()
 	}
 	
 	func openClick(){
@@ -154,24 +156,22 @@ public class EFIReplacementView: NSView{
 			if response == NSModalResponseOK{
 				if !open.urls.isEmpty{
 					DispatchQueue.global(qos: .background).async{
-						if let opener = EFIFolderReplacementManager.shared.loadEFIFolder(open.urls.first!.path){
+						if let opener = EFIFolderReplacementManager.shared.loadEFIFolder(open.urls.first!.path, currentBootloader: self.bootloader){
 							if !opener{
 								DispatchQueue.main.async {
+									
+									//is this really usefoul or needed? can this be batter?
 									msgBoxWarning("Impossible to open the EFI folder", "There was an unkown error while trying to open the selcted EFI folder")
 								}
 							}else{
-								DispatchQueue.main.async {
-									//set ui
-									self.resetButton.isEnabled = true
-									self.openButton.isEnabled = false
-									
+								DispatchQueue.main.sync {
 									self.checkOriginFolder()
 								}
 							}
 						}else{
-							DispatchQueue.main.async {
+							DispatchQueue.main.sync {
 								
-								msgBoxWarning("The folder \"\(open.urls.first!.path)\" is not a proper clover efi folder", "The folder you selected \"\(open.urls.first!.path)\" does not contain the required element \"\(EFIFolderReplacementManager.shared.missingFileFromOpenedFolder!)\", make sure to open just the folder named EFI and that it cointains all the needed elements")
+								msgBoxWarning("The folder \"\(open.urls.first!.path)\" is not a proper \(self.bootloader.rawValue) efi folder", "The folder you selected \"\(open.urls.first!.path)\" does not contain the required element \"\(EFIFolderReplacementManager.shared.missingFileFromOpenedFolder!)\", make sure to open just the folder named EFI and that it cointains all the needed elements")
 								
 								EFIFolderReplacementManager.shared.resetMissingFileFromOpenedFolder()
 								
@@ -181,53 +181,18 @@ public class EFIReplacementView: NSView{
 				}
 			}
 		})
-		
-		/*
-		if open.runModal() == NSModalResponseOK{
-			if !open.urls.isEmpty{
-				DispatchQueue.global(qos: .background).async{
-					if let opener = EFIFolderReplacementManager.shared.loadEFIFolder(open.urls.first!.path){
-					if !opener{
-						DispatchQueue.main.async {
-							msgBoxWarning("Impossible to open the EFI folder", "there was an unkown error while trying to open the selcted EFI folder")
-						}
-					}else{
-						DispatchQueue.main.async {
-							//set ui
-							
-							//msgBox("TINU: EFI folder correctly opened", "EFI folder opened correctly, as it should be", .informational)
-							
-							self.resetButton.isEnabled = true
-							self.openButton.isEnabled = false
-							
-							self.checkOriginFolder()
-						}
-					}
-					}else{
-						DispatchQueue.main.async {
-							
-							msgBoxWarning("The folder \"\(open.urls.first!.path)\" is not a proper clover efi folder", "The folder you selected \"\(open.urls.first!.path)\" does not contain the required element \"\(EFIFolderReplacementManager.shared.missingFileFromOpenedFolder!)\", make sure to open just the folder named EFI and that it cointains all the needed elements")
-							
-							EFIFolderReplacementManager.shared.resetMissingFileFromOpenedFolder()
-							
-						}
-					}
-				}
-			}
-		}
-	*/
 	}
 	
 	func resetClick(){
 		DispatchQueue.global(qos: .background).async{
 			if !EFIFolderReplacementManager.shared.unloadEFIFolder(){
 				DispatchQueue.main.async {
-					msgBoxWarning("TINU: Error while removing efi folder from memory", "Error while removing the stored efi foleer from the program memory")
+					
+					//is this really usefoul or needed? can this be batter?
+					msgBoxWarning("TINU: Error while unloading the EFI folder", "There was an error while unloading the stored efi foleer from the program memory")
 				}
 			}else{
 				DispatchQueue.main.async {
-					self.resetButton.isEnabled = false
-					self.openButton.isEnabled = true
 					self.checkOriginFolder()
 				}
 			}
@@ -237,19 +202,39 @@ public class EFIReplacementView: NSView{
 	}
 	
 	func checkOriginFolder(){
+		
+		
+		
 		if EFIFolderReplacementManager.shared.openedDirectory == nil{
 			pathLabel.stringValue = ""
 			checkImage.isHidden = true
+			
+			self.resetButton.isEnabled = false
+			self.openButton.isEnabled = true
 		}else{
 			
-			var str = EFIFolderReplacementManager.shared.openedDirectory!
+			if EFIFolderReplacementManager.shared.currentEFIFolderType == self.bootloader{
+				var str = EFIFolderReplacementManager.shared.openedDirectory!
+				
+				if str.count > 45{
+					str = str[0...45] + "..."
+				}
 			
-			if str.count > 45{
-				str = str[0...45] + "..."
+				pathLabel.stringValue = str
+				checkImage.isHidden = false
+				
+			}else{
+				
+				let t = EFIFolderReplacementManager.shared.currentEFIFolderType.rawValue
+				
+				//this is still imprecise because it doesn't accounts for the usage of the h as the first letter, but for now it's enought
+				pathLabel.stringValue = "You have alreay chosen " + (t.first!.isVowel() ? "an " : "a ") + t + " EFI folder"
+				
+				checkImage.isHidden = true
 			}
 			
-			pathLabel.stringValue = str
-			checkImage.isHidden = false
+			self.resetButton.isEnabled = true
+			self.openButton.isEnabled = false
 		}
 	}
 	

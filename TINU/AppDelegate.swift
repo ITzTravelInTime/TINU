@@ -35,42 +35,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplicationTerminateReply {
+		print("Should terminate called")
         if CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress{
             msgBoxWarning("You can't quit now", "You can't quit from TINU now, wait for the first part of the process to end or press the cancel button on the windows that asks for the password, and then quit if you want")
             return NSApplicationTerminateReply.terminateCancel
-        }
-        
-        
-        if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress{
-           // if !dialogYesNoWarning(question: "Installer creation in progress in progess", text: "The installer creation is inprogress do you want to quit?", style: .warning){
-			#if installManager
-			if let s = InstallMediaCreationManager.shared.stopWithAsk(){
-				if s{
-					msgBoxWarning("Error while trying to quit", "There was an error while trying to quit from the app: \n\nFailed to stop " + sharedExecutableName + " process")
+        }else if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress{
+			var spd: Bool!
+				
+			spd = InstallMediaCreationManager.shared.stopWithAsk()
+				
+			if let stopped = spd{
+				if !stopped{
+					print("Terminate failed")
 					return NSApplicationTerminateReply.terminateCancel
 				}
 			}else{
+				print("Terminate cancelled")
 				return NSApplicationTerminateReply.terminateCancel
 			}
-			#else
-                if let i = sharedWindow.contentViewController as? InstallingViewController{
-					
-					if let s = i.stopWithAsk(){
-						if s{
-                        msgBoxWarning("Error while trying to quit", "There was an error while trying to quit from the app: \n\nFailed to stop " + sharedExecutableName + " process")
-                        return NSApplicationTerminateReply.terminateCancel
-						}
-					}else{
-						return NSApplicationTerminateReply.terminateCancel
-					}
-                }
-			#endif
-            //}else{
-                //return NSApplicationTerminateReply.terminateCancel
-            //}
         }
-        
-        //erasePassword()
+		
         return NSApplicationTerminateReply.terminateNow
     }
     
@@ -84,55 +68,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		
 		//focusAreaItem.isHidden = true
 		//vibrantButton.isHidden = true
+		
+		tinuRelated     .isEnabled = !sharedIsOnRecovery
+		otherApps       .isEnabled = !sharedIsOnRecovery
+		verboseItem     .isEnabled = !sharedIsOnRecovery
+		FAQItem         .isEnabled = !sharedIsOnRecovery
+		getMacOSApp     .isEnabled = !sharedIsOnRecovery
+		wMSDIND         .isEnabled = !sharedIsOnRecovery
+		
+		InstallMacOSItem.isHidden =  !sharedIsOnRecovery
+		
         
         if sharedIsOnRecovery{
 			print("Verbose mode not usable under recovery")
-			
-			tinuRelated.isEnabled = false
-			otherApps.isEnabled = false
-			verboseItem.isEnabled = false
-			
-			InstallMacOSItem.isHidden = false
-			
-			/*
-            vibrantButton.isEnabled = false
-            vibrantButton.state = 0
-            
-            focusAreaItem.isEnabled = false
-            focusAreaItem.state = 0
-            */
-			
-            FAQItem.isEnabled = false
-			
-			getMacOSApp.isEnabled = false
-			wMSDIND.isEnabled = false
-        }else{
-			verboseItem.isEnabled = true
-			tinuRelated.isEnabled = true
-			otherApps.isEnabled = true
-			
-			InstallMacOSItem.isHidden = true
-			
-            //vibrantButton.isEnabled = false
-			
-            /*if sharedUseVibrant{
-                focusAreaItem.isEnabled = true
-                vibrantButton.state = 1
-            }else{
-                focusAreaItem.isEnabled = false
-                vibrantButton.state = 0
-            }
-            
-            if sharedUseFocusArea{
-                focusAreaItem.state = 1
-            }else{
-                focusAreaItem.state = 0
-            }*/
-            
-            FAQItem.isEnabled = true
-			
-			getMacOSApp.isEnabled = true
-			wMSDIND.isEnabled = true
         }
         
         FAQItemHelp.isEnabled = FAQItem.isEnabled
@@ -157,7 +105,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to tear down your application
         
         if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress{
-			#if installManager
 			if let s = InstallMediaCreationManager.shared.stop(){
 				if s{
 					msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
@@ -165,53 +112,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			}else{
 				msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
 			}
-			#else
-            if let i = sharedWindow.contentViewController as? InstallingViewController{
-                if let s = i.stop(){
-					if s{
-						msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
-					}
-				}else{
-					msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
-				}
-            }
-			#endif
         }
     }
     
 	
     
     @IBAction func installMacActivate(_ sender: Any) {
-        /*
-        if !(sharedIsCreationInProgress || sharedIsPreCreationInProgress){
-            sharedInstallMac = !sharedInstallMac
-            
-            if sharedInstallMac{
-                InstallMacOSItem.title = "Use TINU to create a macOS install media"
-            }else{
-                InstallMacOSItem.title = "Use TINU to install macOS"
-            }
-            
-            sharedWindow.contentViewController?.openSubstituteWindow(windowStoryboardID: "Info", sender: sender)
-            
-            restoreOtherOptions()
-            
-            eraseReplacementFilesData()
-            
-            sharedApp = nil
-            sharedBSDDrive = nil
-            sharedVolume = nil
-        }
-        */
-        
         swichMode(isInstall: !sharedInstallMac)
     }
     
     public func swichMode(isInstall: Bool){
-		let cim = CreateinstallmediaSmallManager.shared
 		
-		
-        if !(cim.sharedIsCreationInProgress || cim.sharedIsPreCreationInProgress){
+        if !(CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress){
 			
             sharedInstallMac = isInstall
 			
@@ -220,7 +132,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }else{
                 InstallMacOSItem.title = "Use TINU to install macOS"
             }
-            sharedWindow.contentViewController?.openSubstituteWindow(windowStoryboardID: "Info", sender: self)
+            sharedWindow.contentViewController?.sawpCurrentViewController(with: "Info", sender: self)
 			
             //restoreOtherOptions()
             

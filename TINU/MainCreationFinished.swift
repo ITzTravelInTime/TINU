@@ -76,7 +76,7 @@ class MainCreationFinishedViewController: NSViewController{
         clearLog()
         
        // if sharedIsOnRecovery{
-            openSubstituteWindow(windowStoryboardID: "chooseSide", sender: self)
+            sawpCurrentViewController(with: "chooseSide", sender: self)
         /*}else{
             openSubstituteWindow(windowStoryboardID: "Info", sender: self)
         }*/

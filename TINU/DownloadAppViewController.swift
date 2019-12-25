@@ -68,4 +68,8 @@ public class DownloadAppViewController: GenericViewController {
 		NSWorkspace.shared().open(URL(string: "macappstores://itunes.apple.com/app/os-x-el-capitan/id1147835434")!)
 	}
 	
+	@IBAction func catClick(_ sender: Any) {
+		NSWorkspace.shared().open(URL(string: "macappstores://itunes.apple.com/app/macos-catalina/id1466841314")!)
+	}
+	
 }

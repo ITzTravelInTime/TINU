@@ -6,6 +6,8 @@
 //  Copyright © 2018 Pietro Caruso. All rights reserved.
 //
 
+
+//useless stuff
 import Cocoa
 
 class ChooseCustomizationViewController: GenericViewController {
@@ -31,7 +33,7 @@ class ChooseCustomizationViewController: GenericViewController {
 		DispatchQueue.main.async {
 			
 			cvm.shared.sharedMediaIsCustomized = true
-			self.openSubstituteWindow(windowStoryboardID: "Customize", sender: sender)
+			self.sawpCurrentViewController(with: "Customize", sender: sender)
 		}
     }
     
@@ -42,16 +44,16 @@ class ChooseCustomizationViewController: GenericViewController {
 			checkOtherOptions()
 		
 			cvm.shared.sharedMediaIsCustomized = false
-			self.openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
+			self.sawpCurrentViewController(with: "Confirm", sender: sender)
 		}
     }
     
     @IBAction func goBack(_ sender: Any) {
 		DispatchQueue.main.async {
 			if showProcessLicense && sharedInstallMac{
-				self.openSubstituteWindow(windowStoryboardID: "License", sender: sender)
+				self.sawpCurrentViewController(with: "License", sender: sender)
 			}else{
-				self.openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
+				self.sawpCurrentViewController(with: "ChoseApp", sender: sender)
 			}
 		}
     }

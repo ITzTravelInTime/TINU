@@ -14,21 +14,19 @@ class CustomizationViewController: GenericViewController {
 	
 	public enum SectionsID: UInt8{
 		
+		case undefined = 0
+		
 		case generalOptions = 1
 		case bootFilesReplacement = 2
+		
 		case eFIfolderReplacement = 3
 		
-		case undefined = 0
 	}
 	
     private var ps: Bool!
 	
-	@IBOutlet weak var infoImageView: NSImageView!
-	
 	@IBOutlet weak var sectionsScrollView: NSScrollView!
 	@IBOutlet weak var settingsScrollView: NSScrollView!
-	
-    @IBOutlet weak var descriptionField: NSTextField!
 	
 	@IBOutlet weak var backButton: NSButton!
 	@IBOutlet weak var nextButton: NSButton!
@@ -40,7 +38,7 @@ class CustomizationViewController: GenericViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		self.setTitleLabel(text: "Advanced options")
+		self.setTitleLabel(text: "Options")
 		self.showTitleLabel()
 		
 		sections.removeAll()
@@ -49,76 +47,59 @@ class CustomizationViewController: GenericViewController {
         
         //just in case of errors
         if cvm.shared.sharedVolume == nil || cvm.shared.sharedApp == nil{
-            openSubstituteWindow(windowStoryboardID: "Confirm", sender: self.view)
-        }
-		
-		infoImageView.image = IconsManager.shared.infoIcon
-        
-        //let customizeIconPath = "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ToolbarCustomizeIcon.icns"
-        let bootFilesIconPath = "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ExecutableBinaryIcon.icns"
-		
-		#if useEFIReplacement
-			//let efiFolderIconPath = "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericFolderIcon.icns"
-		#endif
-			
-        if sharedInstallMac{
-			
-			//otherOperationsButton.frame.origin = NSPoint(x: self.view.frame.width / 2 - otherOperationsButton.frame.height / 2, y: otherOperationsButton.frame.origin.y)
-            
-            descriptionField.stringValue = "Those are options you can use to install macOS, not needed for a standard installation."
-            
-            //titleField.stringValue = "Options"
-            
-            /*if let supportsAPFS = iam.shared.sharedAppNotSupportsAPFS(){
-                if !supportsAPFS{
-                    descriptionField.stringValue += "\nNote that by default macOS will be installed without forcing to upgrade to APFS."
-                    descriptionField.frame.size.height *= (3/2)
-                    descriptionField.frame.origin.y -= descriptionField.frame.size.height / 3
-                }
-            }*/
+            sawpCurrentViewController(with: "Confirm", sender: self.view)
         }
 		
 		//general options
 		
 		let generalOptionsSection = getSectionItem()
-		
-		generalOptionsSection.image.image = NSImage(named: NSImageNamePreferencesGeneral)//IconsManager.shared.getIconFor(path: customizeIconPath, alternate: NSWorkspace.shared().icon(forFileType: ""))
-		
+		generalOptionsSection.image.image = NSImage(named: NSImageNamePreferencesGeneral)
 		generalOptionsSection.name.stringValue = "General options"
-		
 		generalOptionsSection.id = SectionsID.generalOptions
-		
 		sections.append(generalOptionsSection)
+		
+		let advancedOptionsSection = getSectionItem()
+		advancedOptionsSection.image.image = NSImage(named: NSImageNamePreferencesGeneral)
+		advancedOptionsSection.name.stringValue = "Advanced options"
+		advancedOptionsSection.isAdvanced = true
+		advancedOptionsSection.id = SectionsID.generalOptions
+		sections.append(advancedOptionsSection)
 		
 		#if !macOnlyMode
 			
 			#if useEFIReplacement
 				//efi replacement
+		
+				for i in SupportedEFIFolders.allCases{
+					let efiReplacement = getSectionItem()
+			
+					efiReplacement.image.image = NSImage(named: NSImageNameFolder)
 				
-				let efiReplacement = getSectionItem()
+					efiReplacement.name.stringValue = "Install " + i.rawValue + "\nEFI folder"
 				
-				efiReplacement.image.image = NSImage(named: NSImageNameFolder)//IconsManager.shared.getIconFor(path: efiFolderIconPath, alternate: NSWorkspace.shared().icon(forFile: "/Volumes"))
-				
-				efiReplacement.name.stringValue = "Install Clover EFI folder\n(Experimental)"
-				
-				efiReplacement.id = SectionsID.eFIfolderReplacement
-				
-				sections.append(efiReplacement)
-				
+					efiReplacement.id = SectionsID.eFIfolderReplacement
+					efiReplacement.bootLoaderType = i
+			
+					sections.append(efiReplacement)
+				}
+		
 			#endif
 		
-			//bootfiles
-			if !sharedInstallMac{
-				let bootFielsRepSection = getSectionItem()
+			#if useFileReplacement
+				//bootfiles
+				if !sharedInstallMac{
+					let bootFielsRepSection = getSectionItem()
 				
-				bootFielsRepSection.image.image = IconsManager.shared.getIconFor(path: bootFilesIconPath, name: "options")
+					bootFielsRepSection.image.image = IconsManager.shared.executableIcon
 				
-				bootFielsRepSection.name.stringValue = "Replace macOS\nboot files"
+					bootFielsRepSection.name.stringValue = "Replace macOS\nboot files"
 				
-				bootFielsRepSection.id = SectionsID.bootFilesReplacement
+					bootFielsRepSection.id = SectionsID.bootFilesReplacement
 				
-				sections.append(bootFielsRepSection)
-			}
+					sections.append(bootFielsRepSection)
+				}
+		
+			#endif
 		#endif
 		
 		
@@ -179,7 +160,7 @@ class CustomizationViewController: GenericViewController {
 		
 		CustomizationWindowManager.shared.referenceWindow = nil
 		
-		openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
+		sawpCurrentViewController(with: "ChooseCustomize", sender: sender)
 		//openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
     }
     

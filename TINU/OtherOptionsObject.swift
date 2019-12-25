@@ -9,13 +9,15 @@
 import Cocoa
 
 //other options
-public class OtherOptionsObject{
-	var id: OtherOptionsManager.OtherOptionID
-	var title: String
+public struct OtherOptionsObject{
+	var id: OtherOptionsManager.OtherOptionID = .unknown
+	var title: String = ""
+	
 	var isActivated = false
 	var isVisible = true
-	
 	var isUsable = true
+	
+	var isAdvanced = false
 	
 	var description: String! = ""
 	
@@ -28,26 +30,12 @@ public class OtherOptionsObject{
 	}
 	
 	func copy() -> OtherOptionsObject{
-		return OtherOptionsObject.init(objectID: id, objectTitle: title, objectDescription: description, objectIsActivated: isActivated, objectIsVisible: isVisible)
+		return OtherOptionsObject(from: self)
 	}
-	
-	init(){
-		id             = OtherOptionsManager.OtherOptionID.unknown
-		title = "This is an option"
-		description    = "This is the description of this option"
-	}
-	
-	init(objectID: OtherOptionsManager.OtherOptionID, objectTitle: String, objectDescription: String!) {
-		id = objectID
-		title = objectTitle
-		description = objectDescription
-	}
-	
-	init(objectID: OtherOptionsManager.OtherOptionID, objectTitle: String, objectDescription: String? ,objectIsActivated: Bool, objectIsVisible: Bool) {
-		id = objectID
-		title = objectTitle
-		isActivated = objectIsActivated
-		isVisible = objectIsVisible
-		description = objectDescription
+}
+
+extension OtherOptionsObject{
+	init(from other: OtherOptionsObject) {
+		self.init(id: other.id, title: other.title, isActivated: other.isActivated, isVisible: other.isVisible, isUsable: other.isUsable, isAdvanced: other.isActivated, description: other.description)
 	}
 }

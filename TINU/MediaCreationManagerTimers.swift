@@ -7,13 +7,6 @@
 //
 
 import Cocoa
-import SecurityFoundation
-
-#if recovery
-
-import LocalAuthentication
-
-#endif
 
 fileprivate let minutesRatio: UInt64 = 60
 

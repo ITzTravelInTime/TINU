@@ -22,6 +22,10 @@ public class SettingsSectionItem: NSView{
 	let normalColor = NSColor.white.withAlphaComponent(0).cgColor
 	var selectedColor = NSColor.selectedControlColor.cgColor
 	
+	//category switching for code reuse, not the best place for this stuff, but here it requires the less work
+	var bootLoaderType: SupportedEFIFolders = .clover
+	var isAdvanced = false
+	
 	
 	override public func draw(_ dirtyRect: NSRect) {
 		
@@ -123,33 +127,19 @@ public class SettingsSectionItem: NSView{
 			switch id{
 			case CustomizationViewController.SectionsID.generalOptions:
 				let surface = NSView()
-				let itemHeigth: CGFloat = 30//scrollView.frame.size.height / CGFloat(filesToReplace.count) - 1
-				
-				surface.frame.origin = CGPoint.zero
-				
+				let itemHeigth: CGFloat = 30
 				var isGray = true
 				
-				surface.frame.size = NSSize.init(width: scrollView.frame.size.width - 20, height: itemHeigth * (CGFloat(oom.shared.otherOptions.count))) //CGSize(width: scrollView.frame.size.width, height: 0)
-				
-				//surface.backgroundColor = NSColor.red
+				surface.frame.origin = CGPoint.zero
+				surface.frame.size = NSSize.init(width: scrollView.frame.size.width - 20, height: itemHeigth * (CGFloat(oom.shared.otherOptions.count)))
 				
 				var count: CGFloat = 0
 				
 				for i in oom.shared.otherOptions.sorted(by: { $0.0.rawValue > $1.0.rawValue }){
-					if i.value.isVisible{
-						let item = OtherOptionsItem(frame: NSRect(x: 0, y: count, width: surface.frame.size.width, height: itemHeigth))
-						
-						//item.textField.stringValue = i.filename
-						
-						//item.replaceFile = i
+					if i.value.isVisible && (i.value.isAdvanced == isAdvanced){
+						let item = OtherOptionsCheckBox(frame: NSRect(x: 0, y: count, width: surface.frame.size.width, height: itemHeigth))
 						
 						item.option = i.value
-//						
-//						if isGray{
-//							item.backgroundColor = NSColor.controlColor
-//						}else{
-//							item.backgroundColor = NSColor.white
-//						}
 						
 						isGray = !isGray
 						
@@ -287,6 +277,8 @@ public class SettingsSectionItem: NSView{
 					let surface = EFIReplacementView.init(frame: NSRect(origin: CGPoint.zero, size: NSSize(width: scrollView.frame.size.width - 17, height: scrollView.frame.size.height - 2)))
 				
 					scrollView.documentView = surface
+				
+					surface.bootloader = bootLoaderType
 					
 					scrollView.verticalScrollElasticity = .none
 				

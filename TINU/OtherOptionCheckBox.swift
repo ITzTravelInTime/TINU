@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class OtherOptionsItem: NSView {
+class OtherOptionsCheckBox: NSView {
     
     var option = OtherOptionsObject()
     
@@ -24,7 +24,7 @@ class OtherOptionsItem: NSView {
             checkBox.setButtonType(.switch)
             checkBox.title = option.title
             checkBox.target = self
-            checkBox.action = #selector(OtherOptionsItem.checked)
+            checkBox.action = #selector(OtherOptionsCheckBox.checked)
 		
 		checkBox.isEnabled = option.isUsable
 		
@@ -51,7 +51,7 @@ class OtherOptionsItem: NSView {
 		infoButton.font = NSFont.systemFont(ofSize: 13)
 		infoButton.isContinuous = true
 		infoButton.target = self
-		infoButton.action = #selector(OtherOptionsItem.showInfo)
+		infoButton.action = #selector(OtherOptionsCheckBox.showInfo)
 		
 		self.addSubview(infoButton)
     }
@@ -66,7 +66,7 @@ class OtherOptionsItem: NSView {
 		}
 		}*/
 		
-		if let o = oom.shared.otherOptions[option.id]{
+		if var o = oom.shared.otherOptions[option.id]{
 			o.isActivated = (checkBox.state == 1)
 			option.isActivated = o.isActivated
 			
@@ -74,11 +74,11 @@ class OtherOptionsItem: NSView {
 				if option.id == oom.OtherOptionID.otherOptionForceToFormatID{
 					
 					for item in (self.superview?.subviews)!{
-						if let opt = item as? OtherOptionsItem{
+						if let opt = item as? OtherOptionsCheckBox{
 							if opt.option.id == oom.OtherOptionID.otherOptionDoNotUseApfsID{
 								log("Trying to change the value of \"\(opt.option.id)\"")
 								
-								if let oo = oom.shared.otherOptions[opt.option.id]{
+								if var oo = oom.shared.otherOptions[opt.option.id]{
 									oo.isActivated = o.isActivated
 									oo.isUsable = o.isActivated
 								}

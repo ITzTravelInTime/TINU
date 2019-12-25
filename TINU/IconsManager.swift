@@ -19,6 +19,19 @@ public final class IconsManager{
 		}
 	}
 	
+	//executable file icon
+	//stop icon used by the app
+	public var executableIcon: NSImage!{
+		get{
+			
+			if let i = getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ExecutableBinaryIcon.icns", name: "warning"){
+				return i
+			}else{
+				return NSImage(named: "uncheck")
+			}
+		}
+	}
+	
 	//stop icon used by the app
 	public var stopIcon: NSImage!{
 		get{

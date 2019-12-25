@@ -84,7 +84,7 @@ class ChoseDriveViewController: ShadowViewController {
         super.viewDidLoad()
         // Do view setup here.
 		
-		self.setTitleLabel(text: "Choose the USB Drive to turn into a bootable macOS Installer")
+		self.setTitleLabel(text: "Choose the Drive or the Partition to turn into a macOS Installer")
 		self.showTitleLabel()
 		
 		if !sharedIsOnRecovery && !simulateDisableShadows{
@@ -111,7 +111,7 @@ class ChoseDriveViewController: ShadowViewController {
 		}
 		
         if sharedInstallMac{
-            titleLabel.stringValue = "Choose a partition to install macOS on"
+            titleLabel.stringValue = "Choose a drive or a partition to install macOS on"
         }
         
         updateDrives()
@@ -145,6 +145,8 @@ class ChoseDriveViewController: ShadowViewController {
 			if isGUIDwEFI{
 				prt = Part(partitionBSDName: d.DeviceIdentifier, partitionName: drivei.volume.stringValue, partitionPath: d.MountPoint!, partitionFileSystem: Part.FileSystem.other, partitionScheme: Part.PartScheme.gUID , partitionHasEFI: true, partitionSize: d.Size)
 			}else{
+				print(item)
+				print(d)
 				prt = Part(partitionBSDName: item.DeviceIdentifier, partitionName: drivei.volume.stringValue, partitionPath: item.MountPoint!, partitionFileSystem: .other, partitionScheme: .blank, partitionHasEFI: false, partitionSize: d.Size)
 				prt.apfsBDSName = d.DeviceIdentifier
 			}
@@ -267,7 +269,9 @@ class ChoseDriveViewController: ShadowViewController {
 					var ref: DiskutilObject!
 					
 					if d.isVolume(){
-						ref = d
+						if d.isMounted(){
+							ref = d
+						}
 					}else{
 						
 						for p in d.Partitions!{
@@ -384,9 +388,9 @@ class ChoseDriveViewController: ShadowViewController {
 	
 	@IBAction func goBack(_ sender: Any) {
 		if sharedShowLicense{
-			let _ = openSubstituteWindow(windowStoryboardID: "License", sender: self)
+			let _ = sawpCurrentViewController(with: "License", sender: self)
 		}else{
-			let _ = openSubstituteWindow(windowStoryboardID: "Info", sender: self)
+			let _ = sawpCurrentViewController(with: "Info", sender: self)
 		}
 	}
 	
@@ -423,7 +427,7 @@ class ChoseDriveViewController: ShadowViewController {
 				}
 			}
 			
-			let _ = openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: self)
+			let _ = sawpCurrentViewController(with: "ChoseApp", sender: self)
 		}else{
 			NSApplication.shared().terminate(sender)
 		}
