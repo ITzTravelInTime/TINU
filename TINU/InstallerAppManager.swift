@@ -133,6 +133,9 @@ public final class InstallerAppManager{
 			//fallback, really not used a lot
 			
 			let lc = cvm.shared.sharedBundleName.lowercased()
+			if lc.contains("big sur") || lc.contains("10.16") || lc.contains("11.0"){
+				return "16"
+			}
 			if lc.contains("catalina") || lc.contains("10.15"){
 				return "15"
 			}

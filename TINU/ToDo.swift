@@ -19,6 +19,7 @@
 -fix sudo at startup on catalina
 -download installer app window resizable
 -download installer app sewctions like in the efi mounter
+-optimize efi partition mounter for menu usage
 
 */
 
