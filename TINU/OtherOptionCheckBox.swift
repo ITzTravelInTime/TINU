@@ -66,39 +66,38 @@ class OtherOptionsCheckBox: NSView {
 		}
 		}*/
 		
-		if var o = oom.shared.otherOptions[option.id]{
-			o.isActivated = (checkBox.state == 1)
-			option.isActivated = o.isActivated
+		if oom.shared.otherOptions[option.id] != nil{
+			let newState = (checkBox.state == 1)
 			
-			if sharedInstallMac && cvm.shared.sharedSVReallyIsAPFS{
-				if option.id == oom.OtherOptionID.otherOptionForceToFormatID{
-					
-					for item in (self.superview?.subviews)!{
-						if let opt = item as? OtherOptionsCheckBox{
-							if opt.option.id == oom.OtherOptionID.otherOptionDoNotUseApfsID{
-								log("Trying to change the value of \"\(opt.option.id)\"")
-								
-								if var oo = oom.shared.otherOptions[opt.option.id]{
-									oo.isActivated = o.isActivated
-									oo.isUsable = o.isActivated
-								}
-								
-								opt.option.isActivated = o.isActivated
-								opt.option.isUsable = o.isActivated
-									
-								opt.checkBox.isEnabled = o.isActivated
-								
-								if o.isActivated{
-									opt.checkBox.state = 1
-								}else{
-									opt.checkBox.state = 0
-								}
-							}
-						}
+			//this as been done in this way instead of an if var because of possible errors
+			oom.shared.otherOptions[option.id]?.isActivated = newState
+			option.isActivated = newState
+			
+			if !sharedInstallMac || !cvm.shared.sharedSVReallyIsAPFS{
+				return
+			}
+			
+			if option.id != oom.OtherOptionID.otherOptionForceToFormatID{
+				return
+			}
+			
+			for item in self.superview!.subviews{
+				if let opt = item as? OtherOptionsCheckBox{
+					if opt.option.id != oom.OtherOptionID.otherOptionDoNotUseApfsID{
+						continue
 					}
 					
+					log("Trying to change the value of \"\(opt.option.id)\"")
+					
+					oom.shared.otherOptions[opt.option.id]?.isActivated = newState
+					oom.shared.otherOptions[opt.option.id]?.isUsable = newState
+					opt.option.isActivated = newState
+					opt.option.isUsable = newState
+					opt.checkBox.isEnabled = newState
+					opt.checkBox.state = checkBox.state
 				}
 			}
+			
 		}
 	}
 	
@@ -110,9 +109,9 @@ class OtherOptionsCheckBox: NSView {
 		CustomizationWindowManager.shared.referenceWindow.contentViewController?.presentViewControllerAsSheet(vc)
 		
 		/*if sharedUseVibrant{
-			if let w = sharedWindow.windowController as? GenericWindowController{
-				w.deactivateVibrantWindow()
-			}
+		if let w = sharedWindow.windowController as? GenericWindowController{
+		w.deactivateVibrantWindow()
+		}
 		}*/
 		
 	}

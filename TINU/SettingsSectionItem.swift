@@ -177,7 +177,7 @@ public class SettingsSectionItem: NSView{
 				scrollView.documentView = surface
 				
 				
-			case CustomizationViewController.SectionsID.bootFilesReplacement:
+			/*case CustomizationViewController.SectionsID.bootFilesReplacement:
 				
 				#if !macOnlyMode
 				
@@ -269,7 +269,7 @@ public class SettingsSectionItem: NSView{
 				#else
 					break
 				#endif
-				
+				*/
 			case CustomizationViewController.SectionsID.eFIfolderReplacement:
 				//efi replacement menu
 				#if useEFIReplacement && !macOnlyMode

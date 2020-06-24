@@ -26,7 +26,12 @@ class ChooseSideViewController: GenericViewController {
 	var count = 0
 	
 	override func viewDidLoad() {
-        super.viewDidLoad()
+		super.viewDidLoad()
+		
+		/*
+		DispatchQueue.global(qos: .background).async {
+		print(runCommandWithSudo(cmd: "/bin/sh", args: ["-c", "whoami"])!)
+		}*/
 		
 		spinner.isHidden = false
 		spinner.startAnimation(self)
@@ -34,61 +39,61 @@ class ChooseSideViewController: GenericViewController {
 		createUSBButton.isHidden = true
 		installButton.isHidden = true
 		
-        // Do view setup here.
+		// Do view setup here.
 		//DispatchQueue.global(qos: .background).sync {
-			//those functions are executed here and not into the app delegate, because this is executed first
-			AppManager.shared.checkAppMode()
-			AppManager.shared.checkUser()
-			AppManager.shared.checkSettings()
+		//those functions are executed here and not into the app delegate, because this is executed first
+		AppManager.shared.checkAppMode()
+		AppManager.shared.checkUser()
+		AppManager.shared.checkSettings()
 		
-			#if demo
-				print("You have successfully enbled the \"demo\" macro!")
-			#endif
+		#if demo
+		print("You have successfully enbled the \"demo\" macro!")
+		#endif
 		
-			#if macOnlyMode
-				print("This version of the app is compiled to be App Store Friendly!")
-			#endif
+		#if macOnlyMode
+		print("This version of the app is compiled to be App Store Friendly!")
+		#endif
 		
-			#if noFirstAuth
-				if !sharedIsOnRecovery{
-					print("WARNING: this app has been compiled with the first step authentication disabled, it may be less secure to use!")
-					//msgBoxWarning("WARNING", "This app has been compiled with first step authentication disabled, it may be less secure to use, use it at your own risk!")
-				}
-			#endif
-			
+		#if noFirstAuth
+		if !sharedIsOnRecovery{
+			print("WARNING: this app has been compiled with the first step authentication disabled, it may be less secure to use!")
+			//msgBoxWarning("WARNING", "This app has been compiled with first step authentication disabled, it may be less secure to use, use it at your own risk!")
+		}
+		#endif
+		
 		//}
 		
-        //code setup
-        
-        if let w = sharedWindow{
-            w.title = sharedWindowTitlePrefix
-        }
+		//code setup
 		
-        //ui setup
-        
-        createUSBButton.upperImage.image = NSImage(named: "Removable")
-        createUSBButton.upperTitle.stringValue = "Create a bootable\nmacOS installer"
-        
-        installButton.upperImage.image = NSImage(named: "OSInstall")
-        installButton.upperTitle.stringValue = "Install macOS"
+		if let w = sharedWindow{
+			w.title = sharedWindowTitlePrefix
+		}
+		
+		//ui setup
+		
+		createUSBButton.upperImage.image = NSImage(named: "Removable")
+		createUSBButton.upperTitle.stringValue = "Create a bootable\nmacOS installer"
+		
+		installButton.upperImage.image = NSImage(named: "OSInstall")
+		installButton.upperTitle.stringValue = "Install macOS"
 		
 		efiButton.upperImage.image = NSImage(named: "EFIIcon")
 		efiButton.upperTitle.stringValue = "Use \nEFI Partition Mounter"
 		
-        
-        /*if sharedIsOnRecovery{
-            //titleField.stringValue = "TINU (TINU Is Not Unib***t): The macOS tool"
-            /*let delta = (self.view.frame.size.width - (createUSBButton.frame.size.width * 2)) / 4
-            
-            createUSBButton.frame.origin.x = delta
-            
-            installButton.frame.origin.x = (delta * 3) + createUSBButton.frame.size.width*/
-            
-            installButton.isHidden = false
-        }else{
-            createUSBButton.frame.origin.x = self.view.frame.width / 2 - createUSBButton.frame.width / 2
-            installButton.isHidden = true
-        }*/
+		
+		/*if sharedIsOnRecovery{
+		//titleField.stringValue = "TINU (TINU Is Not Unib***t): The macOS tool"
+		/*let delta = (self.view.frame.size.width - (createUSBButton.frame.size.width * 2)) / 4
+		
+		createUSBButton.frame.origin.x = delta
+		
+		installButton.frame.origin.x = (delta * 3) + createUSBButton.frame.size.width*/
+		
+		installButton.isHidden = false
+		}else{
+		createUSBButton.frame.origin.x = self.view.frame.width / 2 - createUSBButton.frame.width / 2
+		installButton.isHidden = true
+		}*/
 		
 		var spacing: CGFloat = 20
 		
@@ -98,7 +103,7 @@ class ChooseSideViewController: GenericViewController {
 		}
 		
 		#if macOnlyMode
-			efiButton.isEnabled = false
+		efiButton.isEnabled = false
 		#endif
 		
 		background.frame.size.height = installButton.frame.size.height + 40
@@ -156,10 +161,11 @@ class ChooseSideViewController: GenericViewController {
 		}
 		
 		background.frame.origin = NSPoint(x: self.view.frame.width / 2 - background.frame.size.width / 2, y: self.view.frame.height / 2 - background.frame.size.height / 2)
-        
-    }
+		
+	}
 	
 	override func viewWillAppear() {
+		super.viewWillAppear()
 		
 		if count < 2{
 			DispatchQueue.global(qos: .background).async {
@@ -175,6 +181,25 @@ class ChooseSideViewController: GenericViewController {
 		}
 	}
 	
+	override func viewDidAppear() {
+		super.viewDidAppear()
+		
+		#if sudoStartup
+		
+		if !isRootUser{
+			if #available(OSX 10.15, *){
+				let appDelegate = NSApplication.shared().delegate as! AppDelegate
+				appDelegate.openVerbose(appDelegate.getVerboseItem(isSudo: true))
+			}else{
+				let _ = startCommandWithSudo(cmd: "/bin/sh", args: ["-c", Bundle.main.executablePath!])
+			}
+			
+			NSApplication.shared().terminate(self)
+		}
+		
+		#endif
+	}
+	
 	func stopAnimationAndShowbuttons(){
 		self.spinner.stopAnimation(self)
 		self.spinner.isHidden =  true
@@ -187,16 +212,18 @@ class ChooseSideViewController: GenericViewController {
 			apd.openEFIPartitionTool(sender)
 		}
 	}
-    
-    @IBAction func createUSB(_ sender: Any) {
-        	if let apd = NSApplication.shared().delegate as? AppDelegate{
-            	apd.swichMode(isInstall: false)
-        	}
-    }
-    
-    @IBAction func install(_ sender: Any) {
-        	if let apd = NSApplication.shared().delegate as? AppDelegate{
-            	apd.swichMode(isInstall: true)
-        	}
-    }
+	
+	@IBAction func createUSB(_ sender: Any) {
+		if let apd = NSApplication.shared().delegate as? AppDelegate{
+			apd.swichMode(isInstall: false)
+		}
+	}
+	
+	@IBAction func install(_ sender: Any) {
+		if let apd = NSApplication.shared().delegate as? AppDelegate{
+			apd.swichMode(isInstall: true)
+		}
+	}
+	
+	
 }

@@ -25,14 +25,14 @@ extension InstallMediaCreationManager{
 		
 		log("process took " + String(self.seconds) + " seconds to finish")
 		
-			DispatchQueue.main.sync {
-		//we have finished, so the controls opf the window are restored
-		if let w = sharedWindow{
-			w.isMiniaturizeEnaled = true
-			w.isClosingEnabled = true
-			w.canHide = true
-		}
+		DispatchQueue.main.sync {
+			//we have finished, so the controls opf the window are restored
+			if let w = sharedWindow{
+				w.isMiniaturizeEnaled = true
+				w.isClosingEnabled = true
+				w.canHide = true
 			}
+		}
 		
 		//this code get's the output of teh process
 		let outdata = CreateinstallmediaSmallManager.shared.outputPipe.fileHandleForReading.readDataToEndOfFile()
@@ -52,11 +52,23 @@ extension InstallMediaCreationManager{
 		log("\"\(sharedExecutableName)\" has finished")
 		
 		log("process output produced: ")
-		
-		//logs the output of the process
-		for o in self.output{
-			log("      " + o)
-		}
+			
+			if self.output.isEmpty{
+				if let data = String(data: outdata, encoding: .utf8){
+					log(data)
+				}
+			}else if self.output.first!.isEmpty{
+				if let data = String(data: outdata, encoding: .utf8){
+					log(data)
+				}
+			}else{
+			
+				//logs the output of the process
+				for o in self.output{
+					log("      " + o)
+				}
+				
+			}
 		
 		//if the output is empty opr if it's just the standard output of the creation process, it's not logged
 		if !self.error.isEmpty{
@@ -67,6 +79,11 @@ extension InstallMediaCreationManager{
 				for o in self.error{
 					log("      " + o)
 				}
+			}
+		}else{
+			if let data = String(data: errdata, encoding: .utf8){
+				log("process error/s produced: ")
+				log(data)
 			}
 		}
 			
@@ -107,9 +124,7 @@ extension InstallMediaCreationManager{
 			}
 			
 			//if the exit code produced is not normal, it's logged
-			if rc != 0{
-				log("process exit code produced: \n      \(rc)")
-			}
+			
 			DispatchQueue.main.sync {
 			self.setActivityLabelText("Checking previous operations")
 			}
@@ -117,8 +132,8 @@ extension InstallMediaCreationManager{
 			
 			if sharedInstallMac{
 				DispatchQueue.main.sync {
-					
-					if rc == 0{
+					//102030100
+					if (rc == 0){
 						self.viewController.goToFinalScreen(title: "macOS installed successfully", success: true)
 					}else{
 						self.viewController.goToFinalScreen(title: "macOS installation error: check the log for details", success: false)
@@ -129,24 +144,11 @@ extension InstallMediaCreationManager{
 				return
 			}
 			
-			var px = 0
-			
-			var fe: String!
-			var me: String!
-			var le: String!
-			
-			//let fo = ""
-			var lo: String!
-			
-			var llo: String!
-			
-			var tt: String!
+			var px = 0, fe: String!, me: String!, le: String!, lo: String!, llo: String!, tt: String!
 			
 			if !simulateCreateinstallmediaFailCustomMessage.isEmpty && simulateAbnormalExitcode{
 				tt = simulateCreateinstallmediaFailCustomMessage
 			}
-			
-			//DispatchQueue.main.sync{
 			
 				fe = self.error.first
 				if self.error.indices.contains(1){
@@ -161,10 +163,6 @@ extension InstallMediaCreationManager{
 				lo = self.output.last
 				
 				llo = self.output.last?.lowercased()
-				
-			//}
-			
-			//if simulateUseScriptAuth{
 				
 				var mol = 1
 				
@@ -185,13 +183,18 @@ extension InstallMediaCreationManager{
 						}
 					}
 				}
-				
-				log("Main process exit code: \(px)")
-			//}
+			
+			
+			let success = ((rc == 0) && (px == 0)) || (isRootUser && (px == 102030100) && (rc == 0)) //add rc to the root case
+			
+			log("Current user:                       \(NSUserName())")
+			log("Main process exit code:             \(px)")
+			log("process exit code produced:         \(rc)")
+			log("Detected process outcome:           \(success ? "Positive" : "Negative")")
 			
 			var errorsList: [CheckItem] = []
 			
-			if rc != 0 || px != 0{
+			if !success{
 				
 				/*
 
@@ -214,16 +217,23 @@ extension InstallMediaCreationManager{
 				//checks for known errors first
 				
 				
-				errorsList.append(CheckItem(stringsToCheck: [tt, fe, le, lo], valuesToCheck: ["A error occurred erasing the disk."], printMessage: "Bootable macOS installer creation failed, createinstallmedia returned an error while formatting the installer, please, erase this dirve with disk utility and retry", message: "TINU creation failed to format \"\(self.dname)\"", notError: false, operation: .contains, isBack: false))
+				errorsList.append(CheckItem(stringsToCheck: [tt, fe, le, lo], valuesToCheck: ["A error occurred erasing the disk."], printMessage: "Bootable macOS installer creation failed, createinstallmedia returned an error while formatting the installer partition, please, erase manually this dirve with disk utility and retry", message: "TINU creation failed to format \"\(self.dname)\"", notError: false, operation: .contains, isBack: false))
 				
 				errorsList.append(CheckItem(stringsToCheck: [tt, fe, le, me, lo], valuesToCheck: ["does not appear to be a valid OS installer application"], printMessage: "macOS install media creation failed, createinstallmedia returned an error about the app you are using, please, check your mac installaltion app and if needed download it again. Many thimes this appens ,because the installer downloaded from the mac app store, does not contains all the needed files or contanins wrong or corrupted files, in many cases the mac app store on a virtual machine does not downloads the full macOS installer application", message: "Bootable macOS installer creation failed because the selected macOS installer app is damaged or invalid", notError: false, operation: .contains, isBack: false))
 				
 				errorsList.append(CheckItem(stringsToCheck: [tt, fe, le, me, lo], valuesToCheck: ["is not a valid volume mount point"], printMessage: "Bootable macOS installer creation failed because the selected volume is no longer available", message: "Bootable macOS installer creation failed because the drive \"\(self.dname)\" is no longer available", notError: false, operation: .contains, isBack: false))
 				
+				if #available(OSX 10.15, *){
+				errorsList.append(CheckItem(stringsToCheck: [tt, fe, le, me, lo], valuesToCheck: ["IA app name cookie write failed"], printMessage: "Bootable macOS installer creation failed because of an error while copying needed files, make sure that \"\(self.dname)\" is working correctly and that the SIP is disasbled, the SIP enabled can be the real issue in mac versions from Catalina and newer", message: "Bootable macOS installer creation failed because the SIP (System Integrity Protection) is enabled, please disable it and retry", notError: false, operation: .contains, isBack: false))
+				}
+				
 				errorsList.append(CheckItem(stringsToCheck: [tt, fe, le, me, lo], valuesToCheck: ["The copy of the installer app failed"], printMessage: "Bootable macOS installer creation failed because the process failed to copy some elements on it, mainly the installer app or it's content, can't be copied or failed to be copied, please check that your target driver is working properly and just in case erase it with disk utility, if that does not work, use another working target device", message: "Bootable macOS installer creation failed because of an error while copying needed files, make sure that \"\(self.dname)\" is working correctly", notError: false, operation: .contains, isBack: false))
 				
 				errorsList.append(CheckItem(stringsToCheck: [fe, le, me, lo], valuesToCheck: ["The bless of the installer disk failed"], printMessage: "Bootable macOS installer creation failed because \"\(sharedExecutableName)\" was suddenly closed or crashed, probably due to some killing or by the computer going into a sleep state.", message: "Bootable macOS installer creation failed: The creation process was suddenly closed, make sure that the computer doesn't go in standby mode during the creation process.", notError: false, operation: .contains, isBack: false))
 				
+				errorsList.append(CheckItem(stringsToCheck: [tt, fe, le, me, lo], valuesToCheck: ["To use this tool, you must download the macOS installer application on a Mac with"], printMessage: "Installer app not supprted by this mac os version", message: "Bootable macOS installer creation failed: The installer app seems not to be compatible with your mac os version or it wasn't properly downloaded, it's reccomended to re-download it from the App Store or to use a different macOS version", notError: false, operation: .contains, isBack: false))
+				
+				//To use this tool, you must download the macOS installer application on a Mac with 10.12.5 or later, or El Capitan 10.11.6. For more information, please see the following: https://support.apple.com/kb/HT201372
 				
 				
 				//if simulateUseScriptAuth{
@@ -241,7 +251,7 @@ extension InstallMediaCreationManager{
 				
 				
 				//then checks for unknown errors
-				errorsList.append(CheckItem(stringsToCheck: ["\(rc)","\(px)"], valuesToCheck: ["0"], printMessage: "Bootable macOS installer creation exited with a not normal exit code, see previous lines in the log to get more info about the error", message: "Bootable macOS installer creation failed because of an unknown error, check the log for details", notError: false, operation: .different, isBack: false))
+				errorsList.append(CheckItem(stringsToCheck: ["\(rc)","\(px)"], valuesToCheck: ["0", "102030100"], printMessage: "Bootable macOS installer creation exited with a not normal exit code, see previous lines in the log to get more info about the error", message: "Bootable macOS installer creation failed because of an unknown error, check the log for details", notError: false, operation: .different, isBack: false))
 				
 				
 			}else{
@@ -250,7 +260,7 @@ extension InstallMediaCreationManager{
 				errorsList.append(CheckItem(stringsToCheck: [llo], valuesToCheck: ["done", "install media now available at "], printMessage: "Bootable macOS installer created successfully!", message: "Bootable macOS installer created successfully", notError: true, operation: .contains, isBack: false))
 				
 				//then if the proces has not been completed correclty, probably we have an error output or an unknown output
-				errorsList.append(CheckItem(stringsToCheck: ["\(rc)", "\(px)"], valuesToCheck: ["0"], printMessage: "Bootable macOS installer creation failed, unknown output from \"\(sharedExecutableName)\" while creating the installer, please, erase this dirve with disk utility and retry", message: "Bootable macOS installer creation failed because of an unknown error, chech the log for details", notError: false, operation: .equal, isBack: false))
+				errorsList.append(CheckItem(stringsToCheck: ["\(rc)", "\(px)"], valuesToCheck: ["0", "102030100"], printMessage: "Bootable macOS installer creation failed, unknown output from \"\(sharedExecutableName)\" while creating the installer, please, erase this dirve with disk utility and retry", message: "Bootable macOS installer creation failed because of an unknown error, chech the log for details", notError: false, operation: .equal, isBack: false))
 				
 			}
 			

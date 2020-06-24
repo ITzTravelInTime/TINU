@@ -24,7 +24,6 @@ extension InstallMediaCreationManager{
 			var tCMD = ""
 			
 			let pname = sharedExecutableName
-			let isNotMojave = iam.shared.installerAppGoesUpToThatVersion(version: 14.0)!
 			
 			self.dname = dm.getCurrentDriveName()
 			
@@ -43,12 +42,6 @@ extension InstallMediaCreationManager{
 					userText = "Unmounting conflicting volumes"
 				case 3:
 					userText = "Applying options"
-				case 4:
-					userText = ""
-				case 5:
-					userText = ""
-				case 6:
-					userText = ""
 				case 7:
 					userText = "Building " + pname + " command string"
 				default:
@@ -83,7 +76,7 @@ extension InstallMediaCreationManager{
 						}
 					}
 				case 7:
-					tCMD = self.buildCommandString(useMojave: isNotMojave, useAPFS: useAPFS)
+					tCMD = self.buildCommandString(useAPFS: useAPFS)
 					
 					log("The application that will be used is: " + cvm.shared.sharedApp!)
 					log("The target drive is: " + cvm.shared.sharedVolume!)
@@ -107,7 +100,7 @@ extension InstallMediaCreationManager{
 			}
 			
 			let args = ["-c", tCMD]
-			let exec = "/bin/sh"
+			let exec = "/bin/zsh"
 			
 			#if noFirstAuth
 			let noFAuth = true
@@ -164,6 +157,7 @@ extension InstallMediaCreationManager{
 					DispatchQueue.main.sync {
 						self.installFinished()
 					}
+					
 				}else{
 					//here insted just uses a timer to see if the process has finished and stops this thread
 					//assign processes variables

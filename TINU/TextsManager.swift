@@ -11,7 +11,10 @@ import Foundation
 public final class TextManager{
 
 //this is the verbose mode script, a copy here is leaved here just in case it's missing from the application folder
-public static let verboseScript = "#!/bin/sh\n#  DebugScript.sh\n#  TINU\n#\n#  Created by Pietro Caruso on 20/09/17.\n#  Copyright © 2017-2018 Pietro Caruso. All rights reserved.\necho \"Staring running TINU in log mode\"\n\"$(dirname \"$(dirname \"$0\")\")/MacOS/TINU\""
+	/*
+public static let verboseScript = "#!/bin/sh\n#  DebugScript.sh\n#  TINU\n#\n#  Created by Pietro Caruso on 20/09/17.\n#  Copyright © 2017-2020 Pietro Caruso. All rights reserved.\necho \"Staring running TINU in log mode\"\n\"$(dirname \"$(dirname \"$0\")\")/MacOS/TINU\""
+	
+public static let verboseScriptSudo = "#!/bin/sh\n#  DebugScriptSudo.sh\n#  TINU\n#\n#  Created by Pietro Caruso on 20/06/20.\n#  Copyright © 2017-2020 Pietro Caruso. All rights reserved.\necho \"Staring running TINU in log mode\"\nsudo \"$(dirname \"$(dirname \"$0\")\")/MacOS/TINU\""*/
 
 //this is the text of the readme file that is written on the macOS install media at the end of the createinstallmedia process
 public static var readmeText: String {
@@ -21,9 +24,9 @@ public static var readmeText: String {
 		#else
 		
 		if sharedInstallMac{
-			return "Thank you for using TINU\n\nIf you want to use this macOS system on an hackintosh, please download and install the clover bootloader, you can find it here:\n https://sourceforge.net/projects/cloverefiboot/files/latest/download?source=files\n\n(note that the clover bootloader needs to be installed and configured properly depending on the hw configuration of the system you want to install on, for help about that go to: www.insanelymac.com)\n\nIf you want to use this macOS system on a standard mac, you don`t have to do any extra steps, it`s ready to be used"
+			return "Thank you for using TINU\n\nIf you want to use this macOS system on an hackintosh, please download and install either the Clover or the OpenCore bootloader, you can find Clover here:\n https://github.com/CloverHackyColor/CloverBootloader/releases\n\nor OpenCore here:\n https://github.com/acidanthera/OpenCorePkg/releases \n\n(note that the bootloaders mentioned needs to be installed and configured properly depending on the hw configuration of the system you want to install on, for help about that go to: www.insanelymac.com or r/Hackintosh)\n\nIf you want to use this macOS system on a standard mac, you don`t have to do any extra steps, it`s ready to be used."
 		}else{
-			return "Thank you for using TINU\n\nIf you want to use this bootable macOS installer on an hackintosh, please download and install the clover bootloader, you can find it here:\n https://sourceforge.net/projects/cloverefiboot/files/latest/download?source=files\n\n(note that the clover bootloader needs to be installed and configured properly depending on the hw configuration of the system you want to install on, for help about that go to: www.insanelymac.com)\n\nIf you want to use this bootable macOS installer on a standard mac, you don`t have to do any extra steps, it`s ready to be used"
+			return "Thank you for using TINU\n\nIf you want to use this bootable macOS installer on an hackintosh, please download and install either the Clover or the OpenCore bootloader, you can find Clover here:\n https://github.com/CloverHackyColor/CloverBootloader/releases\n\nor OpenCore here:\n https://github.com/acidanthera/OpenCorePkg/releases \n\n(note that the bootloaders mentioned needs to be installed and configured properly depending on the hw configuration of the system you want to install on, for help about that go to: www.insanelymac.com or r/Hackintosh)\n\nIf you want to use this bootable macOS installer on a standard mac, you don`t have to do any extra steps, it`s ready to be used."
 		}
 		#endif
 	}

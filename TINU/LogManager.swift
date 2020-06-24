@@ -19,7 +19,7 @@ public var logHasBeenUpdated = false
 #endif
 
 //function you need to call if you want to log something
-@inline(__always) public func log(_ log: Any){
+public func log(_ log: Any){
     print("\(log)")
 	
     #if !isTool
@@ -53,7 +53,7 @@ public var logHasBeenUpdated = false
 
 #if !isTool
 //returs the whole log, if you do not have alreay read it, it's better to not use it
-@inline(__always) public func readLog() -> String!{
+public func readLog() -> String!{
     if !logHasBeenUpdated{
         return nil
     }else{
@@ -62,7 +62,7 @@ public var logHasBeenUpdated = false
 }
 
 //returs the whole log, but it will always return the log
-@inline(__always) public func readAllLog() -> String{
+public func readAllLog() -> String{
         var ret = ""
         for i in logs{
             ret += i + "\n"

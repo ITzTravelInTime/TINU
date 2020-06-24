@@ -90,7 +90,7 @@ extension NSWindow{
     }
     
     public func makeFullScreen(){
-        if self.styleMask.contains(.fullScreen) == false{
+        if !self.styleMask.contains(.fullScreen){
             self.toggleFullScreen(true)
         }
     }

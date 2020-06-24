@@ -92,6 +92,12 @@ class InfoViewController: GenericViewController{
 	override func viewDidAppear() {
 		super.viewDidAppear()
 		
+		if #available(OSX 10.15, *){
+			if !isRootUser{
+				SIPManager.checkSIPAndLetTheUserKnow()
+			}
+		}
+		
 		#if noFirstAuth
 			if !sharedIsOnRecovery{
 				msgBoxWarning("WARNING", "This app has been compiled with first step authentication disabled.\nIt may be less secure to use, use it at your own risk!")

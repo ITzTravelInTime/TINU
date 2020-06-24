@@ -78,7 +78,7 @@ extension InstallMediaCreationManager{
 			self.setProgressValue(startProgress + (progressRate * p))
 		}
 	}
-	
+	/*
 	@objc func checkBootFilesReplacementProcess(_ sender: AnyObject){
 		if EFICopyEnded{
 			timer.invalidate()
@@ -87,7 +87,7 @@ extension InstallMediaCreationManager{
 		if let p = BootFilesReplacementManager.shared.replacementProcessProgress{
 			self.setProgressValue(startProgress + (progressRate * p))
 		}
-	}
+	}*/
 	
 	#endif
 	

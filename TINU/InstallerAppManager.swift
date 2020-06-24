@@ -129,7 +129,13 @@ public final class InstallerAppManager{
 		}
 		
 		if checkSharedBundleName(){
+			
+			//fallback, really not used a lot
+			
 			let lc = cvm.shared.sharedBundleName.lowercased()
+			if lc.contains("catalina") || lc.contains("10.15"){
+				return "15"
+			}
 			if lc.contains("mojave") || lc.contains("10.14"){
 				return "14"
 			}

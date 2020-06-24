@@ -34,6 +34,6 @@ public class CopyrightLabel: NSTextField{
 		
 		self.isHidden = false
 		
-		self.stringValue = "Created by Pietro Caruso 2017-2019, Please do not redistribute"
+		self.stringValue = Bundle.main.copyright!
 	}
 }

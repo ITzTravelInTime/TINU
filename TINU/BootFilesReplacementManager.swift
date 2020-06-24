@@ -6,6 +6,7 @@
 //  Copyright © 2017 Pietro Caruso. All rights reserved.
 //
 
+/*
 import Foundation
 
 #if !macOnlyMode
@@ -203,5 +204,5 @@ public final class BootFilesReplacementManager{
 }
 
 #endif
-
+*/
 

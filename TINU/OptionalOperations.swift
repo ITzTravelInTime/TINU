@@ -338,6 +338,7 @@ public final class OptionalOperations{
 		return (ok, nil)
 	}
 	
+	/*
 	#if !macOnlyMode
 	func replaceBootFiles() -> (result: Bool, message: String?){
 		var ok = true
@@ -388,6 +389,8 @@ public final class OptionalOperations{
 		return(ok, nil)
 	}
 	#endif
+
+*/
 		
 }
 

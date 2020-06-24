@@ -72,7 +72,7 @@ public final class IconsManager{
 	
 	//return the icon of thespecified installer app
 	
-	func getInstallerAppIcon(forApp app: String) ->NSImage{
+	func getInstallerAppIconFrom(path app: String) ->NSImage{
 		let iconp = app + "/Contents/Resources/InstallAssistant.icns"
 		
 		if FileManager.default.fileExists(atPath: iconp){

@@ -16,7 +16,7 @@ public func checkOtherOptions(){
 		oom.shared.restoreOtherOptions()
 		
 		#if !macOnlyMode
-			BootFilesReplacementManager.shared.eraseReplacementFilesData()
+			//BootFilesReplacementManager.shared.eraseReplacementFilesData()
 		
 			#if useEFIReplacement
 				let _ = EFIFolderReplacementManager.shared.unloadEFIFolder()
@@ -75,6 +75,7 @@ public func checkOtherOptions(){
 						item.isUsable = !cvm.shared.sharedSVReallyIsAPFS
 					}
 				}else{
+					/*
 					#if !macOnlyMode
 					
 					for i in 0...(BootFilesReplacementManager.shared.filesToReplace.count - 1){
@@ -94,6 +95,7 @@ public func checkOtherOptions(){
 					}
 					
 					#endif
+					*/
 					
 					#if !macOnlyMode
 					

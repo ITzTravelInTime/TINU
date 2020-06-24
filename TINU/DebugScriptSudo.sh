@@ -1,9 +1,9 @@
 #!/bin/sh
 
-#  DebugScript.sh
+#  DebugScriptSudo.sh
 #  TINU
 #
-#  Created by Pietro Caruso on 20/09/17.
+#  Created by Pietro Caruso on 20/06/20.
 #  Copyright © 2017-2020 Pietro Caruso. All rights reserved.
 echo "Staring running TINU in log mode"
-"$(dirname "$(dirname "$0")")/MacOS/TINU"
+sudo "$(dirname "$(dirname "$0")")/MacOS/TINU"

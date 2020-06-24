@@ -17,6 +17,9 @@ To enable each macro you need to go into the build settings section of the Xcode
 - demo
 	This is an example macro to let you test macros effects, and check if you are able to make them to work, by enableing this you will see a message of success at the app startup
 
+- sudoStartup
+	This will let the app to always start as sudo
+
 - usedate
 	This will add a string prefix with the date and the precise time in seconds in which that log message was send to the log system, usefoul for debug reasons, WARNING, this may slow down the app while creating the usb instller or while installing macOS via tinu using the recovery mode
 

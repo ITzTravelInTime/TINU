@@ -15,10 +15,8 @@ class CustomizationViewController: GenericViewController {
 	public enum SectionsID: UInt8{
 		
 		case undefined = 0
-		
 		case generalOptions = 1
 		case bootFilesReplacement = 2
-		
 		case eFIfolderReplacement = 3
 		
 	}
@@ -58,8 +56,10 @@ class CustomizationViewController: GenericViewController {
 		generalOptionsSection.id = SectionsID.generalOptions
 		sections.append(generalOptionsSection)
 		
+		//advanced
+		
 		let advancedOptionsSection = getSectionItem()
-		advancedOptionsSection.image.image = NSImage(named: NSImageNamePreferencesGeneral)
+		advancedOptionsSection.image.image = NSImage(named: NSImageNameAdvanced)
 		advancedOptionsSection.name.stringValue = "Advanced options"
 		advancedOptionsSection.isAdvanced = true
 		advancedOptionsSection.id = SectionsID.generalOptions

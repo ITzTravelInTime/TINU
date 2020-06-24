@@ -68,13 +68,12 @@ public func checkAppMode(){
 
 //checks if teh app is running in a normal user level environment or in a root user inside the mac os recovery or installer, so it's sufficient to call it only once during the startup of the app
 public func checkUser(){
-	let u = NSUserName()
 	if sharedIsReallyOnRecovery{
 		print("Running on the root user on a mac os recovery")
 		sharedIsOnRecovery = true
 	}else{
 		sharedIsOnRecovery = false
-		print("Running on this user: " + u)
+		print("Running on this user: " + NSUserName())
         
 		if simulateRecovery{
 			print("Recovery mode simulation activated")

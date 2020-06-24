@@ -38,6 +38,12 @@ class ConfirmViewController: GenericViewController {
         }
 		
 		self.showTitleLabel()
+		
+		if #available(OSX 10.15, *){
+			if !isRootUser{
+				SIPManager.checkSIPAndLetTheUserKnow()
+			}
+		}
     }
     
     
@@ -70,7 +76,7 @@ class ConfirmViewController: GenericViewController {
         
         if let sa = cm.sharedApp{
             print(sa)
-            appImage.image = IconsManager.shared.getInstallerAppIcon(forApp: sa)
+			appImage.image = IconsManager.shared.getInstallerAppIconFrom(path: sa)
             appName.stringValue = FileManager.default.displayName(atPath: sa)
             print("Installation app that will be used is: " + sa)
         }else{

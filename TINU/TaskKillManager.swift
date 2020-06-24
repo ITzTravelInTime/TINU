@@ -81,7 +81,7 @@ public final class TaskKillManager{
 	-True  - if the process has been killed successfully or if it is not in execution
 	-False - if the process has not been killed successfully
 	-nil   - if the authentication to kill the process has not been gives*/
-	private class func terminateProcessPid(pid: String!, name: String) -> Bool!{
+	class func terminateProcessPidCheck(pid: String!, name: String) -> Bool!{
 		
 		var npid = pid
 		
@@ -94,33 +94,40 @@ public final class TaskKillManager{
 		}
 		
 		if !recalculate{
-			if let res = runCommandWithSudo(cmd: "/bin/sh", args: ["-c", "kill " + npid!]){
+			return terminateProcess(PID: Int32(npid!)!)
+		}
+		
+		log("The Pid has not been determinated with success")
+		return false
+		
+	}
+	
+	class func terminateProcess(PID pid: Int32) -> Bool!{
+		
+		
+			if let res = runCommandWithSudo(cmd: "/bin/sh", args: ["-c", "kill \(pid)"]){
 				
 				if res.exitCode != 0{
-					log("Failed to close \"\(name)\" because the closing process has exited with a code that is not 0: \n     exit code: \(res.exitCode)\n    output: \(res.output)\n     error/s produced: \(res.error)")
+					log("Failed to close \"\(pid)\" because the closing process has exited with a code that is not 0: \n     exit code: \(res.exitCode)\n    output: \(res.output)\n     error/s produced: \(res.error)")
 					return false
 				}
 				
 				if let f = res.output.first{
 					if (f.isEmpty || f == "Password:" || f == "\n"){
-						log("Process \"\(name)\" stopped with success")
+						log("Process \"\(pid)\" stopped with success")
 						return true
 					}else{
-						log("Failed to close \"\(name)\": \n     exit code: \(res.exitCode)\n    output: \(res.output)\n     error/s produced: \(res.error)")
+						log("Failed to close \"\(pid)\": \n     exit code: \(res.exitCode)\n    output: \(res.output)\n     error/s produced: \(res.error)")
 						return false
 					}
 				}else{
-					log("Failed to close \"\(name)\" because is not possible to get the output of the termination process")
+					log("Failed to close \"\(pid)\" because is not possible to get the output of the termination process")
 					return false
 				}
 			}else{
-				log("Failed to close \"\(name)\" because of an authentication failure")
+				log("Failed to close \"\(pid)\" because of an authentication failure")
 				return nil
 			}
-		}
-		
-		log("The Pid has not been determinated with success")
-		return false
 		
 	}
 	
@@ -136,7 +143,7 @@ public final class TaskKillManager{
 	
 	@inline(__always) class func terminateProcess(name: String) -> Bool!{
 		
-		return terminateProcessPid(pid: nil, name: name)
+		return terminateProcessPidCheck(pid: nil, name: name)
 		
 	}
 	
@@ -159,7 +166,7 @@ public final class TaskKillManager{
 				#endif
 			}
 			
-			return answer ? terminateProcessPid(pid: pid, name: name) : nil
+			return answer ? terminateProcessPidCheck(pid: pid, name: name) : nil
 			
 		}
 		

@@ -58,7 +58,7 @@ public final class RecoveryModeManager{
 			}else{
 				var really = false
 				
-				if NSUserName() == "root"{
+				if isRootUser{
 					really = !FileManager.default.fileExists(atPath: "/usr/bin/sudo")
 				}
 				
@@ -85,6 +85,12 @@ public var sharedIsOnRecovery: Bool{
 public var sharedIsReallyOnRecovery: Bool{
 	get{
 		return RecoveryModeManager.shared.sharedIsReallyOnRecovery
+	}
+}
+
+public var isRootUser: Bool{
+	get{
+		return NSUserName() == "root"
 	}
 }
 

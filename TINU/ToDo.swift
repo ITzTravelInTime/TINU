@@ -8,19 +8,22 @@
 
 /*TODO:
 
--show license just once as a dialog-ish window on the first usage of the app
--it's better to no longer mention directly hackintosh and hackintoshing in the tool
+-it's better to no longer mention directly hackintosh and hackintoshing in the tool, since it can be couse of possible problems maybe?
 -add unusable catalina and newer app if the usb driver is less than 9 gb
 -add time machine detection for disks
--remove reddit posts form the contacts
--add beta testing group to contacts
 -continue with ui revision
+
+-reimplement efi partition mounter's back end using codable classes
+
+-touch id efi partition mounter
+-fix sudo at startup on catalina
+-download installer app window resizable
+-download installer app sewctions like in the efi mounter
 
 */
 
 /*TODO but with less priority:
 
--make the download mac os isnatller apps window with a scroll view and with each element created programatically from a list of a struct elements containing all the needed info to make each section
-
+-show license just once as a dialog-ish window on the first usage of the app
 
 */

@@ -224,7 +224,7 @@ extension InstallMediaCreationManager{
 		self.addToProgressValue(self.unit * 2)
 		}
 		
-		
+		/*
 		#if !macOnlyMode
 		DispatchQueue.main.sync {
 		self.setActivityLabelText("Replacing boot files")
@@ -251,6 +251,7 @@ extension InstallMediaCreationManager{
 			
 		}
 		#endif
+*/
 		
 		//8
 		DispatchQueue.main.sync {

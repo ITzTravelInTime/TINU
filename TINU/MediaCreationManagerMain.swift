@@ -90,10 +90,12 @@ public final class InstallMediaCreationManager{
 	
 	//this function stops the current executable from running and , it does runs sudo using the password stored in memory
 	public func stop(mustStop: Bool) -> Bool!{
-		if let success = TaskKillManager.terminateProcess(name: sharedExecutableName){
+		if let success = TaskKillManager.terminateProcess(PID: CreateinstallmediaSmallManager.shared.process.processIdentifier){
 			if success{
 				//if we need to stop the process ...
 				if mustStop{
+					
+					CreateinstallmediaSmallManager.shared.process.terminate()
 					//just tell to the rest of the app that the installer creation is no longer running
 					CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress = false
 					CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress = false

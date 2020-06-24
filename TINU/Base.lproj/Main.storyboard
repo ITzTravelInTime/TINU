@@ -87,11 +87,19 @@
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="JDX-r4-tVp"/>
                                         <menuItem title="Diagnostic Mode" keyEquivalent="d" id="qpo-04-kkH">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                             <connections>
                                                 <action selector="openVerbose:" target="Voe-Tx-rLC" id="gcx-Dm-xVc"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Diagnostic Mode with Administrator Privileges" keyEquivalent="s" id="AEE-nJ-CZk">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                            <connections>
+                                                <action selector="openVerbose:" target="Voe-Tx-rLC" id="0vg-kv-apL"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Process Log" keyEquivalent="l" id="09g-wy-2rt">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                             <connections>
                                                 <action selector="showLog:" target="Voe-Tx-rLC" id="i0L-2J-07b"/>
                                             </connections>
@@ -436,6 +444,7 @@
                         <outlet property="tinuRelated" destination="TBQ-DB-mnf" id="fTG-h2-afS"/>
                         <outlet property="toolsMenuItem" destination="89I-JN-t0I" id="CnG-M0-fLU"/>
                         <outlet property="verboseItem" destination="qpo-04-kkH" id="4PZ-7O-xKZ"/>
+                        <outlet property="verboseItemSudo" destination="AEE-nJ-CZk" id="mpw-du-usL"/>
                         <outlet property="wMSDIND" destination="t4Z-eO-Otu" id="9HL-iP-50z"/>
                     </connections>
                 </customObject>
@@ -786,11 +795,11 @@
             <objects>
                 <viewController id="h6T-6F-uOe" customClass="ContactsViewController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="us4-ff-JI1">
-                        <rect key="frame" x="0.0" y="0.0" width="512" height="584"/>
+                        <rect key="frame" x="0.0" y="0.0" width="512" height="560"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ziA-0i-bQO">
-                                <rect key="frame" x="68" y="415" width="183" height="17"/>
+                                <rect key="frame" x="68" y="391" width="183" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Insanelymac.com profile:" id="mhZ-50-Yxj">
                                     <font key="font" metaFont="system"/>
@@ -799,7 +808,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i15-Md-rm8">
-                                <rect key="frame" x="68" y="490" width="183" height="17"/>
+                                <rect key="frame" x="68" y="466" width="183" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Email:" id="2Lg-yP-iI3">
                                     <font key="font" metaFont="system"/>
@@ -808,7 +817,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HF4-tv-1Di" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="252" y="415" width="242" height="17"/>
+                                <rect key="frame" x="253" y="391" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Pietro Caruso (ITzTravelInTime)" id="1E2-eu-ixH">
                                     <font key="font" metaFont="system"/>
@@ -820,7 +829,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Naq-3y-Ru8" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="252" y="490" width="242" height="17"/>
+                                <rect key="frame" x="253" y="466" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="piecaruso97@gmail.com" id="i1Y-56-9xB">
                                     <font key="font" metaFont="system"/>
@@ -832,7 +841,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oCg-sC-zAg">
-                                <rect key="frame" x="68" y="465" width="183" height="17"/>
+                                <rect key="frame" x="68" y="441" width="183" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="GitHub profile:" id="MoD-aV-pdr">
                                     <font key="font" metaFont="system"/>
@@ -841,7 +850,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JE3-W9-Oaf" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="252" y="465" width="242" height="17"/>
+                                <rect key="frame" x="253" y="441" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="ITzTravelInTime on GitHub" id="B9x-q4-in1">
                                     <font key="font" metaFont="system"/>
@@ -853,7 +862,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wa4-pK-vn2">
-                                <rect key="frame" x="68" y="329" width="183" height="17"/>
+                                <rect key="frame" x="57" y="305" width="194" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Discussion (English):" id="bVL-S9-CMT">
                                     <font key="font" metaFont="system"/>
@@ -862,7 +871,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mzo-1X-Ac7" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="252" y="329" width="242" height="17"/>
+                                <rect key="frame" x="253" y="305" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="TINU on insanelymac (EN)" id="ohg-Ii-b6n">
                                     <font key="font" metaFont="system"/>
@@ -874,7 +883,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bmE-Px-pW3">
-                                <rect key="frame" x="68" y="304" width="183" height="17"/>
+                                <rect key="frame" x="69" y="280" width="182" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Discussion (Italian):" id="FCq-px-z8x">
                                     <font key="font" metaFont="system"/>
@@ -883,7 +892,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9j2-up-grk" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="252" y="304" width="242" height="17"/>
+                                <rect key="frame" x="253" y="280" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="TINU on insanelymac (ITA)" id="oQJ-95-zja">
                                     <font key="font" metaFont="system"/>
@@ -897,7 +906,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Y7-pH-crI">
-                                <rect key="frame" x="18" y="354" width="232" height="17"/>
+                                <rect key="frame" x="18" y="330" width="232" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Project links:" id="5yW-M5-GLB">
                                     <font key="font" metaFont="systemBold"/>
@@ -906,7 +915,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u9s-RU-fmQ">
-                                <rect key="frame" x="18" y="515" width="231" height="17"/>
+                                <rect key="frame" x="18" y="491" width="231" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Project creator:" id="Hej-ux-MBS">
                                     <font key="font" metaFont="systemBold"/>
@@ -915,7 +924,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fZR-tS-1tl">
-                                <rect key="frame" x="68" y="440" width="183" height="17"/>
+                                <rect key="frame" x="68" y="416" width="183" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Reddit profile:" id="K9v-Pm-o93">
                                     <font key="font" metaFont="system"/>
@@ -924,7 +933,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tse-RC-lAd" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="252" y="440" width="242" height="17"/>
+                                <rect key="frame" x="253" y="416" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="/u/ITzTravelInTime" id="ZKW-1x-LjN">
                                     <font key="font" metaFont="system"/>
@@ -936,22 +945,11 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="PE4-Rr-oRg">
-                                <rect key="frame" x="20" y="390" width="472" height="5"/>
+                                <rect key="frame" x="20" y="366" width="472" height="5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </box>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cOR-Pu-tTy">
-                                <rect key="frame" x="14" y="25" width="128" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mo2-Gg-3xB">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="systemBold"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="closeWindow:" target="h6T-6F-uOe" id="g45-tJ-IH3"/>
-                                </connections>
-                            </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="toF-MC-ZRl">
-                                <rect key="frame" x="68" y="212" width="183" height="34"/>
+                                <rect key="frame" x="68" y="213" width="182" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Discussion on hackintosh-froum.de:" id="Vvp-bt-y01">
                                     <font key="font" metaFont="system"/>
@@ -960,7 +958,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sqs-9R-zjf" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="252" y="220" width="242" height="17"/>
+                                <rect key="frame" x="253" y="221" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="TINU on hackintosh-forum.de" id="yvR-rs-KrU">
                                     <font key="font" metaFont="system"/>
@@ -972,7 +970,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OJU-fB-CJy">
-                                <rect key="frame" x="68" y="187" width="183" height="17"/>
+                                <rect key="frame" x="68" y="188" width="181" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Issues report:" id="vKF-dh-I2L">
                                     <font key="font" metaFont="system"/>
@@ -981,7 +979,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sz5-yd-vgL" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="252" y="187" width="242" height="17"/>
+                                <rect key="frame" x="253" y="188" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="TINU's issues report on GitHub" id="ycM-Oc-r3R">
                                     <font key="font" metaFont="system"/>
@@ -992,29 +990,8 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/ITzTravelInTime/TINU/issues"/>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DTL-b6-Mws">
-                                <rect key="frame" x="68" y="279" width="183" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Discussion on Reddit:" id="fS9-Cy-uDm">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3JJ-EQ-MRj" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="252" y="279" width="241" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="TINU on Reddit (EN)" id="UQW-Hf-LTG">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://www.reddit.com/r/hackintosh/comments/a1h61d/tinu_vanilla_bootable_macos_installer_creation/"/>
-                                </userDefinedRuntimeAttributes>
-                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MMH-10-KfX" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="253" y="100" width="250" height="17"/>
+                                <rect key="frame" x="253" y="116" width="250" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Italian Hackintosh group!!! on Facebook" id="g4Q-wX-rQw">
                                     <font key="font" metaFont="system"/>
@@ -1026,7 +1003,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7ih-rE-y7W">
-                                <rect key="frame" x="69" y="100" width="183" height="17"/>
+                                <rect key="frame" x="69" y="116" width="183" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Hackintosh help (italian):" id="Egc-bw-b29">
                                     <font key="font" metaFont="system"/>
@@ -1035,7 +1012,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9oV-rb-nbe">
-                                <rect key="frame" x="18" y="125" width="232" height="17"/>
+                                <rect key="frame" x="18" y="141" width="232" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Other related links:" id="GRO-s8-g4s">
                                     <font key="font" metaFont="systemBold"/>
@@ -1044,11 +1021,11 @@
                                 </textFieldCell>
                             </textField>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="YUL-C2-3ul">
-                                <rect key="frame" x="20" y="157" width="470" height="5"/>
+                                <rect key="frame" x="20" y="173" width="470" height="5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </box>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nKW-NM-75S">
-                                <rect key="frame" x="68" y="254" width="181" height="17"/>
+                                <rect key="frame" x="69" y="255" width="181" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Beta testing (English):" id="GPd-Ba-rrP">
                                     <font key="font" metaFont="system"/>
@@ -1057,7 +1034,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="10N-F6-1WZ" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="252" y="254" width="242" height="17"/>
+                                <rect key="frame" x="253" y="255" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="TINU Beta testing on Telegram" id="wtl-f5-tKW">
                                     <font key="font" metaFont="system"/>
@@ -1069,7 +1046,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EeZ-d6-d2n">
-                                <rect key="frame" x="68" y="75" width="183" height="17"/>
+                                <rect key="frame" x="68" y="91" width="183" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Hackintosh Italia (Italian):" id="ThU-kc-cIe">
                                     <font key="font" metaFont="system"/>
@@ -1078,7 +1055,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uhI-Xk-lP5" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="252" y="75" width="242" height="17"/>
+                                <rect key="frame" x="253" y="91" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Hackintosh Italia on Telegram" id="dIy-XZ-Hcc">
                                     <font key="font" metaFont="system"/>
@@ -1089,6 +1066,17 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://t.me/hackintoshitalia"/>
                                 </userDefinedRuntimeAttributes>
                             </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cOR-Pu-tTy">
+                                <rect key="frame" x="14" y="25" width="128" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mo2-Gg-3xB">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="systemBold"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="closeWindow:" target="h6T-6F-uOe" id="g45-tJ-IH3"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
@@ -1098,7 +1086,7 @@
                 </viewController>
                 <customObject id="dha-iC-vAs" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2062" y="814"/>
+            <point key="canvasLocation" x="-2062" y="802"/>
         </scene>
         <!--License View Controller-->
         <scene sceneID="RGc-0Q-p9u">
@@ -1222,199 +1210,38 @@ Gw
                                     <action selector="buttonClick:" target="HKf-Ty-Hk6" id="MgF-Du-LKE"/>
                                 </connections>
                             </button>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6ES-fy-PGo">
-                                <rect key="frame" x="20" y="327" width="70" height="70"/>
+                            <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SLp-8D-gcU">
+                                <rect key="frame" x="0.0" y="66" width="620" height="418"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <clipView key="contentView" ambiguous="YES" copiesOnScroll="NO" id="sSe-QN-wB5">
+                                    <rect key="frame" x="0.0" y="0.0" width="605" height="418"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hhe-KO-kp4">
+                                            <rect key="frame" x="0.0" y="0.0" width="590" height="403"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="ihf-ls-Gef">
+                                    <rect key="frame" x="-100" y="-100" width="166" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="rpo-Xx-vV6">
+                                    <rect key="frame" x="605" y="0.0" width="15" height="418"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                            <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="5ch-8S-tgF">
+                                <rect key="frame" x="294" y="252" width="32" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="Mojave" id="588-XR-mda"/>
-                            </imageView>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uNm-M4-DZT">
-                                <rect key="frame" x="96" y="366" width="232" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="macOS Mojave" id="E9o-qN-KNo">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H5H-Es-yv6">
-                                <rect key="frame" x="96" y="341" width="180" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" enabled="NO" sendsActionOnEndEditing="YES" title="Version: 10.14.6" id="vh7-tH-HEj">
-                                    <font key="font" metaFont="smallSystem"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cUU-70-ShS">
-                                <rect key="frame" x="443" y="352" width="150" height="19"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundRect" title="View in the App Store" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SvG-25-43C">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="cellTitle"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="mjClick:" target="HKf-Ty-Hk6" id="e40-Bj-NXw"/>
-                                </connections>
-                            </button>
-                            <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="vbC-Iv-wZu">
-                                <rect key="frame" x="53" y="316" width="514" height="5"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                            </box>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7rT-k7-hjv">
-                                <rect key="frame" x="20" y="240" width="70" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="High_Sierra" id="9kv-ve-THV"/>
-                            </imageView>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JBr-d1-stO">
-                                <rect key="frame" x="20" y="153" width="70" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="Sierra" id="1LG-dl-Ffy"/>
-                            </imageView>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ayO-f2-Gb7">
-                                <rect key="frame" x="96" y="279" width="232" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="macOS High Sierra" id="315-nh-4rY">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qdt-Ft-dbG">
-                                <rect key="frame" x="96" y="192" width="180" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="macOS Sierra" id="FTp-d7-xLg">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZSw-jg-G0a">
-                                <rect key="frame" x="443" y="178" width="150" height="19"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundRect" title="View in the App Store" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="8hP-sF-bnR">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="cellTitle"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="sClick:" target="HKf-Ty-Hk6" id="bPA-0a-WV0"/>
-                                </connections>
-                            </button>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="omu-HU-nAI">
-                                <rect key="frame" x="20" y="66" width="70" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="El_Capitan" id="Rt1-Nc-ZEJ"/>
-                            </imageView>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vza-47-5SY">
-                                <rect key="frame" x="96" y="105" width="180" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Mac OS X El Capitan" id="oXq-xr-Fey">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nEh-EJ-QzP">
-                                <rect key="frame" x="443" y="91" width="150" height="19"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundRect" title="View in the App Store" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5OU-DU-dgL">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="cellTitle"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="elClick:" target="HKf-Ty-Hk6" id="BQ8-7V-XWV"/>
-                                </connections>
-                            </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XpC-sH-jWr">
-                                <rect key="frame" x="96" y="254" width="180" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" enabled="NO" sendsActionOnEndEditing="YES" title="Version: 10.13.6" id="h2u-YH-8ff">
-                                    <font key="font" metaFont="smallSystem"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5h1-xM-jSt">
-                                <rect key="frame" x="96" y="167" width="180" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" enabled="NO" sendsActionOnEndEditing="YES" title="Version: 10.12.6" id="oIx-2D-L6K">
-                                    <font key="font" metaFont="smallSystem"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EI0-bi-ZAo">
-                                <rect key="frame" x="443" y="265" width="150" height="19"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundRect" title="View in the App Store" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tpT-hA-6kS">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="cellTitle"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="hsClick:" target="HKf-Ty-Hk6" id="nPX-kq-2dY"/>
-                                </connections>
-                            </button>
-                            <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="kEG-HT-hbI">
-                                <rect key="frame" x="53" y="142" width="514" height="5"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                            </box>
-                            <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="SLg-3D-02o">
-                                <rect key="frame" x="53" y="229" width="514" height="5"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                            </box>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HuO-B0-MHx">
-                                <rect key="frame" x="20" y="414" width="70" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="Catalina" id="T8b-1O-fPT"/>
-                            </imageView>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kSv-bd-Hvm">
-                                <rect key="frame" x="96" y="453" width="232" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="macOS Catalina" id="Vrp-me-yPU">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U27-TI-9yb">
-                                <rect key="frame" x="96" y="428" width="180" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" enabled="NO" sendsActionOnEndEditing="YES" title="Version: 10.15.x" id="4SE-uC-fgM">
-                                    <font key="font" metaFont="smallSystem"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uup-N6-ZAg">
-                                <rect key="frame" x="443" y="439" width="150" height="19"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundRect" title="View in the App Store" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yeC-Ms-MRo">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="cellTitle"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="catClick:" target="HKf-Ty-Hk6" id="t45-Xi-JJs"/>
-                                </connections>
-                            </button>
-                            <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="BU8-77-9Dd">
-                                <rect key="frame" x="53" y="403" width="514" height="5"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                            </box>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Svs-4t-qRa">
-                                <rect key="frame" x="96" y="80" width="180" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" enabled="NO" sendsActionOnEndEditing="YES" title="Version: 10.11.6" id="vwn-ai-mwt">
-                                    <font key="font" metaFont="smallSystem"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
+                            </progressIndicator>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="closeButton" destination="HGy-Sc-j6F" id="fER-vt-0FJ"/>
-                        <outlet property="elButton" destination="nEh-EJ-QzP" id="03P-KH-cht"/>
-                        <outlet property="hsButton" destination="EI0-bi-ZAo" id="eaD-h5-0ud"/>
-                        <outlet property="sButton" destination="ZSw-jg-G0a" id="zwW-Zf-kMk"/>
+                        <outlet property="scroller" destination="SLp-8D-gcU" id="aIc-TM-cLh"/>
+                        <outlet property="spinner" destination="5ch-8S-tgF" id="Vdw-O8-QAZ"/>
                     </connections>
                 </viewController>
                 <customObject id="0w3-XL-bny" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -2515,19 +2342,14 @@ Gw
     </scenes>
     <resources>
         <image name="AppIcon" width="128" height="128"/>
-        <image name="Catalina" width="512" height="512"/>
-        <image name="El_Capitan" width="512" height="512"/>
-        <image name="High_Sierra" width="512" height="512"/>
         <image name="InstallApp" width="512" height="512"/>
-        <image name="Mojave" width="512" height="512"/>
         <image name="NSMultipleDocuments" width="32" height="32"/>
         <image name="NSShareTemplate" width="11" height="16"/>
         <image name="Removable" width="512" height="512"/>
-        <image name="Sierra" width="512" height="512"/>
         <image name="checkVector" width="495" height="375"/>
         <image name="warning" width="409.60000610351562" height="409.60000610351562"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mVO-W0-COZ"/>
+        <segue reference="fLT-cJ-H3F"/>
     </inferredMetricsTieBreakers>
 </document>

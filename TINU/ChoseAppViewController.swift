@@ -115,6 +115,12 @@ class ChoseAppViewController: GenericViewController {
 		chooseExternal()
 	}
 	
+	private static var installerAppNeededFiles: [[String]]{
+		get{
+			return ([ ["/Contents/Resources/" + sharedExecutableName],["/Contents/Info.plist"],["/Contents/SharedSupport"], ["/Contents/SharedSupport/InstallESD.dmg", "/Contents/SharedSupport/SharedSupport.dmg"]])
+		}
+	}
+	
     func chooseExternal() {
         let open = NSOpenPanel()
         open.allowsMultipleSelection = false
@@ -144,7 +150,22 @@ class ChoseAppViewController: GenericViewController {
 							}
 						}
 						
-						if manager.fileExists(atPath: path + "/Contents/Resources/" + sharedExecutableName) && manager.fileExists(atPath: path + "/Contents/SharedSupport/InstallESD.dmg") && manager.fileExists(atPath: path + "/Contents/Info.plist") {
+						let needed = ChoseAppViewController.installerAppNeededFiles
+						var check: Int = needed.count
+						for c in needed{
+							if c.isEmpty{
+								check-=1
+								continue
+							}
+							for d in c{
+								if manager.fileExists(atPath: path + d){
+									check-=1
+									break
+								}
+							}
+						}
+						
+						if check == 0 {
 							
 							cvm.shared.sharedApp = path
 							
@@ -158,9 +179,9 @@ class ChoseAppViewController: GenericViewController {
 							
 						}else{
 							if let name = open.urls.first?.lastPathComponent{
-								msgBoxWarning("Invalid file", "The app you chose, \"\(name)\", is not usable to create macOS installers or macOS installations because it does not contain all the needed files to do that or it isn't a macOS installer.")
+								msgBoxWarning("Invalid file", "The app you chose, \"\(name)\", is not usable to create macOS installers or macOS installations because it isn't a macOS installer or is a damaged macOS installer.")
 							}else{
-								msgBoxWarning("Invalid file", "The app you chose is not usable to create macOS installers or macOS installations because it does not contain all the needed files to do that or it isn't a macOS installer.")
+								msgBoxWarning("Invalid file", "The app you chose is not usable to create macOS installers or macOS installations because it isn't a macOS installer or is a damaged macOS installer.")
 							}
 						}
 					}else{
@@ -339,6 +360,7 @@ class ChoseAppViewController: GenericViewController {
 			
 			var dirs = [String]()
 			var drives = [DriveView]()
+			let needed = ChoseAppViewController.installerAppNeededFiles
 			
 			do {
 				for dir in foldersURLS{
@@ -372,6 +394,7 @@ class ChoseAppViewController: GenericViewController {
 								continue
 							}
 							
+							//only installer apps from now
 							if !fm.fileExists(atPath: appPath + "/Contents/Resources/" + ex) {
 								continue
 							}
@@ -387,7 +410,7 @@ class ChoseAppViewController: GenericViewController {
 								drive.applicationPath = appPath
 								print("     App path is " + appPath)
 								
-								drive.image.image = IconsManager.shared.getInstallerAppIcon(forApp: appPath)
+								drive.image.image = IconsManager.shared.getInstallerAppIconFrom(path: appPath)
 								
 								drive.volume.stringValue = FileManager.default.displayName(atPath: appPath)
 								print("     App name is " + drive.volume.stringValue)
@@ -396,32 +419,35 @@ class ChoseAppViewController: GenericViewController {
 								drive.isEnabled = false
 								}*/
 								
-								print("     Checking app's info.plist")
-								if !fm.fileExists(atPath: appPath + "/Contents/Info.plist"){
-									print("       No app's info.plist found!")
-									drive.isEnabled = false
-								}else{
-									print("     App's info.plist checked")
-								}
-								
-								print("     Checking app's SharedSupport directory")
-								if fm.fileExists(atPath: appPath + "/Contents/SharedSupport"){
-									
-									print("       Checking SharedSupport/InstallESD.dmg")
-									if !fm.fileExists(atPath: appPath + "/Contents/SharedSupport/InstallESD.dmg"){
-										print("       SharedSupport/InstallESD.dmg does not exists!")
-										drive.isEnabled = false
-									}else{
-										print("       SharedSupport/InstallESD.dmg present")
+								var check: Int = needed.count
+								for c in needed{
+									if c.isEmpty{
+										check-=1
+										continue
 									}
 									
-									print("     App's SharedSupport directory check ended")
-								}else{
-									print("     App's SharedSupport directory does not exists!")
-									drive.isEnabled = false
+									let tmp = check
+									for d in c{
+										print("       Checking if app contains \"\(d)\"")
+										if fm.fileExists(atPath: appPath + d){
+											print("       +App does contain \"\(d)\"")
+											check-=1
+											break
+										}
+									}
+									
+									if tmp == check{
+										for d in c{
+											print("       -App does not contain \"\(d)\"")
+										}
+										print("     App is not usable to make installers")
+										break
+									}
 								}
 								
-								print("     Adding app to the apps list")
+								drive.isEnabled = (check == 0)
+								
+								print("     App checked, adding it to the apps list")
 								drives.append(drive)
 								print("     App added to the apps list")
 							}

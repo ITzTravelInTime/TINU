@@ -73,7 +73,7 @@ class InstallingViewController: GenericViewController{
 		var notDone = false
 		
 		if let sa = cvm.shared.sharedApp{
-			appImage.image = IconsManager.shared.getInstallerAppIcon(forApp: sa)
+			appImage.image = IconsManager.shared.getInstallerAppIconFrom(path: sa)
 			appName.stringValue = FileManager.default.displayName(atPath: sa)
 			print("Installer app that will be used is: " + sa)
 		}else{
@@ -246,6 +246,7 @@ class InstallingViewController: GenericViewController{
 				apd.InstallMacOSItem.isEnabled = enabled
 			}
 			apd.verboseItem.isEnabled = enabled
+			apd.verboseItemSudo.isEnabled = enabled
 			apd.toolsMenuItem.isEnabled = enabled
 		}
 		

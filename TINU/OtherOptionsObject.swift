@@ -36,6 +36,10 @@ public struct OtherOptionsObject{
 
 extension OtherOptionsObject{
 	init(from other: OtherOptionsObject) {
-		self.init(id: other.id, title: other.title, isActivated: other.isActivated, isVisible: other.isVisible, isUsable: other.isUsable, isAdvanced: other.isActivated, description: other.description)
+		self.init()
+		
+		self = other
+		
+		//self.init(id: other.id, title: other.title, isActivated: other.isActivated, isVisible: other.isVisible, isUsable: other.isUsable, isAdvanced: other.isActivated, description: other.description)
 	}
 }

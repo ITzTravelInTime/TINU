@@ -10,7 +10,8 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-    @IBOutlet weak var verboseItem: NSMenuItem!
+    @IBOutlet weak var verboseItemSudo: NSMenuItem!
+	@IBOutlet weak var verboseItem: NSMenuItem!
     //@IBOutlet weak var vibrantButton: NSMenuItem!
     @IBOutlet weak var tinuRelated: NSMenuItem!
     @IBOutlet weak var otherApps: NSMenuItem!
@@ -29,6 +30,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	
 	@IBOutlet weak var toolsMenuItem: NSMenuItem!
 	@IBOutlet weak var efiMounterMenuItem: NSMenuItem!
+	
+	func getVerboseItem(isSudo: Bool) -> NSMenuItem!{
+		if isSudo{
+			return verboseItemSudo
+		}else{
+			return verboseItem
+		}
+	}
 	
 	func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true
@@ -72,6 +81,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		tinuRelated     .isEnabled = !sharedIsOnRecovery
 		otherApps       .isEnabled = !sharedIsOnRecovery
 		verboseItem     .isEnabled = !sharedIsOnRecovery
+		verboseItemSudo .isEnabled = !sharedIsOnRecovery
 		FAQItem         .isEnabled = !sharedIsOnRecovery
 		getMacOSApp     .isEnabled = !sharedIsOnRecovery
 		wMSDIND         .isEnabled = !sharedIsOnRecovery
@@ -98,6 +108,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             sharedShowLicense = true
             print("License agreement file found")
         }
+		
+		#if demo
+		demoMacroEnabled = true
+		#endif
         
     }
     
@@ -259,65 +273,56 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func openVerbose(_ sender: Any) {
         if !(CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress || sharedIsOnRecovery){
-			/*
-            if let b = Bundle.main.resourcePath{
-                let f = b + "/DebugScript.sh"
-                if FileManager.default.fileExists(atPath: f){
-                    print("Trying to fix script permitions")
-                    if let e = getOutWithSudo(cmd: "chmod -R 771 \"" + f + "\""){
-                        if e == "" || e == "Password:\n" || e == "Password:" {
-                            print("Script permitions fixed with success")
-                            print("Restarting app with log in the terminal")
-                            NSWorkspace.shared().openFile(f, withApplication: "Terminal")
-                            NSApplication.shared().terminate(self)
-                        }else{
-                            print("Script permitions fix failed")
-                            print("Application not opened: " + e)
-                        }
-                    }else{
-                        print("Script permitions not fixed, switch to diagnostics mode aborted")
-                        msgBox("Impossible to switch mode!", "The needed script to run TINU in diagnostics mode is not usable, try to downlaod again the app", .warning)
-                    }
-                }else{
-                    
-                    if !dialogYesNoWarning(question: "Diagnostics mode script missing", text: "The needed script to run TINU in diagnoistics mode is missing, do you want to create a new one?", style: .warning){
-                        do {
-                            try verboseScript.write(toFile: f, atomically: true, encoding: .utf8)
-                            return openVerbose(_: sender)
-                        }catch{
-                            msgBox("Impossible to switch mode!", "The needed script to run TINU in diagnostics mode can't be written, try to downlaod again the app", .warning)
-                        }
-                    }
-                    
-                    /*
-                     verboseItem.isEnabled = false
-                     msgBox("Impossible to switch mode!", "The needed script to run TINU in diagnostics mode is missing, try to downlaod again the app", .warning)
-                     */
-                }
-            }*/
 			
 			print("trying to use diagnostics mode")
-			if let scriptPath = Bundle.main.url(forResource: "DebugScript", withExtension: "sh") {
-				let theScript = "do shell script \"chmod -R 771 \'" + scriptPath.path + "\'\" with administrator privileges"
+			
+			let isSudo = (sender as? NSMenuItem) == verboseItemSudo
+			
+			let resourceName = isSudo ? "DebugScriptSudo" : "DebugScript"
+			
+			if let scriptPath = Bundle.main.url(forResource: resourceName, withExtension: "sh")?.path {
 				
-				print(theScript)
+				var val: Int16 = 1;
 				
-				let appleScript = NSAppleScript(source: theScript)
-				
-				if let eventResult = appleScript?.executeAndReturnError(nil){
-					if let result = eventResult.stringValue{
-						if result.isEmpty || result == "\n" || result == "Password:"{
-							NSWorkspace.shared().openFile(scriptPath.path, withApplication: "Terminal")
-							NSApplication.shared().terminate(self)
-						}else{
-							print("error with the script output: " + result)
-							msgBoxWarning("Impossible to use diagnostics mode", "Something went wrong when preparing TINU to be run in diagnostics mode.\n\n[error code: 0]\n\nScript output: \(result)")
-						}
+				do{
+					if let perm = (try FileManager.default.attributesOfItem(atPath: scriptPath)[FileAttributeKey.posixPermissions] as? NSNumber)?.int16Value{
+						val = perm
 					}
-				}else{
-					print("impossible to execute the apple script to prepare the app")
 					
-					msgBoxWarning("Impossible to use diagnostics mode", "Impossible to prepare TINU to run in diagnostics mode.\n\n[error code: 1]")
+				}catch let err{
+					print(err)
+				}
+				
+				if val != 0o771{
+					
+					let theScript = "do shell script \"chmod -R 771 \'" + scriptPath + "\'\" with administrator privileges"
+					
+					print(theScript)
+					
+					let appleScript = NSAppleScript(source: theScript)
+					
+					if let eventResult = appleScript?.executeAndReturnError(nil){
+						if let result = eventResult.stringValue{
+							if result.isEmpty || result == "\n" || result == "Password:"{
+								val = 0;
+							}else{
+								print("error with the script output: " + result)
+								msgBoxWarning("Impossible to use diagnostics mode", "Something went wrong when preparing TINU to be run in diagnostics mode.\n\n[error code: 0]\n\nScript output: \(result)")
+							}
+						}
+					}else{
+						print("impossible to execute the apple script to prepare the app")
+						
+						msgBoxWarning("Impossible to use diagnostics mode", "Impossible to prepare TINU to run in diagnostics mode.\n\n[error code: 1]")
+					}
+					
+				}else{
+					val = 0
+				}
+				
+				if val == 0{
+					NSWorkspace.shared().openFile(scriptPath, withApplication: "Terminal")
+					NSApplication.shared().terminate(self)
 				}
 			}else{
 				print("no debug file found!")

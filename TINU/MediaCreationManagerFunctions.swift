@@ -271,7 +271,10 @@ extension InstallMediaCreationManager{
 		log("Finished extra operations before launching the executable\n\n")
 	}
 	
-	func buildCommandString(useMojave isNotMojave: Bool, useAPFS: Bool) -> String{
+	func buildCommandString(useAPFS: Bool) -> String{
+		
+		let isNotMojave = iam.shared.installerAppGoesUpToThatVersion(version: 14.0)!
+		//let isNotCatalina = iam.shared.installerAppGoesUpToThatVersion(version: 15.0)!
 		
 		//this is the name of the executable we need to use now
 		let pname = sharedExecutableName
@@ -280,10 +283,10 @@ extension InstallMediaCreationManager{
 		var mainCMD = "\"\(cvm.shared.sharedApp!)/Contents/Resources/\(pname)\" --volume \"\(cvm.shared.sharedVolume!)\""
 		
 		//mojave instalelr do not supports this argument
-		if isNotMojave{
-			log("This is an older macOS installer app, it needs the --applicationpath argument to use " + pname)
-			mainCMD += " --applicationpath \"\(cvm.shared.sharedApp!)\""
-		}
+		//if isNotMojave || !isNotCatalina{
+			//log("This is an older macOS installer app, it needs the --applicationpath argument to use " + pname)
+		mainCMD += " --applicationpath \"\(cvm.shared.sharedApp!)\""
+		//}
 		
 		//if tinu have to create a mac os installation on the selected drive
 		if sharedInstallMac{
@@ -299,15 +302,14 @@ extension InstallMediaCreationManager{
 			mainCMD += " --agreetolicense"
 			
 			//the command is adjusted if the version of the installer supports apfs and if the user prefers to avoid upgrading to apfs
-			if noAPFSSupport && isNotMojave{
-				mainCMD += ""
-			}else{
+			if !noAPFSSupport || !isNotMojave{
 				if useAPFS || cvm.shared.sharedBSDDriveAPFS != nil{
 					mainCMD += " --converttoapfs YES"
 				}else{
 					mainCMD += " --converttoapfs NO"
 				}
 			}
+			
 		}else{
 			//we are just on the standard createinstallmedia, so let's add what is missing
 			mainCMD += " --nointeraction"
@@ -385,6 +387,17 @@ extension InstallMediaCreationManager{
 				log("    \"InstallESD\" unmounted correctly or already unmounted")
 			}
 		}
+		
+		/*
+		log("    Unmounting \"Shared Support\"")
+		if dm.driveExists(path: "/Volumes/Shared Support") {
+			if !NSWorkspace.shared().unmountAndEjectDevice(atPath: "/Volumes/Shared Support"){
+				res = false
+			}else{
+				log("    \"Shared Support\" unmounted correctly or already unmounted")
+			}
+		}
+		*/
 		
 		return res
 	}

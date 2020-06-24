@@ -175,7 +175,7 @@ class ChoseDriveViewController: ShadowViewController {
 		self.hideFailureLabel()
 		self.hideFailureButtons()
 		
-		let man = FileManager.default
+		//let man = FileManager.default
 		
 		cvm.shared.sharedDoTimeMachineWarn = false
         
@@ -311,11 +311,13 @@ class ChoseDriveViewController: ShadowViewController {
 				
 				self.empty = res
 				
-				self.topView.isHidden = res || sharedIsOnRecovery
-				self.bottomView.isHidden = res || sharedIsOnRecovery
 				
-				self.leftView.isHidden = res || sharedIsOnRecovery
-				self.rightView.isHidden = res || sharedIsOnRecovery
+				let set = res || sharedIsOnRecovery
+				self.topView.isHidden = set
+				self.bottomView.isHidden = set
+				
+				self.leftView.isHidden = set
+				self.rightView.isHidden = set
 				
 				if res{
 					//fail :(
@@ -433,12 +435,13 @@ class ChoseDriveViewController: ShadowViewController {
 		}
 	}
 	
+	/*
     private func checkDriveSize(_ cc: [ArraySlice<String>], _ isDrive: Bool) -> Bool{
         var c = cc
         
         c.remove(at: c.count - 1)
         
-        var sz: Float = 0
+        var sz: UInt64 = 0
         
         if c.count == 1{
             let f: String = (c.last?.last!)!
@@ -463,37 +466,47 @@ class ChoseDriveViewController: ShadowViewController {
                 }
             }
             
-            if let s = Float(n){
+            if let s = UInt64(n){
                 sz = s
             }
         }
-        
+		
         if let n = c.last?.last{
-            if n == "KB"{
-                sz /= 1024
-            }else if n == "GB"{
-                sz *= 1024
-            }else if n == "TB"{
-                sz *= 1024 * 1024
-            }else if n != "MB"{
-                if isDrive{
-                    print("     this drive has an unknown size unit, skipping this drive")
-                }else{
-                    print("         volume size unit unkown, skipping this volume")
-                }
-                return false
-            }
+			switch n{
+			case "KB":
+				sz *= get1024Pow(exp: 1)
+				break
+			case "MB":
+				sz *= get1024Pow(exp: 2)
+				break
+			case "GB":
+				sz *= get1024Pow(exp: 3)
+				break
+			case "TB":
+				sz *= get1024Pow(exp: 4)
+				break
+			case "PB":
+				sz *= get1024Pow(exp: 5)
+				break
+			default:
+				if isDrive{
+					print("     this drive has an unknown size unit, skipping this drive")
+				}else{
+					print("         volume size unit unkown, skipping this volume")
+				}
+				return false
+			}
         }
         
-        var minSize: Float = 7000
+        var minSize: UInt64 = 7 * get1024Pow(exp: 3) // 7 gb
         
         if sharedInstallMac{
-            minSize = 20000
+            minSize = 20 * get1024Pow(exp: 3) // 20 gb
         }
         
         //if we are in a testing situation, size of the drive is not so much important
         if simulateCreateinstallmediaFail != nil{
-            minSize = 2000
+            minSize = get1024Pow(exp: 3) // 1 gb
         }
         
         if sz <= minSize{
@@ -507,27 +520,23 @@ class ChoseDriveViewController: ShadowViewController {
         
         return true
     }
+	
+	private func get1024Pow(exp: Float) -> UInt64{
+		return UInt64(pow(1024.0, exp))
+	}*/
     
     func checkDriveSizeUint(bytes: UInt64) -> Bool{
-        var minSize: UInt64 = 6000000000
-        
+        let gb = UInt64(pow(10.0, 9.0))
+		
         if sharedInstallMac{
-            minSize = 2 * 10000000000
+            return !(bytes <= (20 * gb)) //20 gb
         }
-        
+		
         if simulateCreateinstallmediaFail != nil{
-            minSize = 5 * 100000000
+            return !(bytes <= (2 * gb)) // 2 gb
         }
         
-        /*
-        if bytes <= minSize{
-            return false
-        }
-        
-        return true
-        */
-        
-        return !(bytes <= minSize)
+        return !(bytes <= (8 * gb)) // 8 gb
     }
     
 }

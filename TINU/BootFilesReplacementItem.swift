@@ -6,6 +6,7 @@
 //  Copyright © 2017 Pietro Caruso. All rights reserved.
 //
 
+/*
 import Cocoa
 
 #if !macOnlyMode
@@ -79,20 +80,20 @@ class BootFilesReplacementItem: NSView {
 		
 		self.addSubview(imageView)
 		
-		/*
-		chosedText.isEditable = false
-		chosedText.isSelectable = false
-		chosedText.drawsBackground = false
-		chosedText.isBordered = false
-		chosedText.isBezeled = false
-		chosedText.alignment = .right
-		chosedText.frame.size = NSSize(width: 60, height: choosedLabelHeigth)
-		chosedText.frame.origin = NSPoint(x: imageView.frame.origin.x - chosedText.frame.width - 5, y: self.frame.size.height / 2 - choosedLabelHeigth / 2)
-		chosedText.font = NSFont.systemFont(ofSize: choosedLabelHeigth - 2)
-		chosedText.stringValue = "Customized"
 		
-		self.addSubview(chosedText)
-		*/
+//		chosedText.isEditable = false
+//		chosedText.isSelectable = false
+//		chosedText.drawsBackground = false
+//		chosedText.isBordered = false
+//		chosedText.isBezeled = false
+//		chosedText.alignment = .right
+//		chosedText.frame.size = NSSize(width: 60, height: choosedLabelHeigth)
+//		chosedText.frame.origin = NSPoint(x: imageView.frame.origin.x - chosedText.frame.width - 5, y: self.frame.size.height / 2 - choosedLabelHeigth / 2)
+//		chosedText.font = NSFont.systemFont(ofSize: choosedLabelHeigth - 2)
+//		chosedText.stringValue = "Customized"
+//
+//		self.addSubview(chosedText)
+//		
 		
 		textField.isEditable = false
 		textField.isSelectable = false
@@ -170,14 +171,14 @@ class BootFilesReplacementItem: NSView {
 						}
 						
 						self.checkButtonsVisibility()
-						
-						/*for i in filesToReplace{
-						var isnil = false
-						if i.data == nil{
-						isnil = true
-						}
-						log("item " + i.filename + " data " + String(isnil))
-						}*/
+//
+//						for i in filesToReplace{
+//						var isnil = false
+//						if i.data == nil{
+//						isnil = true
+//						}
+//						log("item " + i.filename + " data " + String(isnil))
+//						}
 						
 					}catch let error{
 						log(error.localizedDescription)
@@ -188,43 +189,45 @@ class BootFilesReplacementItem: NSView {
 			
 		})
 		
-		/*
-		if open.runModal() == NSModalResponseOK{
-		if !open.urls.isEmpty{
-		do{
-		
-		log("Trying to give a value at the item: \(replaceFile.filename)")
-		
-		//log(open.urls.first!)
-		
-		//replaceFile.data = try Data.init(contentsOf: open.urls.first!)
-		
-		for f in 0...(BootFilesReplacementManager.shared.filesToReplace.count - 1){
-		if BootFilesReplacementManager.shared.filesToReplace[f].filename == replaceFile.filename{
-		BootFilesReplacementManager.shared.filesToReplace[f].data = try Data.init(contentsOf: open.urls.first!)
-		isInPlace = true
-		log("Value gived successfully!")
-		}
-		}
-		
-		checkButtonsVisibility()
-		
-		/*for i in filesToReplace{
-		var isnil = false
-		if i.data == nil{
-		isnil = true
-		}
-		log("item " + i.filename + " data " + String(isnil))
-		}*/
-		
-		}catch let error{
-		log(error.localizedDescription)
-		msgBox("Error while opening the file", "There was an error while opening the file you choosed: \n" + error.localizedDescription, NSAlertStyle.critical)
-		}
-		}
-		}
-		*/
+//
+//		if open.runModal() == NSModalResponseOK{
+//		if !open.urls.isEmpty{
+//		do{
+//
+//		log("Trying to give a value at the item: \(replaceFile.filename)")
+//
+//		//log(open.urls.first!)
+//
+//		//replaceFile.data = try Data.init(contentsOf: open.urls.first!)
+//
+//		for f in 0...(BootFilesReplacementManager.shared.filesToReplace.count - 1){
+//		if BootFilesReplacementManager.shared.filesToReplace[f].filename == replaceFile.filename{
+//		BootFilesReplacementManager.shared.filesToReplace[f].data = try Data.init(contentsOf: open.urls.first!)
+//		isInPlace = true
+//		log("Value gived successfully!")
+//		}
+//		}
+//
+//		checkButtonsVisibility()
+//
+//		for i in filesToReplace{
+//		var isnil = false
+//		if i.data == nil{
+//		isnil = true
+//		}
+//		log("item " + i.filename + " data " + String(isnil))
+//		}
+//
+//		}catch let error{
+//		log(error.localizedDescription)
+//		msgBox("Error while opening the file", "There was an error while opening the file you choosed: \n" + error.localizedDescription, NSAlertStyle.critical)
+//		}
+//		}
+//		}
+//
     }
 }
 
 #endif
+
+*/
