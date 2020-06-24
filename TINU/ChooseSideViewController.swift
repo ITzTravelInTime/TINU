@@ -188,13 +188,17 @@ class ChooseSideViewController: GenericViewController {
 		
 		if !isRootUser{
 			if #available(OSX 10.15, *){
-				let appDelegate = NSApplication.shared().delegate as! AppDelegate
-				appDelegate.openVerbose(appDelegate.getVerboseItem(isSudo: true))
+				openDiagnosticsMode(withSudo: true)
+				
+				//if it ges here it means that diagnostics mode failed, so, it's better to not quit the app
+				
+				
 			}else{
 				let _ = startCommandWithSudo(cmd: "/bin/sh", args: ["-c", Bundle.main.executablePath!])
+				NSApplication.shared().terminate(self)
 			}
 			
-			NSApplication.shared().terminate(self)
+			
 		}
 		
 		#endif

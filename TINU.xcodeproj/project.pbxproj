@@ -63,6 +63,7 @@
 		C6B16958203B27AF00FD2818 /* ChooseCustomizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */; };
 		C6B74D0A20B8E76A001CAD4D /* EFIFolderReplacementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B74D0920B8E76A001CAD4D /* EFIFolderReplacementManager.swift */; };
 		C6B74D0C20BA2A79001CAD4D /* EFIPartitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B74D0B20BA2A79001CAD4D /* EFIPartitionManager.swift */; };
+		C6BEA10224A3A5AE008997CF /* DiagnosticsModeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BEA10124A3A5AE008997CF /* DiagnosticsModeManager.swift */; };
 		C6C1820D1FE7605300617DC2 /* ChooseSideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C1820C1FE7605300617DC2 /* ChooseSideViewController.swift */; };
 		C6C2EAA72030710A0033EF85 /* SettingsSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */; };
 		C6C8A8B1249E9C8A009C3D6E /* SIPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C8A8B0249E9C8A009C3D6E /* SIPManager.swift */; };
@@ -167,6 +168,7 @@
 		C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseCustomizationViewController.swift; sourceTree = "<group>"; };
 		C6B74D0920B8E76A001CAD4D /* EFIFolderReplacementManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EFIFolderReplacementManager.swift; sourceTree = "<group>"; };
 		C6B74D0B20BA2A79001CAD4D /* EFIPartitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EFIPartitionManager.swift; sourceTree = "<group>"; };
+		C6BEA10124A3A5AE008997CF /* DiagnosticsModeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsModeManager.swift; sourceTree = "<group>"; };
 		C6C1820C1FE7605300617DC2 /* ChooseSideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSideViewController.swift; sourceTree = "<group>"; };
 		C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSectionItem.swift; sourceTree = "<group>"; };
 		C6C8A8B0249E9C8A009C3D6E /* SIPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIPManager.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 		C60C40C520CCAD9C00258574 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				C6BEA10124A3A5AE008997CF /* DiagnosticsModeManager.swift */,
 				C60C40BB20CCA2BB00258574 /* AppManager.swift */,
 				DD73ABE11FB46EEB00C7F721 /* BootFilesReplacementManager.swift */,
 				C60C40BF20CCA9DC00258574 /* CreationVariablesManager.swift */,
@@ -649,6 +652,7 @@
 				C621CFA71F4F6A6500CC6D5B /* MainWindowController.swift in Sources */,
 				C621CFAC1F4F7DF400CC6D5B /* DriveView.swift in Sources */,
 				DDD038F21FB7AEC000D22695 /* BootFilesReplacementItem.swift in Sources */,
+				C6BEA10224A3A5AE008997CF /* DiagnosticsModeManager.swift in Sources */,
 				C65AA61F1F4F497A00C43223 /* ClassExtensions.swift in Sources */,
 				C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */,
 				C615B815216AF04D00913BFF /* MediaCreationManagerFunctions.swift in Sources */,

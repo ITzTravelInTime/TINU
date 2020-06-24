@@ -26,6 +26,12 @@ public final class CreateinstallmediaSmallManager{
 	
 	//this tells to the rest of the app if the creation of the installer is in execution
 	public var sharedIsCreationInProgress = false
+	
+	public var sharedIsBusy: Bool{
+		get{
+			return (sharedIsCreationInProgress || sharedIsPreCreationInProgress)
+		}
+	}
 }
 
 public final class FinalScreenSmallManager{
