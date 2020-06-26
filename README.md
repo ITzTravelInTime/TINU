@@ -3,31 +3,23 @@ TINU, the bootable macOS installer creation tool
 
 [TINU Is Not Unibe**t]
 
-This software is intended for creating a bootable macOS installer for Mac and Hackintosh computers. It's basically a GUI for the createinstallmedia executable that can be found in any macOS installer app from Mavericks (macOS 10.9) up to the most recent versions.
+This software is intended for creating a vanilla bootable macOS installer for Mac and Hackintosh computers. It's basically a GUI for the createinstallmedia executable that can be found in any macOS installer app from Mavericks (macOS 10.9) up to the most recent versions.
 
 It allows you to easily create a macOS install USB stick or other installer media without messing around with the command line and without using Disk Utility. It also detects and prevents the most common errors with the creation of bootable vanilla macOS installers. 
 
 # Features:
 - Simple-to-use UI that allows you to easily start the bootable macOS installer creation process.
 - It can work with every macOS installer app that has the createinstallmedia executable inside its resources folder (including also beta and newly released installers).
-- You can use any erasable volume that is at least 7 GB of size (if the volume's drive is not in GUID format, TINU will re-format it accordingly).
+- Works using the latest versions of macOS and will also support newer Mac installers out of the box without requiring an update.
+- You can use any erasable volume that is at least 7 GB of size (if the volume's drive is not in GUID format, TINU will re-format it accordingly, 10+ gb volumes are required for Catalina and newer versions).
 - Can work with the Mac OS recovery system, so you can create a bootable macOS installer from the macOS installer itself or from the macOS recovery partition, and you can use TINU to install macOS, too.
 - 100% clean: The bootable macOS installers created with this tool are vanilla, just as if you created them using the command line "createinstallmedia" method in Terminal.
 - Open Source: You can verify what this program does on your computer and you can create your own version by downloading and playing with the source code.
 - Does not require any special preparations. Just open the program, make sure you have a USB drive plugged in and have a macOS installer app on your disk.
 - No need to use Disk Utility. TINU can format your drive or partition for you.
 - Integrated EFI partition mounter tool.
-- Uses recent, modern, APIs and SDKs and the Swift 3 language.
-- Transparent graphics style available (type alt-S or choose from the menu bar: View -> Use transparent style).
-- Works using the latest versions of macOS and will also support newer Mac installers out of the box without requiring an update.
-- Offers advanced features to customize your bootable macOS installer.
 
 Features that are planned for future versions:
-- Install and configure [Clover](https://sourceforge.net/projects/cloverefiboot/).
-- Install kexts into Clover's kexts folder.
-- Clover drivers customization
-- Use custom DSDT in Clover
-- Integrated pre-made Clover config templates database from a remote and open repository.
 - Support for other languages, at least Italian.
 
 # Requirements:
@@ -36,12 +28,12 @@ Features that are planned for future versions:
 - A copy of a macOS/Mac OS X installer app (Maveriks or newer versions are supported) in the /Applications folder or in the root of any storage drive on your machine (excepted the drive or volume you want to turn into your macOS install media).
 
 # Building/Compiling requirements: 
-- To compile (or create) a copy this app using the source code provvided in this repo, Xcode 10 is required and it's recommended to also to use codesign, but the app can work without this last thing.
+- To compile (or create) a copy this app using the source code provvided in this repo, Xcode 10.1 is required and it's recommended to also to use codesign, but the app can work without this last thing.
 
 # Download:
-- You can download the pre-made and code signed app from the releases section of this repo that you can find here: https://github.com/ITzTravelInTime/TINU/releases
+- You can download the pre-made app from the releases section of this repo that you can find here: https://github.com/ITzTravelInTime/TINU/releases
 
-- Or you can just build your own copy by just downloading the source code and then using Xcode (requires Xcode 10)
+- Or you can just build your own copy by just downloading the source code and then using Xcode (requires Xcode 10.1)
 
 # Frequently asked questions
 https://github.com/ITzTravelInTime/TINU/wiki/FAQs
@@ -59,23 +51,20 @@ Thread (italian) on insanelymac.com:
 Thread (english-german) on hackintosh-forum.de:
 - https://www.hackintosh-forum.de/index.php/Thread/33630-TINU/ 
 
-Post on Reddit:
-- https://www.reddit.com/r/hackintosh/comments/a1h61d/tinu_vanilla_bootable_macos_installer_creation/
-
 Facebook hackintosh help and beta testing (Italian only):
 - https://www.facebook.com/groups/Italia.hackintosh/?fref=ts
 
-Contact me (Pietro Caruso, the project creator):
+Contact the project creator (ITzTravelInTime):
 - Insanelymac.com profile: http://www.insanelymac.com/forum/user/1390153-itztravelintime/
 - Reddit profile:          https://www.reddit.com/user/ITzTravelInTime
 - email:                   piecaruso97@gmail.com
 
 # Repository rules:
-- Pease trust only official releases of this software, to avoid using any third party modified or recompiled versions, because third party developers can easily hide malweres inside of it
+- Pease trust only official releases of this software, avoid using any third party modified or recompiled versions, because third party developers can easily hide malweres inside of it (but external contribution are welcome)
 - If you want to create your own spin-off version of TINU please let the project creator to know!
 - Distribute your spin-off version of TINU on GitHub and respect the license please!
-- If you believe that your changes may help with the main branch, create your own fork, apply the changes to it and then create a pull/merge request to the main branch here to let the changes to be applyed more easily by the repository maintainers
-- Contact the project creator for any problems, bugs, spell/grammar errors and missplacements to fix in the main repo, suggestions from designers and developers are always welcome
+- If you believe that your changes may help with the main branch, create your own fork, apply the changes to it and then create a pull/merge request to the main branch here to let the changes to be applyed more easily by the repository maintainers.
+- Create a GitHub issue for any problems, bugs, spell/grammar errors and missplacements to fix in the repo or in the app/source code, suggestions from anyone (especially from designers and developers are always welcome)
 
 # Note that:
 - This software is under GNU GPL v3 license so any new branch/mod/third party release must be open source and under the same license
