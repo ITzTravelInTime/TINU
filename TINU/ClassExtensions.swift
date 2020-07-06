@@ -28,7 +28,8 @@ extension NSViewController{
                 self.view.window?.contentViewController = viewController
                 
                 self.view.window?.contentView = viewController?.view
-                
+				
+				/*
                 #if !isTool
                 if !sharedIsOnRecovery{
                     if let w = viewController?.window.windowController as? GenericWindowController{
@@ -36,7 +37,8 @@ extension NSViewController{
                     }
                 }
                 #endif
-                
+				*/
+				
                 if tempPos != nil{
                     self.view.window?.setFrameOrigin(tempPos!)
                 }

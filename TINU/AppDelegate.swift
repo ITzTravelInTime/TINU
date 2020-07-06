@@ -31,12 +31,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	@IBOutlet weak var toolsMenuItem: NSMenuItem!
 	@IBOutlet weak var efiMounterMenuItem: NSMenuItem!
 	
+	#if sudoStartup
+	private var useChange = true
+	#endif
+	
 	func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true
     }
     
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplicationTerminateReply {
-		print("Should terminate called")
+		log("Should terminate called")
+		
         if CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress{
             msgBoxWarning("You can't quit now", "You can't quit from TINU now, wait for the first part of the process to end or press the cancel button on the windows that asks for the password, and then quit if you want")
             return NSApplicationTerminateReply.terminateCancel
@@ -129,7 +134,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     public func swichMode(isInstall: Bool){
 		
-        if !(CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress){
+        if !(CreateinstallmediaSmallManager.shared.sharedIsBusy){
 			
             sharedInstallMac = isInstall
 			

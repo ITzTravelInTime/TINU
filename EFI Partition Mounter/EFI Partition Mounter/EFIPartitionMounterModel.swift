@@ -116,7 +116,7 @@ public final class EFIPartitionMounterModel{
                                                     print("                    This EFI partition is mounted")
                                                     
                                                     
-                                                    if FileManager.default.fileExists(atPath: mp! + "/EFI/CLOVER/config.plist"){
+                                                    if FileManager.default.fileExists(atPath: mp! + EFIPartitionToolTypes.cloverConfigLocation) || FileManager.default.fileExists(atPath: mp! + EFIPartitionToolTypes.openCoreConfigLocation){
                                                         print("                      This EFI Partition has a clover config file")
                                                         tempResult.hasConfig = true
                                                     }

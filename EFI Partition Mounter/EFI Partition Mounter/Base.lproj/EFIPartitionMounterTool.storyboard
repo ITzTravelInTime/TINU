@@ -36,19 +36,19 @@
                                                             <segue destination="UsW-sh-Xlf" kind="show" id="GfO-gk-L1j"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Source code on GitHub" id="q5g-xw-6GS" customClass="HyperMenuItem" customModule="TINU" customModuleProvider="target">
+                                                    <menuItem title="Source code on GitHub" id="q5g-xw-6GS" customClass="HyperMenuItem" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/ITzTravelInTime/EFI-Partition-Mounter"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </menuItem>
-                                                    <menuItem title="Discussion (English)" id="4Yo-Kr-yIf" customClass="HyperMenuItem" customModule="TINU" customModuleProvider="target">
+                                                    <menuItem title="Discussion (English)" id="4Yo-Kr-yIf" customClass="HyperMenuItem" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://www.insanelymac.com/forum/topic/335138-therers-a-new-efi-partition-mounter-tool-in-town/"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </menuItem>
-                                                    <menuItem title="Discussion (Italian)" id="P92-KG-xoa" customClass="HyperMenuItem" customModule="TINU" customModuleProvider="target">
+                                                    <menuItem title="Discussion (Italian)" id="P92-KG-xoa" customClass="HyperMenuItem" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://www.insanelymac.com/forum/topic/335142-c%C3%A8-un-nuovo-tool-per-montare-la-partizione-efi-in-citt%C3%A0/"/>
@@ -62,13 +62,13 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Other Apps by Pietro Caruso" autoenablesItems="NO" id="2eq-C6-uKP">
                                                 <items>
-                                                    <menuItem title="VoodooTSCSync Configurator" id="HQy-72-bB2" customClass="HyperMenuItem" customModule="TINU" customModuleProvider="target">
+                                                    <menuItem title="VoodooTSCSync Configurator" id="HQy-72-bB2" customClass="HyperMenuItem" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://www.insanelymac.com/forum/topic/323366-voodootscsync-configurator-create-a-custom-version-of-voodoo-tsc-sync/"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </menuItem>
-                                                    <menuItem title="TINU" id="BLi-eP-pQT" customClass="HyperMenuItem" customModule="TINU" customModuleProvider="target">
+                                                    <menuItem title="TINU" id="BLi-eP-pQT" customClass="HyperMenuItem" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/ITzTravelInTime/TINU"/>
@@ -411,7 +411,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="TINU" customModuleProvider="target">
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                     <connections>
                         <outlet property="diagnosticsItem" destination="ff9-2k-K1q" id="YHX-Sj-DXa"/>
                         <outlet property="otherAppsItem" destination="1Kg-uk-fTS" id="Nad-4r-ac9"/>
@@ -427,7 +427,7 @@
         <scene sceneID="gih-Ko-CxZ">
             <objects>
                 <customObject id="g7a-qL-Ml9" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <viewController storyboardIdentifier="EFIMounter" showSeguePresentationStyle="single" id="Yey-AQ-1Pt" customClass="EFIPartitionMounterViewController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EFIMounter" showSeguePresentationStyle="single" id="Yey-AQ-1Pt" customClass="EFIPartitionMounterViewController" customModule="EFI_Partition_Mounter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" autoresizesSubviews="NO" id="WEf-d6-Mro">
                         <rect key="frame" x="0.0" y="0.0" width="620" height="360"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -539,7 +539,7 @@
         <!--Window Controller-->
         <scene sceneID="zdo-jT-Jwi">
             <objects>
-                <windowController storyboardIdentifier="EFIMounterWindow" id="dxr-Z3-LXy" customClass="EFIPartitionMounterWindowController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="EFIMounterWindow" id="dxr-Z3-LXy" customClass="EFIPartitionMounterWindowController" customModule="EFI_Partition_Mounter" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="TINU: EFI partition mounter" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="11d-LS-SHb">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES"/>
@@ -562,7 +562,7 @@
         <!--AboutEFI Partition Mounter-->
         <scene sceneID="dd8-vj-uZh">
             <objects>
-                <viewController storyboardIdentifier="CreditsViewController" id="HAL-pd-aYq" customClass="AboutEFIPartitionMounter" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreditsViewController" id="HAL-pd-aYq" customClass="AboutEFIPartitionMounter" customModule="EFI_Partition_Mounter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Qlt-Ww-43x">
                         <rect key="frame" x="0.0" y="0.0" width="588" height="313"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -727,7 +727,7 @@
         <!--Partition Mounter License View Controller-->
         <scene sceneID="Ecv-WS-N0F">
             <objects>
-                <viewController id="tKN-fL-pGz" customClass="EFIPartitionMounterLicenseViewController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="tKN-fL-pGz" customClass="EFIPartitionMounterLicenseViewController" customModule="EFI_Partition_Mounter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="RQt-4N-WZL">
                         <rect key="frame" x="0.0" y="0.0" width="588" height="420"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -769,7 +769,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mp2-Gf-JXq" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
+                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mp2-Gf-JXq" customClass="HyperTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                 <rect key="frame" x="159" y="110" width="272" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="you can still find the license agreement here" id="Hi9-VL-fR0">
@@ -797,7 +797,7 @@
         <!--Contact UsEFI Partition Mounter-->
         <scene sceneID="yPC-mp-yqP">
             <objects>
-                <viewController id="OWw-sV-dSl" customClass="ContactUsEFIPartitionMounter" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="OWw-sV-dSl" customClass="ContactUsEFIPartitionMounter" customModule="EFI_Partition_Mounter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="8eU-oh-Z1N">
                         <rect key="frame" x="0.0" y="0.0" width="512" height="299"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -829,7 +829,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0BL-R4-OJh" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0BL-R4-OJh" customClass="HyperTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                 <rect key="frame" x="253" y="205" width="241" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Pietro Caruso (ITzTravelInTime)" id="Cka-ln-bas">
@@ -841,7 +841,7 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="href" value="http://www.insanelymac.com/forum/user/1390153-itztravelintime/"/>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="amC-7u-cHr" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="amC-7u-cHr" customClass="HyperTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                 <rect key="frame" x="253" y="180" width="241" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="piecaruso97@gmail.com" id="uIb-AF-pim">
@@ -862,7 +862,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hf4-0c-mhG" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hf4-0c-mhG" customClass="HyperTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                 <rect key="frame" x="253" y="155" width="241" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="ITzTravelInTime on GitHub" id="qFL-3h-9pj">
@@ -916,7 +916,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ajc-aF-W0F" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ajc-aF-W0F" customClass="HyperTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                 <rect key="frame" x="253" y="91" width="241" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Discussion on insanelymac.com" id="A4x-AV-bZk">
@@ -937,7 +937,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N1X-aH-DAM" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N1X-aH-DAM" customClass="HyperTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                 <rect key="frame" x="253" y="66" width="241" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Discussion on insanelymac.com" id="WF0-IV-rwB">
@@ -960,8 +960,8 @@
         <scene sceneID="6F2-aM-KpE">
             <objects>
                 <windowController storyboardIdentifier="CreditsWindow" id="Pdh-rc-ZRd" sceneMemberID="viewController">
-                    <window key="window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="creditsWindow" tabbingMode="disallowed" id="0Se-3L-aoq">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
+                    <window key="window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="creditsWindow" tabbingMode="disallowed" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="0Se-3L-aoq">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" fullSizeContentView="YES"/>
                         <rect key="contentRect" x="294" y="328" width="480" height="265"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1050"/>
                         <connections>
@@ -980,8 +980,8 @@
         <scene sceneID="Zo6-SD-Jx3">
             <objects>
                 <windowController id="QLh-Ma-d7O" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="ycK-qj-MHF">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="ycK-qj-MHF">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="245" y="310" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1050"/>
@@ -1000,7 +1000,7 @@
         <!--Partition Mounter Settings View Controller-->
         <scene sceneID="0Xl-Vo-cs0">
             <objects>
-                <viewController id="K1m-N2-fxs" customClass="EFIPartitionMounterSettingsViewController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="K1m-N2-fxs" customClass="EFIPartitionMounterSettingsViewController" customModule="EFI_Partition_Mounter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="3nM-C1-LlS">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1050,8 +1050,8 @@
         <scene sceneID="MAW-Jm-tRq">
             <objects>
                 <windowController id="UsW-sh-Xlf" sceneMemberID="viewController">
-                    <window key="window" title="Contact us" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="logWindow" tabbingMode="disallowed" id="RAe-4X-VA1">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
+                    <window key="window" title="Contact us" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="logWindow" tabbingMode="disallowed" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="RAe-4X-VA1">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES"/>
                         <rect key="contentRect" x="100" y="323" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1050"/>
@@ -1072,6 +1072,6 @@
         <image name="EFIIcon" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="GfO-gk-L1j"/>
+        <segue reference="uhE-p4-tyX"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -257,7 +257,7 @@ public class EFIPartitionToolInterface{
                     
                     if !self.hasConfig && self.isMounted{
                         if let mountPoint = dm.getDevicePropertyInfoNew(self.bsdid, propertyName: "MountPoint"){
-                            self.hasConfig = FileManager.default.fileExists(atPath: mountPoint + "/EFI/CLOVER/config.plist")
+                            self.hasConfig = FileManager.default.fileExists(atPath: mountPoint + EFIPartitionToolTypes.cloverConfigLocation) || FileManager.default.fileExists(atPath: mountPoint + EFIPartitionToolTypes.openCoreConfigLocation)
                         }
                     }
                     
@@ -293,26 +293,45 @@ public class EFIPartitionToolInterface{
         }
         
         #if !macOnlyMode
-        @objc private func editConfig(_ sender: Any)
-        {
-            DispatchQueue.global(qos: .background).async
-                {
-                    if let mountPoint = dm.getDevicePropertyInfoNew(self.bsdid, propertyName: "MountPoint")
-                    {
-                        if !NSWorkspace.shared().openFile(mountPoint + "/EFI/CLOVER/config.plist", withApplication: "Clover Configurator")
-                        {
+        @objc private func editConfig(_ sender: Any){
+			DispatchQueue.global(qos: .background).async{
+				if let mountPoint = dm.getDevicePropertyInfoNew(self.bsdid, propertyName: "MountPoint"){
+					
+					//https://mackie100projects.altervista.org/download-opencore-configurator/
+					//https://mackie100projects.altervista.org/download-clover-configurator/
+					
+					var configLocation = mountPoint
+					var applicationName = ""
+					var applicationDownload = ""
+					
+					if (FileManager.default.fileExists(atPath: mountPoint + EFIPartitionToolTypes.cloverConfigLocation)){
+						configLocation += EFIPartitionToolTypes.cloverConfigLocation
+						applicationName = "Clover Configurator"
+						applicationDownload = "https://mackie100projects.altervista.org/download-clover-configurator/"
+					}else if (FileManager.default.fileExists(atPath: mountPoint + EFIPartitionToolTypes.openCoreConfigLocation)){
+						configLocation += EFIPartitionToolTypes.openCoreConfigLocation
+						applicationName = "OpenCore Configurator"
+						applicationDownload = "https://mackie100projects.altervista.org/download-opencore-configurator/"
+					}
+					
+					
+					
+					if !NSWorkspace.shared().openFile(configLocation, withApplication: applicationName)
+					{
                             DispatchQueue.main.sync
                                 {
-                                    if !dialogYesNo(question: "Download clover configurator?", text: "Clover configurator is not installed in your system, do you want to download and install it?", style: .informational)
+									//TODO: remeber to add a setting to not always prompt for this con figurator tools
+									
+									if !dialogYesNo(question: "Download \"\(applicationName)\" ?", text: "\"\(applicationName)\" is not installed in your system, do you want to download and install it?", style: .informational)
                                     {
-                                        NSWorkspace.shared().open(URL(string: "https://mackie100projects.altervista.org/download-clover-configurator/")!)
+                                        NSWorkspace.shared().open(URL(string: applicationDownload)!)
                                     }
                                     else
                                     {
-                                        if !dialogYesNo(question: "Open \"config.plist\" with another editor?", text: "You choose to not download \"Clover Configurator\", do you want to edit your \"config.plist\" file with another app?" , style: .informational)
+                                        if !dialogYesNo(question: "Open \"config.plist\" with another editor?", text: "You choose to not download \"\(applicationName)\", do you want to edit your \"config.plist\" file with another app?" , style: .informational)
                                         {
                                             
-                                            if !NSWorkspace.shared().openFile(mountPoint + "/EFI/CLOVER/config.plist")
+                                            if !NSWorkspace.shared().openFile(configLocation)
                                             {
                                                 msgBoxWarning("Impossible to open \"config.plist\"!", "Impossible to find an app to open the \"config.plist\" file!")
                                             }
@@ -322,6 +341,7 @@ public class EFIPartitionToolInterface{
                         }
                     }
             }
+			
         }
         #endif
 		

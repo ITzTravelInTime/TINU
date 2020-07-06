@@ -23,7 +23,12 @@ class ChooseSideViewController: GenericViewController {
 	
 	let background = NSView()
 	
-	var count = 0
+	private var count = 0
+	
+	
+	#if sudoStartup
+	static private var useChange = true
+	#endif
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -161,7 +166,6 @@ class ChooseSideViewController: GenericViewController {
 		}
 		
 		background.frame.origin = NSPoint(x: self.view.frame.width / 2 - background.frame.size.width / 2, y: self.view.frame.height / 2 - background.frame.size.height / 2)
-		
 	}
 	
 	override func viewWillAppear() {
@@ -186,18 +190,24 @@ class ChooseSideViewController: GenericViewController {
 		
 		#if sudoStartup
 		
-		if !isRootUser{
-			if #available(OSX 10.15, *){
-				openDiagnosticsMode(withSudo: true)
-				
-				//if it ges here it means that diagnostics mode failed, so, it's better to not quit the app
-				
-				
-			}else{
-				let _ = startCommandWithSudo(cmd: "/bin/sh", args: ["-c", Bundle.main.executablePath!])
-				NSApplication.shared().terminate(self)
+		if !isRootUser && ChooseSideViewController.useChange{
+			
+			if (!SIPManager.checkSIP()){
+				if dialogYesNo(question: "Use diagnostics mode?", text: "You can run TINU using diagnostics mode with administrator privileges, this will let you avoid to enter the password multiple times, do you want to continue?", style: .informational){
+					ChooseSideViewController.useChange = false
+					return
+				}
 			}
 			
+			self.window!.orderOut(self)
+			
+			//if it ges here it means that diagnostics mode failed, so, it's better to not quit the app
+				
+			//let _ = startCommandWithSudo(cmd: "/bin/sh", args: ["-c", Bundle.main.executablePath!])
+			
+			openDiagnosticsMode(withSudo: true)
+			
+			//NSApplication.shared().terminate(self)
 			
 		}
 		

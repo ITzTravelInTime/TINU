@@ -15,7 +15,7 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
    public let backgroundUnselectedMaterial = NSVisualEffectMaterial.light
     
     var background: NSVisualEffectView!
-	var alreadyFullScreen: Bool = false
+	//var alreadyFullScreen: Bool = false
     
     override public func windowDidLoad() {
         super.windowDidLoad()
@@ -29,9 +29,11 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
         self.window?.isFullScreenEnaled = false
         self.window?.title = sharedWindowTitlePrefix
         
-        checkVibrant()
+        //checkVibrant()
+		activateVibrantWindow()
     }
-    
+	
+	/*
     func checkVibrant(){
 		if (self.window?.styleMask.contains(.fullSizeContentView))! || self.window!.titlebarAppearsTransparent{
 			alreadyFullScreen = true
@@ -44,7 +46,7 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
 			}
 		}
 			
-			/*
+	/*
 			if !alreadyFullScreen{
             	if sharedUseVibrant {
                 	activateVibrantBackground()
@@ -53,14 +55,14 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
                 	deactivateVibrantBackground()
                 	deactivateVibrantWindow()
             	}
-			}*/
+			}
 			
-			/*
+	
             if let c = self.window?.contentViewController as? GenericViewController{
                 c.viewDidSetVibrantLook()
             }
 			*/
-    }
+    }*/
 	
 	
     func activateVibrantWindow(){
@@ -142,9 +144,9 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
 	
 	public func windowWillBeginSheet(_ notification: Notification) {
 		
-		if alreadyFullScreen{
+		//if alreadyFullScreen{
 			deactivateVibrantWindow()
-		}
+		//}
 		
 		/*
 		if sharedUseVibrant || alreadyFullScreen{
@@ -154,9 +156,9 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
 	
 	public func windowDidEndSheet(_ notification: Notification) {
 		
-		if alreadyFullScreen{
+		//if alreadyFullScreen{
 			activateVibrantWindow()
-		}
+		//}
 		
 		/*
 		if sharedUseVibrant || alreadyFullScreen{

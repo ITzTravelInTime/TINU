@@ -189,7 +189,7 @@ class InstallingViewController: GenericViewController{
 	func goBack(){
 		//this code opens the previus window
 		
-		if (CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress) && !sharedIsOnRecovery{
+		if (CreateinstallmediaSmallManager.shared.sharedIsBusy) && !sharedIsOnRecovery{
 			
 			let notification = NSUserNotification()
 			
@@ -221,7 +221,7 @@ class InstallingViewController: GenericViewController{
 		
 		if let stopped = spd{
 			if stopped{
-				if !(CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress){
+				if !(CreateinstallmediaSmallManager.shared.sharedIsBusy){
 					goBack()
 				}
 			}else{

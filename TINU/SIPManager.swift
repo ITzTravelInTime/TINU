@@ -11,7 +11,11 @@ import Foundation
 final class SIPManager{
 	//launch this check from a background thread
 	@inline(__always) class func checkSIP() -> Bool{
-		return (getOut(cmd: "csrutil status").contains("enabled"))
+		if #available(OSX 10.11, *){
+			return (getOut(cmd: "csrutil status").contains("enabled"))
+		}else{
+			return false
+		}
 	}
 
 	class func checkSIPAndLetTheUserKnow(){

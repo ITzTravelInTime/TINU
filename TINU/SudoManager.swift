@@ -25,7 +25,7 @@ fileprivate final class SudoManager{
 	
 	private func sendAuthNotification(){
 		#if TINU
-		if (CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress) && !sharedIsOnRecovery{
+		if (CreateinstallmediaSmallManager.shared.sharedIsBusy) && !sharedIsOnRecovery{
 			
 			notification = NSUserNotification()
 			

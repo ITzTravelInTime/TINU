@@ -44,13 +44,13 @@ public func openDiagnosticsMode(withSudo sudo: Bool){
 							val = 0;
 						}else{
 							print("error with the script output: " + result)
-							msgBoxWarning("Impossible to use diagnostics mode", "Something went wrong when preparing TINU to be run in diagnostics mode.\n\n[error code: 0]\n\nScript output: \(result)")
+							msgBoxWarning("Impossible to use diagnostics mode", "Something went wrong when preparing TINU to be run in diagnostics mode.\n\nDiagnostic info: \n    [error code: 0]\n    Script output: \(result)")
 						}
 					}
 				}else{
 					print("impossible to execute the apple script to prepare the app")
 					
-					msgBoxWarning("Impossible to use diagnostics mode", "Impossible to prepare TINU to run in diagnostics mode, try to moove the app to a different directory e.g. the Desktop.\n\n[error code: 1, apple script execution failed]")
+					msgBoxWarning("Impossible to prepare TINU for diagnostics mode", "Impossible to prepare TINU to run in diagnostics mode, try to moove the app to a different directory e.g. the Desktop or the Applications folder.\n\nDiagnostic info: \n    [error code: 1, apple script execution failed]")
 				}
 				
 			}else{
@@ -71,8 +71,8 @@ public func openDiagnosticsMode(withSudo sudo: Bool){
 		//the diagnostics mode button should be blocked at this point if the app is in a recovery or the app is performing a creation process
 		if CreateinstallmediaSmallManager.shared.sharedIsBusy{
 			msgBox("You can't switch mode now", "The bootable macOS installer creation process is currenly running. Please cancel the operation or wait for the operation to end before switching the mode.", .warning)
-		}else if sharedIsOnRecovery{
-			msgBoxWarning("You can't switch the mode right now", "Switching the mode in which TINU is running is not possible while running TINU from this recovery/installer system.")
+		}else if sharedIsReallyOnRecovery{
+			msgBoxWarning("You can't switch the mode right now", "Switching the mode in which TINU is running is not possible while running TINU from a recovery/installer system.")
 		}
 	}
 }

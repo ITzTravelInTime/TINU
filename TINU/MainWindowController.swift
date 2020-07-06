@@ -38,6 +38,7 @@ public class mainWindowController: GenericWindowController {
     }
     
     func windowShouldClose(_ sender: Any) -> Bool {
+		print("main Window should close called")
         if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress{
 			if let d = InstallMediaCreationManager.shared.stopWithAsk(){
 				return d
@@ -46,11 +47,7 @@ public class mainWindowController: GenericWindowController {
 			}
         }
         
-        if CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress{
-            return false
-        }
-        
-        return true
+        return !CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress
     }
     
 }
