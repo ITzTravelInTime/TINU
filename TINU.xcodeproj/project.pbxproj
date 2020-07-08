@@ -234,10 +234,10 @@
 		C60C40C520CCAD9C00258574 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				C6BEA10124A3A5AE008997CF /* DiagnosticsModeManager.swift */,
 				C60C40BB20CCA2BB00258574 /* AppManager.swift */,
 				DD73ABE11FB46EEB00C7F721 /* BootFilesReplacementManager.swift */,
 				C60C40BF20CCA9DC00258574 /* CreationVariablesManager.swift */,
+				C6BEA10124A3A5AE008997CF /* DiagnosticsModeManager.swift */,
 				C6AD9344239A684D0004704C /* DiskutilListCodable.swift */,
 				C60C40C620CCAE6200258574 /* DrivesManager.swift */,
 				C6B74D0B20BA2A79001CAD4D /* EFIPartitionManager.swift */,

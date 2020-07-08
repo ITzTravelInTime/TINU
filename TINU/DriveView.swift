@@ -210,6 +210,8 @@ class DriveView: ShadowView {
 					sz = "Size: 0 Byte"
 				}
 			}
+		}else{
+			
 		}
 		
 		DispatchQueue.main.async {
@@ -249,37 +251,65 @@ class DriveView: ShadowView {
 			
         }else{
 			
-			/*
-           	self.overlay = NSImageView(frame: self.image.frame)
-            self.overlay.image = IconsManager.shared.unsupportedOverlay
-			self.overlay.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
-			self.overlay.imageAlignment = .alignBottom
-            
-            self.addSubview(self.overlay)
-			*/
+			var notBigger: Bool = false
 			
-			//let y: CGFloat = 15//self.volume.frame.origin.y + ((self.volume.frame.size.width / 2) - ((self.frame.width / 5) / 2))
-			//let h: CGFloat = self.image.frame.origin.y - 15 - 3//height: self.frame.width / 5
-			let w: CGFloat = self.frame.width / 3
-			let margin: CGFloat = 15
+			if self.sz != nil{
+				notBigger = !cvm.shared.compareSize(to: self.sz)
+			}
 			
-			self.warnImage = NSImageView(frame: NSRect(x: self.frame.width - w - margin, y: self.image.frame.origin.y, width: w, height: w))
-			self.warnImage.image = IconsManager.shared.warningIcon
-			self.warnImage.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
+			if (notBigger){
+				self.overlay = NSImageView(frame: self.image.frame)
+				self.overlay.image = IconsManager.shared.unsupportedOverlay
+				self.overlay.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
+				self.overlay.imageAlignment = .alignBottom
+				
+				self.addSubview(self.overlay)
+				
+				self.warnText = NSTextField(frame: self.volume.frame)
+				self.warnText.font = self.volume.font
+				
+				self.warnText.stringValue = "App too big: " + self.volume.stringValue
+				
+				self.warnText.isEditable = false
+				self.warnText.isBordered = false
+				self.warnText.alignment = .center
+				self.warnText.textColor = .systemGray
+				(self.warnText as NSView).backgroundColor = NSColor.white.withAlphaComponent(0)
+				
+				//volume.isSelectable = false
+				self.addSubview(self.warnText)
+			}else{
 			
-			self.addSubview(self.warnImage)
+				//let y: CGFloat = 15//self.volume.frame.origin.y + ((self.volume.frame.size.width / 2) - ((self.frame.width / 5) / 2))
+				//let h: CGFloat = self.image.frame.origin.y - 15 - 3//height: self.frame.width / 5
+				let w: CGFloat = self.frame.width / 3
+				let margin: CGFloat = 15
 			
-			self.warnText = NSTextField(frame: self.volume.frame)
-			self.warnText.font = self.volume.font
-			self.warnText.stringValue = "Damaged app: " + self.volume.stringValue
-			self.warnText.isEditable = false
-			self.warnText.isBordered = false
-			self.warnText.alignment = .center
-			self.warnText.textColor = .systemYellow
-			(self.warnText as NSView).backgroundColor = NSColor.white.withAlphaComponent(0)
+				self.warnImage = NSImageView(frame: NSRect(x: self.frame.width - w - margin, y: self.image.frame.origin.y, width: w, height: w))
+				self.warnImage.image = IconsManager.shared.warningIcon
+				self.warnImage.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
 			
-			//volume.isSelectable = false
-			self.addSubview(self.warnText)
+				self.addSubview(self.warnImage)
+			
+				self.warnText = NSTextField(frame: self.volume.frame)
+				self.warnText.font = self.volume.font
+				
+				if self.sz != nil{
+					self.warnText.stringValue = "Damaged app: " + self.volume.stringValue
+				}else{
+					self.warnText.stringValue = "Error: " + self.volume.stringValue
+				}
+				
+				self.warnText.isEditable = false
+				self.warnText.isBordered = false
+				self.warnText.alignment = .center
+				self.warnText.textColor = .systemYellow
+				(self.warnText as NSView).backgroundColor = NSColor.white.withAlphaComponent(0)
+			
+				//volume.isSelectable = false
+				self.addSubview(self.warnText)
+				
+			}
 			
 			self.volume.removeFromSuperview()
 			

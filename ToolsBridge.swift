@@ -8,6 +8,7 @@
 
 import Cocoa
 
+/*
 #if TINU && !isTool
 	public typealias AppViewController   =  GenericViewController
 	public typealias AppWindowController =  GenericWindowController
@@ -18,6 +19,10 @@ import Cocoa
 	public typealias AppViewController   =  NSViewController
 	public typealias AppWindowController =  NSWindowController
 #endif
+*/
+
+public typealias AppViewController   =  GenericViewController
+public typealias AppWindowController =  GenericWindowController
 
 #if isTool
 public var defaults = UserDefaults.init()

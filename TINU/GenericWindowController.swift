@@ -27,7 +27,10 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
     
     func setUI(){
         self.window?.isFullScreenEnaled = false
+        
+        #if !isTool
         self.window?.title = sharedWindowTitlePrefix
+        #endif
         
         //checkVibrant()
 		activateVibrantWindow()
@@ -70,11 +73,13 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
 		self.window?.styleMask.insert(.fullSizeContentView)
 		self.window?.isMovableByWindowBackground = true
 		
+        #if !isTool
 		if AppManager.shared.sharedTestingMode{
 			self.window?.titleVisibility = .visible
 		}else{
 			self.window?.titleVisibility = .hidden
 		}
+        #endif
 		
     }
     

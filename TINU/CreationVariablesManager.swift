@@ -59,6 +59,20 @@ public final class CreationVariablesManager{
 			
 		}
 	}
+	
+	func compareSize(to number: UInt64) -> Bool{
+		//print(currentPart.size)
+		//print(number)
+		return (currentPart.size > ((number / 100) * 120))
+	}
+	
+	func compareSize(to string: String!) -> Bool{
+		if let s = UInt64(string){
+			return compareSize(to: s)
+		}
+		return false
+	}
+	
 	//this variable tells to the app which is the bundle name of the selcted installer app
 	public var sharedBundleName = ""
 	

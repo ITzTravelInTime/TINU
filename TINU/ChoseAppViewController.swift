@@ -414,6 +414,7 @@ class ChoseAppViewController: GenericViewController {
 								
 								drive.volume.stringValue = FileManager.default.displayName(atPath: appPath)
 								print("     App name is " + drive.volume.stringValue)
+								drive.sz = nil
 								
 								/*if fp{
 								drive.isEnabled = false
@@ -445,11 +446,36 @@ class ChoseAppViewController: GenericViewController {
 									}
 								}
 								
-								drive.isEnabled = (check == 0)
+								
+								
+								if check == 0{
+									
+									let appURL = URL(fileURLWithPath: appPath, isDirectory: true)
+									let res = FileManager.default.directorySize(appURL)
+									
+									if let r = res{
+										print("    Got installer app size")
+										drive.sz = "\(size)"
+										drive.isEnabled = (cvm.shared.compareSize(to: UInt64(r)))
+										if !drive.isEnabled{
+											print("      Drive is too small to be used with this installer app")
+										}
+									}else{
+										print("    Can't get the size for this installer app")
+										drive.isEnabled = false
+										drive.sz = nil
+									}
+									
+								}else{
+									print("    Uncomplete installer app")
+									drive.sz = "0"
+									drive.isEnabled = false
+								}
 								
 								print("     App checked, adding it to the apps list")
 								drives.append(drive)
 								print("     App added to the apps list")
+								
 							}
 						}
 					}

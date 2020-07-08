@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C605D5B624AB6AE200D6F71E /* DarkModeDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C605D5B524AB6AE200D6F71E /* DarkModeDetection.swift */; };
+		C60C041624B35BF400ECDA37 /* GenericWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60C041524B35BF400ECDA37 /* GenericWindowController.swift */; };
 		C6322576221C18C0003A56D4 /* FilesystemObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6322575221C18C0003A56D4 /* FilesystemObserver.swift */; };
 		C6353AC6213618B6000AEEC3 /* SanFranciscoText-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = C6353AC5213618B6000AEEC3 /* SanFranciscoText-Regular.otf */; };
 		C647B35E211CEA430024B9A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B35D211CEA430024B9A1 /* AppDelegate.swift */; };
@@ -59,6 +60,7 @@
 
 /* Begin PBXFileReference section */
 		C605D5B524AB6AE200D6F71E /* DarkModeDetection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DarkModeDetection.swift; path = ../../TINU/DarkModeDetection.swift; sourceTree = "<group>"; };
+		C60C041524B35BF400ECDA37 /* GenericWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericWindowController.swift; path = ../../TINU/GenericWindowController.swift; sourceTree = "<group>"; };
 		C6322575221C18C0003A56D4 /* FilesystemObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilesystemObserver.swift; path = ../../TINU/FilesystemObserver.swift; sourceTree = "<group>"; };
 		C6353AC5213618B6000AEEC3 /* SanFranciscoText-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SanFranciscoText-Regular.otf"; sourceTree = "<group>"; };
 		C647B35A211CEA430024B9A1 /* EFI Partition Mounter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EFI Partition Mounter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -190,6 +192,7 @@
 				C6662575212E6BC800173770 /* AllertFunctions.swift */,
 				C685B3BA23496E08000BB275 /* CopyrightLabel.swift */,
 				C685B3B823496D94000BB275 /* GenericViewController.swift */,
+				C60C041524B35BF400ECDA37 /* GenericWindowController.swift */,
 				C676D194215E2BCF00E900E9 /* ShadowViewController.swift */,
 				DDF9A56A2159AFD700389F78 /* ShadowView.swift */,
 			);
@@ -324,6 +327,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C60C041624B35BF400ECDA37 /* GenericWindowController.swift in Sources */,
 				C605D5B624AB6AE200D6F71E /* DarkModeDetection.swift in Sources */,
 				C6CF8E1B211D816800760E67 /* EFIPartitionMounterCompletingViewControllers.swift in Sources */,
 				C647B38A211CEF9E0024B9A1 /* EFIPartitionMounterViewController.swift in Sources */,

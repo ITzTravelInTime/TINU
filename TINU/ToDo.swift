@@ -8,7 +8,6 @@
 
 /*TODO:
 
--add unusable catalina and newer app if the usb driver is less than 9 gb
 -add time machine detection for disks
 -continue with ui revision
 

@@ -151,6 +151,8 @@ class ChoseDriveViewController: ShadowViewController {
 				prt.apfsBDSName = d.DeviceIdentifier
 			}
 			
+			prt.size = d.Size
+			
 			drivei.part = prt
 			to.append(drivei)
 			

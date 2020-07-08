@@ -39,7 +39,7 @@ public class EFIPartitionMounterWindowController: AppWindowController {
     
     #else
     
-    public func windowWillClose(_ notification: Notification){
+    public override func windowWillClose(_ notification: Notification){
         if let win = self.window?.contentViewController as? EFIPartitionMounterViewController{
             
             if !win.barMode{
