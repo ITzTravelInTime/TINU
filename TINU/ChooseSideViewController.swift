@@ -26,8 +26,10 @@ class ChooseSideViewController: GenericViewController {
 	private var count = 0
 	
 	
+	
+	
 	#if sudoStartup
-	static private var useChange = true
+	private static var _already_prompted = false
 	#endif
 	
 	override func viewDidLoad() {
@@ -190,14 +192,13 @@ class ChooseSideViewController: GenericViewController {
 		
 		#if sudoStartup
 		
-		if !isRootUser && ChooseSideViewController.useChange{
-			
-			if (!SIPManager.checkSIP()){
-				if dialogYesNo(question: "Use diagnostics mode?", text: "You can run TINU using diagnostics mode with administrator privileges, this will let you avoid to enter the password multiple times, do you want to continue?", style: .informational){
-					ChooseSideViewController.useChange = false
-					return
+		if !isRootUser && !ChooseSideViewController._already_prompted{
+				if (!SIPManager.checkSIP()){
+					if dialogYesNo(question: "Use diagnostics mode?", text: "You can run TINU using diagnostics mode with administrator privileges, this will let you avoid to enter the password multiple times, do you want to continue?", style: .informational){
+						ChooseSideViewController._already_prompted = true
+						return
+					}
 				}
-			}
 			
 			//self.window!.orderOut(self)
 			
@@ -205,7 +206,9 @@ class ChooseSideViewController: GenericViewController {
 				
 			//let _ = startCommandWithSudo(cmd: "/bin/sh", args: ["-c", Bundle.main.executablePath!])
 			
-			openDiagnosticsMode(withSudo: true)
+			
+				openDiagnosticsMode(withSudo: true)
+				ChooseSideViewController._already_prompted = true
 			
 			//NSApplication.shared().terminate(self)
 			
