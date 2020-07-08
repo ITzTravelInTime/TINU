@@ -199,7 +199,7 @@ class ChooseSideViewController: GenericViewController {
 				}
 			}
 			
-			self.window!.orderOut(self)
+			//self.window!.orderOut(self)
 			
 			//if it ges here it means that diagnostics mode failed, so, it's better to not quit the app
 				

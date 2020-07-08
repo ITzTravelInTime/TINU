@@ -15,6 +15,10 @@
 
 -fix sudo at startup on catalina
 
+-mbr format fix
+
+-diagnostics mode prompt for sip off with remember choiche
+
 */
 
 /*TODO but with less priority:

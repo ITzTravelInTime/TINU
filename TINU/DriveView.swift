@@ -253,8 +253,10 @@ class DriveView: ShadowView {
 			
 			var notBigger: Bool = false
 			
-			if self.sz != nil{
-				notBigger = !cvm.shared.compareSize(to: self.sz)
+			if self.isApp{
+				if self.sz != nil{
+					notBigger = !cvm.shared.compareSize(to: self.sz)
+				}
 			}
 			
 			if (notBigger){
@@ -269,6 +271,7 @@ class DriveView: ShadowView {
 				self.warnText.font = self.volume.font
 				
 				self.warnText.stringValue = "App too big: " + self.volume.stringValue
+				self.toolTip = "This macOS installer app is not usable bacause you choose a target drive which is too small\n\nPath: " + self.applicationPath
 				
 				self.warnText.isEditable = false
 				self.warnText.isBordered = false
@@ -294,10 +297,14 @@ class DriveView: ShadowView {
 				self.warnText = NSTextField(frame: self.volume.frame)
 				self.warnText.font = self.volume.font
 				
-				if self.sz != nil{
-					self.warnText.stringValue = "Damaged app: " + self.volume.stringValue
-				}else{
-					self.warnText.stringValue = "Error: " + self.volume.stringValue
+				if self.isApp{
+					if self.sz != nil{
+						self.warnText.stringValue = "Damaged app: " + self.volume.stringValue
+						self.toolTip = "This macOS installer app is not usable bacause it's missing some internal elements, you need the full installer app \nwhich weights more than 5 gb\n\nPath: " + self.applicationPath
+					}else{
+						self.warnText.stringValue = "Error: " + self.volume.stringValue
+						self.toolTip = "This macOS installer app is not usable bacause there was an error while trying to calculate it's size\n\nPath: " + self.applicationPath
+					}
 				}
 				
 				self.warnText.isEditable = false
@@ -313,9 +320,7 @@ class DriveView: ShadowView {
 			
 			self.volume.removeFromSuperview()
 			
-			if self.isApp{
-				self.toolTip = "This macOS installer app is not usable bacause it's incomplete, you need the full installer app \nwhich weights more than 5 gb\n\nPath: " + self.applicationPath
-			}else{
+			if !self.isApp{
 				if sharedInstallMac{
 					self.toolTip = "This drive can't be used to\ninstall macOS in it now."
 				}else{

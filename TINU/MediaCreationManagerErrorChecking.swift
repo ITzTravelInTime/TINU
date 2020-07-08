@@ -187,10 +187,10 @@ extension InstallMediaCreationManager{
 			
 			let success = ((rc == 0) && (px == 0)) || (isRootUser && (px == 102030100) && (rc == 0)) //add rc to the root case
 			
-			log("Current user:                       \(NSUserName())")
-			log("Main process exit code:             \(px)")
-			log("process exit code produced:         \(rc)")
-			log("Detected process outcome:           \(success ? "Positive" : "Negative")")
+			log("Current user:                           \(NSUserName())")
+			log("Main process exit code:                 \(px)")
+			log("Sub process exit code produced:         \(rc)")
+			log("Detected process outcome:               \(success ? "Positive" : "Negative")")
 			
 			var errorsList: [CheckItem] = []
 			
@@ -232,6 +232,8 @@ extension InstallMediaCreationManager{
 				errorsList.append(CheckItem(stringsToCheck: [fe, le, me, lo], valuesToCheck: ["The bless of the installer disk failed"], printMessage: "Bootable macOS installer creation failed because \"\(sharedExecutableName)\" was suddenly closed or crashed, probably due to some killing or by the computer going into a sleep state.", message: "Bootable macOS installer creation failed: The creation process was suddenly closed, make sure that the computer doesn't go in standby mode during the creation process.", notError: false, operation: .contains, isBack: false))
 				
 				errorsList.append(CheckItem(stringsToCheck: [tt, fe, le, me, lo], valuesToCheck: ["To use this tool, you must download the macOS installer application on a Mac with"], printMessage: "Installer app not supprted by this mac os version", message: "Bootable macOS installer creation failed: The installer app seems not to be compatible with your mac os version or it wasn't properly downloaded, it's reccomended to re-download it from the App Store or to use a different macOS version", notError: false, operation: .contains, isBack: false))
+				
+				errorsList.append(CheckItem(stringsToCheck: [le, fe, me, lo], valuesToCheck: ["is not large enough for install media."], printMessage: "The selected drive/partition is not large enought for this macOS installer app, if you want to make an installer of Catalina or later we reccommend you to use a drive/partition of at least 10 gb", message: "Bootable macOS installer creation failed because the volume you choose for the installer is not large enought, please choose a larger one, see the log for more info", notError: false, operation: .contains, isBack: false))
 				
 				//To use this tool, you must download the macOS installer application on a Mac with 10.12.5 or later, or El Capitan 10.11.6. For more information, please see the following: https://support.apple.com/kb/HT201372
 				

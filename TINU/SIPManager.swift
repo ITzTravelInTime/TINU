@@ -20,7 +20,7 @@ final class SIPManager{
 
 	class func checkSIPAndLetTheUserKnow(){
 		if checkSIP(){
-			msgBoxWithCustomIcon("TINU: Please disable SIP", "SIP (system integrity protection) is enabled and will not allow TINU to complete successfully the installer creation process.", .warning , IconsManager.shared.stopIcon)
+			msgBoxWithCustomIcon("TINU: Please disable SIP", "SIP (system integrity protection) is enabled and will not allow TINU to complete successfully the installer creation process, please disable it or use the diagnostics mode with administrator privileges", .warning , IconsManager.shared.stopIcon)
 		}
 	}
 
