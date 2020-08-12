@@ -27,10 +27,13 @@ public func checkOtherOptions(){
 		processLicense = ""
 		
 		if var item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionForceToFormatID]{
+			
 			if let st = cvm.shared.sharedVolumeNeedsPartitionMethodChange{
 				item.isUsable = !st
 				item.isActivated = st
 			}
+			
+			oom.shared.otherOptions[oom.OtherOptionID.otherOptionForceToFormatID] = item
 		}
 		
 		if cvm.shared.sharedApp != nil{
@@ -53,6 +56,7 @@ public func checkOtherOptions(){
 				if var item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionTinuCopyID]{
 					item.isUsable = !supportsTINU
 					item.isActivated = !supportsTINU
+					oom.shared.otherOptions[oom.OtherOptionID.otherOptionTinuCopyID] = item
 				}
 				
 				if sharedInstallMac{
@@ -73,6 +77,8 @@ public func checkOtherOptions(){
 						item.isVisible = !supportsAPFS
 						item.isActivated = !cvm.shared.sharedSVReallyIsAPFS
 						item.isUsable = !cvm.shared.sharedSVReallyIsAPFS
+						
+						oom.shared.otherOptions[oom.OtherOptionID.otherOptionDoNotUseApfsID] = item
 					}
 				}else{
 					/*
@@ -100,13 +106,15 @@ public func checkOtherOptions(){
 					#if !macOnlyMode
 					
 					if var item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionCreateAIBootFID]{
-							item.isActivated = false
-							item.isVisible = needsIA
+						item.isActivated = false
+						item.isUsable = needsIA
+						oom.shared.otherOptions[oom.OtherOptionID.otherOptionCreateAIBootFID] = item
 					}
 					
 					if var item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionDeleteIAPMID]{
-							item.isActivated = false
-							item.isVisible = needsIA
+						item.isActivated = false
+						item.isUsable = needsIA
+						oom.shared.otherOptions[oom.OtherOptionID.otherOptionDeleteIAPMID] = item
 					}
 					
 					#endif
@@ -120,5 +128,61 @@ public func checkOtherOptions(){
 		}
 	}
 
+}
+
+func checkSate(_ useDriveIcon: inout Bool) -> Bool {
+	
+	let cmm = cvm.shared
+	
+	if let sa = cmm.sharedApp{
+		print("Check installer app")
+		if !FileManager.default.directoryExistsAtPath(sa){
+			print("Missing installer app in the specified directory")
+			return false
+		}
+		print("Installaer app that will be used is: " + sa)
+	}else{
+		print("Missing installer in memory")
+		return false
+	}
+	
+	var canFormat = false
+	var apfs = false
+	
+	InstallMediaCreationManager.shared.OtherOptionsBeforeformat(canFormat: &canFormat, useAPFS: &apfs)
+	
+	if !(cvm.shared.currentPart!.isDrive || canFormat){
+		print("Getting drive info about the used volume")
+		if let s = cmm.sharedVolume{
+			var sv = s
+			
+			if !FileManager.default.directoryExistsAtPath(sv){
+				if let sb = cmm.sharedBSDDrive{
+					if let sd = dm.getDevicePropertyInfoNew(sb, propertyName: "MountPoint"){
+						sv = sd
+						cmm.sharedVolume = sv
+						print("Corrected the name of the target volume")
+					}else{
+						print("Can't get the mount point!!")
+						return false
+					}
+				}else{
+					print("Can't get the device id!!")
+					return false
+				}
+			}
+			
+			print("Mount point: \(sv)")
+		}else{
+			print("The selected volume mount point is empty")
+			return false
+		}
+	}else{
+		print("A drive has been selected or a partition that needs format")
+		useDriveIcon = true
+	}
+	
+	print("Everything is ready to start the installer creation process")
+	return true
 }
 

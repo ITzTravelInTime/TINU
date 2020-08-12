@@ -32,6 +32,8 @@ public final class CreateinstallmediaSmallManager{
 			return (sharedIsCreationInProgress || sharedIsPreCreationInProgress)
 		}
 	}
+	
+	public var startTime = Date()
 }
 
 public final class FinalScreenSmallManager{

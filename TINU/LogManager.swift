@@ -8,15 +8,66 @@
 
 import Foundation
 
+public final class LogManager{
 #if !isTool
-//this code manages the log system and the log window
-public var logs = [String]()
-public var logHasBeenUpdated = false
+	//this code manages the log system and the log window
+	public static var logs = [String]()
+	public static var logHasBeenUpdated = false
 
 #if usedate
-	let calendar = Calendar.current
+	static let calendar = Calendar.current
 #endif
+	
+	//returs the whole log, if you do not have alreay read it, it's better to not use it
+	public class func readLog() -> String!{
+		if !logHasBeenUpdated{
+			return nil
+		}else{
+			return readAllLog()
+		}
+	}
+	
+	//returs the whole log, but it will always return the log
+	public class func readAllLog() -> String{
+		var ret = ""
+		for i in logs{
+			ret += i + "\n"
+		}
+		logHasBeenUpdated = false
+		return ret
+	}
+	
+	//returns the latest log line
+	@inline(__always) public class func readAllLatestLog() -> String!{
+		return logs.last
+	}
+	
+	
+	//returs the latest log line only if you don't have alreay read it, it's better to not use it because it's used by the log window thaty will not work without
+	@inline(__always) public class func readLatestLog() -> String!{
+		if !logs.isEmpty{
+			return readAllLatestLog()
+		}
+		return nil
+	}
+	
+	//resets the initial state of the log control
+	@inline(__always) public class func clearLog(){
+		for i in 0..<logs.count{
+			logs.remove(at: i)
+		}
+		logs = []
+		
+		logHasBeenUpdated = false
+		if let lw = logWindow{
+			if (lw.window?.isVisible)!{
+				logHasBeenUpdated = true
+			}
+		}
+	}
 #endif
+	
+}
 
 //function you need to call if you want to log something
 public func log(_ log: Any){
@@ -43,57 +94,10 @@ public func log(_ log: Any){
 	
 		logs.append("\(timeItems[1])/\(timeItems[2])/\(timeItems[0]) \(timeItems[3]):\(timeItems[4]):\(timeItems[5])     \(log)")
 	#else
-		logs.append("\(log)")
+		LogManager.logs.append("\(log)")
 	#endif
     
-    logHasBeenUpdated = true
+    LogManager.logHasBeenUpdated = true
     
     #endif
 }
-
-#if !isTool
-//returs the whole log, if you do not have alreay read it, it's better to not use it
-public func readLog() -> String!{
-    if !logHasBeenUpdated{
-        return nil
-    }else{
-        return readAllLog()
-    }
-}
-
-//returs the whole log, but it will always return the log
-public func readAllLog() -> String{
-        var ret = ""
-        for i in logs{
-            ret += i + "\n"
-        }
-        logHasBeenUpdated = false
-        return ret
-}
-
-//returns the latest log line
-@inline(__always) public func readAllLatestLog() -> String!{
-    return logs.last
-}
-
-
-//returs the latest log line only if you don't have alreay read it, it's better to not use it because it's used by the log window thaty will not work without
-@inline(__always) public func readLatestLog() -> String!{
-    if !logs.isEmpty{
-        return readAllLatestLog()
-    }
-    return nil
-}
-
-//resets the initial state of the log control
-@inline(__always) public func clearLog(){
-    logs = []
-    logHasBeenUpdated = false
-    if let lw = logWindow{
-        if (lw.window?.isVisible)!{
-            logHasBeenUpdated = true
-        }
-    }
-}
-
-#endif

@@ -17,6 +17,9 @@ To enable each macro you need to go into the build settings section of the Xcode
 - demo
 	This is an example macro to let you test macros effects, and check if you are able to make them to work, by enableing this you will see a message of success at the app startup
 
+- noUnmounted
+	This will not let the user to use drives without mounted partitions
+
 - sudoStartup
 	This will let the app to always start as sudo
 

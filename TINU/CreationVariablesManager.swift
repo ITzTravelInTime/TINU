@@ -17,10 +17,10 @@ public final class CreationVariablesManager{
 	//this variable is the drive or partition that the user has selected
 	public var sharedVolume: String!{
 		get{
-			return currentPart.path
+			return currentPart.mountPoint
 		}
 		set{
-			currentPart.path = newValue
+			currentPart.mountPoint = newValue
 		}
 	}
 	
@@ -63,7 +63,7 @@ public final class CreationVariablesManager{
 	func compareSize(to number: UInt64) -> Bool{
 		//print(currentPart.size)
 		//print(number)
-		return (currentPart.size > ((number / 100) * 120))
+		return (currentPart != nil) ? (currentPart.size > number + UInt64(5 * pow(10.0, 8.0))) : false
 	}
 	
 	func compareSize(to string: String!) -> Bool{

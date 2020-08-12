@@ -55,8 +55,10 @@ class DriveView: ShadowView {
 		
 		if self.isEnabled{
 			self.volume.textColor = NSColor.textColor
-		/*}else{
-			self.volume.textColor = NSColor.lightGray*/
+		/*
+		}else{
+			self.volume.textColor = NSColor.lightGray
+		*/
 		}
 		
 	}
@@ -183,7 +185,7 @@ class DriveView: ShadowView {
 				
 				cm.currentPart = part
 				
-				Swift.print("The volume that the user has selected is: " + part.path!)
+				Swift.print("The volume that the user has selected is: " + part.mountPoint!)
             }
 			
 		}
@@ -246,7 +248,11 @@ class DriveView: ShadowView {
 			if self.isApp{
 				self.toolTip = "Path: " + self.applicationPath
 			}else{
-				self.toolTip = self.sz
+				if self.part!.isDrive{
+					self.toolTip = "\(self.sz!)"
+				}else{
+					self.toolTip = "\(self.sz!)\n\nMount point: \(self.part!.mountPoint!)"
+				}
 			}
 			
         }else{

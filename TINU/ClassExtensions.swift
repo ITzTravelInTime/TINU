@@ -12,45 +12,56 @@ import AppKit
 //this file just contains some usefoul extensions and methods for system classes
 
 extension NSViewController{
-    public func sawpCurrentViewController(with storyboardID: String, sender: Any){
+	
+	internal static var tmpViewController: [NSViewController?] = []
+	
+    public func sawpCurrentViewController(with storyboardID: String){
         
         let tempPos = self.view.window?.frame.origin
-        
-        let viewController: NSViewController? = storyboard?.instantiateController(withIdentifier: storyboardID) as? NSViewController
-        
-        if viewController != nil{
+		
+		NSViewController.tmpViewController.append(storyboard?.instantiateController(withIdentifier: storyboardID) as? NSViewController)
+		
+		if NSViewController.tmpViewController.last! != nil{
+			
             //presentViewControllerAsModalWindow(viewController!)
             
             //self.dismiss(sender)
             //self.view.window?.windowController?.close()
 			
             if self.view.window != nil{
-                self.view.window?.contentViewController = viewController
-                
-                self.view.window?.contentView = viewController?.view
 				
-				/*
-                #if !isTool
-                if !sharedIsOnRecovery{
-                    if let w = viewController?.window.windowController as? GenericWindowController{
-                        w.checkVibrant()
-                    }
-                }
-                #endif
-				*/
+                self.view.window?.contentViewController = NSViewController.tmpViewController.last!!
+				self.view.window?.contentView = NSViewController.tmpViewController.last!!.view
 				
                 if tempPos != nil{
                     self.view.window?.setFrameOrigin(tempPos!)
                 }
-                
-				//self.view.exitFullScreenMode(options: [:])
-                
-                self.dismiss(self)
+				
+				self.removeFromParentViewController()
+				self.dismiss(self)
+				
+				print("Memory clean attempt")
+				
+				if NSViewController.tmpViewController.contains(self){
+					for i in 0..<NSViewController.tmpViewController.count{
+						if NSViewController.tmpViewController[i] == self{
+							NSViewController.tmpViewController[i] = nil
+							NSViewController.tmpViewController.remove(at: i)
+							print("Memory cleaned: \(NSViewController.tmpViewController.count) items in controls memory")
+							return
+						}
+					}
+				}else{
+					print("Can't perform memory clean")
+				}
+				
             }else{
                 // :-(
+				fatalError("Target window is nil")
             }
         }else{
             // :-(
+			fatalError("New viewcontroller not initialized")
         }
     }
     
@@ -127,6 +138,7 @@ extension NSWindow{
         }
     }
 }
+
 
 extension FileManager{
 	func directoryExistsAtPath(_ path: String) -> Bool {

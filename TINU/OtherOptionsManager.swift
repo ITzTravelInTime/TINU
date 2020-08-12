@@ -12,7 +12,7 @@ public final class OtherOptionsManager{
 	public enum OtherOptionID: UInt8, CaseIterable {
 		case unknown = 0
 		
-		case otherOptionTinuCopyID      =  1
+		case otherOptionTinuCopyID
 		case otherOptionCreateReadmeID
 		case otherOptionCreateIconID
 		case otherOptionForceToFormatID

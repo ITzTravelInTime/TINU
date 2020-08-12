@@ -55,6 +55,8 @@ class InfoViewController: GenericViewController{
             sloganLabel.isHidden = true
 		
 			getInstallerButton.isHidden = true//sharedIsOnRecovery
+		
+		
         //}
 		
 		#if macOnlyMode
@@ -67,7 +69,7 @@ class InfoViewController: GenericViewController{
             
             infoField.stringValue = "This is a tool that helps you to create a bootable macOS installer and also to install macOS\nBefore starting you need:\n   - At least a 20 gb drive or partition\n   - A copy of the macOS installer app (of any version starting from El Capitan) in\n     the root of a storage device connected to the computer"
             
-            driveIcon.image = NSImage(named: "Internal")
+            driveIcon.image = IconsManager.shared.internalDiskIcon
 			
             driveLabel.stringValue = "A drive or partition of 20 GB or higher"
             
@@ -86,6 +88,8 @@ class InfoViewController: GenericViewController{
 			#else
 				sloganLabel.stringValue = "TINU Is Not Unib***t: The bootable macOS installer creation tool"
 			#endif
+			
+			driveIcon.image = IconsManager.shared.removableDiskIcon
 		}
     }
 	
@@ -107,13 +111,13 @@ class InfoViewController: GenericViewController{
 
     @IBAction func ok(_ sender: Any) {
         if sharedShowLicense{
-            let _ = sawpCurrentViewController(with: "License", sender: self)
+            let _ = sawpCurrentViewController(with: "License")
         }else{
-            let _ = sawpCurrentViewController(with: "ChoseDrive", sender: self)
+            let _ = sawpCurrentViewController(with: "ChoseDrive")
         }
     }
 
     @IBAction func back(_ sender: Any) {
-        sawpCurrentViewController(with: "chooseSide", sender: sender)
+        sawpCurrentViewController(with: "chooseSide")
     }
 }

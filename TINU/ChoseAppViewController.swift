@@ -76,7 +76,7 @@ class ChoseAppViewController: GenericViewController {
     private let spacerID = "spacer"
     
     @IBAction func goBack(_ sender: Any) {
-        let _ = sawpCurrentViewController(with: "ChoseDrive", sender: self)
+        let _ = sawpCurrentViewController(with: "ChoseDrive")
     }
     
     @IBAction func next(_ sender: Any) {
@@ -90,10 +90,12 @@ class ChoseAppViewController: GenericViewController {
 			
 			if sharedInstallMac{
 				showProcessLicense = true
-				sawpCurrentViewController(with: "License", sender: sender)
+				sawpCurrentViewController(with: "License")
 			}else{
+				
+				checkOtherOptions()
 				#if skipChooseCustomization
-				let _ = self.sawpCurrentViewController(with: "Confirm", sender: sender)
+				let _ = self.sawpCurrentViewController(with: "Confirm")
 				#else
 				let _ = self.openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
 				#endif
@@ -101,6 +103,7 @@ class ChoseAppViewController: GenericViewController {
 			
             //openSubstituteWindow(windowStoryboardID: "Customize", sender: sender)
             //}
+			
         }else{
             NSApplication.shared().terminate(self)
         }
@@ -172,9 +175,9 @@ class ChoseAppViewController: GenericViewController {
 							cvm.shared.sharedVolumeNeedsPartitionMethodChange = self.ps
 							
 							#if skipChooseCustomization
-							let _ = self.sawpCurrentViewController(with: "Confirm", sender: self)
+							let _ = self.sawpCurrentViewController(with: "Confirm")
 							#else
-							let _ = self.openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: self)
+							let _ = self.openSubstituteWindow(windowStoryboardID: "ChooseCustomize")
 							#endif
 							
 						}else{
@@ -280,7 +283,7 @@ class ChoseAppViewController: GenericViewController {
                 foldersURLS = [URL(fileURLWithPath: "/Applications"), fm.urls(for: .applicationDirectory, in: .systemDomainMask).first, fm.urls(for: .desktopDirectory, in: .userDomainMask).first, fm.urls(for: .downloadsDirectory, in: .userDomainMask).first, fm.urls(for: .documentDirectory, in: .userDomainMask).first, fm.urls(for: .allApplicationsDirectory, in: .systemDomainMask).first, fm.urls(for: .allApplicationsDirectory, in: .userDomainMask).first]
             }
 			
-			
+			print(foldersURLS)
 			
 			let driveb = dm.getDriveNameFromBSDID(cvm.shared.sharedBSDDrive)
 			

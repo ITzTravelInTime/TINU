@@ -143,7 +143,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }else{
                 InstallMacOSItem.title = "Use TINU to install macOS"
             }
-            sharedWindow.contentViewController?.sawpCurrentViewController(with: "Info", sender: self)
+            sharedWindow.contentViewController?.sawpCurrentViewController(with: "Info")
 			
             //restoreOtherOptions()
             

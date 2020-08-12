@@ -157,7 +157,7 @@ public final class TaskKillManager{
 				
 				#if TINU
 				if name == "createinstallmedia"{
-					answer = !dialogYesNoWarning(question: "Quit the other isntaller creation?", text: "TINU needs to close the installer creation which is currently running in order to continue, do you want to close it?\n\nIf yes, you will need to enter your credentials")
+					answer = !dialogYesNoWarning(question: "Quit the other installer creation?", text: "TINU needs to close the installer creation which is currently running in order to continue, do you want to close it?\n\nIf yes, you will need to enter your credentials")
 				}else{
 					answer = !dialogYesNoWarning(question: "Close \"\(name)\"?", text: "TINU needs to close \"\(name)\" in order to continue, do you want to close it?\n\nIf yes, you will need to enter your credentials")
 				}

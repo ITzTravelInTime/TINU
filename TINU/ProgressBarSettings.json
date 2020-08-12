@@ -1,0 +1,8 @@
+{
+	"pMaxMins" : 50,
+	"pMaxVal" : 10000,
+	"pMidMins" : 20,
+	"uDen" : 5,
+	"pMidDurationChunkCount" : 4,
+	"pMidDurationChunkCountDiff" : 1
+}

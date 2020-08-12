@@ -9,7 +9,7 @@
 import Cocoa
 
 //this is just a simple class that represents a drive, used fot the drive scan algoritm
-public class Part{
+public struct Part{
 	
 	public enum FileSystem{
 		case blank
@@ -30,10 +30,11 @@ public class Part{
     var bsdName: String!
     var apfsBDSName: String!
     var name: String
-    var path: String!
+    var mountPoint: String!
     var fileSystem: FileSystem
     var partScheme: PartScheme
     var hasEFI: Bool
+	var isDrive = false
 	
 	var tmDisk = false
 	
@@ -44,7 +45,7 @@ public class Part{
     public init(){
         bsdName = "/dev/"
         name = ""
-        path = ""
+        mountPoint = ""
         fileSystem = .blank
         partScheme = .blank
         hasEFI = false
@@ -53,7 +54,7 @@ public class Part{
     public init(partitionBSDName: String?, partitionName: String, partitionPath: String?, partitionFileSystem: FileSystem, partitionScheme: PartScheme, partitionHasEFI: Bool, partitionSize: UInt64){
         bsdName = partitionBSDName
         name = partitionName
-        path = partitionPath
+        mountPoint = partitionPath
         fileSystem = partitionFileSystem
         partScheme = partitionScheme
         hasEFI = partitionHasEFI
@@ -61,24 +62,19 @@ public class Part{
     }
     
     public func copy() -> Part{
-		//let p = Part(partitionBSDName: bsdName, partitionName: name, partitionPath: path, partitionFileSystem: fileSystem, partitionScheme: partScheme, partitionHasEFI: hasEFI, partitionSize: totSize)
-		let p = Part()
+		//let p = Part(partitionBSDName: bsdName, partitionName: name, partitionPath: mountPoint, partitionFileSystem: fileSystem, partitionScheme: partScheme, partitionHasEFI: hasEFI, partitionSize: totSize)
 		
-		p.bsdName = bsdName
-		p.name = name
-		p.path = path
-		p.fileSystem = fileSystem
-		p.partScheme = partScheme
-		p.hasEFI = hasEFI
-        p.apfsBDSName = apfsBDSName
-		p.size = size
-		
-		p.tmDisk = tmDisk
-		p.usable = usable
-		
-        return p
+        return Part(from: self)
     }
     
     
     
+}
+
+extension Part{
+	init(from other: Part) {
+		self.init()
+		
+		self = other
+	}
 }

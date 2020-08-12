@@ -8,22 +8,15 @@
 
 import Cocoa
 
-fileprivate let pMaxVal: Double = 1000
-fileprivate let pMaxMins: UInt64 = 40
-fileprivate let pMidMins: UInt64 = 30
-
-fileprivate let uDen: Double = 5
-
-fileprivate let pMidDuration = ((pMaxVal * (uDen - 2)) / uDen)
-fileprivate let pExtDuration = (pMaxVal / uDen)
+public typealias IMCM = InstallMediaCreationManager
 
 public final class InstallMediaCreationManager{
 	
-	public static var shared = InstallMediaCreationManager()
+	static var cpc: ProcessConsts = ProcessConsts()
 	
-	public func reset(){
-		InstallMediaCreationManager.shared = InstallMediaCreationManager()
-	}
+	public static var shared = InstallMediaCreationManager()
+	var lastMinute: UInt64 = 0
+	var lastSecs: UInt64 = 0
 
 	//timer to trace the process
 	var timer = Timer()
@@ -32,27 +25,34 @@ public final class InstallMediaCreationManager{
 	var output : [String] = []
 	var error : [String] = []
 	
-	let  progressMaxVal: Double = pMaxVal
+	var progressMaxVal: Double {return  IMCM.cpc.pMaxVal }
+	var processUnit:    Double {return  IMCM.cpc.pExtDuration }
 	
-	let processEstimatedMinutes: UInt64 = pMaxMins
+	var processEstimatedMinutes: UInt64 {return  IMCM.cpc.pMaxMins }
+	var processMinutesToChange:  UInt64 {return  IMCM.cpc.pMidMins }
 	
-	let processMinutesToChange: UInt64 = pMidMins
+	//static let processDivisor: Double = ProcessConsts.uDen
 	
-	let processUnit: Double = pExtDuration
+	//n of pre-process operations
+	static let preCount: UInt8 = 10
 	
-	let processDenominator: Double = uDen
+	//progress bar segments of the pre-process
+	static var unit: Double = 0
 	
-	let unit: Double = pExtDuration / 9
+	//progress bar increments during installer creation
 	
-	let installerProgressValueFast: Double = ( pMidDuration / Double(pMidMins)) / 12
-	let installerProgressValueSlow: Double = ( pMidDuration / Double(pMaxMins - pMidMins)) / 12
+	//static let installerProgressValueFast: Double = ProcessConsts.pMidDuration / (Double(ProcessConsts.pMidMins) * 12)
+	//static let installerProgressValueSlow: Double = ProcessConsts.pMidDuration / (Double(ProcessConsts.pMaxMins - ProcessConsts.pMidMins) * 12)
+	
+	var installerProgressValueFast: Double {return IMCM.cpc.installerProgressValueFast}
+	var installerProgressValueSlow: Double {return IMCM.cpc.installerProgressValueSlow}
 	
 	var viewController: InstallingViewController!
 	
-	var seconds: UInt64 = 0
-	
 	var dname = ""
 	
+	
+	//EFI copyng stuff
 	#if !macOnlyMode
 	
 	var startProgress: Double = 0
@@ -63,18 +63,27 @@ public final class InstallMediaCreationManager{
 	
 	#endif
 	
+	private func reset(){
+		//cleans it's won memory first
+		IMCM.shared = InstallMediaCreationManager()
+		//gets fresh info about the management of the progressbar
+		IMCM.cpc = ProcessConsts.createFromDefaultFile()
+		//claculates the division for the progrees bar usage outside the main process
+		IMCM.unit = IMCM.cpc.pExtDuration / Double(IMCM.preCount)
+		
+	}
+	
 	func startInstallProcess(){
 		
-		if pMaxMins <= pMidMins{
-			fatalError("pMaxMins can't be smaller or equal to pMidMins")
-		}
+		reset()
 		
 		viewController = sharedWindow.contentViewController as? InstallingViewController
 		
 		if viewController == nil{
-			print("Can't get installing ViewController")
-			return
+			fatalError("Can't get installing ViewController")
 		}
+		
+		viewController.setProgressMax(IMCM.cpc.pMaxVal)
 		
 		viewController.cancelButton.isEnabled = false
 		viewController.enableItems(enabled: false)
@@ -151,6 +160,10 @@ public final class InstallMediaCreationManager{
 	
 	func setProgressMax(_ max: Double){
 		self.viewController.setProgressMax(max)
+	}
+	
+	func getProgressBarValue() -> Double{
+		return self.viewController!.getProgressBarValue()
 	}
 	
 }

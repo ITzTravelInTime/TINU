@@ -391,6 +391,12 @@
                                                 <action selector="openEFIPartitionTool:" target="Voe-Tx-rLC" id="fJv-q6-pEO"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Download macOS Installer" id="SkF-ZK-107">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openDownloadMacApp:" target="Voe-Tx-rLC" id="qdi-pe-FGC"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -415,12 +421,6 @@
                                                 <action selector="openWMSDIND:" target="Voe-Tx-rLC" id="fiJ-0w-Urb"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Download macOS Installer…" id="ujX-5E-vhx">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="openDownloadMacApp:" target="Voe-Tx-rLC" id="zHa-3i-Sfj"/>
-                                            </connections>
-                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -438,7 +438,7 @@
                         <outlet property="LogItem" destination="09g-wy-2rt" id="D75-er-mVJ"/>
                         <outlet property="QuitMenuButton" destination="4sb-4s-VLi" id="Hqz-MU-ipf"/>
                         <outlet property="efiMounterMenuItem" destination="h6A-oj-VQy" id="uKs-fC-dDf"/>
-                        <outlet property="getMacOSApp" destination="ujX-5E-vhx" id="lOK-gx-v4S"/>
+                        <outlet property="getMacOSApp" destination="SkF-ZK-107" id="Ge4-jP-edm"/>
                         <outlet property="otherApps" destination="LYj-L2-bAi" id="apI-dP-89Y"/>
                         <outlet property="otherAppsSeparator" destination="yCB-So-MEx" id="H9l-41-Hfd"/>
                         <outlet property="tinuRelated" destination="TBQ-DB-mnf" id="fTG-h2-afS"/>
@@ -456,7 +456,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="mainWindowController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="TINU" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" tabbingIdentifier="TINU" tabbingMode="disallowed" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="IQv-IB-iLA">
+                    <window key="window" title="TINU" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" animationBehavior="default" tabbingIdentifier="TINU" tabbingMode="disallowed" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" fullSizeContentView="YES"/>
                         <rect key="contentRect" x="195" y="233" width="481" height="277"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
@@ -555,7 +555,7 @@
         <scene sceneID="D1e-XX-cRj">
             <objects>
                 <windowController storyboardIdentifier="Contacts" id="Grg-mv-VVn" customClass="ContactsWindowController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="TINU: contacts" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="contactsWindow" tabbingMode="disallowed" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="i0U-Qi-tQe">
+                    <window key="window" title="TINU: contacts" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="contactsWindow" tabbingMode="disallowed" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="i0U-Qi-tQe">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" fullSizeContentView="YES"/>
                         <rect key="contentRect" x="196" y="249" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1440" height="900"/>
@@ -575,7 +575,7 @@
         <scene sceneID="G7P-wB-PtE">
             <objects>
                 <windowController storyboardIdentifier="Credits" id="Fa1-hC-JST" customClass="CreditsWindowController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" identifier="Credits" title="TINU: credits" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="creditsWindow" tabbingMode="disallowed" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="qfy-fU-dmC">
+                    <window key="window" identifier="Credits" title="TINU: credits" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="creditsWindow" tabbingMode="disallowed" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="qfy-fU-dmC">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" fullSizeContentView="YES"/>
                         <rect key="contentRect" x="294" y="328" width="480" height="265"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1050"/>
@@ -1371,17 +1371,6 @@ Gw
                                     <action selector="goBack:" target="7nf-dx-PMy" id="ps0-c5-Cru"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r0D-ie-R4Z">
-                                <rect key="frame" x="478" y="25" width="128" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="a0x-CO-HTC">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="systemBold"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="goNext:" target="7nf-dx-PMy" id="3Gc-bj-QqJ"/>
-                                </connections>
-                            </button>
                             <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="WUf-Xv-kGC">
                                 <rect key="frame" x="20" y="73" width="192" height="205"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
@@ -1437,6 +1426,17 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r0D-ie-R4Z">
+                                <rect key="frame" x="478" y="25" width="128" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="a0x-CO-HTC">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="systemBold"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="goNext:" target="7nf-dx-PMy" id="3Gc-bj-QqJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
@@ -1514,15 +1514,6 @@ Gw
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="warning" id="TIq-np-TSk"/>
                             </imageView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ff2-R7-qGY">
-                                <rect key="frame" x="96" y="81" width="506" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Volume name (eventually the drive stuff)" id="YHI-5B-JI7">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HY7-aS-PGw">
                                 <rect key="frame" x="266" y="25" width="88" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1534,6 +1525,15 @@ Gw
                                     <action selector="openAdvancedOptions:" target="5xT-7C-9Jy" id="3fN-mA-1yu"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ff2-R7-qGY">
+                                <rect key="frame" x="96" y="82" width="506" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Volume name (eventually the drive stuff)" id="YHI-5B-JI7">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
                     <connections>
@@ -1575,12 +1575,12 @@ Gw
                                 </connections>
                             </button>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aag-M4-3LB">
-                                <rect key="frame" x="507" y="139" width="70" height="70"/>
+                                <rect key="frame" x="507" y="158" width="70" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="Removable" id="0WU-Ck-vYD"/>
                             </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mzP-nf-qM2">
-                                <rect key="frame" x="18" y="83" width="120" height="48"/>
+                                <rect key="frame" x="18" y="102" width="120" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="App name" id="YvN-gT-AfX">
                                     <font key="font" metaFont="smallSystem"/>
@@ -1588,17 +1588,8 @@ Gw
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gcb-ov-5ph">
-                                <rect key="frame" x="134" y="240" width="352" height="38"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="The bootable macOS installer creation is in progress Please wait and leave the window as is" id="k4d-Tc-ALr">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" red="0.95891410112380981" green="0.95622009038925171" blue="0.95902365446090698" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </textFieldCell>
-                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dgH-UW-uAc">
-                                <rect key="frame" x="142" y="157" width="336" height="28"/>
+                                <rect key="frame" x="142" y="176" width="336" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Activity Activity" id="p0j-m2-lzA">
                                     <font key="font" metaFont="smallSystem"/>
@@ -1606,17 +1597,12 @@ Gw
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fI4-Ga-ZsI">
-                                <rect key="frame" x="20" y="240" width="39" height="38"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="warning" id="OrB-aS-bWR"/>
-                            </imageView>
                             <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="1" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="otl-9s-q9k">
-                                <rect key="frame" x="144" y="138" width="332" height="20"/>
+                                <rect key="frame" x="144" y="157" width="332" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </progressIndicator>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GMW-fr-vKz">
-                                <rect key="frame" x="482" y="83" width="120" height="48"/>
+                                <rect key="frame" x="482" y="102" width="120" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Drive name" id="VWt-2c-U1N">
                                     <font key="font" metaFont="smallSystem"/>
@@ -1636,14 +1622,19 @@ Gw
                                 </connections>
                             </button>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s63-w6-p6P">
-                                <rect key="frame" x="43" y="139" width="70" height="70"/>
+                                <rect key="frame" x="43" y="158" width="70" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="InstallApp" id="PyC-k9-YhY"/>
                             </imageView>
-                            <progressIndicator hidden="YES" wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="PSh-aK-QG9">
-                                <rect key="frame" x="294" y="117" width="32" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                            </progressIndicator>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gcb-ov-5ph">
+                                <rect key="frame" x="142" y="133" width="336" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Please wait and leave the window as is" id="k4d-Tc-ALr">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" red="0.95891410112380981" green="0.95622009038925171" blue="0.95902365446090698" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
                     <connections>
@@ -1654,9 +1645,7 @@ Gw
                         <outlet property="descriptionField" destination="Gcb-ov-5ph" id="3Ha-i4-EPC"/>
                         <outlet property="driveImage" destination="aag-M4-3LB" id="OoB-gL-S1t"/>
                         <outlet property="driveName" destination="GMW-fr-vKz" id="3i8-IS-qDN"/>
-                        <outlet property="infoImageView" destination="fI4-Ga-ZsI" id="u00-GG-ZOi"/>
                         <outlet property="progress" destination="otl-9s-q9k" id="30S-il-WxU"/>
-                        <outlet property="spinner" destination="PSh-aK-QG9" id="76T-Os-W7U"/>
                     </connections>
                 </viewController>
                 <customObject id="Znr-Os-W1v" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -1743,7 +1732,7 @@ Gw
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Qs-UR-bjL">
                                         <rect key="frame" x="76" y="18" width="506" height="36"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="A USB thumb drive or a partition of 8 GB or higher (9 GB or higher for Catalina and later installers)" id="bCX-Qv-gRK">
+                                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="A USB thumb drive or a partition of 8 GB or higher (9 GB or higher for Catalina, 13 GB or higher for Big Sur)" id="bCX-Qv-gRK">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1817,15 +1806,6 @@ Gw
                                     <action selector="exit:" target="fzs-th-YvF" id="ldZ-RM-tRy"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6cQ-9K-bG8">
-                                <rect key="frame" x="92" y="61" width="437" height="75"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Bootable macOS installer created successfully" id="4yJ-rm-5jF">
-                                    <font key="font" metaFont="system" size="16"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AKx-0U-DbP">
                                 <rect key="frame" x="243" y="144" width="134" height="134"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -1853,6 +1833,15 @@ Gw
                                     </connections>
                                 </buttonCell>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6cQ-9K-bG8">
+                                <rect key="frame" x="69" y="61" width="482" height="75"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Bootable macOS installer created successfully" id="4yJ-rm-5jF">
+                                    <font key="font" metaFont="systemBold" size="16"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
                     <connections>
@@ -1870,30 +1859,29 @@ Gw
         <scene sceneID="mEA-w8-BgO">
             <objects>
                 <windowController storyboardIdentifier="Log" id="Tob-PB-uNY" customClass="LogWindowController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="TINU: Log" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="logWindow" tabbingMode="disallowed" titlebarAppearsTransparent="YES" id="099-rA-qV0">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES"/>
+                    <window key="window" title="TINU: Log" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="logWindow" tabbingMode="disallowed" titlebarAppearsTransparent="YES" id="099-rA-qV0">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <rect key="contentRect" x="100" y="323" width="544" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1080"/>
                         <value key="minSize" type="size" width="480" height="270"/>
                         <value key="minFullScreenContentSize" type="size" width="480" height="270"/>
-                        <toolbar key="toolbar" implicitIdentifier="552F0390-FE61-44F6-8F46-A52E108EA7C0" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="KgM-mo-rea">
+                        <toolbar key="toolbar" implicitIdentifier="552F0390-FE61-44F6-8F46-A52E108EA7C0" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="KgM-mo-rea">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="8mS-qe-P8C"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="yaM-n8-mrS"/>
-                                <toolbarItem implicitItemIdentifier="88799477-C95F-4DFE-A253-7D8B56B4910D" label="Save Log" paletteLabel="Save Log" tag="-1" image="NSMultipleDocuments" id="VGs-cV-tWl"/>
+                                <toolbarItem implicitItemIdentifier="88799477-C95F-4DFE-A253-7D8B56B4910D" label="Save Log" paletteLabel="Save Log" tag="-1" image="Internal" id="VGs-cV-tWl"/>
                                 <toolbarItem implicitItemIdentifier="3B5F0828-0798-4234-A959-3382A4BBDAC3" label="Copy Log" paletteLabel="Copy Log" tag="-1" image="NSMultipleDocuments" id="jHC-wI-0sg"/>
-                                <toolbarItem implicitItemIdentifier="64CA9669-0C34-46C7-BF8D-523B2C8022C2" label="Save Log" paletteLabel="Save Log" image="NSMultipleDocuments" sizingBehavior="auto" id="AMe-9S-K90">
+                                <toolbarItem implicitItemIdentifier="64CA9669-0C34-46C7-BF8D-523B2C8022C2" label="Save Log" paletteLabel="Save Log" image="Internal" id="AMe-9S-K90">
                                     <nil key="toolTip"/>
+                                    <size key="minSize" width="60" height="25"/>
+                                    <size key="maxSize" width="60" height="25"/>
                                     <button key="view" verticalHuggingPriority="750" id="V2W-XC-cpU">
                                         <rect key="frame" x="0.0" y="14" width="60" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSMultipleDocuments" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AGZ-oz-tpi">
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="Internal" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" transparent="YES" imageScaling="proportionallyDown" inset="2" id="AGZ-oz-tpi">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="saveLog:" target="Tob-PB-uNY" id="aeJ-Mo-4ew"/>
-                                        </connections>
                                     </button>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="CEA91573-4BC2-4C1E-9283-FBFE6070F003" label="Copy Log" paletteLabel="Copy Log" image="NSMultipleDocuments" sizingBehavior="auto" id="H35-H9-wOQ">
@@ -1901,13 +1889,10 @@ Gw
                                     <button key="view" verticalHuggingPriority="750" id="krk-1k-tsr">
                                         <rect key="frame" x="0.0" y="14" width="60" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSMultipleDocuments" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Qg4-tw-J4N">
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSMultipleDocuments" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" transparent="YES" imageScaling="proportionallyDown" inset="2" id="Qg4-tw-J4N">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="copyLog:" target="Tob-PB-uNY" id="4rq-ko-PZC"/>
-                                        </connections>
                                     </button>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="FD0C7701-C2F5-4702-9A01-ABCBC134D1F6" label="Share" paletteLabel="Share" image="NSShareTemplate" sizingBehavior="auto" id="zgF-8l-bYF">
@@ -1915,21 +1900,19 @@ Gw
                                     <button key="view" verticalHuggingPriority="750" id="4JQ-le-Uo9">
                                         <rect key="frame" x="0.0" y="14" width="46" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSShareTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UqS-Le-FBu">
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSShareTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" transparent="YES" imageScaling="proportionallyDown" inset="2" id="UqS-Le-FBu">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="shareLog:" target="Tob-PB-uNY" id="epw-aN-fOg"/>
-                                        </connections>
                                     </button>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="170A87C5-25A7-4C6D-84E3-245171F34AC2" label="Share" paletteLabel="Share" tag="-1" image="NSShareTemplate" sizingBehavior="auto" id="5V4-xG-CjU"/>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
-                                <toolbarItem reference="AMe-9S-K90"/>
                                 <toolbarItem reference="H35-H9-wOQ"/>
                                 <toolbarItem reference="yaM-n8-mrS"/>
                                 <toolbarItem reference="zgF-8l-bYF"/>
+                                <toolbarItem reference="AMe-9S-K90"/>
                             </defaultToolbarItems>
                         </toolbar>
                         <connections>
@@ -1937,9 +1920,12 @@ Gw
                         </connections>
                     </window>
                     <connections>
-                        <outlet property="copyLogItem" destination="H35-H9-wOQ" id="qKM-6d-4Al"/>
-                        <outlet property="saveLogItem" destination="AMe-9S-K90" id="g2o-A3-x1l"/>
-                        <outlet property="shareLogItem" destination="zgF-8l-bYF" id="hnj-hV-atz"/>
+                        <outlet property="copyLogBigItem" destination="jHC-wI-0sg" id="Z43-kd-MUB"/>
+                        <outlet property="copyLogItem" destination="H35-H9-wOQ" id="DBj-1g-b3M"/>
+                        <outlet property="saveLogBigItem" destination="VGs-cV-tWl" id="1eb-IA-bGj"/>
+                        <outlet property="saveLogItem" destination="AMe-9S-K90" id="REr-nH-J2w"/>
+                        <outlet property="shareLogBigItem" destination="5V4-xG-CjU" id="ypL-6u-yoL"/>
+                        <outlet property="shareLogItem" destination="zgF-8l-bYF" id="RVv-Nw-mfH"/>
                         <segue destination="ep3-ie-0pp" kind="relationship" relationship="window.shadowedContentViewController" id="QW8-ey-xIw"/>
                     </connections>
                 </windowController>
@@ -1983,20 +1969,6 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="emf-S5-cVb">
-                                <rect key="frame" x="14" y="18" width="128" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="paR-zk-smg">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="systemBold"/>
-                                    <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="Close:" target="ep3-ie-0pp" id="ywy-om-wWy"/>
-                                </connections>
-                            </button>
                             <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J6b-fs-spx">
                                 <rect key="frame" x="18" y="286" width="584" height="24"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -2006,34 +1978,6 @@ Gw
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OmF-oJ-C5d">
-                                <rect key="frame" x="478" y="18" width="128" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="push" title="Copy log" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Smh-U8-by4">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                    <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="copyLog:" target="ep3-ie-0pp" id="iRM-ZI-28H"/>
-                                </connections>
-                            </button>
-                            <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ebp-EG-VhX">
-                                <rect key="frame" x="342" y="18" width="128" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="push" title="Save log ..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mZk-kn-6RJ">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                    <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="saveLog:" target="ep3-ie-0pp" id="rFn-aH-wo4"/>
-                                </connections>
-                            </button>
                         </subviews>
                     </view>
                     <connections>
@@ -2184,7 +2128,7 @@ Gw
         <scene sceneID="G5H-qz-IHB">
             <objects>
                 <windowController storyboardIdentifier="DriveDetectionInfo" id="1oO-Lg-92d" customClass="DriveDetectInfoWindowController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="TINU: Why my storage device is not detected?" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="07X-dh-bE6">
+                    <window key="window" title="TINU: Why my storage device is not detected?" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="07X-dh-bE6">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="245" y="310" width="480" height="270"/>
@@ -2322,7 +2266,7 @@ Gw
         <scene sceneID="Jwu-ci-4cB">
             <objects>
                 <windowController storyboardIdentifier="DownloadApp" id="VTe-PZ-3Hj" customClass="DownloadAppWindowController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="TINU: Download a macOS installer app from the App Store" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="HOO-gR-4yR">
+                    <window key="window" title="TINU: Download a macOS installer app from the App Store" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="HOO-gR-4yR">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="245" y="310" width="480" height="270"/>
@@ -2343,6 +2287,7 @@ Gw
     <resources>
         <image name="AppIcon" width="128" height="128"/>
         <image name="InstallApp" width="512" height="512"/>
+        <image name="Internal" width="512" height="512"/>
         <image name="NSMultipleDocuments" width="32" height="32"/>
         <image name="NSShareTemplate" width="11" height="16"/>
         <image name="Removable" width="512" height="512"/>

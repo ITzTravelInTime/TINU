@@ -33,9 +33,10 @@ fileprivate final class SudoManager{
 			notification.informativeText = "To complete the creation process of your bootable macOS installer TINU needs that you do the login"
 			notification.contentImage = NSImage(named: "AppIcon")
 			
+			/*
 			notification.hasActionButton = true
-			
 			notification.actionButtonTitle = "Close"
+			*/
 			
 			notification.soundName = NSUserNotificationDefaultSoundName
 			NSUserNotificationCenter.default.deliver(notification)

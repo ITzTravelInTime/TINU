@@ -14,7 +14,7 @@ extension InstallMediaCreationManager{
 		var ret = true
 		
 		DispatchQueue.main.sync {
-		self.setProgressValue(self.progressMaxVal - self.processUnit)
+			self.setProgressValue(self.progressMaxVal - self.processUnit)
 		}
 		
 		DispatchQueue.global(qos: .background).sync {
@@ -39,12 +39,12 @@ extension InstallMediaCreationManager{
 			}
 			
 			DispatchQueue.main.sync {
-			self.setProgressValue(self.progressMaxVal - self.unit)
+				self.setProgressValue(self.progressMaxVal - IMCM.unit)
 			}
 			
 			#endif
 			DispatchQueue.main.sync {
-			self.setActivityLabelText("Process ended, exiting ...")
+				self.setActivityLabelText("Process ended, exiting ...")
 			
 				if ok.success{
 					//ok the installer creation has been completed with success, so it sets up the final widnow and then it's showed up
@@ -132,9 +132,7 @@ extension InstallMediaCreationManager{
 		}
 		
 		//1
-		DispatchQueue.main.sync {
-		self.addToProgressValue(self.unit)
-		}
+		incrementProgressUnit()
 		
 		#if useEFIReplacement && !macOnlyMode
 		
@@ -144,7 +142,7 @@ extension InstallMediaCreationManager{
 			
 			self.startProgress = self.viewController.progress.doubleValue
 			
-			self.progressRate = self.unit
+			self.progressRate = IMCM.unit
 			
 			self.timer.invalidate()
 			self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.checkEFIFolderCopyProcess(_:)), userInfo: nil, repeats: true)
@@ -158,15 +156,13 @@ extension InstallMediaCreationManager{
 			
 			self.EFICopyEnded = true
 			
-			self.setProgressValue(self.startProgress + self.unit)
+			self.setProgressValue(self.startProgress + IMCM.unit)
 			
 		}
 		
 		//self.addToProgressValue(step)
 		#else
-		DispatchQueue.main.sync {
-		self.viewController.addToProgressValue(self.unit)
-		}
+		incrementProgressUnit()
 		#endif
 		
 		//create readme
@@ -175,9 +171,7 @@ extension InstallMediaCreationManager{
 		}
 		
 		//3
-		DispatchQueue.main.sync {
-		self.addToProgressValue(self.unit)
-		}
+		incrementProgressUnit()
 		
 		#if !macOnlyMode
 		//create IABootFiles folder
@@ -187,9 +181,7 @@ extension InstallMediaCreationManager{
 		#endif
 		
 		//4
-		DispatchQueue.main.sync {
-		self.addToProgressValue(self.unit)
-		}
+		incrementProgressUnit()
 		
 		#if !macOnlyMode
 		//delete the IAPhysicalMedia file
@@ -199,9 +191,7 @@ extension InstallMediaCreationManager{
 		#endif
 		
 		//5
-		DispatchQueue.main.sync {
-		self.addToProgressValue(self.unit)
-		}
+		incrementProgressUnit()
 		
 		//gives to the install media the icon of the mac os installer app
 		if let m = checkOperationResult(operation: OptionalOperations.shared.createIcon(), res: &ok){
@@ -210,9 +200,7 @@ extension InstallMediaCreationManager{
 		
 		
 		//6
-		DispatchQueue.main.sync {
-		self.addToProgressValue(self.unit)
-		}
+		incrementProgressUnit()
 		
 		//copyes this app on the mac os install media
 		if let m = checkOperationResult(operation: OptionalOperations.shared.createTINUCopy(), res: &ok){
@@ -220,9 +208,7 @@ extension InstallMediaCreationManager{
 		}
 		
 		//7 + 8
-		DispatchQueue.main.sync {
-		self.addToProgressValue(self.unit * 2)
-		}
+		incrementProgressUnit(2)
 		
 		/*
 		#if !macOnlyMode
@@ -255,12 +241,18 @@ extension InstallMediaCreationManager{
 		
 		//8
 		DispatchQueue.main.sync {
-		self.setProgressValue(self.progressMaxVal - self.unit)
+		self.setProgressValue(self.progressMaxVal - IMCM.unit)
 		
 		self.setActivityLabelText("Checking partitions")
 		}
 		
 		return (ok, nil)
+	}
+	
+	private func incrementProgressUnit(_ mul: Double = 1){
+		DispatchQueue.main.sync {
+			self.addToProgressValue(IMCM.unit * mul)
+		}
 	}
 
 }

@@ -15,9 +15,11 @@ class CustomizationViewController: GenericViewController {
 	public enum SectionsID: UInt8{
 		
 		case undefined = 0
-		case generalOptions = 1
-		case bootFilesReplacement = 2
-		case eFIfolderReplacement = 3
+		case generalOptions
+		case advancedOptions
+		//case bootFilesReplacement
+		case eFIFolderReplacementClover
+		case eFIFolderReplacementOpenCore
 		
 	}
 	
@@ -45,7 +47,7 @@ class CustomizationViewController: GenericViewController {
         
         //just in case of errors
         if cvm.shared.sharedVolume == nil || cvm.shared.sharedApp == nil{
-            sawpCurrentViewController(with: "Confirm", sender: self.view)
+            sawpCurrentViewController(with: "Confirm")
         }
 		
 		//general options
@@ -61,8 +63,7 @@ class CustomizationViewController: GenericViewController {
 		let advancedOptionsSection = getSectionItem()
 		advancedOptionsSection.image.image = NSImage(named: NSImageNameAdvanced)
 		advancedOptionsSection.name.stringValue = "Advanced options"
-		advancedOptionsSection.isAdvanced = true
-		advancedOptionsSection.id = SectionsID.generalOptions
+		advancedOptionsSection.id = SectionsID.advancedOptions
 		sections.append(advancedOptionsSection)
 		
 		#if !macOnlyMode
@@ -76,15 +77,22 @@ class CustomizationViewController: GenericViewController {
 					efiReplacement.image.image = NSImage(named: NSImageNameFolder)
 				
 					efiReplacement.name.stringValue = "Install " + i.rawValue + "\nEFI folder"
-				
-					efiReplacement.id = SectionsID.eFIfolderReplacement
-					efiReplacement.bootLoaderType = i
+					
+					switch i{
+					case .clover:
+						efiReplacement.id = SectionsID.eFIFolderReplacementClover
+						break
+					case.openCore:
+						efiReplacement.id = SectionsID.eFIFolderReplacementOpenCore
+						break
+						
+					}
 			
 					sections.append(efiReplacement)
 				}
 		
 			#endif
-		
+			/*
 			#if useFileReplacement
 				//bootfiles
 				if !sharedInstallMac{
@@ -100,6 +108,8 @@ class CustomizationViewController: GenericViewController {
 				}
 		
 			#endif
+
+			*/
 		#endif
 		
 		
@@ -160,7 +170,7 @@ class CustomizationViewController: GenericViewController {
 		
 		CustomizationWindowManager.shared.referenceWindow = nil
 		
-		sawpCurrentViewController(with: "ChooseCustomize", sender: sender)
+		sawpCurrentViewController(with: "ChooseCustomize")
 		//openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
     }
     

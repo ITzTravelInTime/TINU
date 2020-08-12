@@ -8,34 +8,19 @@
 
 import Cocoa
 
-fileprivate let minutesRatio: UInt64 = 60
-
 extension InstallMediaCreationManager{
-	
-	@objc func increaseProgressBar(_ sender: AnyObject){
-		DispatchQueue.global(qos: .userInteractive).async {
-			self.seconds += 1
-			print(String(self.seconds) + " sec")
-		if CreateinstallmediaSmallManager.shared.process.isRunning{
-			
-			self.timerProgressIncrement()
-			
-		}else{
-			CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress = false
-			self.timer.invalidate()
-		}
-		}
-	}
 	
 	//function that checks if the process has finished
 	@objc func checkProcessFinished(_ sender: AnyObject){
 		DispatchQueue.global(qos: .userInteractive).async {
-		self.seconds += 1
-		print(String(self.seconds) + " sec")
+			
+		let diff = UInt64(abs(CreateinstallmediaSmallManager.shared.startTime.timeIntervalSinceNow))
+			
+		print("\(diff) seconds")
 			
 		if CreateinstallmediaSmallManager.shared.process.isRunning{
 			
-			self.timerProgressIncrement()
+			self.timerProgressIncrement(diff)
 			
 		}else{
 			CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress = false
@@ -45,26 +30,38 @@ extension InstallMediaCreationManager{
 		}
 	}
 	
-	@inline(__always) private func timerProgressIncrement(){
-		if self.seconds % 5 == 0{
+	@inline(__always) private func timerProgressIncrement(_ secs: UInt64){
+		
+		let minutes = secs / 60
+		
+		let diffs = (secs - self.lastSecs)
+		if diffs >= 5{
+			self.lastSecs = secs
 			
-			let minutes = self.seconds / minutesRatio
-			
-			if self.seconds % minutesRatio == 0{
-				log("Please wait, the process is still going, minutes since process beginning: \(minutes)")
-			}
-			
-			if minutes <= self.processMinutesToChange{
-				DispatchQueue.main.sync {
-					self.addToProgressValue(self.installerProgressValueFast)
-				}
-			}else if minutes > self.processMinutesToChange{
-				DispatchQueue.main.sync {
-					self.addToProgressValue(self.installerProgressValueSlow)
+			DispatchQueue.main.sync {
+				let val = self.getProgressBarValue()
+				
+				if val < Double(IMCM.cpc.pMidDuration + IMCM.cpc.pExtDuration){
+					for _ in 1...(diffs / 5){
+						if minutes <= self.processMinutesToChange{
+							self.addToProgressValue(self.installerProgressValueFast)
+						}else if minutes > self.processMinutesToChange{
+							self.addToProgressValue(self.installerProgressValueSlow)
+						}
+					}
 				}
 			}
 			
 		}
+		
+		let diffm = (minutes - self.lastMinute)
+		if (diffm > 0){
+			self.lastMinute = minutes
+			for i in diffm...1{
+				log("Please wait, the process is still going, minutes since process beginning: \(minutes - i + 1)")
+			}
+		}
+		
 	}
 	
 	#if !macOnlyMode

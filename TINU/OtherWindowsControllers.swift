@@ -77,6 +77,10 @@ public class LogWindowController: NSWindowController {
 	@IBOutlet weak var copyLogItem: NSToolbarItem!
 	@IBOutlet weak var shareLogItem: NSToolbarItem!
 	
+	@IBOutlet weak var saveLogBigItem: NSToolbarItem!
+	@IBOutlet weak var copyLogBigItem: NSToolbarItem!
+	@IBOutlet weak var shareLogBigItem: NSToolbarItem!
+	
 	override public func windowDidLoad() {
 		super.windowDidLoad()
 		//self.window?.title += ": Log"
@@ -99,9 +103,20 @@ public class LogWindowController: NSWindowController {
 						self.copyLogItem.target = vc
 						self.shareLogItem.target = vc
 						
+						self.saveLogBigItem.target = vc
+						self.copyLogBigItem.target = vc
+						self.shareLogBigItem.target = vc
+						
+						self.saveLogItem.image = IconsManager.shared.internalDiskIcon
+						self.saveLogBigItem.image = self.saveLogItem.image
+						
 						self.saveLogItem.action = #selector(vc.saveLog(_:))
 						self.copyLogItem.action = #selector(vc.copyLog(_:))
 						self.shareLogItem.action = #selector(vc.shareLog(_:))
+						
+						self.saveLogBigItem.action = #selector(vc.saveLog(_:))
+						self.copyLogBigItem.action = #selector(vc.copyLog(_:))
+						self.shareLogBigItem.action = #selector(vc.shareLog(_:))
 					}
 				}
 			}
@@ -111,6 +126,11 @@ public class LogWindowController: NSWindowController {
 	convenience init() {
 		//creates an instace of the window
 		self.init(window: (sharedStoryboard.instantiateController(withIdentifier: "Log") as! NSWindowController).window)
+	}
+	
+	override public func close() {
+		logWindow = nil
+		super.close()
 	}
 	
 }

@@ -73,10 +73,10 @@ class MainCreationFinishedViewController: NSViewController{
     
     @IBAction func goNext(_ sender: Any) {
         //if !sharedIsOk {
-        clearLog()
+        LogManager.clearLog()
         
        // if sharedIsOnRecovery{
-            sawpCurrentViewController(with: "chooseSide", sender: self)
+            sawpCurrentViewController(with: "chooseSide")
         /*}else{
             openSubstituteWindow(windowStoryboardID: "Info", sender: self)
         }*/

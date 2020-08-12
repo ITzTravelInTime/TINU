@@ -55,12 +55,8 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate, 
         timer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(self.updateLog(_:)), userInfo: nil, repeats: true)
     }
     
-    func Close(_ sender: Any) {
-        timer.invalidate()
-        self.window.close()
-    }
-    
     override func viewWillDisappear() {
+		
         super.viewWillDisappear()
         if timer.isValid{
             timer.invalidate()
@@ -70,30 +66,38 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate, 
     
     @objc func updateLog(_ sender: AnyObject){
         //print("Log updated")
-        if let l = readLog(){
+        if let l = LogManager.readLog(){
             text.text = l
         }
     }
     
     @objc public func copyLog(_ sender: Any) {
-        let pasteBoard = NSPasteboard.general()
-        pasteBoard.clearContents()
-        pasteBoard.writeObjects([text.text as NSString])
 		
-		DispatchQueue.global(qos: .background).sync {
-		let notification = NSUserNotification()
+		let text = self.text.text as NSString
 		
-		notification.identifier = "org.tinu.TINU_LOG_COPY"
+		DispatchQueue.global(qos: .background).async {
+			
+			let pasteBoard = NSPasteboard.general()
+			pasteBoard.clearContents()
+			pasteBoard.writeObjects([text])
+			
+			DispatchQueue.main.sync {
+				let notification = NSUserNotification()
 		
-		notification.title = "Log copied"
-		notification.informativeText = "TINU's log successfully copied to the clipboard"
+				notification.identifier = "org.tinu.TINU_LOG_COPY"
 		
-		notification.hasActionButton = true
-		notification.actionButtonTitle = "Ok"
+				notification.title = "TINU: Log copied"
+				notification.informativeText = "TINU's log has been successfully copied to the clipboard"
 		
-		notification.soundName = NSUserNotificationDefaultSoundName
+				/*
+				notification.hasActionButton = true
+				notification.actionButtonTitle = "Ok"
+				*/
+			
+				notification.soundName = NSUserNotificationDefaultSoundName
 		
-		NSUserNotificationCenter.default.deliver(notification)
+				NSUserNotificationCenter.default.deliver(notification)
+			}
 		}
 		
 		print("Log copied to clipboard")
@@ -140,13 +144,16 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate, 
 	
 	@objc public func shareLog(_ sender: Any) {
 		
+		print("Share called")
+		
+		
 		if let sen = sender as? NSView{
+			
+			print("Share good")
 		
-		let service = NSSharingServicePicker(items: [text.attributedString()])
-		
-		service.delegate = self
-		
-		service.show(relativeTo: sen.bounds, of: sen, preferredEdge: .minY)
+			let service = NSSharingServicePicker(items: [text.attributedString()])
+			service.delegate = self
+			service.show(relativeTo: sen.bounds, of: sen, preferredEdge: .minY)
 			
 		}
 	}

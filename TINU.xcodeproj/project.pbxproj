@@ -33,6 +33,9 @@
 		C621CFAC1F4F7DF400CC6D5B /* DriveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */; };
 		C6322574221C1883003A56D4 /* FilesystemObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6322573221C1883003A56D4 /* FilesystemObserver.swift */; };
 		C63DD0282265D921007944A5 /* TaskKillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63DD0272265D921007944A5 /* TaskKillManager.swift */; };
+		C63F035E24E1091400F950B4 /* ProgressBarSettings.json in Resources */ = {isa = PBXBuildFile; fileRef = C63F035D24E1091400F950B4 /* ProgressBarSettings.json */; };
+		C63F036024E3D19300F950B4 /* ProgressBarValuesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63F035F24E3D19300F950B4 /* ProgressBarValuesManager.swift */; };
+		C63F036224E40F5500F950B4 /* TextManagerAssets.json in Resources */ = {isa = PBXBuildFile; fileRef = C63F036124E40F5500F950B4 /* TextManagerAssets.json */; };
 		C6409AC7226D35D200E63762 /* CopyrightLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6409AC6226D35D200E63762 /* CopyrightLabel.swift */; };
 		C647B350211CE2C00024B9A1 /* ToolsBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B34F211CE2C00024B9A1 /* ToolsBridge.swift */; };
 		C647B39B211CF2C40024B9A1 /* EFIPartitionMounterTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B395211CF2C40024B9A1 /* EFIPartitionMounterTypes.swift */; };
@@ -60,6 +63,7 @@
 		C691D6AB20655C700083D057 /* DriveDetectInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691D6AA20655C700083D057 /* DriveDetectInfoViewController.swift */; };
 		C698B47E204CDAE5007B3CD8 /* MacrosReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */; };
 		C6AD9345239A684D0004704C /* DiskutilListCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AD9344239A684D0004704C /* DiskutilListCodable.swift */; };
+		C6AEE8FB24E41A49006135FB /* CodablesGeneric.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AEE8FA24E41A49006135FB /* CodablesGeneric.swift */; };
 		C6B16958203B27AF00FD2818 /* ChooseCustomizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */; };
 		C6B74D0A20B8E76A001CAD4D /* EFIFolderReplacementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B74D0920B8E76A001CAD4D /* EFIFolderReplacementManager.swift */; };
 		C6B74D0C20BA2A79001CAD4D /* EFIPartitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B74D0B20BA2A79001CAD4D /* EFIPartitionManager.swift */; };
@@ -138,6 +142,9 @@
 		C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveView.swift; sourceTree = "<group>"; };
 		C6322573221C1883003A56D4 /* FilesystemObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesystemObserver.swift; sourceTree = "<group>"; };
 		C63DD0272265D921007944A5 /* TaskKillManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskKillManager.swift; sourceTree = "<group>"; };
+		C63F035D24E1091400F950B4 /* ProgressBarSettings.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ProgressBarSettings.json; sourceTree = "<group>"; };
+		C63F035F24E3D19300F950B4 /* ProgressBarValuesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarValuesManager.swift; sourceTree = "<group>"; };
+		C63F036124E40F5500F950B4 /* TextManagerAssets.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = TextManagerAssets.json; sourceTree = "<group>"; };
 		C6409AC6226D35D200E63762 /* CopyrightLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyrightLabel.swift; sourceTree = "<group>"; };
 		C647B34F211CE2C00024B9A1 /* ToolsBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsBridge.swift; sourceTree = SOURCE_ROOT; };
 		C647B395211CF2C40024B9A1 /* EFIPartitionMounterTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EFIPartitionMounterTypes.swift; path = "EFI Partition Mounter/EFI Partition Mounter/EFIPartitionMounterTypes.swift"; sourceTree = SOURCE_ROOT; };
@@ -165,6 +172,7 @@
 		C691D6AA20655C700083D057 /* DriveDetectInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveDetectInfoViewController.swift; sourceTree = "<group>"; };
 		C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacrosReference.swift; sourceTree = "<group>"; };
 		C6AD9344239A684D0004704C /* DiskutilListCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskutilListCodable.swift; sourceTree = "<group>"; };
+		C6AEE8FA24E41A49006135FB /* CodablesGeneric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodablesGeneric.swift; sourceTree = "<group>"; };
 		C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseCustomizationViewController.swift; sourceTree = "<group>"; };
 		C6B74D0920B8E76A001CAD4D /* EFIFolderReplacementManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EFIFolderReplacementManager.swift; sourceTree = "<group>"; };
 		C6B74D0B20BA2A79001CAD4D /* EFIPartitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EFIPartitionManager.swift; sourceTree = "<group>"; };
@@ -250,6 +258,7 @@
 				C6D82A6B20D80C7600A5B5BE /* OtherOptionsManager.swift */,
 				C60C40B720CC9E4800258574 /* IconsManager.swift */,
 				C60C40C320CCACB600258574 /* PlistXMLManager.swift */,
+				C63F035F24E3D19300F950B4 /* ProgressBarValuesManager.swift */,
 				C6D9EE58210AED4700019818 /* Reachability.swift */,
 				C65B5EFE1F72099F0061F1A3 /* ScriptsManager.swift */,
 				C6C8A8B0249E9C8A009C3D6E /* SIPManager.swift */,
@@ -342,6 +351,8 @@
 		C6553A941F5F83DC0048965D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C63F035D24E1091400F950B4 /* ProgressBarSettings.json */,
+				C63F036124E40F5500F950B4 /* TextManagerAssets.json */,
 				C6553A921F5F83770048965D /* License.rtf */,
 				C65B5EFB1F71FAB10061F1A3 /* DebugScript.sh */,
 				C6C8A8B2249EB2C2009C3D6E /* DebugScriptSudo.sh */,
@@ -422,6 +433,7 @@
 			children = (
 				DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */,
 				DDD038F11FB7AEC000D22695 /* BootFilesReplacementItem.swift */,
+				C6AEE8FA24E41A49006135FB /* CodablesGeneric.swift */,
 				C6409AC6226D35D200E63762 /* CopyrightLabel.swift */,
 				C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */,
 				C60B646A20B4464200FEDAA6 /* EFIFolderReplcament.swift */,
@@ -523,7 +535,7 @@
 						CreatedOnToolsVersion = 8.3.1;
 						DevelopmentTeam = 9RSH5734GY;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.Mac = {
 								enabled = 0;
@@ -583,9 +595,11 @@
 				C65B5EFD1F7201D10061F1A3 /* DebugScript.sh in Resources */,
 				C647B3AF211D18950024B9A1 /* EFIPartitionMounterTool.storyboard in Resources */,
 				C6DF046D1F4F33C500D200B1 /* Main.storyboard in Resources */,
+				C63F036224E40F5500F950B4 /* TextManagerAssets.json in Resources */,
 				C6C8A8B3249EB2C2009C3D6E /* DebugScriptSudo.sh in Resources */,
 				C691BFEE1F6DEEA800589EF8 /* Assets.xcassets in Resources */,
 				C6553A931F5F83770048965D /* License.rtf in Resources */,
+				C63F035E24E1091400F950B4 /* ProgressBarSettings.json in Resources */,
 				C6CB670A217756BE00746A84 /* CreateMediaWithAuth.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -694,6 +708,7 @@
 				C60C40C720CCAE6200258574 /* DrivesManager.swift in Sources */,
 				C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */,
 				C60C40C220CCAA9900258574 /* InstallerAppManager.swift in Sources */,
+				C63F036024E3D19300F950B4 /* ProgressBarValuesManager.swift in Sources */,
 				DD7C7CC5235E26DC000CC2E0 /* DarkModeDetection.swift in Sources */,
 				DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */,
 				C60C40C420CCACB600258574 /* PlistXMLManager.swift in Sources */,
@@ -724,6 +739,7 @@
 				DD01EBEF1F71BD2A00C94D9B /* LogManager.swift in Sources */,
 				C66411052077A80100454292 /* OtherWindowsControllers.swift in Sources */,
 				C6553A911F5F7CEA0048965D /* LicenseViewController.swift in Sources */,
+				C6AEE8FB24E41A49006135FB /* CodablesGeneric.swift in Sources */,
 				C6DF04661F4F33C500D200B1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -897,12 +913,12 @@
 				ASSETCATALOG_COMPILER_OPTIMIZATION = space;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TINU/TINU.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 9RSH5734GY;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = TINU/Info.plist;
@@ -913,7 +929,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG useEFIReplacement skipChooseCustomization TINU sudoStartup";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG useEFIReplacement skipChooseCustomization TINU";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = on;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -930,11 +946,11 @@
 				ASSETCATALOG_COMPILER_OPTIMIZATION = space;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TINU/TINU.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 9RSH5734GY;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_OPTIMIZATION_LEVEL = s;

@@ -23,7 +23,7 @@ extension InstallMediaCreationManager{
 		
 			}
 		
-		log("process took " + String(self.seconds) + " seconds to finish")
+		log("process took \(UInt64(abs(CreateinstallmediaSmallManager.shared.startTime.timeIntervalSinceNow))) seconds to finish")
 		
 		DispatchQueue.main.sync {
 			//we have finished, so the controls opf the window are restored

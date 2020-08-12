@@ -52,20 +52,26 @@ public class DownloadAppViewController: ShadowViewController {
 		]
 		
 		let segmentHeight: CGFloat = 100
-		plain = NSView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width - 24, height: segmentHeight * CGFloat(apps.count)))
+		let segmentOffset: CGFloat = 20
+		let segmentEdge:   CGFloat = 20
 		
-		var tmp: CGFloat = 0
+		plain = NSView(frame: CGRect(x: 0, y: 0, width: self.scroller.frame.width - 15, height: (segmentHeight + segmentOffset) * CGFloat(apps.count) + segmentOffset))
+		
+		var tmp: CGFloat = segmentOffset
 		for app in apps.reversed(){
-			let segment = DownloadAppItem(frame: CGRect(x: 0, y: tmp, width: plain.frame.size.width, height: segmentHeight))
+			let segment = DownloadAppItem(frame: CGRect(x: segmentEdge, y: tmp, width: plain.frame.size.width - segmentOffset, height: segmentHeight))
 			
-			segment.isLast = (app == apps.last!)
+			//segment.isLast = (app == apps.last!)
 			
 			segment.associtaed = app
 			
 			plain.addSubview(segment)
 			
-			tmp += segmentHeight
+			tmp += segmentHeight + segmentOffset
 		}
+		
+		plain.backgroundColor = NSColor.windowBackgroundColor
+		scroller.backgroundColor = plain.backgroundColor
 		
 		
     }
@@ -101,9 +107,9 @@ public class DownloadAppViewController: ShadowViewController {
 	}
 }
 
-fileprivate class DownloadAppItem: NSView{
+fileprivate class DownloadAppItem: ShadowView{
 	public var associtaed: App_download!
-	public var isLast: Bool = false
+	//public var isLast: Bool = false
 	
 	private var link: URL!
 	
@@ -115,6 +121,8 @@ fileprivate class DownloadAppItem: NSView{
 	
 	override func viewDidMoveToSuperview() {
 		super.viewDidMoveToSuperview()
+		
+		canShadow = true
 		
 		icon.frame.size = NSSize(width: 70, height: 70)
 		icon.frame.origin = NSPoint(x: 5, y: (self.frame.height - icon.frame.height) / 2)
@@ -174,12 +182,15 @@ fileprivate class DownloadAppItem: NSView{
 			link = URL(string: associtaed.DownloadLink)
 		}
 		
-		downloadButton.bezelStyle = .roundRect
+		//downloadButton.bezelStyle = .roundRect
+		downloadButton.bezelStyle = .rounded
 		downloadButton.setButtonType(.momentaryPushIn)
 		
-		downloadButton.frame.size = NSSize(width: 150, height: 20)
+		downloadButton.frame.size = NSSize(width: 150, height: 30)
 		
-		downloadButton.frame.origin = NSPoint(x: self.frame.size.width - downloadButton.frame.size.width - 5, y: (self.frame.size.height - downloadButton.frame.height) / 2)
+		//downloadButton.frame.origin = NSPoint(x: self.frame.size.width - downloadButton.frame.size.width - 5, y: (self.frame.size.height - downloadButton.frame.height) / 2)
+		
+		downloadButton.frame.origin = NSPoint(x: self.frame.size.width - downloadButton.frame.size.width - 7, y: 7)
 		
 		downloadButton.font = NSFont.systemFont(ofSize: 12)
 		downloadButton.isContinuous = true
@@ -188,6 +199,7 @@ fileprivate class DownloadAppItem: NSView{
 		
 		self.addSubview(downloadButton)
 		
+		/*
 		if !isLast{
 		separator.frame.origin = CGPoint(x: 30, y: 1)
 		separator.frame.size = CGSize(width: self.frame.width - 60, height: 1)
@@ -196,7 +208,7 @@ fileprivate class DownloadAppItem: NSView{
 		separator.layer?.borderWidth = 1
 		
 		self.addSubview(separator)
-		}
+		}*/
 		
 	}
 	

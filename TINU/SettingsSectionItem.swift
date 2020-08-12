@@ -22,11 +22,6 @@ public class SettingsSectionItem: NSView{
 	let normalColor = NSColor.white.withAlphaComponent(0).cgColor
 	var selectedColor = NSColor.selectedControlColor.cgColor
 	
-	//category switching for code reuse, not the best place for this stuff, but here it requires the less work
-	var bootLoaderType: SupportedEFIFolders = .clover
-	var isAdvanced = false
-	
-	
 	override public func draw(_ dirtyRect: NSRect) {
 		
 		/*
@@ -125,7 +120,8 @@ public class SettingsSectionItem: NSView{
 			scrollView.verticalScroller?.isHidden = false
 			
 			switch id{
-			case CustomizationViewController.SectionsID.generalOptions:
+			case CustomizationViewController.SectionsID.generalOptions, CustomizationViewController.SectionsID.advancedOptions:
+				let isAdvanced = (id == CustomizationViewController.SectionsID.advancedOptions)
 				let surface = NSView()
 				let itemHeigth: CGFloat = 30
 				var isGray = true
@@ -270,7 +266,7 @@ public class SettingsSectionItem: NSView{
 					break
 				#endif
 				*/
-			case CustomizationViewController.SectionsID.eFIfolderReplacement:
+			case CustomizationViewController.SectionsID.eFIFolderReplacementClover, CustomizationViewController.SectionsID.eFIFolderReplacementOpenCore:
 				//efi replacement menu
 				#if useEFIReplacement && !macOnlyMode
 					
@@ -278,7 +274,16 @@ public class SettingsSectionItem: NSView{
 				
 					scrollView.documentView = surface
 				
-					surface.bootloader = bootLoaderType
+					switch id{
+						case CustomizationViewController.SectionsID.eFIFolderReplacementClover:
+							surface.bootloader = .clover
+							break
+						case CustomizationViewController.SectionsID.eFIFolderReplacementOpenCore:
+							surface.bootloader = .openCore
+							break
+						default:
+							break
+					}
 					
 					scrollView.verticalScrollElasticity = .none
 				

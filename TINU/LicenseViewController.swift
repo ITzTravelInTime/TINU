@@ -187,13 +187,13 @@ class LicenseViewController: ShadowViewController {
 					} catch let error {
 						print("Get license error, skipping: \(error)")
 						DispatchQueue.main.sync {
-							let _ = self.sawpCurrentViewController(with: "ChoseDrive", sender: self)
+							let _ = self.sawpCurrentViewController(with: "ChoseDrive")
 						}
 					}
 				}else{
 					print("Get license error, skipping: license file not found")
 					DispatchQueue.main.sync {
-						let _ = self.sawpCurrentViewController(with: "ChoseDrive", sender: self)
+						let _ = self.sawpCurrentViewController(with: "ChoseDrive")
 					}
 				}
 				
@@ -224,12 +224,12 @@ class LicenseViewController: ShadowViewController {
 		self.scroller.isHidden = false
 		if showProcessLicense && sharedInstallMac{
 			#if skipChooseCustomization
-				let _ = self.sawpCurrentViewController(with: "Confirm", sender: sender)
+				let _ = self.sawpCurrentViewController(with: "Confirm")
 			#else
 				let _ = self.openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
 			#endif
 		}else{
-			let _ = self.sawpCurrentViewController(with: "ChoseDrive", sender: sender)
+			let _ = self.sawpCurrentViewController(with: "ChoseDrive")
 		}
 		}
     }
@@ -242,10 +242,10 @@ class LicenseViewController: ShadowViewController {
 		self.scroller.isHidden = false
 		if showProcessLicense && sharedInstallMac{
 			showProcessLicense = false
-			let _ = self.sawpCurrentViewController(with: "ChoseApp", sender: sender)
+			let _ = self.sawpCurrentViewController(with: "ChoseApp")
 		}else{
 			showProcessLicense = false
-			let _ = self.sawpCurrentViewController(with: "Info", sender: sender)
+			let _ = self.sawpCurrentViewController(with: "Info")
 		}
 		}
 		

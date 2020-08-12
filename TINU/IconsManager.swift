@@ -59,13 +59,32 @@ public final class IconsManager{
 	
 	public var copyIcon: NSImage!{
 		get{
-			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/MultipleItemsIcon.icns", name: "warning")
+			//return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/MultipleItemsIcon.icns", name: "warning")
+			return NSImage.init(named: NSImageNameMultipleDocuments)
 		}
 	}
 	
 	public var saveIcon: NSImage!{
 		get{
 			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericDocumentIcon.icns", name: "warning")
+		}
+	}
+	
+	public var removableDiskIcon: NSImage{
+		get{
+			return getIconFor(path: "/System/Library/Extensions/IOStorageFamily.kext/Contents/Resources/Removable.icns", name: "Removable")
+		}
+	}
+	
+	public var externalDiskIcon: NSImage{
+		get{
+			return getIconFor(path: "/System/Library/Extensions/IOStorageFamily.kext/Contents/Resources/External.icns", name: "Removable")
+		}
+	}
+	
+	public var internalDiskIcon: NSImage{
+		get{
+			return getIconFor(path: "/System/Library/Extensions/IOStorageFamily.kext/Contents/Resources/Internal.icns", name: "Removable")
 		}
 	}
 	

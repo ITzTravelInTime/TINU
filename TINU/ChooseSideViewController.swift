@@ -25,11 +25,10 @@ class ChooseSideViewController: GenericViewController {
 	
 	private var count = 0
 	
-	
-	
-	
 	#if sudoStartup
 	private static var _already_prompted = false
+	private static let _prompt_sip = "SIPPrompt"
+	private static let _prompt_sip_result = "SIPPromptResult"
 	#endif
 	
 	override func viewDidLoad() {
@@ -78,10 +77,10 @@ class ChooseSideViewController: GenericViewController {
 		
 		//ui setup
 		
-		createUSBButton.upperImage.image = NSImage(named: "Removable")
+		createUSBButton.upperImage.image = IconsManager.shared.removableDiskIcon //NSImage(named: "Removable")
 		createUSBButton.upperTitle.stringValue = "Create a bootable\nmacOS installer"
 		
-		installButton.upperImage.image = NSImage(named: "OSInstall")
+		installButton.upperImage.image = NSImage.init(named: NSImageNameComputer)//NSImage(named: "OSInstall")
 		installButton.upperTitle.stringValue = "Install macOS"
 		
 		efiButton.upperImage.image = NSImage(named: "EFIIcon")
@@ -175,11 +174,11 @@ class ChooseSideViewController: GenericViewController {
 		
 		if count < 2{
 			DispatchQueue.global(qos: .background).async {
-				DispatchQueue.main.async {
+				DispatchQueue.main.sync {
 					self.stopAnimationAndShowbuttons()
 					
+					self.sawpCurrentViewController(with: "Info")
 					
-					self.sawpCurrentViewController(with: "Info", sender: self.view)
 				}
 			}
 		}else{
@@ -192,13 +191,50 @@ class ChooseSideViewController: GenericViewController {
 		
 		#if sudoStartup
 		
-		if !isRootUser && !ChooseSideViewController._already_prompted{
-				if (!SIPManager.checkSIP()){
-					if dialogYesNo(question: "Use diagnostics mode?", text: "You can run TINU using diagnostics mode with administrator privileges, this will let you avoid to enter the password multiple times, do you want to continue?", style: .informational){
-						ChooseSideViewController._already_prompted = true
+		if !isRootUser{
+			
+				if (SIPManager.checkSIP()){
+				
+					/*
+				if !ChooseSideViewController._already_prompted{
+					if dialogYesNo(question: "Use diagnostics mode?", text: "You can run TINU using diagnostics mode with administrator privileges, this will let you complete successfully installer creations and avoid to enter the password multiple times, do you want to continue?", style: .informational){
 						return
-					}
 				}
+					*/
+				
+				
+				}else{
+				
+					if !ChooseSideViewController._already_prompted{
+						let shouldPrompt = UserDefaults.standard.bool(forKey: ChooseSideViewController._prompt_sip)
+						
+						if shouldPrompt{
+							let res = dialogYesNo(question: "Use diagnostics mode?", text: "You can run TINU using diagnostics mode with administrator privileges, this will let you avoid to enter the password multiple times, do you want to continue?", style: .informational)
+							
+							ChooseSideViewController._already_prompted = true
+							UserDefaults.standard.set(false, forKey: ChooseSideViewController._prompt_sip)
+							UserDefaults.standard.set(res, forKey: ChooseSideViewController._prompt_sip_result)
+							
+							if res{
+								return
+							}
+							
+							
+						}else{
+							if UserDefaults.standard.bool(forKey: ChooseSideViewController._prompt_sip_result){
+								return
+							}
+						}
+					}
+				
+				
+					
+				}
+			
+			
+			
+			
+			
 			
 			//self.window!.orderOut(self)
 			

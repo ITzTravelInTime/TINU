@@ -8,18 +8,18 @@
 
 import Cocoa
 
-fileprivate let guid = "GUID_partition_scheme"
-fileprivate let mbr = "FDisk_partition_scheme"
-fileprivate let applePS = "Apple_partition_scheme"
-
-fileprivate let apfs = "Apple_APFS"
-fileprivate let hfs = "Apple_HFS"
-fileprivate let core = "Apple_CoreStorage"
-fileprivate let efi = "EFI"
-
-fileprivate let ignore = ["Apple_Boot", "Apple_KernelCoreDump"]
-
 class ChoseDriveViewController: ShadowViewController {
+	fileprivate let guid = "GUID_partition_scheme"
+	fileprivate let mbr = "FDisk_partition_scheme"
+	fileprivate let applePS = "Apple_partition_scheme"
+	
+	fileprivate let apfs = "Apple_APFS"
+	fileprivate let hfs = "Apple_HFS"
+	fileprivate let core = "Apple_CoreStorage"
+	fileprivate let efi = "EFI"
+	
+	fileprivate let ignore = ["Apple_Boot", "Apple_KernelCoreDump"]
+	
     @IBOutlet weak var scoller: NSScrollView!
     @IBOutlet weak var ok: NSButton!
     @IBOutlet weak var spinner: NSProgressIndicator!
@@ -117,42 +117,47 @@ class ChoseDriveViewController: ShadowViewController {
         updateDrives()
     }
 	
-	func makeAndDisplayItem(_ item: DiskutilObject, _ to: inout [DriveView], _ origin: DiskutilObject! = nil, _ isGUIDwEFI: Bool = true){
+	func makeAndDisplayItem(_ item: DiskutilObject!, _ to: inout [DriveView], _ origin: DiskutilObject! = nil, _ isGUIDwEFI: Bool = true){
 		
-		let d = (origin == nil) ? item : origin!
+		guard let d: DiskutilObject = ((origin == nil) ? item : origin) else{
+			print("[UI creation] Invalid disk item!")
+			return
+		}
+		
 		let man = FileManager.default
 		
 		DispatchQueue.main.sync {
 			
 			let drivei = DriveView(frame: NSRect(x: 0, y: itemOriginY, width: DriveView.itemSize.width, height: DriveView.itemSize.height))
-			
-			drivei.isApp = false
-			
-			if item.isMounted(){
-				drivei.image.image = NSWorkspace.shared().icon(forFile: item.MountPoint!)
-			}
-			
-			if !isGUIDwEFI{
-				drivei.volume.stringValue = dm.getDriveName(from: d.DeviceIdentifier)
-			}else{
-				drivei.volume.stringValue = man.displayName(atPath: d.MountPoint!)
-			}
-			
-			log("        Drive display name is: \(drivei.volume.stringValue)")
-			
 			var prt: Part!
 			
 			if isGUIDwEFI{
+				drivei.volume.stringValue = man.displayName(atPath: d.MountPoint!)
 				prt = Part(partitionBSDName: d.DeviceIdentifier, partitionName: drivei.volume.stringValue, partitionPath: d.MountPoint!, partitionFileSystem: Part.FileSystem.other, partitionScheme: Part.PartScheme.gUID , partitionHasEFI: true, partitionSize: d.Size)
+				prt.tmDisk = man.fileExists(atPath: d.MountPoint! + "/tmbootpicker.efi") || man.directoryExistsAtPath(d.MountPoint! + "/Backups.backupdb")
 			}else{
-				print(item)
-				print(d)
-				prt = Part(partitionBSDName: item.DeviceIdentifier, partitionName: drivei.volume.stringValue, partitionPath: item.MountPoint!, partitionFileSystem: .other, partitionScheme: .blank, partitionHasEFI: false, partitionSize: d.Size)
+				drivei.volume.stringValue = dm.getDriveName(from: d.DeviceIdentifier)
+				prt = Part(partitionBSDName: d.DeviceIdentifier, partitionName: drivei.volume.stringValue, partitionPath: (item?.MountPoint == nil) ? "" : item.MountPoint!, partitionFileSystem: .other, partitionScheme: .blank, partitionHasEFI: false, partitionSize: d.Size)
 				prt.apfsBDSName = d.DeviceIdentifier
 			}
 			
+			prt.isDrive = (origin != nil) || !isGUIDwEFI
+			
+			log("        Item type: \(prt.isDrive ? "Drive" : "Partition")")
+			
 			prt.size = d.Size
 			
+			log("        Item display name is: \(drivei.volume.stringValue)")
+			if !prt.isDrive{
+				if item!.isMounted(){
+					drivei.image.image = NSWorkspace.shared().icon(forFile: item.MountPoint!)
+				}
+			}else{
+				drivei.image.image = IconsManager.shared.removableDiskIcon
+			}
+			
+			
+			drivei.isApp = false
 			drivei.part = prt
 			to.append(drivei)
 			
@@ -219,6 +224,7 @@ class ChoseDriveViewController: ShadowViewController {
 					}
 				}
 				
+				print("The boot drive is: ")
 				print(boot_drive)
 				
 				for d in data.AllDisksAndPartitions{
@@ -285,10 +291,12 @@ class ChoseDriveViewController: ShadowViewController {
 						
 					}
 					
+					#if noUnmounted
 					if ref == nil{
 						log("        Drive has no mounted partitions, those are needed in order to detect a drive")
 						continue
 					}
+					#endif
 					
 					log("        Drive seems to meet all the requirements for our purposes, it will be added to the list")
 					
@@ -386,16 +394,24 @@ class ChoseDriveViewController: ShadowViewController {
 		}
 	}
 	
+	
+	private var tmpWin: GenericViewController!
 	func openDetectStorageSuggestions(){
-		self.presentViewControllerAsSheet(sharedStoryboard.instantiateController(withIdentifier: "DriveDetectionInfoVC") as! NSViewController)
+		tmpWin = nil
+		tmpWin = sharedStoryboard.instantiateController(withIdentifier: "DriveDetectionInfoVC") as? GenericViewController
+		
+		if tmpWin != nil{
+			self.presentViewControllerAsSheet(tmpWin)
+		}
 	}
 	
 	@IBAction func goBack(_ sender: Any) {
 		if sharedShowLicense{
-			let _ = sawpCurrentViewController(with: "License", sender: self)
+			let _ = sawpCurrentViewController(with: "License")
 		}else{
-			let _ = sawpCurrentViewController(with: "Info", sender: self)
+			let _ = sawpCurrentViewController(with: "Info")
 		}
+		tmpWin = nil
 	}
 	
 	@IBAction func next(_ sender: Any) {
@@ -406,10 +422,6 @@ class ChoseDriveViewController: ShadowViewController {
 			if cvm.shared.sharedVolumeNeedsPartitionMethodChange != nil /*&& sharedVolumeNeedsFormat != nil*/{
 				
 				var dialogText = "The drive \"\(dname)\" will be formatted entirely to be used to create a bootable macOS installer"
-				
-				if cvm.shared.currentPart.apfsBDSName != nil{
-					dialogText = "The drive \"\(dname)\" will be formatted entirely to be used to create a bootable macOS installer"
-				}
 				
 				if sharedInstallMac{
 					dialogText = "The drive \"\(dname)\" will be formatted entirely to install macOS on it"
@@ -431,7 +443,9 @@ class ChoseDriveViewController: ShadowViewController {
 				}
 			}
 			
-			let _ = sawpCurrentViewController(with: "ChoseApp", sender: self)
+			tmpWin = nil
+			
+			let _ = sawpCurrentViewController(with: "ChoseApp")
 		}else{
 			NSApplication.shared().terminate(sender)
 		}
@@ -538,7 +552,7 @@ class ChoseDriveViewController: ShadowViewController {
             return !(bytes <= (2 * gb)) // 2 gb
         }
         
-        return !(bytes <= (8 * gb)) // 8 gb
+        return !(bytes <= (6 * gb)) // 6 gb
     }
     
 }

@@ -31,7 +31,7 @@ extension InstallMediaCreationManager{
 				self.setProgressValue(0)
 			}
 			
-			for i in 1...9{
+			for i in 1...InstallMediaCreationManager.preCount{
 				var userText = ""
 				var isFailed = true
 				
@@ -49,7 +49,7 @@ extension InstallMediaCreationManager{
 				}
 				
 				DispatchQueue.main.sync {
-					self.addToProgressValue(self.unit)
+					self.addToProgressValue(InstallMediaCreationManager.unit)
 					if !userText.isEmpty{
 						self.setActivityLabelText(userText)
 					}
@@ -69,7 +69,7 @@ extension InstallMediaCreationManager{
 				case 6:
 					//if the process will install mac, special operations are performed before the beginning of the "startosinstall" process
 					if sharedInstallMac{
-						self.setProgressValue(1)
+						self.setProgressValue(0.01)
 						self.setActivityLabelText("Applying options")
 						if !self.manageSpecialOperations(false){
 							return
@@ -118,7 +118,7 @@ extension InstallMediaCreationManager{
 					log("\n\nInstaller creation process started\n")
 				}
 				
-				log(TextManager.helpfoulMessage)
+				log(TextManager!.helpfoulMessage!)
 					
 				log("""
 					
@@ -143,31 +143,27 @@ extension InstallMediaCreationManager{
 					}
 				}
 				
+				//here insted just uses a timer to see if the process has finished and stops this thread
+				//assign processes variables
+				CreateinstallmediaSmallManager.shared.process = r.process
+				CreateinstallmediaSmallManager.shared.errorPipe = r.errorPipe
+				CreateinstallmediaSmallManager.shared.outputPipe = r.outputPipe
+				
+				CreateinstallmediaSmallManager.shared.startTime = Date()
+				
+				
+				DispatchQueue.main.sync {
+					self.timer.invalidate()
+					self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.checkProcessFinished(_:)), userInfo: nil, repeats: true)
+				}
+				
 				//2 different aproces of handeling the process end detection
 				if simulateNoTimer{
 					//code used if the timer is not used
-					
-					DispatchQueue.main.sync {
-						self.timer.invalidate()
-						self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.increaseProgressBar(_:)), userInfo: nil, repeats: true)
-					}
-					
 					r.process.waitUntilExit()
 					
 					DispatchQueue.main.sync {
 						self.installFinished()
-					}
-					
-				}else{
-					//here insted just uses a timer to see if the process has finished and stops this thread
-					//assign processes variables
-					CreateinstallmediaSmallManager.shared.process = r.process
-					CreateinstallmediaSmallManager.shared.errorPipe = r.errorPipe
-					CreateinstallmediaSmallManager.shared.outputPipe = r.outputPipe
-					
-					DispatchQueue.main.sync {
-						self.timer.invalidate()
-						self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.checkProcessFinished(_:)), userInfo: nil, repeats: true)
 					}
 				}
 				
