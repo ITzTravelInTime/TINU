@@ -35,6 +35,10 @@ Features that are planned for future versions:
 
 - Or you can just build your own copy by just downloading the source code and then using Xcode (requires Xcode 10.1)
 
+
+# Catalina and Big Sur users:
+Since the latest stable release does not support Big Sur and Catalina please use the latest beta release: https://github.com/ITzTravelInTime/TINU/releases/tag/3.0_BETA_3_(70)
+
 # Frequently asked questions
 https://github.com/ITzTravelInTime/TINU/wiki/FAQs
 
