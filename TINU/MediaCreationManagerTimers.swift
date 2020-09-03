@@ -32,21 +32,28 @@ extension InstallMediaCreationManager{
 	
 	@inline(__always) private func timerProgressIncrement(_ secs: UInt64){
 		
-		let minutes = secs / 60
+		let minutes: UInt64 = secs / 60
 		
 		let diffs = (secs - self.lastSecs)
 		if diffs >= 5{
 			self.lastSecs = secs
 			
 			DispatchQueue.main.sync {
-				let val = self.getProgressBarValue()
 				
-				if val < Double(IMCM.cpc.pMidDuration + IMCM.cpc.pExtDuration){
+				var val = self.getProgressBarValue()
+				let max = Double(IMCM.cpc.pMidDuration + IMCM.cpc.pExtDuration)
+				
+				if val < max{
 					for _ in 1...(diffs / 5){
-						if minutes <= self.processMinutesToChange{
-							self.addToProgressValue(self.installerProgressValueFast)
-						}else if minutes > self.processMinutesToChange{
-							self.addToProgressValue(self.installerProgressValueSlow)
+					
+						val = self.getProgressBarValue()
+					
+						if val < max{
+							if minutes <= self.processMinutesToChange{
+								self.addToProgressValue(self.installerProgressValueFast)
+							}else if minutes > self.processMinutesToChange{
+								self.addToProgressValue(self.installerProgressValueSlow)
+							}
 						}
 					}
 				}
@@ -54,7 +61,7 @@ extension InstallMediaCreationManager{
 			
 		}
 		
-		let diffm = (minutes - self.lastMinute)
+		let diffm = UInt64(abs(Int32(minutes - self.lastMinute)))
 		if (diffm > 0){
 			self.lastMinute = minutes
 			for i in diffm...1{

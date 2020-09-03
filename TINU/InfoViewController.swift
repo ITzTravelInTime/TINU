@@ -91,6 +91,10 @@ class InfoViewController: GenericViewController{
 			
 			driveIcon.image = IconsManager.shared.removableDiskIcon
 		}
+		
+		DispatchQueue.global(qos: .background).async {
+			EFIFolderReplacementManager.reset()
+		}
     }
 	
 	override func viewDidAppear() {

@@ -12,6 +12,46 @@ import AppKit
 //here there are all the variables that are accessible in all the app to determinate the status of the app and what it is doing
 
 
+public func getLanguageFile(fileName: String, fextension: String) -> String{
+	let referenceStart = (Bundle.main.resourceURL!.path + "/" + fileName)
+	let referenceEnd = ("." + fextension)
+	
+	var language = NSLocale.current.languageCode!.lowercased()
+	let f = String(language.uppercased().first!)
+	language = f + language.dropFirst()
+	
+	print("Current language: \(language)")
+	
+	let filePath = referenceStart + language + referenceEnd
+	
+	if FileManager.default.fileExists(atPath: filePath){
+		print("Found file for current language")
+		return filePath
+	}
+	
+	return referenceStart + "En" + referenceEnd
+}
+
+public func parse(messange: String, keys: [String: String]) -> String{
+	var ret = ""
+	for piece in messange.split(separator: "$"){
+		var s = String(piece)
+		
+		for key in keys{
+			if s.starts(with: key.key){
+				s.deletePrefix(key.key)
+				s = key.value + s
+				break
+			}
+		}
+			
+		ret += s
+			
+	}
+	
+	return ret
+}
+
 public final class AppBanner{
 public static let banner = "\n" + """
 \(getRow(isUP: true))

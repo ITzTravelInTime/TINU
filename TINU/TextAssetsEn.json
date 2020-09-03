@@ -1,0 +1,107 @@
+{
+	"readme":{
+		"installation":{
+			"hackintosh": "Thank you for using TINU\n\nIf you want to use this macOS system on an hackintosh, please download and install either the Clover or the OpenCore bootloader, you can find Clover here:\n https://github.com/CloverHackyColor/CloverBootloader/releases\n\nor OpenCore here:\n https://github.com/acidanthera/OpenCorePkg/releases \n\n(note that the bootloaders mentioned needs to be installed and configured properly depending on the hw configuration of the system you want to install on, for help about that go to: www.insanelymac.com or r/Hackintosh)\n\nIf you want to use this macOS system on a standard mac, you don`t have to do any extra steps, it`s ready to be used.",
+			"mac": "Thank you for using TINU\n\nRemember that this macOS installation will work just with macs officially supported by the version of the OS you choose and not with unsupported machines"
+		},
+		"installer":{
+			"hackintosh": "Thank you for using TINU\n\nIf you want to use this bootable macOS installer on an hackintosh, please download and install either the Clover or the OpenCore bootloader, you can find Clover here:\n https://github.com/CloverHackyColor/CloverBootloader/releases\n\nor OpenCore here:\n https://github.com/acidanthera/OpenCorePkg/releases \n\n(note that the bootloaders mentioned needs to be installed and configured properly depending on the hw configuration of the system you want to install on, for help about that go to: www.insanelymac.com or r/Hackintosh)\n\nIf you want to use this bootable macOS installer on a standard mac, you don`t have to do any extra steps, it`s ready to be used.",
+			"mac": "Thank you for using TINU\n\nRemember that this installer will work just with macs officially supported by the version of macOS you choose and not with unsupported machines"
+		}
+	},
+	"helpfoulMessange":{
+		"installer": "\n\n******************************************\n\nNote that:\n\n-This process may take a lot of time (usually between 5 and 50 minutes) especially with slow storage devices (like Hard drives, SD/micro SD cards and virtual disks) and slow machines (like most virtual machines), so be patient and wait for it to finish\n\n-If you feel nothing is happening or the program is stuck remeber that TINU is just waiting for the program, createinstallmedia, to take care of the foundamental steps of this process, without knowing when it will finish his opearation. So TINU it's not stuck, it's just waiting.\n\n-The progress shown in the progress bar is just to give to the user the impression of busyness and that something is happening, so that's only cosmethic, but it's not actual progress since there is not a consistent way of obtaining accurate progress values during this step. TINU is just making the bar going forward by using a timer which increments it each few seconds for 50 minutes.\n\n-For more help or questions go to |Menu bar| -> |TINU| -> |Related to TINU| -> |Contact us| there you will find all the links and the contacts related to this project (NOTE: this doesn't work when TINU is running in a macOS recovery environment).\n\n******************************************\n\n",
+		"installation": "\n\n******************************************\n\nNote that:\n\n-This process may take a lot of time (usually between 5 and 50 minutes) especially with slow storage devices (like Hard drives, SD/micro SD cards and virtual disks) and slow machines (like most virtual machines), so be patient and wait for it to finish\n\n-If you feel nothing is happening or the program is stuck remeber that TINU is just waiting for the program, startosinstall, to take care of the foundamental steps of this process, without knowing when it will finish his opearation. So TINU it's not stuck, it's just waiting.\n\n-The progress shown in the progress bar is just to give to the user the impression of busyness and that something is happening, so that's only cosmethic, but it's not actual progress since there is not a consistent way of obtaining accurate progress values during this step. TINU is just making the bar going forward by using a timer which increments it each few seconds for 50 minutes.\n\n-For more help or questions go to |Menu bar| -> |TINU| -> |Related to TINU| -> |Contact us| there you will find all the links and the contacts related to this project (NOTE: this doesn't work when TINU is running in a macOS recovery environment).\n\n******************************************\n\n"
+	},
+	"optionsDescs":{
+		"installer":[
+			1,
+			{
+				"title" : "Create a copy of TINU on the installer",
+				"desc" : "Creates a copy of this application inside the choosen drive.\nOnce you boot into the USB installer you can open TINU by performing this command into the terminal:\n\n/Volumes/Image\\ Volume/TINU.app/Contents/MacOS/TINU\n\nUsing TINU in this way it allows you to create bootable macOS installers from a macOS installer/recovery or allows you to install macOS from TINU.\n\nWorks only with Mac OS X El Capitan or newer versions of the macOS installer/macOS recovery."
+			},
+			2,
+			{
+				"title" : "Create the \"README\" file on the installer",
+				"desc" : "Creates a README file on the target drive. The content of this file is just a thank you messange and a reminder for some users."
+			},
+			3,
+			{
+				"title" : "Apply the macOS installer's icon to the installer",
+				"desc" : "Applys the macOS icon from the macOS installer app to the target drive."
+			},
+			4,
+			{
+				"title" : "Format the choosen drive entirely",
+				"desc" : "Erases all the contentent of the choosen storage device, and then formats it using a macOS Extended Journaled (HFS+) main partition with the GUID partition table for the drive.\nThis operation is mandatory (and it will be performed automatically) if the choosen drive does not use GUID, because GUID is needed to allow the macOS installer to boot."
+			},
+			6,
+			{
+				"title" : "Create the .AIBootFiles folder, if it's not present",
+				"desc" : "For hackintosh usage, older version of Clover may not recognize the bootable macOS installer without the .IABootFiles folder, so this option copies the system files from the bootable installer and then puts them in the newly created .IABootfiles folder."
+			},
+			7,
+			{
+				"title" : "Delete the .IAPhisicalMedia file from the installer",
+				"desc" : "For hackintosh usage, some older version of Clover may not detect bootable macOS installers which contain the .IAPhysicalMedia file, so to let that versions of Clover to detect those isntallers, this option deletes the .IAPhysicalMedia file."
+			},
+			8,
+			{
+				"title" : "Don't unmount the EFI partition",
+				"desc" : "While creating the bootable macOS installer, TINU may mount it's EFI partition, this option prevents TINU from unmounting it after it finishes creating the bootable installer."
+			}
+		],
+		"installation":[
+			1,
+			{
+				"title" : "Install TINU on the system",
+				"desc" : "Installs a copy of TINU in the /Applications folder of the newly installed macOS system.\n\nRequires Mac OS X El Capitan or newer versions of macOS"
+			},
+			2,
+			{
+				"title" : "Create the \"README\" file on the system",
+				"desc" : "Creates a README file on the target drive. The content of this file is just a thank you messange and a reminder for some users."
+			},
+			3,
+			{
+				"title" : "Apply the macOS icon to the system volume",
+				"desc" : "Applys the macOS icon from the macOS version to the installation volume."
+			},
+			4,
+			{
+				"title" : "Format the choosen drive entirely",
+				"desc" : "Erases all the contentent of the target drive, and then formats it using a macOS Extended Journaled (HFS+) main partition with the GUID partition table for the drive (note that the macOS installer will convert it in APFS if the option to avoid the APFS conversion operation, is not enabled or if you are installaing macOS Mojave or newer).\nThis operation is mandatory (and it will be performed automatically) if the choosen drive does not use GUID, because GUID is needed to install macOS and to make it work properly."
+			},
+			5,
+			{
+				"title" : "Install macOS avoiding automatic APFS upgrade",
+				"desc" : "Forces the macOS installer to not convert the target volume to the APFS file system (Available only with macOS High Sierra)."
+			}
+		]
+	},
+	"viewStrings" : {
+		"DriveDetectionInfo" :
+		{
+			"mutable" : {
+				"content" :
+				{
+					"installer" : "• Make sure that your disk device is working, e.g. by copying files to it.\n\n• Verify that any adapters, cables or devices you use to attach your disk device to the computer are correctly plugged in, working, and if needed, correctly installed, and that your version of macOS does work with these particular devices, adapters or peripherals you are using.\n\n• Make sure the disk device you have chosen is a physical device and not a virtual device. Virtual devices may not work properly with this app.\n\n• Try to format it in Disk Utility using the \"macOS Extended (journaled)\" format before using it with this app.\n\n• TINU will detect only disk devices that are usable to create a bootable macOS installer.\n\n• Make sure that the chosen disk does not contain the partition from which you have booted the system and that it's not the internal SSD or hard disk of your Mac.\n\n• Make sure that the disk device (drive) or the partition you want to use is at least 8 GB. If your drive is big enough but the partition you want to use is not, you have to use Disk Utility to create a partition of at least 8 GB on that drive, or you have resize the partition you want to use.",
+					"installation" : "• Make sure that your disk device is working, e.g. by copying files to it.\n\n• Verify that any adapters, cables or devices you use to attach your disk device to the computer are correctly plugged in, working, and if needed, correctly installed, and that your version of macOS does work with these particular devices, adapters or peripherals you are using.\n\n• Make sure the disk device you have chosen is a physical device and not a virtual device. Virtual devices may not work properly with this app.\n\n• Try to format it in Disk Utility using the \"macOS Extended (journaled)\" format before using it with this app.\n\n• TINU will only detect drives that can be used to install macOS.\n\n• Make sure the disk device (drive) or the partition you want to use is at least 20 GB. If your drive is big enough but the partition you want to use is not, you have to use Disk Utility to create a partition of at least 20 GB on that drive, or you have resize the partition you want to use."
+				}
+			},
+			"unmutable" : {}
+		},
+		"EFIFolderReplacement" :
+		{
+			"mutable" : {},
+			"unmutable" : {
+				"desc" : "This option automatically installs the selected ${bootloader} EFI folder inside the EFI partition of the drive \"${drive}\".\nOnly UEFI 64Bits ${bootloader} EFI folders are supported.",
+				"title" : "${bootloader} EFI folder installer",
+				"errorDialogTitle" : "Impossible to open the EFI folder",
+				"errorDialog" : "There was an unkown error while trying to open the selcted EFI folder",
+				"improperDialogTitle": "The folder \"${pathName}\" is not a proper ${bootloader} efi folder",
+				"improperDialog" : "The folder you selected \"${path}\" does not contain the required element \"${missing}\", make sure to open just the folder named EFI and that it cointains all the needed elements"
+			}
+		}
+	}
+}

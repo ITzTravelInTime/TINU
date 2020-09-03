@@ -20,7 +20,7 @@ public final class OptionalOperations{
 		
 		let efiRepMan = EFIFolderReplacementManager.shared
 		
-		if let f = efiRepMan.checkSavedEFIFolder(){
+		if let f = efiRepMan!.checkSavedEFIFolder(){
 			
 			let badReturn: (result: Bool, message: String?) = (false, "TINU failed to mount the EFI partition or to copy the EFI folder inside of it")
 			
@@ -59,7 +59,7 @@ public final class OptionalOperations{
 				
 				log("    Trying to copy the saved EFI folder in \(mount)")
 				
-				if !efiRepMan.saveEFIFolder(mount + "/EFI"){
+				if !efiRepMan!.saveEFIFolder(mount + "/EFI"){
 					log("Error while copying the clover EFI folder, operation canceled")
 					return badReturn
 				}

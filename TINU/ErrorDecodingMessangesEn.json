@@ -1,0 +1,179 @@
+{
+	"itemsList" : [
+		{
+			"isBack" : false,
+			"operation" : 0,
+			"message" : "TINU creation failed to format \"${drive}\"",
+			"stringsToCheck" : [
+				"A error occurred erasing the disk."
+			],
+			"chackValues" : [
+				5,
+				0,
+				2,
+				3
+			],
+			"printMessage" : "Bootable macOS installer creation failed, createinstallmedia returned an error while formatting the installer partition, please, erase manually this dirve with disk utility and retry",
+			"notError" : false
+		},
+		{
+			"isBack" : false,
+			"operation" : 0,
+			"message" : "Bootable macOS installer creation failed because the selected macOS installer app is damaged or invalid",
+			"stringsToCheck" : [
+				"does not appear to be a valid OS installer application"
+			],
+			"chackValues" : [
+				5,
+				0,
+				2,
+				1,
+				3
+			],
+			"printMessage" : "macOS install media creation failed, createinstallmedia returned an error about the app you are using, please, check your mac installaltion app and if needed download it again. Many thimes this appens ,because the installer downloaded from the mac app store, does not contains all the needed files or contanins wrong or corrupted files, in many cases the mac app store on a virtual machine does not downloads the full macOS installer application",
+			"notError" : false
+		},
+		{
+			"isBack" : false,
+			"operation" : 0,
+			"message" : "Bootable macOS installer creation failed because the drive \"${drive}\" is no longer available",
+			"stringsToCheck" : [
+				"is not a valid volume mount point"
+			],
+			"chackValues" : [
+				5,
+				0,
+				2,
+				1,
+				3
+			],
+			"printMessage" : "Bootable macOS installer creation failed because the selected volume is no longer available",
+			"notError" : false
+		},
+		{
+			"isBack" : false,
+			"operation" : 0,
+			"message" : "Bootable macOS installer creation failed because the SIP (System Integrity Protection) is enabled, please disable it and retry",
+			"stringsToCheck" : [
+				"IA app name cookie write failed"
+			],
+			"chackValues" : [
+				5,
+				0,
+				2,
+				1,
+				3
+			],
+			"printMessage" : "Bootable macOS installer creation failed because of an error while copying needed files, make sure that \"${drive}\" is working correctly and that the SIP is disasbled, the SIP enabled can be the real issue in mac versions from Catalina and newer",
+			"notError" : false
+		},
+		{
+			"isBack" : false,
+			"operation" : 0,
+			"message" : "Bootable macOS installer creation failed because of an error while copying needed files, make sure that \"${drive}\" is working correctly",
+			"stringsToCheck" : [
+				"The copy of the installer app failed"
+			],
+			"chackValues" : [
+				5,
+				0,
+				2,
+				1,
+				3
+			],
+			"printMessage" : "Bootable macOS installer creation failed because the process failed to copy some elements on it, mainly the installer app or it's content, can't be copied or failed to be copied, please check that your target driver is working properly and just in case erase it with disk utility, if that does not work, use another working target device",
+			"notError" : false
+		},
+		{
+			"isBack" : false,
+			"operation" : 0,
+			"message" : "Bootable macOS installer creation failed: The creation process was suddenly closed, make sure that the computer doesn't go in standby mode during the creation process.",
+			"stringsToCheck" : [
+				"The bless of the installer disk failed"
+			],
+			"chackValues" : [
+				0,
+				2,
+				1,
+				3
+			],
+			"printMessage" : "Bootable macOS installer creation failed because \"${executable}\" was suddenly closed or crashed, probably due to some killing or by the computer going into a sleep state.",
+			"notError" : false
+		},
+		{
+			"isBack" : false,
+			"operation" : 0,
+			"message" : "Bootable macOS installer creation failed: The installer app seems not to be compatible with your mac os version or it wasn't properly downloaded, it's reccomended to re-download it from the App Store or to use a different macOS version",
+			"stringsToCheck" : [
+				"To use this tool, you must download the macOS installer application on a Mac with"
+			],
+			"chackValues" : [
+				5,
+				0,
+				2,
+				1,
+				3
+			],
+			"printMessage" : "Installer app not supprted by this mac os version",
+			"notError" : false
+		},
+		{
+			"isBack" : false,
+			"operation" : 0,
+			"message" : "Bootable macOS installer creation failed because the volume you choose for the installer is not large enought, please choose a larger one, see the log for more info",
+			"stringsToCheck" : [
+				"is not large enough for install media."
+			],
+			"chackValues" : [
+				2,
+				0,
+				1,
+				3
+			],
+			"printMessage" : "The selected drive\/partition is not large enought for this macOS installer app, if you want to make an installer of Catalina or later we reccommend you to use a drive\/partition of at least 10 gb",
+			"notError" : false
+		},
+		{
+			"isBack" : true,
+			"operation" : 0,
+			"message" : "",
+			"stringsToCheck" : [
+				"NO"
+			],
+			"chackValues" : [
+				0
+			],
+			"printMessage" : "script auth cancelled by user",
+			"notError" : false
+		},
+		{
+			"isBack" : true,
+			"operation" : 0,
+			"message" : "",
+			"stringsToCheck" : [
+				"execution error:",
+				"(-128)"
+			],
+			"chackValues" : [
+				2
+			],
+			"printMessage" : "Apple script operation cancelled, going to previous screen",
+			"notError" : false
+		},
+		{
+			"isBack" : false,
+			"operation" : 2,
+			"message" : "Bootable macOS installer creation failed because of an unknown error, check the log for details",
+			"stringsToCheck" : [
+				"0",
+				"102030100"
+			],
+			"chackValues" : [
+				6,
+				7
+			],
+			"printMessage" : "Bootable macOS installer creation on \"${drive}\" exited with a not normal exit code, see previous lines in the log to get more info about the error",
+			"notError" : false
+		}
+	]
+}

@@ -10,12 +10,14 @@ import Cocoa
 
 public class SettingsSectionItem: NSView{
 	
+	static var surface: NSView!
+	
 	var image = NSImageView()
 	var name = NSTextField()
 	
 	var isSelected = false
 	
-	var id = CustomizationViewController.SectionsID(rawValue: 0)!
+	var id = OptionsViewController.SectionsID(rawValue: 0)!
 	
 	var itemsScrollView: NSScrollView?
 	
@@ -69,8 +71,6 @@ public class SettingsSectionItem: NSView{
 		
 		self.addSubview(name)
 		
-		
-		
 	}
 	
 	override public func updateLayer() {
@@ -118,22 +118,22 @@ public class SettingsSectionItem: NSView{
 			scrollView.documentView = NSView()
 			
 			scrollView.verticalScroller?.isHidden = false
+			SettingsSectionItem.surface = NSView()
 			
 			switch id{
-			case CustomizationViewController.SectionsID.generalOptions, CustomizationViewController.SectionsID.advancedOptions:
-				let isAdvanced = (id == CustomizationViewController.SectionsID.advancedOptions)
-				let surface = NSView()
+			case OptionsViewController.SectionsID.generalOptions, OptionsViewController.SectionsID.advancedOptions:
+				let isAdvanced = (id == OptionsViewController.SectionsID.advancedOptions)
 				let itemHeigth: CGFloat = 30
 				var isGray = true
 				
-				surface.frame.origin = CGPoint.zero
-				surface.frame.size = NSSize.init(width: scrollView.frame.size.width - 20, height: itemHeigth * (CGFloat(oom.shared.otherOptions.count)))
+				SettingsSectionItem.surface.frame.origin = CGPoint.zero
+				SettingsSectionItem.surface.frame.size = NSSize.init(width: scrollView.frame.size.width - 20, height: itemHeigth * (CGFloat(oom.shared.otherOptions.count)))
 				
 				var count: CGFloat = 0
 				
 				for i in oom.shared.otherOptions.sorted(by: { $0.0.rawValue > $1.0.rawValue }){
 					if i.value.isVisible && (i.value.isAdvanced == isAdvanced){
-						let item = OtherOptionsCheckBox(frame: NSRect(x: 0, y: count, width: surface.frame.size.width, height: itemHeigth))
+						let item = OtherOptionsCheckBox(frame: NSRect(x: 0, y: count, width: SettingsSectionItem.surface.frame.size.width, height: itemHeigth))
 						
 						item.option = i.value
 						
@@ -141,27 +141,27 @@ public class SettingsSectionItem: NSView{
 						
 						count += itemHeigth
 						
-						surface.addSubview(item)
+						SettingsSectionItem.surface.addSubview(item)
 						
 						//surface.frame.size = CGSize(width: surface.frame.size.width, height: surface.frame.size.height + itemHeigth)
 					}else{
-						surface.frame.size.height -= itemHeigth
+						SettingsSectionItem.surface.frame.size.height -= itemHeigth
 					}
 					
 				}
 				
-				if surface.frame.height < scrollView.frame.height{
+				if SettingsSectionItem.surface.frame.height < scrollView.frame.height{
 					let h = scrollView.frame.height - 2
 					let w = scrollView.frame.width - 2
-					let delta = (h - surface.frame.height)
+					let delta = (h - SettingsSectionItem.surface.frame.height)
 					
-					surface.frame.size.height = h
-					surface.frame.size.width = w
+					SettingsSectionItem.surface.frame.size.height = h
+					SettingsSectionItem.surface.frame.size.width = w
 					scrollView.hasVerticalScroller = false
 					//scrollView.verticalScrollElasticity = .none
 					scrollView.verticalScrollElasticity = .automatic
 					
-					for item in surface.subviews{
+					for item in SettingsSectionItem.surface.subviews{
 						item.frame.size.width = w
 						item.frame.origin.y += delta
 					}
@@ -170,124 +170,28 @@ public class SettingsSectionItem: NSView{
 					scrollView.verticalScrollElasticity = .automatic
 				}
 				
-				scrollView.documentView = surface
+				scrollView.documentView = SettingsSectionItem.surface
 				
-				
-			/*case CustomizationViewController.SectionsID.bootFilesReplacement:
-				
-				#if !macOnlyMode
-				
-				let fieldHeigth: CGFloat = 16 * 5
-				
-				let surface = NSView()
-				let itemHeigth: CGFloat = 36//scrollView.frame.size.height / CGFloat(filesToReplace.count) - 1
-				
-				surface.frame.size = NSSize.init(width: scrollView.frame.size.width - 20, height: itemHeigth * (CGFloat(BootFilesReplacementManager.shared.filesToReplace.count)) + fieldHeigth) //CGSize(width: scrollView.frame.size.width, height: 0)
-				
-				
-				let textField = NSTextField()
-				
-				textField.isEditable = false
-				textField.isSelectable = false
-				textField.drawsBackground = false
-				textField.isBordered = false
-				textField.isBezeled = false
-				textField.alignment = .left
-				
-				
-				
-				textField.stringValue = "This section allows you to choose customized boot files for the bootable macOS installer.\n\nHere is a list of the files you can customize: "
-				
-				surface.addSubview(textField)
-				
-				var count: CGFloat = 0//itemHeigth
-				
-				var isGray = true
-				
-				for i in BootFilesReplacementManager.shared.filesToReplace.reversed(){
-					if i.visible{
-						let item = BootFilesReplacementItem(frame: NSRect(x: 0, y: /*surface.frame.size.height surface.frame.height -*/ count, width: surface.frame.size.width, height: itemHeigth))
-						
-						item.isGray = isGray
-						
-						item.textField.stringValue = i.filename
-						
-						item.textField.textColor = NSColor.textColor
-						
-						item.replaceFile = i
-						
-						isGray = !isGray
-						
-						count += itemHeigth
-						
-						surface.addSubview(item)
-						
-						//surface.frame.size = CGSize(width: surface.frame.size.width, height: surface.frame.size.height + itemHeigth)
-					}else{
-						surface.frame.size.height -= itemHeigth
-					}
-					
-				}
-				
-				
-				
-				if surface.frame.height < scrollView.frame.height{
-					let h = scrollView.frame.height - 2
-					let w = scrollView.frame.width - 2
-					let delta = (h - surface.frame.height)
-					
-					surface.frame.size.height = h
-					surface.frame.size.width = w
-					
-					scrollView.hasVerticalScroller = false
-					//scrollView.verticalScrollElasticity = .none
-					scrollView.verticalScrollElasticity = .automatic
-					
-					for item in surface.subviews{
-						item.frame.size.width = w
-						item.frame.origin.y += delta
-					}
-					
-				}else{
-					scrollView.hasVerticalScroller = true
-					scrollView.verticalScrollElasticity = .automatic
-					
-				}
-				
-				textField.frame.origin = NSPoint(x: 5, y: surface.frame.size.height - fieldHeigth)
-				textField.frame.size = NSSize(width: surface.frame.width - textField.frame.origin.x, height: fieldHeigth)
-				textField.font = NSFont.systemFont(ofSize: 13)
-				
-				scrollView.documentView = surface
-				
-				
-				
-				#else
-					break
-				#endif
-				*/
-			case CustomizationViewController.SectionsID.eFIFolderReplacementClover, CustomizationViewController.SectionsID.eFIFolderReplacementOpenCore:
+			case OptionsViewController.SectionsID.eFIFolderReplacementClover, OptionsViewController.SectionsID.eFIFolderReplacementOpenCore:
 				//efi replacement menu
 				#if useEFIReplacement && !macOnlyMode
 					
-					let surface = EFIReplacementView.init(frame: NSRect(origin: CGPoint.zero, size: NSSize(width: scrollView.frame.size.width - 17, height: scrollView.frame.size.height - 2)))
+					SettingsSectionItem.surface = EFIReplacementView.init(frame: NSRect(origin: CGPoint.zero, size: NSSize(width: scrollView.frame.size.width - 17, height: scrollView.frame.size.height - 2))) as NSView
 				
-					scrollView.documentView = surface
+					scrollView.documentView = SettingsSectionItem.surface
 				
 					switch id{
-						case CustomizationViewController.SectionsID.eFIFolderReplacementClover:
-							surface.bootloader = .clover
+						case OptionsViewController.SectionsID.eFIFolderReplacementClover:
+							(SettingsSectionItem.surface as? EFIReplacementView)!.bootloader = .clover
 							break
-						case CustomizationViewController.SectionsID.eFIFolderReplacementOpenCore:
-							surface.bootloader = .openCore
+						case OptionsViewController.SectionsID.eFIFolderReplacementOpenCore:
+							(SettingsSectionItem.surface as? EFIReplacementView)!.bootloader = .openCore
 							break
 						default:
 							break
 					}
 					
 					scrollView.verticalScrollElasticity = .none
-				
-					surface.draw(surface.frame)
 					
 				#else
 				
@@ -297,6 +201,8 @@ public class SettingsSectionItem: NSView{
 			default:
 				break
 			}
+			
+			SettingsSectionItem.surface.draw(SettingsSectionItem.surface.frame)
 			
 			if let documentView = scrollView.documentView{
 				documentView.scroll(NSPoint.init(x: 0, y: documentView.bounds.size.height))

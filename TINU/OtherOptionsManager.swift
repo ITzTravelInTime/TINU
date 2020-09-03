@@ -9,28 +9,31 @@
 import Foundation
 
 public final class OtherOptionsManager{
-	public enum OtherOptionID: UInt8, CaseIterable {
+	
+	/** Values used to identify options, they are hardcoded to fixed values to prevent problems with reading values from json files*/
+	public enum OtherOptionID: UInt8, Codable, Equatable, CaseIterable {
 		case unknown = 0
 		
-		case otherOptionTinuCopyID
-		case otherOptionCreateReadmeID
-		case otherOptionCreateIconID
-		case otherOptionForceToFormatID
-		case otherOptionDoNotUseApfsID
+		case otherOptionTinuCopyID = 1
+		case otherOptionCreateReadmeID = 2
+		case otherOptionCreateIconID = 3
+		case otherOptionForceToFormatID = 4
+		case otherOptionDoNotUseApfsID = 5
 		
-		#if !macOnlyMode
-		case otherOptionCreateAIBootFID
-		case otherOptionDeleteIAPMID
-		case otherOptionAddBFRScriptID
-		#endif
+		//Not usable in mac-only mode
+		case otherOptionCreateAIBootFID = 6
+		case otherOptionDeleteIAPMID = 7
 		
-		#if useEFIReplacement && !macOnlyMode
-		case otherOptionKeepEFIpartID
-		#endif
+		//usable only if efi partition mounting is enabled and if there no mac-only mode active
+		case otherOptionKeepEFIpartID = 8
 	}
 	
-	typealias OtherOptionString = (title: String, desc: String)
-	typealias OtherOptionsStringList = [OtherOptionID: OtherOptionString]
+	public struct OtherOptionString: Codable, Equatable{
+		let title: String
+		let desc: String
+	}
+	
+	public typealias OtherOptionsStringList = [OtherOptionID: OtherOptionString]
 	
 	public typealias OtherOptionsList = [OtherOptionID: OtherOptionsObject]
 	
@@ -55,16 +58,18 @@ public final class OtherOptionsManager{
 		}
 	}
 	
+	/*
 	@inline(__always) private func getCorrectedDescription(title: String, normal: String, altered: String) -> OtherOptionString{
-		return (title: title, desc: sharedInstallMac ? altered : normal)
+		return OtherOptionsManager.OtherOptionString(title: title, desc: sharedInstallMac ? altered : normal)
 	}
+	*/
 	
 	private var otherOptionsDefault: OtherOptionsList {
 		get{
 			
 			var r: OtherOptionRaps
 			
-			r.objects = getStrings()
+			r.objects = TextManager!.optionsDescpriptions! //= getStrings()
 			r.tmpDict = [:]
 			
 			addOtheroOption(&r, id: OtherOptionID.otherOptionTinuCopyID, activated: true, visible: true, isAdvanced: false)
@@ -93,6 +98,7 @@ public final class OtherOptionsManager{
 		}
 	}
 	
+	/*
 	fileprivate func getStrings() -> OtherOptionsStringList{
 		
 		var list = OtherOptionsStringList()
@@ -119,23 +125,23 @@ public final class OtherOptionsManager{
 		
 		//descriptions for objects with only ust one
 		
-		list[OtherOptionID.otherOptionCreateIconID] = (title: "Apply the macOS installer's icon to the usb drive", desc: "Applys the macOS icon from the macOS installer app to the target drive.")
-		list[OtherOptionID.otherOptionCreateReadmeID] = (title: "Create the \"README\" file on the usb installer", desc: "Creates a README file on the target drive. The content of this file is just a thank you messange and a reminder for some users.")
+		list[OtherOptionID.otherOptionCreateIconID] = OtherOptionsManager.OtherOptionString(title: "Apply the macOS installer's icon to the usb drive", desc: "Applys the macOS icon from the macOS installer app to the target drive.")
+		list[OtherOptionID.otherOptionCreateReadmeID] = OtherOptionsManager.OtherOptionString(title: "Create the \"README\" file on the usb installer", desc: "Creates a README file on the target drive. The content of this file is just a thank you messange and a reminder for some users.")
 		
 		if sharedInstallMac{
 			
-			list[OtherOptionID.otherOptionDoNotUseApfsID] = (title: "Install macOS avoiding automatic APFS upgrade", desc: "Forces the macOS installer to not convert the target volume to the APFS file system (Available only with macOS High Sierra).")
+			list[OtherOptionID.otherOptionDoNotUseApfsID] = OtherOptionsManager.OtherOptionString(title: "Install macOS avoiding automatic APFS upgrade", desc: "Forces the macOS installer to not convert the target volume to the APFS file system (Available only with macOS High Sierra).")
 			
 		}else{
 			#if !macOnlyMode
-			list[OtherOptionID.otherOptionCreateAIBootFID] = (title: "Create the .AIBootFiles folder, if it's not present", desc: "For hackintosh usage, older version of Clover may not recognize the bootable macOS installer without the .IABootFiles folder, so this option copies the system files from the bootable installer and then puts them in the newly created .IABootfiles folder.")
+			list[OtherOptionID.otherOptionCreateAIBootFID] = OtherOptionsManager.OtherOptionString(title: "Create the .AIBootFiles folder, if it's not present", desc: "For hackintosh usage, older version of Clover may not recognize the bootable macOS installer without the .IABootFiles folder, so this option copies the system files from the bootable installer and then puts them in the newly created .IABootfiles folder.")
 			
-			list[OtherOptionID.otherOptionDeleteIAPMID] = (title: "Delete the .IAPhisicalMedia file from the installer", desc: "For hackintosh usage, some older version of Clover may not detect bootable macOS installers which contain the .IAPhysicalMedia file, so to let that versions of Clover to detect those isntallers, this option deletes the .IAPhysicalMedia file.")
+			list[OtherOptionID.otherOptionDeleteIAPMID] = OtherOptionsManager.OtherOptionString(title: "Delete the .IAPhisicalMedia file from the installer", desc: "For hackintosh usage, some older version of Clover may not detect bootable macOS installers which contain the .IAPhysicalMedia file, so to let that versions of Clover to detect those isntallers, this option deletes the .IAPhysicalMedia file.")
 			#endif
 		}
 		
 		return list
-	}
+	}*/
 	
 }
 

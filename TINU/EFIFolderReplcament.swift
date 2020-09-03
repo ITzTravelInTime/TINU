@@ -9,7 +9,9 @@
 import Cocoa
 
 #if useEFIReplacement && !macOnlyMode
-public class EFIReplacementView: NSView{
+public class EFIReplacementView: NSView, ViewID{
+	public let id: String = "EFIFolderReplacement"
+	
 	//titles
 	let titleLabel = NSTextField()
 	let expLabel = NSTextField()
@@ -70,8 +72,18 @@ public class EFIReplacementView: NSView{
 		expLabel.font = NSFont.systemFont(ofSize: 13)
 		
 		if let drive = dm.getCurrentDriveName(){
+			let replaceList = ["{drive}": drive, "{bootloader}": bootloader.rawValue]
+			
+			/*
 			titleLabel.stringValue = "\(bootloader.rawValue) EFI folder installer"
 			expLabel.stringValue = "This option automatically installs the selected \(bootloader.rawValue) EFI folder inside the EFI partition of the drive \"\(drive)\".\nOnly UEFI 64Bits \(bootloader.rawValue) EFI folders are supported."
+			*/
+			
+			let desc = TextManager!.getViewString(context: self, stringID: "desc")!
+			expLabel.stringValue = parse(messange: desc, keys: replaceList)
+			
+			let title = TextManager!.getViewString(context: self, stringID: "title")!
+			titleLabel.stringValue = parse(messange: title, keys: replaceList)
 		}
 		
 		self.addSubview(expLabel)
@@ -160,8 +172,8 @@ public class EFIReplacementView: NSView{
 							if !opener{
 								DispatchQueue.main.async {
 									
-									//is this really usefoul or needed? can this be batter?
-									msgBoxWarning("Impossible to open the EFI folder", "There was an unkown error while trying to open the selcted EFI folder")
+									//is this really usefoul or needed? can this be better?
+									msgBoxWarning(TextManager!.getViewString(context: self, stringID: "errorDialogTitle")!, TextManager!.getViewString(context: self, stringID: "errorDialog")!)
 								}
 							}else{
 								DispatchQueue.main.sync {
@@ -171,7 +183,14 @@ public class EFIReplacementView: NSView{
 						}else{
 							DispatchQueue.main.sync {
 								
-								msgBoxWarning("The folder \"\(open.urls.first!.path)\" is not a proper \(self.bootloader.rawValue) efi folder", "The folder you selected \"\(open.urls.first!.path)\" does not contain the required element \"\(EFIFolderReplacementManager.shared.missingFileFromOpenedFolder!)\", make sure to open just the folder named EFI and that it cointains all the needed elements")
+								let replaceList = ["{path}": open.urls.first!.path, "{pathName}": open.urls.first!.lastPathComponent, "{bootloader}": self.bootloader.rawValue, "{missing}" : EFIFolderReplacementManager.shared.missingFileFromOpenedFolder!]
+								
+								let title = parse(messange: TextManager!.getViewString(context: self, stringID: "improperDialogTitle")!, keys: replaceList)
+								let messange = parse(messange: TextManager!.getViewString(context: self, stringID: "improperDialog")!, keys: replaceList)
+								
+								//msgBoxWarning("The folder \"\(open.urls.first!.path)\" is not a proper \(self.bootloader.rawValue) efi folder", "The folder you selected \"\(open.urls.first!.path)\" does not contain the required element \"\(EFIFolderReplacementManager.shared.missingFileFromOpenedFolder!)\", make sure to open just the folder named EFI and that it cointains all the needed elements")
+								
+								msgBoxWarning(title, messange)
 								
 								EFIFolderReplacementManager.shared.resetMissingFileFromOpenedFolder()
 								

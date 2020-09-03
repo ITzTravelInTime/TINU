@@ -53,7 +53,7 @@ public final class CustomizationWindowManager{
 #endif
 
 public final class RecoveryModeManager{
-	 public static let shared = RecoveryModeManager()
+	public static let shared = RecoveryModeManager()
 	
 	//this is used to not repeat a lot of time the user and file check
 	private var tempReallyRecovery: Bool! = nil

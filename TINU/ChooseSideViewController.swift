@@ -167,6 +167,8 @@ class ChooseSideViewController: GenericViewController {
 		}
 		
 		background.frame.origin = NSPoint(x: self.view.frame.width / 2 - background.frame.size.width / 2, y: self.view.frame.height / 2 - background.frame.size.height / 2)
+		
+		print(TextManager!.getEncoded()!)
 	}
 	
 	override func viewWillAppear() {

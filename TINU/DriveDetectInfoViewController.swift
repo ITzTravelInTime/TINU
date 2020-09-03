@@ -8,7 +8,8 @@
 
 import Cocoa
 
-public class DriveDetectInfoViewController: GenericViewController {
+public class DriveDetectInfoViewController: GenericViewController, ViewID {
+	public let id: String = "DriveDetectionInfo"
 
 	@IBOutlet var textView: NSTextView!
 	
@@ -21,9 +22,12 @@ public class DriveDetectInfoViewController: GenericViewController {
 		
 		textView.font = NSFont.systemFont(ofSize: 15)
 		
+		/*
 		for i in getTextContent(){
 			textView.text += i + "\n\n"
-		}
+		}*/
+		
+		textView.text = TextManager.getViewString(context: self, stringID: "content")
     }
 	
 	override public func viewDidAppear() {
@@ -65,6 +69,7 @@ public class DriveDetectInfoViewController: GenericViewController {
 }
 
 //it's outside the main function class just for ordering purposes
+/*
 extension DriveDetectInfoViewController{
 	func getTextContent() -> [String]{
 		var text = [String]()
@@ -91,3 +96,4 @@ extension DriveDetectInfoViewController{
 		return text
 	}
 }
+*/

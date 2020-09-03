@@ -35,7 +35,7 @@
 		C63DD0282265D921007944A5 /* TaskKillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63DD0272265D921007944A5 /* TaskKillManager.swift */; };
 		C63F035E24E1091400F950B4 /* ProgressBarSettings.json in Resources */ = {isa = PBXBuildFile; fileRef = C63F035D24E1091400F950B4 /* ProgressBarSettings.json */; };
 		C63F036024E3D19300F950B4 /* ProgressBarValuesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63F035F24E3D19300F950B4 /* ProgressBarValuesManager.swift */; };
-		C63F036224E40F5500F950B4 /* TextManagerAssets.json in Resources */ = {isa = PBXBuildFile; fileRef = C63F036124E40F5500F950B4 /* TextManagerAssets.json */; };
+		C63F036224E40F5500F950B4 /* TextAssetsEn.json in Resources */ = {isa = PBXBuildFile; fileRef = C63F036124E40F5500F950B4 /* TextAssetsEn.json */; };
 		C6409AC7226D35D200E63762 /* CopyrightLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6409AC6226D35D200E63762 /* CopyrightLabel.swift */; };
 		C647B350211CE2C00024B9A1 /* ToolsBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B34F211CE2C00024B9A1 /* ToolsBridge.swift */; };
 		C647B39B211CF2C40024B9A1 /* EFIPartitionMounterTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B395211CF2C40024B9A1 /* EFIPartitionMounterTypes.swift */; };
@@ -62,6 +62,7 @@
 		C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */; };
 		C691D6AB20655C700083D057 /* DriveDetectInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691D6AA20655C700083D057 /* DriveDetectInfoViewController.swift */; };
 		C698B47E204CDAE5007B3CD8 /* MacrosReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */; };
+		C6A3A36A24FBAC3500CC8E37 /* ErrorDecodingMessangesEn.json in Resources */ = {isa = PBXBuildFile; fileRef = C6A3A36924FBAC3500CC8E37 /* ErrorDecodingMessangesEn.json */; };
 		C6AD9345239A684D0004704C /* DiskutilListCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AD9344239A684D0004704C /* DiskutilListCodable.swift */; };
 		C6AEE8FB24E41A49006135FB /* CodablesGeneric.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AEE8FA24E41A49006135FB /* CodablesGeneric.swift */; };
 		C6B16958203B27AF00FD2818 /* ChooseCustomizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */; };
@@ -72,7 +73,6 @@
 		C6C2EAA72030710A0033EF85 /* SettingsSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */; };
 		C6C8A8B1249E9C8A009C3D6E /* SIPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C8A8B0249E9C8A009C3D6E /* SIPManager.swift */; };
 		C6C8A8B3249EB2C2009C3D6E /* DebugScriptSudo.sh in Resources */ = {isa = PBXBuildFile; fileRef = C6C8A8B2249EB2C2009C3D6E /* DebugScriptSudo.sh */; };
-		C6CB670A217756BE00746A84 /* CreateMediaWithAuth.sh in Resources */ = {isa = PBXBuildFile; fileRef = C6CB6709217756B300746A84 /* CreateMediaWithAuth.sh */; };
 		C6D82A6A20D802E700A5B5BE /* OtherOptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D82A6920D802E700A5B5BE /* OtherOptionsObject.swift */; };
 		C6D82A6C20D80C7600A5B5BE /* OtherOptionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D82A6B20D80C7600A5B5BE /* OtherOptionsManager.swift */; };
 		C6D9EE59210AED4700019818 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D9EE58210AED4700019818 /* Reachability.swift */; };
@@ -86,11 +86,10 @@
 		DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBF01F71BFE600C94D9B /* LogViewController.swift */; };
 		DD3AC14C1FBB974C00C71F53 /* OtherOptionCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC14B1FBB974C00C71F53 /* OtherOptionCheckBox.swift */; };
 		DD5016061F993D4500FB1407 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5016051F993D4500FB1407 /* GenericViewController.swift */; };
-		DD73ABE21FB46EEB00C7F721 /* BootFilesReplacementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD73ABE11FB46EEB00C7F721 /* BootFilesReplacementManager.swift */; };
 		DD7C7CC5235E26DC000CC2E0 /* DarkModeDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7C7CC4235E26DC000CC2E0 /* DarkModeDetection.swift */; };
 		DDA7FB601F96AE510029F4F2 /* RuntimeCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */; };
 		DDA7FB621F96B13F0029F4F2 /* GenericWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */; };
-		DDCC4ED51FB5C2A7007FBB6F /* CustomizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCC4ED41FB5C2A7007FBB6F /* CustomizationViewController.swift */; };
+		DDCC4ED51FB5C2A7007FBB6F /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCC4ED41FB5C2A7007FBB6F /* OptionsViewController.swift */; };
 		DDD038EB1FB7366400D22695 /* AdvancedOptionsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */; };
 		DDD038F21FB7AEC000D22695 /* BootFilesReplacementItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD038F11FB7AEC000D22695 /* BootFilesReplacementItem.swift */; };
 		DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */; };
@@ -144,7 +143,7 @@
 		C63DD0272265D921007944A5 /* TaskKillManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskKillManager.swift; sourceTree = "<group>"; };
 		C63F035D24E1091400F950B4 /* ProgressBarSettings.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ProgressBarSettings.json; sourceTree = "<group>"; };
 		C63F035F24E3D19300F950B4 /* ProgressBarValuesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarValuesManager.swift; sourceTree = "<group>"; };
-		C63F036124E40F5500F950B4 /* TextManagerAssets.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = TextManagerAssets.json; sourceTree = "<group>"; };
+		C63F036124E40F5500F950B4 /* TextAssetsEn.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = TextAssetsEn.json; sourceTree = "<group>"; };
 		C6409AC6226D35D200E63762 /* CopyrightLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyrightLabel.swift; sourceTree = "<group>"; };
 		C647B34F211CE2C00024B9A1 /* ToolsBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsBridge.swift; sourceTree = SOURCE_ROOT; };
 		C647B395211CF2C40024B9A1 /* EFIPartitionMounterTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EFIPartitionMounterTypes.swift; path = "EFI Partition Mounter/EFI Partition Mounter/EFIPartitionMounterTypes.swift"; sourceTree = SOURCE_ROOT; };
@@ -171,6 +170,7 @@
 		C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingVariables.swift; sourceTree = "<group>"; };
 		C691D6AA20655C700083D057 /* DriveDetectInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveDetectInfoViewController.swift; sourceTree = "<group>"; };
 		C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacrosReference.swift; sourceTree = "<group>"; };
+		C6A3A36924FBAC3500CC8E37 /* ErrorDecodingMessangesEn.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ErrorDecodingMessangesEn.json; sourceTree = "<group>"; };
 		C6AD9344239A684D0004704C /* DiskutilListCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskutilListCodable.swift; sourceTree = "<group>"; };
 		C6AEE8FA24E41A49006135FB /* CodablesGeneric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodablesGeneric.swift; sourceTree = "<group>"; };
 		C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseCustomizationViewController.swift; sourceTree = "<group>"; };
@@ -181,7 +181,6 @@
 		C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSectionItem.swift; sourceTree = "<group>"; };
 		C6C8A8B0249E9C8A009C3D6E /* SIPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIPManager.swift; sourceTree = "<group>"; };
 		C6C8A8B2249EB2C2009C3D6E /* DebugScriptSudo.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = DebugScriptSudo.sh; sourceTree = "<group>"; };
-		C6CB6709217756B300746A84 /* CreateMediaWithAuth.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = CreateMediaWithAuth.sh; sourceTree = "<group>"; };
 		C6D82A6920D802E700A5B5BE /* OtherOptionsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherOptionsObject.swift; sourceTree = "<group>"; };
 		C6D82A6B20D80C7600A5B5BE /* OtherOptionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherOptionsManager.swift; sourceTree = "<group>"; };
 		C6D9EE58210AED4700019818 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
@@ -202,11 +201,10 @@
 		DD01EBF01F71BFE600C94D9B /* LogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
 		DD3AC14B1FBB974C00C71F53 /* OtherOptionCheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherOptionCheckBox.swift; sourceTree = "<group>"; };
 		DD5016051F993D4500FB1407 /* GenericViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericViewController.swift; sourceTree = "<group>"; };
-		DD73ABE11FB46EEB00C7F721 /* BootFilesReplacementManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootFilesReplacementManager.swift; sourceTree = "<group>"; };
 		DD7C7CC4235E26DC000CC2E0 /* DarkModeDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkModeDetection.swift; sourceTree = "<group>"; };
 		DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuntimeCode.swift; sourceTree = "<group>"; };
 		DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWindowController.swift; sourceTree = "<group>"; };
-		DDCC4ED41FB5C2A7007FBB6F /* CustomizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomizationViewController.swift; sourceTree = "<group>"; };
+		DDCC4ED41FB5C2A7007FBB6F /* OptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedOptionsButton.swift; sourceTree = "<group>"; };
 		DDD038F11FB7AEC000D22695 /* BootFilesReplacementItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootFilesReplacementItem.swift; sourceTree = "<group>"; };
 		DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsViewController.swift; sourceTree = "<group>"; };
@@ -243,7 +241,6 @@
 			isa = PBXGroup;
 			children = (
 				C60C40BB20CCA2BB00258574 /* AppManager.swift */,
-				DD73ABE11FB46EEB00C7F721 /* BootFilesReplacementManager.swift */,
 				C60C40BF20CCA9DC00258574 /* CreationVariablesManager.swift */,
 				C6BEA10124A3A5AE008997CF /* DiagnosticsModeManager.swift */,
 				C6AD9344239A684D0004704C /* DiskutilListCodable.swift */,
@@ -302,7 +299,7 @@
 				C65AA6221F4F4C3400C43223 /* ChoseDriveViewController.swift */,
 				C64E56361F51D917007B8CEE /* ChoseAppViewController.swift */,
 				C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */,
-				DDCC4ED41FB5C2A7007FBB6F /* CustomizationViewController.swift */,
+				DDCC4ED41FB5C2A7007FBB6F /* OptionsViewController.swift */,
 				C61AE89320C2F16400229FEC /* OtherOptionInfoViewController.swift */,
 				C64E56381F51E79C007B8CEE /* ConfirmViewController.swift */,
 				C64E563A1F522854007B8CEE /* InstallingViewController.swift */,
@@ -351,12 +348,12 @@
 		C6553A941F5F83DC0048965D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C6A3A36924FBAC3500CC8E37 /* ErrorDecodingMessangesEn.json */,
+				C63F036124E40F5500F950B4 /* TextAssetsEn.json */,
 				C63F035D24E1091400F950B4 /* ProgressBarSettings.json */,
-				C63F036124E40F5500F950B4 /* TextManagerAssets.json */,
 				C6553A921F5F83770048965D /* License.rtf */,
 				C65B5EFB1F71FAB10061F1A3 /* DebugScript.sh */,
 				C6C8A8B2249EB2C2009C3D6E /* DebugScriptSudo.sh */,
-				C6CB6709217756B300746A84 /* CreateMediaWithAuth.sh */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -595,12 +592,12 @@
 				C65B5EFD1F7201D10061F1A3 /* DebugScript.sh in Resources */,
 				C647B3AF211D18950024B9A1 /* EFIPartitionMounterTool.storyboard in Resources */,
 				C6DF046D1F4F33C500D200B1 /* Main.storyboard in Resources */,
-				C63F036224E40F5500F950B4 /* TextManagerAssets.json in Resources */,
+				C63F036224E40F5500F950B4 /* TextAssetsEn.json in Resources */,
 				C6C8A8B3249EB2C2009C3D6E /* DebugScriptSudo.sh in Resources */,
 				C691BFEE1F6DEEA800589EF8 /* Assets.xcassets in Resources */,
+				C6A3A36A24FBAC3500CC8E37 /* ErrorDecodingMessangesEn.json in Resources */,
 				C6553A931F5F83770048965D /* License.rtf in Resources */,
 				C63F035E24E1091400F950B4 /* ProgressBarSettings.json in Resources */,
-				C6CB670A217756BE00746A84 /* CreateMediaWithAuth.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -672,7 +669,7 @@
 				C615B815216AF04D00913BFF /* MediaCreationManagerFunctions.swift in Sources */,
 				C6D9EE59210AED4700019818 /* Reachability.swift in Sources */,
 				C64E56391F51E79C007B8CEE /* ConfirmViewController.swift in Sources */,
-				DDCC4ED51FB5C2A7007FBB6F /* CustomizationViewController.swift in Sources */,
+				DDCC4ED51FB5C2A7007FBB6F /* OptionsViewController.swift in Sources */,
 				C60C40BC20CCA2BB00258574 /* AppManager.swift in Sources */,
 				C65B5F031F720D680061F1A3 /* SudoManager.swift in Sources */,
 				C615B819216B0E9400913BFF /* MediaCreationManagerTimers.swift in Sources */,
@@ -718,7 +715,6 @@
 				C6322574221C1883003A56D4 /* FilesystemObserver.swift in Sources */,
 				C64E56371F51D917007B8CEE /* ChoseAppViewController.swift in Sources */,
 				C615B813216AEF7A00913BFF /* MediaCreationManagerPreProcess.swift in Sources */,
-				DD73ABE21FB46EEB00C7F721 /* BootFilesReplacementManager.swift in Sources */,
 				DDF9A5692159A05800389F78 /* ShadowView.swift in Sources */,
 				C615B81B216B30D000913BFF /* MediaCreationManagerPostProcesses.swift in Sources */,
 				C647B39D211CF2C40024B9A1 /* EFIPartitionMounterWindowController.swift in Sources */,

@@ -57,10 +57,12 @@ extension NSViewController{
 				
             }else{
                 // :-(
-				fatalError("Target window is nil")
+				//fatalError("Target window is nil")
+				NSViewController.tmpViewController[NSViewController.tmpViewController.count - 1] = nil
             }
         }else{
             // :-(
+			print("View controller with storyboard id \"\(storyboardID)\" not found in the current storyboard")
 			fatalError("New viewcontroller not initialized")
         }
     }

@@ -53,9 +53,7 @@ public final class LogManager{
 	
 	//resets the initial state of the log control
 	@inline(__always) public class func clearLog(){
-		for i in 0..<logs.count{
-			logs.remove(at: i)
-		}
+		logs.removeAll()
 		logs = []
 		
 		logHasBeenUpdated = false

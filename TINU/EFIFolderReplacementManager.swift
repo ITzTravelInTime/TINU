@@ -13,9 +13,10 @@ import Foundation
 	
 	public final class EFIFolderReplacementManager{
 		
-		static let shared = EFIFolderReplacementManager()
+		static var shared: EFIFolderReplacementManager! { return sharedi }
+		static var sharedi: EFIFolderReplacementManager! = nil
 		
-		private var sharedEFIFolderTempData: [String : Data]! = nil
+		private var sharedEFIFolderTempData: [String : Data?]! = nil
 		private var firstDir = ""
 		private let refData = Data.init()
 		
@@ -114,7 +115,7 @@ import Foundation
 							
 							if f.value != refData{
 							
-								try f.value.write(to: file)
+								try f.value!.write(to: file)
 								
 							}else{
 								
@@ -155,12 +156,10 @@ import Foundation
 		public func unloadEFIFolder() -> Bool{
 		
 			if sharedEFIFolderTempData != nil{
-				for f in sharedEFIFolderTempData{
-					
-					print("Removing value from the saved EFI folder: \(f.key)")
-					
-					sharedEFIFolderTempData[f.key] = refData
-					sharedEFIFolderTempData.removeValue(forKey: f.key)
+				for i in sharedEFIFolderTempData.keys{
+					print("Removing value from the saved EFI folder: \(i)")
+					sharedEFIFolderTempData[i] = nil
+					sharedEFIFolderTempData.removeValue(forKey: i)
 				}
 				
 				sharedEFIFolderTempData.removeAll()
@@ -325,6 +324,14 @@ import Foundation
 		
 		public func resetMissingFileFromOpenedFolder(){
 			missingFile = nil
+		}
+		
+		class func reset(){
+			if sharedi != nil{
+				let _ = sharedi.unloadEFIFolder()
+			}
+			sharedi = nil
+			sharedi = EFIFolderReplacementManager()
 		}
 		
 	}

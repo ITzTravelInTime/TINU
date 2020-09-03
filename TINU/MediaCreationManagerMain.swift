@@ -31,6 +31,10 @@ public final class InstallMediaCreationManager{
 	var processEstimatedMinutes: UInt64 {return  IMCM.cpc.pMaxMins }
 	var processMinutesToChange:  UInt64 {return  IMCM.cpc.pMidMins }
 	
+	//progress bar increments during installer creation
+	var installerProgressValueFast: Double {return IMCM.cpc.installerProgressValueFast}
+	var installerProgressValueSlow: Double {return IMCM.cpc.installerProgressValueSlow}
+	
 	//static let processDivisor: Double = ProcessConsts.uDen
 	
 	//n of pre-process operations
@@ -38,14 +42,6 @@ public final class InstallMediaCreationManager{
 	
 	//progress bar segments of the pre-process
 	static var unit: Double = 0
-	
-	//progress bar increments during installer creation
-	
-	//static let installerProgressValueFast: Double = ProcessConsts.pMidDuration / (Double(ProcessConsts.pMidMins) * 12)
-	//static let installerProgressValueSlow: Double = ProcessConsts.pMidDuration / (Double(ProcessConsts.pMaxMins - ProcessConsts.pMidMins) * 12)
-	
-	var installerProgressValueFast: Double {return IMCM.cpc.installerProgressValueFast}
-	var installerProgressValueSlow: Double {return IMCM.cpc.installerProgressValueSlow}
 	
 	var viewController: InstallingViewController!
 	
