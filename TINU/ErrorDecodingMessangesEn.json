@@ -162,6 +162,35 @@
 		},
 		{
 			"isBack" : false,
+			"operation" : 0,
+			"message" : "Bootable macOS installer created successfully",
+			"stringsToCheck" : [
+				"done",
+				"install media now available at "
+			],
+			"chackValues" : [
+				4
+			],
+			"printMessage" : "Bootable macOS installer created successfully!",
+			"notError" : true
+		},
+		{
+			"isBack" : false,
+			"operation" : 1,
+			"message" : "Bootable macOS installer creation failed because of an unknown error, chech the log for details",
+			"stringsToCheck" : [
+				"0",
+				"102030100"
+			],
+			"chackValues" : [
+				6,
+				7
+			],
+			"printMessage" : "Bootable macOS installer creation failed, unknown output from \"${executable}\" while creating the installer, please, erase this dirve with disk utility and retry",
+			"notError" : false
+		},
+		{
+			"isBack" : false,
 			"operation" : 2,
 			"message" : "Bootable macOS installer creation failed because of an unknown error, check the log for details",
 			"stringsToCheck" : [

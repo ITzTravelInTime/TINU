@@ -12,7 +12,8 @@ public var showProcessLicense = false
 
 public var processLicense = ""
 
-class LicenseViewController: ShadowViewController {
+class LicenseViewController: ShadowViewController, ViewID {
+	let id: String = "LicenseViewController"
     
     @IBOutlet var licenseField: NSTextView!
     
@@ -47,7 +48,13 @@ class LicenseViewController: ShadowViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		self.setTitleLabel(text: "License agreement")
+		//self.setTitleLabel(text: "License agreement")
+		
+		self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "mainTitle"))
+		self.backButton.title = TextManager.getViewString(context: self, stringID: "backButton")
+		self.continueButton.title = TextManager.getViewString(context: self, stringID: "agreeButton")
+		self.check.title = TextManager.getViewString(context: self, stringID: "checkboxText")
+		
 		self.showTitleLabel()
 		
 		spinner.isHidden = false
@@ -77,9 +84,8 @@ class LicenseViewController: ShadowViewController {
 			
 			if showProcessLicense && sharedInstallMac{
 				DispatchQueue.main.async {
-					self.titleLabel.stringValue = "macOS License Agreement"
-					
-					self.backButton.title = "Disagree"
+					self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "macOSLicenseTitle"))
+					self.backButton.title = TextManager.getViewString(context: self, stringID: "macOSLicenseBackButton")
 				}
 				
 				if processLicense.isEmpty{
@@ -131,7 +137,7 @@ class LicenseViewController: ShadowViewController {
 							counter += 1
 							
 							if counter == 20{
-								license = "Impossible to get the macOS license agreement"
+								license = "Error: Impossible to get the macOS license agreement"
 							}
 						}
 						

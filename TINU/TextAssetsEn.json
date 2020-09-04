@@ -102,6 +102,17 @@
 				"improperDialogTitle": "The folder \"${pathName}\" is not a proper ${bootloader} efi folder",
 				"improperDialog" : "The folder you selected \"${path}\" does not contain the required element \"${missing}\", make sure to open just the folder named EFI and that it cointains all the needed elements"
 			}
+		},
+		"LicenseViewController" : {
+			"mutable" : {},
+			"unmutable" : {
+				"mainTitle" : "License agreement",
+				"backButton" : "Cancel",
+				"macOSLicenseTitle" : "macOS License Agreement",
+				"macOSLicenseBackButton" : "Disagree",
+				"checkboxText" : "I have read and I agree to the terms and conditions of the license agreement",
+				"agreeButton" : "Agree"
+			}
 		}
 	}
 }

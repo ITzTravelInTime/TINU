@@ -96,19 +96,19 @@ extension InstallMediaCreationManager{
 		
 		enum Operations: UInt8, Codable, Equatable{
 			case contains = 0
-			case equal
-			case different
+			case equal = 1
+			case different = 2
 		}
 		
 		enum CheckValues: UInt8, Codable, Equatable{
 			case fe = 0
-			case me
-			case le
-			case lo
-			case llo
-			case tt
-			case rc
-			case px
+			case me = 1
+			case le = 2
+			case lo = 3
+			case llo = 4
+			case tt = 5
+			case rc = 6
+			case px = 7
 		}
 		
 		
@@ -265,7 +265,7 @@ extension InstallMediaCreationManager{
 			log("Sub process exit code produced:         \(rc)")
 			log("Detected process outcome:               \(success ? "Positive" : "Negative")")
 			
-			var errorsList: [CheckItem] = CheckItemCollection.createFromDefaultFile()!.itemsList
+			let errorsList: [CheckItem] = CheckItemCollection.createFromDefaultFile()!.itemsList
 			
 			var valueList: [CheckItem.CheckValues: String?] = [:]
 			
@@ -278,9 +278,9 @@ extension InstallMediaCreationManager{
 			valueList[.llo] = llo
 			valueList[.tt] = tt
 			
-			
+			/*
 			if !success{
-				/*
+				
 				/*
 
 
@@ -343,7 +343,7 @@ extension InstallMediaCreationManager{
 				//then checks for unknown errors
 				errorsList.append(CheckItem(chackValues: [.rc, .px], stringsToCheck: ["0", "102030100"], printMessage: "Bootable macOS installer creation exited with a not normal exit code, see previous lines in the log to get more info about the error", message: "Bootable macOS installer creation failed because of an unknown error, check the log for details", notError: false, operation: .different, isBack: false))
 				
-				*/
+				
 			}else{
 				
 				errorsList = []
@@ -352,70 +352,81 @@ extension InstallMediaCreationManager{
 				errorsList.append(CheckItem(chackValues: [.llo], stringsToCheck: ["done", "install media now available at "], printMessage: "Bootable macOS installer created successfully!", message: "Bootable macOS installer created successfully", notError: true, operation: .contains, isBack: false))
 				
 				//then if the proces has not been completed correclty, probably we have an error output or an unknown output
-				errorsList.append(CheckItem(chackValues: [.rc, .px], stringsToCheck: ["0", "102030100"], printMessage: "Bootable macOS installer creation failed, unknown output from \"\(sharedExecutableName)\" while creating the installer, please, erase this dirve with disk utility and retry", message: "Bootable macOS installer creation failed because of an unknown error, chech the log for details", notError: false, operation: .equal, isBack: false))
+				errorsList.append(CheckItem(chackValues: [.rc, .px], stringsToCheck: ["0", "102030100"], printMessage: "Bootable macOS installer creation failed, unknown output from \"${executable}\" while creating the installer, please, erase this dirve with disk utility and retry", message: "Bootable macOS installer creation failed because of an unknown error, chech the log for details", notError: false, operation: .equal, isBack: false))
 				
-			}
+			}*/
 			
+			//sanity check print just so see how the json should look like
 			print(CheckItemCollection(itemsList: errorsList).getEncoded()!)
 			
 			//checks the conditions of the errorlist array to see if the operation has been complited with success
+			print("Checking errors:")
 			for item in errorsList{
+				
+				var values: [String?] = []
+				
 				for nvalue in item.chackValues{
 					
-					guard let value = valueList[nvalue]! else{
-						continue
+					if let value = valueList[nvalue] {
+						values.append(value)
 					}
 					
-					if self.checkMatch(item.stringsToCheck, value, operation: item.operation){
+				}
+				
+				print("    Strings to check: \(item.stringsToCheck)")
+				print("    Strings to check against: \"\(values)\"")
+				print("    Operation to perform: \(item.operation)")
+				
+				
+				if self.checkMatch(values, item.stringsToCheck, operation: item.operation){
+					
+					print("    Check sucess")
+					
+					log("\n\(self.parse(messange: item.printMessage))\n")
+					
+					if item.notError{
+						var res = false
 						
+						/*DispatchQueue.main.async {
+						self.viewController.progress.isHidden = false
+						self.viewController.spinner.isHidden = true
+						}*/
 						
-						
-						log("\n\(self.parse(messange: item.printMessage))\n")
-						
-						if item.notError{
-							var res = false
+						DispatchQueue.global(qos: .background).sync {
+							//here createinstall media succedes in creating the installer
+							log("\(sharedExecutableName) process ended with success")
+							log("Bootable macOS installer created successfully!")
 							
-							/*DispatchQueue.main.async {
-								self.viewController.progress.isHidden = false
-								self.viewController.spinner.isHidden = true
-							}*/
-							
-							DispatchQueue.global(qos: .background).sync {
-								//here createinstall media succedes in creating the installer
-								log("\(sharedExecutableName) process ended with success")
-								log("Bootable macOS installer created successfully!")
-								
-								//extra operations here
-								//trys to apply special options
-								DispatchQueue.main.sync {
-									self.setActivityLabelText("Applaying custom options")
-								}
-								
-								res = self.manageSpecialOperations(true)
+							//extra operations here
+							//trys to apply special options
+							DispatchQueue.main.sync {
+								self.setActivityLabelText("Applaying custom options")
 							}
 							
-							if res{
-								
-							}else{
-								print("Advanced options fails")
-								return
-							}
-							
+							res = self.manageSpecialOperations(true)
 						}
 						
-						if item.isBack{
-							DispatchQueue.main.sync {
-								self.viewController.goBack()
-							}
+						if res{
+							
 						}else{
-							DispatchQueue.main.sync {
-								self.viewController.goToFinalScreen(title: self.parse(messange: item.message), success: item.notError)
-							}
+							print("Advanced options fails")
+							return
 						}
 						
-						
-						return
 					}
+					
+					if item.isBack{
+						DispatchQueue.main.sync {
+							self.viewController.goBack()
+						}
+					}else{
+						DispatchQueue.main.sync {
+							self.viewController.goToFinalScreen(title: self.parse(messange: item.message), success: item.notError)
+						}
+					}
+					
+					
+					return
 				}
 			}
 			
@@ -423,55 +434,69 @@ extension InstallMediaCreationManager{
 		
 	}
 	
-	private func checkMatch(_ stringsToCheck: [String?], _ valueToCheck: String, operation: CheckItem.Operations) -> Bool{
-		var ret = false
-		
-		for ss in stringsToCheck{
+	private func checkMatch(_ stringsToCheck: [String?], _ valuesToCheck: [String?], operation: CheckItem.Operations) -> Bool{
+		stringsfor: for ss in stringsToCheck{
 			guard let s = ss else {
-				continue
+				continue stringsfor
 			}
 			
-			switch operation{
+			if s == "" || s == " "{
+				continue stringsfor
+			}
+			
+			valuefor: for ovalueToCheck in valuesToCheck{
+				
+				guard let valueToCheck = ovalueToCheck else {
+					continue valuefor
+				}
+				
+				if valueToCheck == "" || valueToCheck == " "{
+					continue valuefor
+				}
+				
+				switch operation{
+				case .contains:
+					if s.contains(valueToCheck){
+						return true
+					}
+					break
 				case .different:
 					
 					if s != valueToCheck{
-						ret = true
+						return true
 					}
-					
+					break
 				case .equal:
 					
 					if s == valueToCheck{
-						ret = true
+						return true
 					}
-					
-				default:
-					
-					if s.contains(valueToCheck){
-						ret = true
-					}
+					break
+				}
+				
 			}
 		}
 		
-		return ret
+		return false
 	}
 	
 	private func parse(messange: String) -> String{
 		/*
 		var ret = ""
 		for piece in messange.split(separator: "$"){
-			var s = String(piece)
-			
-			if s.starts(with: "{executable}"){
-				s.deletePrefix("{executable}")
-				s = sharedExecutableName + s
-			}
-			
-			if s.starts(with: "{drive}"){
-				s.deletePrefix("{drive}")
-				s = self.dname + s
-			}
-			
-			ret += s
+		var s = String(piece)
+		
+		if s.starts(with: "{executable}"){
+		s.deletePrefix("{executable}")
+		s = sharedExecutableName + s
+		}
+		
+		if s.starts(with: "{drive}"){
+		s.deletePrefix("{drive}")
+		s = self.dname + s
+		}
+		
+		ret += s
 		}
 		
 		return ret
