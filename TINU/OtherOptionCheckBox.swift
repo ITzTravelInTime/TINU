@@ -21,10 +21,10 @@ class OtherOptionsCheckBox: NSView {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 		
-            checkBox.setButtonType(.switch)
-            checkBox.title = option.title
-            checkBox.target = self
-            checkBox.action = #selector(OtherOptionsCheckBox.checked)
+		checkBox.setButtonType(.switch)
+		checkBox.title = option.title
+		checkBox.target = self
+		checkBox.action = #selector(OtherOptionsCheckBox.checked)
 		
 		checkBox.isEnabled = option.isUsable
 		
@@ -41,8 +41,8 @@ class OtherOptionsCheckBox: NSView {
 
         self.addSubview(checkBox)
 		
-			infoButton.title = ""
-			infoButton.bezelStyle = .helpButton
+		infoButton.title = ""
+		infoButton.bezelStyle = .helpButton
 		
 		infoButton.frame.size = NSSize(width: 25, height: 25)
 		
@@ -57,6 +57,7 @@ class OtherOptionsCheckBox: NSView {
     }
 	
 	func checked(){
+		
 		log("Trying to change the value of \"\(option.id)\"")
 		/*for i in 0...(otherOptions.count - 1){
 		if otherOptions[i].id == self.option.id{
@@ -66,38 +67,32 @@ class OtherOptionsCheckBox: NSView {
 		}
 		}*/
 		
-		if oom.shared.otherOptions[option.id] != nil{
-			let newState = (checkBox.state == 1)
+		if oom.shared.otherOptions[option.id] == nil { return }
+		
+		let newState = (checkBox.state == 1)
+		
+		//this as been done in this way instead of an if var because of possible errors
+		oom.shared.otherOptions[option.id]?.isActivated = newState
+		option.isActivated = newState
+		
+		//this code here is used to deactivate the APFS convertion stuff if the user has choosen to format the target drive
+		if !sharedInstallMac || !cvm.shared.sharedSVReallyIsAPFS || option.id != oom.OtherOptionID.otherOptionForceToFormatID{
+			return
+		}
+		
+		for item in self.superview!.subviews{
+			guard let opt = item as? OtherOptionsCheckBox else { continue }
 			
-			//this as been done in this way instead of an if var because of possible errors
-			oom.shared.otherOptions[option.id]?.isActivated = newState
-			option.isActivated = newState
-			
-			if !sharedInstallMac || !cvm.shared.sharedSVReallyIsAPFS{
-				return
+			if opt.option.id != oom.OtherOptionID.otherOptionDoNotUseApfsID{
+				continue
 			}
 			
-			if option.id != oom.OtherOptionID.otherOptionForceToFormatID{
-				return
-			}
-			
-			for item in self.superview!.subviews{
-				if let opt = item as? OtherOptionsCheckBox{
-					if opt.option.id != oom.OtherOptionID.otherOptionDoNotUseApfsID{
-						continue
-					}
-					
-					log("Trying to change the value of \"\(opt.option.id)\"")
-					
-					oom.shared.otherOptions[opt.option.id]?.isActivated = newState
-					oom.shared.otherOptions[opt.option.id]?.isUsable = newState
-					opt.option.isActivated = newState
-					opt.option.isUsable = newState
-					opt.checkBox.isEnabled = newState
-					opt.checkBox.state = checkBox.state
-				}
-			}
-			
+			oom.shared.otherOptions[opt.option.id]?.isActivated = newState
+			oom.shared.otherOptions[opt.option.id]?.isUsable = newState
+			opt.option.isActivated = newState
+			opt.option.isUsable = newState
+			opt.checkBox.isEnabled = newState
+			opt.checkBox.state = checkBox.state
 		}
 	}
 	
@@ -107,12 +102,6 @@ class OtherOptionsCheckBox: NSView {
 		vc.associatedOption = option
 		
 		CustomizationWindowManager.shared.referenceWindow.contentViewController?.presentViewControllerAsSheet(vc)
-		
-		/*if sharedUseVibrant{
-		if let w = sharedWindow.windowController as? GenericWindowController{
-		w.deactivateVibrantWindow()
-		}
-		}*/
 		
 	}
 }

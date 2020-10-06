@@ -9,7 +9,7 @@
 import Cocoa
 
 extension InstallMediaCreationManager{
-
+	
 	func killConflictingPrcesses() -> Bool{
 		//creates a list of processes to kill
 		let processesToClose = ["InstallAssistant", "InstallAssistant_plain", "InstallAssistant_springboard"]
@@ -18,35 +18,37 @@ extension InstallMediaCreationManager{
 		log("""
 			
 			***Trying to close conflicting processes
-			   If those conflicting processes are running,
-			   they may interfere with the success of
-			   the \"\(sharedExecutableName)\" operation
+			If those conflicting processes are running,
+			they may interfere with the success of
+			the \"\(sharedExecutableName)\" operation
 			
 			""")
 		
 		var p: String?
-			//trys to terminate the process
-			if let success = TaskKillManager.terminateAppsWithAsk(byCommonParameter: processesToClose, parameterKind: .executableName, mustBeEqual: true, firstFailedToCloseName: &p){
-				if !success{
-					log("***Failed to close conflicting processes \(p!)!!!")
-					DispatchQueue.main.sync {
-						self.viewController.goToFinalScreen(title: "TINU failed to stop conflicting process \"\(p!)\"", success: false)
-					}
-					return false
-				}
-			}else{
-				log("***Failed to terminate conflicting process: \"" + p! + "\" because the user denid to close it\n\n")
+		//trys to terminate the process
+		if let success = TaskKillManager.terminateAppsWithAsk(byCommonParameter: processesToClose, parameterKind: .executableName, mustBeEqual: true, firstFailedToCloseName: &p){
+			if !success{
+				log("***Failed to close conflicting processes \(p!)!!!")
 				DispatchQueue.main.sync {
-					self.viewController.goBack()
+					//self.viewController.goToFinalScreen(title: "TINU failed to stop conflicting process \"\(p!)\"", success: false)
+					self.viewController.goToFinalScreen(id: "finalScreenCFE", success: false, parseList: ["{process}" : p!])
 				}
 				return false
 			}
+		}else{
+			log("***Failed to terminate conflicting process: \"" + p! + "\" because the user denid to close it\n\n")
+			DispatchQueue.main.sync {
+				self.viewController.goBack()
+			}
+			return false
+		}
 		
 		if let success = TaskKillManager.terminateProcessWithAsk(name: sharedExecutableName){
 			if !success{
 				log("***Failed to close conflicting processes \(sharedExecutableName)!!!")
 				DispatchQueue.main.sync {
-					self.viewController.goToFinalScreen(title: "TINU failed to stop conflicting process \"\(sharedExecutableName)\"\nTry to restart the computer and try again", success: false)
+					//self.viewController.goToFinalScreen(title: "TINU failed to stop conflicting process \"\(sharedExecutableName)\"\nTry to restart the computer and try again", success: false)
+					self.viewController.goToFinalScreen(id: "finalScreenCFE", success: false, parseList: ["{process}" : sharedExecutableName])
 				}
 				return false
 			}
@@ -69,10 +71,10 @@ extension InstallMediaCreationManager{
 		log("""
 			
 			###Trying to unmount conflicting volumes
-			   Those volumes may be mounted images
-			   from inside the macOS installer app
-			   and may interfere with the success of
-			   the \"\(sharedExecutableName)\" operation
+			Those volumes may be mounted images
+			from inside the macOS installer app
+			and may interfere with the success of
+			the \"\(sharedExecutableName)\" operation
 			
 			""")
 		
@@ -82,7 +84,8 @@ extension InstallMediaCreationManager{
 		}else{
 			log("###Failed to unmount conflicting volumes!!!")
 			DispatchQueue.main.async {
-				self.viewController.goToFinalScreen(title: "TINU failed to unmount conflicting volumes", success: false)
+				//self.viewController.goToFinalScreen(title: "TINU failed to unmount conflicting volumes", success: false)
+				self.viewController.goToFinalScreen(id: "finalScreenCVGE")
 			}
 			return false
 		}
@@ -90,133 +93,161 @@ extension InstallMediaCreationManager{
 		return true
 	}
 	
+	class func unmountDiskAndGetDiskId(id: String) -> String!{
+		//this code gets the bsd name of the drive from the bsd name of the partition selcted
+		let tmpBSDName = dm.getDriveBSDIDFromVolumeBSDID(volumeID: id)
+		
+		log("Disk that will be unmounted: \(tmpBSDName)")
+		
+		let unmountComm = "diskutil unmountDisk " + tmpBSDName
+		
+		log("    Disks unmount will be done with command: \n    \(unmountComm)")
+		
+		if let out = getOutWithSudo(cmd: unmountComm){
+			
+			print(out)
+			
+			if out.contains("was successful"){
+				return tmpBSDName
+			}else{
+				return ""
+			}
+		}else{
+			print("Auth failed: Emergency remount")
+			print(getOut(cmd: "diskutil mount " + id))
+		}
+		
+		return nil
+	}
+	
 	func formatTargetDrive(canFormat: Bool, useAPFS: Bool) -> Bool{
+		
+		if !canFormat {
+			return true
+		}
 		
 		var didChangePS = false
 		
-		if canFormat {
-			DispatchQueue.main.sync {
-			self.setActivityLabelText("\nFormatting target drive\n")
-			}
-			
-			log("@@@ Starting drive format process")
-			
-			//this code gets the bsd name of the drive from the bsd name of the partition selcted
-			let tmpBSDName = dm.getDriveBSDIDFromVolumeBSDID(volumeID: cvm.shared.sharedBSDDrive)
-			
-			//if cvm.shared.sharedBSDDriveAPFS != nil{
-				//NSWorkspace.shared().unmountAndEjectDevice(atPath: sharedVolume)
-			
-				log("    The disk needs to be unmounted, in order to be formatted")
-			
-				let unmountComm = "diskutil unmountDisk " + tmpBSDName
-				
-				log("    Disks unmount will be done with command: \n    \(unmountComm)")
-				
-				if let out = getOutWithSudo(cmd: unmountComm){
-					
-					print(out)
-					
-					if !out.contains("was successful"){
-						DispatchQueue.main.sync {
-							log("@@@ Failed to unmount the disk\n\n")
-							self.viewController.goToFinalScreen(title: "Volume format failed to unmount APFS disks, check log for more details", success: false)
-						}
-						return false
-					}
-				}else{
-					print(getOut(cmd: "diskutil mount " + cvm.shared.sharedBSDDrive))
-					
-					log("@@@ Failed to authenticate to eject the drive!!!!\n[The drive has been re-mounted to let the user to use it]\n\n")
-					DispatchQueue.main.sync {
-						self.viewController.goBack()
-					}
-					return false
-				}
-			//}
-			
-			var newVolumeName = "Installer"
-			
-			if iam.shared.checkSharedBundleName() {
-				newVolumeName = cvm.shared.sharedBundleName
-			}
-			
-			//this is the command used to erase the disk and create on just one partition with the GUID table
-			let cmd = "diskutil eraseDisk JHFS+ \"" + newVolumeName + "\" /dev/" + tmpBSDName
-			
-			log("Formatting disk and change partition scheme with the command:\n       " + cmd)
-			
-			//gets the output of the format script
-			//out is nil only if the authentication has failed
-			if let out = getOutWithSudo(cmd: cmd){
-				
-				print(out)
-				
-				//output separated in parts
-				let c = out.components(separatedBy: "\n")
-				//the text we are looking for
-				let finishedMark = "Finished erase on disk"
-				
-				if !c.isEmpty{
-					if !(c.count <= 1 && (c.first?.isEmpty)!){
-						//checks if the erase has been completed with success
-						if c.last!.contains(finishedMark){
-							//we can set this boolean to true because the process has been successfoul
-							didChangePS = true
-							//setup variables for the \createinstall media, the target partition is always the second partition into the drive, the first one is the EFI partition
-							cvm.shared.sharedBSDDrive = "/dev/" + tmpBSDName + "s2"
-							
-							if sharedInstallMac{
-								cvm.shared.sharedBSDDriveAPFS = nil
-							}
-							
-							cvm.shared.sharedVolume = dm.getDriveNameFromBSDID(cvm.shared.sharedBSDDrive)
-							
-							if cvm.shared.sharedVolume == nil{
-								cvm.shared.sharedVolume = "/Volumes/" + newVolumeName
-							}
-							
-							DispatchQueue.main.async {
-								if let name = cvm.shared.sharedVolume{
-									self.viewController.driveImage.image = NSWorkspace.shared().icon(forFile: name)
-									self.viewController.driveName.stringValue = FileManager.default.displayName(atPath: name)
-								}
-								
-								log("@@@Volume format process ended with success\n\n")
-							}
-						}else{
-							//the format has failed, so the boolean is false and a screen with installer creation failed will be displayed
-							log("----Volume format process fail: ")
-							log("         Format script output: \n" + out)
-							
-							didChangePS = false
-						}
-					}else{
-						//too less output from the process
-						log("Failed to get valid output for the format process")
-						didChangePS =  false
-					}
-				}else{
-					log("Failed to get outut from the format process")
-					didChangePS = false
-				}
-			}else{
-				log("Failed to perform needed authentication to format target drive\n\n")
-				
-				print(getOut(cmd: "diskutil mount " + cvm.shared.sharedBSDDrive))
-				
-				DispatchQueue.main.sync {
-					self.viewController.goBack()
-				}
-				return false
-			}
-			
-			
-		}
-		
-		//this code simulates when the format has failed
 		if simulateFormatFail{
 			didChangePS = false
+			print("Process format fail simulation")
+			if sharedInstallMac{
+				//self.viewController.goToFinalScreen(title: "TINU failed to format \"\(dname)\" [SIMULATED]", success: false)
+				
+				self.viewController.goToFinalScreen(id: "finalScreenCVE", success: false, parseList: ["{volume}" : dname])
+			}
+			return false
+		}
+		
+		DispatchQueue.main.sync {
+			//self.setActivityLabelText("Formatting target drive")
+			self.setActivityLabelText("activityLabel6")
+		}
+		
+		log("@@@ Starting drive format process")
+		
+		log("    The disk needs to be unmounted, in order to be formatted")
+		
+		guard let tmpBSDName = InstallMediaCreationManager.unmountDiskAndGetDiskId(id: cvm.shared.sharedBSDDrive) else {
+			log("@@@ Failed to authenticate to eject the drive!!!!\n[The app made sure that the drive has been re-mounted to let the user to use it]\n\n")
+			DispatchQueue.main.sync {
+				self.viewController.goBack()
+			}
+			return false
+		}
+		
+		if tmpBSDName.isEmpty || cvm.shared.sharedBSDDrive == nil{
+			log("@@@ Failed to unmount the disk\n\n")
+			DispatchQueue.main.sync {
+				//self.viewController.goToFinalScreen(title: "Failed to unmount the chosen Disk, check log for more details", success: false)
+				
+				self.viewController.goToFinalScreen(id: "finalScreenFUE")
+			}
+			return false
+		}
+		
+		var newVolumeName = "macOS install media"
+		
+		if iam.shared.checkSharedBundleName() {
+			newVolumeName = cvm.shared.sharedBundleName
+		}
+		
+		//this is the command used to erase the disk and create on just one partition with the GUID table
+		let cmd = "diskutil eraseDisk JHFS+ \"" + newVolumeName + "\" /dev/" + tmpBSDName
+		
+		log("Formatting disk and change partition scheme with the command:\n       " + cmd)
+		
+		//gets the output of the format script
+		//out is nil only if the authentication has failed
+		guard let out = getOutWithSudo(cmd: cmd) else{
+			log("Failed to perform needed authentication to format target drive\n\n")
+			
+			print(getOut(cmd: "diskutil mount " + cvm.shared.sharedBSDDrive))
+			
+			DispatchQueue.main.sync {
+				self.viewController.goBack()
+			}
+			
+			return false
+		}
+		
+		print(out)
+		
+		//output separated in parts
+		let c = out.components(separatedBy: "\n")
+		//the text we are looking for
+		let finishedMark = "Finished erase on disk"
+		
+		for _ in 0...0{
+			if c.isEmpty{
+				log("Failed to get outut from the format process")
+				didChangePS = false
+				continue
+			}
+			
+			if (c.count <= 1 && c.first!.isEmpty){
+				//too less output from the process
+				log("Failed to get valid output for the format process")
+				didChangePS =  false
+				continue
+			}
+			
+			//checks if the erase has been completed with success
+			if !c.last!.contains(finishedMark){
+				
+				//the format has failed, so the boolean is false and a screen with installer creation failed will be displayed
+				log("----Volume format process fail: ")
+				log("         Format script output: \n" + out)
+				
+				didChangePS = false
+				
+				continue
+			}
+			
+			//we can set this boolean to true because the process has been successfoul
+			didChangePS = true
+			//setup variables for the \createinstall media, the target partition is always the second partition into the drive, the first one is the EFI partition
+			cvm.shared.sharedBSDDrive = "/dev/" + tmpBSDName + "s2"
+			
+			if sharedInstallMac{
+				cvm.shared.sharedBSDDriveAPFS = nil
+			}
+			
+			cvm.shared.sharedVolume = dm.getMountPointFromPartitionBSDID(cvm.shared.sharedBSDDrive)
+			
+			if cvm.shared.sharedVolume == nil{
+				//cvm.shared.sharedVolume = "/Volumes/" + newVolumeName
+				cvm.shared.sharedVolume = dm.getMountPointFromPartitionBSDID(cvm.shared.sharedBSDDrive)
+			}
+			
+			DispatchQueue.main.async {
+				if let name = cvm.shared.sharedVolume{
+					self.viewController.driveImage.image = NSWorkspace.shared().icon(forFile: name)
+					self.viewController.driveName.stringValue = FileManager.default.displayName(atPath: name)
+				}
+				
+				log("@@@Volume format process ended with success\n\n")
+			}
 		}
 		
 		//if the drive has benn successfully formatted, procede
@@ -228,9 +259,12 @@ extension InstallMediaCreationManager{
 				log("Process failed, drive format or partition table changement failed, please erase this drive manually with disk utility and then retry")
 				//the driver format has failed, so it does setup the final windows to show the failure an the error and then it's called
 				
-				if sharedInstallMac{
-					self.viewController.goToFinalScreen(title: "TINU failed to format \"\(dname)\"", success: false)
-				}
+				//if sharedInstallMac{
+					//self.viewController.goToFinalScreen(title: "TINU failed to format \"\(dname)\"", success: false)
+					
+				self.viewController.goToFinalScreen(id: "finalScreenFFE", success: false, parseList: ["{diskName}": dname])
+				
+				//}
 			}
 			
 			return false
@@ -379,12 +413,25 @@ extension InstallMediaCreationManager{
 		
 		#endif
 		
-		log("    Unmounting \"InstallESD\"")
-		if dm.driveExists(path: "/Volumes/InstallESD") {
-			if !NSWorkspace.shared().unmountAndEjectDevice(atPath: "/Volumes/InstallESD"){
-				res = false
-			}else{
-				log("    \"InstallESD\" unmounted correctly or already unmounted")
+		
+		
+		let remooveHardcoded = ["InstallESD", "OS X InstallESD"]
+		
+		for r in remooveHardcoded{
+			for i in 1...10{
+				let path = "/Volumes/" + r + ((i > 1) ? (" " + String(i)) : "")
+				
+				log("    Unmounting \"\(path)\"")
+				
+				if !dm.driveHasID(path: path) {
+					continue
+				}
+				
+				if !NSWorkspace.shared().unmountAndEjectDevice(atPath: path){
+					res = false
+				}else{
+					log("    \"\(path)\" unmounted correctly or already unmounted")
+				}
 			}
 		}
 		

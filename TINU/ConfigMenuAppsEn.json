@@ -1,0 +1,30 @@
+{
+	"list" : [
+		{
+			"name" : "Clover Configurator",
+			"download" : "https://mackie100projects.altervista.org/download-clover-configurator/",
+			"installedAppName" : "Clover Configurator"
+		},
+		{
+			"name" : "OpenCore Configurator",
+			"download" : "https://mackie100projects.altervista.org/download-opencore-configurator/",
+			"installedAppName" : "OpenCore Configurator"
+		},
+		{
+			"name" : "Xcode",
+			"download" : "macappstores:\/\/itunes.apple.com/app/xcode/id497799835?mt=12",
+			"installedAppName" : "Xcode"
+		},
+		{
+			"name" : "BBEdit",
+			"download" : "macappstores:\/\/itunes.apple.com/app/bbedit/id404009241?mt=12",
+			"installedAppName" : "BBEdit"
+		},
+		{
+			"name" : "Other app ...",
+			"download" : "",
+			"installedAppName" : ""
+		}
+	]
+	
+}

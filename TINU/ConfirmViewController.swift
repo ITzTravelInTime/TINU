@@ -8,7 +8,9 @@
 
 import Cocoa
 
-class ConfirmViewController: GenericViewController {
+class ConfirmViewController: GenericViewController, ViewID {
+	let id: String = "ConfirmViewController"
+	
 	#if skipChooseCustomization
 	var tmpWin: GenericViewController!
 	#endif
@@ -28,7 +30,8 @@ class ConfirmViewController: GenericViewController {
     
 	@IBOutlet weak var advancedOptionsButton: NSButton!
     
-    private var ps: Bool!
+	@IBOutlet weak var back: NSButton!
+	private var ps: Bool!
     //private var fs: Bool!
     override func viewDidAppear() {
         super.viewDidAppear()
@@ -53,7 +56,7 @@ class ConfirmViewController: GenericViewController {
         super.viewDidLoad()
         // Do view setup here.
 		
-		self.setTitleLabel(text: "The volume and macOS installer below will be used, are you sure?")
+		self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "title"))
         
         self.hideFailureImage()
 		self.hideFailureLabel()
@@ -81,10 +84,12 @@ class ConfirmViewController: GenericViewController {
 		
 		//just to simulate a failure to get data for the drive and the app
 		if !simulateConfirmGetDataFail{
-			state = !checkSate(&drive)
+			state = !checkProcessReadySate(&drive)
 		}
 		
 		fail = state
+		
+		back.stringValue = TextManager.getViewString(context: self, stringID: "backButton")
 		
 		if state {
 			
@@ -93,7 +98,7 @@ class ConfirmViewController: GenericViewController {
 			print("Couldn't get valid info about the installation app and/or the drive")
 			//yes.isEnabled = false
 			
-			yes.title = "Quit"
+			yes.title = TextManager.getViewString(context: self, stringID: "nextButtonFail")
 			info.isHidden = true
 			
 			driveName.isHidden = true
@@ -106,19 +111,22 @@ class ConfirmViewController: GenericViewController {
 			
 			if self.failureImageView == nil || self.failureLabel == nil{
 				self.setFailureImage(image: IconsManager.shared.warningIcon)
-				self.setFailureLabel(text: "Error while getting volume/drive and installer app information")
+				self.setFailureLabel(text: TextManager.getViewString(context: self, stringID: "failureText"))
 			}
 			
 			self.showFailureImage()
 			self.showFailureLabel()
 			
-			titleLabel.stringValue = "Impossible to create the macOS install meadia"
+			titleLabel.stringValue = TextManager.getViewString(context: self, stringID: "failureTitle")
 		}else{
+			
+			yes.title = TextManager.getViewString(context: self, stringID: "nextButton")
+			advancedOptionsButton.stringValue = TextManager.getViewString(context: self, stringID: "optionsButton")
 			
 			if drive{
 				driveImage.image = IconsManager.shared.removableDiskIcon
 				driveName.stringValue = dm.getCurrentDriveName()!
-				self.setTitleLabel(text: "The drive and macOS installer below will be used, are you sure?")
+				self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "titleDrive"))
 			}else{
 				let sv = cm.sharedVolume!
 				driveImage.image = NSWorkspace.shared().icon(forFile: sv)
@@ -129,13 +137,15 @@ class ConfirmViewController: GenericViewController {
 			appImage.image = IconsManager.shared.getInstallerAppIconFrom(path: sa)
 			appName.stringValue = FileManager.default.displayName(atPath: sa)
 			
-			let vname = driveName.stringValue
-			
+			let reps = ["{driveName}" : driveName.stringValue]
+			/*
 			if sharedInstallMac{
-				warningField.stringValue = "If you go ahead, this app will modify the volume you selected \"\(vname)\", and macOS will be installed on it. If you are sure, continue at your own risk."
+				warningField.stringValue = "If you go ahead, this app will modify the volume you selected \"${driveName}\", and macOS will be installed on it. If you are sure, continue at your own risk."
 			}else{
-				warningField.stringValue = "If you go ahead, this app will erase \"\(vname)\"! All the data on it will be lost and replaced with the bootable macOS installer. If you are sure, continue at your own risk."
-			}
+				warningField.stringValue = "If you go ahead, this app will erase \"${driveName}\"! All the data on it will be lost and replaced with the bootable macOS installer. If you are sure, continue at your own risk."
+			}*/
+			
+			warningField.stringValue = parse(messange: TextManager.getViewString(context: self, stringID: "warningText"), keys: reps)
 			
 		}
 	}

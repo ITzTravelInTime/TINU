@@ -1,0 +1,570 @@
+
+/* Class = "NSTextFieldCell"; title = "Copyrigth Copyrigth"; ObjectID = "02w-3c-QF0"; */
+"02w-3c-QF0.title" = "Copyrigth Copyrigth";
+
+/* Class = "NSMenuItem"; title = "Find and Replace…"; ObjectID = "056-R6-Fz8"; */
+"056-R6-Fz8.title" = "Cerca e rimpiazza…";
+
+/* Class = "NSWindow"; title = "TINU: Why my storage device is not detected?"; ObjectID = "07X-dh-bE6"; */
+"07X-dh-bE6.title" = "TINU: Perchè il mio disco non viene riconosciuto?";
+
+/* Class = "NSWindow"; title = "TINU: Log"; ObjectID = "099-rA-qV0"; */
+"099-rA-qV0.title" = "TINU: Log";
+
+/* Class = "NSMenuItem"; title = "Process Log"; ObjectID = "09g-wy-2rt"; */
+"09g-wy-2rt.title" = "Log del processo";
+
+/* Class = "NSMenuItem"; title = "Use Selection for Find"; ObjectID = "144-fg-Jw3"; */
+"144-fg-Jw3.title" = "Usa selezione per trovare";
+
+/* Class = "NSMenu"; title = "Other Apps by Pietro Caruso"; ObjectID = "1A2-ia-PxP"; */
+"1A2-ia-PxP.title" = "Altre App di Pietro Caruso";
+
+/* Class = "NSTextFieldCell"; title = "Pietro Caruso (ITzTravelInTime)"; ObjectID = "1E2-eu-ixH"; */
+"1E2-eu-ixH.title" = "Pietro Caruso (ITzTravelInTime)";
+
+/* Class = "NSMenuItem"; title = "TINU"; ObjectID = "1Xt-HY-uBw"; */
+"1Xt-HY-uBw.title" = "TINU";
+
+/* Class = "NSButtonCell"; title = "Abort"; ObjectID = "1hi-sJ-Csl"; */
+"1hi-sJ-Csl.title" = "Annulla";
+
+/* Class = "NSTextFieldCell"; title = "Email:"; ObjectID = "2Lg-yP-iI3"; */
+"2Lg-yP-iI3.title" = "Email:";
+
+/* Class = "NSMenuItem"; title = "Smart Links"; ObjectID = "2Oh-Ap-SL5"; */
+"2Oh-Ap-SL5.title" = "Link intelligenti";
+
+/* Class = "NSMenuItem"; title = "Frequently asked questions (FAQs)"; ObjectID = "3Mm-4Z-mGB"; */
+"3Mm-4Z-mGB.title" = "Domande frequenti e dubbi (FAQs)";
+
+/* Class = "NSMenuItem"; title = "Transformations"; ObjectID = "48B-ou-pKI"; */
+"48B-ou-pKI.title" = "Transformazioni";
+
+/* Class = "NSButtonCell"; title = "Back"; ObjectID = "4rL-lS-4oB"; */
+"4rL-lS-4oB.title" = "Indietro";
+
+/* Class = "NSMenuItem"; title = "Quit TINU"; ObjectID = "4sb-4s-VLi"; */
+"4sb-4s-VLi.title" = "Esci da TINU";
+
+/* Class = "NSTextFieldCell"; title = "Bootable macOS installer created successfully"; ObjectID = "4yJ-rm-5jF"; */
+"4yJ-rm-5jF.title" = "Supporto di instasllazione di macOS creato con successo";
+
+/* Class = "NSToolbarItem"; label = "Share"; ObjectID = "5V4-xG-CjU"; */
+"5V4-xG-CjU.label" = "Condividi";
+
+/* Class = "NSToolbarItem"; paletteLabel = "Share"; ObjectID = "5V4-xG-CjU"; */
+"5V4-xG-CjU.paletteLabel" = "Condifividi";
+
+/* Class = "NSMenuItem"; title = "About TINU"; ObjectID = "5kV-Vb-QxS"; */
+"5kV-Vb-QxS.title" = "Info su TINU";
+
+/* Class = "NSMenuItem"; title = "Cut"; ObjectID = "5l0-LS-hzj"; */
+"5l0-LS-hzj.title" = "Taglia";
+
+/* Class = "NSTextFieldCell"; title = "Project links:"; ObjectID = "5yW-M5-GLB"; */
+"5yW-M5-GLB.title" = "Link del progetto:";
+
+/* Class = "NSTextFieldCell"; title = "This is a tool that helps you to create a macOS install media. Before starting you need:   - At least an 8 GB USB Flash Drive   - A copy of the macOS installer app (of any version starting from Mavericks) in your      /Applications folder or in the root of a storage device connected to the computer"; ObjectID = "6H1-Ij-pJT"; */
+"6H1-Ij-pJT.title" = "This is a tool that helps you to create a macOS install media. Before starting you need:   - At least an 8 GB USB Flash Drive   - A copy of the macOS installer app (of any version starting from Mavericks) in your      /Applications folder or in the root of a storage device connected to the computer";
+
+/* Class = "NSTextFieldCell"; title = "Pietro Caruso (ITzTravelInTime), Thomas Tempelmann"; ObjectID = "7vv-ZS-5eD"; */
+"7vv-ZS-5eD.title" = "Pietro Caruso (ITzTravelInTime), Thomas Tempelmann";
+
+/* Class = "NSMenuItem"; title = "Tools"; ObjectID = "89I-JN-t0I"; */
+"89I-JN-t0I.title" = "Strumenti";
+
+/* Class = "NSButtonCell"; title = "Back"; ObjectID = "ABt-eW-z5k"; */
+"ABt-eW-z5k.title" = "Indietro";
+
+/* Class = "NSMenuItem"; title = "Diagnostic Mode with Administrator Privileges"; ObjectID = "AEE-nJ-CZk"; */
+"AEE-nJ-CZk.title" = "Modalità diagnostica con privilegi di amministratore";
+
+/* Class = "NSToolbarItem"; label = "Save Log"; ObjectID = "AMe-9S-K90"; */
+"AMe-9S-K90.label" = "Salva Log";
+
+/* Class = "NSToolbarItem"; paletteLabel = "Save Log"; ObjectID = "AMe-9S-K90"; */
+"AMe-9S-K90.paletteLabel" = "Salva Log";
+
+/* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
+"AYu-sK-qS6.title" = "Menu principale";
+
+/* Class = "NSMenuItem"; title = "Check Document Now"; ObjectID = "Az0-pz-lsw"; */
+"Az0-pz-lsw.title" = "Controlla ora il documento";
+
+/* Class = "NSTextFieldCell"; title = "ITzTravelInTime on GitHub"; ObjectID = "B9x-q4-in1"; */
+"B9x-q4-in1.title" = "ITzTravelInTime su GitHub";
+
+/* Class = "NSButtonCell"; title = "Source code"; ObjectID = "C2J-4U-6T1"; */
+"C2J-4U-6T1.title" = "Codice sorgente";
+
+/* Class = "NSMenuItem"; title = "Delete"; ObjectID = "CNe-gx-6iB"; */
+"CNe-gx-6iB.title" = "Togli";
+
+/* Class = "NSMenuItem"; title = "Find Previous"; ObjectID = "Cbg-hr-3BE"; */
+"Cbg-hr-3BE.title" = "Cerca il precedente";
+
+/* Class = "NSButtonCell"; title = "Advanced Options"; ObjectID = "Cee-ja-TsS"; */
+"Cee-ja-TsS.title" = "Opzioni avanzate";
+
+/* Class = "NSTextFieldCell"; title = "Francesco Perchiazzi, Peter Paul Chato"; ObjectID = "DH7-Se-hcg"; */
+"DH7-Se-hcg.title" = "Francesco Perchiazzi, Peter Paul Chato";
+
+/* Class = "NSButtonCell"; title = "Refresh"; ObjectID = "DMF-RI-zJW"; */
+"DMF-RI-zJW.title" = "Aggiorna";
+
+/* Class = "NSButtonCell"; title = "Open..."; ObjectID = "Dlo-aK-QLS"; */
+"Dlo-aK-QLS.title" = "Apri...";
+
+/* Class = "NSMenuItem"; title = "Smart Dashes"; ObjectID = "DsQ-T1-hFl"; */
+"DsQ-T1-hFl.title" = "Smart Dashes";
+
+/* Class = "NSTextFieldCell"; title = "Hackintosh help (italian):"; ObjectID = "Egc-bw-b29"; */
+"Egc-bw-b29.title" = "Aiuto con Hackintosh (italiano):";
+
+/* Class = "NSButtonCell"; title = "Show Log"; ObjectID = "EkR-ry-Rdr"; */
+"EkR-ry-Rdr.title" = "Mostra Log";
+
+/* Class = "NSMenu"; title = "Help"; ObjectID = "F2S-fz-NVQ"; */
+"F2S-fz-NVQ.title" = "Aiuto";
+
+/* Class = "NSTextFieldCell"; title = "Discussion (Italian):"; ObjectID = "FCq-px-z8x"; */
+"FCq-px-z8x.title" = "Discussione (Italiano):";
+
+/* Class = "NSTextFieldCell"; title = "Icons:"; ObjectID = "FFu-la-Iyd"; */
+"FFu-la-Iyd.title" = "Icone:";
+
+/* Class = "NSButtonCell"; title = "Back"; ObjectID = "FJh-iT-s0n"; */
+"FJh-iT-s0n.title" = "Indietro";
+
+/* Class = "NSMenuItem"; title = "TINU Help"; ObjectID = "FKE-Sm-Kum"; */
+"FKE-Sm-Kum.title" = "Aiuto con TINU";
+
+/* Class = "NSButtonCell"; title = "Agree"; ObjectID = "FYN-or-Twm"; */
+"FYN-or-Twm.title" = "Accetta";
+
+/* Class = "NSMenuItem"; title = "Frequently Asked Questions (FAQs)"; ObjectID = "FbI-OH-25A"; */
+"FbI-OH-25A.title" = "Domande frequenti e dubbi (FAQs)";
+
+/* Class = "NSButtonCell"; title = "Get an installer"; ObjectID = "Fdy-fu-iW5"; */
+"Fdy-fu-iW5.title" = "Ottieni un installer di macOS";
+
+/* Class = "NSTextFieldCell"; title = "Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa"; ObjectID = "GPN-6Q-q2a"; */
+"GPN-6Q-q2a.title" = "Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa";
+
+/* Class = "NSTextFieldCell"; title = "Beta testing (English):"; ObjectID = "GPd-Ba-rrP"; */
+"GPd-Ba-rrP.title" = "Beta testing (Inglese):";
+
+/* Class = "NSTextFieldCell"; title = "Other related links:"; ObjectID = "GRO-s8-g4s"; */
+"GRO-s8-g4s.title" = "Altri link correlati:";
+
+/* Class = "NSMenuItem"; title = "EFI Partition Mounter"; ObjectID = "GbK-s1-Pag"; */
+"GbK-s1-Pag.title" = "EFI Partition Mounter";
+
+/* Class = "NSToolbarItem"; label = "Copy Log"; ObjectID = "H35-H9-wOQ"; */
+"H35-H9-wOQ.label" = "Copia Log";
+
+/* Class = "NSToolbarItem"; paletteLabel = "Copy Log"; ObjectID = "H35-H9-wOQ"; */
+"H35-H9-wOQ.paletteLabel" = "Copia Log";
+
+/* Class = "NSMenuItem"; title = "Text Replacement"; ObjectID = "HBj-E0-8LD"; */
+"HBj-E0-8LD.title" = "Rimpiazza Testo";
+
+/* Class = "NSWindow"; title = "TINU: Download a macOS installer app from the App Store"; ObjectID = "HOO-gR-4yR"; */
+"HOO-gR-4yR.title" = "TINU: Scarica un'app di installazione di macOS da App Store";
+
+/* Class = "NSTextFieldCell"; title = "Project creator:"; ObjectID = "Hej-ux-MBS"; */
+"Hej-ux-MBS.title" = "Creatore del progetto:";
+
+/* Class = "NSWindow"; title = "TINU"; ObjectID = "IQv-IB-iLA"; */
+"IQv-IB-iLA.title" = "TINU";
+
+/* Class = "NSMenuItem"; title = "Find…"; ObjectID = "JK4-SA-7My"; */
+"JK4-SA-7My.title" = "Cerca…";
+
+/* Class = "NSMenuItem"; title = "Substitutions"; ObjectID = "Jk8-1L-nXO"; */
+"Jk8-1L-nXO.title" = "Sostituzioni";
+
+/* Class = "NSTextFieldCell"; title = "Reddit profile:"; ObjectID = "K9v-Pm-o93"; */
+"K9v-Pm-o93.title" = "Profilo Reddit:";
+
+/* Class = "NSMenuItem"; title = "Show All"; ObjectID = "Kd2-mp-pUS"; */
+"Kd2-mp-pUS.title" = "Mostra tutto";
+
+/* Class = "NSButtonCell"; title = "Show log"; ObjectID = "KmI-hj-gwg"; */
+"KmI-hj-gwg.title" = "Mostra log";
+
+/* Class = "NSButtonCell"; title = "I have read and I agree to the terms and conditions of the license agreement"; ObjectID = "Kvb-ch-j7O"; */
+"Kvb-ch-j7O.title" = "Ho letto ed accetto i termini e le condizioni dell'accordo di licenza";
+
+/* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "LE2-aR-0XJ"; */
+"LE2-aR-0XJ.title" = "Porta tutto in primo piano";
+
+/* Class = "NSMenuItem"; title = "Other Apps by Pietro Caruso"; ObjectID = "LYj-L2-bAi"; */
+"LYj-L2-bAi.title" = "Altre App di Pietro Caruso";
+
+/* Class = "NSMenuItem"; title = "Find"; ObjectID = "LZN-j7-Fpu"; */
+"LZN-j7-Fpu.title" = "Cerca";
+
+/* Class = "NSMenuItem"; title = "Redo"; ObjectID = "Ln6-QT-5jo"; */
+"Ln6-QT-5jo.title" = "Rifai";
+
+/* Class = "NSButtonCell"; title = "Recommended Default Options"; ObjectID = "LuD-Qk-9it"; */
+"LuD-Qk-9it.title" = "Opzioni di default raccomandate";
+
+/* Class = "NSMenuItem"; title = "Speech"; ObjectID = "MFG-OD-f65"; */
+"MFG-OD-f65.title" = "Parla";
+
+/* Class = "NSTextFieldCell"; title = "GitHub profile:"; ObjectID = "MoD-aV-pdr"; */
+"MoD-aV-pdr.title" = "Profilo GitHub:";
+
+/* Class = "NSMenuItem"; title = "Smart Copy/Paste"; ObjectID = "NgD-xr-YAm"; */
+"NgD-xr-YAm.title" = "Copia/Incolla intelligente";
+
+/* Class = "NSMenuItem"; title = "Check Spelling While Typing"; ObjectID = "Np0-Um-TX5"; */
+"Np0-Um-TX5.title" = "Controlla ortografia mentre scrivi";
+
+/* Class = "NSMenuItem"; title = "Show Substitutions"; ObjectID = "ORA-1z-iNv"; */
+"ORA-1z-iNv.title" = "Mostra sostituzioni";
+
+/* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "OY7-WF-poV"; */
+"OY7-WF-poV.title" = "Riduci a icona";
+
+/* Class = "NSTextFieldCell"; title = "The recommended default options will: create the basic bootable macOS installer, apply the icon of the installer app on it, copy TINU on it, create the \"README\" file and will keep the original boot files"; ObjectID = "OkP-ff-ZIR"; */
+"OkP-ff-ZIR.title" = "Le opzioni di default raccomandate: creeranno il supporto di installazione di macOS, a cui verrà applicata l'icona dell'app di installazione, copieranno TINU sull'installer e creeranno il file \"README\".";
+
+/* Class = "NSMenuItem"; title = "Hide TINU"; ObjectID = "Olw-nP-bQN"; */
+"Olw-nP-bQN.title" = "Nascondi TINU";
+
+/* Class = "NSButtonCell"; title = "Back"; ObjectID = "P7b-LC-2nU"; */
+"P7b-LC-2nU.title" = "Indietro";
+
+/* Class = "NSButtonCell"; title = "Back"; ObjectID = "PCd-eA-jvC"; */
+"PCd-eA-jvC.title" = "Indietro";
+
+/* Class = "NSTextFieldCell"; title = "Credits:"; ObjectID = "Phu-dt-TGi"; */
+"Phu-dt-TGi.title" = "Riconoscimenti:";
+
+/* Class = "NSMenuItem"; title = "Stop Speaking"; ObjectID = "PxT-3t-uvA"; */
+"PxT-3t-uvA.title" = "Basta Parlare";
+
+/* Class = "NSMenuItem"; title = "Show Spelling and Grammar"; ObjectID = "QKe-av-lHo"; */
+"QKe-av-lHo.title" = "Mostra ortografia e grammatica";
+
+/* Class = "NSMenuItem"; title = "Zoom"; ObjectID = "R4o-n2-Eq4"; */
+"R4o-n2-Eq4.title" = "Zoom";
+
+/* Class = "NSMenuItem"; title = "Download macOS Installer"; ObjectID = "SkF-ZK-107"; */
+"SkF-ZK-107.title" = "Scarica un'app di installazione di macOS";
+
+/* Class = "NSMenuItem"; title = "Related to TINU"; ObjectID = "TBQ-DB-mnf"; */
+"TBQ-DB-mnf.title" = "Altro ...";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "TBZ-N3-HQO"; */
+"TBZ-N3-HQO.title" = "Annulla";
+
+/* Class = "NSButtonCell"; title = "Next"; ObjectID = "THr-DK-LlL"; */
+"THr-DK-LlL.title" = "Prossimo";
+
+/* Class = "NSMenu"; title = "Window"; ObjectID = "Td7-aD-5lo"; */
+"Td7-aD-5lo.title" = "Finestra";
+
+/* Class = "NSTextFieldCell"; title = "Hackintosh Italia (Italian):"; ObjectID = "ThU-kc-cIe"; */
+"ThU-kc-cIe.title" = "Hackintosh Italia (Italiano):";
+
+/* Class = "NSTextFieldCell"; title = "Development:"; ObjectID = "TvO-Ld-v0Z"; */
+"TvO-Ld-v0Z.title" = "Sviluppo:";
+
+/* Class = "NSMenu"; title = "Related to TINU"; ObjectID = "URd-Yp-HZH"; */
+"URd-Yp-HZH.title" = "Altro ...";
+
+/* Class = "NSTextFieldCell"; title = "TINU"; ObjectID = "V4U-oN-2Lt"; */
+"V4U-oN-2Lt.title" = "TINU";
+
+/* Class = "NSToolbarItem"; label = "Save Log"; ObjectID = "VGs-cV-tWl"; */
+"VGs-cV-tWl.label" = "Salva Log";
+
+/* Class = "NSToolbarItem"; paletteLabel = "Save Log"; ObjectID = "VGs-cV-tWl"; */
+"VGs-cV-tWl.paletteLabel" = "Salva Log";
+
+/* Class = "NSMenuItem"; title = "Copy"; ObjectID = "VHd-vs-CGw"; */
+"VHd-vs-CGw.title" = "Copia";
+
+/* Class = "NSTextFieldCell"; title = "Drive name"; ObjectID = "VWt-2c-U1N"; */
+"VWt-2c-U1N.title" = "Drive name";
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Vdr-fp-XzO"; */
+"Vdr-fp-XzO.title" = "Nascondi gli altri";
+
+/* Class = "NSTextFieldCell"; title = "Discussion on hackintosh-froum.de:"; ObjectID = "Vvp-bt-y01"; */
+"Vvp-bt-y01.title" = "Discussione su hackintosh-froum.de:";
+
+/* Class = "NSMenuItem"; title = "Correct Spelling Automatically"; ObjectID = "XHr-xK-oLY"; */
+"XHr-xK-oLY.title" = "Correggi ortografia automaticamente";
+
+/* Class = "NSTextFieldCell"; title = "Ermanno Nicoletti, Tommaso Dimatore, Massimiliano Faralli"; ObjectID = "Y6d-QA-zNU"; */
+"Y6d-QA-zNU.title" = "Ermanno Nicoletti, Tommaso Dimatore, Massimiliano Faralli";
+
+/* Class = "NSTextFieldCell"; title = "Volume name (eventually the drive stuff)"; ObjectID = "YHI-5B-JI7"; */
+"YHI-5B-JI7.title" = "Volume name (eventually the drive stuff)";
+
+/* Class = "NSMenuItem"; title = "Data Detectors"; ObjectID = "YNo-bD-ece"; */
+"YNo-bD-ece.title" = "Riconoscitori di informazione";
+
+/* Class = "NSMenuItem"; title = "Make Upper Case"; ObjectID = "YU9-IL-oQT"; */
+"YU9-IL-oQT.title" = "Rendi maiuscolo";
+
+/* Class = "NSMenuItem"; title = "Find Next"; ObjectID = "YYE-X0-3ks"; */
+"YYE-X0-3ks.title" = "Trova il prossimo";
+
+/* Class = "NSTextFieldCell"; title = "App name"; ObjectID = "YvN-gT-AfX"; */
+"YvN-gT-AfX.title" = "App name";
+
+/* Class = "NSMenuItem"; title = "Contact us"; ObjectID = "Yz5-Q0-A5t"; */
+"Yz5-Q0-A5t.title" = "Contattaci";
+
+/* Class = "NSTextFieldCell"; title = "/u/ITzTravelInTime"; ObjectID = "ZKW-1x-LjN"; */
+"ZKW-1x-LjN.title" = "/u/ITzTravelInTime";
+
+/* Class = "NSButtonCell"; title = "Next"; ObjectID = "a0x-CO-HTC"; */
+"a0x-CO-HTC.title" = "Prossimo";
+
+/* Class = "NSMenuItem"; title = "Window"; ObjectID = "aUF-d1-5bR"; */
+"aUF-d1-5bR.title" = "Finestra";
+
+/* Class = "NSMenuItem"; title = "Start Speaking"; ObjectID = "aeD-cf-PpO"; */
+"aeD-cf-PpO.title" = "Inizia a parlare";
+
+/* Class = "NSButtonCell"; title = "Set default options"; ObjectID = "aqu-C3-g9T"; */
+"aqu-C3-g9T.title" = "Ripristina default";
+
+/* Class = "NSTextFieldCell"; title = "TINU"; ObjectID = "b2L-ht-3Hn"; */
+"b2L-ht-3Hn.title" = "TINU";
+
+/* Class = "NSTextFieldCell"; title = "A USB thumb drive or a partition of 8 GB or higher (9 GB or higher for Catalina, 13 GB or higher for Big Sur)"; ObjectID = "bCX-Qv-gRK"; */
+"bCX-Qv-gRK.title" = "Una chiavetta USB o una partizione libera di almeno 8 GB (9 GB o più per Catalina, 13 GB o più per Big Sur)";
+
+/* Class = "NSButtonCell"; title = "Next"; ObjectID = "bOe-U7-jRg"; */
+"bOe-U7-jRg.title" = "Prossimo";
+
+/* Class = "NSTextFieldCell"; title = "Discussion (English):"; ObjectID = "bVL-S9-CMT"; */
+"bVL-S9-CMT.title" = "Discussione (Inglese):";
+
+/* Class = "NSButtonCell"; title = "Proceed"; ObjectID = "bb4-vA-5ig"; */
+"bb4-vA-5ig.title" = "Procedi";
+
+/* Class = "NSMenuItem"; title = "Select All"; ObjectID = "bgf-uF-dnL"; */
+"bgf-uF-dnL.title" = "Seleziona Tutto";
+
+/* Class = "NSTextFieldCell"; title = "TINU"; ObjectID = "cOP-TG-xxX"; */
+"cOP-TG-xxX.title" = "TINU";
+
+/* Class = "NSTextFieldCell"; title = "Version: "; ObjectID = "cbv-XH-G2E"; */
+"cbv-XH-G2E.title" = "Versione: ";
+
+/* Class = "NSTextFieldCell"; title = "Apple (macOS system Icons), Pablo Melo prcmelo@gmail.com (EFI Partition Mounter Icon)"; ObjectID = "cdb-AU-e6h"; */
+"cdb-AU-e6h.title" = "Apple (Icone di systema di macOS), Pablo Melo prcmelo@gmail.com (Icona di EFI Partition Mounter)";
+
+/* Class = "NSButtonCell"; title = "Close"; ObjectID = "dA4-Vh-7dJ"; */
+"dA4-Vh-7dJ.title" = "Chiudi";
+
+/* Class = "NSTextFieldCell"; title = "Hackintosh Italia on Telegram"; ObjectID = "dIy-XZ-Hcc"; */
+"dIy-XZ-Hcc.title" = "Hackintosh Italia su Telegram";
+
+/* Class = "NSTextFieldCell"; title = "Hackintosh Italia on Telegram for using TINU"; ObjectID = "dQh-zU-FdC"; */
+"dQh-zU-FdC.title" = "Hackintosh Italia su Telegram per usare TINU";
+
+/* Class = "NSMenu"; title = "Transformations"; ObjectID = "dnE-Qf-GqW"; */
+"dnE-Qf-GqW.title" = "Transformazioni";
+
+/* Class = "NSMenu"; title = "Spelling"; ObjectID = "eIp-3f-OVb"; */
+"eIp-3f-OVb.title" = "Ortigrafia";
+
+/* Class = "NSMenu"; title = "Substitutions"; ObjectID = "eQw-E3-zvx"; */
+"eQw-E3-zvx.title" = "Sostituzioni";
+
+/* Class = "NSMenuItem"; title = "Jump to Selection"; ObjectID = "f25-bo-ZvP"; */
+"f25-bo-ZvP.title" = "Salta a selezione";
+
+/* Class = "NSMenuItem"; title = "About TINU"; ObjectID = "fU6-gA-1jk"; */
+"fU6-gA-1jk.title" = "Info su TINU";
+
+/* Class = "NSButtonCell"; title = "Refresh"; ObjectID = "fUs-ga-2h0"; */
+"fUs-ga-2h0.title" = "Aggiorna";
+
+/* Class = "NSTextFieldCell"; title = "TINU Is Not Unib***t: The macOS tool"; ObjectID = "fdv-Os-iG9"; */
+"fdv-Os-iG9.title" = "TINU Is Not Unib***t: The macOS tool";
+
+/* Class = "NSMenuItem"; title = "Smart Quotes"; ObjectID = "fk0-FT-3aJ"; */
+"fk0-FT-3aJ.title" = "Virgolette intelligenti";
+
+/* Class = "NSTextFieldCell"; title = "Italian Hackintosh group!!! on Facebook"; ObjectID = "g4Q-wX-rQw"; */
+"g4Q-wX-rQw.title" = "Italian Hackintosh group!!! su Facebook";
+
+/* Class = "NSMenuItem"; title = "Capitalize"; ObjectID = "gM0-Sx-WJt"; */
+"gM0-Sx-WJt.title" = "Rendi maiuscolo";
+
+/* Class = "NSButtonCell"; title = "Back"; ObjectID = "ggZ-II-gV4"; */
+"ggZ-II-gV4.title" = "Indietro";
+
+/* Class = "NSMenuItem"; title = "EFI partition mounter"; ObjectID = "h6A-oj-VQy"; */
+"h6A-oj-VQy.title" = "EFI partition mounter";
+
+/* Class = "NSMenu"; title = "Edit"; ObjectID = "hUl-5K-890"; */
+"hUl-5K-890.title" = "Modifica";
+
+/* Class = "NSWindow"; title = "TINU: contacts"; ObjectID = "i0U-Qi-tQe"; */
+"i0U-Qi-tQe.title" = "TINU: contatti";
+
+/* Class = "NSTextFieldCell"; title = "piecaruso97@gmail.com"; ObjectID = "i1Y-56-9xB"; */
+"i1Y-56-9xB.title" = "piecaruso97@gmail.com";
+
+/* Class = "NSMenuItem"; title = "Source code on GITHub"; ObjectID = "i9l-T5-q7n"; */
+"i9l-T5-q7n.title" = "Codice sorgente su GITHub";
+
+/* Class = "NSButtonCell"; title = "Quit"; ObjectID = "jGf-Z4-UwF"; */
+"jGf-Z4-UwF.title" = "Esci";
+
+/* Class = "NSToolbarItem"; label = "Copy Log"; ObjectID = "jHC-wI-0sg"; */
+"jHC-wI-0sg.label" = "Copia Log";
+
+/* Class = "NSToolbarItem"; paletteLabel = "Copy Log"; ObjectID = "jHC-wI-0sg"; */
+"jHC-wI-0sg.paletteLabel" = "Copia Log";
+
+/* Class = "NSMenuItem"; title = "Paste"; ObjectID = "k1n-38-Yy8"; */
+"k1n-38-Yy8.title" = "Incolla";
+
+/* Class = "NSTextFieldCell"; title = "Please wait and leave the window as is"; ObjectID = "k4d-Tc-ALr"; */
+"k4d-Tc-ALr.title" = "Perfavore aspetta e lascia la finestra com'è";
+
+/* Class = "NSMenuItem"; title = "VoodooTSCSync Configurator"; ObjectID = "k82-L9-FHg"; */
+"k82-L9-FHg.title" = "VoodooTSCSync Configurator";
+
+/* Class = "NSTextFieldCell"; title = "Speacial thanks to:"; ObjectID = "mNh-1f-wsf"; */
+"mNh-1f-wsf.title" = "Un grazie speciale a:";
+
+/* Class = "NSTextFieldCell"; title = "Insanelymac.com profile:"; ObjectID = "mhZ-50-Yxj"; */
+"mhZ-50-Yxj.title" = "Profilo di insanelymac.com:";
+
+/* Class = "NSButtonCell"; title = "Close"; ObjectID = "mo2-Gg-3xB"; */
+"mo2-Gg-3xB.title" = "Chiudi";
+
+/* Class = "NSButtonCell"; title = "Main menu"; ObjectID = "nYR-DT-CGo"; */
+"nYR-DT-CGo.title" = "Menù principale";
+
+/* Class = "NSMenuItem"; title = "Make Lower Case"; ObjectID = "nlr-qw-t5w"; */
+"nlr-qw-t5w.title" = "Rendi minuscolo";
+
+/* Class = "NSMenu"; title = "Speech"; ObjectID = "npr-VC-upM"; */
+"npr-VC-upM.title" = "Pronuncia";
+
+/* Class = "NSTextFieldCell"; title = "Michele Vitiello Bonaventura, Giorglio Dall'Aglio, Davide Dessí"; ObjectID = "oMO-Hx-Iin"; */
+"oMO-Hx-Iin.title" = "Michele Vitiello Bonaventura, Giorglio Dall'Aglio, Davide Dessí";
+
+/* Class = "NSTextFieldCell"; title = "TINU on insanelymac (ITA)"; ObjectID = "oQJ-95-zja"; */
+"oQJ-95-zja.title" = "TINU su insanelymac (ITA)";
+
+/* Class = "NSTextFieldCell"; title = "text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text "; ObjectID = "oU9-zq-2aK"; */
+"oU9-zq-2aK.title" = "text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text  text ";
+
+/* Class = "NSTextFieldCell"; title = "TINU on insanelymac (EN)"; ObjectID = "ohg-Ii-b6n"; */
+"ohg-Ii-b6n.title" = "TINU su insanelymac (EN)";
+
+/* Class = "NSTextFieldCell"; title = "Activity Activity"; ObjectID = "p0j-m2-lzA"; */
+"p0j-m2-lzA.title" = "Activity Activity";
+
+/* Class = "NSButtonCell"; title = "Yes, I understand"; ObjectID = "p9c-xq-qE9"; */
+"p9c-xq-qE9.title" = "Si, capisco";
+
+/* Class = "NSTextFieldCell"; title = "A macOS installer app downloaded from the App Store (OS X Mavericks or a more recent version is required)"; ObjectID = "qFD-Oz-njI"; */
+"qFD-Oz-njI.title" = "Un'app di installazione di macOS scaricata da App Store (è richiesta un'app di OS X Mavericks o di una versione più recente)";
+
+/* Class = "NSWindow"; title = "TINU: credits"; ObjectID = "qfy-fU-dmC"; */
+"qfy-fU-dmC.title" = "TINU: Riconoscimenti";
+
+/* Class = "NSMenuItem"; title = "Discussion (Italian)"; ObjectID = "qkb-CO-bYt"; */
+"qkb-CO-bYt.title" = "Discussione (Italiano)";
+
+/* Class = "NSMenuItem"; title = "Diagnostic Mode"; ObjectID = "qpo-04-kkH"; */
+"qpo-04-kkH.title" = "Modalità diagnostica";
+
+/* Class = "NSButtonCell"; title = "Contact us"; ObjectID = "quU-KF-LqR"; */
+"quU-KF-LqR.title" = "Contattaci";
+
+/* Class = "NSButtonCell"; title = "Back"; ObjectID = "r7I-fo-ahn"; */
+"r7I-fo-ahn.title" = "Indietro";
+
+/* Class = "NSMenuItem"; title = "Paste and Match Style"; ObjectID = "rCz-bk-VkD"; */
+"rCz-bk-VkD.title" = "Incolla e usa uno stile che combacia";
+
+/* Class = "NSButtonCell"; title = "Get a macOS installer"; ObjectID = "rsx-ub-CVy"; */
+"rsx-ub-CVy.title" = "Ottieni un'app di installazione di macOS";
+
+/* Class = "NSMenuItem"; title = "Why is my storage device not detected?"; ObjectID = "t4Z-eO-Otu"; */
+"t4Z-eO-Otu.title" = "Perchè il mio disco non viene riconosciuto?";
+
+/* Class = "NSTextFieldCell"; title = "Italian hackintosh group!!! on Facebook for testing"; ObjectID = "tTo-33-TWD"; */
+"tTo-33-TWD.title" = "Italian hackintosh group!!! su Facebook per il testing";
+
+/* Class = "NSButtonCell"; title = "Back"; ObjectID = "tdV-vD-PRM"; */
+"tdV-vD-PRM.title" = "Indietro";
+
+/* Class = "NSMenu"; title = "TINU"; ObjectID = "uQy-DD-JDr"; */
+"uQy-DD-JDr.title" = "TINU";
+
+/* Class = "NSTextFieldCell"; title = "Issues report:"; ObjectID = "vKF-dh-I2L"; */
+"vKF-dh-I2L.title" = "Segnala un problema:";
+
+/* Class = "NSMenuItem"; title = "Spelling and Grammar"; ObjectID = "vVP-uR-5LX"; */
+"vVP-uR-5LX.title" = "Ortografia e grammatica";
+
+/* Class = "NSTextFieldCell"; title = "App name"; ObjectID = "wFv-yX-XMF"; */
+"wFv-yX-XMF.title" = "Nome App";
+
+/* Class = "NSTextFieldCell"; title = "Bootable macOS installer creation log:"; ObjectID = "wXT-Ka-AVY"; */
+"wXT-Ka-AVY.title" = "Log del processo di creazione del supprto di installazione di macOS:";
+
+/* Class = "NSButtonCell"; title = "Back"; ObjectID = "wZj-Dm-Jzz"; */
+"wZj-Dm-Jzz.title" = "Indietro";
+
+/* Class = "NSMenuItem"; title = "Help"; ObjectID = "wpr-3q-Mcd"; */
+"wpr-3q-Mcd.title" = "Aiuto";
+
+/* Class = "NSTextFieldCell"; title = "TINU Beta testing on Telegram"; ObjectID = "wtl-f5-tKW"; */
+"wtl-f5-tKW.title" = "TINU Beta testing su Telegram";
+
+/* Class = "NSMenuItem"; title = "Discussion (English)"; ObjectID = "xmZ-Va-1RL"; */
+"xmZ-Va-1RL.title" = "Discussione (Inglese)";
+
+/* Class = "NSTextFieldCell"; title = "TINU's issues report on GitHub"; ObjectID = "ycM-Oc-r3R"; */
+"ycM-Oc-r3R.title" = "Segnala un problema su GitHub";
+
+/* Class = "NSMenuItem"; title = "Check Grammar With Spelling"; ObjectID = "yiN-Qk-nut"; */
+"yiN-Qk-nut.title" = "Controlla grammatica con ortografia";
+
+/* Class = "NSTextFieldCell"; title = "TINU on hackintosh-forum.de"; ObjectID = "yvR-rs-KrU"; */
+"yvR-rs-KrU.title" = "TINU su hackintosh-forum.de";
+
+/* Class = "NSMenuItem"; title = "Use TINU to Install MacOS"; ObjectID = "yxk-al-dbr"; */
+"yxk-al-dbr.title" = "Usa TINU per installare MacOS";
+
+/* Class = "NSMenuItem"; title = "Undo"; ObjectID = "z3y-9b-TZk"; */
+"z3y-9b-TZk.title" = "Annulla";
+
+/* Class = "NSToolbarItem"; label = "Share"; ObjectID = "zgF-8l-bYF"; */
+"zgF-8l-bYF.label" = "Condividi";
+
+/* Class = "NSToolbarItem"; paletteLabel = "Share"; ObjectID = "zgF-8l-bYF"; */
+"zgF-8l-bYF.paletteLabel" = "Condividi";
+
+/* Class = "NSMenu"; title = "Find"; ObjectID = "zln-Gc-Iqz"; */
+"zln-Gc-Iqz.title" = "Cerca";
+
+/* Class = "NSButtonCell"; title = "Options"; ObjectID = "zmV-YO-NLF"; */
+"zmV-YO-NLF.title" = "Opzioni";
+
+/* Class = "NSMenuItem"; title = "Edit"; ObjectID = "zmp-Bl-byG"; */
+"zmp-Bl-byG.title" = "Modifica";
+
+/* Class = "NSMenu"; title = "Tools"; ObjectID = "zyp-Xz-sYh"; */
+"zyp-Xz-sYh.title" = "Strumenti";

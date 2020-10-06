@@ -9,7 +9,9 @@
 import Cocoa
 import SecurityFoundation
 
-class InstallingViewController: GenericViewController{
+class InstallingViewController: GenericViewController, ViewID{
+	let id: String = "InstallingViewController"
+	
 	@IBOutlet weak var driveName: NSTextField!
 	@IBOutlet weak var driveImage: NSImageView!
 	
@@ -22,7 +24,8 @@ class InstallingViewController: GenericViewController{
 	
 	@IBOutlet weak var activityLabel: NSTextField!
 	
-	@IBOutlet weak var cancelButton: NSButton!
+    @IBOutlet weak var showLogButton: NSButton!
+    @IBOutlet weak var cancelButton: NSButton!
 	
 	//@IBOutlet weak var infoImageView: NSImageView!
 	
@@ -32,7 +35,12 @@ class InstallingViewController: GenericViewController{
 		super.viewDidLoad()
 		// Do view setup here.
 		
-		self.setTitleLabel(text: "Bootable macOS installer creation")
+		//self.setTitleLabel(text: "Bootable macOS installer creation")
+		self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "title"))
+		self.cancelButton.title = TextManager.getViewString(context: self, stringID: "cancelButton")
+        self.showLogButton.title = TextManager.getViewString(context: self, stringID: "showLogButton")
+        self.descriptionField.stringValue = TextManager.getViewString(context: self, stringID: "descriptionField")
+		
 		self.showTitleLabel()
 		
 		//disable the close button of the window
@@ -45,14 +53,16 @@ class InstallingViewController: GenericViewController{
 		//infoImageView.image = IconsManager.shared.infoIcon
 		
 		//setup of the window if the app is in install macOS mode
-		if sharedInstallMac{
+		//if sharedInstallMac{
 			//descriptionField.stringValue = "macOS installation in progress, please wait until the computer reboots and leave the windows as is, after that you should boot from \"macOS install\""
 			
-			titleLabel.stringValue = "macOS installation in progress"
-		}
+			//titleLabel.stringValue = "macOS installation in progress"
+		//}
 		
+		//initialization
 		activityLabel.stringValue = ""
 		
+		//placeholder values
 		self.setProgressMax(1000)
 		
 		self.setProgressValue(0)
@@ -66,7 +76,9 @@ class InstallingViewController: GenericViewController{
 		print("* PROCESS STARTED *")
 		print("*******************")
 		
-		setActivityLabelText("Checking installer appilcation")
+		setActivityLabelText("activityLabel1")
+		
+		//setActivityLabelText("Checking installer appilcation")
 		
 		print("process window opened")
 		
@@ -78,11 +90,18 @@ class InstallingViewController: GenericViewController{
 		var state = false
 		
 		if !simulateInstallGetDataFail{
-			state = !checkSate(&drive)
+			state = !checkProcessReadySate(&drive)
 		}
 		
 		if state {
-			setActivityLabelText("Error with inst. app or target drive")
+			
+			
+			
+			//setActivityLabelText("Error with inst. app or target drive")
+			
+			setActivityLabelText("activityLabel2")
+			
+			
 			log("Couldn't get valid info about the installer app and/or the drive")
 			//temporary dialong util a soulution for the go back in the view controller problem is solved
 			/*if !dialogYesNoWarning(question: "Quit the app?", text: "There was an error while trying to get drive or installer app data, do you want to quit the app?", style: .critical){
@@ -101,7 +120,7 @@ class InstallingViewController: GenericViewController{
 		if drive{
 			driveImage.image = IconsManager.shared.removableDiskIcon
 			driveName.stringValue = dm.getCurrentDriveName()!
-			self.setTitleLabel(text: "The drive and macOS installer below will be used, are you sure?")
+			//self.setTitleLabel(text: "The drive and macOS installer below will be used, are you sure?")
 		}else{
 			let sv = cm.sharedVolume!
 			driveImage.image = NSWorkspace.shared().icon(forFile: sv)
@@ -141,17 +160,12 @@ class InstallingViewController: GenericViewController{
 		InstallMediaCreationManager.shared.makeProcessNotInExecution()
 	}
 	
-	func goToFinalScreen(title: String, success: Bool){
+	func goToFinalScreen(title: String, success: Bool = false){
 		//this code opens the final window
 		log("Bootable macOS installer creation process ended")
 		//resets window and auths
 		restoreWindow()
 		
-		if !success{
-			self.setActivityLabelText("Process failure")
-		}
-		
-		//fixes shared variables
 		FinalScreenSmallManager.shared.title = title
 		FinalScreenSmallManager.shared.isOk = success
 		
@@ -164,24 +178,39 @@ class InstallingViewController: GenericViewController{
 		self.sawpCurrentViewController(with: "MainDone")
 	}
 	
+	func goToFinalScreen(id: String, success: Bool = false, parseList: [String: String]! = nil){
+		//this code opens the final window
+		log("Bootable macOS installer creation process ended\n\n  Ending messange id: \(id)\n  Ending success: \(success ? "Yes" : "No")")
+		//resets window and auths
+		restoreWindow()
+		
+		
+		
+		var etitle = TextManager.getViewString(context: self, stringID: id)!
+		
+		if let list = parseList{
+			etitle = parse(messange: etitle, keys: list)
+		}
+		
+		goToFinalScreen(title: etitle, success: success)
+	}
+	
 	func goBack(){
 		//this code opens the previus window
 		
-		if (CreateinstallmediaSmallManager.shared.sharedIsBusy) && !sharedIsOnRecovery{
-			
+		if (CreateinstallmediaSmallManager.shared.sharedIsBusy){
+			/*
 			let notification = NSUserNotification()
 			
 			notification.title = "TINU: bootable macOS installer creation canceled"
 			notification.informativeText = "The creation of the bootable macOS installer has been canceled, please check the TINU window if you want to try again"
 			notification.contentImage = IconsManager.shared.warningIcon
 			
-			notification.hasActionButton = true
-			
-			notification.actionButtonTitle = "Close"
-			
 			notification.soundName = NSUserNotificationDefaultSoundName
 			NSUserNotificationCenter.default.deliver(notification)
+			*/
 			
+			let _ = NotificationsManager.sendWith(id: "goBack", image: nil)
 		}
 		
 		//resets window and auths
@@ -204,7 +233,10 @@ class InstallingViewController: GenericViewController{
 				}
 			}else{
 				log("Error while trying to close " + sharedExecutableName + " try to stop it from the termianl or from Activity monitor")
-				msgBoxWarning("Error while trying to exit from the process", "There was an error while trying to close the creation process: \n\nFailed to stop " + sharedExecutableName + " process")
+				let list = ["{executable}" : sharedExecutableName]
+				//msgBoxWarning("Error while trying to exit from the process", "There was an error while trying to close the creation process: \n\nFailed to stop ${executable} process")
+				
+				msgboxWithManager(self, name: "stopError", parseList: list)
 			}
 		}
 	}
@@ -235,7 +267,9 @@ class InstallingViewController: GenericViewController{
 		#endif
 	}
 	
-	public func setActivityLabelText(_ text: String){
+	public func setActivityLabelText(_ texta: String){
+		let list = ["{executable}" : sharedExecutableName]
+		let text = parse(messange: TextManager.getViewString(context: self, stringID: texta)!, keys: list)
 		self.activityLabel.stringValue = text
 		print("Set activity label text: \(text)")
 	}

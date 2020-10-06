@@ -9,7 +9,10 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate, ViewID {
+	
+	let id: String = "AppDelegate"
+	
     @IBOutlet weak var verboseItemSudo: NSMenuItem!
 	@IBOutlet weak var verboseItem: NSMenuItem!
     //@IBOutlet weak var vibrantButton: NSMenuItem!
@@ -35,6 +38,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	private var useChange = true
 	#endif
 	
+	func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
+		return true
+	}
+	
 	func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true
     }
@@ -43,7 +50,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		log("Should terminate called")
 		
         if CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress{
-            msgBoxWarning("You can't quit now", "You can't quit from TINU now, wait for the first part of the process to end or press the cancel button on the windows that asks for the password, and then quit if you want")
+            //msgBoxWarning("You can't quit now", "You can't quit from TINU now, wait for the first part of the process to end or press the cancel button on the windows that asks for the password, and then quit if you want")
+			msgboxWithManager(self, name: "cantQuiNow")
             return NSApplicationTerminateReply.terminateCancel
         }else if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress{
 			var spd: Bool!
@@ -66,6 +74,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+		
+		NSUserNotificationCenter.default.delegate = self
 		
 		toolsMenuItem.isEnabled = true
 		toolsMenuItem.isHidden = false
@@ -98,11 +108,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			toolsMenuItem.isHidden = true
 		#endif
 		
-        if Bundle.main.url(forResource: "License", withExtension: "rtf") == nil{
-            sharedShowLicense = false
+		sharedShowLicense = (Bundle.main.url(forResource: "License", withExtension: "rtf") != nil)
+		
+		if sharedShowLicense{
             print("License agreement file not found")
         }else{
-            sharedShowLicense = true
             print("License agreement file found")
         }
 		
@@ -116,12 +126,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to tear down your application
         
         if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress{
+			
+			let list = ["{executable}" : sharedExecutableName]
 			if let s = InstallMediaCreationManager.shared.stop(){
-				if s{
-					msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
+				if !s{
+					//msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
+					
+					msgboxWithManager(self, name: "stopFailed", parseList: list)
+					log("Quit error 1")
 				}
 			}else{
-				msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
+				//msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
+				
+				msgboxWithManager(self, name: "stopFailed", parseList: list)
+				log("Quit error 2")
 			}
         }
     }
@@ -137,12 +155,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if !(CreateinstallmediaSmallManager.shared.sharedIsBusy){
 			
             sharedInstallMac = isInstall
-			
+			/*
             if sharedInstallMac{
                 InstallMacOSItem.title = "Use TINU to create a bootable macOS installer"
             }else{
                 InstallMacOSItem.title = "Use TINU to install macOS"
-            }
+            }*/
+			
+			InstallMacOSItem.title = TextManager.getViewString(context: self, stringID: "switchText")
+			
             sharedWindow.contentViewController?.sawpCurrentViewController(with: "Info")
 			
             //restoreOtherOptions()
@@ -183,31 +204,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         creditsWindowController?.showWindow(self)
         
     }
-	
-	/*
-	@IBAction func checkVibrantLook(_ sender: Any) {
-		if sharedUseVibrant{
-			sharedUseVibrant = false
-			vibrantButton.state = 0
-		}else{
-			sharedUseVibrant = true
-			vibrantButton.state = 1
-		}
-		
-		focusAreaItem.isEnabled = sharedUseVibrant
-		
-	}
-	
-	@IBAction func checkFocusArea(_ sender: Any) {
-		if canUseVibrantLook{
-			if sharedUseFocusArea{
-				focusAreaItem.state = 0
-			}else{
-				focusAreaItem.state = 1
-			}
-			sharedUseFocusArea = !sharedUseFocusArea
-		}
-	}*/
 	
 	@IBAction func openEFIPartitionTool(_ sender: Any) {
 		

@@ -52,7 +52,8 @@ public final class LogManager{
 	}
 	
 	//resets the initial state of the log control
-	@inline(__always) public class func clearLog(){
+	@inline(__always) public class func clearLog(_ printBanner: Bool = false){
+		
 		logs.removeAll()
 		logs = []
 		
@@ -61,6 +62,10 @@ public final class LogManager{
 			if (lw.window?.isVisible)!{
 				logHasBeenUpdated = true
 			}
+		}
+		
+		if printBanner{
+			log(AppBanner.banner)
 		}
 	}
 #endif

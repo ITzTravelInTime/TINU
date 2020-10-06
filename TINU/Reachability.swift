@@ -6,6 +6,7 @@
 //  Copyright © 2018 Pietro Caruso. All rights reserved.
 //
 
+/*
 import Foundation
 import SystemConfiguration
 
@@ -28,3 +29,4 @@ public class Reachability {
 	}
 	
 }
+*/

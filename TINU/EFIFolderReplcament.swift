@@ -114,7 +114,7 @@ public class EFIReplacementView: NSView, ViewID{
 		self.addSubview(checkImage)
 		
 		//buttons
-		openButton.title = "Choose Folder ..."
+		openButton.title = TextManager.getViewString(context: self, stringID: "buttonChoose")
 		openButton.bezelStyle = .rounded
 		openButton.setButtonType(.momentaryPushIn)
 		
@@ -129,7 +129,7 @@ public class EFIReplacementView: NSView, ViewID{
 		
 		self.addSubview(openButton)
 		
-		resetButton.title = "Remove"
+		resetButton.title = TextManager.getViewString(context: self, stringID: "buttonRemoove")
 		resetButton.bezelStyle = .rounded
 		resetButton.setButtonType(.momentaryPushIn)
 		
@@ -173,7 +173,9 @@ public class EFIReplacementView: NSView, ViewID{
 								DispatchQueue.main.async {
 									
 									//is this really usefoul or needed? can this be better?
-									msgBoxWarning(TextManager!.getViewString(context: self, stringID: "errorDialogTitle")!, TextManager!.getViewString(context: self, stringID: "errorDialog")!)
+									//msgBoxWarning(TextManager!.getViewString(context: self, stringID: "errorDialogTitle")!, TextManager!.getViewString(context: self, stringID: "errorDialog")!)
+									
+									msgboxWithManager(self, name: "errorDialog")
 								}
 							}else{
 								DispatchQueue.main.sync {
@@ -185,12 +187,14 @@ public class EFIReplacementView: NSView, ViewID{
 								
 								let replaceList = ["{path}": open.urls.first!.path, "{pathName}": open.urls.first!.lastPathComponent, "{bootloader}": self.bootloader.rawValue, "{missing}" : EFIFolderReplacementManager.shared.missingFileFromOpenedFolder!]
 								
-								let title = parse(messange: TextManager!.getViewString(context: self, stringID: "improperDialogTitle")!, keys: replaceList)
-								let messange = parse(messange: TextManager!.getViewString(context: self, stringID: "improperDialog")!, keys: replaceList)
+								//let title = parse(messange: TextManager!.getViewString(context: self, stringID: "improperDialogTitle")!, keys: replaceList)
+								//let messange = parse(messange: TextManager!.getViewString(context: self, stringID: "improperDialog")!, keys: replaceList)
 								
 								//msgBoxWarning("The folder \"\(open.urls.first!.path)\" is not a proper \(self.bootloader.rawValue) efi folder", "The folder you selected \"\(open.urls.first!.path)\" does not contain the required element \"\(EFIFolderReplacementManager.shared.missingFileFromOpenedFolder!)\", make sure to open just the folder named EFI and that it cointains all the needed elements")
 								
-								msgBoxWarning(title, messange)
+								//msgBoxWarning(title, messange)
+								
+								msgboxWithManager(self, name: "improperDialog", parseList: replaceList)
 								
 								EFIFolderReplacementManager.shared.resetMissingFileFromOpenedFolder()
 								
@@ -247,7 +251,12 @@ public class EFIReplacementView: NSView, ViewID{
 				let t = EFIFolderReplacementManager.shared.currentEFIFolderType.rawValue
 				
 				//this is still imprecise because it doesn't accounts for the usage of the h as the first letter, but for now it's enought
-				pathLabel.stringValue = "You have alreay chosen " + (t.first!.isVowel() ? "an " : "a ") + t + " EFI folder"
+				
+				let replist = ["{bootloader}" : t]
+				
+				pathLabel.stringValue =  parse(messange: TextManager.getViewString(context: self, stringID: "alreadyChoosen"), keys: replist)
+				
+				//pathLabel.stringValue = "You have alreay chosen " + (t.first!.isVowel() ? "an " : "a ") + t + " EFI folder"
 				
 				checkImage.isHidden = true
 			}

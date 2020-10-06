@@ -9,7 +9,8 @@
 import Cocoa
 
 //the first screen of the app, it has just some labels and a button
-class InfoViewController: GenericViewController{
+class InfoViewController: GenericViewController, ViewID{
+	let id: String = "InfoViewController"
     @IBOutlet weak var infoField: NSTextField!
     
     @IBOutlet weak var backButton: NSButton!
@@ -36,7 +37,7 @@ class InfoViewController: GenericViewController{
 		/*if !sharedIsOnRecovery{
 			//backButton.isHidden = true
         }else{*/
-			self.setTitleLabel(text: "Requirements")
+			self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "title"))
 			self.showTitleLabel()
 		
 			self.titleLabel.frame.origin.y = 229
@@ -67,13 +68,13 @@ class InfoViewController: GenericViewController{
         
         if sharedInstallMac{
             
-            infoField.stringValue = "This is a tool that helps you to create a bootable macOS installer and also to install macOS\nBefore starting you need:\n   - At least a 20 gb drive or partition\n   - A copy of the macOS installer app (of any version starting from El Capitan) in\n     the root of a storage device connected to the computer"
+            //infoField.stringValue = "This is a tool that helps you to create a bootable macOS installer and also to install macOS\nBefore starting you need:\n   - At least a 20 gb drive or partition\n   - A copy of the macOS installer app (of any version starting from El Capitan) in\n     the root of a storage device connected to the computer"
             
             driveIcon.image = IconsManager.shared.internalDiskIcon
 			
-            driveLabel.stringValue = "A drive or partition of 20 GB or higher"
+            //driveLabel.stringValue = "A drive or partition of 20 GB or higher"
             
-            appLabel.stringValue = "A macOS installer app downloaded from the App Store\n(El Capitan or more recent)"
+            //appLabel.stringValue = "A macOS installer app downloaded from the App Store\n(El Capitan or more recent)"
 			
 			#if macOnlyMode
 				sloganLabel.stringValue = "TINU: The macOS tool"
@@ -91,6 +92,10 @@ class InfoViewController: GenericViewController{
 			
 			driveIcon.image = IconsManager.shared.removableDiskIcon
 		}
+		
+		driveLabel.stringValue = TextManager.getViewString(context: self, stringID: "driveInfo")
+		
+		appLabel.stringValue = TextManager.getViewString(context: self, stringID: "appInfo")
 		
 		DispatchQueue.global(qos: .background).async {
 			EFIFolderReplacementManager.reset()

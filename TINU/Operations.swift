@@ -8,13 +8,22 @@
 
 import Cocoa
 
-public final class OptionalOperations{
-	public static let shared = OptionalOperations()
+public struct SettingsRes: Equatable{
+	let result: Bool
+	let messange: String?
+	
+	static let resTrueNil: SettingsRes = SettingsRes(result: true, messange: nil)
+	static let resFalseNil: SettingsRes = SettingsRes(result: false, messange: nil)
+}
+
+public final class Operations{
+	
+	public static let shared = Operations()
 	
 	private let manager = FileManager.default
 	
 	#if useEFIReplacement && !macOnlyMode
-	func mountEFIPartAndCopyEFIFolder() -> (result: Bool, message: String?){
+	func mountEFIPartAndCopyEFIFolder() -> SettingsRes{
 		
 		let efiMan = EFIPartitionManager()
 		
@@ -22,7 +31,7 @@ public final class OptionalOperations{
 		
 		if let f = efiRepMan!.checkSavedEFIFolder(){
 			
-			let badReturn: (result: Bool, message: String?) = (false, "TINU failed to mount the EFI partition or to copy the EFI folder inside of it")
+			let badReturn = SettingsRes(result: false, messange: "TINU failed to mount the EFI partition or to copy the EFI folder inside of it")
 			
 			if !f{
 				
@@ -47,7 +56,7 @@ public final class OptionalOperations{
 			
 			log("    EFI partition \(bsdid) mounted with success")
 			
-			if let mount = dm.getDriveNameFromBSDID(bsdid){
+			if let mount = dm.getMountPointFromPartitionBSDID(bsdid){
 				
 				if !FileManager.default.fileExists(atPath: mount){
 					
@@ -75,17 +84,18 @@ public final class OptionalOperations{
 			log("There isn't any saved clover EFI folder, skipping EFI partition mount and EFI folder copying")
 		}
 		
-		return (true, nil)
+		return SettingsRes.resTrueNil
 	}
 	#endif
 	
-	func createReadme() -> (result: Bool, message: String?){
-		
-		var ok = true
+	func createReadme() -> SettingsRes{
 		
 		if let o = oom.shared.otherOptions[oom.OtherOptionID.otherOptionCreateReadmeID]?.canBeUsed(){
 			if o {
 				//creates a readme file into the target drive
+				
+				var ok = true
+				
 				do{
 					log("   Creating the readme file")
 					if let sv = cvm.shared.sharedVolume{
@@ -108,24 +118,24 @@ public final class OptionalOperations{
 				if !ok{
 					log("!!Error while creating the \"README\" file!")
 					
-					return (ok, "TINU failed to create the \"README\" file on the target drive, check the log for details")
+					return SettingsRes(result: false, messange: "TINU failed to create the \"README\" file on the target drive, check the log for details")
 					
 				}
 				
 			}
 		}
 		
-		return (ok, nil)
+		return SettingsRes.resTrueNil
 	}
 	
 	#if !macOnlyMode
-	func createAIBootFiles() -> (result: Bool, message: String?){
-		
-		var ok = true
+	func createAIBootFiles() -> SettingsRes{
 		
 		if let o = oom.shared.otherOptions[oom.OtherOptionID.otherOptionCreateAIBootFID]?.canBeUsed(){
 			if o && !sharedInstallMac{
 				let iaFolder = cvm.shared.sharedVolume + "/.IABootFiles"
+				
+				var ok = true
 				
 				do{
 					
@@ -173,24 +183,24 @@ public final class OptionalOperations{
 				if !ok{
 					log("!!Error while creating the \".IABootFiles\" folder!")
 					
-					return (ok, "TINU failed to create the \".IABootFiles\" folder, check the log for details")
+					return SettingsRes(result: false, messange: "TINU failed to create the \".IABootFiles\" folder, check the log for details")
 				}
 				
 			}
 		}
 		
-		return (ok, nil)
+		return SettingsRes.resTrueNil
 		
 	}
 	#endif
 	
 	#if !macOnlyMode
-	func deleteIAPMID() -> (result: Bool, message: String?){
-		var ok = true
-		
+	func deleteIAPMID() -> SettingsRes{
 		if let o = oom.shared.otherOptions[oom.OtherOptionID.otherOptionDeleteIAPMID]?.canBeUsed(){
 			if o && !sharedInstallMac{
 				let iaFile = cvm.shared.sharedVolume + "/.IAPhysicalMedia"
+				
+				var ok = true
 				
 				do{
 					
@@ -213,20 +223,22 @@ public final class OptionalOperations{
 				if !ok{
 					log("!!Error while removing the \".IAPhysicalMedia\" file!")
 					
-					return (ok, "TINU failed to remove the \".IAPhysicalMedia\" file, check the log for details")
+					return SettingsRes(result: false, messange: "TINU failed to remove the \".IAPhysicalMedia\" file, check the log for details")
 				}
 				
 			}
 		}
-		return (ok, nil)
+		
+		return SettingsRes.resTrueNil
 	}
 	#endif
 	
-	func createIcon() -> (result: Bool, message: String?){
-		var ok = true
+	func createIcon() -> SettingsRes{
 		
 		if let o = oom.shared.otherOptions[oom.OtherOptionID.otherOptionCreateIconID]?.canBeUsed(){
 			if o{
+				
+				var ok = true
 				
 				//trys to create a volumeicon on the target drive if there isn't any, it's used mainly for versions of macOS installer older than 10.13
 				do{
@@ -276,22 +288,23 @@ public final class OptionalOperations{
 				if !ok{
 					log("!!Error while applying the installer app icon to the target volume!")
 					
-					return (ok, "TINU failed to apply the installer app icon on the target drive")
+					return SettingsRes(result: false, messange: "TINU failed to apply the installer app icon on the target drive")
 					
 				}
 				
 			}
 		}
 		
-		return (ok, nil)
+		return SettingsRes.resTrueNil
 	}
 	
-	func createTINUCopy() -> (result: Bool, message: String?){
-		var ok = true
-		
+	func createTINUCopy() -> SettingsRes{
 		if let o = oom.shared.otherOptions[oom.OtherOptionID.otherOptionTinuCopyID]?.canBeUsed(){
 			if o {
 				//trys to crerate a copy of this app on the mac os install media
+				
+				var ok = true
+				
 				do{
 					log("   Trying to create a copy of this app on the bootable macOS installer")
 					
@@ -330,67 +343,15 @@ public final class OptionalOperations{
 				if !ok{
 					log("!!Error while copying this app into the target volume!")
 					
-					return (ok, "TINU failed to create a copy of itself into the target drive, check the log for details")				}
-				
-			}
-		}
-		
-		return (ok, nil)
-	}
-	
-	/*
-	#if !macOnlyMode
-	func replaceBootFiles() -> (result: Bool, message: String?){
-		var ok = true
-		if !sharedInstallMac{
-			
-			var tempName = ""
-			
-			let c = Double(BootFilesReplacementManager.shared.filesToReplace.count)
-			
-			if c>0 {
-			
-			log("Replacing Boot Files")
-			
-			let step = 1 / c
-				
-			BootFilesReplacementManager.shared.replacementProcessProgress = 0
-				
-				
-			
-			// boot files replacemt
-			for f in BootFilesReplacementManager.shared.filesToReplace{
-				
-				if !f.replace() {
-					log("   File \"" + f.filename + "\" replacement failed!")
+					return SettingsRes(result: false, messange: "TINU failed to create a copy of itself into the target drive, check the log for details")
 					
-					tempName = f.filename
-					
-					ok = false
 				}
 				
-				
-				BootFilesReplacementManager.shared.replacementProcessProgress += step
-			}
-				log("Boot files replacemnt finished\n\n")
-			}
-			
-			BootFilesReplacementManager.shared.replacementProcessProgress = nil
-			
-			log("Extra operations finished\n\n")
-			
-			if !ok {
-				log("!!Error while replacing boot files: ")
-				
-				return (ok, "TINU failed to replace the boot file: \"" + tempName + "\"")
 			}
 		}
 		
-		return(ok, nil)
+		return SettingsRes.resTrueNil
 	}
-	#endif
-
-*/
 		
 }
 

@@ -130,7 +130,7 @@ public func checkOtherOptions(){
 
 }
 
-func checkSate(_ useDriveIcon: inout Bool) -> Bool {
+func checkProcessReadySate(_ useDriveIcon: inout Bool) -> Bool {
 	
 	let cmm = cvm.shared
 	
@@ -158,7 +158,7 @@ func checkSate(_ useDriveIcon: inout Bool) -> Bool {
 			
 			if !FileManager.default.directoryExistsAtPath(sv){
 				if let sb = cmm.sharedBSDDrive{
-					if let sd = dm.getDevicePropertyInfoNew(sb, propertyName: "MountPoint"){
+					if let sd = dm.getDevicePropertyInfoString(sb, propertyName: "MountPoint"){
 						sv = sd
 						cmm.sharedVolume = sv
 						print("Corrected the name of the target volume")

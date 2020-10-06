@@ -235,7 +235,7 @@ public final class InstallerAppManager{
 	}
 	
 	@inline(__always) public func sharedAppNeedsIABoot() -> Bool!{
-		print("Checking if the installer app needs particular boot files replacement or the creation of .IABootFiles folder")
+		print("Checking if the installer app supports the creation of .IABootFiles folder")
 		return !installerAppGoesUpToThatVersion(version: 13.4)
 	}
 	

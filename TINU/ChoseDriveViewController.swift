@@ -8,7 +8,9 @@
 
 import Cocoa
 
-class ChoseDriveViewController: ShadowViewController {
+class ChoseDriveViewController: ShadowViewController, ViewID {
+	let id: String = "ChoseDriveViewController"
+	
 	fileprivate let guid = "GUID_partition_scheme"
 	fileprivate let mbr = "FDisk_partition_scheme"
 	fileprivate let applePS = "Apple_partition_scheme"
@@ -33,7 +35,7 @@ class ChoseDriveViewController: ShadowViewController {
             if self.empty{
                 scoller.drawsBackground = false
                 scoller.borderType = .noBorder
-                ok.title = "Quit"
+                ok.title = TextManager.getViewString(context: self, stringID: "nextButtonFail")
                 ok.isEnabled = true
             }else{
                 //viewDidSetVibrantLook()
@@ -48,10 +50,10 @@ class ChoseDriveViewController: ShadowViewController {
 					}
 				}
 				
-                ok.title = "Next"
+                ok.title = TextManager.getViewString(context: self, stringID: "nextButton")
                 ok.isEnabled = false
 				
-				if !(sharedIsOnRecovery || simulateDisableShadows){
+				if !blockShadow{
 					scoller.drawsBackground = false
 					scoller.borderType = .noBorder
 				}else{
@@ -83,11 +85,13 @@ class ChoseDriveViewController: ShadowViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-		
-		self.setTitleLabel(text: "Choose the Drive or the Partition to turn into a macOS Installer")
+		//"Choose the Drive or the Partition to turn into a macOS Installer"
+		self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "title"))
 		self.showTitleLabel()
 		
-		if !sharedIsOnRecovery && !simulateDisableShadows{
+		ok.title = TextManager.getViewString(context: self, stringID: "nextButton")
+		
+		if !blockShadow{
 			scoller.frame = CGRect.init(x: 0, y: scoller.frame.origin.y, width: self.view.frame.width, height: scoller.frame.height)
 			scoller.drawsBackground = false
 			scoller.borderType = .noBorder
@@ -110,9 +114,10 @@ class ChoseDriveViewController: ShadowViewController {
 			scoller.borderType = .bezelBorder
 		}
 		
+		/*
         if sharedInstallMac{
             titleLabel.stringValue = "Choose a drive or a partition to install macOS on"
-        }
+        }*/
         
         updateDrives()
     }
@@ -215,16 +220,18 @@ class ChoseDriveViewController: ShadowViewController {
 				log("Analyzing diskutil data to detect usable storage devices")
 				
 				for d in data.AllDisksAndPartitions{
-					if d.DeviceIdentifier == boot_drive.first!{
-						if let stores = d.APFSPhysicalStores{
-							for s in stores {
-								boot_drive.append(dm.getDriveBSDIDFromVolumeBSDID(volumeID: s.DeviceIdentifier))
-							}
-						}
+					if d.DeviceIdentifier != boot_drive.first!{
+						continue
+					}
+					
+					guard let stores = d.APFSPhysicalStores else { continue }
+					
+					for s in stores {
+						boot_drive.append(dm.getDriveBSDIDFromVolumeBSDID(volumeID: s.DeviceIdentifier))
 					}
 				}
 				
-				print("The boot drive is: ")
+				print("The boot drive devices are: ")
 				print(boot_drive)
 				
 				for d in data.AllDisksAndPartitions{
@@ -335,8 +342,15 @@ class ChoseDriveViewController: ShadowViewController {
 					
 					if self.failureLabel == nil || self.failureImageView == nil || self.failureButtons.isEmpty{
 						self.setFailureImage(image: IconsManager.shared.warningIcon)
+						//TextManager.getViewString(context: self, stringID: "agreeButtonFail")
+						
+						self.setFailureLabel(text: TextManager.getViewString(context: self, stringID: "failureText"))
+						self.addFailureButton(buttonTitle: TextManager.getViewString(context: self, stringID: "failureButton"), target: self, selector: #selector(ChoseDriveViewController.openDetectStorageSuggestions))
+						
+						/*
 						self.setFailureLabel(text: "No usable storage devices detected")
 						self.addFailureButton(buttonTitle: "Why is my storage device not detected?", target: self, selector: #selector(ChoseDriveViewController.openDetectStorageSuggestions))
+						*/
 					}
 					
 					self.showFailureImage()
@@ -351,7 +365,7 @@ class ChoseDriveViewController: ShadowViewController {
 					var temp: CGFloat = 20
 					for d in drives.reversed(){
 						d.frame.origin.x = temp
-						if !(sharedIsOnRecovery || simulateDisableShadows){
+						if !blockShadow{
 							temp += d.frame.width + 15
 						}else{
 							temp += d.frame.width
@@ -359,7 +373,7 @@ class ChoseDriveViewController: ShadowViewController {
 						content.addSubview(d)
 					}
 					
-					if !(sharedIsOnRecovery || simulateDisableShadows){
+					if !blockShadow{
 						content.frame.size.width = temp + 5
 					}else{
 						content.frame.size.width = temp + 20
@@ -418,17 +432,29 @@ class ChoseDriveViewController: ShadowViewController {
 		if !empty{
 			
 			let dname = dm.getCurrentDriveName()!
+			let pname = cvm.shared.currentPart.name
+			
+			let parseList = ["{diskName}" : dname, "{partitionName}" : pname]
+			//let title = parse(messange: TextManager.getViewString(context: self, stringID: "formatDialogTitle"), keys: parseList)
 			
 			if cvm.shared.sharedVolumeNeedsPartitionMethodChange != nil /*&& sharedVolumeNeedsFormat != nil*/{
 				
+				/*
 				var dialogText = "The drive \"\(dname)\" will be formatted entirely to be used to create a bootable macOS installer"
 				
 				if sharedInstallMac{
 					dialogText = "The drive \"\(dname)\" will be formatted entirely to install macOS on it"
 				}
 				
+				//"Format \"\(dname)\"?"
+				*/
+				
+				
+				//let dialogText = parse(messange: TextManager.getViewString(context: self, stringID: "formatDialog"), keys: parseList)
+				
 				if cvm.shared.sharedVolumeNeedsPartitionMethodChange{
-					if !dialogCriticalWarning(question: "Format \"\(dname)\"?", text: dialogText, proceedButtonText: "Erase", cancelButtonText: "Don't Erase"){
+					if !dialogGenericWithManagerBool(self, name: "formatDialog", parseList: parseList){
+					//if !dialogCriticalWarning(question: title, text: dialogText, proceedButtonText: TextManager.getViewString(context: self, stringID: "formatDialogYes"), cancelButtonText: TextManager.getViewString(context: self, stringID: "formatDialogNo")){
 						//if !dialogCustomWarning(question: "Format \"\(dname)\"?", text: dialogText, style: .warning, mainButtonText: "Don't format", secondButtonText: "Format"){
 						return
 					}
@@ -436,8 +462,9 @@ class ChoseDriveViewController: ShadowViewController {
 			}
 			
 			if cvm.shared.sharedDoTimeMachineWarn{
-				let pname = cvm.shared.currentPart.name
-				if !dialogCriticalWarning(question: "Format \"\(pname)\"?", text: "The partition \"\(pname)\" is used for Time Machine backups, and may contain your backed up files. Your backups will be lost if you use it!", proceedButtonText: "Erase", cancelButtonText: "Don't Erase"){
+				//let dialogText = parse(messange: TextManager.getViewString(context: self, stringID: "formatDialogTimeMachine"), keys: parseList)
+				//if !dialogCriticalWarning(question: title, text: dialogText, proceedButtonText: TextManager.getViewString(context: self, stringID: "formatDialogYes"), cancelButtonText: TextManager.getViewString(context: self, stringID: "formatDialogNo")){
+				if !dialogGenericWithManagerBool(self, name: "formatDialogTimeMachine", parseList: parseList){
 					//if !dialogCustomWarning(question: "Format \"\(pname)\"?", text: "The partition \"\(pname)\" is used for time machine backups, and may contain usefoul backup data, that will be lost if you use it", style: .warning, mainButtonText: "Don't format", secondButtonText: "Format"){
 					return
 				}
@@ -544,14 +571,14 @@ class ChoseDriveViewController: ShadowViewController {
     func checkDriveSizeUint(bytes: UInt64) -> Bool{
         let gb = UInt64(pow(10.0, 9.0))
 		
+		if simulateCreateinstallmediaFail != nil{
+			return !(bytes <= (2 * gb)) // 2 gb
+		}
+		
         if sharedInstallMac{
             return !(bytes <= (20 * gb)) //20 gb
         }
 		
-        if simulateCreateinstallmediaFail != nil{
-            return !(bytes <= (2 * gb)) // 2 gb
-        }
-        
         return !(bytes <= (6 * gb)) // 6 gb
     }
     

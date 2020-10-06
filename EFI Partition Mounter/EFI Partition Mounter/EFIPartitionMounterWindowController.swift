@@ -36,6 +36,14 @@ public class EFIPartitionMounterWindowController: AppWindowController {
 		self.init(window: (NSStoryboard(name: "EFIPartitionMounterTool", bundle: Bundle.main).instantiateController(withIdentifier: "EFIMounterWindow") as! NSWindowController).window)
 		//self.init(windowNibName: "ContactsWindowController")
 	}
+	
+	public override func windowWillClose(_ notification: Notification){
+		
+		#if TINU
+			EFIPartitionMonuterTool = nil
+		#endif
+		
+	}
     
     #else
     

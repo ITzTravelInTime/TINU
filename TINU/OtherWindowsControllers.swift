@@ -71,7 +71,9 @@ public class CreditsWindowController: GenericWindowController {
 	
 }
 
-public class LogWindowController: NSWindowController {
+public class LogWindowController: NSWindowController, ViewID {
+	
+	public let id: String = "LogWindowController"
 	
 	@IBOutlet weak var saveLogItem: NSToolbarItem!
 	@IBOutlet weak var copyLogItem: NSToolbarItem!
@@ -117,6 +119,15 @@ public class LogWindowController: NSWindowController {
 						self.saveLogBigItem.action = #selector(vc.saveLog(_:))
 						self.copyLogBigItem.action = #selector(vc.copyLog(_:))
 						self.shareLogBigItem.action = #selector(vc.shareLog(_:))
+						
+						self.saveLogItem.label = TextManager.getViewString(context: self, stringID: "saveButton")
+						self.saveLogBigItem.label = self.saveLogItem.label
+						
+						self.copyLogItem.label = TextManager.getViewString(context: self, stringID: "copyButton")
+						self.copyLogBigItem.label = self.copyLogItem.label
+						
+						self.shareLogItem.label = TextManager.getViewString(context: self, stringID: "shareButton")
+						self.shareLogBigItem.label = self.shareLogItem.label
 					}
 				}
 			}

@@ -36,37 +36,6 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
 		activateVibrantWindow()
     }
 	
-	/*
-    func checkVibrant(){
-		if (self.window?.styleMask.contains(.fullSizeContentView))! || self.window!.titlebarAppearsTransparent{
-			alreadyFullScreen = true
-			self.window?.isMovableByWindowBackground = true
-				
-			if AppManager.shared.sharedTestingMode{
-				self.window?.titleVisibility = .visible
-			}else{
-				self.window?.titleVisibility = .hidden
-			}
-		}
-			
-	/*
-			if !alreadyFullScreen{
-            	if sharedUseVibrant {
-                	activateVibrantBackground()
-                	activateVibrantWindow()
-            	}else{
-                	deactivateVibrantBackground()
-                	deactivateVibrantWindow()
-            	}
-			}
-			
-	
-            if let c = self.window?.contentViewController as? GenericViewController{
-                c.viewDidSetVibrantLook()
-            }
-			*/
-    }*/
-	
 	
     func activateVibrantWindow(){
 		self.window?.titlebarAppearsTransparent = true
@@ -93,31 +62,6 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
 		
 		self.window?.titleVisibility = .visible
     }
-	
-	/*
-    private func activateVibrantBackground(){
-        background = NSVisualEffectView.init(frame: CGRect.init(origin: CGPoint.zero, size: (self.window?.contentView?.frame.size)!))
-        background.material = backgroundDefaultMaterial
-        background.state = .active
-        self.window?.contentViewController?.view.addSubview(background, positioned: .below, relativeTo: window?.contentViewController?.view)
-    }
-    
-    private func deactivateVibrantBackground(){
-        //print("\(String(describing: self.window?.contentView?.subviews))\n\n")
-        if background != nil{
-            background.isHidden = true
-            background.removeFromSuperview()
-            background = nil
-        }
-        
-        for cc in (self.window?.contentViewController?.view.subviews)!{
-            if let c = cc as? NSVisualEffectView{
-                c.removeFromSuperview()
-                c.isHidden = true
-            }
-        }
-        
-    }*/
     
     func makeStandard(){
         //self.window?.isResizable = true
@@ -138,73 +82,15 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
 	
 	
 	public func windowWillClose(_ notification: Notification) {
-		/*if sharedUseVibrant{
-			if let w = sharedWindow.windowController as? GenericWindowController{
-				w.activateVibrantWindow()
-			}
-		}*/
+		
 	}
 	
-	
-	
 	public func windowWillBeginSheet(_ notification: Notification) {
-		
-		//if alreadyFullScreen{
-			deactivateVibrantWindow()
-		//}
-		
-		/*
-		if sharedUseVibrant || alreadyFullScreen{
-			self.deactivateVibrantWindow()
-		}*/
+		deactivateVibrantWindow()
 	}
 	
 	public func windowDidEndSheet(_ notification: Notification) {
 		
-		//if alreadyFullScreen{
-			activateVibrantWindow()
-		//}
-		
-		/*
-		if sharedUseVibrant || alreadyFullScreen{
-			self.activateVibrantWindow()
-		}*/
-		
+		activateVibrantWindow()
 	}
-	
-    /*
-    private func changeBackgroundMaterial(_ material: NSVisualEffectMaterial){
-        if canUseVibrantLook{
-            if background != nil{
-                background.material = material
-            }
-            
-            for cc in (self.window?.contentView?.subviews)!{
-                if let c = cc as? NSVisualEffectView{
-                    c.material = material
-                }
-            }
-            
-            print("called background change: " + (self.window?.title)!)
-        }
-    }*/
-    
-    /*
-    public func windowDidBecomeMain(_ notification: Notification) {
-        changeBackgroundMaterial(backgroundDefaultMaterial)
-    }
-    
-    public func windowDidResignMain(_ notification: Notification) {
-        changeBackgroundMaterial(backgroundUnselectedMaterial)
-    }
- 
-    
-    public func windowDidBecomeKey(_ notification: Notification) {
-        changeBackgroundMaterial(backgroundDefaultMaterial)
-    }
-    
-    public func windowDidResignKey(_ notification: Notification) {
-        changeBackgroundMaterial(backgroundUnselectedMaterial)
-    }
-    */
 }

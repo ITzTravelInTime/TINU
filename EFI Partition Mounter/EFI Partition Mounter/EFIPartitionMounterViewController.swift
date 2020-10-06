@@ -10,18 +10,19 @@ import Cocoa
 
 #if (!macOnlyMode && TINU) || (!TINU && isTool)
 
-class EFIPartitionMounterViewController: ShadowViewController {
+class EFIPartitionMounterViewController: ShadowViewController, ViewID {
+	let id: String = "EFIPartitionMounterViewController"
 	
-	@IBOutlet weak var scrollView:         NSScrollView!
-	@IBOutlet weak var scrollHeight:       NSLayoutConstraint!
+	@IBOutlet weak var scrollView: NSScrollView!
+	@IBOutlet weak var scrollHeight: NSLayoutConstraint!
 	
-	@IBOutlet weak var spinner:            NSProgressIndicator!
+	@IBOutlet weak var spinner: NSProgressIndicator!
 	
-	@IBOutlet weak var refreshButton:      NSButton!
-	@IBOutlet weak var closeButton:        NSButton!
+	@IBOutlet weak var refreshButton: NSButton!
+	@IBOutlet weak var closeButton: NSButton!
 
 	
-    @IBOutlet weak var iconModeButton:     NSButton!
+    @IBOutlet weak var iconModeButton: NSButton!
     
     
     
@@ -77,21 +78,17 @@ class EFIPartitionMounterViewController: ShadowViewController {
 		
 		setShadowViewsTopBottomOnly(respectTo: scrollView, topBottomViewsShadowRadius: 5)
         
-        self.setTitleLabel(text: "EFI Partition Mounter")
+        self.setTitleLabel(text: EFIPMTextManager.getViewString(context: self, stringID: "title"))
         self.showTitleLabel()
         
-        
 		setOtherViews(respectTo: scrollView)
-        
-        
-        
-        
-        
 		
 		#if !isTool
-			closeButton.title = "Close"
+			closeButton.title = EFIPMTextManager.getViewString(context: self, stringID: "closeButtonTINU")//"Close"
             iconModeButton.isHidden = true
 		#endif
+		
+		refreshButton.title = EFIPMTextManager.getViewString(context: self, stringID: "refreshButton")
 	}
 	
     
@@ -135,9 +132,9 @@ class EFIPartitionMounterViewController: ShadowViewController {
         self.spinner.usesThreadedAnimation = true
         
         if barMode{
-            iconModeButton.title = "Window Mode"
+            iconModeButton.title = EFIPMTextManager.getViewString(context: self, stringID: "windowMode")
         }else{
-            iconModeButton.title = "Toolbar Mode"
+            iconModeButton.title = EFIPMTextManager.getViewString(context: self, stringID: "toolbarMode")
         }
         
         #endif
@@ -324,11 +321,11 @@ class EFIPartitionMounterViewController: ShadowViewController {
 					self.setFailureImage(image: IconsManager.shared.warningIcon)
                     self.showFailureImage()
                     
-					self.setFailureLabel(text: "No EFI partitions found")
+					self.setFailureLabel(text: EFIPMTextManager.getViewString(context: self, stringID: "noEFIPartitions"))//"No EFI partitions found")
 					self.showFailureLabel()
                     
                     if self.failureButtons.count == 0{
-                        self.addFailureButton(buttonTitle: "Try again", target: self, selector: #selector(self.refresh(_:)))
+                        self.addFailureButton(buttonTitle: EFIPMTextManager.getViewString(context: self, stringID: "noEFIActionButton")!, target: self, selector: #selector(self.refresh(_:)))
                     }
                     
                     self.showFailureButtons()
@@ -349,46 +346,61 @@ class EFIPartitionMounterViewController: ShadowViewController {
 	}
 	
 	private func createEFIPartitionItems(response: @escaping ([EFIPartitionToolInterface.EFIPartitionItem]?) -> Void){
-        
+		
 		typealias EFIItem = EFIPartitionToolInterface.EFIPartitionItem
 		typealias PartItem = EFIPartitionToolInterface.PartitionItem
 		
-		EFIPartitionMounterModel.shared.getEFIPartitionsAndSubprtitions(response: { resp in
+		DispatchQueue.global(qos: .background).async {
 			
 			var items: [EFIItem]! = nil
-            
-			if let eFIData = resp{
-                
-                var EFIParts = [String]()
-                
-				for drive in eFIData{
-					DispatchQueue.main.sync {
+			
+			#if EFIPMAlternateDetection
+			
+			guard let eFIData = EFIPartitionMounterModel.shared.getEFIPartitionsAndSubprtitionsNew() else {
+				response(items)
+				return
+			}
+			
+			#else
+			
+			guard let eFIData = EFIPartitionMounterModel.shared.getEFIPartitionsAndSubprtitions() else {
+				response(items)
+				return
+			}
+			
+			#endif
+			
+			var EFIParts = [String]()
+			
+			for drive in eFIData{
+				
+				DispatchQueue.main.sync {
 					let item = EFIItem()
 					
 					item.titleLabel.stringValue = drive.displayName
 					item.bsdid = drive.bsdName
-                        
-                    EFIParts.append(drive.bsdName)
 					
-					item.frame.size.height = 100
+					EFIParts.append(drive.bsdName)
+					
+					item.frame.size.height = 110
 					
 					item.frame.size.width = self.scrollView.frame.size.width - 40
 					
 					item.isMounted = drive.isMounted
-                        
-                        item.hasConfig = drive.hasConfig
-                        
-                        item.isEjectable = drive.isRemovable
-						
-						item.partitions = []
-                        
-                        let cnt = drive.completeDrivePartitions.count
-                        
-                        if cnt != 0{
+					
+					item.configType = drive.configType
+					
+					item.isEjectable = drive.isRemovable
+					
+					item.partitions = []
+					
+					let cnt = drive.completeDrivePartitions.count
+					
+					if cnt != 0{
 						
 						for i in 0...cnt - 1{
-                            let partition = drive.completeDrivePartitions[i]
-                            
+							let partition = drive.completeDrivePartitions[i]
+							
 							let part = PartItem()
 							
 							part.imageView.image = partition.drivePartIcon
@@ -400,28 +412,26 @@ class EFIPartitionMounterViewController: ShadowViewController {
 								item.frame.size.height += item.tileHeight + 5
 							}
 						}
-                            
-                        }
-						
-						if items == nil{
-							items = []
-						}
-						
-						//item.checkMounted()
-						
-						items.append(item)
 						
 					}
+					
+					if items == nil{
+						items = []
+					}
+					
+					items.append(item)
+					
 				}
-                
-                if EFIParts != []{
-                    self.eFIManager.buildPartitionsCache(fromPartitionsList: EFIParts)
-                }
+			}
+			
+			if EFIParts != []{
+				self.eFIManager.buildPartitionsCache(fromPartitionsList: EFIParts)
 			}
 			
 			response(items)
 			
-		})
+		}
+		
 	}
 	
 }

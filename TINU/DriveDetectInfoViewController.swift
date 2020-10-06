@@ -33,16 +33,14 @@ public class DriveDetectInfoViewController: GenericViewController, ViewID {
 	override public func viewDidAppear() {
 		super.viewDidAppear()
 		
-		self.setTitleLabel(text: "To make sure that your storage device will be detected:")
+		self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "title"))
 		self.showTitleLabel()
 		
 		textView.textColor = NSColor.textColor
 		
 		if self.presenting == nil{
 		//if self.window != sharedWindow{
-			self.button.stringValue = "Close"
-			self.button.title = "Close"
-			self.button.alternateTitle = "Close"
+			self.button.title = TextManager.getViewString(context: self, stringID: "backButton")
 		}
 	}
 	

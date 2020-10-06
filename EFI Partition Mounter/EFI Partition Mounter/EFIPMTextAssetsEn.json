@@ -1,0 +1,44 @@
+{
+	"viewStrings" : {
+		"EFIPartitionItem" : {
+			"unmutable" : {
+				"mountButton" : "Mount EFI partition",
+				"unmountButton" : "Unmount EFI partition",
+				"openInfinderButton" : "Show in Finder",
+				"editConfigButtonOther" : "Open config.plist with ...",
+				"noPartitionsLabel" : "No mounted partitions found",
+				"downloadTitle" : "Download \"${appName}\" ?",
+				"download" : "the app \"${appName}\" is not installed, do you want to download it?",
+				"downloadYes" : "Yes",
+				"downloadNo" : "No",
+				"impossibleTitle" : "Can't open \"config.plist\"!",
+				"impossible" : "No installed app can open \"config.plist\"",
+				"notEjectTitle" : "Can't unmount \"${disk}\"!",
+				"notEject" : "there was an error trying to eject the drive \"${disk}\".\n\nDisgnostic info:\nErrore:${text}"
+			}
+		},
+		"EFIPartitionMounterViewController" : {
+			"unmutable" : {
+				"title" : "EFI Partition Mounter",
+				"closeButtonTINU" : "Close",
+				"windowsMode" : "Windows mode",
+				"toolbarMode" : "Tool Bar Mode",
+				"noEFIPartitions" : "No EFI partitions found",
+				"noEFIActionButton" : "Try again",
+				"refreshButton" : "Refresh"
+			}
+		},
+		"template":{
+			"mutable" : {
+				"item" : {
+					"installer" :    "",
+					"installation" : ""
+				}
+			},
+			"unmutable" : {
+				"title" : ""
+			}
+		}
+	}
+	
+}

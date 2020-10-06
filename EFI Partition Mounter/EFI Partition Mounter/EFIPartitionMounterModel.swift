@@ -6,18 +6,114 @@
 //  Copyright © 2018 Pietro Caruso. All rights reserved.
 //
 
-import Cocoa
+import AppKit
 
 #if (!macOnlyMode && TINU) || (!TINU && isTool)
 
 public final class EFIPartitionMounterModel{
-    static let shared = EFIPartitionMounterModel()
+	static let shared = EFIPartitionMounterModel()
+	
+	/*
+	private struct VirtualDisk: Equatable{
+	
+	}*/
+	
+	//new efi partition mounter system draft
+	public func getEFIPartitionsAndSubprtitionsNew() -> [EFIPartitionToolTypes.EFIPartitionStandard]? {
+		
+		var result: [String: EFIPartitionToolTypes.EFIPartitionStandard]! = nil
+		
+		guard let diskutilData = DiskutilManagement.DiskutilList.readFromTerminal() else {
+			print("No diskutil data!")
+			return nil
+		}
+		
+		var apfsQueue = [String: DiskutilManagement.Disk]()
+		
+		for disk in diskutilData.AllDisksAndPartitions{
+			print("Scanning disk \(disk.DeviceIdentifier)")
+			
+			if disk.isAPFSContainer(){
+				
+				guard let stores = disk.APFSPhysicalStores else { continue }
+				apfsQueue[stores.first!.DeviceIdentifier] = disk
+				
+				continue
+			}
+			
+			if !disk.hasEFIPartition() { continue }
+			print("  Disk has EFI partition")
+			
+			guard let name = dm.getDriveName(from: disk.DeviceIdentifier) else { continue }
+			print("  Disk is named: \(name)")
+			
+			var res = EFIPartitionToolTypes.EFIPartitionStandard()
+			
+			res.displayName = name
+			
+			var property = "Ejectable"
+			
+			if #available(OSX 10.12, *){
+				property = "RemovableMediaOrExternalDevice"
+			}
+			
+			var removable: Bool! = dm.getDevicePropertyInfoBoolNew(disk.DeviceIdentifier, propertyName: property)
+			
+			if #available(OSX 10.12, *){
+				removable = dm.getDevicePropertyInfoBoolNew(disk.DeviceIdentifier, propertyName: "RemovableMediaOrExternalDevice")
+			}else{
+				removable = dm.getDevicePropertyInfoBoolNew(disk.DeviceIdentifier, propertyName: "Ejectable")
+			}
+			
+			if removable == nil { continue }
+			
+			print("  Disk is " + (removable ? "removable" : "unremovable"))
+			
+			res.isRemovable = removable
+			
+			for partition in disk.Partitions!{
+				if partition.getUsableType() == .eFI {
+					res.isMounted = partition.isMounted()
+					res.bsdName = partition.DeviceIdentifier
+					res.configType = EFIPartitionToolTypes.ConfigLocations.folderHasConfig(partition.MountPoint!)
+				}
+				
+				var part = EFIPartitionToolTypes.PartitionStandard()
+				
+				if !partition.isVolume(){ continue }
+				
+				part.drivePartDisplayName = partition.VolumeName!
+				
+				if !partition.isMounted(){ continue }
+				
+				part.drivePartIcon = NSWorkspace.shared().icon(forFile: partition.MountPoint!)
+				
+				res.completeDrivePartitions.append(part)
+			}
+			
+			if result == nil{
+				result = [:]
+			}
+			
+			result[disk.DeviceIdentifier] = res
+		}
+		
+		if result == nil{
+			return nil
+		}
+		
+		var ret: [EFIPartitionToolTypes.EFIPartitionStandard] = []
+		
+		for r in result{
+			ret.append(r.value)
+		}
+		
+		return ret
+	}
     
-    public func getEFIPartitionsAndSubprtitions(response: @escaping ([EFIPartitionToolTypes.EFIPartitionStandard]?) -> Void){
-        
-        DispatchQueue.global(qos: .background).async {
-            
-            var result: [EFIPartitionToolTypes.EFIPartitionStandard]! = nil
+    public func getEFIPartitionsAndSubprtitions() -> [EFIPartitionToolTypes.EFIPartitionStandard]?{
+		
+		var result: [EFIPartitionToolTypes.EFIPartitionStandard]! = nil
             
             print("Scanning to get complete partitions list for this tool")
             
@@ -114,12 +210,8 @@ public final class EFIPartitionMounterModel{
                                                 
                                                 if tempResult.isMounted{
                                                     print("                    This EFI partition is mounted")
-                                                    
-                                                    
-                                                    if FileManager.default.fileExists(atPath: mp! + EFIPartitionToolTypes.cloverConfigLocation) || FileManager.default.fileExists(atPath: mp! + EFIPartitionToolTypes.openCoreConfigLocation){
-                                                        print("                      This EFI Partition has a clover config file")
-                                                        tempResult.hasConfig = true
-                                                    }
+													
+													tempResult.configType = EFIPartitionToolTypes.ConfigLocations.folderHasConfig(mp!)
                                                     
                                                 }else{
                                                     print("                    This EFI partition is not mounted")
@@ -311,9 +403,8 @@ public final class EFIPartitionMounterModel{
                 print("partitions listing error: \(err)")
                 
             }
-            
-            response(result)
-        }
+		
+		return result
         
     }
 	

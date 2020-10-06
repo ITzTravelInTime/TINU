@@ -63,7 +63,7 @@ class LicenseViewController: ShadowViewController, ViewID {
 		
 		check.isEnabled = false
 		
-		if !(sharedIsOnRecovery || simulateDisableShadows){
+		if !blockShadow{
 			scroller.frame = CGRect.init(x: 0, y: scroller.frame.origin.y, width: self.view.frame.width, height: scroller.frame.height)
 			scroller.borderType = .noBorder
 			//scroller.drawsBackground = false
@@ -134,6 +134,8 @@ class LicenseViewController: ShadowViewController, ViewID {
 							
 							license = getOut(cmd: cmd)
 							
+							print(license)
+							
 							counter += 1
 							
 							if counter == 20{
@@ -149,19 +151,10 @@ class LicenseViewController: ShadowViewController, ViewID {
 						
 						DispatchQueue.main.sync{
 							self.licenseField.text = license
-							
-							print("license assigned")
-							
 							self.spinner.stopAnimation(self)
-							print("stopped spinner")
 							self.spinner.isHidden = true
-							print("hidden spinner")
 							self.scroller.isHidden = false
-							print("scoller shown")
 							self.check.isEnabled = true
-							print("check enabled")
-							
-							print("License shown")
 						}
 					}
 				}else{

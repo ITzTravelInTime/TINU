@@ -6,9 +6,14 @@
 //  Copyright © 2020 Pietro Caruso. All rights reserved.
 //
 
-import Foundation
+import AppKit
 
-final class SIPManager{
+final class SIPManager: ViewID{
+	
+	let id: String = "SIPManager"
+	
+	private static let ref = SIPManager()
+	
 	//launch this check from a background thread
 	@inline(__always) class func checkSIP() -> Bool{
 		if #available(OSX 10.11, *){
@@ -21,7 +26,8 @@ final class SIPManager{
 	class func checkSIPAndLetTheUserKnow(){
 		DispatchQueue.global(qos: .background).async {
 			if checkSIP(){
-				msgBoxWithCustomIcon("TINU: Please disable SIP", "SIP (system integrity protection) is enabled and will not allow TINU to complete successfully the installer creation process, please disable it or use the diagnostics mode with administrator privileges", .warning , IconsManager.shared.stopIcon)
+				//msgBoxWithCustomIcon("TINU: Please disable SIP", "SIP (system integrity protection) is enabled and will not allow TINU to complete successfully the installer creation process, please disable it or use the diagnostics mode with administrator privileges", .warning , IconsManager.shared.stopIcon)
+				msgboxWithManager(ref, name: "disable", parseList: nil, style: NSAlertStyle.critical, icon: IconsManager.shared.stopIcon)
 			}
 		}
 	}

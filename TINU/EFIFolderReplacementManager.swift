@@ -157,6 +157,11 @@ import Foundation
 		
 			if sharedEFIFolderTempData != nil{
 				for i in sharedEFIFolderTempData.keys{
+					//in some instances 
+					if sharedEFIFolderTempData == nil{
+						break
+					}
+					
 					print("Removing value from the saved EFI folder: \(i)")
 					sharedEFIFolderTempData[i] = nil
 					sharedEFIFolderTempData.removeValue(forKey: i)

@@ -62,8 +62,6 @@ public struct Part{
     }
     
     public func copy() -> Part{
-		//let p = Part(partitionBSDName: bsdName, partitionName: name, partitionPath: mountPoint, partitionFileSystem: fileSystem, partitionScheme: partScheme, partitionHasEFI: hasEFI, partitionSize: totSize)
-		
         return Part(from: self)
     }
     

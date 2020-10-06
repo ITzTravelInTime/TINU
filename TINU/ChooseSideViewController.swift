@@ -9,7 +9,8 @@
 import Cocoa
 
 
-class ChooseSideViewController: GenericViewController {
+class ChooseSideViewController: GenericViewController, ViewID {
+	let id: String = "ChooseSideViewController"
 
     @IBOutlet weak var createUSBButton: AdvancedOptionsButton!
     
@@ -25,11 +26,14 @@ class ChooseSideViewController: GenericViewController {
 	
 	private var count = 0
 	
+	
 	#if sudoStartup
 	private static var _already_prompted = false
 	private static let _prompt_sip = "SIPPrompt"
 	private static let _prompt_sip_result = "SIPPromptResult"
 	#endif
+	
+	
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -77,14 +81,17 @@ class ChooseSideViewController: GenericViewController {
 		
 		//ui setup
 		
-		createUSBButton.upperImage.image = IconsManager.shared.removableDiskIcon //NSImage(named: "Removable")
-		createUSBButton.upperTitle.stringValue = "Create a bootable\nmacOS installer"
+		//print(TextManager!)
+		print(CodableCreation<TINUTextsManagerStruct>.getEncoded(TextManager!)!)
 		
-		installButton.upperImage.image = NSImage.init(named: NSImageNameComputer)//NSImage(named: "OSInstall")
-		installButton.upperTitle.stringValue = "Install macOS"
+		createUSBButton.upperImage.image = IconsManager.shared.removableDiskIcon //NSImage(named: "Removable")
+		createUSBButton.upperTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstaller")//"Create a bootable\nmacOS installer"
+		
+		installButton.upperImage.image = NSImage(named: NSImageNameComputer)//NSImage(named: "OSInstall")
+		installButton.upperTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstallation")//"Install macOS"
 		
 		efiButton.upperImage.image = NSImage(named: "EFIIcon")
-		efiButton.upperTitle.stringValue = "Use \nEFI Partition Mounter"
+		efiButton.upperTitle.stringValue = TextManager.getViewString(context: self, stringID: "openEFIMounter")//"Use \nEFI Partition Mounter"
 		
 		
 		/*if sharedIsOnRecovery{
@@ -132,7 +139,7 @@ class ChooseSideViewController: GenericViewController {
 					
 					var shadowView: NSView!
 					
-					if !(sharedIsOnRecovery || simulateDisableShadows){
+					if !blockShadow{
 						shadowView = ShadowView()
 						b.isBordered = false
 						
@@ -167,8 +174,6 @@ class ChooseSideViewController: GenericViewController {
 		}
 		
 		background.frame.origin = NSPoint(x: self.view.frame.width / 2 - background.frame.size.width / 2, y: self.view.frame.height / 2 - background.frame.size.height / 2)
-		
-		print(TextManager!.getEncoded()!)
 	}
 	
 	override func viewWillAppear() {
@@ -193,63 +198,25 @@ class ChooseSideViewController: GenericViewController {
 		
 		#if sudoStartup
 		
-		if !isRootUser{
+		if #available(OSX 10.15, *){
+			if !isRootUser{
 			
-				if (SIPManager.checkSIP()){
-				
-					/*
 				if !ChooseSideViewController._already_prompted{
-					if dialogYesNo(question: "Use diagnostics mode?", text: "You can run TINU using diagnostics mode with administrator privileges, this will let you complete successfully installer creations and avoid to enter the password multiple times, do you want to continue?", style: .informational){
-						return
-				}
-					*/
+					if (SIPManager.checkSIP()){
 				
-				
-				}else{
-				
-					if !ChooseSideViewController._already_prompted{
-						let shouldPrompt = UserDefaults.standard.bool(forKey: ChooseSideViewController._prompt_sip)
-						
-						if shouldPrompt{
-							let res = dialogYesNo(question: "Use diagnostics mode?", text: "You can run TINU using diagnostics mode with administrator privileges, this will let you avoid to enter the password multiple times, do you want to continue?", style: .informational)
-							
-							ChooseSideViewController._already_prompted = true
-							UserDefaults.standard.set(false, forKey: ChooseSideViewController._prompt_sip)
-							UserDefaults.standard.set(res, forKey: ChooseSideViewController._prompt_sip_result)
-							
-							if res{
-								return
-							}
-							
-							
-						}else{
-							if UserDefaults.standard.bool(forKey: ChooseSideViewController._prompt_sip_result){
-								return
-							}
-						}
+						openDiagnosticsMode(withSudo: true)
+					
+					}else{
+					
 					}
 				
+					ChooseSideViewController._already_prompted = true
 				
-					
 				}
 			
+				//NSApplication.shared().terminate(self)
 			
-			
-			
-			
-			
-			//self.window!.orderOut(self)
-			
-			//if it ges here it means that diagnostics mode failed, so, it's better to not quit the app
-				
-			//let _ = startCommandWithSudo(cmd: "/bin/sh", args: ["-c", Bundle.main.executablePath!])
-			
-			
-				openDiagnosticsMode(withSudo: true)
-				ChooseSideViewController._already_prompted = true
-			
-			//NSApplication.shared().terminate(self)
-			
+			}
 		}
 		
 		#endif

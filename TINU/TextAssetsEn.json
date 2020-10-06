@@ -33,22 +33,22 @@
 			4,
 			{
 				"title" : "Format the choosen drive entirely",
-				"desc" : "Erases all the contentent of the choosen storage device, and then formats it using a macOS Extended Journaled (HFS+) main partition with the GUID partition table for the drive.\nThis operation is mandatory (and it will be performed automatically) if the choosen drive does not use GUID, because GUID is needed to allow the macOS installer to boot."
+				"desc" : "Erases all the contentent of the choosen storage device, and then formats it using a macOS Extended Journaled (HFS+) main partition with the GUID partition table for the drive.\nThis operation is mandatory (and it will be performed automatically) if you chose a drive."
 			},
 			6,
 			{
 				"title" : "Create the .AIBootFiles folder, if it's not present",
-				"desc" : "For hackintosh usage, older version of Clover may not recognize the bootable macOS installer without the .IABootFiles folder, so this option copies the system files from the bootable installer and then puts them in the newly created .IABootfiles folder."
+				"desc" : "For hackintosh usage: Older version of Clover (released before macOS 10.13.4) may not recognize or boot a bootable macOS installer without the invisible folder called .IABootFiles, so this option creates one automatically."
 			},
 			7,
 			{
 				"title" : "Delete the .IAPhisicalMedia file from the installer",
-				"desc" : "For hackintosh usage, some older version of Clover may not detect bootable macOS installers which contain the .IAPhysicalMedia file, so to let that versions of Clover to detect those isntallers, this option deletes the .IAPhysicalMedia file."
+				"desc" : "For hackintosh usage: Older version of Clover (released before macOS 10.13.4) may not recognize or boot a bootable macOS installer which contains the .IAPhysicalMedia file, so this option remooves it automatically."
 			},
 			8,
 			{
 				"title" : "Don't unmount the EFI partition",
-				"desc" : "While creating the bootable macOS installer, TINU may mount it's EFI partition, this option prevents TINU from unmounting it after it finishes creating the bootable installer."
+				"desc" : "While creating the bootable macOS installer, TINU may mount it's EFI partition, this option prevents TINU from unmounting it after it finishes the creation process."
 			}
 		],
 		"installation":[
@@ -70,7 +70,7 @@
 			4,
 			{
 				"title" : "Format the choosen drive entirely",
-				"desc" : "Erases all the contentent of the target drive, and then formats it using a macOS Extended Journaled (HFS+) main partition with the GUID partition table for the drive (note that the macOS installer will convert it in APFS if the option to avoid the APFS conversion operation, is not enabled or if you are installaing macOS Mojave or newer).\nThis operation is mandatory (and it will be performed automatically) if the choosen drive does not use GUID, because GUID is needed to install macOS and to make it work properly."
+				"desc" : "Erases all the contentent of the choosen storage device, and then formats it using a macOS Extended Journaled (HFS+) main partition with the GUID partition table for the drive.\nThis operation is mandatory (and it will be performed automatically) if you chose a drive."
 			},
 			5,
 			{
@@ -80,31 +80,71 @@
 		]
 	},
 	"viewStrings" : {
+		"ContactsViewController" :
+		{
+			"unmutable" : {
+				"title" : "TINU: Contact us",
+				"backButton" : "Close"
+			}
+		},
+		"CreditsViewController" :
+		{
+			"unmutable" : {
+				"version" : "Version: ",
+				"license" : "\nReleased under the GNU GPL V3 License"
+			}
+		},
 		"DriveDetectionInfo" :
 		{
 			"mutable" : {
 				"content" :
 				{
-					"installer" : "• Make sure that your disk device is working, e.g. by copying files to it.\n\n• Verify that any adapters, cables or devices you use to attach your disk device to the computer are correctly plugged in, working, and if needed, correctly installed, and that your version of macOS does work with these particular devices, adapters or peripherals you are using.\n\n• Make sure the disk device you have chosen is a physical device and not a virtual device. Virtual devices may not work properly with this app.\n\n• Try to format it in Disk Utility using the \"macOS Extended (journaled)\" format before using it with this app.\n\n• TINU will detect only disk devices that are usable to create a bootable macOS installer.\n\n• Make sure that the chosen disk does not contain the partition from which you have booted the system and that it's not the internal SSD or hard disk of your Mac.\n\n• Make sure that the disk device (drive) or the partition you want to use is at least 8 GB. If your drive is big enough but the partition you want to use is not, you have to use Disk Utility to create a partition of at least 8 GB on that drive, or you have resize the partition you want to use.",
-					"installation" : "• Make sure that your disk device is working, e.g. by copying files to it.\n\n• Verify that any adapters, cables or devices you use to attach your disk device to the computer are correctly plugged in, working, and if needed, correctly installed, and that your version of macOS does work with these particular devices, adapters or peripherals you are using.\n\n• Make sure the disk device you have chosen is a physical device and not a virtual device. Virtual devices may not work properly with this app.\n\n• Try to format it in Disk Utility using the \"macOS Extended (journaled)\" format before using it with this app.\n\n• TINU will only detect drives that can be used to install macOS.\n\n• Make sure the disk device (drive) or the partition you want to use is at least 20 GB. If your drive is big enough but the partition you want to use is not, you have to use Disk Utility to create a partition of at least 20 GB on that drive, or you have resize the partition you want to use."
+					"installer" : "• Make sure that your disk device is working, e.g. by copying files to it.\n\n• Verify that any adapters, cables or devices you use to attach your disk device to the computer are correctly plugged in, working, and if needed, correctly installed, and that your version of macOS does work with these particular devices, adapters or peripherals you are using.\n\n• Make sure the disk device you have chosen is a physical device and not a virtual device. Virtual devices may not work properly with this app.\n\n• TINU only recognizes disks and partitions that are usable to create bootasble macOS installers, so make sure the disk/partition you want to use is large enough (at least 8GB or at least 9GB if you want to create a Catalina installer and at least 13GB if you want to create an installer of Big Sur and later, and in the case of a partition, also make sure that it is part of a disk that uses the GUID or GPT format and that it's not of the APFS type).\n\n• Make sure that the partition you want to use is not part of your computer's startup disk and that it is not your mac's internal hard drive or SSD.\n\n• Before using this app try to format, the drive you want to use, using Disk Utility and choosing the format \"macOS Extended (journaled)\".",
+					"installation" : "• Make sure that your disk device is working, e.g. by copying files to it.\n\n• Verify that any adapters, cables or devices you use to attach your disk device to the computer are correctly plugged in, working, and if needed, correctly installed, and that your version of macOS does work with these particular devices, adapters or peripherals you are using.\n\n• Make sure the disk device you have chosen is a physical device and not a virtual device. Virtual devices may not work properly with this app.\n\n• TINU only recognizes disks and partitions that are usable to install macOS on them, so make sure the disk/partition you want to use is large enough (at least 20 GB or at least 30GB if you want to install Catalina or Big Sur and later versions, and in the case of a partition, also make sure that it is part of a disk that uses the GUID or GPT format).\n\n• Try to format it in Disk Utility using the \"macOS Extended (journaled)\" format before using it with this app."
 				}
 			},
-			"unmutable" : {}
+			"unmutable" : {
+				"title" : "To make sure that your storage device will be detected:",
+				"backButton" : "Close"
+			}
 		},
 		"EFIFolderReplacement" :
 		{
-			"mutable" : {},
 			"unmutable" : {
 				"desc" : "This option automatically installs the selected ${bootloader} EFI folder inside the EFI partition of the drive \"${drive}\".\nOnly UEFI 64Bits ${bootloader} EFI folders are supported.",
 				"title" : "${bootloader} EFI folder installer",
-				"errorDialogTitle" : "Impossible to open the EFI folder",
+				"errorDialogTitle" : "Impossible to open the folder",
 				"errorDialog" : "There was an unkown error while trying to open the selcted EFI folder",
 				"improperDialogTitle": "The folder \"${pathName}\" is not a proper ${bootloader} efi folder",
-				"improperDialog" : "The folder you selected \"${path}\" does not contain the required element \"${missing}\", make sure to open just the folder named EFI and that it cointains all the needed elements"
+				"improperDialog" : "The folder you selected \"${path}\" does not contain the required element \"${missing}\", make sure to open just the folder named EFI and that it cointains all the needed elements",
+				"alreadyChoosen" : "You have already choosen a ${bootloader} EFI folder",
+				"buttonChoose" : "Chose Folder ...",
+				"buttonRemoove" : "Remoove"
+			}
+		},
+		"ChooseSideViewController":{
+			"unmutable" : {
+				"openEFIMounter" : "Use\nEFI Partition Mounter",
+				"openInstallation" : "Install macOS",
+				"openInstaller" : "Create a bootable\nmacOS installer"
+			}
+		},
+		"InfoViewController":{
+			"mutable" : {
+				"driveInfo" : {
+					"installer" :    "A USB thumb drive or a partition of 8 GB or higher (9 GB or higher for Catalina, 13 GB or higher for Big Sur)",
+					"installation" : "A drive or partition of 20 GB or higher\n(or possibly at least 30GB)"
+				},
+				"appInfo" : {
+					"installer" :    "A macOS installer app downloaded from the App Store (OS X Mavericks or a more recent version is required)",
+					"installation" : "A macOS installer app downloaded from the App Store\n(El Capitan or more recent)"
+				}
+			},
+			"unmutable" : {
+				"title" : "Requirements"
 			}
 		},
 		"LicenseViewController" : {
-			"mutable" : {},
 			"unmutable" : {
 				"mainTitle" : "License agreement",
 				"backButton" : "Cancel",
@@ -112,6 +152,236 @@
 				"macOSLicenseBackButton" : "Disagree",
 				"checkboxText" : "I have read and I agree to the terms and conditions of the license agreement",
 				"agreeButton" : "Agree"
+			}
+		},
+		"ChoseDriveViewController": {
+			"mutable" : {
+				"title" : {
+					"installer" :    "Choose the Drive or the Partition to turn into a macOS Installer",
+					"installation" : "Choose the Drive or the Partition to install macOS on"
+				},
+				"formatDialog" : {
+					"installer" :    "The drive \"${diskName}\" will be formatted entirely to be used to create a bootable macOS installer. All your data will be lost!",
+					"installation" : "The drive \"${diskName}\" will be formatted entirely to be used to install macOS on. All your data will be lost!"
+				}
+			},
+			"unmutable" : {
+				"backButton" : "Back",
+				"nextButton" : "Next",
+				"nextButtonFail" : "Quit",
+				"failureText" : "No usable storage devices detected",
+				"failureButton" : "Why is my storage device not detected?",
+				"formatDialogTitle" : "Erase \"${diskName}\"?",
+				"formatDialogTimeMachineTitle" : "Erase \"${diskName}\"?",
+				"formatDialogTimeMachine" : "The drive \"${partitionName}\" is currently used as a Time Machine backup disk, if you go ahed it will be completely erased. All your backups will be lost!",
+				"formatDialogTimeMachine1" : "Erase",
+				"formatDialogTimeMachine1Key" : "",
+				"formatDialogTimeMachine2"  : "Don't erase",
+				"formatDialogTimeMachine2Key" : "\r",
+				"formatDialog1" : "Erase",
+				"formatDialog1Key" : "",
+				"formatDialog2"  : "Don't erase",
+				"formatDialog2Key" : "\r"
+			}
+		},
+		"ChoseAppViewController":{
+			"unmutable" : {
+				"title" : "Choose a macOS Installer app",
+				"backButton" : "Back",
+				"nextButton" : "Next",
+				"nextButtonFail" : "Quit",
+				"failureText" : "No macOS installer apps found",
+				"failureButtonGetInstaller" : "Get an installer app",
+				"failureButtonOpen" : "Open ...",
+				"buttonGetInstaller" : "Get installer ...",
+				"buttonOpen" : "Open ...",
+				"buttonRefresh" : "Refresh",
+				"invalidAppDialogTitle" : "Unusable app",
+				"invalidAppDialog" : "The app you chose${fileName} is not usable because it isn't a macOS installer or is a damaged or unsupported macOS installer.",
+				"invalidAliasDialogTitle" : "Bad alias",
+				"invalidAliasDialog" : "The file you chose${fileName} is not usable because it's a Finder Alias that can't be intepreted."
+			}
+		},
+		"ConfirmViewController":{
+			"mutable" : {
+				"warningText" : {
+					"installer" :    "If you go ahead, this app will erase \"${driveName}\"! All the data on it will be lost and replaced with the bootable macOS installer. If you are sure, continue at your own risk.",
+					"installation" : "If you go ahead, this app will modify the volume you selected \"${driveName}\", and macOS will be installed on it. If you are sure, continue at your own risk."
+				}
+			},
+			"unmutable" : {
+				"title" : "The volume and macOS installer below will be used, are you sure?",
+				"titleDrive" : "The drive and macOS installer below will be used, are you sure?",
+				"backButton" : "Back",
+				"nextButton" : "Yes, I understand",
+				"nextButtonFail" : "Quit",
+				"optionsButton" : "Options",
+				"failureTitle" : "Impossible to create the macOS install meadia",
+				"failureText" : "Error while getting volume/drive and installer app information"
+			}
+		},
+		"OtherOptionsViewController":{
+			"unmutable" : {
+				"title" : "Options",
+				"backButton" : "Back",
+				"nextButton" : "Done",
+				"nextButtonChoose" : "Next",
+				"defaultButton" : "Set default options",
+				"optionsSection" : "General options",
+				"advancedOptionsSection" : "Advanced options",
+				"bootloaderSection" : "Install clover ${bootloader}\nEFI folder"
+			}
+		},
+		"DownloadAppViewController":{
+			"unmutable" : {
+				"title" : "Download a macOS installer",
+				"backButton" : "Close"
+			}
+		},
+		"DownloadAppItem":{
+			"unmutable" : {
+				"downloadButtonAppStore" : "View in the App Store",
+				"downloadButtonApple" : "Download from Apple",
+				"downloadDialogTitle" : "Remeber to open the download",
+				"downloadDialog" : "The intaller file you are about to download will need to be opened after being downloaded in order to be usable with TINU",
+				"downloadDialogYes" : "Continue",
+				"downloadDialogNo" : "Cancel"
+			}
+		},
+		"InstallingViewController":{
+			"mutable" : {
+				"title" : {
+					"installer" :    "Bootable macOS installer creation",
+					"installation" : "macOS installation"
+				},
+				"activityLabel11" : {
+					"installer" : "Creating bootable macOS installer\n(may take from 5 to 50 minutes)",
+					"installation" : "Installing macOS\n(may take from 5 to 50 minutes)"
+				}
+				
+			},
+			"unmutable" : {
+				"cancelButton" : "Cancel",
+				"showLogButton" : "Show Log",
+				"descriptionField" : "Please wait and leave the windows as is",
+				"activityLabel1" : "Inspecting installer App",
+				"activityLabel2" : "Error with inst. app or target drive",
+				"activityLabel3" : "Interpreting the results of the process",
+				"activityLabel4" : "Checking previous operations",
+				"activityLabel5" : "Applaying custom options",
+				"activityLabel6" : "Formatting target drive",
+				"activityLabel7" : "Unmounting partitions",
+				"activityLabel8" : "Process ended, exiting ...",
+				"activityLabel9" : "Checking partitions",
+				"activityLabel10" : "Applying options",
+				"activityLabel12" : "Chiusura dei programmi che causano conflitto",
+				"activityLabel13" : "Espulsione dei dischi che causano conflitto",
+				"activityLabel14" : "Applicazione delle opzioni",
+				"activityLabel18" : "Costruzione del comando per ${executable}",
+				"stopErrorTitle" : "Error while trying to exit from the process",
+				"stopError" : "There was an error while trying to close the creation process: \n\nFailed to stop ${executable} process",
+				"finalScreenCFE" : "Failed to stop conflicting process \"${process}\"",
+				"finalScreenCVE" : "Failed to unmount conflicting volume \"${volume}\"",
+				"finalScreenCVGE" : "Failed to unmount conflicting volumes",
+				"finalScreenFFE" : "Failed to format the disk \"${diskName}\"",
+				"finalScreenFUE" : "Failed to unmount the the target disk",
+				"finalScreenMIS" : "macOS installed successfully",
+				"finalScreenMIE" : "macOS installation error, check the log for more details",
+				"finalScreenAOE" : "Failed to apply options"
+			}
+		},
+		"NotificationsManager":{
+			"unmutable" : {
+				"goBackTitle" : "TINU: Operation cancelled",
+				"goBack" : "The creation of the bootable macOS installer has been canceled, please check the TINU window if you want to try again",
+				"copyLogTitle" : "TINU: Log copied to clipboard",
+				"copyLog" : "TINU's log has been successfully copied to the clipboard",
+				"processEndNoTitle" : "TINU: Operation failed",
+				"processEndNo" : "The creation process of the bootable macOS installer has failed, see log for more details",
+				"processEndYesTitle" : "TINU: Operation ended successfully",
+				"processEndYes" : "The creation process of your bootable macOS installer has been completed with success",
+				"loginTitle" : "TINU: Please log in",
+				"login" : "To complete the creation process of your bootable macOS installer TINU needs that you do the login"
+			}
+		},
+		"MainCreationFinishedViewController":{
+			"unmutable" : {
+				"exitButton" : "Quit",
+				"continueButtonYes" : "Main menu",
+				"continueButtonNo" : "Retry",
+				"logButton" : "Show Log"
+			}
+		},
+		"DriveView" : {
+			"mutable" : {
+				"driveNotUsableToolTip":{
+					"installer" : "This drive can't be used to\ncreate a bootable macOS installer",
+					"installation" : "This drive can't be used to\ninstall macOS in it now"
+				}
+			},
+			"unmutable" : {
+				"sizePrefix" : "Size: ",
+				"appNormalWarn" : "${name}",
+				"appNormalToolTip" : "Path: ${path}",
+				"appTooBigWarn" : "App too big: ${name}",
+				"appTooBigToolTip" : "This macOS installer app is not usable bacause you choose a target drive which is too small\n\nPath: ${path}",
+				"appDamagedWarn" : "Damaged app: ${name}",
+				"appDamagedToolTip" : "This macOS installer app is not usable bacause it's missing some internal elements, you need the full installer app from the App Store which weights more than 5 gb\n\nPath: ${path}",
+				"appErrorWarn" : "Error: ${name}",
+				"appErrorToolTip" : "This macOS installer app is not usable bacause there was an error while trying to calculate it's size\n\nPath: ${path}",
+				"driveNormalToolTip" : "${size}${mount}"
+			}
+		},
+		"AppDelegate" : {
+			"mutable" : {
+				"switchText" : {
+					"installation" : "Use TINU to create a bootable macOS installer",
+					"installer" : "Use TINU to install macOS"
+				}
+			},
+			"unmutable" : {
+				"cantQuiNowTitle" : "You can't quit now",
+				"cantQuiNow" : "You can't quit from TINU now, you have to wait until the first important part, of the process, is completed, and then you can quit if you want",
+				"stopFailedTitle" : "Error while trying to quit",
+				"stopFailed" : "There was an error while trying to quit from the app: \n\nFailed to stop ${executable} process"
+			}
+		},
+		"LogViewController" : {
+			"unmutable" : {
+				"saveErrorTitle" : "Error while saving the log file",
+				"saveError" : "There was an error while saving the file: \n\n${desc}"
+			}
+		},
+		"LogWindowController" : {
+			"unmutable" : {
+				"saveButton" : "Save Log",
+				"copyButton" : "Copy Log",
+				"shareButton" : "Share"
+			}
+		},
+		"SIPManager" : {
+			"unmutable" : {
+				"disableTitle" : "TINU: Please disable SIP",
+				"disable" : "SIP (system integrity protection) is enabled and will not allow TINU to to work properly (on Catalina and newer versions), please disable it or use the diagnostics mode with administrator privileges"
+			}
+		},
+		"OtherOptionsInfoViewController" : {
+			"unmutable" : {
+				"infoPrefix" : "Info about: "
+			}
+		},
+		"template":{
+			"mutable" : {
+				"item" : {
+					"installer" :    "",
+					"installation" : ""
+				}
+			},
+			"unmutable" : {
+				"title" : "",
+				"backButton" : "Back",
+				"nextButton" : "Next",
+				"nextButtonFail" : "Quit"
 			}
 		}
 	}

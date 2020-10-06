@@ -33,7 +33,7 @@ public final class TaskKillManager{
 				break
 			}
 			
-			if let num = cpid?.unsignedNumber{
+			if let num = cpid?.uIntValue{
 				switch num{
 				case ..<10:
 					log("Provvided PID for \"\(name)\" is form a system process, so it can't be stopped, exiting ...")

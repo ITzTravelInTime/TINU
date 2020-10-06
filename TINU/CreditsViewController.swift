@@ -9,7 +9,10 @@
 import Foundation
 import Cocoa
 
-public class CreditsViewController: GenericViewController {
+public class CreditsViewController: GenericViewController, ViewID {
+	public let id: String = "CreditsViewController"
+	
+	
     @IBOutlet weak var versionLabel: NSTextField!
     @IBOutlet weak var copyrigthLabel: NSTextField!
     
@@ -21,9 +24,9 @@ public class CreditsViewController: GenericViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-        
-        versionLabel.stringValue = "Version: " + Bundle.main.version! + " (" + Bundle.main.build! + ")"
-        copyrigthLabel.stringValue = Bundle.main.copyright! + "\nReleased under GNU GPL v3 License"
+		
+        versionLabel.stringValue = TextManager.getViewString(context: self, stringID: "version") + Bundle.main.version! + " (" + Bundle.main.build! + ")"
+        copyrigthLabel.stringValue = Bundle.main.copyright! + TextManager.getViewString(context: self, stringID: "license")
         
         if sharedIsOnRecovery{
             contactButton.isEnabled = false

@@ -17,7 +17,7 @@ public class SettingsSectionItem: NSView{
 	
 	var isSelected = false
 	
-	var id = OptionsViewController.SectionsID(rawValue: 0)!
+	var id = OtherOptionsViewController.SectionsID(rawValue: 0)!
 	
 	var itemsScrollView: NSScrollView?
 	
@@ -113,101 +113,99 @@ public class SettingsSectionItem: NSView{
 	
 	public func addSettingsToScrollView(){
 		
-		if let scrollView = itemsScrollView{
+		guard let scrollView = itemsScrollView else { return }
+		
+		scrollView.documentView = NSView()
+		
+		scrollView.verticalScroller?.isHidden = false
+		SettingsSectionItem.surface = NSView()
+		
+		switch id{
+		case OtherOptionsViewController.SectionsID.generalOptions, OtherOptionsViewController.SectionsID.advancedOptions:
+			let isAdvanced = (id == OtherOptionsViewController.SectionsID.advancedOptions)
+			let itemHeigth: CGFloat = 30
+			var isGray = true
 			
-			scrollView.documentView = NSView()
+			SettingsSectionItem.surface.frame.origin = CGPoint.zero
+			SettingsSectionItem.surface.frame.size = NSSize.init(width: scrollView.frame.size.width - 20, height: itemHeigth * (CGFloat(oom.shared.otherOptions.count)))
 			
-			scrollView.verticalScroller?.isHidden = false
-			SettingsSectionItem.surface = NSView()
+			var count: CGFloat = 0
+			
+			for i in oom.shared.otherOptions.sorted(by: { $0.0.rawValue > $1.0.rawValue }){
+				if !(i.value.isVisible && (i.value.isAdvanced == isAdvanced)){
+					SettingsSectionItem.surface.frame.size.height -= itemHeigth
+					continue
+				}
+				
+				let item = OtherOptionsCheckBox(frame: NSRect(x: 0, y: count, width: SettingsSectionItem.surface.frame.size.width, height: itemHeigth))
+				
+				item.option = i.value
+				
+				isGray = !isGray
+				
+				count += itemHeigth
+				
+				SettingsSectionItem.surface.addSubview(item)
+				
+				//surface.frame.size = CGSize(width: surface.frame.size.width, height: surface.frame.size.height + itemHeigth)
+				
+			}
+			
+			if SettingsSectionItem.surface.frame.height < scrollView.frame.height{
+				let h = scrollView.frame.height - 2
+				let w = scrollView.frame.width - 2
+				let delta = (h - SettingsSectionItem.surface.frame.height)
+				
+				SettingsSectionItem.surface.frame.size.height = h
+				SettingsSectionItem.surface.frame.size.width = w
+				scrollView.hasVerticalScroller = false
+				//scrollView.verticalScrollElasticity = .none
+				scrollView.verticalScrollElasticity = .automatic
+				
+				for item in SettingsSectionItem.surface.subviews{
+					item.frame.size.width = w
+					item.frame.origin.y += delta
+				}
+			}else{
+				scrollView.hasVerticalScroller = true
+				scrollView.verticalScrollElasticity = .automatic
+			}
+			
+			scrollView.documentView = SettingsSectionItem.surface
+			
+		case OtherOptionsViewController.SectionsID.eFIFolderReplacementClover, OtherOptionsViewController.SectionsID.eFIFolderReplacementOpenCore:
+			//efi replacement menu
+			#if useEFIReplacement && !macOnlyMode
+			SettingsSectionItem.surface = EFIReplacementView.init(frame: NSRect(origin: CGPoint.zero, size: NSSize(width: scrollView.frame.size.width - 17, height: scrollView.frame.size.height - 2))) as NSView
+			
+			scrollView.documentView = SettingsSectionItem.surface
 			
 			switch id{
-			case OptionsViewController.SectionsID.generalOptions, OptionsViewController.SectionsID.advancedOptions:
-				let isAdvanced = (id == OptionsViewController.SectionsID.advancedOptions)
-				let itemHeigth: CGFloat = 30
-				var isGray = true
-				
-				SettingsSectionItem.surface.frame.origin = CGPoint.zero
-				SettingsSectionItem.surface.frame.size = NSSize.init(width: scrollView.frame.size.width - 20, height: itemHeigth * (CGFloat(oom.shared.otherOptions.count)))
-				
-				var count: CGFloat = 0
-				
-				for i in oom.shared.otherOptions.sorted(by: { $0.0.rawValue > $1.0.rawValue }){
-					if i.value.isVisible && (i.value.isAdvanced == isAdvanced){
-						let item = OtherOptionsCheckBox(frame: NSRect(x: 0, y: count, width: SettingsSectionItem.surface.frame.size.width, height: itemHeigth))
-						
-						item.option = i.value
-						
-						isGray = !isGray
-						
-						count += itemHeigth
-						
-						SettingsSectionItem.surface.addSubview(item)
-						
-						//surface.frame.size = CGSize(width: surface.frame.size.width, height: surface.frame.size.height + itemHeigth)
-					}else{
-						SettingsSectionItem.surface.frame.size.height -= itemHeigth
-					}
-					
-				}
-				
-				if SettingsSectionItem.surface.frame.height < scrollView.frame.height{
-					let h = scrollView.frame.height - 2
-					let w = scrollView.frame.width - 2
-					let delta = (h - SettingsSectionItem.surface.frame.height)
-					
-					SettingsSectionItem.surface.frame.size.height = h
-					SettingsSectionItem.surface.frame.size.width = w
-					scrollView.hasVerticalScroller = false
-					//scrollView.verticalScrollElasticity = .none
-					scrollView.verticalScrollElasticity = .automatic
-					
-					for item in SettingsSectionItem.surface.subviews{
-						item.frame.size.width = w
-						item.frame.origin.y += delta
-					}
-				}else{
-					scrollView.hasVerticalScroller = true
-					scrollView.verticalScrollElasticity = .automatic
-				}
-				
-				scrollView.documentView = SettingsSectionItem.surface
-				
-			case OptionsViewController.SectionsID.eFIFolderReplacementClover, OptionsViewController.SectionsID.eFIFolderReplacementOpenCore:
-				//efi replacement menu
-				#if useEFIReplacement && !macOnlyMode
-					
-					SettingsSectionItem.surface = EFIReplacementView.init(frame: NSRect(origin: CGPoint.zero, size: NSSize(width: scrollView.frame.size.width - 17, height: scrollView.frame.size.height - 2))) as NSView
-				
-					scrollView.documentView = SettingsSectionItem.surface
-				
-					switch id{
-						case OptionsViewController.SectionsID.eFIFolderReplacementClover:
-							(SettingsSectionItem.surface as? EFIReplacementView)!.bootloader = .clover
-							break
-						case OptionsViewController.SectionsID.eFIFolderReplacementOpenCore:
-							(SettingsSectionItem.surface as? EFIReplacementView)!.bootloader = .openCore
-							break
-						default:
-							break
-					}
-					
-					scrollView.verticalScrollElasticity = .none
-					
-				#else
-				
-					break
-					
-				#endif
+			case OtherOptionsViewController.SectionsID.eFIFolderReplacementClover:
+				(SettingsSectionItem.surface as? EFIReplacementView)!.bootloader = .clover
+				break
+			case OtherOptionsViewController.SectionsID.eFIFolderReplacementOpenCore:
+				(SettingsSectionItem.surface as? EFIReplacementView)!.bootloader = .openCore
+				break
 			default:
 				break
 			}
 			
-			SettingsSectionItem.surface.draw(SettingsSectionItem.surface.frame)
+			scrollView.verticalScrollElasticity = .none
 			
-			if let documentView = scrollView.documentView{
-				documentView.scroll(NSPoint.init(x: 0, y: documentView.bounds.size.height))
-			}
+			#else
 			
+			break
+			
+			#endif
+		default:
+			break
+		}
+		
+		SettingsSectionItem.surface.draw(SettingsSectionItem.surface.frame)
+		
+		if let documentView = scrollView.documentView{
+			documentView.scroll(NSPoint.init(x: 0, y: documentView.bounds.size.height))
 		}
 	}
 }

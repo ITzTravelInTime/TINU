@@ -48,7 +48,11 @@ public let simulateCreateinstallmediaFail: Bool! = nil
 public let simulateAbnormalExitcode = false
 
 //this variable tells to the app to ignore special operations after the end of the createinstallmedia process
-public let simulateNoSpecialOperations = false
+//values:
+// - true:  the advanced option will be skipped with true as resoult
+// - false: the advanced options will be skipped with false as resoult
+// - nil:   (default) all normal
+public let simulateNoSpecialOperations: Bool! = nil
 
 //this variable is used to simulate a failure while doing advanced operations
 public let simulateSpecialOperationsFail = false
@@ -59,8 +63,7 @@ public let simulateCreateinstallmediaFailCustomMessage: String = ""
 //this is used to debug the app as it is into the recovery
 public let simulateRecovery = false
 
-
-//this used to disale the new shadow UI
+//this is used to set the usage of shadows in the UI
 public let simulateDisableShadows = false
 
 //non ui testing conditions

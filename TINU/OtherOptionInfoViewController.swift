@@ -8,7 +8,9 @@
 
 import Cocoa
 
-public class OtherOptionsInfoViewController: GenericViewController {
+public class OtherOptionsInfoViewController: GenericViewController, ViewID {
+	
+	public let id: String = "OtherOptionsInfoViewController"
 	
 	@IBOutlet var textView: NSTextView!
 	
@@ -28,7 +30,7 @@ public class OtherOptionsInfoViewController: GenericViewController {
 		showTitleLabel()
 		
 		if let option = associatedOption{
-			titleLabel.stringValue = "Info about: " + option.title
+			titleLabel.stringValue = TextManager.getViewString(context: self, stringID: "infoPrefix") + option.title
 			
 			if let desc = associatedOption?.description{
 				textView.text = desc

@@ -1,0 +1,389 @@
+{
+	"readme":{
+		"installation":{
+			"hackintosh": "Grazie per aver usato TINU\n\nSe vuoi usare questa installazione di macOS su un hackintosh, perfavore scarica ed installa un bootloader come Clover o OpenCore, puoi trvare Clover qui:\n https://github.com/CloverHackyColor/CloverBootloader/releases\n\ne puoi trovare OpenCore qui:\n https://github.com/acidanthera/OpenCorePkg/releases \n\n(nota che i bootloader menzionati necessitano di essere installati e configurati nel modo giusto a seconda della configurazione hardware del pc sul quale hai installato e vuoi avviare macOS, per aiuto vai su: www.insanelymac.com o sul subreddit r/Hackintosh)\n\nSe vuoi usare questa installazione su un mac originale, non devi fare altro, è già pronta per essere usata.",
+			"mac": "Grazie per aver usato TINU\n\nRicoarda che questo supporto di installazione di macOS funziona solo con mac ufficialmente supportati dalla versione che hai scelto, non funzionerà con macchine non ufficialmente supportate"
+		},
+		"installer":{
+			"hackintosh": "Grazie per aver usato TINU\n\nSe vuoi usare questo supporto di installazione di macOS su un hackintosh, perfavore scarica ed installa un bootloader come Clover o OpenCore, puoi trvare Clover qui:\n https://github.com/CloverHackyColor/CloverBootloader/releases\n\ne puoi trovare OpenCore qui:\n https://github.com/acidanthera/OpenCorePkg/releases \n\n(nota che i bootloader menzionati necessitano di essere installati e configurati nel modo giusto a seconda della configurazione hardware del pc sul quale hai intenzione di avviare ed installare macOS, per aiuto vai su: www.insanelymac.com o sul subreddit r/Hackintosh)\n\nSe vuoi usare questo supporto di installazione di macOS su un mac originale, non devi fare altro, è già pronta per essere usata.",
+			"mac": "Grazie per aver usato TINU\n\nRicoarda che questo supporto di installazione di macOS funziona solo con mac ufficialmente supportati dalla versione che hai scelto, non funzionerà con macchine non ufficialmente supportate"
+		}
+	},
+	"helpfoulMessange":{
+		"installer": "\n\n******************************************\n\nNote that:\n\n-This process may take a lot of time (usually between 5 and 50 minutes) especially with slow storage devices (like Hard drives, SD/micro SD cards and virtual disks) and slow machines (like most virtual machines), so be patient and wait for it to finish\n\n-If you feel nothing is happening or the program is stuck remeber that TINU is just waiting for the program, createinstallmedia, to take care of the foundamental steps of this process, without knowing when it will finish his opearation. So TINU it's not stuck, it's just waiting.\n\n-The progress shown in the progress bar is just to give to the user the impression of busyness and that something is happening, so that's only cosmethic, but it's not actual progress since there is not a consistent way of obtaining accurate progress values during this step. TINU is just making the bar going forward by using a timer which increments it each few seconds for 50 minutes.\n\n-For more help or questions go to |Menu bar| -> |TINU| -> |Related to TINU| -> |Contact us| there you will find all the links and the contacts related to this project (NOTE: this doesn't work when TINU is running in a macOS recovery environment).\n\n******************************************\n\n",
+		"installation": "\n\n******************************************\n\nNote that:\n\n-This process may take a lot of time (usually between 5 and 50 minutes) especially with slow storage devices (like Hard drives, SD/micro SD cards and virtual disks) and slow machines (like most virtual machines), so be patient and wait for it to finish\n\n-If you feel nothing is happening or the program is stuck remeber that TINU is just waiting for the program, startosinstall, to take care of the foundamental steps of this process, without knowing when it will finish his opearation. So TINU it's not stuck, it's just waiting.\n\n-The progress shown in the progress bar is just to give to the user the impression of busyness and that something is happening, so that's only cosmethic, but it's not actual progress since there is not a consistent way of obtaining accurate progress values during this step. TINU is just making the bar going forward by using a timer which increments it each few seconds for 50 minutes.\n\n-For more help or questions go to |Menu bar| -> |TINU| -> |Related to TINU| -> |Contact us| there you will find all the links and the contacts related to this project (NOTE: this doesn't work when TINU is running in a macOS recovery environment).\n\n******************************************\n\n"
+	},
+	"optionsDescs":{
+		"installer":[
+			1,
+			{
+				"title" : "Crea una copia di TINU sul disco",
+				"desc" : "Questa opzione crea una copia di TINU sul disco selezionato.\nQuado hai avviato l'installer puoi aprire TINU usando questo comando nel Terminale:\n\n/Volumes/Image\\ Volume/TINU.app/Contents/MacOS/TINU\n\nAprire TINU in questo modo ti permette di creare una chiavetta di installazione dall'installer o dalla recovery di macOS o ti permette di installare macOS usando TINU.\n\nFunziona solo con installer e recovery di OS X El Capitan e successivi."
+			},
+			2,
+			{
+				"title" : "Crea il file \"README\" sul disco",
+				"desc" : "Crea il file README sul disco selezionato. È un file di testo contenente un rigraziamento e qualche indicazione per alcuni utenti."
+			},
+			3,
+			{
+				"title" : "Applica l'icona di macOS al disco",
+				"desc" : "Applica l'icona dell'app di installazione scelta al supporto di installazione di macOS."
+			},
+			4,
+			{
+				"title" : "Formatta per intero il disco selezionato",
+				"desc" : "Cancella per intero il contenuto del disco selezionato, e lo formatta in formato macOS Extended Journaled (HFS+) utilizzando la tabella di partizione di tipo GUID.\nQuesta operazione è necessaria se si è selezionato un disco intero (e in tal caso viene effettuata automaticamente)."
+			},
+			6,
+			{
+				"title" : "Crea la cartella .AIBootFiles sul disco",
+				"desc" : "Solo per hackintosh: Alcune vecchie versioni di Clover (antecedenti all'uscita di macOS 10.13.4) potrebbero non riconoscere o avviare chiavette che non hanno la cartella invisibile .IABootFiles al loro interno, quindi questa opzione ne crea una automaticamente."
+			},
+			7,
+			{
+				"title" : "Rimuovi il file .IAPhisicalMedia sul disco",
+				"desc" : "Solo per hackintosh: Alcune vecchie versioni di Clover (antecedenti all'uscita di macOS 10.13.4) potrebbero non riconoscere o avviare chiavette che hanno il file invisibile .IAPhysicalMedia, quindi questa opzione lo rimuove automaticamente."
+			},
+			8,
+			{
+				"title" : "Non espellere la partizione EFI del disco",
+				"desc" : "Durante la creazione del supporto di installazione di macOS, TINU potrebbe aprire la partizione EFI dek disco selezionato, questa opzione impedisce a TINU di espellere questa partizione alla fine del processo."
+			}
+		],
+		"installation":[
+			1,
+			{
+				"title" : "Installa TINU sul disco",
+				"desc" : "Installa una copia di TINU nella cartella \"/Applications\" del sistema macOS che si sta installando.\n\nRichiede Mac OS X El Capitan o una versione successiva."
+			},
+			2,
+			{
+				"title" : "Crea il file \"README\" sul disco",
+				"desc" : "Crea il file README sul disco selezionato. È un file di testo contenente un rigraziamento e qualche indicazione per alcuni utenti."
+			},
+			3,
+			{
+				"title" : "Applica l'icona di macOS al disco",
+				"desc" : "Applica l'icona dell'app di installazione scelta al supporto di installazione di macOS."
+			},
+			4,
+			{
+				"title" : "Formatta per intero il dispositivo selezionato",
+				"desc" : "Cancella per intero il contenuto del disco selezionato, e lo formatta in formato macOS Extended Journaled (HFS+) utilizzando la tabella di partizione di tipo GUID.\nQuesta operazione è necessaria se si è selezionato un disco intero (e in tal caso viene effettuata automaticamente)."
+			},
+			5,
+			{
+				"title" : "Installa macOS evitando la conversione automatica ad APFS",
+				"desc" : "Questa opzione forza l'installer di macOS a non convertire il volume selezionato in APFS (Opzione disponibile solo se si desidera installare macOS High Sierra)."
+			}
+		]
+	},
+	"viewStrings" : {
+		"ContactsViewController" :
+		{
+			"unmutable" : {
+				"title" : "TINU: Contattaci",
+				"backButton" : "Chiudi"
+			}
+		},
+		"CreditsViewController" :
+		{
+			"unmutable" : {
+				"version" : "Versione: ",
+				"license" : "\nRilasciato sotto la licenza GNU GPL v3"
+			}
+		},
+		"DriveDetectionInfo" :
+		{
+			"mutable" : {
+				"content" :
+				{
+					"installer" : "• Assicurati che il tuo disco sia funzionante (ad esempio copiandoci dei file sopra).\n\n• Controlla che qualunque adattatore, cavo, o dispositivo che sia usato per collegare il disco al computer, sia correttamente collegato, funzionante, e se necessario, correttamente installato e che la versione di OS X o macOS che usi sia compatibile con i cavi, adattatori o periferiche che usi.\n\n• Assicurati di usare un disco \"fisico\" e non un disco virtuale. I dischi virtuali potrebbero non essere riconosciuti o funzionare correttamente con quest'app.\n\n• TINU riconosce solo dischi e partizioni che sono utilizzabili per creare supporti di installazione di macOS, quindi assicurati che il disco/partizione che vuoi usare sia abbastanza grande (almeno 8 GB o almeno 9 GB se vuoi creare un installer di Catalina e almeno 13 GB se vuoi creare un'installer di Big Sur e successivi, e nel caso di una partizione, assicurati anche, che essa sia parte di un disco che usa il formato GUID o GPT e che non sia di tipo APFS).\n\n• Prima di usare quest'app prova a formattare il disco che vuoi usare usando Utility disco e scgliendo il formato \"macOS Extended (journaled)\".\n\n• Assicurati che la partizione che vuoi usare non faccia parte del disco di avvio del computer e che non sia l'hard disk o lo SSD interno del tuo mac.",
+					"installation" : "• Assicurati che il tuo disco sia funzionante (ad esempio copiandoci dei file sopra).\n\n• Controlla che qualunque adattatore, cavo, o dispositivo che sia usato per collegare il disco al computer, sia correttamente collegato, funzionante, e se necessario, correttamente installato e che la versione di OS X o macOS che usi sia compatibile con i cavi, adattatori o periferiche che usi.\n\n• Assicurati di usare un disco \"fisico\" e non un disco virtuale. I dischi virtuali potrebbero non essere riconosciuti o funzionare correttamente con quest'app.\n\n• TINU riconosce solo dischi e partizioni che sono utilizzabili per l'installazione di macOS, quindi assicurati che il disco/partizione che vuoi usare sia abbastanza grande (almeno 20 GB o almeno 30 GB se vuoi installare Catalina o Big Sur e successivi, e nel caso di una partizione, assicurati anche, che essa sia parte di un disco che usa il formato GUID o GPT e che non sia di tipo APFS).\n\n• Prima di usare quest'app prova a formattare il disco che vuoi usare usando Utility diso e scgliendo il formato \"macOS Extended (journaled)\"."
+				}
+			},
+			"unmutable" : {
+				"title" : "Per assicurarti che il tuo disco venga riconosciuto:",
+				"backButton" : "Chiudi"
+			}
+		},
+		"EFIFolderReplacement" :
+		{
+			"unmutable" : {
+				"desc" : "Questo menù serve ad installare la cartella EFI di ${bootloader} nella partizione EFI del disco \"${drive}\".\nSolo le cartelle EFI di tipo UEFI a 64Bit sono supportate.",
+				"title" : "Installer della cartella EFI di ${bootloader}",
+				"errorDialogTitle" : "Impossibile la cartela selezionata",
+				"errorDialog" : "C'è stato un errore sconosciuto durante l'apertura della cartella selezionata",
+				"improperDialogTitle": "La cartella \"${pathName}\" non è una cartella EFI di ${bootloader}",
+				"improperDialog" : "La cartella che hai scelto \"${path}\" non contiene il file \"${missing}\" che è richiesto, assicurati di aprire solo la cartella chiamata EFI e che essa contenga tutti i file necessari",
+				"alreadyChoosen" : "Hai già scelto una cartella EFI di ${bootloader}",
+				"buttonChoose" : "Apri Cartella ...",
+				"buttonRemoove" : "Cancella"
+			}
+		},
+		"ChooseSideViewController":{
+			"unmutable" : {
+				"openEFIMounter" : "Usa\nEFI Partition Mounter",
+				"openInstallation" : "Installa macOS",
+				"openInstaller" : "Crea un supporto di\ninstallazione di macOS"
+			}
+		},
+		"InfoViewController":{
+			"mutable" : {
+				"driveInfo" : {
+					"installer" :    "Un disco o una partizione di almeno 8 GB (9 GB o più per Catalina, 13 GB o più per Big Sur)",
+					"installation" : "Un disco o una partizione di almeno 20 GB\n(o possibilmente di almeno 30 GB)"
+				},
+				"appInfo" : {
+					"installer" :    "Un'app di installazione di macOS scaricata da App Store (è richiesta un'app di OS X Mavericks o di una versione più recente)",
+					"installation" : "Un'app di installazione di macOS scaricata da App Store (è richiesta un'app di OS X El Capitan o di una versione più recente)"
+				}
+			},
+			"unmutable" : {
+				"title" : "Recquisiti",
+			}
+		},
+		"LicenseViewController" : {
+			"unmutable" : {
+				"mainTitle" : "Accordo di licenza",
+				"backButton" : "Indietro",
+				"macOSLicenseTitle" : "Accordo di licenza di macOS",
+				"macOSLicenseBackButton" : "Non accetto",
+				"checkboxText" : "Ho letto ed accetto i termini e le condizioni dell'accordo di licenza",
+				"agreeButton" : "Accetto"
+			}
+		},
+		"ChoseDriveViewController": {
+			"mutable" : {
+				"title" : {
+					"installer" :    "Scegli un disco o una partizione da utilizare",
+					"installation" : "Scegli un disco o una partizione su cui installare macOS"
+				},
+				"formatDialog" : {
+					"installer" :    "Il disco \"${diskName}\" deve essere formattato se lo vuoi usare come supporto di installazione di macOS. Se continui tutto quello che ci sta sopra andrà perso!",
+					"installation" : "Il disco \"${diskName}\" deve essere formattato se vuoi installarci macOS. Se continui tutto quello che ci sta sopra andrà perso!"
+				}
+			},
+			"unmutable" : {
+				"backButton" : "Indietro",
+				"nextButton" : "Avanti",
+				"nextButtonFail" : "Esci",
+				"failureText" : "Nessun disco utilizzabile è stato trovato",
+				"failureButton" : "Perchè il mio disco non viene riconosciuto?",
+				"formatDialogTitle" : "Formattare \"${diskName}\"?",
+				"formatDialog1" : "Formatta",
+				"formatDialog1Key" : "",
+				"formatDialog2" : "Non formattare",
+				"formatDialog2Key" : "\r",
+				"formatDialogTimeMachineTitle" : "Formattare \"${diskName}\"?",
+				"formatDialogTimeMachine" : "Il disco \"${partitionName}\" è attualmente usato come disco di Time Machine, se vai avanti TINU lo formatterà. Tutti i tuoi backup sul disco andranno perduti!",
+				"formatDialogTimeMachine1" : "Formatta",
+				"formatDialogTimeMachine1Key" : "",
+				"formatDialogTimeMachine2" : "Non formattare",
+				"formatDialogTimeMachine2Key" : "\r"
+				
+			}
+		},
+		"ChoseAppViewController":{
+			"unmutable" : {
+				"title" : "Scegli un'app di installazione di macOS",
+				"backButton" : "Indietro",
+				"nextButton" : "Avanti",
+				"nextButtonFail" : "Esci",
+				"failureText" : "Nessun'app di installazione è stata trovata",
+				"failureButtonGetInstaller" : "Ottieni installer ...",
+				"failureButtonOpen" : "Apri ...",
+				"buttonGetInstaller" : "Ottieni app ...",
+				"buttonOpen" : "Apri ...",
+				"buttonRefresh" : "Aggiorna",
+				"invalidAppDialogTitle" : "App non utilizzabile",
+				"invalidAppDialog" : "L'app che hai scelto${fileName} non è utilizzabile perchè non è un'app di installazione di macOS oppure è un app di installazione danneggiata o non supportata.",
+				"invalidAliasDialogTitle" : "Impossibile usare alias",
+				"invalidAliasDialog" : "Il file hai scelto${fileName} non è utilizzabile perchè si tratta di un alias che non può essere interpretato."
+			}
+		},
+		"ConfirmViewController":{
+			"mutable" : {
+				"warningText" : {
+					"installer" :    "Se vai avanti, il disco \"${driveName}\" verrà formattato! Tutto il suo contenuto sarà cancellato e rimpiazzato con l'installer di macOS. Se sei sicuro, continua a tuo rischio.",
+					"installation" : "Se vai avanti, il disco \"${driveName}\" verrà modificato! Tutto il suo contenuto potrebbe essere cancellato e rimpiazzato con l'installazione di macOS. Se sei sicuro, continua a tuo rischio."
+				}
+			},
+			"unmutable" : {
+				"title" : "Verranno usati questa partizione e quest'app di installazione, sei sicuro?",
+				"titleDrive" : "Verranno usati, questo disco e ques'app di installazione, sei sicuto?",
+				"backButton" : "Indietro",
+				"nextButton" : "Si, capisco",
+				"nextButtonFail" : "Esci",
+				"optionsButton" : "Opzioni",
+				"failureTitle" : "Impossiblile procedere",
+				"failureText" : "Errore durante l'ottenimento delle informazioni relative al disco o alla partizione scelti."
+			}
+		},
+		"OtherOptionsViewController":{
+			"unmutable" : {
+				"title" : "Opzioni",
+				"backButton" : "Indietro",
+				"nextButton" : "Fatto",
+				"nextButtonChoose" : "Avanti",
+				"defaultButton" : "Ripristina default",
+				"optionsSection" : "Opzioni generali",
+				"advancedOptionsSection" : "Opzioni avanzate",
+				"bootloaderSection" : "Installa la cartella EFI di\n${bootloader}"
+			}
+		},
+		"DownloadAppViewController":{
+			"unmutable" : {
+				"title" : "Scarica un'installer di macOS",
+				"backButton" : "Chiudi"
+			}
+		},
+		"DownloadAppItem":{
+			"unmutable" : {
+				"downloadButtonAppStore" : "Vedi nell'App Store",
+				"downloadButtonApple" : "Scarica da Apple",
+				"downloadDialogTitle" : "Ricordati di aprire il download",
+				"downloadDialog" : "Il file che stai per scaricare contiene l'installer di macOS che dovrai usare con TINU e pertanto deve essere aprto prima dell'uso per permettere a tinu di rilevare l'installer.",
+				"downloadDialogYes" : "Continua",
+				"downloadDialogNo" : "Annulla"
+			}
+		},
+		"InstallingViewController":{
+			"mutable" : {
+				"title" : {
+					"installer" :    "Creazione del supporto di installazione di macOS",
+					"installation" : "Installazione di macOS"
+				},
+				"activityLabel11" : {
+					"installer" : "Creazione del supporto di installazione di macOS\n(potrebbero volerci dai 5 ai 50 minuti)",
+					"installation" : "Installazione di macOS in corso\n(potrebbero volerci dai 5 ai 50 minuti)"
+				}
+				
+			},
+			"unmutable" : {
+				"cancelButton" : "Annulla",
+				"showLogButton" : "Mostra il Log",
+				"descriptionField" : "Per favore aspetta e lascia la finestra com'è",
+				"activityLabel1" : "Controllo dell'app di installazione",
+				"activityLabel2" : "Errore con l'app o col disco sceli",
+				"activityLabel3" : "Interpretazione del risultato del processo",
+				"activityLabel4" : "Controllo delle operazioni effettuate",
+				"activityLabel5" : "Applicazione delle impostazioni",
+				"activityLabel6" : "Formattazione del disco scelto",
+				"activityLabel7" : "Espulsione delle partizioni",
+				"activityLabel8" : "Processo completato, chiusura in corso ...",
+				"activityLabel9" : "Controllo delle partizioni",
+				"activityLabel10" : "Applicando le impostazioni",
+				"activityLabel12" : "Chiusura dei processi",
+				"activityLabel13" : "Espulsione dei dischi",
+				"activityLabel14" : "Applicazione delle impostazioni",
+				"activityLabel18" : "Costruzione del comando per ${executable}",
+				"stopErrorTitle" : "Errore durante la chiusura del processo",
+				"stopError" : "C'è stato un errore durante la chiusura di ${executable}",
+				"finalScreenCFE" : "Errore durante la chiusura del programma \"${process}\"",
+				"finalScreenCVE" : "Errore dirante l'espulsione del disco \"${volume}\"",
+				"finalScreenCVGE" : "Errore nell'espulsione dei dischi",
+				"finalScreenFFE" : "Errore nel formattare il disco \"${diskName}\"",
+				"finalScreenFUE" : "Errore nell'espellere il disco selezionato",
+				"finalScreenMIS" : "macOS installato con successo",
+				"finalScreenMIE" : "Errore dutante l'installazione di macOS,\n vedi il log per maggiori dettagli",
+				"finalScreenAOE" : "Errore nell'applicare le impostazioni"
+			}
+		},
+		"NotificationsManager":{
+			"unmutable" : {
+				"goBackTitle" : "TINU: Operazione annullata",
+				"goBack" : "Il processo di creazione del supporto di installazione di macOS è stato annullato, vai alla finestra di TINU per riprovare",
+				"copyLogTitle" : "TINU: Log copiato negli appunti",
+				"copyLog" : "Il log di TINU è stato copiato negli sppunti con successo",
+				"processEndNoTitle" : "TINU: Operazione fallita",
+				"processEndNo" : "Il processo di creazione del supporto di installazione di macOS è fallito",
+				"processEndYesTitle" : "TINU: Operazione completata con sucesso",
+				"processEndYes" : "Il processo di creazione del supporto di installazione di macOS è stato portato a termine con succeesso",
+				"loginTitle" : "TINU: Per favore fai il login",
+				"login" : "Per poter procedere è necessario fare il login"
+			}
+		},
+		"MainCreationFinishedViewController":{
+			"unmutable" : {
+				"exitButton" : "Esci",
+				"continueButtonYes" : "Menù principale",
+				"continueButtonNo" : "Riprova",
+				"logButton" : "Mostra Log"
+			}
+		},
+		"DriveView" : {
+			"mutable" : {
+				"driveNotUsableToolTip":{
+					"installer" : "Questo disco non può essere usato per la creazione di un supporto di installazione di macOS",
+					"installation" : "Questo disco non può essere usato per l'installazione di macOS"
+				}
+			},
+			"unmutable" : {
+				"sizePrefix" : "Dimensione: ",
+				"appNormalWarn" : "${name}",
+				"appNormalToolTip" : "Percorso: ${path}",
+				"appTooBigWarn" : "App troppo grande: ${name}",
+				"appTooBigToolTip" : "Quest'app di installazione di macOS è troppo grande per il disco/partizione che hai scelto\n\nPercorso: ${path}",
+				"appDamagedWarn" : "App danneggiata: ${name}",
+				"appDamagedToolTip" : "Quest'app di installazione di macOS non è utilizzabile perchè è danneggiata e non contiene alcuni elementi richiesti, ti serve l'app di installazione completa presa da App Store, e che pesa come minimo, più di 5 GB \n\nPercorso: ${path}",
+				"appErrorWarn" : "Errore: ${name}",
+				"appErrorToolTip" : "Non è possibile usare quest'app di installazione di macOS perchè si è verificato un errore durante kla verifica della dimensione dell'app stessa.\n\nPercorso: ${path}",
+				"driveNormalToolTip" : "${size}${mount}"
+			}
+		},
+		"AppDelegate" : {
+			"mutable" : {
+				"switchText" : {
+					"installation" : "Usa TINU per creare un supporto\ndi installazione di macOS",
+					"installer" : "Usa TINU per installare macOS"
+				}
+			},
+			"unmutable" : {
+				"cantQuiNowTitle" : "Non puoi uscire ora!",
+				"cantQuiNow" : "Non puoi uscire ora perchè TINU sta effettuando delle operazioni importanti, aspetta che queste operazion i finiscano e poi puoi uscire se vuoi",
+				"stopFailedTitle" : "Errore durante la chiusura dell'app",
+				"stopFailed" : "È avvenuto un 'errore durante la chiusura dell'app: \n\nChiusura di ${executable} fallita"
+			}
+		},
+		"LogViewController" : {
+			"unmutable" : {
+				"saveErrorTitle" : "Errore durante il salvataggio del file",
+				"saveError" : "C'è statpo un errore durante il salvataggio del file: \n\n${desc}"
+			}
+		},
+		"LogWindowController" : {
+			"unmutable" : {
+				"saveButton" : "Salva Log",
+				"copyButton" : "Copia Log",
+				"shareButton" : "Condividi"
+			}
+		},
+		"SIPManager" : {
+			"unmutable" : {
+				"disableTitle" : "TINU: Per favore disabilita SIP",
+				"disable" : "La SIP (system integrity protection) è abilitata e non permette a TINU di funzionare correttamente (su Catalina e successivi), per favore disattivala o usa la modalità diagnostica con rpivilegi di amministratore."
+			}
+		},
+		"OtherOptionsInfoViewController" : {
+			"unmutable" : {
+				"infoPrefix" : "Info su: "
+			}
+		},
+		"template":{
+			"mutable" : {
+				"item" : {
+					"installer" :    "",
+					"installation" : ""
+				}
+			},
+			"unmutable" : {
+				"title" : "",
+				"backButton" : "Indietro",
+				"nextButton" : "Avanti",
+				"nextButtonFail" : "Esci"
+			}
+		}
+	}
+}

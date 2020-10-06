@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -76,7 +76,7 @@
                                                             <action selector="VoodooTSCSyncConfigurator:" target="Voe-Tx-rLC" id="kD2-Mm-qTi"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="EFI Partition Mounter" id="GbK-s1-Pag" customClass="HyperMenuItem" customModule="TINU" customModuleProvider="target">
+                                                    <menuItem title="EFI Partition Mounter" id="GbK-s1-Pag" customClass="ExternalLinkMenuItem" customModule="TINU" customModuleProvider="target">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/ITzTravelInTime/EFI-Partition-Mounter"/>
@@ -489,7 +489,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="HHu-C9-gRV">
                                     <rect key="frame" x="0.0" y="0.0" width="580" height="205"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VjH-Wz-Y3P">
                                             <rect key="frame" x="0.0" y="0.0" width="565" height="190"/>
@@ -816,7 +816,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HF4-tv-1Di" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HF4-tv-1Di" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
                                 <rect key="frame" x="253" y="391" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Pietro Caruso (ITzTravelInTime)" id="1E2-eu-ixH">
@@ -828,7 +828,7 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="href" value="http://www.insanelymac.com/forum/user/1390153-itztravelintime/"/>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Naq-3y-Ru8" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Naq-3y-Ru8" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
                                 <rect key="frame" x="253" y="466" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="piecaruso97@gmail.com" id="i1Y-56-9xB">
@@ -849,7 +849,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JE3-W9-Oaf" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JE3-W9-Oaf" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
                                 <rect key="frame" x="253" y="441" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="ITzTravelInTime on GitHub" id="B9x-q4-in1">
@@ -870,7 +870,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mzo-1X-Ac7" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mzo-1X-Ac7" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
                                 <rect key="frame" x="253" y="305" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="TINU on insanelymac (EN)" id="ohg-Ii-b6n">
@@ -891,7 +891,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9j2-up-grk" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9j2-up-grk" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
                                 <rect key="frame" x="253" y="280" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="TINU on insanelymac (ITA)" id="oQJ-95-zja">
@@ -932,7 +932,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tse-RC-lAd" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tse-RC-lAd" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
                                 <rect key="frame" x="253" y="416" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="/u/ITzTravelInTime" id="ZKW-1x-LjN">
@@ -957,7 +957,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sqs-9R-zjf" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sqs-9R-zjf" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
                                 <rect key="frame" x="253" y="221" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="TINU on hackintosh-forum.de" id="yvR-rs-KrU">
@@ -978,7 +978,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sz5-yd-vgL" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sz5-yd-vgL" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
                                 <rect key="frame" x="253" y="188" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="TINU's issues report on GitHub" id="ycM-Oc-r3R">
@@ -990,7 +990,7 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/ITzTravelInTime/TINU/issues"/>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MMH-10-KfX" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MMH-10-KfX" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
                                 <rect key="frame" x="253" y="116" width="250" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Italian Hackintosh group!!! on Facebook" id="g4Q-wX-rQw">
@@ -1033,7 +1033,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="10N-F6-1WZ" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="10N-F6-1WZ" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
                                 <rect key="frame" x="253" y="255" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="TINU Beta testing on Telegram" id="wtl-f5-tKW">
@@ -1054,7 +1054,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uhI-Xk-lP5" customClass="HyperTextField" customModule="TINU" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uhI-Xk-lP5" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
                                 <rect key="frame" x="253" y="91" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Hackintosh Italia on Telegram" id="dIy-XZ-Hcc">
@@ -1067,7 +1067,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cOR-Pu-tTy">
-                                <rect key="frame" x="14" y="25" width="128" height="32"/>
+                                <rect key="frame" x="13" y="25" width="128" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mo2-Gg-3xB">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1101,7 +1101,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" ambiguous="YES" copiesOnScroll="NO" id="fCD-re-KbG">
                                     <rect key="frame" x="1" y="1" width="563" height="180"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textView ambiguous="YES" editable="NO" importsGraphics="NO" verticallyResizable="YES" baseWritingDirection="leftToRight" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" linkDetection="YES" dashSubstitution="YES" textCompletion="NO" spellingCorrection="YES" id="CPE-h3-g85">
                                             <rect key="frame" x="0.0" y="0.0" width="563" height="180"/>
@@ -1215,7 +1215,7 @@ Gw
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" ambiguous="YES" copiesOnScroll="NO" id="sSe-QN-wB5">
                                     <rect key="frame" x="0.0" y="0.0" width="605" height="418"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hhe-KO-kp4">
                                             <rect key="frame" x="0.0" y="0.0" width="590" height="403"/>
@@ -1272,7 +1272,7 @@ Gw
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="FIZ-iq-7Qo">
                                     <rect key="frame" x="0.0" y="0.0" width="580" height="205"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QZt-wI-J8v">
                                             <rect key="frame" x="0.0" y="0.0" width="565" height="190"/>
@@ -1305,7 +1305,7 @@ Gw
                                 <autoresizingMask key="autoresizingMask"/>
                             </progressIndicator>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DPn-X4-7gP">
-                                <rect key="frame" x="375" y="25" width="87" height="32"/>
+                                <rect key="frame" x="374" y="25" width="87" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="Refresh" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fUs-ga-2h0">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1316,7 +1316,7 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cXO-kw-Anf">
-                                <rect key="frame" x="158" y="25" width="85" height="32"/>
+                                <rect key="frame" x="157" y="25" width="85" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="Open..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Dlo-aK-QLS">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1341,6 +1341,7 @@ Gw
                     </view>
                     <connections>
                         <outlet property="DownloadAppsAlways" destination="IrD-is-71E" id="5O6-qK-pfd"/>
+                        <outlet property="back" destination="OhM-7v-U3I" id="XmU-PR-xwF"/>
                         <outlet property="normalOpen" destination="cXO-kw-Anf" id="i2r-Xq-Utj"/>
                         <outlet property="ok" destination="cOM-NC-Y8K" id="ZbR-Xk-ofn"/>
                         <outlet property="refreshButton" destination="DPn-X4-7gP" id="FtM-Br-5IR"/>
@@ -1352,10 +1353,10 @@ Gw
             </objects>
             <point key="canvasLocation" x="1393" y="687"/>
         </scene>
-        <!--Options View Controller-->
+        <!--Other Options View Controller-->
         <scene sceneID="uLu-GL-XpE">
             <objects>
-                <viewController storyboardIdentifier="Customize" id="7nf-dx-PMy" customClass="OptionsViewController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Customize" id="7nf-dx-PMy" customClass="OtherOptionsViewController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="vxw-oh-1q9">
                         <rect key="frame" x="0.0" y="0.0" width="620" height="330"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1376,7 +1377,7 @@ Gw
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                                 <clipView key="contentView" ambiguous="YES" id="QxO-xz-B1l">
                                     <rect key="frame" x="1" y="1" width="190" height="203"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rXd-4v-I1H">
                                             <rect key="frame" x="0.0" y="0.0" width="175" height="188"/>
@@ -1394,7 +1395,7 @@ Gw
                                 </scroller>
                             </scrollView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4HJ-Oc-oNv">
-                                <rect key="frame" x="233" y="25" width="155" height="32"/>
+                                <rect key="frame" x="232" y="25" width="155" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="Set default options" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aqu-C3-g9T">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1409,14 +1410,14 @@ Gw
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" ambiguous="YES" copiesOnScroll="NO" id="8gN-3u-nOz">
                                     <rect key="frame" x="1" y="1" width="363" height="203"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4eo-6V-eFj">
                                             <rect key="frame" x="0.0" y="0.0" width="348" height="188"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" name="quaternaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="alternatingContentBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="VrX-yy-YtD">
                                     <rect key="frame" x="-100" y="-100" width="378" height="16"/>
@@ -1442,6 +1443,7 @@ Gw
                     </view>
                     <connections>
                         <outlet property="backButton" destination="rbt-UU-xAL" id="uxe-qH-bNR"/>
+                        <outlet property="defaultButton" destination="4HJ-Oc-oNv" id="9XE-CY-yjd"/>
                         <outlet property="nextButton" destination="r0D-ie-R4Z" id="xbd-F7-RcU"/>
                         <outlet property="sectionsScrollView" destination="WUf-Xv-kGC" id="jY1-zg-l6Z"/>
                         <outlet property="settingsScrollView" destination="RFi-vA-ysd" id="pRL-xB-foZ"/>
@@ -1541,6 +1543,7 @@ Gw
                         <outlet property="advancedOptionsButton" destination="HY7-aS-PGw" id="3q5-kL-tWN"/>
                         <outlet property="appImage" destination="egQ-BR-gJV" id="dUw-pQ-YcA"/>
                         <outlet property="appName" destination="gMs-8e-Zsa" id="uOt-uT-tQN"/>
+                        <outlet property="back" destination="XpI-Fb-fUe" id="0HN-rN-G9S"/>
                         <outlet property="driveImage" destination="C0l-Dd-scR" id="Y5h-eg-zrX"/>
                         <outlet property="driveName" destination="ff2-R7-qGY" id="uJj-u0-xu9"/>
                         <outlet property="info" destination="75y-6D-p8N" id="4i7-bF-47k"/>
@@ -1647,6 +1650,7 @@ Gw
                         <outlet property="driveImage" destination="aag-M4-3LB" id="OoB-gL-S1t"/>
                         <outlet property="driveName" destination="GMW-fr-vKz" id="3i8-IS-qDN"/>
                         <outlet property="progress" destination="otl-9s-q9k" id="30S-il-WxU"/>
+                        <outlet property="showLogButton" destination="qTs-ee-xCZ" id="3fe-82-tIc"/>
                     </connections>
                 </viewController>
                 <customObject id="Znr-Os-W1v" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -1807,13 +1811,8 @@ Gw
                                     <action selector="exit:" target="fzs-th-YvF" id="ldZ-RM-tRy"/>
                                 </connections>
                             </button>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AKx-0U-DbP">
-                                <rect key="frame" x="243" y="144" width="134" height="134"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="checkVector" id="c41-G7-CQv"/>
-                            </imageView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FaU-vg-drK">
-                                <rect key="frame" x="14" y="25" width="128" height="32"/>
+                                <rect key="frame" x="14" y="25" width="142" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="Show Log" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EkR-ry-Rdr">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1824,7 +1823,7 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jmd-d2-LIT">
-                                <rect key="frame" x="371" y="25" width="107" height="32"/>
+                                <rect key="frame" x="316" y="25" width="162" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="Main menu" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nYR-DT-CGo">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1834,22 +1833,12 @@ Gw
                                     </connections>
                                 </buttonCell>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6cQ-9K-bG8">
-                                <rect key="frame" x="69" y="61" width="482" height="75"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Bootable macOS installer created successfully" id="4yJ-rm-5jF">
-                                    <font key="font" metaFont="systemBold" size="16"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="continueButton" destination="Jmd-d2-LIT" id="SbC-Dk-W5U"/>
                         <outlet property="exitButton" destination="b96-xh-wHk" id="5V1-dP-8Qh"/>
-                        <outlet property="image" destination="AKx-0U-DbP" id="8ZC-zo-QFm"/>
-                        <outlet property="myTitle" destination="6cQ-9K-bG8" id="nxQ-fr-XCH"/>
+                        <outlet property="logButton" destination="FaU-vg-drK" id="44R-oS-HOx"/>
                     </connections>
                 </viewController>
                 <customObject id="YUd-wa-tIt" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -1947,7 +1936,7 @@ Gw
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" ambiguous="YES" id="BoY-aL-VEi">
                                     <rect key="frame" x="0.0" y="0.0" width="605" height="310"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textView ambiguous="YES" editable="NO" importsGraphics="NO" verticallyResizable="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="YjC-b1-CdR">
                                             <rect key="frame" x="0.0" y="0.0" width="605" height="310"/>
@@ -1982,8 +1971,8 @@ Gw
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="content" destination="YjC-b1-CdR" id="zhV-pm-i7C"/>
                         <outlet property="scroller" destination="7OD-AH-9mk" id="Fhc-83-MgE"/>
-                        <outlet property="text" destination="YjC-b1-CdR" id="zhV-pm-i7C"/>
                     </connections>
                 </viewController>
                 <customObject id="knt-sA-0x7" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -2034,7 +2023,7 @@ Gw
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             </progressIndicator>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dKi-5G-hVX" customClass="AdvancedOptionsButton" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="419" y="75" width="182" height="180"/>
+                                <rect key="frame" x="418" y="75" width="182" height="180"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" alignment="center" borderStyle="border" inset="2" id="H84-2h-4WP">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -2088,7 +2077,7 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vx8-hu-m90" customClass="AdvancedOptionsButton" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="180" y="153" width="261" height="70"/>
+                                <rect key="frame" x="179" y="153" width="261" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="squareTextured" title="Recommended Default Options" bezelStyle="texturedSquare" alignment="center" borderStyle="border" inset="2" id="LuD-Qk-9it">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -2099,7 +2088,7 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ndk-m3-h0p" customClass="AdvancedOptionsButton" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="180" y="65" width="261" height="70"/>
+                                <rect key="frame" x="179" y="65" width="261" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="squareTextured" title="Advanced Options" bezelStyle="texturedSquare" alignment="center" borderStyle="border" inset="2" id="Cee-ja-TsS">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -2170,7 +2159,7 @@ Gw
                                 <autoresizingMask key="autoresizingMask"/>
                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="D4h-Ke-c4w">
                                     <rect key="frame" x="1" y="1" width="563" height="236"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textView ambiguous="YES" editable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsNonContiguousLayout="YES" textCompletion="NO" id="rK7-0i-3Pa">
                                             <rect key="frame" x="0.0" y="0.0" width="563" height="236"/>
@@ -2229,7 +2218,7 @@ Gw
                                 <autoresizingMask key="autoresizingMask"/>
                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="unI-ig-fqM">
                                     <rect key="frame" x="1" y="1" width="563" height="236"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textView ambiguous="YES" editable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsNonContiguousLayout="YES" textCompletion="NO" spellingCorrection="YES" id="OXq-i4-7HW">
                                             <rect key="frame" x="0.0" y="0.0" width="563" height="236"/>
@@ -2292,7 +2281,6 @@ Gw
         <image name="NSMultipleDocuments" width="32" height="32"/>
         <image name="NSShareTemplate" width="11" height="16"/>
         <image name="Removable" width="512" height="512"/>
-        <image name="checkVector" width="495" height="375"/>
         <image name="warning" width="409.60000610351562" height="409.60000610351562"/>
     </resources>
     <inferredMetricsTieBreakers>

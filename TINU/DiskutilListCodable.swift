@@ -6,7 +6,7 @@
 //  Copyright © 2019 Pietro Caruso. All rights reserved.
 //
 
-import Cocoa
+import AppKit
 
 protocol DiskutilDiskPointer: Codable, Equatable{
 	var DeviceIdentifier: String {get}
@@ -86,13 +86,12 @@ public struct Disk: DiskutilObject, Codable, Equatable {
 	
 	func getAPFSPhysicalStore(record: DiskutilList) -> Disk!{
 		if !isAPFSContainer() { return nil }
-		if APFSPhysicalStores != nil{
-			if !APFSPhysicalStores!.isEmpty{
-				for d in record.AllDisksAndPartitions{
-					if d.DeviceIdentifier == APFSPhysicalStores!.first!.DeviceIdentifier{
-						return d
-					}
-				}
+		if APFSPhysicalStores == nil{ return nil }
+		if APFSPhysicalStores!.isEmpty { return nil }
+		
+		for d in record.AllDisksAndPartitions{
+			if d.DeviceIdentifier == APFSPhysicalStores!.first!.DeviceIdentifier{
+				return d
 			}
 		}
 		
@@ -222,7 +221,7 @@ public struct DiskutilList: Codable, Equatable{
 				
 				return new
 			}catch let err{
-				log("Error decoding diskutil data")
+				log("Error decoding diskutil data: ")
 				log(err.localizedDescription)
 			}
 		}

@@ -10,7 +10,7 @@ import Cocoa
 
 public final class IconsManager{
 	
-	static let shared = IconsManager()
+	public static let shared = IconsManager()
 	
 	//warning icon used by the app
 	public var warningIcon: NSImage!{

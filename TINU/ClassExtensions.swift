@@ -6,7 +6,6 @@
 //  Copyright © 2017 Pietro Caruso. All rights reserved.
 //
 
-import Foundation
 import AppKit
 
 //this file just contains some usefoul extensions and methods for system classes
@@ -15,70 +14,71 @@ extension NSViewController{
 	
 	internal static var tmpViewController: [NSViewController?] = []
 	
-    public func sawpCurrentViewController(with storyboardID: String){
-        
-        let tempPos = self.view.window?.frame.origin
+	public func sawpCurrentViewController(with storyboardID: String, storyboard customStoryboard: NSStoryboard! = nil){
 		
-		NSViewController.tmpViewController.append(storyboard?.instantiateController(withIdentifier: storyboardID) as? NSViewController)
+		let cstoryboard: NSStoryboard = customStoryboard ?? storyboard!
 		
-		if NSViewController.tmpViewController.last! != nil{
+		print("Swapping current View Controller with: \"\(storyboardID)\" from storyboard \"\(String(describing: cstoryboard))\"")
+		
+		let tempPos = self.view.window?.frame.origin
+		
+		NSViewController.tmpViewController.append(cstoryboard.instantiateController(withIdentifier: storyboardID) as? NSViewController)
+		
+		if NSViewController.tmpViewController.last! == nil{
+			// :-(
 			
-            //presentViewControllerAsModalWindow(viewController!)
-            
-            //self.dismiss(sender)
-            //self.view.window?.windowController?.close()
-			
-            if self.view.window != nil{
+			let msg = "ViewController \"\(storyboardID)\" not found in the storyboard: \n    \(String(describing: cstoryboard))"
+			print(msg)
+			fatalError(msg)
+		}
+		
+		if self.view.window == nil{
+			// :-(
+			//fatalError("Target window is nil")
+			print("    Don't have any window to reference unfortunately")
+			NSViewController.tmpViewController[NSViewController.tmpViewController.count - 1] = nil
+			return
+		}
+		
+		print("    Performing View Controller sawp ...")
+		
+		self.view.window?.contentViewController = NSViewController.tmpViewController.last!!
+		self.view.window?.contentView = NSViewController.tmpViewController.last!!.view
+		
+		if tempPos != nil{
+			self.view.window?.setFrameOrigin(tempPos!)
+		}
+		
+		self.removeFromParentViewController()
+		self.dismiss(self)
+		
+		print("    View controller swapped successfully")
+		
+		print("    View controller memory system: Memory clean attempt")
+		
+		if !NSViewController.tmpViewController.contains(self){
+			print("        Memory clean is unnecessary")
+			return
+		}
+		
+		for i in 0..<NSViewController.tmpViewController.count{
+			if NSViewController.tmpViewController[i] != self{
+				continue
+			}
 				
-                self.view.window?.contentViewController = NSViewController.tmpViewController.last!!
-				self.view.window?.contentView = NSViewController.tmpViewController.last!!.view
-				
-                if tempPos != nil{
-                    self.view.window?.setFrameOrigin(tempPos!)
-                }
-				
-				self.removeFromParentViewController()
-				self.dismiss(self)
-				
-				print("Memory clean attempt")
-				
-				if NSViewController.tmpViewController.contains(self){
-					for i in 0..<NSViewController.tmpViewController.count{
-						if NSViewController.tmpViewController[i] == self{
-							NSViewController.tmpViewController[i] = nil
-							NSViewController.tmpViewController.remove(at: i)
-							print("Memory cleaned: \(NSViewController.tmpViewController.count) items in controls memory")
-							return
-						}
-					}
-				}else{
-					print("Can't perform memory clean")
-				}
-				
-            }else{
-                // :-(
-				//fatalError("Target window is nil")
-				NSViewController.tmpViewController[NSViewController.tmpViewController.count - 1] = nil
-            }
-        }else{
-            // :-(
-			print("View controller with storyboard id \"\(storyboardID)\" not found in the current storyboard")
-			fatalError("New viewcontroller not initialized")
-        }
-    }
-    
-    public func exportOptions(enabled: Bool){
-        if enabled{
-            if let _ = NSApplication.shared().delegate as? AppDelegate{
-            //setup menu while windows canges
-            }
-        }
-    }
-    
-    public var window: NSWindow!{
-        get{
-            return self.view.window
-        }
+			NSViewController.tmpViewController[i] = nil
+			NSViewController.tmpViewController.remove(at: i) //we need this too since the array is made of optional values
+			print("        Memory cleaned: \(NSViewController.tmpViewController.count) items in controls memory")
+			return
+		}
+		
+		print("        Memory empty or already cleaned")
+	}
+	
+	public var window: NSWindow!{
+		get{
+			return self.view.window
+		}
     }
 }
 
@@ -141,15 +141,6 @@ extension NSWindow{
     }
 }
 
-
-extension FileManager{
-	func directoryExistsAtPath(_ path: String) -> Bool {
-		var isDirectory = ObjCBool(true)
-		let exists = self.fileExists(atPath: path, isDirectory: &isDirectory)
-		return exists && isDirectory.boolValue
-	}
-}
-
 extension NSTextView{
     public var text: String{
         set{
@@ -182,13 +173,6 @@ extension NSView {
     }
 }
 
-//english grammar
-extension Character{
-	func isVowel() -> Bool{
-		return "aeiou".contains("\(self)".lowercased())
-	}
-}
-
 extension String {
 	subscript (bounds: CountableClosedRange<Int>) -> String {
 		let start = index(startIndex, offsetBy: bounds.lowerBound)
@@ -205,7 +189,7 @@ extension String {
 
 extension String{
     @inline(__always) public func copy()-> String{
-        return String("\(self)")
+        return String(self)
     }
     
     func deletingPrefix(_ prefix: String) -> String {
@@ -226,65 +210,25 @@ extension String{
 		self = self.deletingSuffix(suffix)
 	}
 	
-	var isNumber: Bool {
+	var isInt: Bool {
 		return !isEmpty && Int(self) != nil
 	}
 	
-	var number: Int! {
+	var intValue: Int! {
 		return Int(self)
 	}
 	
-	var isUnsignedNumber: Bool {
+	var isUInt: Bool {
 		return !isEmpty && UInt(self) != nil
 	}
 	
-	var unsignedNumber: UInt! {
+	var uIntValue: UInt! {
 		return UInt(self)
 	}
 	
 	func contains(_ str: String) -> Bool{
 		return self.range(of: str) != nil
 	}
-}
-
-@IBDesignable
-class HyperTextField: NSTextField {
-    @IBInspectable var href: String = ""
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        let attributes: [String: AnyObject] = [
-            NSForegroundColorAttributeName: NSColor.linkColor
-            ,NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue as AnyObject, NSCursorAttributeName: NSCursor.pointingHand()
-        ]
-        self.attributedStringValue = NSAttributedString(string: self.stringValue, attributes: attributes)
-        
-    }
-    
-    override func mouseDown(with event: NSEvent) {
-        NSWorkspace.shared().open(URL(string: self.href)!)
-    }
-}
-
-@IBDesignable
-public class HyperMenuItem: NSMenuItem {
-	@IBInspectable var href: String = ""
-	
-	override public func awakeFromNib() {
-		super.awakeFromNib()
-		
-		action = #selector(HyperMenuItem.click(_:))
-		target = self
-	}
-	
-	@objc func click(_ sender: Any){
-		NSWorkspace.shared().open(URL(string: self.href)!)
-	}
-	
-	//func mouseDown(with event: NSEvent) {
-		//NSWorkspace.shared().open(URL(string: self.href)!)
-	//}
 }
 
 extension Bundle {
@@ -301,7 +245,7 @@ extension Bundle {
 		return infoDictionary?["CFBundleName"] as? String
 	}
 }
-
+/*
 extension NSColor {
 	public convenience init?(rgbaHex: String) {
 		let r, g, b, a: CGFloat
@@ -356,33 +300,46 @@ extension NSColor {
 		return nil
 	}
 }
+*/
 
-
-extension URL {
-	var fileSize: Int? { // in bytes
+extension FileManager {
+	
+	func fileSize(of: URL) -> Int?{
 		do {
-			let val = try self.resourceValues(forKeys: [.totalFileAllocatedSizeKey, .fileAllocatedSizeKey])
+			let val = try of.resourceValues(forKeys: [.totalFileAllocatedSizeKey, .fileAllocatedSizeKey])
 			return val.totalFileAllocatedSize ?? val.fileAllocatedSize
 		} catch {
 			print(error)
 			return nil
 		}
 	}
-}
-
-extension FileManager {
+		
 	func directorySize(_ dir: URL) -> Int? { // in bytes
 		if let enumerator = self.enumerator(at: dir, includingPropertiesForKeys: [.totalFileAllocatedSizeKey, .fileAllocatedSizeKey], options: [], errorHandler: { (_, error) -> Bool in
 			print(error)
 			return false
 		}) {
 			var bytes = 0
-			for case let url as URL in enumerator {
-				bytes += url.fileSize ?? 0
+			for case let url_ as URL in enumerator {
+				//bytes += url_.fileSize ?? 0
+				bytes += fileSize(of: url_) ?? 0
 			}
 			return bytes
 		} else {
 			return nil
 		}
 	}
+	
+	func directoryExistsAtPath(_ path: String) -> Bool {
+		var isDirectory = ObjCBool(true)
+		let exists = self.fileExists(atPath: path, isDirectory: &isDirectory)
+		return exists && isDirectory.boolValue
+	}
 }
+
+fileprivate extension URL {
+	var fileSize: Int? { // in bytes
+		return FileManager.default.fileSize(of: self)
+	}
+}
+

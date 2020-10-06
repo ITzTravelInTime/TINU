@@ -8,13 +8,15 @@
 
 import Cocoa
 
-class ChoseAppViewController: GenericViewController {
+class ChoseAppViewController: GenericViewController, ViewID {
+	let id: String = "ChoseAppViewController"
+	
     private var empty: Bool = false{
         didSet{
             if self.empty{
                 scoller.drawsBackground = false
                 scoller.borderType = .noBorder
-                ok.title = "Quit"
+                ok.title = TextManager.getViewString(context: self, stringID: "nextButtonFail")
                 ok.isEnabled = true
             }else{
                 //viewDidSetVibrantLook()
@@ -29,10 +31,10 @@ class ChoseAppViewController: GenericViewController {
 					}
 				}
 				
-				ok.title = "Next"
+				ok.title = TextManager.getViewString(context: self, stringID: "nextButton")
                 ok.isEnabled = false
 				
-				if !(sharedIsOnRecovery || simulateDisableShadows){
+				if !blockShadow{
 					scoller.drawsBackground = false
 					scoller.borderType = .noBorder
 				}else{
@@ -68,7 +70,9 @@ class ChoseAppViewController: GenericViewController {
     
     @IBOutlet weak var normalOpen: NSButton!
     
-    private var tempRefresh: CGFloat = 0
+	@IBOutlet weak var back: NSButton!
+	
+	private var tempRefresh: CGFloat = 0
     
     private var ps: Bool!
     //private var fs: Bool!
@@ -120,96 +124,125 @@ class ChoseAppViewController: GenericViewController {
 	
 	private static var installerAppNeededFiles: [[String]]{
 		get{
+			//the first element of the first of this array of arrays should always be executable to look for
 			return ([ ["/Contents/Resources/" + sharedExecutableName],["/Contents/Info.plist"],["/Contents/SharedSupport"], ["/Contents/SharedSupport/InstallESD.dmg", "/Contents/SharedSupport/SharedSupport.dmg"]])
 		}
 	}
 	
-    func chooseExternal() {
-        let open = NSOpenPanel()
-        open.allowsMultipleSelection = false
-        open.canChooseDirectories = false
-        open.canChooseFiles = true
-        open.isExtensionHidden = false
-        open.showsHiddenFiles = true
-        open.allowedFileTypes = ["app"]
+	func chooseExternal() {
+		let open = NSOpenPanel()
+		open.allowsMultipleSelection = false
+		open.canChooseDirectories = false
+		open.canChooseFiles = true
+		open.isExtensionHidden = false
+		open.showsHiddenFiles = true
+		open.allowedFileTypes = ["app"]
 		
 		open.beginSheetModal(for: self.window, completionHandler: {response in
 			
-			if response == NSModalResponseOK{
-				if !open.urls.isEmpty{
-					if var path = open.urls.first?.path{
-						let manager = FileManager.default
-						
-						var tmpURL: URL?
-						if let isAlias = FileAliasManager.finderAlias(open.urls.first!, resolvedURL: &tmpURL){
-							if isAlias{
-								path = tmpURL!.path
-							}
-						}else{
-							if let name = open.urls.first?.lastPathComponent{
-								msgBoxWarning("Invalid file", "The app you chose, \"\(name)\", is not usable because it's Finder Alias can't be resolved.")
-							}else{
-								msgBoxWarning("Invalid file", "The app you chose is not usable because it's Finder Alias can't be resolved.")
-							}
-						}
-						
-						let needed = ChoseAppViewController.installerAppNeededFiles
-						var check: Int = needed.count
-						for c in needed{
-							if c.isEmpty{
-								check-=1
-								continue
-							}
-							for d in c{
-								if manager.fileExists(atPath: path + d){
-									check-=1
-									break
-								}
-							}
-						}
-						
-						if check == 0 {
-							
-							cvm.shared.sharedApp = path
-							
-							cvm.shared.sharedVolumeNeedsPartitionMethodChange = self.ps
-							
-							#if skipChooseCustomization
-							let _ = self.sawpCurrentViewController(with: "Confirm")
-							#else
-							let _ = self.openSubstituteWindow(windowStoryboardID: "ChooseCustomize")
-							#endif
-							
-						}else{
-							if let name = open.urls.first?.lastPathComponent{
-								msgBoxWarning("Invalid file", "The app you chose, \"\(name)\", is not usable to create macOS installers or macOS installations because it isn't a macOS installer or is a damaged macOS installer.")
-							}else{
-								msgBoxWarning("Invalid file", "The app you chose is not usable to create macOS installers or macOS installations because it isn't a macOS installer or is a damaged macOS installer.")
-							}
-						}
-					}else{
-						msgBoxWarning("Error while opening the file", "Impossible to obtain the file's location")
+			for _ in 0...0{
+				if response != NSModalResponseOK{
+					continue
+				}
+				
+				if open.urls.isEmpty{
+					msgBoxWarning("Error while opening the file", "No files choosen")
+					continue
+				}
+				
+				guard var path = open.urls.first?.path else {
+					msgBoxWarning("Error while opening the file", "Impossible to obtain the file's location")
+					continue
+				}
+				
+				let manager = FileManager.default
+				
+				let replist = ["{fileName}" : ((open.urls.first?.lastPathComponent != nil) ? ", \"\(open.urls.first!.lastPathComponent)\"," : "")]
+				
+				var tmpURL: URL?
+				if let isAlias = FileAliasManager.finderAlias(open.urls.first!, resolvedURL: &tmpURL){
+					if isAlias{
+						path = tmpURL!.path
 					}
 				}else{
-					msgBoxWarning("Error while opening the file", "No files choosen")
+					/*
+					if let name = open.urls.first?.lastPathComponent{
+					msgBoxWarning("Invalid file", "The app you chose, \"\(name)\", is not usable because it's Finder Alias can't be resolved.")
+					}else{
+					msgBoxWarning("Invalid file", "The app you chose is not usable because it's Finder Alias can't be resolved.")
+					}
+					*/
+					
+					msgboxWithManager(self, name: "invalidAliasDialog", parseList: replist)
 				}
+				
+				let needed = ChoseAppViewController.installerAppNeededFiles
+				var check: Int = needed.count
+				for c in needed{
+					if c.isEmpty{
+						check-=1
+						continue
+					}
+					for d in c{
+						if manager.fileExists(atPath: path + d){
+							check-=1
+							break
+						}
+					}
+				}
+				
+				if check == 0 {
+					
+					cvm.shared.sharedApp = path
+					
+					cvm.shared.sharedVolumeNeedsPartitionMethodChange = self.ps
+					
+					/*
+					#if skipChooseCustomization
+					let _ = self.sawpCurrentViewController(with: "Confirm")
+					#else
+					let _ = self.sawpCurrentViewController(with: "ChooseCustomize")
+					#endif
+					*/
+					
+					self.next(self)
+					
+				}else{
+					
+					/*if let name = open.urls.first?.lastPathComponent{
+					msgBoxWarning("Invalid app", "The app you chose, \"\(name)\", is not usable to create macOS installers or macOS installations because it isn't a macOS installer or is a damaged or unsupported macOS installer.")
+					}else{
+					msgBoxWarning("Invalid app", "The app you chose is not usable to create macOS installers or macOS installations because it isn't a macOS installer or is a damaged or unsupported macOS installer.")
+					}*/
+					
+					msgboxWithManager(self, name: "invalidAppDialog", parseList: replist)
+				}
+				
+				
 			}
 			
 		})
-    }
+	}
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
 		
-		self.setTitleLabel(text: "Choose the macOS installer app to use for the macOS installer")
+		//self.setTitleLabel(text: "Choose the macOS installer app to use for the macOS installer")
+		
+		self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "title"))
 		self.showTitleLabel()
 		
-		if !sharedIsOnRecovery && !simulateDisableShadows{
+		self.refreshButton.title = TextManager.getViewString(context: self, stringID: "buttonRefresh")
+		self.DownloadAppsAlways.title = TextManager.getViewString(context: self, stringID: "buttonGetInstaller")
+		self.normalOpen.title = TextManager.getViewString(context: self, stringID: "buttonOpen")
+		self.back.title = TextManager.getViewString(context: self, stringID: "backButton")
+		self.ok.title = TextManager.getViewString(context: self, stringID: "nextButton")
+		
+		if !blockShadow{
 			scoller.frame = CGRect.init(x: 0, y: scoller.frame.origin.y, width: self.view.frame.width, height: scoller.frame.height)
 			scoller.drawsBackground = false
 			scoller.borderType = .noBorder
-			
 		}else{
 			scoller.frame = CGRect.init(x: 20, y: scoller.frame.origin.y, width: self.view.frame.width - 40, height: scoller.frame.height)
 			scoller.drawsBackground = true
@@ -217,13 +250,14 @@ class ChoseAppViewController: GenericViewController {
 		}
 		
 		showProcessLicense = false
-        
+		
+		/*
         if sharedInstallMac{
             titleLabel.stringValue = "Choose the macOS installer app to use to install macOS"
-        }
+        }*/
         
         tempRefresh = refreshButton.frame.origin.x
-        
+		
         loadApps()
     }
     
@@ -285,12 +319,12 @@ class ChoseAppViewController: GenericViewController {
 			
 			print(foldersURLS)
 			
-			let driveb = dm.getDriveNameFromBSDID(cvm.shared.sharedBSDDrive)
+			let driveb = dm.getMountPointFromPartitionBSDID(cvm.shared.sharedBSDDrive)
 			
 			for d in fm.mountedVolumeURLs(includingResourceValuesForKeys: [URLResourceKey.isVolumeKey], options: [.skipHiddenVolumes])!{
 				let p = d.path
 				
-				if p == driveb || sharedIsOnRecovery{
+				if p == driveb{//} || sharedIsOnRecovery{
 					continue
 				}
 				
@@ -318,21 +352,19 @@ class ChoseAppViewController: GenericViewController {
 			
 			for pathURL in foldersURLS{
 				
-				if let p = pathURL{
-					print("    " + p.path)
+				guard let p = pathURL else { continue }
+				
+				print("    " + p.path)
 					
-					do{
+				do{
 						
-						for content in (try fm.contentsOfDirectory(at: p, includingPropertiesForKeys: nil, options: []).filter{ fm.directoryExistsAtPath($0.path) }){
-							print("    " + content.path)
-							foldersURLS.append(content)
-							
-						}
-						
-					} catch let err{
-						print("Error while trying to retrive subfolders of: " + p.path + "\n" + err.localizedDescription)
+					for content in (try fm.contentsOfDirectory(at: p, includingPropertiesForKeys: nil, options: []).filter{ fm.directoryExistsAtPath($0.path) }){
+						print("    " + content.path)
+						foldersURLS.append(content)
 					}
-					
+						
+				} catch let err{
+					print("Error while trying to retrive subfolders of: " + p.path + "\n" + err.localizedDescription)
 				}
 				
 			}
@@ -367,119 +399,131 @@ class ChoseAppViewController: GenericViewController {
 			
 			do {
 				for dir in foldersURLS{
-					if let d = dir{
+					
+					guard let d = dir else { continue }
+					
+					if !fm.fileExists(atPath: d.path){
+						continue
+					}
+					
+					print("Scanning for usable apps in \(d.path)")
+					//let fileNames = try manager.contentsOfDirectory(at: d, includingPropertiesForKeys: nil, options: []).filter{ $0.pathExtension == "app" }.map{ $0.path }
+					
+					appfor: for appOriginPath in (try fm.contentsOfDirectory(at: d, includingPropertiesForKeys: nil, options: []).filter{ $0.pathExtension == "app" }.map{ $0.path }) {
 						
-						if !fm.fileExists(atPath: d.path){
+						var appPath = appOriginPath
+						
+						var tempPath: String?
+						
+						if let isAlias = FileAliasManager.finderAlias(appOriginPath, resolvedPath: &tempPath){
+							if isAlias{
+								print("This application \"\(appOriginPath)\" is an alias")
+								appPath = tempPath!
+								print("Alias resolved: \n        alias path: \(appOriginPath) \n        file path:  \(appPath)")
+							}
+						}else{
+							print("Alias resolution for \"\(appOriginPath)\" has failed, skipping it")
 							continue
 						}
 						
-						print("Scanning for usable apps in \(d.path)")
-						//let fileNames = try manager.contentsOfDirectory(at: d, includingPropertiesForKeys: nil, options: []).filter{ $0.pathExtension == "app" }.map{ $0.path }
+						if dirs.contains(appPath){
+							continue
+						}
 						
-						for appOriginPath in (try fm.contentsOfDirectory(at: d, includingPropertiesForKeys: nil, options: []).filter{ $0.pathExtension == "app" }.map{ $0.path }) {
+						//only installer apps from now on
+						
+						var isInstaller = false
+						
+						exefor: for c in ChoseAppViewController.installerAppNeededFiles.first!{
+							if fm.fileExists(atPath: appPath + c){
+								isInstaller = true
+								print("A new app that contains the needed \"" + c + "\" element has been found")
+								break
+							}
+						}
+						
+						if !isInstaller{
+							continue
+						}
+						
+						
+						//DispatchQueue.main.sync {
+						dirs.append(appPath)
+						
+						print("     App path is " + appPath)
+						let nm = FileManager.default.displayName(atPath: appPath)
+						print("     App name is " + nm)
+						
+						//check installer app completition
+						var check: Int = needed.count
+						for c in needed{
+							if c.isEmpty{
+								check-=1
+								continue
+							}
 							
-							var appPath = appOriginPath
-							
-							var tempPath: String?
-							
-							if let isAlias = FileAliasManager.finderAlias(appOriginPath, resolvedPath: &tempPath){
-								if isAlias{
-									print("This application \"\(appOriginPath)\" is an alias")
-									appPath = tempPath!
-									print("Alias resolved: \n        alias path: \(appOriginPath) \n        file path:  \(appPath)")
+							let tmp = check
+							for d in c{
+								print("       Checking if app contains \"\(d)\"")
+								if fm.fileExists(atPath: appPath + d){
+									print("       +App does contain \"\(d)\"")
+									check-=1
+									break
 								}
-							}else{
-								print("Alias resolution for \"\(appOriginPath)\" has failed, skipping it")
-								continue
 							}
 							
-							if dirs.contains(appPath){
-								continue
-							}
-							
-							//only installer apps from now
-							if !fm.fileExists(atPath: appPath + "/Contents/Resources/" + ex) {
-								continue
-							}
-							
-							print("A new app that contains the needed \"" + ex + "\" executable has been found")
-							//DispatchQueue.main.sync {
-							dirs.append(appPath)
-							
-							DispatchQueue.main.sync {
-								
-								let drive = DriveView(frame: NSRect(x: 0, y: h, width: DriveView.itemSize.width, height: DriveView.itemSize.height))
-								drive.isApp = true
-								drive.applicationPath = appPath
-								print("     App path is " + appPath)
-								
-								drive.image.image = IconsManager.shared.getInstallerAppIconFrom(path: appPath)
-								
-								drive.volume.stringValue = FileManager.default.displayName(atPath: appPath)
-								print("     App name is " + drive.volume.stringValue)
-								drive.sz = nil
-								
-								/*if fp{
-								drive.isEnabled = false
-								}*/
-								
-								var check: Int = needed.count
-								for c in needed{
-									if c.isEmpty{
-										check-=1
-										continue
-									}
-									
-									let tmp = check
-									for d in c{
-										print("       Checking if app contains \"\(d)\"")
-										if fm.fileExists(atPath: appPath + d){
-											print("       +App does contain \"\(d)\"")
-											check-=1
-											break
-										}
-									}
-									
-									if tmp == check{
-										for d in c{
-											print("       -App does not contain \"\(d)\"")
-										}
-										print("     App is not usable to make installers")
-										break
-									}
+							if tmp == check{
+								for d in c{
+									print("       -App does not contain \"\(d)\"")
 								}
+								print("     App is not usable to make installers")
+								break
+							}
+						}
+						
+						DispatchQueue.main.sync {
+							
+							let drive = DriveView(frame: NSRect(x: 0, y: h, width: DriveView.itemSize.width, height: DriveView.itemSize.height))
+							drive.isApp = true
+							drive.applicationPath = appPath
+							drive.image.image = IconsManager.shared.getInstallerAppIconFrom(path: appPath)
+							drive.volume.stringValue = nm
+							
+							drive.sz = nil
+							
+							/*if fp{
+							drive.isEnabled = false
+							}*/
+							
+							if check == 0{
 								
+								let appURL = URL(fileURLWithPath: appPath, isDirectory: true)
+								let res = FileManager.default.directorySize(appURL)
 								
-								
-								if check == 0{
+								if let r = res{
+									print("    Got installer app size")
+									drive.sz = "\(size)"
+									drive.isEnabled = (cvm.shared.compareSize(to: UInt64(r)))
 									
-									let appURL = URL(fileURLWithPath: appPath, isDirectory: true)
-									let res = FileManager.default.directorySize(appURL)
-									
-									if let r = res{
-										print("    Got installer app size")
-										drive.sz = "\(size)"
-										drive.isEnabled = (cvm.shared.compareSize(to: UInt64(r)))
-										if !drive.isEnabled{
-											print("      Drive is too small to be used with this installer app")
-										}
-									}else{
-										print("    Can't get the size for this installer app")
-										drive.isEnabled = false
-										drive.sz = nil
+									if !drive.isEnabled{
+										print("      Drive is too small to be used with this installer app")
 									}
-									
 								}else{
-									print("    Uncomplete installer app")
-									drive.sz = "0"
+									print("    Can't get the size for this installer app")
 									drive.isEnabled = false
+									drive.sz = nil
 								}
 								
-								print("     App checked, adding it to the apps list")
-								drives.append(drive)
-								print("     App added to the apps list")
-								
+							}else{
+								print("    Uncomplete installer app")
+								drive.sz = "0"
+								drive.isEnabled = false
 							}
+							
+							print("     App checked, adding it to the apps list")
+							drives.append(drive)
+							print("     App added to the apps list")
+							
 						}
 					}
 				}
@@ -488,11 +532,9 @@ class ChoseAppViewController: GenericViewController {
 				print(error.localizedDescription)
 			}
 			
-			
 			print("Apps scanning finished, \(dirs.count) app/s found")
 			
 			print("--- App detection complete")
-			
 			
 			DispatchQueue.main.sync {
 				
@@ -511,12 +553,23 @@ class ChoseAppViewController: GenericViewController {
 					
 					if self.failureLabel == nil || self.failureImageView == nil || self.failureButtons.isEmpty{
 						self.setFailureImage(image: IconsManager.shared.warningIcon)
+						self.setFailureLabel(text: TextManager.getViewString(context: self, stringID: "failureText"))
+						//"failureButtonGetInstaller"
+						if !sharedIsOnRecovery{
+							self.addFailureButton(buttonTitle: TextManager.getViewString(context: self, stringID: "failureButtonGetInstaller"), target: self, selector: #selector(ChoseAppViewController.openGetAnApp))
+						}
+						self.addFailureButton(buttonTitle: TextManager.getViewString(context: self, stringID: "failureButtonOpen"), target: self, selector: #selector(ChoseAppViewController.chooseExternal))
+						
+						/*
+						
 						self.setFailureLabel(text: "No macOS Installer apps where detected")
 						
 						if !sharedIsOnRecovery{
-							self.addFailureButton(buttonTitle: "Get an Installer", target: self, selector: #selector(ChoseAppViewController.openGetAnApp))
+						self.addFailureButton(buttonTitle: "Get an Installer", target: self, selector: #selector(ChoseAppViewController.openGetAnApp))
 						}
 						self.addFailureButton(buttonTitle: "Open an installer ...", target: self, selector: #selector(ChoseAppViewController.chooseExternal))
+						
+						*/
 					}
 					
 					self.showFailureImage()
@@ -525,7 +578,7 @@ class ChoseAppViewController: GenericViewController {
 					
 					self.refreshButton.frame.origin.x = self.view.frame.width / 2 - self.refreshButton.frame.width / 2
 				}else{
-
+					
 					
 					let content = NSView(frame: NSRect(x: 0, y: 0, width: 0, height: self.scoller.frame.size.height - 17))
 					
@@ -537,7 +590,7 @@ class ChoseAppViewController: GenericViewController {
 						var temp: CGFloat = 20
 						for d in drives{
 							d.frame.origin.x = temp
-							if !(sharedIsOnRecovery || simulateDisableShadows){
+							if !blockShadow{
 								temp += d.frame.width + 15
 							}else{
 								temp += d.frame.width
@@ -545,7 +598,7 @@ class ChoseAppViewController: GenericViewController {
 							content.addSubview(d)
 						}
 						
-						if !(sharedIsOnRecovery || simulateDisableShadows){
+						if !blockShadow{
 							content.frame.size.width = temp + 5
 						}else{
 							content.frame.size.width = temp + 20

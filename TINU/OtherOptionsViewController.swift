@@ -10,7 +10,9 @@
 
 import Cocoa
 
-class OptionsViewController: GenericViewController {
+class OtherOptionsViewController: GenericViewController, ViewID {
+	
+	let id: String = "OtherOptionsViewController"
 	
 	public enum SectionsID: UInt8{
 		
@@ -28,6 +30,7 @@ class OptionsViewController: GenericViewController {
 	@IBOutlet weak var sectionsScrollView: NSScrollView!
 	@IBOutlet weak var settingsScrollView: NSScrollView!
 	
+	@IBOutlet weak var defaultButton: NSButton!
 	@IBOutlet weak var backButton: NSButton!
 	@IBOutlet weak var nextButton: NSButton!
 	
@@ -42,7 +45,7 @@ class OptionsViewController: GenericViewController {
 		settingsScrollView.wantsLayer = true
 		settingsScrollView.layer?.cornerRadius = 3.5
 		
-		self.setTitleLabel(text: "Options")
+		self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "title"))
 		self.showTitleLabel()
 		
 		sections.removeAll()
@@ -58,14 +61,14 @@ class OptionsViewController: GenericViewController {
 		
 		sections.append(getSectionItem())
 		sections.last!!.image.image = NSImage(named: NSImageNamePreferencesGeneral)
-		sections.last!!.name.stringValue = "General options"
+		sections.last!!.name.stringValue = TextManager.getViewString(context: self, stringID: "optionsSection")
 		sections.last!!.id = SectionsID.generalOptions
 		
 		//advanced options
 		
 		sections.append(getSectionItem())
-		sections.last!!.image.image = NSImage(named: NSImageNameAdvanced)
-		sections.last!!.name.stringValue = "Advanced options"
+		sections.last!!.image.image = NSImage(named: NSImageNameAdvanced) //"advancedOptionsSection"
+		sections.last!!.name.stringValue = TextManager.getViewString(context: self, stringID: "advancedOptionsSection")
 		sections.last!!.id = SectionsID.advancedOptions
 		
 		#if !macOnlyMode
@@ -77,8 +80,10 @@ class OptionsViewController: GenericViewController {
 					sections.append(getSectionItem())
 			
 					sections.last!!.image.image = NSImage(named: NSImageNameFolder)
+					
+					let rep = ["{bootloader}" : i.rawValue]
 				
-					sections.last!!.name.stringValue = "Install " + i.rawValue + "\nEFI folder"
+					sections.last!!.name.stringValue = parse(messange: TextManager.getViewString(context: self, stringID: "bootloaderSection" ), keys: rep)
 					
 					switch i{
 					case .clover:
@@ -120,9 +125,14 @@ class OptionsViewController: GenericViewController {
 		
 		sectionsScrollView.documentView = container!
 		
+		defaultButton.title = TextManager.getViewString(context: self, stringID: "defaultButton")
+		
 		#if skipChooseCustomization
 			backButton.isHidden = true
-			nextButton.title = "Done"
+			nextButton.title = TextManager.getViewString(context: self, stringID: "nextButton")
+		#else
+			backButton.title = TextManager.getViewString(context: self, stringID: "backButton")
+			nextButton.title = TextManager.getViewString(context: self, stringID: "nextButtonChoose")
 		#endif
 		
     }

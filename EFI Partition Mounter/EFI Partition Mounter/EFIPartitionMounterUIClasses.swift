@@ -10,40 +10,50 @@ import Cocoa
 
 #if (!macOnlyMode && TINU) || (!TINU && isTool)
 public class EFIPartitionToolInterface{
-	public class EFIPartitionItem: ShadowView{
+	
+	private static let appMenu: EFIPartitionToolTypes.ConfigMenuApps = CodableCreation<EFIPartitionToolTypes.ConfigMenuApps>.createFromDefaultFile()!
+	
+	public class EFIPartitionItem: ShadowView, ViewID{
+		
+		public let id: String = "EFIPartitionItem"
 		
 		public let tileHeight: CGFloat = 60
 		
 		let titleLabel = NSTextField()
-        let placeHolderLabel = NSTextField()
-        
+		let placeHolderLabel = NSTextField()
+		
 		let mountButton = NSButton()
 		let unmountButton = NSButton()
-        let editConfigButton = NSButton()
+		
+		let editOtherConfigButton = NSButton()
+		
+		var configOpenMenu: NSMenu = NSMenu()
+		
 		let showInFinderButton = NSButton()
-        let ejectButton = NSButton()
+		let ejectButton = NSButton()
 		let coverView = NSView()
 		
 		let spinner = NSProgressIndicator()
-		
-        var hasConfig = false
 		var isMounted = false
-        
-        var isEjectable = false
-        
+		
+		var configType: EFIPartitionToolTypes.ConfigLocations! = .cloverConfigLocation
+		
+		var isEjectable = false
+		
 		var bsdid: String = ""
 		
 		var partitions: [PartitionItem] = []
-        
-        var isBar = false
-        
-        var alreadyDrwn = false
+		
+		var isBar = false
+		
+		var alreadyDrwn = false
 		
 		public override func draw(_ dirtyRect: NSRect) {
 			super.draw(dirtyRect)
 			
-            if !alreadyDrwn{
-			let buttonWidth: CGFloat = 170
+			if alreadyDrwn{ return }
+			
+			let buttonWidth: CGFloat = 190
 			let buttonsHeigth: CGFloat = 32
 			
 			let tileWidth = self.frame.width / 3.2
@@ -64,8 +74,9 @@ public class EFIPartitionToolInterface{
 			titleLabel.font = NSFont.boldSystemFont(ofSize: 20)//NSFont.systemFont(ofSize: 30)
 			
 			self.addSubview(titleLabel)
-            
-			mountButton.title = "Mount EFI partition"
+			
+			//mountButton.title = "Mount EFI partition"
+			mountButton.title = EFIPMTextManager.getViewString(context: self, stringID: "mountButton")
 			mountButton.bezelStyle = .rounded
 			mountButton.setButtonType(.momentaryPushIn)
 			
@@ -80,7 +91,8 @@ public class EFIPartitionToolInterface{
 			
 			self.addSubview(mountButton)
 			
-			unmountButton.title = "Unmount EFI partition"
+			//unmountButton.title = "Unmount EFI partition"
+			unmountButton.title = EFIPMTextManager.getViewString(context: self, stringID: "unmountButton")
 			unmountButton.bezelStyle = .rounded
 			unmountButton.setButtonType(.momentaryPushIn)
 			
@@ -95,13 +107,15 @@ public class EFIPartitionToolInterface{
 			
 			self.addSubview(unmountButton)
 			
-			showInFinderButton.title = "Open in Finder"
+			//showInFinderButton.title = "Open in Finder"
+			showInFinderButton.title = EFIPMTextManager.getViewString(context: self, stringID: "openInfinderButton")
 			showInFinderButton.bezelStyle = .rounded
 			showInFinderButton.setButtonType(.momentaryPushIn)
 			
-			showInFinderButton.frame.size = NSSize(width: buttonWidth, height: buttonsHeigth)
+			showInFinderButton.frame.size = NSSize(width: 140, height: buttonsHeigth)
 			
-			showInFinderButton.frame.origin = NSPoint(x: margin / 2, y: 5)
+			showInFinderButton.frame.origin = unmountButton.frame.origin
+			showInFinderButton.frame.origin.x -= showInFinderButton.frame.size.width + 1
 			
 			showInFinderButton.font = NSFont.systemFont(ofSize: 13)
 			showInFinderButton.isContinuous = true
@@ -109,44 +123,61 @@ public class EFIPartitionToolInterface{
 			showInFinderButton.action = #selector(EFIPartitionItem.showPartition(_:))
 			
 			self.addSubview(showInFinderButton)
-            
-            #if !macOnlyMode
-            
-            editConfigButton.title = "Edit config.plist"
-            editConfigButton.bezelStyle = .rounded
-            editConfigButton.setButtonType(.momentaryPushIn)
-            
-            editConfigButton.frame.size = NSSize(width: buttonWidth, height: buttonsHeigth)
-            
-            editConfigButton.frame.origin = NSPoint(x: showInFinderButton.frame.origin.x + showInFinderButton.frame.size.width + 5, y: 5)
-            
-            editConfigButton.font = NSFont.systemFont(ofSize: 13)
-            editConfigButton.isContinuous = true
-            editConfigButton.target = self
-            editConfigButton.action = #selector(EFIPartitionItem.editConfig(_:))
-            
-            self.addSubview(editConfigButton)
-            
-            #endif
-            
-            ejectButton.title = ""
-            ejectButton.bezelStyle = .texturedRounded
-            ejectButton.setButtonType(.momentaryPushIn)
-            ejectButton.isBordered = false
-            
-            ejectButton.imageScaling = .scaleProportionallyUpOrDown
-            ejectButton.imagePosition = .imageOnly
-            ejectButton.image = IconsManager.shared.getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/EjectMediaIcon.icns", name: "EFIIcon")
-            
-            ejectButton.frame.size = NSSize(width: titleLabel.frame.height, height: titleLabel.frame.height)
-            
-            ejectButton.frame.origin = NSPoint(x: titleLabel.frame.size.width + margin * 2, y: titleLabel.frame.origin.y)
-            
-            ejectButton.isContinuous = true
-            ejectButton.target = self
-            ejectButton.action = #selector(EFIPartitionItem.ejectDrive(_:))
-            
-            self.addSubview(ejectButton)
+			
+			#if !macOnlyMode
+			//editConfigButton.title = "Edit config.plist"
+			editOtherConfigButton.title = EFIPMTextManager.getViewString(context: self, stringID: "editConfigButtonOther")
+			
+			editOtherConfigButton.bezelStyle = .rounded
+			editOtherConfigButton.setButtonType(.momentaryPushIn)
+			
+			editOtherConfigButton.frame.size = NSSize(width: buttonWidth, height: buttonsHeigth)
+			editOtherConfigButton.frame.origin = NSPoint(x: margin / 2, y: 5)//NSPoint(x: margin / 2, y: buttonsHeigth + 10)
+			
+			editOtherConfigButton.font = NSFont.systemFont(ofSize: 13)
+			editOtherConfigButton.isContinuous = true
+			editOtherConfigButton.target = self
+			//editOtherConfigButton.action = #selector(EFIPartitionItem.editConfigOther(_:))
+			
+			editOtherConfigButton.action = #selector(EFIPartitionItem.openConfigMenu(_:))
+			
+			self.addSubview(editOtherConfigButton)
+			
+			configOpenMenu = NSMenu()//(title: EFIPMTextManager.getViewString(context: self, stringID: "configMenuTitle"))
+			
+			for c in 0..<appMenu.list.count{
+				let itm = NSMenuItem()//NSMenuItem(title: appMenu.list[c].name, action: #selector(editConfigGeneric(_:)), keyEquivalent: "")
+				itm.title = appMenu.list[c].name
+				itm.tag = c
+				itm.isEnabled = true
+				itm.isHidden = false
+				itm.target = self
+				itm.action = #selector(editConfigGeneric(_:))
+				
+				configOpenMenu.insertItem(itm, at: c)
+			}
+			
+			
+			#endif
+			
+			ejectButton.title = ""
+			ejectButton.bezelStyle = .texturedRounded
+			ejectButton.setButtonType(.momentaryPushIn)
+			ejectButton.isBordered = false
+			
+			ejectButton.imageScaling = .scaleProportionallyUpOrDown
+			ejectButton.imagePosition = .imageOnly
+			ejectButton.image = IconsManager.shared.getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/EjectMediaIcon.icns", name: "EFIIcon")
+			
+			ejectButton.frame.size = NSSize(width: titleLabel.frame.height, height: titleLabel.frame.height)
+			
+			ejectButton.frame.origin = NSPoint(x: titleLabel.frame.size.width + margin * 2, y: titleLabel.frame.origin.y)
+			
+			ejectButton.isContinuous = true
+			ejectButton.target = self
+			ejectButton.action = #selector(EFIPartitionItem.ejectDrive(_:))
+			
+			self.addSubview(ejectButton)
 			
 			spinner.style = .spinningStyle
 			
@@ -164,13 +195,11 @@ public class EFIPartitionToolInterface{
 			coverView.layer?.zPosition = 10
 			
 			self.addSubview(coverView)
-            
-            self.spinner.isDisplayedWhenStopped = false
-            self.spinner.usesThreadedAnimation = true
 			
-            let partCount = partitions.count
+			self.spinner.isDisplayedWhenStopped = false
+			self.spinner.usesThreadedAnimation = true
 			
-			if partCount == 0{
+			if partitions.count == 0{
 				
 				placeHolderLabel.isEditable = false
 				placeHolderLabel.isSelectable = false
@@ -183,267 +212,296 @@ public class EFIPartitionToolInterface{
 				placeHolderLabel.frame.size = NSSize(width: self.frame.size.width - 20 , height: 28)
 				placeHolderLabel.font = NSFont.systemFont(ofSize: 18)
 				
-				placeHolderLabel.stringValue = "No mounted partitions found"
+				//placeHolderLabel.stringValue = "No mounted partitions found"
+				
+				placeHolderLabel.stringValue = EFIPMTextManager.getViewString(context: self, stringID: "noPartitionsLabel")
 				
 				self.addSubview(placeHolderLabel)
 				
 			}else{
 				
-                var alternate: CGFloat = 0
+				var alternate: CGFloat = 0
 				var startsAsVibrant = titleLabel.frame.origin.y - self.tileHeight - 15
 				
 				Swift.print("Adding tiles for drive: \(titleLabel.stringValue)")
-                
-                var distance: CGFloat = 0
-                
-                distance = 0
-                
-                /*
-                if partCount < 3{
-                    distance = (tileWidth + margin) / CGFloat(partCount)
-                }*/
+				
+				var distance: CGFloat = 0
+				
+				distance = 0
+				
+				/*
+				if partCount < 3{
+				distance = (tileWidth + margin) / CGFloat(partCount)
+				}*/
 				
 				for partition in partitions{
 					partition.frame.size = CGSize(width: tileWidth, height: tileHeight)
 					
 					partition.frame.origin.y = startsAsVibrant
 					
-                    partition.frame.origin.x = (tileWidth * alternate) + (margin * (alternate + 1)) + distance
-                    
-                    if alternate == 2{
-                        startsAsVibrant -= self.tileHeight + margin
-                        alternate = 0
-                    }else{
-                        alternate += 1
-                    }
-                    
+					partition.frame.origin.x = (tileWidth * alternate) + (margin * (alternate + 1)) + distance
+					
+					if alternate == 2{
+						startsAsVibrant -= self.tileHeight + margin
+						alternate = 0
+					}else{
+						alternate += 1
+					}
+					
 					self.addSubview(partition)
 					
 					Swift.print("  Tile added: \(partition.nameLabel.stringValue)")
 				}
 				
 			}
-            
-            /*
-            for c in self.subviews{
-                if let l = c as? NSTextField{
-                    l.drawsBackground = true
-                    (l as NSView).backgroundColor = (l.superview! as NSView).backgroundColor
-                }
-                
-                //c.backgroundColor = .red
-            }*/
-                
-                alreadyDrwn.toggle()
-                
-            }
-            
-            checkMounted()
+			
+			/*
+			for c in self.subviews{
+			if let l = c as? NSTextField{
+			l.drawsBackground = true
+			(l as NSView).backgroundColor = (l.superview! as NSView).backgroundColor
+			}
+			
+			//c.backgroundColor = .red
+			}*/
+			
+			
+			alreadyDrwn.toggle()
+			
+			checkMounted()
 		}
-        
-        override public func updateLayer() {
-            coverView.backgroundColor = .controlColor
-            self.backgroundColor = .controlBackgroundColor
-        }
+		
+		override public func updateLayer() {
+			coverView.backgroundColor = .controlColor
+			self.backgroundColor = .controlBackgroundColor
+		}
 		
 		@objc private func mountPartition(_ sender: Any){
-            if let controller = self.window?.contentViewController as? EFIPartitionMounterViewController{
-                changeLoadMode(enabled: true)
-				DispatchQueue.global(qos: .background).async {
-                    
-                    controller.watcherSkip = true
-                    
-					self.isMounted = controller.eFIManager.mountPartition(self.bsdid)
-                    
-                    if !self.hasConfig && self.isMounted{
-                        if let mountPoint = dm.getDevicePropertyInfoNew(self.bsdid, propertyName: "MountPoint"){
-                            self.hasConfig = FileManager.default.fileExists(atPath: mountPoint + EFIPartitionToolTypes.cloverConfigLocation) || FileManager.default.fileExists(atPath: mountPoint + EFIPartitionToolTypes.openCoreConfigLocation)
-                        }
-                    }
-                    
-                    DispatchQueue.main.async {
-                        self.checkMounted()
-                    }
-                }
-            }
-        }
-        
-        @objc private func unmountPartition(_ sender: Any){
-            if let controller = self.window?.contentViewController as? EFIPartitionMounterViewController{
-                changeLoadMode(enabled: true)
-                DispatchQueue.global(qos: .background).async {
-                    
-                    controller.watcherSkip = true
-                    
-                    self.isMounted = !controller.eFIManager.unmountPartition(self.bsdid)
-                    
-                    DispatchQueue.main.async {
-                        self.checkMounted()
-                    }
-                }
-            }
-        }
-        
-        @objc private func showPartition(_ sender: Any){
-            DispatchQueue.global(qos: .background).async {
-                if let mountPoint = dm.getDevicePropertyInfoNew(self.bsdid, propertyName: "MountPoint"){
-                    NSWorkspace.shared().open(URL(fileURLWithPath: mountPoint, isDirectory: true))
-                }
-            }
-        }
-        
-        #if !macOnlyMode
-        @objc private func editConfig(_ sender: Any){
-			DispatchQueue.global(qos: .background).async{
-				if let mountPoint = dm.getDevicePropertyInfoNew(self.bsdid, propertyName: "MountPoint"){
-					
-					//https://mackie100projects.altervista.org/download-opencore-configurator/
-					//https://mackie100projects.altervista.org/download-clover-configurator/
-					
-					var configLocation = mountPoint
-					var applicationName = ""
-					var applicationDownload = ""
-					
-					if (FileManager.default.fileExists(atPath: mountPoint + EFIPartitionToolTypes.cloverConfigLocation)){
-						configLocation += EFIPartitionToolTypes.cloverConfigLocation
-						applicationName = "Clover Configurator"
-						applicationDownload = "https://mackie100projects.altervista.org/download-clover-configurator/"
-					}else if (FileManager.default.fileExists(atPath: mountPoint + EFIPartitionToolTypes.openCoreConfigLocation)){
-						configLocation += EFIPartitionToolTypes.openCoreConfigLocation
-						applicationName = "OpenCore Configurator"
-						applicationDownload = "https://mackie100projects.altervista.org/download-opencore-configurator/"
-					}
-					
-					
-					
-					if !NSWorkspace.shared().openFile(configLocation, withApplication: applicationName)
-					{
-                            DispatchQueue.main.sync
-                                {
-									//TODO: remeber to add a setting to not always prompt for this con figurator tools
-									
-									if !dialogYesNo(question: "Download \"\(applicationName)\" ?", text: "\"\(applicationName)\" is not installed in your system, do you want to download and install it?", style: .informational)
-                                    {
-                                        NSWorkspace.shared().open(URL(string: applicationDownload)!)
-                                    }
-                                    else
-                                    {
-                                        if !dialogYesNo(question: "Open \"config.plist\" with another editor?", text: "You choose to not download \"\(applicationName)\", do you want to edit your \"config.plist\" file with another app?" , style: .informational)
-                                        {
-                                            
-                                            if !NSWorkspace.shared().openFile(configLocation)
-                                            {
-                                                msgBoxWarning("Impossible to open \"config.plist\"!", "Impossible to find an app to open the \"config.plist\" file!")
-                                            }
-                                        }
-                                    }
-                            }
-                        }
-                    }
-            }
+			guard let controller = self.window?.contentViewController as? EFIPartitionMounterViewController else { return }
 			
-        }
-        #endif
+			changeLoadMode(enabled: true)
+			
+			DispatchQueue.global(qos: .background).async {
+					
+				controller.watcherSkip = true
+					
+				self.isMounted = controller.eFIManager.mountPartition(self.bsdid)
+				
+				if !self.isMounted{
+					self.configType = nil
+				} else {
+					if let mountPoint = dm.getMountPointFromPartitionBSDID(self.bsdid){
+						self.configType = EFIPartitionToolTypes.ConfigLocations.folderHasConfig(mountPoint)
+					}
+				}
+					
+				DispatchQueue.main.async {
+					self.checkMounted()
+				}
+				
+			}
+		}
 		
-        @objc private func ejectDrive(_ sender: Any){
-            changeLoadMode(enabled: true)
+		@objc private func unmountPartition(_ sender: Any){
+			guard let controller = self.window?.contentViewController as? EFIPartitionMounterViewController else { return }
+			
+			changeLoadMode(enabled: true)
+			
+			DispatchQueue.global(qos: .background).async {
+					
+				controller.watcherSkip = true
+					
+				self.isMounted = !controller.eFIManager.unmountPartition(self.bsdid)
+					
+				DispatchQueue.main.async {
+					self.checkMounted()
+				}
+			}
+		}
+		
+		@objc private func showPartition(_ sender: Any){
+			DispatchQueue.global(qos: .background).async {
+				guard let mountPoint = dm.getMountPointFromPartitionBSDID(self.bsdid) else { return }
+				
+				NSWorkspace.shared().open(URL(fileURLWithPath: mountPoint, isDirectory: true))
+			}
+		}
+		
+		#if !macOnlyMode
+		
+		@objc private func editConfigOther(_ sender: Any){
+			
+			if configType == nil{
+				return
+			}
+			
+			
+			DispatchQueue.global(qos: .background).async{
+				guard let mountPoint = dm.getMountPointFromPartitionBSDID(self.bsdid) else { return }
+				
+				var configLocation = mountPoint
+				
+				for loc in EFIPartitionToolTypes.ConfigLocations.allCases{
+					if !FileManager.default.fileExists(atPath: mountPoint + loc.rawValue){ continue }
+					
+					configLocation += loc.rawValue
+					break
+				}
+				
+				DispatchQueue.main.sync{
+						
+					if NSWorkspace.shared().openFile(configLocation){ return }
+						
+					//msgBoxWarning("Impossible to open \"config.plist\"!", "Impossible to find an app to open the \"config.plist\" file!")
+					
+					msgboxWithManagerGeneric(EFIPMTextManager, self, name: "impossible", parseList: nil, style: .warning, icon: IconsManager.shared.warningIcon)
+				}
+			}
+			
+		}
+		
+		@objc private func openConfigMenu(_ sender: Any){
+			configOpenMenu.popUp(positioning: nil, at: editOtherConfigButton.frame.origin, in: self)
+		}
+		
+		@objc private func editConfigGeneric(_ sender: Any){
+			
+			guard let sen = sender as? NSMenuItem else { return }
+			let target = sen.tag
+			
+			DispatchQueue.global(qos: .background).async{
+				guard let mountPoint = dm.getMountPointFromPartitionBSDID(self.bsdid) else { return }
+			
+				guard let config = EFIPartitionToolTypes.ConfigLocations.folderHasConfig(mountPoint) else { return }
+			
+				let configLocation = mountPoint + config.rawValue
+				
+				let item = appMenu.list[target]
+				
+				DispatchQueue.main.sync{
+				
+					if item.installedAppName.isEmpty{
+						
+						if NSWorkspace.shared().openFile(configLocation){ return }
+						
+						msgboxWithManagerGeneric(EFIPMTextManager, self, name: "impossible", parseList: nil, style: .warning, icon: IconsManager.shared.warningIcon)
+						
+					}else{
+						
+						if NSWorkspace.shared().openFile(configLocation, withApplication: item.installedAppName){ return }
+				
+						let list = ["{appName}" : item.name]
+						if dialogWithManagerGeneric(EFIPMTextManager as TextManagerGet, self, name: "download", parseList: list){
+							NSWorkspace.shared().open(URL(string: item.download)!)
+						}
+						
+					}
+				
+				}
+			}
+		}
+		#endif
+		
+		@objc private func ejectDrive(_ sender: Any){
+			changeLoadMode(enabled: true)
 			
 			var controller : EFIPartitionMounterViewController!
 			
 			controller = self.window?.windowController?.contentViewController as? EFIPartitionMounterViewController
 			
-			if controller != nil {
-			
-            	DispatchQueue.global(qos: .background).async{
-					
-                    let driveID = dm.getDriveBSDIDFromVolumeBSDID(volumeID: self.bsdid)
-                    
-                    var res = false
-                    
-                    var text = ""
-                    
-					DispatchQueue.global(qos: .background).sync{
-						controller.watcherSkip = true
-					}
-                    
-                    text = getOut(cmd: "diskutil unmountDisk \(driveID)")
-                    
-                    res = (text.contains("Unmount of all volumes on") && text.contains("was successful")) || (text.isEmpty)
-                    
-                    if res{
-                        log("Drive unmounted with success: \(driveID)")
-                        
-                        DispatchQueue.main.sync {
-                            
-                            let disk = self.titleLabel.stringValue
-                            msgBox("You can remove \"\(disk)\"", "Now it's safe to remove \"\(disk)\" from the computer", .informational)
-                            
-                            self.checkMounted()
-                            
-							controller.refresh(controller)
-                            
-                        }
-                        
-                    }else{
-                        log("Drive not unmounted, error generated: \(text)")
-                        
-                        msgBoxWarning("Impossible to eject \"\(driveID)\"", "There was an error while trying to eject this disk: \(driveID)\n\nDiagnostics info: \n\nCommand executed: diskutil unmountDisk \(driveID)\nOutput: \(text)")
-                    }
-                    
-				
-            	}
-				
-			}else{
-				
+			if controller == nil {
 				self.checkMounted()
+				return
+			}
+			
+			DispatchQueue.global(qos: .background).async{
+				
+				let driveID = dm.getDriveBSDIDFromVolumeBSDID(volumeID: self.bsdid)
+				
+				var res = false
+				
+				var text = ""
+				
+				DispatchQueue.global(qos: .background).sync{
+					controller.watcherSkip = true
+				}
+				
+				text = getOut(cmd: "diskutil unmountDisk \(driveID)")
+				
+				res = (text.contains("Unmount of all volumes on") && text.contains("was successful")) || (text.isEmpty)
+				
+				if res{
+					log("Drive unmounted with success: \(driveID)")
+					
+					DispatchQueue.main.sync {
+						
+						let disk = self.titleLabel.stringValue
+						msgBox("You can remove \"\(disk)\"", "Now it's safe to remove \"\(disk)\" from the computer", .informational)
+						
+						self.checkMounted()
+						
+						controller.refresh(controller)
+						
+					}
+					
+				}else{
+					log("Drive not unmounted, error generated: \(text)")
+					
+					//msgBoxWarning("Impossible to eject \"\(driveID)\"", "There was an error while trying to eject this disk: \(driveID)\n\nDiagnostics info: \n\nCommand executed: diskutil unmountDisk \(driveID)\nOutput: \(text)")
+					
+					let list = ["{disk}" : self.titleLabel.stringValue, "{text}" : text]
+					msgboxWithManagerGeneric(EFIPMTextManager, self, name: "notEject", parseList: list, style: .warning, icon: IconsManager.shared.warningIcon)
+					
+					
+				}
+				
 				
 			}
-        }
-        
-        func checkMounted(){
-            
-            changeLoadMode(enabled: false)
-            
-            showInFinderButton.isHidden = !isMounted || sharedIsOnRecovery
-            unmountButton.isHidden = !isMounted
-            
-            mountButton.isHidden = isMounted
-            
-            editConfigButton.isHidden = !(isMounted && hasConfig && !sharedIsOnRecovery)
-            
-            ejectButton.isHidden = !isEjectable || (isMounted && partitions.isEmpty)
-            
 		}
-        
-        private func changeLoadMode(enabled: Bool){
-            
-            mountButton.isEnabled = !enabled
-            unmountButton.isEnabled = !enabled
-            showInFinderButton.isEnabled = !enabled
-            editConfigButton.isEnabled = !enabled
-            ejectButton.isEnabled = !enabled
-            
-            coverView.isHidden = !enabled
-            
-            if enabled{
-                spinner.startAnimation(coverView)
-            }else{
-                spinner.stopAnimation(coverView)
-            }
-        }
+		
+		func checkMounted(){
+			
+			changeLoadMode(enabled: false)
+			
+			showInFinderButton.isHidden = !isMounted || sharedIsReallyOnRecovery
+			unmountButton.isHidden = !isMounted
+			
+			mountButton.isHidden = isMounted
+			
+			editOtherConfigButton.isHidden = !(isMounted && configType != nil && !sharedIsReallyOnRecovery)
+			
+			ejectButton.isHidden = !isEjectable || (isMounted && partitions.isEmpty)
+			
+		}
+		
+		private func changeLoadMode(enabled: Bool){
+			
+			mountButton.isEnabled = !enabled
+			unmountButton.isEnabled = !enabled
+			showInFinderButton.isEnabled = !enabled
+			ejectButton.isEnabled = !enabled
+			
+			coverView.isHidden = !enabled
+			
+			if enabled{
+				spinner.startAnimation(coverView)
+			}else{
+				spinner.stopAnimation(coverView)
+			}
+		}
 		
 	}
-    
-    
+	
+	
 	
 	public class PartitionItem: NSView {
 		let imageView = NSImageView()
 		let nameLabel = NSTextField()
 		
 		override public func draw(_ dirtyRect: NSRect) {
-            
-            //self.backgroundColor = .red
-            
+			
+			//self.backgroundColor = .red
+			
 			imageView.frame.size = NSSize(width: self.frame.size.height, height: self.frame.size.height)
 			imageView.frame.origin = NSPoint.zero
 			imageView.imageScaling = .scaleProportionallyUpOrDown
@@ -460,24 +518,24 @@ public class EFIPartitionToolInterface{
 			
 			var h: CGFloat = 22
 			
-            let div = nameLabel.stringValue.count / 16
-            
-            if div < 3{
+			let div = nameLabel.stringValue.count / 16
+			
+			if div < 3{
 				h *= CGFloat(div + 1)
-            }else{
-                h *= 3
-            }
+			}else{
+				h *= 3
+			}
 			
 			nameLabel.frame.origin = NSPoint(x: self.frame.size.height, y: (self.frame.height / 2) - (h / 2))
 			nameLabel.frame.size = NSSize(width: self.frame.size.width - self.frame.size.height, height: h)
 			nameLabel.font = NSFont.systemFont(ofSize: 15)
 			
 			self.addSubview(nameLabel)
-            
+			
 		}
 		
-        
-        
+		
+		
 	}
 }
 #endif

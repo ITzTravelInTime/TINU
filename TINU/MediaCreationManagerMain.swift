@@ -12,7 +12,7 @@ public typealias IMCM = InstallMediaCreationManager
 
 public final class InstallMediaCreationManager{
 	
-	static var cpc: ProcessConsts = ProcessConsts()
+	static var cpc: ProcessConsts = CodableCreation<ProcessConsts>.createFromDefaultFile(false)!
 	
 	public static var shared = InstallMediaCreationManager()
 	var lastMinute: UInt64 = 0
@@ -63,7 +63,12 @@ public final class InstallMediaCreationManager{
 		//cleans it's won memory first
 		IMCM.shared = InstallMediaCreationManager()
 		//gets fresh info about the management of the progressbar
-		IMCM.cpc = ProcessConsts.createFromDefaultFile()
+		IMCM.cpc = CodableCreation<ProcessConsts>.createFromDefaultFile(false)!
+		
+		if !ProcessConsts.checkInstance(IMCM.cpc){
+			fatalError("Bad progress bar settings")
+		}
+		
 		//claculates the division for the progrees bar usage outside the main process
 		IMCM.unit = IMCM.cpc.pExtDuration / Double(IMCM.preCount)
 		

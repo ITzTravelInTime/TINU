@@ -3,7 +3,7 @@
 		{
 			"isBack" : false,
 			"operation" : 0,
-			"message" : "TINU creation failed to format \"${drive}\"",
+			"message" : "Failed to format \"${drive}\"",
 			"stringsToCheck" : [
 				"A error occurred erasing the disk."
 			],
@@ -70,7 +70,7 @@
 		{
 			"isBack" : false,
 			"operation" : 0,
-			"message" : "Bootable macOS installer creation failed because of an error while copying needed files, make sure that \"${drive}\" is working correctly",
+			"message" : "Bootable macOS installer creation failed because of an error while copying needed files, make sure that \"${drive}\" is working correctly and that is connected to the computer",
 			"stringsToCheck" : [
 				"The copy of the installer app failed"
 			],
@@ -103,7 +103,7 @@
 		{
 			"isBack" : false,
 			"operation" : 0,
-			"message" : "Bootable macOS installer creation failed: The installer app seems not to be compatible with your mac os version or it wasn't properly downloaded, it's reccomended to re-download it from the App Store or to use a different macOS version",
+			"message" : "Bootable macOS installer creation failed: The installer app seems not to be compatible with your macOS version or it wasn't properly downloaded, it's reccomended to re-download it from the App Store or to use a different macOS version",
 			"stringsToCheck" : [
 				"To use this tool, you must download the macOS installer application on a Mac with"
 			],
@@ -177,7 +177,7 @@
 		{
 			"isBack" : false,
 			"operation" : 1,
-			"message" : "Bootable macOS installer creation failed because of an unknown error, chech the log for details",
+			"message" : "Bootable macOS installer creation failed because of an unknown error, check the log for details",
 			"stringsToCheck" : [
 				"0",
 				"102030100"

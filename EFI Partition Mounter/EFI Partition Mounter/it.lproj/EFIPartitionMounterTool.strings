@@ -1,0 +1,351 @@
+
+/* Class = "NSTextFieldCell"; title = "Pietro Caruso (ITzTravelInTime)"; ObjectID = "0ce-mA-qdt"; */
+"0ce-mA-qdt.title" = "Pietro Caruso (ITzTravelInTime)";
+
+/* Class = "NSWindow"; title = "TINU: EFI partition mounter"; ObjectID = "11d-LS-SHb"; */
+"11d-LS-SHb.title" = "TINU: EFI partition mounter";
+
+/* Class = "NSMenuItem"; title = "Other Apps by Pietro Caruso"; ObjectID = "1Kg-uk-fTS"; */
+"1Kg-uk-fTS.title" = "Other Apps by Pietro Caruso";
+
+/* Class = "NSMenuItem"; title = "Customize Toolbar…"; ObjectID = "1UK-8n-QPP"; */
+"1UK-8n-QPP.title" = "Customize Toolbar…";
+
+/* Class = "NSMenuItem"; title = "EFI Partition Mounter"; ObjectID = "1Xt-HY-uBw"; */
+"1Xt-HY-uBw.title" = "EFI Partition Mounter";
+
+/* Class = "NSMenu"; title = "Other Apps by Pietro Caruso"; ObjectID = "2eq-C6-uKP"; */
+"2eq-C6-uKP.title" = "Other Apps by Pietro Caruso";
+
+/* Class = "NSButtonCell"; title = "Contact us"; ObjectID = "3Bt-YA-u2n"; */
+"3Bt-YA-u2n.title" = "Contact us";
+
+/* Class = "NSTextFieldCell"; title = "Project links:"; ObjectID = "3Qy-jV-q7d"; */
+"3Qy-jV-q7d.title" = "Project links:";
+
+/* Class = "NSButtonCell"; title = "Open EFI Partition Mounter at login"; ObjectID = "3Vz-nf-7qB"; */
+"3Vz-nf-7qB.title" = "Open EFI Partition Mounter at login";
+
+/* Class = "NSTextFieldCell"; title = "Version: "; ObjectID = "3e9-1W-Kp2"; */
+"3e9-1W-Kp2.title" = "Version: ";
+
+/* Class = "NSMenuItem"; title = "Enter Full Screen"; ObjectID = "4J7-dP-txa"; */
+"4J7-dP-txa.title" = "Enter Full Screen";
+
+/* Class = "NSMenuItem"; title = "Discussion (English)"; ObjectID = "4Yo-Kr-yIf"; */
+"4Yo-Kr-yIf.title" = "Discussion (English)";
+
+/* Class = "NSMenuItem"; title = "Quit EFI Partition Mounter"; ObjectID = "4sb-4s-VLi"; */
+"4sb-4s-VLi.title" = "Quit EFI Partition Mounter";
+
+/* Class = "NSButtonCell"; title = "Source code"; ObjectID = "5Cq-TB-IyN"; */
+"5Cq-TB-IyN.title" = "Source code";
+
+/* Class = "NSMenuItem"; title = "Show Spelling and Grammar"; ObjectID = "5V6-yG-48k"; */
+"5V6-yG-48k.title" = "Show Spelling and Grammar";
+
+/* Class = "NSMenuItem"; title = "About EFI Partition Mounter"; ObjectID = "5kV-Vb-QxS"; */
+"5kV-Vb-QxS.title" = "About EFI Partition Mounter";
+
+/* Class = "NSMenuItem"; title = "Related to EFI Partition Mounter"; ObjectID = "6NZ-tz-rTc"; */
+"6NZ-tz-rTc.title" = "Related to EFI Partition Mounter";
+
+/* Class = "NSTextFieldCell"; title = "Copyrigth Copyrigth Copyrigth"; ObjectID = "6hB-Sf-IXT"; */
+"6hB-Sf-IXT.title" = "Copyrigth Copyrigth Copyrigth";
+
+/* Class = "NSMenu"; title = "Substitutions"; ObjectID = "6rY-4i-xvj"; */
+"6rY-4i-xvj.title" = "Substitutions";
+
+/* Class = "NSMenuItem"; title = "Redo"; ObjectID = "7At-vY-SmB"; */
+"7At-vY-SmB.title" = "Redo";
+
+/* Class = "NSMenuItem"; title = "Cut"; ObjectID = "8JF-Tf-hQS"; */
+"8JF-Tf-hQS.title" = "Cut";
+
+/* Class = "NSMenuItem"; title = "Delete"; ObjectID = "9LZ-yH-8dD"; */
+"9LZ-yH-8dD.title" = "Delete";
+
+/* Class = "NSTextFieldCell"; title = "Discussion on insanelymac.com"; ObjectID = "A4x-AV-bZk"; */
+"A4x-AV-bZk.title" = "Discussion on insanelymac.com";
+
+/* Class = "NSTextFieldCell"; title = "Credits:"; ObjectID = "A95-FU-Ap7"; */
+"A95-FU-Ap7.title" = "Credits:";
+
+/* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
+"AYu-sK-qS6.title" = "Main Menu";
+
+/* Class = "NSMenuItem"; title = "Spelling and Grammar"; ObjectID = "Ahh-rf-SIm"; */
+"Ahh-rf-SIm.title" = "Spelling and Grammar";
+
+/* Class = "NSMenuItem"; title = "Make Upper Case"; ObjectID = "BD6-u6-FHD"; */
+"BD6-u6-FHD.title" = "Make Upper Case";
+
+/* Class = "NSMenuItem"; title = "TINU"; ObjectID = "BLi-eP-pQT"; */
+"BLi-eP-pQT.title" = "TINU";
+
+/* Class = "NSMenuItem"; title = "Preferences…"; ObjectID = "BOF-NM-1cW"; */
+"BOF-NM-1cW.title" = "Preferences…";
+
+/* Class = "NSTextFieldCell"; title = "Discussion (italian):"; ObjectID = "CMj-Q2-mVL"; */
+"CMj-Q2-mVL.title" = "Discussion (italian):";
+
+/* Class = "NSMenu"; title = "Related to EFI Partition Mounter"; ObjectID = "CWc-DG-HKn"; */
+"CWc-DG-HKn.title" = "Related to EFI Partition Mounter";
+
+/* Class = "NSTextFieldCell"; title = "Pietro Caruso (ITzTravelInTime)"; ObjectID = "Cka-ln-bas"; */
+"Cka-ln-bas.title" = "Pietro Caruso (ITzTravelInTime)";
+
+/* Class = "NSMenuItem"; title = "Select All"; ObjectID = "Dr7-uX-Nd8"; */
+"Dr7-uX-Nd8.title" = "Select All";
+
+/* Class = "NSTextFieldCell"; title = "Email:"; ObjectID = "EwV-Z5-Iew"; */
+"EwV-Z5-Iew.title" = "Email:";
+
+/* Class = "NSMenu"; title = "Help"; ObjectID = "F2S-fz-NVQ"; */
+"F2S-fz-NVQ.title" = "Help";
+
+/* Class = "NSMenuItem"; title = "Smart Dashes"; ObjectID = "FFI-29-Y4q"; */
+"FFI-29-Y4q.title" = "Smart Dashes";
+
+/* Class = "NSMenuItem"; title = "EFI Partition Mounter Help"; ObjectID = "FKE-Sm-Kum"; */
+"FKE-Sm-Kum.title" = "EFI Partition Mounter Help";
+
+/* Class = "NSButtonCell"; title = "Back"; ObjectID = "FLt-V9-Xdv"; */
+"FLt-V9-Xdv.title" = "Back";
+
+/* Class = "NSTextFieldCell"; title = "Development, distribution, maintaining:"; ObjectID = "Feo-P3-2Cm"; */
+"Feo-P3-2Cm.title" = "Development, distribution, maintaining:";
+
+/* Class = "NSMenuItem"; title = "Check Document Now"; ObjectID = "GIc-et-zdE"; */
+"GIc-et-zdE.title" = "Check Document Now";
+
+/* Class = "NSButtonCell"; title = "Close"; ObjectID = "GYO-zj-7Mt"; */
+"GYO-zj-7Mt.title" = "Close";
+
+/* Class = "NSMenuItem"; title = "View"; ObjectID = "H8h-7b-M4v"; */
+"H8h-7b-M4v.title" = "View";
+
+/* Class = "NSMenuItem"; title = "VoodooTSCSync Configurator"; ObjectID = "HQy-72-bB2"; */
+"HQy-72-bB2.title" = "VoodooTSCSync Configurator";
+
+/* Class = "NSTextFieldCell"; title = "you can still find the license agreement here"; ObjectID = "Hi9-VL-fR0"; */
+"Hi9-VL-fR0.title" = "you can still find the license agreement here";
+
+/* Class = "NSMenu"; title = "View"; ObjectID = "HyV-fh-RgO"; */
+"HyV-fh-RgO.title" = "View";
+
+/* Class = "NSMenuItem"; title = "Smart Links"; ObjectID = "IAL-lL-pi4"; */
+"IAL-lL-pi4.title" = "Smart Links";
+
+/* Class = "NSMenuItem"; title = "Find Previous"; ObjectID = "ITt-7l-CsO"; */
+"ITt-7l-CsO.title" = "Find Previous";
+
+/* Class = "NSMenuItem"; title = "Jump to Selection"; ObjectID = "JaZ-JR-gK0"; */
+"JaZ-JR-gK0.title" = "Jump to Selection";
+
+/* Class = "NSMenuItem"; title = "Show All"; ObjectID = "Kd2-mp-pUS"; */
+"Kd2-mp-pUS.title" = "Show All";
+
+/* Class = "NSMenu"; title = "Speech"; ObjectID = "L8w-ZY-hCT"; */
+"L8w-ZY-hCT.title" = "Speech";
+
+/* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "LE2-aR-0XJ"; */
+"LE2-aR-0XJ.title" = "Bring All to Front";
+
+/* Class = "NSMenuItem"; title = "Edit"; ObjectID = "LTI-UU-4od"; */
+"LTI-UU-4od.title" = "Edit";
+
+/* Class = "NSMenuItem"; title = "Find…"; ObjectID = "M3o-sa-U3B"; */
+"M3o-sa-U3B.title" = "Find…";
+
+/* Class = "NSButtonCell"; title = "Quit"; ObjectID = "NR5-Xs-gpb"; */
+"NR5-Xs-gpb.title" = "Quit";
+
+/* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "OY7-WF-poV"; */
+"OY7-WF-poV.title" = "Minimize";
+
+/* Class = "NSMenu"; title = "Spelling"; ObjectID = "OjW-kB-gOi"; */
+"OjW-kB-gOi.title" = "Spelling";
+
+/* Class = "NSMenuItem"; title = "Hide EFI Partition Mounter"; ObjectID = "Olw-nP-bQN"; */
+"Olw-nP-bQN.title" = "Hide EFI Partition Mounter";
+
+/* Class = "NSMenuItem"; title = "Data Detectors"; ObjectID = "Oob-e0-Q7W"; */
+"Oob-e0-Q7W.title" = "Data Detectors";
+
+/* Class = "NSMenuItem"; title = "Discussion (Italian)"; ObjectID = "P92-KG-xoa"; */
+"P92-KG-xoa.title" = "Discussion (Italian)";
+
+/* Class = "NSMenuItem"; title = "Zoom"; ObjectID = "R4o-n2-Eq4"; */
+"R4o-n2-Eq4.title" = "Zoom";
+
+/* Class = "NSWindow"; title = "Contact us"; ObjectID = "RAe-4X-VA1"; */
+"RAe-4X-VA1.title" = "Contact us";
+
+/* Class = "NSTextFieldCell"; title = "EFI Partition mounter"; ObjectID = "SAw-98-cOv"; */
+"SAw-98-cOv.title" = "EFI Partition mounter";
+
+/* Class = "NSTextFieldCell"; title = "GitHub profile:"; ObjectID = "Sd8-fa-g7U"; */
+"Sd8-fa-g7U.title" = "GitHub profile:";
+
+/* Class = "NSMenuItem"; title = "Check Spelling While Typing"; ObjectID = "TZb-Zq-NqS"; */
+"TZb-Zq-NqS.title" = "Check Spelling While Typing";
+
+/* Class = "NSMenu"; title = "Window"; ObjectID = "Td7-aD-5lo"; */
+"Td7-aD-5lo.title" = "Window";
+
+/* Class = "NSMenuItem"; title = "Show Substitutions"; ObjectID = "UYp-nR-fmk"; */
+"UYp-nR-fmk.title" = "Show Substitutions";
+
+/* Class = "NSMenuItem"; title = "Correct Spelling Automatically"; ObjectID = "VRW-Rn-1ZH"; */
+"VRW-Rn-1ZH.title" = "Correct Spelling Automatically";
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Vdr-fp-XzO"; */
+"Vdr-fp-XzO.title" = "Hide Others";
+
+/* Class = "NSTextFieldCell"; title = "Discussion on insanelymac.com"; ObjectID = "WF0-IV-rwB"; */
+"WF0-IV-rwB.title" = "Discussion on insanelymac.com";
+
+/* Class = "NSTextFieldCell"; title = "Settings"; ObjectID = "YSR-UR-bw8"; */
+"YSR-UR-bw8.title" = "Settings";
+
+/* Class = "NSMenu"; title = "Find"; ObjectID = "Yk4-gY-Q7v"; */
+"Yk4-gY-Q7v.title" = "Find";
+
+/* Class = "NSMenuItem"; title = "Find Next"; ObjectID = "Yls-zV-wHg"; */
+"Yls-zV-wHg.title" = "Find Next";
+
+/* Class = "NSTextFieldCell"; title = "Pablo Melo prcmelo@gmail.com (App Icon), Apple (macOS system Icons)"; ObjectID = "ZTR-Au-hvS"; */
+"ZTR-Au-hvS.title" = "Pablo Melo prcmelo@gmail.com (App Icon), Apple (macOS system Icons)";
+
+/* Class = "NSTextFieldCell"; title = "Project creator:"; ObjectID = "ZaQ-Gc-zMY"; */
+"ZaQ-Gc-zMY.title" = "Project creator:";
+
+/* Class = "NSMenuItem"; title = "Copy"; ObjectID = "Zr1-C8-wzG"; */
+"Zr1-C8-wzG.title" = "Copy";
+
+/* Class = "NSMenuItem"; title = "Make Lower Case"; ObjectID = "ZuP-jP-dxt"; */
+"ZuP-jP-dxt.title" = "Make Lower Case";
+
+/* Class = "NSMenuItem"; title = "Window"; ObjectID = "aUF-d1-5bR"; */
+"aUF-d1-5bR.title" = "Window";
+
+/* Class = "NSMenuItem"; title = "Stop Speaking"; ObjectID = "b9o-cA-5f4"; */
+"b9o-cA-5f4.title" = "Stop Speaking";
+
+/* Class = "NSButtonCell"; title = "Refresh"; ObjectID = "bAM-2d-GNd"; */
+"bAM-2d-GNd.title" = "Refresh";
+
+/* Class = "NSTextFieldCell"; title = "Insanelymac.com profile:"; ObjectID = "bWK-i1-ZMA"; */
+"bWK-i1-ZMA.title" = "Insanelymac.com profile:";
+
+/* Class = "NSTextFieldCell"; title = "Discussion (english):"; ObjectID = "bdN-Ba-7XS"; */
+"bdN-Ba-7XS.title" = "Discussion (english):";
+
+/* Class = "NSMenuItem"; title = "Substitutions"; ObjectID = "byG-xX-zCp"; */
+"byG-xX-zCp.title" = "Substitutions";
+
+/* Class = "NSMenuItem"; title = "Paste"; ObjectID = "cBp-C3-aRA"; */
+"cBp-C3-aRA.title" = "Paste";
+
+/* Class = "NSMenuItem"; title = "Check Grammar With Spelling"; ObjectID = "cx7-3G-YIY"; */
+"cx7-3G-YIY.title" = "Check Grammar With Spelling";
+
+/* Class = "NSButtonCell"; title = "Close"; ObjectID = "dPN-hP-yiW"; */
+"dPN-hP-yiW.title" = "Close";
+
+/* Class = "NSTextFieldCell"; title = "Special thanks to:"; ObjectID = "fFi-GT-a69"; */
+"fFi-GT-a69.title" = "Special thanks to:";
+
+/* Class = "NSMenuItem"; title = "Diagnostics Mode"; ObjectID = "ff9-2k-K1q"; */
+"ff9-2k-K1q.title" = "Diagnostics Mode";
+
+/* Class = "NSButtonCell"; title = "Tool bar mode"; ObjectID = "fgx-JZ-6eM"; */
+"fgx-JZ-6eM.title" = "Tool bar mode";
+
+/* Class = "NSMenu"; title = "Transformations"; ObjectID = "gjh-L5-fJB"; */
+"gjh-L5-fJB.title" = "Transformations";
+
+/* Class = "NSMenuItem"; title = "Start Speaking"; ObjectID = "gnu-ap-zXG"; */
+"gnu-ap-zXG.title" = "Start Speaking";
+
+/* Class = "NSMenuItem"; title = "Paste and Match Style"; ObjectID = "gsa-SX-r2F"; */
+"gsa-SX-r2F.title" = "Paste and Match Style";
+
+/* Class = "NSMenuItem"; title = "Smart Copy/Paste"; ObjectID = "h5Z-7V-Akv"; */
+"h5Z-7V-Akv.title" = "Smart Copy/Paste";
+
+/* Class = "NSMenuItem"; title = "Find"; ObjectID = "hKR-2D-lx4"; */
+"hKR-2D-lx4.title" = "Find";
+
+/* Class = "NSButtonCell"; title = "Close"; ObjectID = "hzE-QX-ziz"; */
+"hzE-QX-ziz.title" = "Close";
+
+/* Class = "NSButtonCell"; title = "Read license"; ObjectID = "jdS-0w-bJC"; */
+"jdS-0w-bJC.title" = "Read license";
+
+/* Class = "NSMenuItem"; title = "Show Sidebar"; ObjectID = "kIP-vf-haE"; */
+"kIP-vf-haE.title" = "Show Sidebar";
+
+/* Class = "NSMenuItem"; title = "Use Selection for Find"; ObjectID = "kez-Nf-lfd"; */
+"kez-Nf-lfd.title" = "Use Selection for Find";
+
+/* Class = "NSMenu"; title = "Edit"; ObjectID = "l4I-Em-MZO"; */
+"l4I-Em-MZO.title" = "Edit";
+
+/* Class = "NSMenuItem"; title = "Contact us"; ObjectID = "lc3-Li-jJI"; */
+"lc3-Li-jJI.title" = "Contact us";
+
+/* Class = "NSMenuItem"; title = "Speech"; ObjectID = "lwQ-p8-h4u"; */
+"lwQ-p8-h4u.title" = "Speech";
+
+/* Class = "NSMenuItem"; title = "Capitalize"; ObjectID = "nZi-PK-YoL"; */
+"nZi-PK-YoL.title" = "Capitalize";
+
+/* Class = "NSMenuItem"; title = "Source code on GitHub"; ObjectID = "q5g-xw-6GS"; */
+"q5g-xw-6GS.title" = "Source code on GitHub";
+
+/* Class = "NSTextFieldCell"; title = "ITzTravelInTime on GitHub"; ObjectID = "qFL-3h-9pj"; */
+"qFL-3h-9pj.title" = "ITzTravelInTime on GitHub";
+
+/* Class = "NSMenuItem"; title = "Text Replacement"; ObjectID = "qMQ-EQ-2a6"; */
+"qMQ-EQ-2a6.title" = "Text Replacement";
+
+/* Class = "NSMenuItem"; title = "Show Toolbar"; ObjectID = "snW-S8-Cw5"; */
+"snW-S8-Cw5.title" = "Show Toolbar";
+
+/* Class = "NSTextFieldCell"; title = "piecaruso97@gmail.com"; ObjectID = "uIb-AF-pim"; */
+"uIb-AF-pim.title" = "piecaruso97@gmail.com";
+
+/* Class = "NSMenu"; title = "EFI Partition Mounter"; ObjectID = "uQy-DD-JDr"; */
+"uQy-DD-JDr.title" = "EFI Partition Mounter";
+
+/* Class = "NSTextFieldCell"; title = "Icons:"; ObjectID = "uTw-FQ-XOu"; */
+"uTw-FQ-XOu.title" = "Icons:";
+
+/* Class = "NSMenuItem"; title = "Find and Replace…"; ObjectID = "usb-8C-hh9"; */
+"usb-8C-hh9.title" = "Find and Replace…";
+
+/* Class = "NSMenuItem"; title = "Undo"; ObjectID = "vJq-tD-661"; */
+"vJq-tD-661.title" = "Undo";
+
+/* Class = "NSMenuItem"; title = "About EFI Partition Mounter"; ObjectID = "vkP-7t-1Sk"; */
+"vkP-7t-1Sk.title" = "About EFI Partition Mounter";
+
+/* Class = "NSTextFieldCell"; title = "EFI Partition mounter: contact us"; ObjectID = "vwB-pf-Zba"; */
+"vwB-pf-Zba.title" = "EFI Partition mounter: contact us";
+
+/* Class = "NSMenuItem"; title = "Help"; ObjectID = "wpr-3q-Mcd"; */
+"wpr-3q-Mcd.title" = "Help";
+
+/* Class = "NSTextFieldCell"; title = "Thomas Tempelmann"; ObjectID = "xRZ-TI-Scz"; */
+"xRZ-TI-Scz.title" = "Thomas Tempelmann";
+
+/* Class = "NSMenuItem"; title = "Smart Quotes"; ObjectID = "yQU-Sf-Rtu"; */
+"yQU-Sf-Rtu.title" = "Smart Quotes";
+
+/* Class = "NSWindow"; title = "Window"; ObjectID = "ycK-qj-MHF"; */
+"ycK-qj-MHF.title" = "Window";
+
+/* Class = "NSMenuItem"; title = "Transformations"; ObjectID = "zDh-gr-9u9"; */
+"zDh-gr-9u9.title" = "Transformations";

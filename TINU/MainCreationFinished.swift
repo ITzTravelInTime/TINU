@@ -9,16 +9,14 @@
 import Foundation
 import Cocoa
 
-class MainCreationFinishedViewController: NSViewController{
-    @IBOutlet weak var myTitle: NSTextField!
-    
-    @IBOutlet weak var image: NSImageView!
+class MainCreationFinishedViewController: GenericViewController, ViewID{
+	
+	let id: String = "MainCreationFinishedViewController"
     
     @IBOutlet weak var exitButton: NSButton!
-    
-    @IBOutlet weak var continueButton: NSButton!
-    
-    //@IBOutlet weak var log: NSScrollView!
+	@IBOutlet weak var logButton: NSButton!
+	@IBOutlet weak var continueButton: NSButton!
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,41 +28,37 @@ class MainCreationFinishedViewController: NSViewController{
         if let a = NSApplication.shared().delegate as? AppDelegate{
             a.QuitMenuButton.isEnabled = true
         }
-        
-        myTitle.stringValue = FinalScreenSmallManager.shared.title
-        
-        let notification = NSUserNotification()
+		
+		let suffix = (FinalScreenSmallManager.shared.isOk ? "Yes" : "No")
+		continueButton.title = TextManager.getViewString(context: self, stringID: "continueButton" + suffix)
+		logButton.title = TextManager.getViewString(context: self, stringID: "logButton")
+		
+		var image = NSImage()
         if !FinalScreenSmallManager.shared.isOk{
-            image.image = IconsManager.shared.stopIcon
-            exitButton.title = "Quit"
-            continueButton.title = "Retry"
+            image = IconsManager.shared.stopIcon
             continueButton.isEnabled = true
             continueButton.frame.size.width = exitButton.frame.size.width
             continueButton.frame.origin.x = exitButton.frame.origin.x
-			
 			exitButton.isHidden = true
-            
-            notification.title = "Bootable macOS installer creation failed"
-            notification.informativeText = "The creation process of the bootable macOS installer has failed, see log for more details"
-            
-            notification.contentImage = IconsManager.shared.stopIcon
         }else{
-            image.image = NSImage(named: "checkVector")
-            exitButton.title = "Quit"
-            continueButton.title = "Main menu"
+			exitButton.title = TextManager.getViewString(context: self, stringID: "exitButton")
+            image = NSImage(named: "checkVector")!
             continueButton.isEnabled = true
             continueButton.isHidden = false
-            
-            notification.title = "Bootable macOS installer creation finished"
-            notification.informativeText = "The creation process of your bootable macOS installer has been completed with success"
-            notification.contentImage = NSImage(named: "checkVector")
         }
-        notification.hasActionButton = true
-        
-        notification.actionButtonTitle = "Close"
-        
-        notification.soundName = NSUserNotificationDefaultSoundName
-        NSUserNotificationCenter.default.deliver(notification)
+		
+		setFailureImage(image: image)
+		showFailureImage()
+		
+		setFailureLabel(text: FinalScreenSmallManager.shared.title)
+		failureLabel.font = NSFont.boldSystemFont(ofSize: failureLabel.font!.pointSize)
+		let old = failureLabel.frame.size.height
+		failureLabel.frame.size.height *= 3
+		failureLabel.frame.origin.y -= old * 2
+		
+		showFailureLabel()
+		
+		let _ = NotificationsManager.sendWith(id: "processEnd" + suffix, image: nil)
     }
 
     @IBAction func exit(_ sender: Any) {
@@ -72,36 +66,12 @@ class MainCreationFinishedViewController: NSViewController{
     }
     
     @IBAction func goNext(_ sender: Any) {
-        //if !sharedIsOk {
-        LogManager.clearLog()
-        
-       // if sharedIsOnRecovery{
-            sawpCurrentViewController(with: "chooseSide")
-        /*}else{
-            openSubstituteWindow(windowStoryboardID: "Info", sender: self)
-        }*/
-        //}
+        LogManager.clearLog(true)
+		
+		sawpCurrentViewController(with: "chooseSide")
     }
     
     @IBAction func checkLog(_ sender: Any) {
-        /*
-        if let b = sender as? NSButton{
-            
-            if self.log.isHidden{
-                b.title = "Hide Log"
-                image.frame.size = NSSize(width: image.frame.size.width, height: image.frame.size.height - log.frame.size.height - 8)
-                image.frame.origin = NSPoint(x: image.frame.origin.x, y: log.frame.origin.y + log.frame.size.height + 8)
-                
-            }else{
-                b.title = "Show Log"
-                
-                image.frame.size = NSSize(width: image.frame.size.width, height: image.frame.origin.y - log.frame.origin.y + image.frame.size.height)
-                image.frame.origin = NSPoint(x: image.frame.origin.x, y: log.frame.origin.y)
-            }
-        }
-        
-        log.isHidden = !log.isHidden
-        */
         if logWindow == nil {
             logWindow = LogWindowController()
         }

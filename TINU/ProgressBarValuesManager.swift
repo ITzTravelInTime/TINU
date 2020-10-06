@@ -24,7 +24,7 @@ let uDen: Double = 5
 */
 
 //progressbar fine tuning
-struct ProcessConsts: Codable, Equatable{
+struct ProcessConsts: CodableDefaults, Codable, Equatable{
 	
 	/*
 
@@ -59,7 +59,7 @@ struct ProcessConsts: Codable, Equatable{
 	*/
 	
 	//used to check if the instance of this structu is valid or not
-	private static func checkInstance(_ new: ProcessConsts) -> Bool{
+	static func checkInstance(_ new: ProcessConsts) -> Bool{
 		//Put the assertions about the values of the struct here
 		
 		if new.pMidDurationChunkCount <= new.pMidDurationChunkCountDiff{
@@ -79,7 +79,7 @@ struct ProcessConsts: Codable, Equatable{
 		
 		return true
 	}
-	
+	/*
 	//assumes the urls refers to a .json file
 	static func createFrom(fileURL: URL, shouldWrite: Bool = true) -> ProcessConsts!{
 		do{
@@ -137,9 +137,14 @@ struct ProcessConsts: Codable, Equatable{
 	static func createFromDefaultFile() -> ProcessConsts!{
 		return createFrom(fileURL: defaultFileURL)
 	}
+*/
+	
+	static let defaultResourceFileName = "ProgressBarSettings"
+	static let defaultResourceFileExtension = "json"
 	
 }
 
+/*
 extension ProcessConsts{
 	
 	init() {
@@ -154,4 +159,4 @@ extension ProcessConsts{
 	func copy() -> ProcessConsts{
 		return ProcessConsts(from: self)
 	}
-}
+}*/

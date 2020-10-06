@@ -8,15 +8,25 @@
 
 import Cocoa
 
-fileprivate struct App_download: Equatable{
-	var name: String
-	var version: String
-	var DownloadLink: String
-	var DownloadLinkAlternate: String!
-	var image: NSImage
+fileprivate struct AppDownloadManager: CodableDefaults, Codable, Equatable{
+	fileprivate struct AppDownload: Codable, Equatable{
+		var name: String
+		var version: String
+		var DownloadLink: String
+		var DownloadLinkAlternate: String!
+		var image: String!
+	}
+	
+	let downloads: [AppDownload]
+	
+	static let defaultResourceFileName = "AppDownloads"
+	static let defaultResourceFileExtension = "json"
 }
 
-public class DownloadAppViewController: ShadowViewController {
+
+public class DownloadAppViewController: ShadowViewController, ViewID {
+	
+	public let id: String = "DownloadAppViewController"
 
 	@IBOutlet weak var closeButton: NSButton!
 	
@@ -31,7 +41,7 @@ public class DownloadAppViewController: ShadowViewController {
 		
         spinner.startAnimation(self)
         
-		self.setTitleLabel(text: "Download a macOS installer")
+		self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "title"))
 		
 		self.showTitleLabel()
 		
@@ -40,20 +50,26 @@ public class DownloadAppViewController: ShadowViewController {
 		setOtherViews(respectTo: scroller)
 		
 		self.scroller.hasHorizontalScroller = false
-        
-		let apps: [App_download] = [
-			App_download(name: "macOS Catalina", version: "10.15.x", DownloadLink: "macappstores://itunes.apple.com/app/macos-catalina/id1466841314", DownloadLinkAlternate: nil, image: NSImage(named: "Catalina")!),
-			App_download(name: "macOS Mojave", version: "10.14.6", DownloadLink: "macappstores://itunes.apple.com/app/macos-mojave/id1398502828", DownloadLinkAlternate: nil, image: NSImage(named: "Mojave")!),
-			App_download(name: "macOS High Sierra", version: "10.13.6", DownloadLink: "macappstores://itunes.apple.com/app/macos-high-sierra/id1246284741", DownloadLinkAlternate: nil, image: NSImage(named: "High_Sierra")!),
-			App_download(name: "macOS Sierra", version: "10.12.6", DownloadLink: "macappstores://itunes.apple.com/app/macos-sierra/id1127487414", DownloadLinkAlternate: "http://updates-http.cdn-apple.com/2019/cert/061-39476-20191023-48f365f4-0015-4c41-9f44-39d3d2aca067/InstallOS.dmg", image: NSImage(named: "Sierra")!),
-			App_download(name: "Mac OS X El Capitan", version: "10.11.6", DownloadLink: "macappstores://itunes.apple.com/app/os-x-el-capitan/id1147835434", DownloadLinkAlternate: "http://updates-http.cdn-apple.com/2019/cert/061-41424-20191024-218af9ec-cf50-4516-9011-228c78eda3d2/InstallMacOSX.dmg", image: NSImage(named: "El_Capitan")!)
+		
+		/*
+		
+		let apps: [AppDownloadManager.AppDownload] = [
+			AppDownloadManager.AppDownload(name: "macOS Catalina", version: "10.15.x", DownloadLink: "macappstores://itunes.apple.com/app/macos-catalina/id1466841314", DownloadLinkAlternate: nil, image: "Catalina"),
+			AppDownloadManager.AppDownload(name: "macOS Mojave", version: "10.14.6", DownloadLink: "macappstores://itunes.apple.com/app/macos-mojave/id1398502828", DownloadLinkAlternate: nil, image: "Mojave"),
+			AppDownloadManager.AppDownload(name: "macOS High Sierra", version: "10.13.6", DownloadLink: "macappstores://itunes.apple.com/app/macos-high-sierra/id1246284741", DownloadLinkAlternate: nil, image: "High_Sierra"),
+			AppDownloadManager.AppDownload(name: "macOS Sierra", version: "10.12.6", DownloadLink: "macappstores://itunes.apple.com/app/macos-sierra/id1127487414", DownloadLinkAlternate: "http://updates-http.cdn-apple.com/2019/cert/061-39476-20191023-48f365f4-0015-4c41-9f44-39d3d2aca067/InstallOS.dmg", image: "Sierra"),
+			AppDownloadManager.AppDownload(name: "Mac OS X El Capitan", version: "10.11.6", DownloadLink: "macappstores://itunes.apple.com/app/os-x-el-capitan/id1147835434", DownloadLinkAlternate: "http://updates-http.cdn-apple.com/2019/cert/061-41424-20191024-218af9ec-cf50-4516-9011-228c78eda3d2/InstallMacOSX.dmg", image: "El_Capitan")
 			//this download is just a .pkg thing, not usable with tinu
 			/*,App_download(name: "Mac OS X Yosemite", version: "10.10.6", DownloadLink: "", DownloadLinkAlternate: "http://updates-http.cdn-apple.com/2019/cert/061-41343-20191023-02465f92-3ab5-4c92-bfe2-b725447a070d/InstallMacOSX.dmg", image: NSImage(named: "Yosemite")!)*/
 		]
 		
+		print(AppDownloadManager(downloads: apps).getEncoded()!)
+		*/
+		
+		let apps = CodableCreation<AppDownloadManager>.createFromDefaultFile()!.downloads
 		let segmentHeight: CGFloat = 100
 		let segmentOffset: CGFloat = 20
-		let segmentEdge:   CGFloat = 20
+		let segmentEdge:   CGFloat = 15
 		
 		plain = NSView(frame: CGRect(x: 0, y: 0, width: self.scroller.frame.width - 15, height: (segmentHeight + segmentOffset) * CGFloat(apps.count) + segmentOffset))
 		
@@ -80,9 +96,7 @@ public class DownloadAppViewController: ShadowViewController {
 		super.viewDidAppear()
 		if self.presenting == nil{
 		//if self.window != sharedWindow{
-			closeButton.stringValue = "Close"
-			closeButton.title = "Close"
-			closeButton.alternateTitle = "Close"
+			closeButton.title = TextManager.getViewString(context: self, stringID: "backButton")
 		}
 		
 		self.scroller.documentView = plain!
@@ -107,8 +121,9 @@ public class DownloadAppViewController: ShadowViewController {
 	}
 }
 
-fileprivate class DownloadAppItem: ShadowView{
-	public var associtaed: App_download!
+fileprivate class DownloadAppItem: ShadowView, ViewID{
+	let id: String = "DownloadAppItem"
+	public var associtaed: AppDownloadManager.AppDownload!
 	//public var isLast: Bool = false
 	
 	private var link: URL!
@@ -130,12 +145,12 @@ fileprivate class DownloadAppItem: ShadowView{
 		icon.imageScaling = .scaleProportionallyUpOrDown
 		icon.isEditable = false
 		
-		icon.image = associtaed.image
+		icon.image = NSImage(named: associtaed.image)!
 		
 		self.addSubview(icon)
 		
-		name.frame.size = NSSize(width: 250, height: 17)
-		name.frame.origin = NSPoint(x: icon.frame.origin.x + icon.frame.size.width + 5, y: icon.frame.origin.y + 30)
+		name.frame.size = NSSize(width: 250, height: 25)
+		name.frame.origin = NSPoint(x: icon.frame.origin.x + icon.frame.size.width + 5, y: icon.frame.origin.y + icon.frame.size.height - name.frame.size.height )
 		
 		name.isEditable = false
 		name.isSelectable = false
@@ -146,12 +161,13 @@ fileprivate class DownloadAppItem: ShadowView{
 		
 		name.stringValue = associtaed.name
 		
-		name.font = NSFont.systemFont(ofSize: NSFont.systemFontSize())
+		//name.font = NSFont.systemFont(ofSize: NSFont.systemFontSize())
+		name.font = NSFont.boldSystemFont(ofSize: 18)
 		
 		self.addSubview(name)
 		
 		version.frame.size = NSSize(width: 250, height: 17)
-		version.frame.origin = NSPoint(x: icon.frame.origin.x + icon.frame.size.width + 5, y: icon.frame.origin.y + 10)
+		version.frame.origin = NSPoint(x: name.frame.origin.x, y: name.frame.origin.y - version.frame.size.height - 5)
 		
 		version.isEditable = false
 		version.isSelectable = false
@@ -175,10 +191,10 @@ fileprivate class DownloadAppItem: ShadowView{
 		isAlternate = (isAlternate && (associtaed.DownloadLinkAlternate != nil)) || (associtaed.DownloadLink == "")
 		
 		if isAlternate{
-			downloadButton.title = "Download from Apple"
+			downloadButton.title = TextManager.getViewString(context: self, stringID: "downloadButtonApple")
 			link = URL(string: associtaed.DownloadLinkAlternate!)
 		}else{
-			downloadButton.title = "View in the App Store"
+			downloadButton.title = TextManager.getViewString(context: self, stringID: "downloadButtonAppStore")
 			link = URL(string: associtaed.DownloadLink)
 		}
 		
@@ -214,7 +230,8 @@ fileprivate class DownloadAppItem: ShadowView{
 	
 	@objc func downloadApp(_ sender: Any){
 		if link!.pathExtension == "dmg"{
-			if dialogCustomWarning(question: "Remeber to open the download", text: "The intaller file you are about to download will need to be opened after being downloaded in order to be usable with TINU", mainButtonText: "Continue", secondButtonText: "Cancel"){
+			//if dialogCustomWarning(question: "Remeber to open the download", text: "The intaller file you are about to download will need to be opened after being downloaded in order to be usable with TINU", mainButtonText: "Continue", secondButtonText: "Cancel"){
+			if dialogWithManager(self, name: "downloadDialog"){
 				return
 			}
 			

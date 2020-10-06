@@ -8,12 +8,12 @@
 
 import Cocoa
 
-enum InterfaceStyle : String {
+enum UIStyle : String {
 	case Dark, Light
 	
 	init() {
 		let type = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
-		self = InterfaceStyle(rawValue: type)!
+		self = UIStyle(rawValue: type)!
 	}
 }
 
@@ -23,9 +23,9 @@ extension NSView {
 			
 			if #available(OSX 10.14, *) {
 				return self.effectiveAppearance.name == NSAppearanceNameDarkAqua
-			}else{
-				return false
 			}
+			
+			return false
 			
 		}
 	}

@@ -8,15 +8,18 @@
 
 import Cocoa
 
-public class ContactsViewController: GenericViewController {
+public class ContactsViewController: GenericViewController, ViewID {
+	
+	public let id: String = "ContactsViewController"
+	
 	@IBOutlet weak var italianHackGroupLabel: NSTextField!
-	@IBOutlet weak var italianHackGroupLinkLabel: HyperTextField!
+	@IBOutlet weak var italianHackGroupLinkLabel: ExternalLinkTextField!
 	
     override public func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
 		
-		self.setTitleLabel(text: "TINU: Contact us")
+		self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "title"))
 		self.showTitleLabel()
 		
 		#if macOnlyMode

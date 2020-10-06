@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="dxr-Z3-LXy">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -36,19 +35,19 @@
                                                             <segue destination="UsW-sh-Xlf" kind="show" id="GfO-gk-L1j"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Source code on GitHub" id="q5g-xw-6GS" customClass="HyperMenuItem" customModule="EFI_Partition_Mounter" customModuleProvider="target">
+                                                    <menuItem title="Source code on GitHub" id="q5g-xw-6GS" customClass="ExternalLinkMenuItem" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/ITzTravelInTime/EFI-Partition-Mounter"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </menuItem>
-                                                    <menuItem title="Discussion (English)" id="4Yo-Kr-yIf" customClass="HyperMenuItem" customModule="EFI_Partition_Mounter" customModuleProvider="target">
+                                                    <menuItem title="Discussion (English)" id="4Yo-Kr-yIf" customClass="ExternalLinkMenuItem" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://www.insanelymac.com/forum/topic/335138-therers-a-new-efi-partition-mounter-tool-in-town/"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </menuItem>
-                                                    <menuItem title="Discussion (Italian)" id="P92-KG-xoa" customClass="HyperMenuItem" customModule="EFI_Partition_Mounter" customModuleProvider="target">
+                                                    <menuItem title="Discussion (Italian)" id="P92-KG-xoa" customClass="ExternalLinkMenuItem" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://www.insanelymac.com/forum/topic/335142-c%C3%A8-un-nuovo-tool-per-montare-la-partizione-efi-in-citt%C3%A0/"/>
@@ -62,13 +61,13 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Other Apps by Pietro Caruso" autoenablesItems="NO" id="2eq-C6-uKP">
                                                 <items>
-                                                    <menuItem title="VoodooTSCSync Configurator" id="HQy-72-bB2" customClass="HyperMenuItem" customModule="EFI_Partition_Mounter" customModuleProvider="target">
+                                                    <menuItem title="VoodooTSCSync Configurator" id="HQy-72-bB2" customClass="ExternalLinkMenuItem" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://www.insanelymac.com/forum/topic/323366-voodootscsync-configurator-create-a-custom-version-of-voodoo-tsc-sync/"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </menuItem>
-                                                    <menuItem title="TINU" id="BLi-eP-pQT" customClass="HyperMenuItem" customModule="EFI_Partition_Mounter" customModuleProvider="target">
+                                                    <menuItem title="TINU" id="BLi-eP-pQT" customClass="ExternalLinkMenuItem" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/ITzTravelInTime/TINU"/>
@@ -436,7 +435,7 @@
                                 <rect key="frame" x="0.0" y="67" width="620" height="247"/>
                                 <clipView key="contentView" id="cVi-Mn-ji8">
                                     <rect key="frame" x="1" y="1" width="618" height="245"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view translatesAutoresizingMaskIntoConstraints="NO" id="2o6-cc-xFb">
                                             <rect key="frame" x="0.0" y="0.0" width="618" height="230"/>
@@ -752,7 +751,7 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="2Hd-f3-zyI">
                                     <rect key="frame" x="1" y="1" width="531" height="300"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textView ambiguous="YES" importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="s9k-8p-gaE">
                                             <rect key="frame" x="0.0" y="0.0" width="531" height="300"/>
@@ -769,7 +768,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mp2-Gf-JXq" customClass="HyperTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
+                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mp2-Gf-JXq" customClass="ExternalLinkTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                 <rect key="frame" x="159" y="110" width="272" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="you can still find the license agreement here" id="Hi9-VL-fR0">
@@ -829,7 +828,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0BL-R4-OJh" customClass="HyperTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0BL-R4-OJh" customClass="ExternalLinkTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                 <rect key="frame" x="253" y="205" width="241" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Pietro Caruso (ITzTravelInTime)" id="Cka-ln-bas">
@@ -841,7 +840,7 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="href" value="http://www.insanelymac.com/forum/user/1390153-itztravelintime/"/>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="amC-7u-cHr" customClass="HyperTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="amC-7u-cHr" customClass="ExternalLinkTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                 <rect key="frame" x="253" y="180" width="241" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="piecaruso97@gmail.com" id="uIb-AF-pim">
@@ -862,7 +861,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hf4-0c-mhG" customClass="HyperTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hf4-0c-mhG" customClass="ExternalLinkTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                 <rect key="frame" x="253" y="155" width="241" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="ITzTravelInTime on GitHub" id="qFL-3h-9pj">
@@ -916,7 +915,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ajc-aF-W0F" customClass="HyperTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ajc-aF-W0F" customClass="ExternalLinkTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                 <rect key="frame" x="253" y="91" width="241" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Discussion on insanelymac.com" id="A4x-AV-bZk">
@@ -937,7 +936,7 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N1X-aH-DAM" customClass="HyperTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N1X-aH-DAM" customClass="ExternalLinkTextField" customModule="EFI_Partition_Mounter" customModuleProvider="target">
                                 <rect key="frame" x="253" y="66" width="241" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Discussion on insanelymac.com" id="WF0-IV-rwB">

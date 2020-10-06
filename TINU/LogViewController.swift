@@ -9,9 +9,9 @@
 import Cocoa
 
 //the view controller of the log window
-class LogViewController: GenericViewController, NSSharingServicePickerDelegate, NSSharingServiceDelegate {
-	
-    @IBOutlet var text: NSTextView!
+class LogViewController: GenericViewController, NSSharingServicePickerDelegate, NSSharingServiceDelegate, ViewID {
+	let id: String = "LogViewController"
+    @IBOutlet var content: NSTextView!
     @IBOutlet weak var scroller: NSScrollView!
     
     var timer: Timer!
@@ -22,7 +22,7 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate, 
 		self.view.superview?.wantsLayer = true
 		self.view.wantsLayer = true
 		
-		text.font = NSFont(name: "Menlo", size: 12)
+		content.font = NSFont(name: "Menlo", size: 12)
 		
 		/*
 		if !(sharedIsOnRecovery || simulateDisableShadows){
@@ -50,7 +50,7 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate, 
     override func viewDidAppear() {
         super.viewDidAppear()
 		
-		text.textColor = NSColor.textColor
+		content.textColor = NSColor.textColor
 		
         timer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(self.updateLog(_:)), userInfo: nil, repeats: true)
     }
@@ -67,13 +67,13 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate, 
     @objc func updateLog(_ sender: AnyObject){
         //print("Log updated")
         if let l = LogManager.readLog(){
-            text.text = l
+            content.text = l
         }
     }
     
     @objc public func copyLog(_ sender: Any) {
 		
-		let text = self.text.text as NSString
+		let text = self.content.text as NSString
 		
 		DispatchQueue.global(qos: .background).async {
 			
@@ -81,7 +81,8 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate, 
 			pasteBoard.clearContents()
 			pasteBoard.writeObjects([text])
 			
-			DispatchQueue.main.sync {
+			//DispatchQueue.main.sync {
+				/*
 				let notification = NSUserNotification()
 		
 				notification.identifier = "org.tinu.TINU_LOG_COPY"
@@ -97,7 +98,12 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate, 
 				notification.soundName = NSUserNotificationDefaultSoundName
 		
 				NSUserNotificationCenter.default.deliver(notification)
-			}
+				*/
+				
+				
+			//}
+			
+			let _ = NotificationsManager.sendWith(id: "copyLog", image: nil)
 		}
 		
 		print("Log copied to clipboard")
@@ -105,6 +111,7 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate, 
     }
     
     @objc public func saveLog(_ sender: Any) {
+		
 		let open = NSSavePanel()
 		open.isExtensionHidden = false
 		//open.showsHiddenFiles = true
@@ -123,22 +130,27 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate, 
 				}
 			}
 		}*/
-		
 		open.beginSheetModal(for: self.window, completionHandler: { response in
 			if response == NSModalResponseOK{
 				if let u = open.url?.path{
+					//read ui stuff just from the main thread
+					let text = self.content.text
+					DispatchQueue.global(qos: .userInteractive).async {
 					do{
 						
-						try self.text.text.write(toFile: u, atomically: true, encoding: .utf8)
+						try text.write(toFile: u, atomically: true, encoding: .utf8)
 						
 					}catch let error{
 						log(error.localizedDescription)
-						msgBoxWarning("Error while saving the log file", "There was an error while saving the log file: \n\n" + error.localizedDescription)
+						//msgBoxWarning("Error while saving the log file", "There was an error while saving the log file: \n\n" + error.localizedDescription)
+						msgboxWithManager(self, name: "saveError", parseList: ["{desc}" : error.localizedDescription])
+					}
 					}
 				}
 			}
 			
 			})
+		
 
     }
 	
@@ -151,7 +163,7 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate, 
 			
 			print("Share good")
 		
-			let service = NSSharingServicePicker(items: [text.attributedString()])
+			let service = NSSharingServicePicker(items: [content.attributedString()])
 			service.delegate = self
 			service.show(relativeTo: sen.bounds, of: sen, preferredEdge: .minY)
 			

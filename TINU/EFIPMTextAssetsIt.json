@@ -1,0 +1,44 @@
+{
+	"viewStrings" : {
+		"EFIPartitionItem" : {
+			"unmutable" : {
+				"mountButton" : "Apri partizione EFI",
+				"unmountButton" : "Espelli partizione EFI",
+				"openInfinderButton" : "Mostra nel Finder",
+				"editConfigButtonOther" : "Apri config.plist con ...",
+				"noPartitionsLabel" : "Nessuna partizione attiva trovata",
+				"downloadTitle" : "Vuoi scaricare \"${appName}\" ?",
+				"download" : "L'applicazione \"${appName}\" non è installata sul computer, vuoi scaricarla?",
+				"downloadYes" : "Si",
+				"downloadNo" : "No",
+				"impossibleTitle" : "Impossibile aprire \"config.plist\"!",
+				"impossible" : "Nessuna delle app installate è in grado di aprire \"config.plist\"",
+				"notEjectTitle" : "Impossible espellere \"${disk}\"!",
+				"notEject" : "C'è stato un'errore durante l'espulsione del disco \"${disk}\".\n\nInformazioni di diagnostica:\nErrore:${text}"
+			}
+		},
+		"EFIPartitionMounterViewController" : {
+			"unmutable" : {
+				"title" : "EFI Partition Mounter",
+				"closeButtonTINU" : "Chiudi",
+				"windowsMode" : "Modalità in finestra",
+				"toolbarMode" : "Modalità menù",
+				"noEFIPartitions" : "Nessuna partizione EFI Trovata",
+				"noEFIActionButton" : "Aggiorna",
+				"refreshButton" : "Aggiorna"
+			}
+		},
+		"template":{
+			"mutable" : {
+				"item" : {
+					"installer" :    "",
+					"installation" : ""
+				}
+			},
+			"unmutable" : {
+				"title" : ""
+			}
+		}
+	}
+	
+}

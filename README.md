@@ -9,6 +9,7 @@ Allows you to create easily a macOS install media without messing around with co
 
 # Features:
 - Simple-to-use UI that allows you to easily start the bootable macOS installer creation process.
+- Support for multiple languages (currenlt just italian, but more will be added in future updates)
 - It can work with every macOS installer app that has the createinstallmedia executable inside its resources folder (including also beta and newly released installers).
 - You can use any erasable volume that is at least 7 GB of size (if the volume's drive is not in GUID format, TINU will re-format it accordingly).
 - Can work with the Mac OS recovery system, so you can create a bootable macOS installer from the macOS installer itself or from the macOS recovery partition, and you can use TINU to install macOS, too.
@@ -18,10 +19,7 @@ Allows you to create easily a macOS install media without messing around with co
 - No need to use Disk Utility. TINU can format your drive or partition for you.
 - Integrated EFI partition mounter tool.
 - Works using the latest versions of macOS and will also support newer Mac installers out of the box without requiring an update.
-- Offers advanced features to customize your bootable macOS installer.
-
-Features that are planned for future versions:
-- Support for other languages, at least Italian.
+- Offers features to customize your bootable macOS installer.
 
  (To sugegst a new feature please contact us)
 

@@ -97,7 +97,7 @@ import Foundation
 				
 				//NSWorkspace.shared().unmountAndEjectDevice(atPath: id!)
 				
-				if dm.getDriveNameFromBSDID(withBSDID) == nil{
+				if dm.getMountPointFromPartitionBSDID(withBSDID) == nil{
 					log("EFI partition already unmounted: \(withBSDID)")
 					return true
 				}

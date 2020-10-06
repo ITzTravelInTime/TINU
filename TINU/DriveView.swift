@@ -9,8 +9,8 @@
 import Cocoa
 
 //this class is an UI object used to represent a drive or a insteller app that can be selected by the user
-class DriveView: ShadowView {
-	
+class DriveView: ShadowView, ViewID {
+	let id: String = "DriveView"
 	//items size for chose drive and chose app screens
 	
 	static let itemSize: NSSize = NSSize(width: 130, height: 155)
@@ -100,7 +100,7 @@ class DriveView: ShadowView {
         //self.borderColor = NSColor.red.cgColor
         //self.backgroundColor = NSColor.blue
 		
-		if (sharedIsOnRecovery || simulateDisableShadows){
+		if blockShadow{
 			self.canShadow = false
 			self.wantsLayer = true
 			self.layer?.cornerRadius = 15
@@ -206,28 +206,31 @@ class DriveView: ShadowView {
 		
 		if !isApp{
 			if sz == nil{
+				/*
 				if let s = part?.size{
 					sz = "Size: \(self.roundInt(number: s))"
 				}else{
 					sz = "Size: 0 Byte"
 				}
+				*/
+				
+				let s = (part != nil) ? part!.size : 0
+				sz = TextManager.getViewString(context: self, stringID: "sizePrefix") + "\(self.roundInt(number: s))"
+				
 			}
-		}else{
-			
 		}
 		
 		DispatchQueue.main.async {
-        //self.layer?.backgroundColor = NSColor.white.withAlphaComponent(0).cgColor
-		self.isSelected = false
+        	//self.layer?.backgroundColor = NSColor.white.withAlphaComponent(0).cgColor
+			self.isSelected = false
 		
 			self.appearance = sharedWindow.effectiveAppearance
 			self.updateLayer()
 			
-        if self.isEnabled{
-            if self.overlay != nil{
-                self.overlay.image = NSImage()
-                self.overlay.removeFromSuperview()
-                self.overlay = nil
+			if self.overlay != nil{
+				self.overlay.image = nil
+				self.overlay.removeFromSuperview()
+				self.overlay = nil
 			}
 			
 			if self.warnText != nil{
@@ -236,9 +239,12 @@ class DriveView: ShadowView {
 			}
 			
 			if self.warnImage != nil{
+				self.warnImage.image = nil
 				self.warnImage.removeFromSuperview()
 				self.warnImage = nil
 			}
+			
+        if self.isEnabled{
 				
 			if self.volume.superview == nil{
 				self.addSubview(self.volume)
@@ -246,13 +252,10 @@ class DriveView: ShadowView {
 			
 			
 			if self.isApp{
-				self.toolTip = "Path: " + self.applicationPath
+				//self.toolTip = "Path: " + self.applicationPath
+				self.setToolTipAndWarn("appNormal")
 			}else{
-				if self.part!.isDrive{
-					self.toolTip = "\(self.sz!)"
-				}else{
-					self.toolTip = "\(self.sz!)\n\nMount point: \(self.part!.mountPoint!)"
-				}
+				self.setToolTipAndWarn("driveNormal")
 			}
 			
         }else{
@@ -276,8 +279,12 @@ class DriveView: ShadowView {
 				self.warnText = NSTextField(frame: self.volume.frame)
 				self.warnText.font = self.volume.font
 				
+				/*
 				self.warnText.stringValue = "App too big: " + self.volume.stringValue
 				self.toolTip = "This macOS installer app is not usable bacause you choose a target drive which is too small\n\nPath: " + self.applicationPath
+				*/
+				
+				self.setToolTipAndWarn("appTooBig")
 				
 				self.warnText.isEditable = false
 				self.warnText.isBordered = false
@@ -305,11 +312,16 @@ class DriveView: ShadowView {
 				
 				if self.isApp{
 					if self.sz != nil{
+						/*
 						self.warnText.stringValue = "Damaged app: " + self.volume.stringValue
 						self.toolTip = "This macOS installer app is not usable bacause it's missing some internal elements, you need the full installer app \nwhich weights more than 5 gb\n\nPath: " + self.applicationPath
+						*/
+						self.setToolTipAndWarn("appDamaged")
 					}else{
+						/*
 						self.warnText.stringValue = "Error: " + self.volume.stringValue
-						self.toolTip = "This macOS installer app is not usable bacause there was an error while trying to calculate it's size\n\nPath: " + self.applicationPath
+						self.toolTip = "This macOS installer app is not usable bacause there was an error while trying to calculate it's size\n\nPath: " + self.applicationPath*/
+						self.setToolTipAndWarn("appError")
 					}
 				}
 				
@@ -327,16 +339,36 @@ class DriveView: ShadowView {
 			self.volume.removeFromSuperview()
 			
 			if !self.isApp{
+				/*
 				if sharedInstallMac{
 					self.toolTip = "This drive can't be used to\ninstall macOS in it now."
 				}else{
 					self.toolTip = "This drive can't be used to\ncreate a bootable macOS installer"
-				}
+				}*/
+				
+				self.toolTip = TextManager.getViewString(context: self, stringID: "driveNotUsableToolTip")
+				
 			}
         }
 		}
         
     }
+	
+	private func setToolTipAndWarn(_ id: String){
+		var list = ["{path}" : self.applicationPath, "{name}" : self.volume.stringValue]
+		
+		list["{mount}"] = (self.part != nil) ? ((self.part!.isDrive) ? "" : "\n\n" + self.part!.mountPoint) : ""
+		
+		list["{size}"] = (self.sz != nil) ? self.sz! : ""
+		
+		if self.warnText != nil{
+			self.warnText.stringValue = parse(messange: TextManager.getViewString(context: self, stringID: id + "Warn")!, keys: list)
+		}
+		
+		self.toolTip = parse(messange: TextManager.getViewString(context: self, stringID: id + "ToolTip")!, keys: list)
+		
+		Swift.print(self.toolTip!)
+	}
     
     public func setSelectedAspect(){
 		//DispatchQueue.main.async {
@@ -370,13 +402,12 @@ class DriveView: ShadowView {
 			suffix = "TB"
 		case 15:
 			suffix = "PB"
-		case 0, 1, 2:
-			suffix = "Byte"
 		default:
-			suffix = ""
+			suffix = "Byte"
+			n = number
 		}
 		
-		return "\(n)\(suffix)"
+		return "\(n) \(suffix)"
 	}
 	
 }

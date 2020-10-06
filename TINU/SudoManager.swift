@@ -16,7 +16,7 @@ import Cocoa
 
 fileprivate final class SudoManager{
 	
-	fileprivate let extra = " with administrator privileges"
+	private static let extra = " with administrator privileges"
 	
 	private var notification: NSUserNotification!
 	
@@ -25,8 +25,8 @@ fileprivate final class SudoManager{
 	
 	private func sendAuthNotification(){
 		#if TINU
-		if (CreateinstallmediaSmallManager.shared.sharedIsBusy) && !sharedIsOnRecovery{
-			
+		if (CreateinstallmediaSmallManager.shared.sharedIsBusy){
+			/*
 			notification = NSUserNotification()
 			
 			notification.title = "TINU: Please log in"
@@ -40,7 +40,11 @@ fileprivate final class SudoManager{
 			
 			notification.soundName = NSUserNotificationDefaultSoundName
 			NSUserNotificationCenter.default.deliver(notification)
+			*/
 			
+			retireAuthNotification()
+			notification = nil
+			notification = NotificationsManager.sendWith(id: "login", image: nil)
 		}
 		#endif
 	}
@@ -85,12 +89,11 @@ fileprivate final class SudoManager{
 				}
 			}
 			
-			let theScript = "do shell script \"echo $(\(ncmd))\"" + extra
+			let theScript = "do shell script \"echo $(\(ncmd))\"" + SudoManager.extra
 			
 			print(theScript)
 			
 			let appleScript = NSAppleScript(source: theScript)
-		
 		
 			let result = appleScript?.executeAndReturnError(nil)
 		
@@ -170,7 +173,7 @@ fileprivate final class SudoManager{
 		
 		pcmd += ""
 		
-		let baseCMD = "osascript -e \'do shell script \"\(pcmd)\"\(extra)\'"
+		let baseCMD = "osascript -e \'do shell script \"\(pcmd)\"\(SudoManager.extra)\'"
 		
 		print(baseCMD)
 		

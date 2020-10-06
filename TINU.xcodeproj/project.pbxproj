@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C600803E251BFAD000FE35E2 /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C600803D251BFAD000FE35E2 /* NotificationsManager.swift */; };
 		C60A461523A8571E009ADF4D /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60A461423A8571E009ADF4D /* ToDo.swift */; };
 		C60A461723A942E4009ADF4D /* SupportedEFIFolders.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60A461623A942E4009ADF4D /* SupportedEFIFolders.swift */; };
 		C60B646B20B4464200FEDAA6 /* EFIFolderReplcament.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60B646A20B4464200FEDAA6 /* EFIFolderReplcament.swift */; };
@@ -26,6 +27,10 @@
 		C615B817216B0B8900913BFF /* MediaCreationManagerErrorChecking.swift in Sources */ = {isa = PBXBuildFile; fileRef = C615B816216B0B8900913BFF /* MediaCreationManagerErrorChecking.swift */; };
 		C615B819216B0E9400913BFF /* MediaCreationManagerTimers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C615B818216B0E9400913BFF /* MediaCreationManagerTimers.swift */; };
 		C615B81B216B30D000913BFF /* MediaCreationManagerPostProcesses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C615B81A216B30D000913BFF /* MediaCreationManagerPostProcesses.swift */; };
+		C6188D96251306FC00BCBC51 /* AllertFunctionsWithTextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6188D95251306FC00BCBC51 /* AllertFunctionsWithTextManager.swift */; };
+		C6188D982513828E00BCBC51 /* AppDownloadsEn.json in Resources */ = {isa = PBXBuildFile; fileRef = C6188D972513828E00BCBC51 /* AppDownloadsEn.json */; };
+		C6188D9A2513DF3400BCBC51 /* ErrorDecodingMessangesIt.json in Resources */ = {isa = PBXBuildFile; fileRef = C6188D992513DF3400BCBC51 /* ErrorDecodingMessangesIt.json */; };
+		C6188D9C25157F8400BCBC51 /* LanguageSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6188D9B25157F8400BCBC51 /* LanguageSelection.swift */; };
 		C61A3654205DA3F400350BE9 /* DownloadAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61A3653205DA3F400350BE9 /* DownloadAppViewController.swift */; };
 		C61AACC1215B0EE6002D8F89 /* ShadowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61AACC0215B0EE6002D8F89 /* ShadowViewController.swift */; };
 		C61AE89420C2F16400229FEC /* OtherOptionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61AE89320C2F16400229FEC /* OtherOptionInfoViewController.swift */; };
@@ -52,12 +57,18 @@
 		C65AA61F1F4F497A00C43223 /* ClassExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65AA61E1F4F497A00C43223 /* ClassExtensions.swift */; };
 		C65AA6211F4F4C0400C43223 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65AA6201F4F4C0400C43223 /* InfoViewController.swift */; };
 		C65AA6241F4F4C3400C43223 /* ChoseDriveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65AA6221F4F4C3400C43223 /* ChoseDriveViewController.swift */; };
-		C65B5EFD1F7201D10061F1A3 /* DebugScript.sh in Resources */ = {isa = PBXBuildFile; fileRef = C65B5EFB1F71FAB10061F1A3 /* DebugScript.sh */; };
 		C65B5EFF1F72099F0061F1A3 /* ScriptsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B5EFE1F72099F0061F1A3 /* ScriptsManager.swift */; };
 		C65B5F031F720D680061F1A3 /* SudoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B5F021F720D680061F1A3 /* SudoManager.swift */; };
+		C660D1972529AEB30027FCA0 /* TextManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C660D1962529AEB30027FCA0 /* TextManagement.swift */; };
+		C660D1992529BB260027FCA0 /* EFIPMTextAssetsIt.json in Resources */ = {isa = PBXBuildFile; fileRef = C660D1982529BB260027FCA0 /* EFIPMTextAssetsIt.json */; };
+		C660D19C2529BB780027FCA0 /* EFIPMTextAssetsEn.json in Resources */ = {isa = PBXBuildFile; fileRef = C660D19B2529BB780027FCA0 /* EFIPMTextAssetsEn.json */; };
+		C660D19E2529F0A70027FCA0 /* EFIPartitionMounterTextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C660D19D2529F0A70027FCA0 /* EFIPartitionMounterTextManager.swift */; };
+		C660D1A0252C7A160027FCA0 /* ConfigMenuAppsEn.json in Resources */ = {isa = PBXBuildFile; fileRef = C660D19F252C7A160027FCA0 /* ConfigMenuAppsEn.json */; };
+		C660D1A2252C94860027FCA0 /* ConfigMenuAppsIt.json in Resources */ = {isa = PBXBuildFile; fileRef = C660D1A1252C94860027FCA0 /* ConfigMenuAppsIt.json */; };
 		C66411052077A80100454292 /* OtherWindowsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66411042077A80100454292 /* OtherWindowsControllers.swift */; };
 		C676D197215EB20E00E900E9 /* MediaCreationManagerMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676D196215EB20E00E900E9 /* MediaCreationManagerMain.swift */; };
-		C682BBE320FFB23600410370 /* OptionalOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C682BBE220FFB23600410370 /* OptionalOperations.swift */; };
+		C682BBE320FFB23600410370 /* Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C682BBE220FFB23600410370 /* Operations.swift */; };
+		C68C79F22505205A00BBDA37 /* TextAssetsIt.json in Resources */ = {isa = PBXBuildFile; fileRef = C68C79F12505205A00BBDA37 /* TextAssetsIt.json */; };
 		C691BFEE1F6DEEA800589EF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C691BFED1F6DEEA800589EF8 /* Assets.xcassets */; };
 		C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */; };
 		C691D6AB20655C700083D057 /* DriveDetectInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691D6AA20655C700083D057 /* DriveDetectInfoViewController.swift */; };
@@ -72,7 +83,9 @@
 		C6C1820D1FE7605300617DC2 /* ChooseSideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C1820C1FE7605300617DC2 /* ChooseSideViewController.swift */; };
 		C6C2EAA72030710A0033EF85 /* SettingsSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */; };
 		C6C8A8B1249E9C8A009C3D6E /* SIPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C8A8B0249E9C8A009C3D6E /* SIPManager.swift */; };
-		C6C8A8B3249EB2C2009C3D6E /* DebugScriptSudo.sh in Resources */ = {isa = PBXBuildFile; fileRef = C6C8A8B2249EB2C2009C3D6E /* DebugScriptSudo.sh */; };
+		C6CE80F42521C3FB00B28413 /* StringFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CE80F32521C3FB00B28413 /* StringFunctions.swift */; };
+		C6CE80F62521C46200B28413 /* AppBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CE80F52521C46200B28413 /* AppBanner.swift */; };
+		C6CE80F825245BA300B28413 /* ExternalLinkUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CE80F725245BA300B28413 /* ExternalLinkUI.swift */; };
 		C6D82A6A20D802E700A5B5BE /* OtherOptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D82A6920D802E700A5B5BE /* OtherOptionsObject.swift */; };
 		C6D82A6C20D80C7600A5B5BE /* OtherOptionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D82A6B20D80C7600A5B5BE /* OtherOptionsManager.swift */; };
 		C6D9EE59210AED4700019818 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D9EE58210AED4700019818 /* Reachability.swift */; };
@@ -89,9 +102,8 @@
 		DD7C7CC5235E26DC000CC2E0 /* DarkModeDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7C7CC4235E26DC000CC2E0 /* DarkModeDetection.swift */; };
 		DDA7FB601F96AE510029F4F2 /* RuntimeCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */; };
 		DDA7FB621F96B13F0029F4F2 /* GenericWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */; };
-		DDCC4ED51FB5C2A7007FBB6F /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCC4ED41FB5C2A7007FBB6F /* OptionsViewController.swift */; };
+		DDCC4ED51FB5C2A7007FBB6F /* OtherOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCC4ED41FB5C2A7007FBB6F /* OtherOptionsViewController.swift */; };
 		DDD038EB1FB7366400D22695 /* AdvancedOptionsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */; };
-		DDD038F21FB7AEC000D22695 /* BootFilesReplacementItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD038F11FB7AEC000D22695 /* BootFilesReplacementItem.swift */; };
 		DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */; };
 		DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDF14631F6730DA00953634 /* SharedVariables.swift */; };
 		DDF9A5692159A05800389F78 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF9A5682159A05800389F78 /* ShadowView.swift */; };
@@ -115,6 +127,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C600803D251BFAD000FE35E2 /* NotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsManager.swift; sourceTree = "<group>"; };
+		C605853025024D6500673F86 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main.strings; sourceTree = "<group>"; };
+		C605853125024D6500673F86 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = "../EFI Partition Mounter/EFI Partition Mounter/it.lproj/EFIPartitionMounterTool.strings"; sourceTree = "<group>"; };
 		C60A461423A8571E009ADF4D /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
 		C60A461623A942E4009ADF4D /* SupportedEFIFolders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedEFIFolders.swift; sourceTree = "<group>"; };
 		C60B646A20B4464200FEDAA6 /* EFIFolderReplcament.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EFIFolderReplcament.swift; sourceTree = "<group>"; };
@@ -134,6 +149,10 @@
 		C615B816216B0B8900913BFF /* MediaCreationManagerErrorChecking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCreationManagerErrorChecking.swift; sourceTree = "<group>"; };
 		C615B818216B0E9400913BFF /* MediaCreationManagerTimers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCreationManagerTimers.swift; sourceTree = "<group>"; };
 		C615B81A216B30D000913BFF /* MediaCreationManagerPostProcesses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCreationManagerPostProcesses.swift; sourceTree = "<group>"; };
+		C6188D95251306FC00BCBC51 /* AllertFunctionsWithTextManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllertFunctionsWithTextManager.swift; sourceTree = "<group>"; };
+		C6188D972513828E00BCBC51 /* AppDownloadsEn.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = AppDownloadsEn.json; sourceTree = "<group>"; };
+		C6188D992513DF3400BCBC51 /* ErrorDecodingMessangesIt.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ErrorDecodingMessangesIt.json; sourceTree = "<group>"; };
+		C6188D9B25157F8400BCBC51 /* LanguageSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSelection.swift; sourceTree = "<group>"; };
 		C61A3653205DA3F400350BE9 /* DownloadAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadAppViewController.swift; sourceTree = "<group>"; };
 		C61AACC0215B0EE6002D8F89 /* ShadowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowViewController.swift; sourceTree = "<group>"; };
 		C61AE89320C2F16400229FEC /* OtherOptionInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherOptionInfoViewController.swift; sourceTree = "<group>"; };
@@ -160,12 +179,18 @@
 		C65AA61E1F4F497A00C43223 /* ClassExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassExtensions.swift; sourceTree = "<group>"; };
 		C65AA6201F4F4C0400C43223 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		C65AA6221F4F4C3400C43223 /* ChoseDriveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoseDriveViewController.swift; sourceTree = "<group>"; };
-		C65B5EFB1F71FAB10061F1A3 /* DebugScript.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = DebugScript.sh; sourceTree = "<group>"; };
 		C65B5EFE1F72099F0061F1A3 /* ScriptsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptsManager.swift; sourceTree = "<group>"; };
 		C65B5F021F720D680061F1A3 /* SudoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudoManager.swift; sourceTree = "<group>"; };
+		C660D1962529AEB30027FCA0 /* TextManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextManagement.swift; sourceTree = "<group>"; };
+		C660D1982529BB260027FCA0 /* EFIPMTextAssetsIt.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = EFIPMTextAssetsIt.json; sourceTree = "<group>"; };
+		C660D19B2529BB780027FCA0 /* EFIPMTextAssetsEn.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = EFIPMTextAssetsEn.json; path = "EFI Partition Mounter/EFI Partition Mounter/EFIPMTextAssetsEn.json"; sourceTree = SOURCE_ROOT; };
+		C660D19D2529F0A70027FCA0 /* EFIPartitionMounterTextManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EFIPartitionMounterTextManager.swift; sourceTree = "<group>"; };
+		C660D19F252C7A160027FCA0 /* ConfigMenuAppsEn.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ConfigMenuAppsEn.json; sourceTree = "<group>"; };
+		C660D1A1252C94860027FCA0 /* ConfigMenuAppsIt.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ConfigMenuAppsIt.json; sourceTree = "<group>"; };
 		C66411042077A80100454292 /* OtherWindowsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherWindowsControllers.swift; sourceTree = "<group>"; };
 		C676D196215EB20E00E900E9 /* MediaCreationManagerMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCreationManagerMain.swift; sourceTree = "<group>"; };
-		C682BBE220FFB23600410370 /* OptionalOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalOperations.swift; sourceTree = "<group>"; };
+		C682BBE220FFB23600410370 /* Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operations.swift; sourceTree = "<group>"; };
+		C68C79F12505205A00BBDA37 /* TextAssetsIt.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TextAssetsIt.json; sourceTree = "<group>"; };
 		C691BFED1F6DEEA800589EF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingVariables.swift; sourceTree = "<group>"; };
 		C691D6AA20655C700083D057 /* DriveDetectInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveDetectInfoViewController.swift; sourceTree = "<group>"; };
@@ -180,7 +205,9 @@
 		C6C1820C1FE7605300617DC2 /* ChooseSideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSideViewController.swift; sourceTree = "<group>"; };
 		C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSectionItem.swift; sourceTree = "<group>"; };
 		C6C8A8B0249E9C8A009C3D6E /* SIPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIPManager.swift; sourceTree = "<group>"; };
-		C6C8A8B2249EB2C2009C3D6E /* DebugScriptSudo.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = DebugScriptSudo.sh; sourceTree = "<group>"; };
+		C6CE80F32521C3FB00B28413 /* StringFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFunctions.swift; sourceTree = "<group>"; };
+		C6CE80F52521C46200B28413 /* AppBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBanner.swift; sourceTree = "<group>"; };
+		C6CE80F725245BA300B28413 /* ExternalLinkUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalLinkUI.swift; sourceTree = "<group>"; };
 		C6D82A6920D802E700A5B5BE /* OtherOptionsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherOptionsObject.swift; sourceTree = "<group>"; };
 		C6D82A6B20D80C7600A5B5BE /* OtherOptionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherOptionsManager.swift; sourceTree = "<group>"; };
 		C6D9EE58210AED4700019818 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
@@ -204,9 +231,8 @@
 		DD7C7CC4235E26DC000CC2E0 /* DarkModeDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkModeDetection.swift; sourceTree = "<group>"; };
 		DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuntimeCode.swift; sourceTree = "<group>"; };
 		DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWindowController.swift; sourceTree = "<group>"; };
-		DDCC4ED41FB5C2A7007FBB6F /* OptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
+		DDCC4ED41FB5C2A7007FBB6F /* OtherOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherOptionsViewController.swift; sourceTree = "<group>"; };
 		DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedOptionsButton.swift; sourceTree = "<group>"; };
-		DDD038F11FB7AEC000D22695 /* BootFilesReplacementItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootFilesReplacementItem.swift; sourceTree = "<group>"; };
 		DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsViewController.swift; sourceTree = "<group>"; };
 		DDDF14631F6730DA00953634 /* SharedVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedVariables.swift; sourceTree = "<group>"; };
 		DDF9A5682159A05800389F78 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
@@ -237,19 +263,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C600803C251A910800FE35E2 /* Json */ = {
+			isa = PBXGroup;
+			children = (
+				C6188D972513828E00BCBC51 /* AppDownloadsEn.json */,
+				C6A3A36924FBAC3500CC8E37 /* ErrorDecodingMessangesEn.json */,
+				C6188D992513DF3400BCBC51 /* ErrorDecodingMessangesIt.json */,
+				C63F036124E40F5500F950B4 /* TextAssetsEn.json */,
+				C68C79F12505205A00BBDA37 /* TextAssetsIt.json */,
+				C63F035D24E1091400F950B4 /* ProgressBarSettings.json */,
+			);
+			name = Json;
+			sourceTree = "<group>";
+		};
 		C60C40C520CCAD9C00258574 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
 				C60C40BB20CCA2BB00258574 /* AppManager.swift */,
 				C60C40BF20CCA9DC00258574 /* CreationVariablesManager.swift */,
 				C6BEA10124A3A5AE008997CF /* DiagnosticsModeManager.swift */,
-				C6AD9344239A684D0004704C /* DiskutilListCodable.swift */,
 				C60C40C620CCAE6200258574 /* DrivesManager.swift */,
 				C6B74D0B20BA2A79001CAD4D /* EFIPartitionManager.swift */,
 				C6B74D0920B8E76A001CAD4D /* EFIFolderReplacementManager.swift */,
 				C6E32EA6218142EA006D4BEB /* FileAliasManager.swift */,
-				C6322573221C1883003A56D4 /* FilesystemObserver.swift */,
 				C60C40C120CCAA9900258574 /* InstallerAppManager.swift */,
+				C600803D251BFAD000FE35E2 /* NotificationsManager.swift */,
 				C615B811216AEF3F00913BFF /* MediaCreationManager */,
 				DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */,
 				C6D82A6B20D80C7600A5B5BE /* OtherOptionsManager.swift */,
@@ -299,7 +337,7 @@
 				C65AA6221F4F4C3400C43223 /* ChoseDriveViewController.swift */,
 				C64E56361F51D917007B8CEE /* ChoseAppViewController.swift */,
 				C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */,
-				DDCC4ED41FB5C2A7007FBB6F /* OptionsViewController.swift */,
+				DDCC4ED41FB5C2A7007FBB6F /* OtherOptionsViewController.swift */,
 				C61AE89320C2F16400229FEC /* OtherOptionInfoViewController.swift */,
 				C64E56381F51E79C007B8CEE /* ConfirmViewController.swift */,
 				C64E563A1F522854007B8CEE /* InstallingViewController.swift */,
@@ -318,7 +356,7 @@
 				C615B818216B0E9400913BFF /* MediaCreationManagerTimers.swift */,
 				C615B816216B0B8900913BFF /* MediaCreationManagerErrorChecking.swift */,
 				C615B81A216B30D000913BFF /* MediaCreationManagerPostProcesses.swift */,
-				C682BBE220FFB23600410370 /* OptionalOperations.swift */,
+				C682BBE220FFB23600410370 /* Operations.swift */,
 			);
 			name = MediaCreationManager;
 			sourceTree = "<group>";
@@ -337,10 +375,12 @@
 			children = (
 				C647B3AD211D18950024B9A1 /* EFIPartitionMounterTool.storyboard */,
 				C647B399211CF2C40024B9A1 /* EFIPartitionMounterModel.swift */,
+				C660D19D2529F0A70027FCA0 /* EFIPartitionMounterTextManager.swift */,
 				C647B395211CF2C40024B9A1 /* EFIPartitionMounterTypes.swift */,
 				C647B39A211CF2C40024B9A1 /* EFIPartitionMounterUIClasses.swift */,
 				C647B396211CF2C40024B9A1 /* EFIPartitionMounterViewController.swift */,
 				C647B397211CF2C40024B9A1 /* EFIPartitionMounterWindowController.swift */,
+				C660D19A2529BB3B0027FCA0 /* JSON */,
 			);
 			name = EFIPartitionMounterTool;
 			sourceTree = "<group>";
@@ -348,22 +388,52 @@
 		C6553A941F5F83DC0048965D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C6A3A36924FBAC3500CC8E37 /* ErrorDecodingMessangesEn.json */,
-				C63F036124E40F5500F950B4 /* TextAssetsEn.json */,
-				C63F035D24E1091400F950B4 /* ProgressBarSettings.json */,
 				C6553A921F5F83770048965D /* License.rtf */,
-				C65B5EFB1F71FAB10061F1A3 /* DebugScript.sh */,
-				C6C8A8B2249EB2C2009C3D6E /* DebugScriptSudo.sh */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		C6584CE4202B093400E7F8FE /* StringsFiles */ = {
+		C660D19A2529BB3B0027FCA0 /* JSON */ = {
 			isa = PBXGroup;
 			children = (
+				C660D1A1252C94860027FCA0 /* ConfigMenuAppsIt.json */,
+				C660D19F252C7A160027FCA0 /* ConfigMenuAppsEn.json */,
+				C660D1982529BB260027FCA0 /* EFIPMTextAssetsIt.json */,
+				C660D19B2529BB780027FCA0 /* EFIPMTextAssetsEn.json */,
 			);
-			name = StringsFiles;
-			path = ..;
+			name = JSON;
+			sourceTree = "<group>";
+		};
+		C6CE80F125219BA400B28413 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */,
+				C6409AC6226D35D200E63762 /* CopyrightLabel.swift */,
+				C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */,
+				C60B646A20B4464200FEDAA6 /* EFIFolderReplcament.swift */,
+				C6CE80F725245BA300B28413 /* ExternalLinkUI.swift */,
+				DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */,
+				DD5016051F993D4500FB1407 /* GenericViewController.swift */,
+				DD3AC14B1FBB974C00C71F53 /* OtherOptionCheckBox.swift */,
+				C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */,
+				C61AACC0215B0EE6002D8F89 /* ShadowViewController.swift */,
+				DDF9A5682159A05800389F78 /* ShadowView.swift */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		C6CE80F225219BE900B28413 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				C6AEE8FA24E41A49006135FB /* CodablesGeneric.swift */,
+				C6AD9344239A684D0004704C /* DiskutilListCodable.swift */,
+				C6322573221C1883003A56D4 /* FilesystemObserver.swift */,
+				C6D82A6920D802E700A5B5BE /* OtherOptionsObject.swift */,
+				C60D39AF1F5E136500D94834 /* Part.swift */,
+				C60A461623A942E4009ADF4D /* SupportedEFIFolders.swift */,
+				C660D1962529AEB30027FCA0 /* TextManagement.swift */,
+			);
+			name = Other;
 			sourceTree = "<group>";
 		};
 		C6DF04591F4F33C500D200B1 = {
@@ -398,7 +468,7 @@
 				C6DF04651F4F33C500D200B1 /* AppDelegate.swift */,
 				C60A461423A8571E009ADF4D /* ToDo.swift */,
 				C649CC8F211A4ECF00A6B47B /* Tools */,
-				C6584CE4202B093400E7F8FE /* StringsFiles */,
+				C600803C251A910800FE35E2 /* Json */,
 				C6553A941F5F83DC0048965D /* Resources */,
 				C60D39B51F5EB48000D94834 /* WindowsControllers */,
 				C60D39B71F5EB4C800D94834 /* ViewControllers */,
@@ -428,21 +498,8 @@
 		DD01EBEA1F71A73700C94D9B /* CustomClasses */ = {
 			isa = PBXGroup;
 			children = (
-				DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */,
-				DDD038F11FB7AEC000D22695 /* BootFilesReplacementItem.swift */,
-				C6AEE8FA24E41A49006135FB /* CodablesGeneric.swift */,
-				C6409AC6226D35D200E63762 /* CopyrightLabel.swift */,
-				C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */,
-				C60B646A20B4464200FEDAA6 /* EFIFolderReplcament.swift */,
-				DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */,
-				DD5016051F993D4500FB1407 /* GenericViewController.swift */,
-				DD3AC14B1FBB974C00C71F53 /* OtherOptionCheckBox.swift */,
-				C6D82A6920D802E700A5B5BE /* OtherOptionsObject.swift */,
-				C60D39AF1F5E136500D94834 /* Part.swift */,
-				C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */,
-				C61AACC0215B0EE6002D8F89 /* ShadowViewController.swift */,
-				DDF9A5682159A05800389F78 /* ShadowView.swift */,
-				C60A461623A942E4009ADF4D /* SupportedEFIFolders.swift */,
+				C6CE80F225219BE900B28413 /* Other */,
+				C6CE80F125219BA400B28413 /* UI */,
 			);
 			name = CustomClasses;
 			sourceTree = "<group>";
@@ -451,10 +508,14 @@
 			isa = PBXGroup;
 			children = (
 				C60B6C8220F80FCC0088B658 /* AllertFunctions.swift */,
+				C6188D95251306FC00BCBC51 /* AllertFunctionsWithTextManager.swift */,
+				C6CE80F52521C46200B28413 /* AppBanner.swift */,
 				C65AA61E1F4F497A00C43223 /* ClassExtensions.swift */,
 				DD7C7CC4235E26DC000CC2E0 /* DarkModeDetection.swift */,
+				C6188D9B25157F8400BCBC51 /* LanguageSelection.swift */,
 				DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */,
 				DDDF14631F6730DA00953634 /* SharedVariables.swift */,
+				C6CE80F32521C3FB00B28413 /* StringFunctions.swift */,
 				C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */,
 			);
 			name = SharedCode;
@@ -525,7 +586,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Pietro Caruso";
 				TargetAttributes = {
 					C6DF04611F4F33C500D200B1 = {
@@ -569,8 +630,10 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
+				it,
 			);
 			mainGroup = C6DF04591F4F33C500D200B1;
 			productRefGroup = C6DF04631F4F33C500D200B1 /* Products */;
@@ -589,12 +652,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C65B5EFD1F7201D10061F1A3 /* DebugScript.sh in Resources */,
 				C647B3AF211D18950024B9A1 /* EFIPartitionMounterTool.storyboard in Resources */,
+				C6188D9A2513DF3400BCBC51 /* ErrorDecodingMessangesIt.json in Resources */,
 				C6DF046D1F4F33C500D200B1 /* Main.storyboard in Resources */,
+				C660D1A2252C94860027FCA0 /* ConfigMenuAppsIt.json in Resources */,
+				C660D1A0252C7A160027FCA0 /* ConfigMenuAppsEn.json in Resources */,
+				C660D1992529BB260027FCA0 /* EFIPMTextAssetsIt.json in Resources */,
 				C63F036224E40F5500F950B4 /* TextAssetsEn.json in Resources */,
-				C6C8A8B3249EB2C2009C3D6E /* DebugScriptSudo.sh in Resources */,
 				C691BFEE1F6DEEA800589EF8 /* Assets.xcassets in Resources */,
+				C660D19C2529BB780027FCA0 /* EFIPMTextAssetsEn.json in Resources */,
+				C68C79F22505205A00BBDA37 /* TextAssetsIt.json in Resources */,
+				C6188D982513828E00BCBC51 /* AppDownloadsEn.json in Resources */,
 				C6A3A36A24FBAC3500CC8E37 /* ErrorDecodingMessangesEn.json in Resources */,
 				C6553A931F5F83770048965D /* License.rtf in Resources */,
 				C63F035E24E1091400F950B4 /* ProgressBarSettings.json in Resources */,
@@ -662,23 +730,24 @@
 			files = (
 				C621CFA71F4F6A6500CC6D5B /* MainWindowController.swift in Sources */,
 				C621CFAC1F4F7DF400CC6D5B /* DriveView.swift in Sources */,
-				DDD038F21FB7AEC000D22695 /* BootFilesReplacementItem.swift in Sources */,
 				C6BEA10224A3A5AE008997CF /* DiagnosticsModeManager.swift in Sources */,
 				C65AA61F1F4F497A00C43223 /* ClassExtensions.swift in Sources */,
 				C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */,
 				C615B815216AF04D00913BFF /* MediaCreationManagerFunctions.swift in Sources */,
 				C6D9EE59210AED4700019818 /* Reachability.swift in Sources */,
 				C64E56391F51E79C007B8CEE /* ConfirmViewController.swift in Sources */,
-				DDCC4ED51FB5C2A7007FBB6F /* OptionsViewController.swift in Sources */,
+				DDCC4ED51FB5C2A7007FBB6F /* OtherOptionsViewController.swift in Sources */,
 				C60C40BC20CCA2BB00258574 /* AppManager.swift in Sources */,
 				C65B5F031F720D680061F1A3 /* SudoManager.swift in Sources */,
 				C615B819216B0E9400913BFF /* MediaCreationManagerTimers.swift in Sources */,
-				C682BBE320FFB23600410370 /* OptionalOperations.swift in Sources */,
+				C682BBE320FFB23600410370 /* Operations.swift in Sources */,
 				DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */,
 				C60A461523A8571E009ADF4D /* ToDo.swift in Sources */,
 				C647B39C211CF2C40024B9A1 /* EFIPartitionMounterViewController.swift in Sources */,
+				C6CE80F825245BA300B28413 /* ExternalLinkUI.swift in Sources */,
 				C647B39B211CF2C40024B9A1 /* EFIPartitionMounterTypes.swift in Sources */,
 				C647B350211CE2C00024B9A1 /* ToolsBridge.swift in Sources */,
+				C660D19E2529F0A70027FCA0 /* EFIPartitionMounterTextManager.swift in Sources */,
 				C6C2EAA72030710A0033EF85 /* SettingsSectionItem.swift in Sources */,
 				C691D6AB20655C700083D057 /* DriveDetectInfoViewController.swift in Sources */,
 				C63DD0282265D921007944A5 /* TaskKillManager.swift in Sources */,
@@ -701,6 +770,7 @@
 				C6AD9345239A684D0004704C /* DiskutilListCodable.swift in Sources */,
 				C60D39B01F5E136500D94834 /* Part.swift in Sources */,
 				C6409AC7226D35D200E63762 /* CopyrightLabel.swift in Sources */,
+				C660D1972529AEB30027FCA0 /* TextManagement.swift in Sources */,
 				C60B646B20B4464200FEDAA6 /* EFIFolderReplcament.swift in Sources */,
 				C60C40C720CCAE6200258574 /* DrivesManager.swift in Sources */,
 				C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */,
@@ -718,16 +788,21 @@
 				DDF9A5692159A05800389F78 /* ShadowView.swift in Sources */,
 				C615B81B216B30D000913BFF /* MediaCreationManagerPostProcesses.swift in Sources */,
 				C647B39D211CF2C40024B9A1 /* EFIPartitionMounterWindowController.swift in Sources */,
+				C600803E251BFAD000FE35E2 /* NotificationsManager.swift in Sources */,
+				C6CE80F62521C46200B28413 /* AppBanner.swift in Sources */,
 				DD5016061F993D4500FB1407 /* GenericViewController.swift in Sources */,
 				C647B39F211CF2C40024B9A1 /* EFIPartitionMounterModel.swift in Sources */,
 				C6B74D0A20B8E76A001CAD4D /* EFIFolderReplacementManager.swift in Sources */,
 				C6B74D0C20BA2A79001CAD4D /* EFIPartitionManager.swift in Sources */,
 				DDA7FB621F96B13F0029F4F2 /* GenericWindowController.swift in Sources */,
 				C698B47E204CDAE5007B3CD8 /* MacrosReference.swift in Sources */,
+				C6CE80F42521C3FB00B28413 /* StringFunctions.swift in Sources */,
 				C676D197215EB20E00E900E9 /* MediaCreationManagerMain.swift in Sources */,
 				C647B3A0211CF2C40024B9A1 /* EFIPartitionMounterUIClasses.swift in Sources */,
 				DD3AC14C1FBB974C00C71F53 /* OtherOptionCheckBox.swift in Sources */,
 				C615B817216B0B8900913BFF /* MediaCreationManagerErrorChecking.swift in Sources */,
+				C6188D9C25157F8400BCBC51 /* LanguageSelection.swift in Sources */,
+				C6188D96251306FC00BCBC51 /* AllertFunctionsWithTextManager.swift in Sources */,
 				C64E563B1F522854007B8CEE /* InstallingViewController.swift in Sources */,
 				C61A3654205DA3F400350BE9 /* DownloadAppViewController.swift in Sources */,
 				C6C8A8B1249E9C8A009C3D6E /* SIPManager.swift in Sources */,
@@ -776,6 +851,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C647B3AE211D18950024B9A1 /* Base */,
+				C605853125024D6500673F86 /* it */,
 			);
 			name = EFIPartitionMounterTool.storyboard;
 			sourceTree = "<group>";
@@ -784,6 +860,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C6DF046C1F4F33C500D200B1 /* Base */,
+				C605853025024D6500673F86 /* it */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -795,6 +872,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -821,7 +899,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -854,6 +932,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -880,7 +959,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -914,7 +993,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9RSH5734GY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = TINU/Info.plist;
@@ -925,7 +1004,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG useEFIReplacement skipChooseCustomization TINU";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG useEFIReplacement skipChooseCustomization TINU sudoStartup";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = on;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -946,7 +1025,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9RSH5734GY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
