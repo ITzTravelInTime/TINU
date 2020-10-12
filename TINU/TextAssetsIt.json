@@ -119,7 +119,9 @@
 				"improperDialog" : "La cartella che hai scelto \"${path}\" non contiene il file \"${missing}\" che è richiesto, assicurati di aprire solo la cartella chiamata EFI e che essa contenga tutti i file necessari",
 				"alreadyChoosen" : "Hai già scelto una cartella EFI di ${bootloader}",
 				"buttonChoose" : "Apri Cartella ...",
-				"buttonRemoove" : "Cancella"
+				"buttonRemoove" : "Cancella",
+				"errorUnloadingTitle" : "Errore durante il reset delle impostazioni",
+				"errorUnloading" : "Non è stato possibile rimuovere la cartella EFI selezionata dalla memoria di TINU, si consiglia di chiudere e riaprire TINU per resettare la memoria dell'app"
 			}
 		},
 		"ChooseSideViewController":{
@@ -200,7 +202,11 @@
 				"invalidAppDialogTitle" : "App non utilizzabile",
 				"invalidAppDialog" : "L'app che hai scelto${fileName} non è utilizzabile perchè non è un'app di installazione di macOS oppure è un app di installazione danneggiata o non supportata.",
 				"invalidAliasDialogTitle" : "Impossibile usare alias",
-				"invalidAliasDialog" : "Il file hai scelto${fileName} non è utilizzabile perchè si tratta di un alias che non può essere interpretato."
+				"invalidAliasDialog" : "Il file hai scelto${fileName} non è utilizzabile perchè si tratta di un alias che non può essere interpretato.",
+				"errorOpeningTitle" : "Errore: nessun file selezionato!",
+				"errorOpening" : "Nessun file sembra essere stato selezionato, proabilmente questo è un'errore interno",
+				"errorPathTitle" : "Errore durante l'apertura del file",
+				"errorPath" : "Impossibile ottenere il persorco del file selezionato!"
 			}
 		},
 		"ConfirmViewController":{
@@ -369,6 +375,39 @@
 		"OtherOptionsInfoViewController" : {
 			"unmutable" : {
 				"infoPrefix" : "Info su: "
+			}
+		},
+		"InstallMediaCreationManager" : {
+			"mutable" : {
+				"stop" : {
+					"installer" :    "Vuoi davvero annullare il porcesso di creazione del supporto di installazione di macOS?",
+					"installation" : "Vuoi davvero annullare l'installazione di macOS?"
+				}
+				
+			},
+			"unmutable" : {
+				"stopTitle" : "Fermare il processo?",
+				"stop2" : "No",
+				"stop2Key" : "\r",
+				"stop1" : "Si",
+				"stop1Key" : ""
+			}
+		},
+		"TaskKillManager" : {
+			"unmutable" : {
+				"quitInstallerTitle" : "Chiudere il processo di creazione in corso?",
+				"quitInstaller" : "È stato rilevato un'altro processo di creazione di un supporto di installazione di macOS, bisogna chiuderlo per poter procedere, vuoi chiuderlo?",
+				"quitInstaller1" : "Si",
+				"quitInstaller1Key" : "\r",
+				"quitInstaller2" : "No",
+				"quitInstaller2Key" : "",
+				"quitTile" : "Chiudere \"${name}\"?",
+				"quit" : "TINU necessita che il programma \"${name}\" venga chiuso per poter continuare, vuoi chiuderlo?",
+				"quit1" : "Si",
+				"quit1Key" : "\r",
+				"quit2" : "No",
+				"quit2Key" : ""
+				
 			}
 		},
 		"template":{

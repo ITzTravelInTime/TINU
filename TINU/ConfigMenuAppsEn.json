@@ -6,7 +6,7 @@
 			"installedAppName" : "Clover Configurator"
 		},
 		{
-			"name" : "OpenCore Configurator",
+			"name" : "OpenCore Configurator (May break your config.plist)",
 			"download" : "https://mackie100projects.altervista.org/download-opencore-configurator/",
 			"installedAppName" : "OpenCore Configurator"
 		},
@@ -16,9 +16,29 @@
 			"installedAppName" : "Xcode"
 		},
 		{
-			"name" : "BBEdit",
+			"name" : "BBEdit (Contains in-app purchases)",
 			"download" : "macappstores:\/\/itunes.apple.com/app/bbedit/id404009241?mt=12",
 			"installedAppName" : "BBEdit"
+		},
+		{
+			"name" : "PlistEdit Pro (May require a paid license)",
+			"download" : "https://www.fatcatsoftware.com/plisteditpro/",
+			"installedAppName" : "PlistEdit Pro"
+		},
+		{
+			"name" : "Separator",
+			"download" : "",
+			"installedAppName" : ""
+		},
+		{
+			"name" : "Get ProperTree",
+			"download" : "https://github.com/corpnewt/propertree",
+			"installedAppName" : "{openLink}"
+		},
+		{
+			"name" : "Separator",
+			"download" : "",
+			"installedAppName" : ""
 		},
 		{
 			"name" : "Other app ...",

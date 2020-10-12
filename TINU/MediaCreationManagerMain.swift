@@ -10,7 +10,9 @@ import Cocoa
 
 public typealias IMCM = InstallMediaCreationManager
 
-public final class InstallMediaCreationManager{
+public final class InstallMediaCreationManager: ViewID{
+	
+	public let id: String = "InstallMediaCreationManager"
 	
 	static var cpc: ProcessConsts = CodableCreation<ProcessConsts>.createFromDefaultFile(false)!
 	
@@ -131,7 +133,7 @@ public final class InstallMediaCreationManager{
 	}
 	
 	//asks if the suer wants to stop the process
-	func stopWithAsk() -> Bool!{
+	func stopWithAsk() -> Bool!{/*
 		var dTitle = "Stop the bootable macOS installer creation?"
 		var text = "Do you want to cancel the bootable macOS installer cration process?"
 		
@@ -144,7 +146,15 @@ public final class InstallMediaCreationManager{
 			return stop(mustStop: true)
 		}else{
 			return nil
+		}*/
+		
+		if dialogGenericWithManagerBool(self, name: "stop", parseList: nil, style: .informational, icon: nil){
+			return stop(mustStop: true)
+		}else{
+			return nil
 		}
+		
+		
 	}
 	
 	public func setActivityLabelText(_ text: String){

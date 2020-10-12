@@ -146,12 +146,18 @@ class ChoseAppViewController: GenericViewController, ViewID {
 				}
 				
 				if open.urls.isEmpty{
-					msgBoxWarning("Error while opening the file", "No files choosen")
+					//msgBoxWarning("Error: no files chosen!", "No files seems to have been chosen , proably this is an internal error")
+					
+					msgboxWithManager(self, name: "errorOpening")
+					
 					continue
 				}
 				
 				guard var path = open.urls.first?.path else {
-					msgBoxWarning("Error while opening the file", "Impossible to obtain the file's location")
+					//msgBoxWarning("Error while opening the file's path", "Impossible to obtain the file's location for some reason")
+					
+					msgboxWithManager(self, name: "errorPath")
+					
 					continue
 				}
 				

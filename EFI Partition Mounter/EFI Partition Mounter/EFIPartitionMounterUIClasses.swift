@@ -17,36 +17,28 @@ public class EFIPartitionToolInterface{
 		
 		public let id: String = "EFIPartitionItem"
 		
-		public let tileHeight: CGFloat = 60
+		public let titleLabel = NSTextField()
 		
-		let titleLabel = NSTextField()
-		let placeHolderLabel = NSTextField()
+		private let placeHolderLabel = NSTextField()
+		private let mountButton = NSButton()
+		private let unmountButton = NSButton()
+		private let editOtherConfigButton = NSButton()
+		private var configOpenMenu: NSMenu = NSMenu()
+		private let showInFinderButton = NSButton()
+		private let ejectButton = NSButton()
+		private let coverView = NSView()
+		private let spinner = NSProgressIndicator()
 		
-		let mountButton = NSButton()
-		let unmountButton = NSButton()
-		
-		let editOtherConfigButton = NSButton()
-		
-		var configOpenMenu: NSMenu = NSMenu()
-		
-		let showInFinderButton = NSButton()
-		let ejectButton = NSButton()
-		let coverView = NSView()
-		
-		let spinner = NSProgressIndicator()
 		var isMounted = false
-		
 		var configType: EFIPartitionToolTypes.ConfigLocations! = .cloverConfigLocation
-		
 		var isEjectable = false
-		
 		var bsdid: String = ""
-		
 		var partitions: [PartitionItem] = []
-		
 		var isBar = false
 		
-		var alreadyDrwn = false
+		public let tileHeight: CGFloat = 60
+		
+		private var alreadyDrwn = false
 		
 		public override func draw(_ dirtyRect: NSRect) {
 			super.draw(dirtyRect)
@@ -137,23 +129,30 @@ public class EFIPartitionToolInterface{
 			editOtherConfigButton.font = NSFont.systemFont(ofSize: 13)
 			editOtherConfigButton.isContinuous = true
 			editOtherConfigButton.target = self
-			//editOtherConfigButton.action = #selector(EFIPartitionItem.editConfigOther(_:))
 			
 			editOtherConfigButton.action = #selector(EFIPartitionItem.openConfigMenu(_:))
 			
 			self.addSubview(editOtherConfigButton)
 			
-			configOpenMenu = NSMenu()//(title: EFIPMTextManager.getViewString(context: self, stringID: "configMenuTitle"))
+			configOpenMenu = NSMenu()
 			
 			for c in 0..<appMenu.list.count{
-				let itm = NSMenuItem()//NSMenuItem(title: appMenu.list[c].name, action: #selector(editConfigGeneric(_:)), keyEquivalent: "")
-				itm.title = appMenu.list[c].name
-				itm.tag = c
-				itm.isEnabled = true
-				itm.isHidden = false
-				itm.target = self
-				itm.action = #selector(editConfigGeneric(_:))
+				let name = appMenu.list[c].name
 				
+				var itm: NSMenuItem = NSMenuItem()
+				
+				if name == "Separator"{
+					itm = NSMenuItem.separator()
+					itm.isEnabled = false
+				}else{
+					itm.title = name
+					itm.tag = c
+					itm.isEnabled = true
+					itm.isHidden = false
+					itm.target = self
+					itm.action = #selector(editConfigGeneric(_:))
+				}
+					
 				configOpenMenu.insertItem(itm, at: c)
 			}
 			
@@ -229,11 +228,6 @@ public class EFIPartitionToolInterface{
 				
 				distance = 0
 				
-				/*
-				if partCount < 3{
-				distance = (tileWidth + margin) / CGFloat(partCount)
-				}*/
-				
 				for partition in partitions{
 					partition.frame.size = CGSize(width: tileWidth, height: tileHeight)
 					
@@ -254,17 +248,6 @@ public class EFIPartitionToolInterface{
 				}
 				
 			}
-			
-			/*
-			for c in self.subviews{
-			if let l = c as? NSTextField{
-			l.drawsBackground = true
-			(l as NSView).backgroundColor = (l.superview! as NSView).backgroundColor
-			}
-			
-			//c.backgroundColor = .red
-			}*/
-			
 			
 			alreadyDrwn.toggle()
 			
@@ -329,42 +312,20 @@ public class EFIPartitionToolInterface{
 		
 		#if !macOnlyMode
 		
-		@objc private func editConfigOther(_ sender: Any){
+		@objc private func openConfigMenu(_ sender: Any){
 			
 			if configType == nil{
 				return
 			}
 			
-			
-			DispatchQueue.global(qos: .background).async{
-				guard let mountPoint = dm.getMountPointFromPartitionBSDID(self.bsdid) else { return }
-				
-				var configLocation = mountPoint
-				
-				for loc in EFIPartitionToolTypes.ConfigLocations.allCases{
-					if !FileManager.default.fileExists(atPath: mountPoint + loc.rawValue){ continue }
-					
-					configLocation += loc.rawValue
-					break
-				}
-				
-				DispatchQueue.main.sync{
-						
-					if NSWorkspace.shared().openFile(configLocation){ return }
-						
-					//msgBoxWarning("Impossible to open \"config.plist\"!", "Impossible to find an app to open the \"config.plist\" file!")
-					
-					msgboxWithManagerGeneric(EFIPMTextManager, self, name: "impossible", parseList: nil, style: .warning, icon: IconsManager.shared.warningIcon)
-				}
-			}
-			
-		}
-		
-		@objc private func openConfigMenu(_ sender: Any){
 			configOpenMenu.popUp(positioning: nil, at: editOtherConfigButton.frame.origin, in: self)
 		}
 		
 		@objc private func editConfigGeneric(_ sender: Any){
+			
+			if configType == nil{
+				return
+			}
 			
 			guard let sen = sender as? NSMenuItem else { return }
 			let target = sen.tag
@@ -380,21 +341,23 @@ public class EFIPartitionToolInterface{
 				
 				DispatchQueue.main.sync{
 				
-					if item.installedAppName.isEmpty{
-						
+					switch item.installedAppName{
+					case "":
 						if NSWorkspace.shared().openFile(configLocation){ return }
 						
 						msgboxWithManagerGeneric(EFIPMTextManager, self, name: "impossible", parseList: nil, style: .warning, icon: IconsManager.shared.warningIcon)
-						
-					}else{
-						
+						break
+					case "{openLink}" :
+						NSWorkspace.shared().open(URL(string: item.download)!)
+						break
+					default:
 						if NSWorkspace.shared().openFile(configLocation, withApplication: item.installedAppName){ return }
-				
-						let list = ["{appName}" : item.name]
+						
+						let list = ["{appName}" : item.installedAppName]
 						if dialogWithManagerGeneric(EFIPMTextManager as TextManagerGet, self, name: "download", parseList: list){
 							NSWorkspace.shared().open(URL(string: item.download)!)
 						}
-						
+						break
 					}
 				
 				}

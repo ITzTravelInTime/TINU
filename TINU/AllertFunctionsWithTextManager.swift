@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pietro Caruso. All rights reserved.
 //
 
-import AppKit
+import Cocoa
 
 public func msgboxWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlertStyle = NSAlertStyle.warning, icon: NSImage? = IconsManager.shared.warningIcon){
 	var title = manager.getViewString(context: handle, stringID: name + "Title")

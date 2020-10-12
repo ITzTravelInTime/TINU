@@ -8,7 +8,10 @@
 
 import Cocoa
 
-public final class TaskKillManager{
+public final class TaskKillManager: ViewID{
+	
+	public let id: String = "TaskKillManager"
+	private static let ref = TaskKillManager()
 	
 	private class func checkPid(pid: inout String?, name: String) -> Bool!{
 		
@@ -149,28 +152,30 @@ public final class TaskKillManager{
 	
 	class func terminateProcessWithAsk(name: String) -> Bool!{
 		
-		if let pid = self.getPid(name: name){
+		guard let pid = self.getPid(name: name) else {
+			return true
+		}
+		
+		var answer: Bool!
+		
+		DispatchQueue.main.sync {
 			
-			var answer = false
-			
-			DispatchQueue.main.sync {
-				
-				#if TINU
-				if name == "createinstallmedia"{
-					answer = !dialogYesNoWarning(question: "Quit the other installer creation?", text: "TINU needs to close the installer creation which is currently running in order to continue, do you want to close it?\n\nIf yes, you will need to enter your credentials")
-				}else{
-					answer = !dialogYesNoWarning(question: "Close \"\(name)\"?", text: "TINU needs to close \"\(name)\" in order to continue, do you want to close it?\n\nIf yes, you will need to enter your credentials")
-				}
-				#else
-					answer = !dialogYesNoWarning(question: "Close \"\(name)\"?", text: Bundle.main.name! + " needs to close \"\(name)\" in order to continue, do you want to close it?\n\nIf yes, you will need to enter your credentials")
-				#endif
+			#if TINU
+			if name == "createinstallmedia"{
+				//answer = !dialogYesNoWarning(question: "Quit the other installer creation?", text: "TINU needs to close the installer creation which is currently running in order to continue, do you want to close it?\n\nIf yes, you will need to enter your credentials")
+				answer = dialogGenericWithManagerBool(ref, name: "quitInstaller")
 			}
+			#endif
 			
-			return answer ? terminateProcessPidCheck(pid: pid, name: name) : nil
+			if answer == nil{
+			//answer = !dialogYesNoWarning(question: "Close \"\(name)\"?", text: "TINU needs to close \"\(name)\" in order to continue, do you want to close it?\n\nIf yes, you will need to enter your credentials")
+				
+				answer = dialogGenericWithManagerBool(ref, name: "stop", parseList: ["{name}": name])
+			}
 			
 		}
 		
-		return true
+		return answer ? terminateProcessPidCheck(pid: pid, name: name) : nil
 		
 	}
 	

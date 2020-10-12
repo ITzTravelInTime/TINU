@@ -124,7 +124,21 @@ class ConfirmViewController: GenericViewController, ViewID {
 			advancedOptionsButton.stringValue = TextManager.getViewString(context: self, stringID: "optionsButton")
 			
 			if drive{
+				
 				driveImage.image = IconsManager.shared.removableDiskIcon
+				
+				var property = "Ejectable"
+				
+				if #available(OSX 10.12, *){
+					property = "RemovableMediaOrExternalDevice"
+				}
+				
+				if let i = dm.getDevicePropertyInfoBoolNew(dm.getDriveBSDIDFromVolumeBSDID(volumeID: cvm.shared.currentPart.bsdName), propertyName: property) {
+					if !i{
+						driveImage.image = IconsManager.shared.internalDiskIcon
+					}
+				}
+				
 				driveName.stringValue = dm.getCurrentDriveName()!
 				self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "titleDrive"))
 			}else{

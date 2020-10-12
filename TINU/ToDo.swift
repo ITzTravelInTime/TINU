@@ -24,14 +24,12 @@
 
 /*TODO but with less priority:
 
--reimplement efi partition mounter's back end using codable classes
+-reimplement efi partition mounter's back end using codable classes (Work in progress)
 
 -download installer app window resizable
--installer app download background dark
+-installer app download background dark in dark mode
 
 -write translation guidelines and how to translate to a new language
-
--put all the important ui strings into the textmanager json file (almost done)
 
 -fix crash recovery mode sudo manager
 -fix volumes detection in recovery
@@ -39,7 +37,6 @@
 -it's better to no longer mention directly hackintosh and hackintoshing in the tool, since it can be couse of possible problems maybe?
 
 -show license just once as a dialog-ish window on the first usage of the app, maybe it's better just to have a disclamener rather than the license, since that is related to the distribution of the app
--not always prompt for mackie100 tools into the efi partition mounter (find alternastives or let the use choose)
 
 -optimize efi partition mounter for menu usage (not a lot of priority)
 
@@ -47,7 +44,7 @@
 
 -show all mounted volumes in the drive detection but don't make them usable if they can't be used, and show a no go sign like with installer apps
 
--send notitifcation if the tinu version is not up to date (use a plist file containing the reference link and the reference information to get)
+-send notitifcation if the tinu version is not up to date (use a json file containing the reference link and the reference information to get)
 
 -initial screen more like a home menu with more features ready to use + help section in this new home screen (which in cludes con tact us and help info and faqs)
 

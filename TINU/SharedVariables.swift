@@ -6,7 +6,7 @@
 //  Copyright © 2017 Pietro Caruso. All rights reserved.
 //
 
-import AppKit
+import Cocoa
 
 //REQUIRED TO LET THE APP TO WORK PROPERLY
 //here there are all the variables that are accessible in all the app to determinate the status of the app and what it is doing

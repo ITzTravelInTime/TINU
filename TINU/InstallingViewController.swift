@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import SecurityFoundation
 
 class InstallingViewController: GenericViewController, ViewID{
 	let id: String = "InstallingViewController"

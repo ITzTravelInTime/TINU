@@ -33,10 +33,21 @@ import Foundation
 				
                 var text: String!
 				
-				if #available(OSX 10.13.6, *){
-					text = getOutWithSudo(cmd: "diskutil mount \(withBSDID)")
+				let mountCMD = "diskutil mount \(withBSDID)"
+				
+				if #available(OSX 10.13.6, *), !sharedIsReallyOnRecovery{
+						if let res = runCommandWithSudo(cmd: "/bin/sh", args: ["-c", mountCMD]){
+						
+							text = ""
+						
+							for i in res.output{
+								text += i + "\n"
+							}
+						}else{
+							text = getOutWithSudo(cmd: mountCMD)
+						}
 				}else{
-					text = getOut(cmd: "diskutil mount \(withBSDID)")
+					text = getOut(cmd: mountCMD)
 				}
 				
 				print(text)
@@ -44,8 +55,6 @@ import Foundation
                 if text == nil{
                     return false
                 }
-                
-                
 				
 				res = (text.contains("mounted") && (text.contains("Volume EFI on") || text.contains("Volume (null) on") || (text.contains("Volume ") && text.contains("on")))) || (text.isEmpty)
 				

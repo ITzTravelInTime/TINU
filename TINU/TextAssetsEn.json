@@ -119,7 +119,9 @@
 				"improperDialog" : "The folder you selected \"${path}\" does not contain the required element \"${missing}\", make sure to open just the folder named EFI and that it cointains all the needed elements",
 				"alreadyChoosen" : "You have already choosen a ${bootloader} EFI folder",
 				"buttonChoose" : "Chose Folder ...",
-				"buttonRemoove" : "Remoove"
+				"buttonRemoove" : "Remoove",
+				"errorUnloadingTitle" : "Error while restoring default settings",
+				"errorUnloading" : "Error durning the cleanup of TINU's Stored EFI folder memory, please close and then re-open the app to clean this memory."
 			}
 		},
 		"ChooseSideViewController":{
@@ -199,7 +201,11 @@
 				"invalidAppDialogTitle" : "Unusable app",
 				"invalidAppDialog" : "The app you chose${fileName} is not usable because it isn't a macOS installer or is a damaged or unsupported macOS installer.",
 				"invalidAliasDialogTitle" : "Bad alias",
-				"invalidAliasDialog" : "The file you chose${fileName} is not usable because it's a Finder Alias that can't be intepreted."
+				"invalidAliasDialog" : "The file you chose${fileName} is not usable because it's a Finder Alias that can't be intepreted.",
+				"errorOpeningTitle" : "Error: no files chosen!",
+				"errorOpening" : "No files seems to have been chosen , proably this is an internal error",
+				"errorPathTitle" : "Error while opening the file's path",
+				"errorPath" : "Impossible to obtain the file's location for some reason"
 			}
 		},
 		"ConfirmViewController":{
@@ -368,6 +374,41 @@
 		"OtherOptionsInfoViewController" : {
 			"unmutable" : {
 				"infoPrefix" : "Info about: "
+			}
+		},
+		"InstallMediaCreationManager" : {
+			"mutable" : {
+				"stopTitle" : {
+					"installer" :    "Stop the bootable macOS installer creation?",
+					"installation" : "Stop the macOS installation?"
+				},
+				"stop" : {
+					"installer" :    "Do you want to cancel the bootable macOS installer cration process?",
+					"installation" : "Do you want to stop the macOS installation process?"
+				}
+				
+			},
+			"unmutable" : {
+				"stop2" : "Don't stop",
+				"stop2Key" : "\r",
+				"stop1" : "Stop",
+				"stop1Key" : ""
+			}
+		},
+		"TaskKillManager":{
+			"unmutable" : {
+				"quitInstallerTitle" : "Do you want to close the other installer creation?",
+				"quitInstaller" : "Another macOS installer creation process was detected, it needs to be closed in order to continue, do you want to close it?",
+				"quitInstaller1" : "Yes",
+				"quitInstaller1Key" : "\r",
+				"quitInstaller2" : "No",
+				"quitInstaller2Key" : "",
+				"quitTile" : "Close \"${name}\"?",
+				"quit" : "TINU needs to close \"${name}\" in order to continue, do you want to close it?",
+				"quit1" : "Yes",
+				"quit1Key" : "\r",
+				"quit2" : "No",
+				"quit2Key" : ""
 			}
 		},
 		"template":{

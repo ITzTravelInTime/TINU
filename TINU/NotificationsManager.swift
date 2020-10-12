@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pietro Caruso. All rights reserved.
 //
 
-import AppKit
+import Cocoa
 
 public final class NotificationsManager: ViewID{
 	public let id: String = "NotificationsManager"

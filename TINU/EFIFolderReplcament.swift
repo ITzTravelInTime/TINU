@@ -212,7 +212,10 @@ public class EFIReplacementView: NSView, ViewID{
 				DispatchQueue.main.async {
 					
 					//is this really usefoul or needed? can this be batter?
-					msgBoxWarning("TINU: Error while unloading the EFI folder", "There was an error while unloading the stored efi foleer from the program memory")
+					//msgBoxWarning("TINU: Error while unloading the EFI folder", "There was an error while unloading the stored efi foleer from the program memory")
+					
+					msgboxWithManager(self, name: "errorUnloading")
+					
 				}
 			}else{
 				DispatchQueue.main.async {

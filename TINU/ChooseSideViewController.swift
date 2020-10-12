@@ -82,7 +82,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		//ui setup
 		
 		//print(TextManager!)
-		print(CodableCreation<TINUTextsManagerStruct>.getEncoded(TextManager!)!)
+		//print(CodableCreation<TINUTextsManagerStruct>.getEncoded(TextManager!)!)
 		
 		createUSBButton.upperImage.image = IconsManager.shared.removableDiskIcon //NSImage(named: "Removable")
 		createUSBButton.upperTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstaller")//"Create a bootable\nmacOS installer"

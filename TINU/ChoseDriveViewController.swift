@@ -153,11 +153,28 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 			prt.size = d.Size
 			
 			log("        Item display name is: \(drivei.volume.stringValue)")
+			
+			drivei.image.image = nil
+			
 			if !prt.isDrive{
 				if item!.isMounted(){
 					drivei.image.image = NSWorkspace.shared().icon(forFile: item.MountPoint!)
 				}
 			}else{
+				var property = "Ejectable"
+				
+				if #available(OSX 10.12, *){
+					property = "RemovableMediaOrExternalDevice"
+				}
+				
+				if let i = dm.getDevicePropertyInfoBoolNew(prt.bsdName, propertyName: property) {
+					if !i{
+						drivei.image.image = IconsManager.shared.internalDiskIcon
+					}
+				}
+			}
+			
+			if drivei.image.image == nil{
 				drivei.image.image = IconsManager.shared.removableDiskIcon
 			}
 			
@@ -212,6 +229,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
             //just need to know which is the boot volume, to not allow the user to choose it
 			let boot = dm.getDeviceBSDIDFromMountPoint("/")!
 			var boot_drive = [dm.getDriveBSDIDFromVolumeBSDID(volumeID: boot)]
+			let execp = Bundle.main.executablePath!
 			
 			print("Boot volume BSDID: \(boot)")
 			
@@ -234,7 +252,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 				print("The boot drive devices are: ")
 				print(boot_drive)
 				
-				for d in data.AllDisksAndPartitions{
+				alldiskFor: for d in data.AllDisksAndPartitions{
 					log("    Drive: \(d.DeviceIdentifier)")
 					
 					if boot_drive.contains(d.DeviceIdentifier){
@@ -264,6 +282,11 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 							if !p.isMounted(){
 								log("            Partition is not mounted, it needs to be mounted in order to be detected and usable with what we need to do later on")
 								continue
+							}
+							
+							if execp.contains(p.MountPoint!) {
+								log("            TINU is running from this partition, skipping to the next drive")
+								continue alldiskFor
 							}
 							
 							log("            Partition meets all the requirements, it will be added to the dectected partitions list")

@@ -263,7 +263,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C600803C251A910800FE35E2 /* Json */ = {
+		C600803C251A910800FE35E2 /* JSON */ = {
 			isa = PBXGroup;
 			children = (
 				C6188D972513828E00BCBC51 /* AppDownloadsEn.json */,
@@ -273,7 +273,7 @@
 				C68C79F12505205A00BBDA37 /* TextAssetsIt.json */,
 				C63F035D24E1091400F950B4 /* ProgressBarSettings.json */,
 			);
-			name = Json;
+			name = JSON;
 			sourceTree = "<group>";
 		};
 		C60C40C520CCAD9C00258574 /* Managers */ = {
@@ -373,6 +373,7 @@
 		C649CC90211A4EE100A6B47B /* EFIPartitionMounterTool */ = {
 			isa = PBXGroup;
 			children = (
+				C660D19A2529BB3B0027FCA0 /* JSON */,
 				C647B3AD211D18950024B9A1 /* EFIPartitionMounterTool.storyboard */,
 				C647B399211CF2C40024B9A1 /* EFIPartitionMounterModel.swift */,
 				C660D19D2529F0A70027FCA0 /* EFIPartitionMounterTextManager.swift */,
@@ -380,7 +381,6 @@
 				C647B39A211CF2C40024B9A1 /* EFIPartitionMounterUIClasses.swift */,
 				C647B396211CF2C40024B9A1 /* EFIPartitionMounterViewController.swift */,
 				C647B397211CF2C40024B9A1 /* EFIPartitionMounterWindowController.swift */,
-				C660D19A2529BB3B0027FCA0 /* JSON */,
 			);
 			name = EFIPartitionMounterTool;
 			sourceTree = "<group>";
@@ -463,13 +463,13 @@
 				C6DE523A247EB6EA00FBD2E1 /* TINU.entitlements */,
 				C6DF046E1F4F33C500D200B1 /* Info.plist */,
 				C691BFED1F6DEEA800589EF8 /* Assets.xcassets */,
+				C600803C251A910800FE35E2 /* JSON */,
+				C6553A941F5F83DC0048965D /* Resources */,
 				C6DF046B1F4F33C500D200B1 /* Main.storyboard */,
 				C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */,
 				C6DF04651F4F33C500D200B1 /* AppDelegate.swift */,
 				C60A461423A8571E009ADF4D /* ToDo.swift */,
 				C649CC8F211A4ECF00A6B47B /* Tools */,
-				C600803C251A910800FE35E2 /* Json */,
-				C6553A941F5F83DC0048965D /* Resources */,
 				C60D39B51F5EB48000D94834 /* WindowsControllers */,
 				C60D39B71F5EB4C800D94834 /* ViewControllers */,
 				C60D39B61F5EB4A000D94834 /* OtherCode */,

@@ -6,7 +6,7 @@
 //  Copyright © 2017 Pietro Caruso. All rights reserved.
 //
 
-import AppKit
+import Cocoa
 
 //this file just contains some usefoul extensions and methods for system classes
 
