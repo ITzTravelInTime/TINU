@@ -37,7 +37,7 @@ Features that are planned for future versions:
 
 
 # Catalina and Big Sur users:
-Since the latest stable release does not support Big Sur and Catalina please use the latest beta release: https://github.com/ITzTravelInTime/TINU/releases/tag/3.0_BETA_3_(70)
+Since the latest stable release does not support Big Sur and Catalina please use the latest beta release: https://github.com/ITzTravelInTime/TINU/releases/tag/3.0_BETA_4_(82)
 
 # Frequently asked questions
 https://github.com/ITzTravelInTime/TINU/wiki/FAQs
@@ -64,16 +64,16 @@ Contact the project creator (ITzTravelInTime):
 - email:                   piecaruso97@gmail.com
 
 # Repository rules:
-- Pease trust only official releases of this software, avoid using any third party modified or recompiled versions, because third party developers can easily hide malweres inside of it (but external contribution are welcome)
-- If you want to create your own spin-off version of TINU please let the project creator to know!
+- Pease trust only official releases of this software, avoid using any third party modified or recompiled versions, because third party developers can easily hide malweres inside of the app (but external contributions are always welcome)
+- If you want to create your own spin-off version of TINU please let the project creator know!
 - Distribute your spin-off version of TINU on GitHub and respect the license please!
 - If you believe that your changes may help with the main branch, create your own fork, apply the changes to it and then create a pull/merge request to the main branch here to let the changes to be applyed more easily by the repository maintainers.
-- Create a GitHub issue for any problems, bugs, spell/grammar errors and missplacements to fix in the repo or in the app/source code, suggestions from anyone (especially from designers and developers are always welcome)
+- Create a GitHub issue for any problems, bugs, spell/grammar errors and missplacements to fix in the repo or in the app/source code, suggestions from anyone (especially from designers and developers) are always welcome
 
 # Note that:
 - This software is under GNU GPL v3 license so any new branch/mod/third party release must be open source and under the same license
 - I (project creator) assume no responsibility for any use of this app and this source code, and also for any kind of hardware and software damage to any computer and any device or peripheral that may come from this app or source code during it's use and outside it's usage
-- I (project creator) do not guarantee support to you, this is only an open source project, not a product released by a company!
+- I (project creator) do not guarantee support to you, so don't pretend it, this is only an open source project worked on in spare time, not a product released by a company!
 - This project is born only for educational and demonstrative purposes, it's not intended to be used for commercial purposes and it will never be, don't use source code from this project to create apps or software for that aim.
 - This is a no-profit project, born only to let people to create macOS install medias in a more simple way and also to learn how to create this kind of apps.
 
