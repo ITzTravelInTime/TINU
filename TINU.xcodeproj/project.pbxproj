@@ -592,8 +592,8 @@
 					C6DF04611F4F33C500D200B1 = {
 						CreatedOnToolsVersion = 8.3.1;
 						DevelopmentTeam = 9RSH5734GY;
-						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
+						LastSwiftMigration = "";
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.Mac = {
 								enabled = 0;
@@ -612,14 +612,14 @@
 					C6DF04721F4F33C500D200B1 = {
 						CreatedOnToolsVersion = 8.3.1;
 						DevelopmentTeam = 9RSH5734GY;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = "";
 						ProvisioningStyle = Automatic;
 						TestTargetID = C6DF04611F4F33C500D200B1;
 					};
 					C6DF047D1F4F33C500D200B1 = {
 						CreatedOnToolsVersion = 8.3.1;
 						DevelopmentTeam = 9RSH5734GY;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = "";
 						ProvisioningStyle = Automatic;
 						TestTargetID = C6DF04611F4F33C500D200B1;
 					};
@@ -990,7 +990,7 @@
 				CODE_SIGN_ENTITLEMENTS = TINU/TINU.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 9RSH5734GY;
@@ -1023,7 +1023,7 @@
 				CODE_SIGN_ENTITLEMENTS = TINU/TINU.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9RSH5734GY;
 				ENABLE_HARDENED_RUNTIME = YES;

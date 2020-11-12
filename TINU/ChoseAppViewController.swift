@@ -506,10 +506,10 @@ class ChoseAppViewController: GenericViewController, ViewID {
 								let appURL = URL(fileURLWithPath: appPath, isDirectory: true)
 								let res = FileManager.default.directorySize(appURL)
 								
-								if let r = res{
-									print("    Got installer app size")
+								if let size = res{
+									print("    Got installer app size \(size / Int(pow(10.0, 9.0))) GB")
 									drive.sz = "\(size)"
-									drive.isEnabled = (cvm.shared.compareSize(to: UInt64(r)))
+									drive.isEnabled = (cvm.shared.compareSize(to: UInt64(size)))
 									
 									if !drive.isEnabled{
 										print("      Drive is too small to be used with this installer app")

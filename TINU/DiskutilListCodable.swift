@@ -161,10 +161,12 @@ public struct DiskutilList: Codable, Equatable{
 		log("Got diskutil data? " + (!out.isEmpty ? "YES" : "NO") )
 		
 		if out.isEmpty { return nil }
+		print("Diskutil data is not empty")
 		
 		if let outData = out.data(using: .utf8) {
 			do{
 				var new = try PropertyListDecoder().decode(DiskutilList.self, from: outData)
+				print("Diskutil data decoded with success")
 				
 				new.apfsContainersPool = []
 				new.coreStorageContainersPool = []

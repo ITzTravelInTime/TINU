@@ -10,7 +10,7 @@
 
 -continue with ui revision
 
--maybe rework the share button to do everything inside the windows controller
+-maybe rework the share button in the log window to do everything inside the window controller
 
 -dialog localization
 
@@ -19,6 +19,24 @@
 -installation unsupported apps (lion and mountain lion) mark instead of hiding
 
 -EFI PM memory leak
+
+-remoovable disk detecion code repetition fix
+
+-divide language files in folders one for each language rather than re-naming them according to the language to use
+
+-translate you can now remoove messange in efi pmte
+
+-terminate with ask translation + messange bug fix
+
+-keep usb drive name options
+
+-drive name constant while installing (maybe put a "(renamed to ... )" messange)
+
+-drive removable detection function in dm
+
+-standardized drive icon function
+
+
 
 */
 
@@ -53,5 +71,7 @@
 -dynamic contact us window using the text assets or a json file (maybe the second option is the better one)
 
 -take the user to contact us in case of problems
+
+-global error screen for the installer creation/installation
 
 */

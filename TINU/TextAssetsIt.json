@@ -163,8 +163,8 @@
 					"installation" : "Scegli un disco o una partizione su cui installare macOS"
 				},
 				"formatDialog" : {
-					"installer" :    "Il disco \"${diskName}\" deve essere formattato se lo vuoi usare come supporto di installazione di macOS. Se continui tutto quello che ci sta sopra andrà perso!",
-					"installation" : "Il disco \"${diskName}\" deve essere formattato se vuoi installarci macOS. Se continui tutto quello che ci sta sopra andrà perso!"
+					"installer" :    "Il disco \"${diskName}\" deve essere formattato se lo vuoi usare come supporto di installazione di macOS. Se continui tutto il suo contenuto andrà perso!",
+					"installation" : "Il disco \"${diskName}\" deve essere formattato se vuoi installarci macOS. Se continui tutto il suo contenuto andrà perso!"
 				}
 			},
 			"unmutable" : {

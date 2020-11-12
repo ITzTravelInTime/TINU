@@ -8,7 +8,10 @@
 
 import Foundation
 
-public func getLanguageFile(fileName: String, fextension: String) -> String{
+public func getLanguageFile(fileName: String, fextension: String) -> String!{
+	
+	print("Getting asset file for current language")
+	
 	let referenceStart = (Bundle.main.resourceURL!.path + "/" + fileName)
 	let referenceEnd = ("." + fextension)
 	
@@ -18,12 +21,29 @@ public func getLanguageFile(fileName: String, fextension: String) -> String{
 	
 	print("Current language: \(language)")
 	
-	let filePath = referenceStart + language + referenceEnd
+	var langs = [language]
 	
-	if FileManager.default.fileExists(atPath: filePath){
-		print("Found file for current language")
-		return filePath
+	langs.append("En")
+	
+	for p in langs{
+		let fullPath = referenceStart + p + referenceEnd
+		
+		if FileManager.default.fileExists(atPath: fullPath){
+			if p == langs.last!{
+				print("Found default \(p) file, using that since the language-specific one is not present")
+			}else{
+				print("Found file for current language")
+			}
+			
+			print("    Found file path: \(fullPath)")
+			
+			return fullPath
+		}
+		
 	}
 	
-	return referenceStart + "En" + referenceEnd
+	print("Default file not found!")
+	
+	return nil
+
 }
