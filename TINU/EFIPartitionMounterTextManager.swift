@@ -11,7 +11,7 @@ import Foundation
 public struct EFIPMTextManagerStruct: TextManagerGet, CodableDefaults, Codable, Equatable{
 	let viewStrings: TextManagementStructs.ViewStringsCollection
 	
-	private let remAsset = getLanguageFile(fileName: EFIPMTextManagerStruct.defaultResourceFileName, fextension: EFIPMTextManagerStruct.defaultResourceFileExtension)
+	private var remAsset = getLanguageFile(fileName: EFIPMTextManagerStruct.defaultResourceFileName, fextension: EFIPMTextManagerStruct.defaultResourceFileExtension)
 	
 	public func getViewString(context: ViewID, stringID: String) -> String!{
 		

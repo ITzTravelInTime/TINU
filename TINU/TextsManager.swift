@@ -16,7 +16,7 @@ public struct TINUTextsManagerStruct: TextManagerGet, CodableDefaults, Codable, 
 	
 	private let viewStrings: TextManagementStructs.ViewStringsCollection
 	
-	private let remAsset = getLanguageFile(fileName: TINUTextsManagerStruct.defaultResourceFileName, fextension: TINUTextsManagerStruct.defaultResourceFileExtension)
+	private var remAsset = getLanguageFile(fileName: TINUTextsManagerStruct.defaultResourceFileName, fextension: TINUTextsManagerStruct.defaultResourceFileExtension)
 	
 	public func getViewString(context: ViewID, stringID: String) -> String!{
 		
