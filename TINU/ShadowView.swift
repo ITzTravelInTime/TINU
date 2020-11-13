@@ -22,7 +22,7 @@ public class ShadowView: NSView{
 			self.layer?.shadowColor = isDarkMode ? CGColor.black : CGColor.init(gray: 0.4, alpha: 1);
 			self.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
 		}else{
-			self.layer?.backgroundColor = NSColor.white.withAlphaComponent(0).cgColor
+			self.layer?.backgroundColor = NSColor.transparent.cgColor
 		}
 		
 	}
@@ -47,7 +47,7 @@ public class ShadowView: NSView{
 			self.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
 			
 		}else{
-			self.layer?.backgroundColor = NSColor.white.withAlphaComponent(0).cgColor
+			self.layer?.backgroundColor = NSColor.transparent.cgColor
 		}
 		
 		updateLayer()

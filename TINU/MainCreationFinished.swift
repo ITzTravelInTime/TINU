@@ -25,7 +25,7 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
             w.isMiniaturizeEnaled = true
         }
         
-        if let a = NSApplication.shared().delegate as? AppDelegate{
+        if let a = NSApplication.shared.delegate as? AppDelegate{
             a.QuitMenuButton.isEnabled = true
         }
 		
@@ -62,13 +62,13 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
     }
 
     @IBAction func exit(_ sender: Any) {
-        NSApplication.shared().terminate(self)
+        NSApplication.shared.terminate(self)
     }
     
     @IBAction func goNext(_ sender: Any) {
         LogManager.clearLog(true)
 		
-		sawpCurrentViewController(with: "chooseSide")
+		swapCurrentViewController("chooseSide")
     }
     
     @IBAction func checkLog(_ sender: Any) {

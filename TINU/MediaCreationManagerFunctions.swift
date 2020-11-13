@@ -242,7 +242,7 @@ extension InstallMediaCreationManager{
 			
 			DispatchQueue.main.async {
 				if let name = cvm.shared.sharedVolume{
-					self.viewController.driveImage.image = NSWorkspace.shared().icon(forFile: name)
+					self.viewController.driveImage.image = NSWorkspace.shared.icon(forFile: name)
 					self.viewController.driveName.stringValue = FileManager.default.displayName(atPath: name)
 				}
 				
@@ -427,7 +427,7 @@ extension InstallMediaCreationManager{
 					continue
 				}
 				
-				if !NSWorkspace.shared().unmountAndEjectDevice(atPath: path){
+				if !NSWorkspace.shared.unmountAndEjectDevice(atPath: path){
 					res = false
 				}else{
 					log("    \"\(path)\" unmounted correctly or already unmounted")

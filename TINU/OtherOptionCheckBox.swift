@@ -29,9 +29,9 @@ class OtherOptionsCheckBox: NSView {
 		checkBox.isEnabled = option.isUsable
 		
         if option.isActivated{
-            checkBox.state = 1
+            checkBox.state = .on
         }else{
-            checkBox.state = 0
+            checkBox.state = .off
         }
 		
 		checkBox.font = NSFont.systemFont(ofSize: 13)
@@ -56,7 +56,7 @@ class OtherOptionsCheckBox: NSView {
 		self.addSubview(infoButton)
     }
 	
-	func checked(){
+	@objc func checked(){
 		
 		log("Trying to change the value of \"\(option.id)\"")
 		/*for i in 0...(otherOptions.count - 1){
@@ -69,7 +69,7 @@ class OtherOptionsCheckBox: NSView {
 		
 		if oom.shared.otherOptions[option.id] == nil { return }
 		
-		let newState = (checkBox.state == 1)
+		let newState = (checkBox.state.rawValue == 1)
 		
 		//this as been done in this way instead of an if var because of possible errors
 		oom.shared.otherOptions[option.id]?.isActivated = newState
@@ -101,7 +101,7 @@ class OtherOptionsCheckBox: NSView {
 		
 		vc.associatedOption = option
 		
-		CustomizationWindowManager.shared.referenceWindow.contentViewController?.presentViewControllerAsSheet(vc)
+		CustomizationWindowManager.shared.referenceWindow.contentViewController?.presentAsSheet(vc)
 		
 	}
 }

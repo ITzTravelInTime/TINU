@@ -19,14 +19,14 @@ public struct EFIPMTextManagerStruct: TextManagerGet, CodableDefaults, Codable, 
 		
 		guard let view = viewStrings[context.id] else{
 			
-			msgBox("View text not found \"\(context.id)\"", "The internal assets \"\(asset)\" file doesn't contain the text for the view \"\(context.id)\"", .critical)
+			print("The assets file \"\(asset)\" file doesn't contain the text for the view \"\(context.id)\"")
 			
 			return nil
 		}
 		
 		guard let ret = view.getString(stringID) else{
 			
-			msgBox("Entity text not found \"\(stringID)\"", "The assets file \"\(asset)\" doesn't contain the text for the View entity \"\(stringID)\"", .critical)
+			print("The assets file \"\(asset)\" doesn't contain the text for the View entity \"\(stringID)\"")
 			
 			return nil
 		}

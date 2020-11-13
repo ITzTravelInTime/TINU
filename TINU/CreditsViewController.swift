@@ -46,7 +46,7 @@ public class CreditsViewController: GenericViewController, ViewID {
     
     @IBAction func openSource(_ sender: Any) {
         if let checkURL = NSURL(string: "https://github.com/ITzTravelInTime/TINU") {
-            if NSWorkspace.shared().open(checkURL as URL) {
+            if NSWorkspace.shared.open(checkURL as URL) {
                 print("url successfully opened: " + String(describing: checkURL))
             }
         } else {

@@ -172,7 +172,9 @@ class LicenseViewController: ShadowViewController, ViewID {
 				
 				if let rtfPath = Bundle.main.url(forResource: "License", withExtension: "rtf") {
 					do {
-						let attributedStringWithRtf:NSAttributedString = try NSAttributedString(url: rtfPath, options: [NSDocumentTypeDocumentAttribute:NSRTFTextDocumentType], documentAttributes: nil)
+						
+						let attributedStringWithRtf:NSAttributedString = try NSAttributedString(url: rtfPath, options: convertDictionary([NSAttributedString.DocumentAttributeKey.documentType.rawValue: NSAttributedString.DocumentType.rtf.rawValue]), documentAttributes: nil)
+						
 						DispatchQueue.main.sync {
 							self.licenseField.text = attributedStringWithRtf.string
 							
@@ -186,13 +188,13 @@ class LicenseViewController: ShadowViewController, ViewID {
 					} catch let error {
 						print("Get license error, skipping: \(error)")
 						DispatchQueue.main.sync {
-							let _ = self.sawpCurrentViewController(with: "ChoseDrive")
+							let _ = self.swapCurrentViewController("ChoseDrive")
 						}
 					}
 				}else{
 					print("Get license error, skipping: license file not found")
 					DispatchQueue.main.sync {
-						let _ = self.sawpCurrentViewController(with: "ChoseDrive")
+						let _ = self.swapCurrentViewController("ChoseDrive")
 					}
 				}
 				
@@ -208,7 +210,7 @@ class LicenseViewController: ShadowViewController, ViewID {
 	
     @IBAction func readedChanged(_ sender: Any) {
         if let s = sender as? NSButton{
-            if s.state == 1{
+            if s.state.rawValue == 1{
                 continueButton.isEnabled = true
             }else{
                 continueButton.isEnabled = false
@@ -223,12 +225,12 @@ class LicenseViewController: ShadowViewController, ViewID {
 		self.scroller.isHidden = false
 		if showProcessLicense && sharedInstallMac{
 			#if skipChooseCustomization
-				let _ = self.sawpCurrentViewController(with: "Confirm")
+				let _ = self.swapCurrentViewController("Confirm")
 			#else
-				let _ = self.openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
+				let _ = self.swapCurrentViewController("ChooseCustomize")
 			#endif
 		}else{
-			let _ = self.sawpCurrentViewController(with: "ChoseDrive")
+			let _ = self.swapCurrentViewController("ChoseDrive")
 		}
 		}
     }
@@ -241,12 +243,17 @@ class LicenseViewController: ShadowViewController, ViewID {
 		self.scroller.isHidden = false
 		if showProcessLicense && sharedInstallMac{
 			showProcessLicense = false
-			let _ = self.sawpCurrentViewController(with: "ChoseApp")
+			let _ = self.swapCurrentViewController("ChoseApp")
 		}else{
 			showProcessLicense = false
-			let _ = self.sawpCurrentViewController(with: "Info")
+			let _ = self.swapCurrentViewController("Info")
 		}
 		}
 		
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertDictionary(_ input: [String: Any]) -> [NSAttributedString.DocumentReadingOptionKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.DocumentReadingOptionKey(rawValue: key), value)})
 }

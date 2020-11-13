@@ -6,7 +6,7 @@
 //  Copyright © 2017 Pietro Caruso. All rights reserved.
 //
 
-import Cocoa
+import AppKit
 
 //this class is an UI object used to represent a drive or a insteller app that can be selected by the user
 class DriveView: ShadowView, ViewID {
@@ -19,8 +19,6 @@ class DriveView: ShadowView, ViewID {
     
     var isEnabled = true{
         didSet{
-			
-			//if !sharedIsOnRecovery{
 			DispatchQueue.main.async {
 				self.setDefaultAspect()
 			}
@@ -34,8 +32,8 @@ class DriveView: ShadowView, ViewID {
     
     public var part: Part!
     
-    var image = NSImageView()
-    var volume = NSTextField()
+	var image: NSImageView!
+	var volume: NSTextField!
 	
 	var warnImage: NSImageView!
 	var warnText: NSTextField!
@@ -47,7 +45,7 @@ class DriveView: ShadowView, ViewID {
 	override func updateLayer() {
 		super.updateLayer()
 		
-		//self.appearance = sharedWindow.effectiveAppearance
+		self.appearance = sharedWindow.effectiveAppearance
 		
 		if isSelected{
 			self.backgroundColor = NSColor.selectedControlColor
@@ -55,10 +53,7 @@ class DriveView: ShadowView, ViewID {
 		
 		if self.isEnabled{
 			self.volume.textColor = NSColor.textColor
-		/*
-		}else{
-			self.volume.textColor = NSColor.lightGray
-		*/
+			
 		}
 		
 	}
@@ -66,14 +61,8 @@ class DriveView: ShadowView, ViewID {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 		
-		self.appearance = sharedWindow.effectiveAppearance
-		
-        //refreshUI()
-		
+		//self.appearance = sharedWindow.effectiveAppearance
 		self.updateLayer()
-		
-		
-		
     }
 	
     override init(frame frameRect: NSRect) {
@@ -105,20 +94,33 @@ class DriveView: ShadowView, ViewID {
 			self.wantsLayer = true
 			self.layer?.cornerRadius = 15
 		}
+		
+		if image != nil{
+			image.removeFromSuperview();
+			image = nil
+		}
         
         image = NSImageView(frame: NSRect(x: 15, y: 55, width: self.frame.size.width - 30, height: self.frame.size.height - 60))
+		image.wantsLayer = true
         image.isEditable = false
         image.imageAlignment = .alignCenter
         image.imageScaling = .scaleProportionallyUpOrDown
+		image.backgroundColor = NSColor.transparent
         self.addSubview(image)
+		
+		if volume != nil{
+			volume.removeFromSuperview();
+			volume = nil
+		}
         
         volume = NSTextField(frame: NSRect(x: 5, y: 5, width: self.frame.size.width - 10, height: 45))
+		volume.wantsLayer = true
         volume.font = NSFont.boldSystemFont(ofSize: 10)
         volume.stringValue = ""
         volume.isEditable = false
         volume.isBordered = false
         volume.alignment = .center
-        (volume as NSView).backgroundColor = NSColor.white.withAlphaComponent(0)
+		volume.drawsBackground = false
         
         //volume.isSelectable = false
         self.addSubview(volume)
@@ -221,7 +223,7 @@ class DriveView: ShadowView, ViewID {
 		}
 		
 		DispatchQueue.main.async {
-        	//self.layer?.backgroundColor = NSColor.white.withAlphaComponent(0).cgColor
+        	//self.layer?.backgroundColor = NSColor.transparent.cgColor
 			self.isSelected = false
 		
 			self.appearance = sharedWindow.effectiveAppearance
@@ -290,7 +292,7 @@ class DriveView: ShadowView, ViewID {
 				self.warnText.isBordered = false
 				self.warnText.alignment = .center
 				self.warnText.textColor = .systemGray
-				(self.warnText as NSView).backgroundColor = NSColor.white.withAlphaComponent(0)
+				(self.warnText as NSView).backgroundColor = NSColor.transparent
 				
 				//volume.isSelectable = false
 				self.addSubview(self.warnText)
@@ -304,6 +306,7 @@ class DriveView: ShadowView, ViewID {
 				self.warnImage = NSImageView(frame: NSRect(x: self.frame.width - w - margin, y: self.image.frame.origin.y, width: w, height: w))
 				self.warnImage.image = IconsManager.shared.warningIcon
 				self.warnImage.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
+				(self.warnImage as NSView).backgroundColor = NSColor.transparent
 			
 				self.addSubview(self.warnImage)
 			
@@ -329,7 +332,7 @@ class DriveView: ShadowView, ViewID {
 				self.warnText.isBordered = false
 				self.warnText.alignment = .center
 				self.warnText.textColor = .systemYellow
-				(self.warnText as NSView).backgroundColor = NSColor.white.withAlphaComponent(0)
+				(self.warnText as NSView).backgroundColor = NSColor.transparent
 			
 				//volume.isSelectable = false
 				self.addSubview(self.warnText)

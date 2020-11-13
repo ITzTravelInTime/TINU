@@ -18,7 +18,6 @@ public protocol AlternateValueSupport{
 }
 
 public protocol TextManagerGet{
-	//var viewStrings: TextManagementStructs.ViewStringsCollection { get }
 	func getViewString(context: ViewID, stringID: String) -> String!
 }
 

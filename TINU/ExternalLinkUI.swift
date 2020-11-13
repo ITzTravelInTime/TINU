@@ -20,7 +20,7 @@ public class ExternalLinkMenuItem: NSMenuItem {
 	}
 	
 	@objc func click(_ sender: Any){
-		NSWorkspace.shared().open(URL(string: self.href)!)
+		NSWorkspace.shared.open(URL(string: self.href)!)
 	}
 }
 
@@ -32,14 +32,20 @@ class ExternalLinkTextField: NSTextField {
 		super.awakeFromNib()
 		
 		let attributes: [String: AnyObject] = [
-			NSForegroundColorAttributeName: NSColor.linkColor
-			,NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue as AnyObject, NSCursorAttributeName: NSCursor.pointingHand()
+			NSAttributedString.Key.foregroundColor.rawValue: NSColor.linkColor
+			,NSAttributedString.Key.underlineStyle.rawValue: NSUnderlineStyle.single.rawValue as AnyObject, NSAttributedString.Key.cursor.rawValue: NSCursor.pointingHand
 		]
-		self.attributedStringValue = NSAttributedString(string: self.stringValue, attributes: attributes)
+		self.attributedStringValue = NSAttributedString(string: self.stringValue, attributes: convertToOptionalNSAttributedStringKeyDictionary(attributes))
 		
 	}
 	
 	override func mouseDown(with event: NSEvent) {
-		NSWorkspace.shared().open(URL(string: self.href)!)
+		NSWorkspace.shared.open(URL(string: self.href)!)
 	}
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
 }

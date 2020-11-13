@@ -85,52 +85,54 @@ public class LogWindowController: NSWindowController, ViewID {
 	
 	override public func windowDidLoad() {
 		super.windowDidLoad()
-		//self.window?.title += ": Log"
 		
 		self.window?.isFullScreenEnaled = true
 		
-		//this is to make sure we have a valid content view controller, because we don't have a windowdidappear function tom do this stuff, this asically waits in a background thread until we have a valid view controller to work with
-		DispatchQueue.global(qos: .background).async {
-			var ok = false
-			
-			while(!ok){
-				DispatchQueue.main.sync {
-					
-					//in here we are sure we have a valid view controller so we do what we will do in a windowdidappear
-					if let vc = self.contentViewController as? LogViewController{
-						ok = true
-						
-						//associate buttons with acrtions in the view controller
-						self.saveLogItem.target = vc
-						self.copyLogItem.target = vc
-						self.shareLogItem.target = vc
-						
-						self.saveLogBigItem.target = vc
-						self.copyLogBigItem.target = vc
-						self.shareLogBigItem.target = vc
-						
-						self.saveLogItem.image = IconsManager.shared.internalDiskIcon
-						self.saveLogBigItem.image = self.saveLogItem.image
-						
-						self.saveLogItem.action = #selector(vc.saveLog(_:))
-						self.copyLogItem.action = #selector(vc.copyLog(_:))
-						self.shareLogItem.action = #selector(vc.shareLog(_:))
-						
-						self.saveLogBigItem.action = #selector(vc.saveLog(_:))
-						self.copyLogBigItem.action = #selector(vc.copyLog(_:))
-						self.shareLogBigItem.action = #selector(vc.shareLog(_:))
-						
-						self.saveLogItem.label = TextManager.getViewString(context: self, stringID: "saveButton")
-						self.saveLogBigItem.label = self.saveLogItem.label
-						
-						self.copyLogItem.label = TextManager.getViewString(context: self, stringID: "copyButton")
-						self.copyLogBigItem.label = self.copyLogItem.label
-						
-						self.shareLogItem.label = TextManager.getViewString(context: self, stringID: "shareButton")
-						self.shareLogBigItem.label = self.shareLogItem.label
-					}
-				}
-			}
+		self.saveLogItem.target = self
+		self.copyLogItem.target = self
+		self.shareLogItem.target = self
+		
+		self.saveLogBigItem.target = self
+		self.copyLogBigItem.target = self
+		self.shareLogBigItem.target = self
+		
+		self.saveLogItem.action = #selector(self.saveLog(_:))
+		self.copyLogItem.action = #selector(self.copyLog(_:))
+		self.shareLogItem.action = #selector(self.shareLog(_:))
+		
+		self.saveLogBigItem.action = #selector(self.saveLog(_:))
+		self.copyLogBigItem.action = #selector(self.copyLog(_:))
+		self.shareLogBigItem.action = #selector(self.shareLog(_:))
+		
+		self.saveLogItem.image = IconsManager.shared.internalDiskIcon
+		self.saveLogBigItem.image = self.saveLogItem.image
+		
+		self.saveLogItem.label = TextManager.getViewString(context: self, stringID: "saveButton")
+		self.saveLogBigItem.label = self.saveLogItem.label
+		
+		self.copyLogItem.label = TextManager.getViewString(context: self, stringID: "copyButton")
+		self.copyLogBigItem.label = self.copyLogItem.label
+		
+		self.shareLogItem.label = TextManager.getViewString(context: self, stringID: "shareButton")
+		self.shareLogBigItem.label = self.shareLogItem.label
+		
+	}
+
+	@objc func saveLog( _ sender: Any){
+		if let vc = self.contentViewController as? LogViewController{
+			vc.saveLog(sender)
+		}
+	}
+	
+	@objc func copyLog( _ sender: Any){
+		if let vc = self.contentViewController as? LogViewController{
+			vc.copyLog(sender)
+		}
+	}
+	
+	@objc func shareLog( _ sender: Any){
+		if let vc = self.contentViewController as? LogViewController{
+			vc.shareLog(sender)
 		}
 	}
 	

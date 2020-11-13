@@ -8,6 +8,39 @@
 
 import AppKit
 
+public func getAppSupportDirectory(create: Bool = true, subFolderName: String! = nil) -> String!{
+	let paths = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+	if paths.count > 0{
+		if let start = paths.first?.path{
+			if let folderName = Bundle.main.bundleIdentifier{
+				let directory = start + "/" + folderName + ((subFolderName != nil) ? ("/" + subFolderName!) : "")
+				if !FileManager.default.fileExists(atPath: directory){
+					do {
+						try FileManager.default.createDirectory(atPath: directory, withIntermediateDirectories: true, attributes: convertToOptionalFileAttributeKeyDictionary([:]))
+						
+					}catch let err{
+						print(err.localizedDescription)
+						return nil
+					}
+				}
+				
+				return directory
+			}
+		}
+	}
+	return nil
+}
+
+fileprivate func getDiagnosticsModeFolder() -> String!{
+	return getAppSupportDirectory(create: true, subFolderName: "DiagnosticsMode")
+}
+
+fileprivate	func getDiagnosticsModeFileLocation(sudo: Bool) -> String!{
+	let resourceName = "/" + (sudo ? "DebugScriptSudo" : "DebugScript") + ".command"
+	
+	return getDiagnosticsModeFolder() + resourceName
+}
+
 fileprivate func getDiagnosticsModecontent(sudo: Bool = true) -> String{
 	var str = "echo \"Opening \(Bundle.main.name!) in log mode"
 	
@@ -21,38 +54,9 @@ fileprivate func getDiagnosticsModecontent(sudo: Bool = true) -> String{
 		str += "sudo "
 	}
 	
-	str += "\"" + Bundle.main.executablePath! + "\""
+	str += "\"" + Bundle.main.executablePath! + "\" > \"" + getDiagnosticsModeFolder() + "/DebugLog.txt\""
 	
 	return str
-}
-
-fileprivate	func getDiagnosticsModeFileLocation(sudo: Bool) -> String!{
-	let resourceName = "/" + (sudo ? "DebugScriptSudo" : "DebugScript") + ".command"
-	
-	return getAppSupportDirectory(create: true, subFolderName: "DiagnosticsMode") + resourceName
-}
-
-public func getAppSupportDirectory(create: Bool = true, subFolderName: String! = nil) -> String!{
-	let paths = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-	if paths.count > 0{
-		if let start = paths.first?.path{
-			if let folderName = Bundle.main.bundleIdentifier{
-				let directory = start + "/" + folderName + ((subFolderName != nil) ? ("/" + subFolderName!) : "")
-				if !FileManager.default.fileExists(atPath: directory){
-					do {
-						try FileManager.default.createDirectory(atPath: directory, withIntermediateDirectories: true, attributes: [:])
-						
-					}catch let err{
-						print(err.localizedDescription)
-						return nil
-					}
-				}
-				
-				return directory
-			}
-		}
-	}
-	return nil
 }
 
 public func openDiagnosticsMode(withSudo sudo: Bool){
@@ -150,8 +154,14 @@ public func openDiagnosticsMode(withSudo sudo: Bool){
 	}
 	
 	if val == 0{
-		NSWorkspace.shared().openFile(scriptPath, withApplication: "Terminal")
-		NSApplication.shared().terminate(NSApp!)
+		NSWorkspace.shared.openFile(scriptPath, withApplication: "Terminal")
+		NSApplication.shared.terminate(NSApp!)
 	}
 	
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalFileAttributeKeyDictionary(_ input: [String: Any]?) -> [FileAttributeKey: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (FileAttributeKey(rawValue: key), value)})
 }

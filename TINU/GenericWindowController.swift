@@ -11,8 +11,8 @@ import Cocoa
 
 public class GenericWindowController: NSWindowController, NSWindowDelegate {
     
-   public let backgroundDefaultMaterial = NSVisualEffectMaterial.titlebar
-   public let backgroundUnselectedMaterial = NSVisualEffectMaterial.light
+   public let backgroundDefaultMaterial = NSVisualEffectView.Material.titlebar
+   public let backgroundUnselectedMaterial = NSVisualEffectView.Material.light
     
     var background: NSVisualEffectView!
 	//var alreadyFullScreen: Bool = false

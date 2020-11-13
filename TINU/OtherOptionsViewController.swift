@@ -54,20 +54,20 @@ class OtherOptionsViewController: GenericViewController, ViewID {
         
         //just in case of errors
         if cvm.shared.sharedVolume == nil || cvm.shared.sharedApp == nil{
-            sawpCurrentViewController(with: "Confirm")
+            swapCurrentViewController("Confirm")
         }
 		
 		//general options
 		
 		sections.append(getSectionItem())
-		sections.last!!.image.image = NSImage(named: NSImageNamePreferencesGeneral)
+		sections.last!!.image.image = NSImage(named: NSImage.preferencesGeneralName)
 		sections.last!!.name.stringValue = TextManager.getViewString(context: self, stringID: "optionsSection")
 		sections.last!!.id = SectionsID.generalOptions
 		
 		//advanced options
 		
 		sections.append(getSectionItem())
-		sections.last!!.image.image = NSImage(named: NSImageNameAdvanced) //"advancedOptionsSection"
+		sections.last!!.image.image = NSImage(named: NSImage.advancedName) //"advancedOptionsSection"
 		sections.last!!.name.stringValue = TextManager.getViewString(context: self, stringID: "advancedOptionsSection")
 		sections.last!!.id = SectionsID.advancedOptions
 		
@@ -79,7 +79,7 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 				for i in SupportedEFIFolders.allCases{
 					sections.append(getSectionItem())
 			
-					sections.last!!.image.image = NSImage(named: NSImageNameFolder)
+					sections.last!!.image.image = NSImage(named: NSImage.folderName)
 					
 					let rep = ["{bootloader}" : i.rawValue]
 				
@@ -164,7 +164,7 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 		
 		clean()
 		
-		sawpCurrentViewController(with: "ChooseCustomize")
+		swapCurrentViewController("ChooseCustomize")
 		//openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
     }
     

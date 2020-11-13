@@ -156,7 +156,7 @@ public class EFIReplacementView: NSView, ViewID{
 		}
 	}
 	
-	func openClick(){
+	@objc func openClick(){
 		let open = NSOpenPanel()
 		open.allowsMultipleSelection = false
 		open.canChooseDirectories = true
@@ -165,10 +165,14 @@ public class EFIReplacementView: NSView, ViewID{
 		open.showsHiddenFiles = true
 		
 		open.beginSheetModal(for: CustomizationWindowManager.shared.referenceWindow, completionHandler: {response in
-			if response == NSModalResponseOK{
+			if response == NSApplication.ModalResponse.OK{
 				if !open.urls.isEmpty{
+					
+					let cbootloader = self.bootloader
+					let url = open.urls.first!
+					
 					DispatchQueue.global(qos: .background).async{
-						if let opener = EFIFolderReplacementManager.shared.loadEFIFolder(open.urls.first!.path, currentBootloader: self.bootloader){
+						if let opener = EFIFolderReplacementManager.shared.loadEFIFolder(url.path, currentBootloader: cbootloader){
 							if !opener{
 								DispatchQueue.main.async {
 									
@@ -185,7 +189,7 @@ public class EFIReplacementView: NSView, ViewID{
 						}else{
 							DispatchQueue.main.sync {
 								
-								let replaceList = ["{path}": open.urls.first!.path, "{pathName}": open.urls.first!.lastPathComponent, "{bootloader}": self.bootloader.rawValue, "{missing}" : EFIFolderReplacementManager.shared.missingFileFromOpenedFolder!]
+								let replaceList = ["{path}": url.path, "{pathName}": url.lastPathComponent, "{bootloader}": cbootloader.rawValue, "{missing}" : EFIFolderReplacementManager.shared.missingFileFromOpenedFolder!]
 								
 								//let title = parse(messange: TextManager!.getViewString(context: self, stringID: "improperDialogTitle")!, keys: replaceList)
 								//let messange = parse(messange: TextManager!.getViewString(context: self, stringID: "improperDialog")!, keys: replaceList)
@@ -206,7 +210,7 @@ public class EFIReplacementView: NSView, ViewID{
 		})
 	}
 	
-	func resetClick(){
+	@objc func resetClick(){
 		DispatchQueue.global(qos: .background).async{
 			if !EFIFolderReplacementManager.shared.unloadEFIFolder(){
 				DispatchQueue.main.async {

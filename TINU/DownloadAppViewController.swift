@@ -94,7 +94,7 @@ public class DownloadAppViewController: ShadowViewController, ViewID {
 	
 	override public func viewDidAppear() {
 		super.viewDidAppear()
-		if self.presenting == nil{
+		if self.presentingViewController == nil{
 		//if self.window != sharedWindow{
 			closeButton.title = TextManager.getViewString(context: self, stringID: "backButton")
 		}
@@ -113,7 +113,7 @@ public class DownloadAppViewController: ShadowViewController, ViewID {
 	*/
 
 	@IBAction func buttonClick(_ sender: Any) {
-		if self.presenting == nil{
+		if self.presentingViewController == nil{
 			self.window.close()
 		}else{
 			self.window.sheetParent?.endSheet(self.window)
@@ -178,7 +178,7 @@ fileprivate class DownloadAppItem: ShadowView, ViewID{
 		
 		version.stringValue = associtaed.version
 		
-		version.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize())
+		version.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
 		
 		self.addSubview(version)
 		
@@ -237,6 +237,6 @@ fileprivate class DownloadAppItem: ShadowView, ViewID{
 			
 		}
 		
-		NSWorkspace.shared().open(link!)
+		NSWorkspace.shared.open(link!)
 	}
 }

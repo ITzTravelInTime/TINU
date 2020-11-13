@@ -27,7 +27,7 @@ final class SIPManager: ViewID{
 		DispatchQueue.global(qos: .background).async {
 			if checkSIP(){
 				//msgBoxWithCustomIcon("TINU: Please disable SIP", "SIP (system integrity protection) is enabled and will not allow TINU to complete successfully the installer creation process, please disable it or use the diagnostics mode with administrator privileges", .warning , IconsManager.shared.stopIcon)
-				msgboxWithManager(ref, name: "disable", parseList: nil, style: NSAlertStyle.critical, icon: IconsManager.shared.stopIcon)
+				msgboxWithManager(ref, name: "disable", parseList: nil, style: NSAlert.Style.critical, icon: IconsManager.shared.stopIcon)
 			}
 		}
 	}

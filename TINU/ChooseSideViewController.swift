@@ -87,7 +87,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		createUSBButton.upperImage.image = IconsManager.shared.removableDiskIcon //NSImage(named: "Removable")
 		createUSBButton.upperTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstaller")//"Create a bootable\nmacOS installer"
 		
-		installButton.upperImage.image = NSImage(named: NSImageNameComputer)//NSImage(named: "OSInstall")
+		installButton.upperImage.image = NSImage(named: NSImage.computerName)//NSImage(named: "OSInstall")
 		installButton.upperTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstallation")//"Install macOS"
 		
 		efiButton.upperImage.image = NSImage(named: "EFIIcon")
@@ -148,7 +148,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 						
 					}else{
 						shadowView = NSView()
-						shadowView.backgroundColor = NSColor.white.withAlphaComponent(0)
+						shadowView.backgroundColor = NSColor.transparent
 					}
 					
 					shadowView.frame.size = b.frame.size
@@ -184,7 +184,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 				DispatchQueue.main.sync {
 					self.stopAnimationAndShowbuttons()
 					
-					self.sawpCurrentViewController(with: "Info")
+					self.swapCurrentViewController("Info")
 					
 				}
 			}
@@ -236,13 +236,13 @@ class ChooseSideViewController: GenericViewController, ViewID {
 	}
 	
 	@IBAction func createUSB(_ sender: Any) {
-		if let apd = NSApplication.shared().delegate as? AppDelegate{
+		if let apd = NSApplication.shared.delegate as? AppDelegate{
 			apd.swichMode(isInstall: false)
 		}
 	}
 	
 	@IBAction func install(_ sender: Any) {
-		if let apd = NSApplication.shared().delegate as? AppDelegate{
+		if let apd = NSApplication.shared.delegate as? AppDelegate{
 			apd.swichMode(isInstall: true)
 		}
 	}

@@ -14,7 +14,7 @@ extension NSViewController{
 	
 	internal static var tmpViewController: [NSViewController?] = []
 	
-	public func sawpCurrentViewController(with storyboardID: String, storyboard customStoryboard: NSStoryboard! = nil){
+	public func swapCurrentViewController(_ storyboardID: String, storyboard customStoryboard: NSStoryboard! = nil){
 		
 		let cstoryboard: NSStoryboard = customStoryboard ?? storyboard!
 		
@@ -49,8 +49,8 @@ extension NSViewController{
 			self.view.window?.setFrameOrigin(tempPos!)
 		}
 		
-		self.removeFromParentViewController()
-		self.dismiss(self)
+		self.removeFromParent()
+		//self.dismiss(self)
 		
 		print("    View controller swapped successfully")
 		
@@ -147,11 +147,7 @@ extension NSTextView{
             self.string = newValue
         }
         get{
-            if let s = self.string{
-                return s
-            }else{
-                return ""
-            }
+            return self.string
         }
     }
 }
@@ -301,6 +297,10 @@ extension NSColor {
 	}
 }
 */
+
+extension NSColor{
+	static let transparent = NSColor.white.withAlphaComponent(0)
+}
 
 extension FileManager {
 	

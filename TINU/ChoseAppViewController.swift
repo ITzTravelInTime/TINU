@@ -22,7 +22,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
                 //viewDidSetVibrantLook()
 				
 				if let document = scoller.documentView{
-					if document.identifier == spacerID{
+					if document.identifier?.rawValue == spacerID{
 						document.frame = NSRect(x: 0, y: 0, width: self.scoller.frame.width - 2, height: self.scoller.frame.height - 2)
 						if let content = document.subviews.first{
 							content.frame.origin = NSPoint(x: document.frame.width / 2 - content.frame.width / 2, y: 0)
@@ -80,7 +80,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
     private let spacerID = "spacer"
     
     @IBAction func goBack(_ sender: Any) {
-        let _ = sawpCurrentViewController(with: "ChoseDrive")
+        let _ = swapCurrentViewController("ChoseDrive")
     }
     
     @IBAction func next(_ sender: Any) {
@@ -94,12 +94,12 @@ class ChoseAppViewController: GenericViewController, ViewID {
 			
 			if sharedInstallMac{
 				showProcessLicense = true
-				sawpCurrentViewController(with: "License")
+				swapCurrentViewController("License")
 			}else{
 				
 				checkOtherOptions()
 				#if skipChooseCustomization
-				let _ = self.sawpCurrentViewController(with: "Confirm")
+				let _ = self.swapCurrentViewController("Confirm")
 				#else
 				let _ = self.openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
 				#endif
@@ -109,7 +109,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
             //}
 			
         }else{
-            NSApplication.shared().terminate(self)
+            NSApplication.shared.terminate(self)
         }
     }
     @IBAction func refreshPressed(_ sender: Any) {
@@ -129,7 +129,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 		}
 	}
 	
-	func chooseExternal() {
+	@objc func chooseExternal() {
 		let open = NSOpenPanel()
 		open.allowsMultipleSelection = false
 		open.canChooseDirectories = false
@@ -141,7 +141,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 		open.beginSheetModal(for: self.window, completionHandler: {response in
 			
 			for _ in 0...0{
-				if response != NSModalResponseOK{
+				if response != NSApplication.ModalResponse.OK{
 					continue
 				}
 				
@@ -171,13 +171,6 @@ class ChoseAppViewController: GenericViewController, ViewID {
 						path = tmpURL!.path
 					}
 				}else{
-					/*
-					if let name = open.urls.first?.lastPathComponent{
-					msgBoxWarning("Invalid file", "The app you chose, \"\(name)\", is not usable because it's Finder Alias can't be resolved.")
-					}else{
-					msgBoxWarning("Invalid file", "The app you chose is not usable because it's Finder Alias can't be resolved.")
-					}
-					*/
 					
 					msgboxWithManager(self, name: "invalidAliasDialog", parseList: replist)
 				}
@@ -203,23 +196,9 @@ class ChoseAppViewController: GenericViewController, ViewID {
 					
 					cvm.shared.sharedVolumeNeedsPartitionMethodChange = self.ps
 					
-					/*
-					#if skipChooseCustomization
-					let _ = self.sawpCurrentViewController(with: "Confirm")
-					#else
-					let _ = self.sawpCurrentViewController(with: "ChooseCustomize")
-					#endif
-					*/
-					
 					self.next(self)
 					
 				}else{
-					
-					/*if let name = open.urls.first?.lastPathComponent{
-					msgBoxWarning("Invalid app", "The app you chose, \"\(name)\", is not usable to create macOS installers or macOS installations because it isn't a macOS installer or is a damaged or unsupported macOS installer.")
-					}else{
-					msgBoxWarning("Invalid app", "The app you chose is not usable to create macOS installers or macOS installations because it isn't a macOS installer or is a damaged or unsupported macOS installer.")
-					}*/
 					
 					msgboxWithManager(self, name: "invalidAppDialog", parseList: replist)
 				}
@@ -279,8 +258,8 @@ class ChoseAppViewController: GenericViewController, ViewID {
 		downloadAppWindowController?.showWindow(sender)
     }*/
 	
-	func openGetAnApp(){
-		self.presentViewControllerAsSheet(sharedStoryboard.instantiateController(withIdentifier: "DownloadAppVC") as! NSViewController)
+	@objc func openGetAnApp(){
+		self.presentAsSheet(sharedStoryboard.instantiateController(withIdentifier: "DownloadAppVC") as! NSViewController)
 	}
     
     private func loadApps(){
@@ -412,6 +391,10 @@ class ChoseAppViewController: GenericViewController, ViewID {
 						continue
 					}
 					
+					if d.pathExtension == "app"{
+						continue
+					}
+					
 					print("Scanning for usable apps in \(d.path)")
 					//let fileNames = try manager.contentsOfDirectory(at: d, includingPropertiesForKeys: nil, options: []).filter{ $0.pathExtension == "app" }.map{ $0.path }
 					
@@ -429,11 +412,11 @@ class ChoseAppViewController: GenericViewController, ViewID {
 							}
 						}else{
 							print("Alias resolution for \"\(appOriginPath)\" has failed, skipping it")
-							continue
+							continue appfor
 						}
 						
 						if dirs.contains(appPath){
-							continue
+							continue appfor
 						}
 						
 						//only installer apps from now on
@@ -613,8 +596,8 @@ class ChoseAppViewController: GenericViewController, ViewID {
 					
 					if content.frame.size.width < self.scoller.frame.width{
 						let spacer = NSView(frame: NSRect(x: 0, y: 0, width: self.scoller.frame.width - 2, height: self.scoller.frame.height - 2))
-						spacer.backgroundColor = NSColor.white.withAlphaComponent(0)
-						spacer.identifier = self.spacerID
+						spacer.backgroundColor = NSColor.transparent
+						spacer.identifier = NSUserInterfaceItemIdentifier(rawValue: self.spacerID)
 						content.frame.origin = NSPoint(x: spacer.frame.width / 2 - content.frame.width / 2, y: 15 / 2)
 						spacer.addSubview(content)
 						self.scoller.documentView = spacer

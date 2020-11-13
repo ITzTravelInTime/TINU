@@ -142,7 +142,7 @@ public final class Operations{
 					if !manager.fileExists(atPath: iaFolder){
 						log("   .IABootFiles folder creation needed")
 						
-						try manager.createDirectory(atPath: iaFolder, withIntermediateDirectories: true, attributes: [:])
+						try manager.createDirectory(atPath: iaFolder, withIntermediateDirectories: true, attributes: convertToOptionalFileAttributeKeyDictionary([:]))
 						
 						let folders = ["/System/Library/CoreServices", "/System/Library/PrelinkedKernels", "/usr/standalone/i386"]
 						
@@ -271,7 +271,7 @@ public final class Operations{
 						log("       Creating the icon file")
 						try manager.copyItem(atPath: origin, toPath: destination + ".icns")
 						
-						NSWorkspace.shared().setIcon(NSImage.init(contentsOf: URL.init(fileURLWithPath: origin)), forFile: cvm.shared.sharedVolume, options: NSWorkspaceIconCreationOptions.excludeQuickDrawElementsIconCreationOption)
+						NSWorkspace.shared.setIcon(NSImage.init(contentsOf: URL.init(fileURLWithPath: origin)), forFile: cvm.shared.sharedVolume, options: NSWorkspace.IconCreationOptions.excludeQuickDrawElementsIconCreationOption)
 						
 						log("   Icon file created successfully")
 					}else{
@@ -312,7 +312,7 @@ public final class Operations{
 					
 					//if we have to put the app on a mac os installation, we need to use the app directory
 					if sharedInstallMac{
-						try manager.createDirectory(atPath: cvm.shared.sharedVolume + "/Applications", withIntermediateDirectories: true, attributes: [:])
+						try manager.createDirectory(atPath: cvm.shared.sharedVolume + "/Applications", withIntermediateDirectories: true, attributes: convertToOptionalFileAttributeKeyDictionary([:]))
 						
 						path = cvm.shared.sharedVolume + "/Applications/" + (Bundle.main.bundleURL.lastPathComponent)
 					}else{
@@ -355,3 +355,9 @@ public final class Operations{
 		
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalFileAttributeKeyDictionary(_ input: [String: Any]?) -> [FileAttributeKey: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (FileAttributeKey(rawValue: key), value)})
+}

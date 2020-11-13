@@ -64,7 +64,7 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate, 
         
     }
     
-    @objc func updateLog(_ sender: AnyObject){
+	@objc func updateLog(_ sender: AnyObject){
         //print("Log updated")
         if let l = LogManager.readLog(){
             content.text = l
@@ -77,31 +77,9 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate, 
 		
 		DispatchQueue.global(qos: .background).async {
 			
-			let pasteBoard = NSPasteboard.general()
+			let pasteBoard = NSPasteboard.general
 			pasteBoard.clearContents()
 			pasteBoard.writeObjects([text])
-			
-			//DispatchQueue.main.sync {
-				/*
-				let notification = NSUserNotification()
-		
-				notification.identifier = "org.tinu.TINU_LOG_COPY"
-		
-				notification.title = "TINU: Log copied"
-				notification.informativeText = "TINU's log has been successfully copied to the clipboard"
-		
-				/*
-				notification.hasActionButton = true
-				notification.actionButtonTitle = "Ok"
-				*/
-			
-				notification.soundName = NSUserNotificationDefaultSoundName
-		
-				NSUserNotificationCenter.default.deliver(notification)
-				*/
-				
-				
-			//}
 			
 			let _ = NotificationsManager.sendWith(id: "copyLog", image: nil)
 		}
@@ -131,7 +109,7 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate, 
 			}
 		}*/
 		open.beginSheetModal(for: self.window, completionHandler: { response in
-			if response == NSModalResponseOK{
+			if response == NSApplication.ModalResponse.OK{
 				if let u = open.url?.path{
 					//read ui stuff just from the main thread
 					let text = self.content.text

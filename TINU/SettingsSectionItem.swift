@@ -21,7 +21,7 @@ public class SettingsSectionItem: NSView{
 	
 	var itemsScrollView: NSScrollView?
 	
-	let normalColor = NSColor.white.withAlphaComponent(0).cgColor
+	let normalColor = NSColor.transparent.cgColor
 	var selectedColor = NSColor.selectedControlColor.cgColor
 	
 	override public func draw(_ dirtyRect: NSRect) {
@@ -30,7 +30,7 @@ public class SettingsSectionItem: NSView{
 		if isSelected{
 			self.backgroundColor = NSColor.selectedControlColor
 		}else{
-			self.backgroundColor = NSColor.white.withAlphaComponent(0)
+			self.backgroundColor = NSColor.transparent
 		}
 		*/
 		

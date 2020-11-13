@@ -41,7 +41,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
                 //viewDidSetVibrantLook()
 				
 				if let document = scoller.documentView{
-					if document.identifier == spacerID{
+					if document.identifier?.rawValue == spacerID{
 						document.frame = NSRect(x: 0, y: 0, width: self.scoller.frame.width - 2, height: self.scoller.frame.height - 2)
 						if let content = document.subviews.first{
 							content.frame.origin = NSPoint(x: document.frame.width / 2 - content.frame.width / 2, y: 0)
@@ -158,7 +158,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 			
 			if !prt.isDrive{
 				if item!.isMounted(){
-					drivei.image.image = NSWorkspace.shared().icon(forFile: item.MountPoint!)
+					drivei.image.image = NSWorkspace.shared.icon(forFile: item.MountPoint!)
 				}
 			}else{
 				var property = "Ejectable"
@@ -381,7 +381,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 					self.showFailureButtons()
 				}else{
 					let content = NSView(frame: NSRect(x: 0, y: 0, width: 0, height: self.scoller.frame.size.height - 17))
-					content.backgroundColor = NSColor.white.withAlphaComponent(0)
+					content.backgroundColor = NSColor.transparent
 					
 					self.scoller.hasHorizontalScroller = true
 					
@@ -404,9 +404,9 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 					
 					if content.frame.size.width < self.scoller.frame.width{
 						let spacer = NSView(frame: NSRect(x: 0, y: 0, width: self.scoller.frame.width - 2, height: self.scoller.frame.height - 2))
-						spacer.backgroundColor = NSColor.white.withAlphaComponent(0)
+						spacer.backgroundColor = NSColor.transparent
 						
-						spacer.identifier = "spacer"
+						spacer.identifier = NSUserInterfaceItemIdentifier(rawValue: "spacer")
 						
 						content.frame.origin = NSPoint(x: spacer.frame.width / 2 - content.frame.width / 2, y: 15 / 2)
 						spacer.addSubview(content)
@@ -433,20 +433,20 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 	
 	
 	private var tmpWin: GenericViewController!
-	func openDetectStorageSuggestions(){
+	@objc func openDetectStorageSuggestions(){
 		tmpWin = nil
 		tmpWin = sharedStoryboard.instantiateController(withIdentifier: "DriveDetectionInfoVC") as? GenericViewController
 		
 		if tmpWin != nil{
-			self.presentViewControllerAsSheet(tmpWin)
+			self.presentAsSheet(tmpWin)
 		}
 	}
 	
 	@IBAction func goBack(_ sender: Any) {
 		if sharedShowLicense{
-			let _ = sawpCurrentViewController(with: "License")
+			let _ = swapCurrentViewController("License")
 		}else{
-			let _ = sawpCurrentViewController(with: "Info")
+			let _ = swapCurrentViewController("Info")
 		}
 		tmpWin = nil
 	}
@@ -462,42 +462,24 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 			
 			if cvm.shared.sharedVolumeNeedsPartitionMethodChange != nil /*&& sharedVolumeNeedsFormat != nil*/{
 				
-				/*
-				var dialogText = "The drive \"\(dname)\" will be formatted entirely to be used to create a bootable macOS installer"
-				
-				if sharedInstallMac{
-					dialogText = "The drive \"\(dname)\" will be formatted entirely to install macOS on it"
-				}
-				
-				//"Format \"\(dname)\"?"
-				*/
-				
-				
-				//let dialogText = parse(messange: TextManager.getViewString(context: self, stringID: "formatDialog"), keys: parseList)
-				
 				if cvm.shared.sharedVolumeNeedsPartitionMethodChange{
 					if !dialogGenericWithManagerBool(self, name: "formatDialog", parseList: parseList){
-					//if !dialogCriticalWarning(question: title, text: dialogText, proceedButtonText: TextManager.getViewString(context: self, stringID: "formatDialogYes"), cancelButtonText: TextManager.getViewString(context: self, stringID: "formatDialogNo")){
-						//if !dialogCustomWarning(question: "Format \"\(dname)\"?", text: dialogText, style: .warning, mainButtonText: "Don't format", secondButtonText: "Format"){
 						return
 					}
 				}
 			}
 			
 			if cvm.shared.sharedDoTimeMachineWarn{
-				//let dialogText = parse(messange: TextManager.getViewString(context: self, stringID: "formatDialogTimeMachine"), keys: parseList)
-				//if !dialogCriticalWarning(question: title, text: dialogText, proceedButtonText: TextManager.getViewString(context: self, stringID: "formatDialogYes"), cancelButtonText: TextManager.getViewString(context: self, stringID: "formatDialogNo")){
 				if !dialogGenericWithManagerBool(self, name: "formatDialogTimeMachine", parseList: parseList){
-					//if !dialogCustomWarning(question: "Format \"\(pname)\"?", text: "The partition \"\(pname)\" is used for time machine backups, and may contain usefoul backup data, that will be lost if you use it", style: .warning, mainButtonText: "Don't format", secondButtonText: "Format"){
 					return
 				}
 			}
 			
 			tmpWin = nil
 			
-			let _ = sawpCurrentViewController(with: "ChoseApp")
+			let _ = swapCurrentViewController("ChoseApp")
 		}else{
-			NSApplication.shared().terminate(sender)
+			NSApplication.shared.terminate(sender)
 		}
 	}
 	

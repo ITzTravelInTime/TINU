@@ -15,7 +15,7 @@ public struct DialogButton: Equatable {
 	let keyEquivalent: String!
 }
 
-public func genericDialogCreate(message: String, informative: String, style: NSAlertStyle, icon: NSImage?, buttons: [DialogButton], accessoryView: NSView?) -> NSAlert{
+public func genericDialogCreate(message: String, informative: String, style: NSAlert.Style, icon: NSImage?, buttons: [DialogButton], accessoryView: NSView?) -> NSAlert{
 	let dialog = NSAlert()
 	dialog.messageText = message
 	dialog.informativeText = informative
@@ -33,34 +33,34 @@ public func genericDialogCreate(message: String, informative: String, style: NSA
 	return dialog
 }
 
-@inline(__always) public func genericDialogDisplay(message: String, informative: String, style: NSAlertStyle, icon: NSImage?, buttons: [DialogButton], accessoryView: NSView?) -> Bool{
-	return genericDialogCreate(message: message, informative: informative, style: style, icon: icon, buttons: buttons, accessoryView: accessoryView).runModal() == NSAlertFirstButtonReturn
+@inline(__always) public func genericDialogDisplay(message: String, informative: String, style: NSAlert.Style, icon: NSImage?, buttons: [DialogButton], accessoryView: NSView?) -> Bool{
+	return genericDialogCreate(message: message, informative: informative, style: style, icon: icon, buttons: buttons, accessoryView: accessoryView).runModal() == NSApplication.ModalResponse.alertFirstButtonReturn
 }
 
 //settable icon
 
-@inline(__always) public func msgBoxWithCustomIcon(_ title: String,_ text: String,_ style: NSAlertStyle, _ icon: NSImage?){
+@inline(__always) public func msgBoxWithCustomIcon(_ title: String,_ text: String,_ style: NSAlert.Style, _ icon: NSImage?){
 	genericDialogCreate(message: title, informative: text, style: style, icon: icon, buttons: [], accessoryView: nil).runModal()
 }
 /*public func dialogOKCancelWithCustomIcon(question: String, text: String, style: NSAlertStyle, icon: NSImage?) -> Bool {
 	return genericDialogDisplay(message: question, informative: text, style: style, icon: icon, buttons: [DialogButton(text: "Ok", keyEquivalent: "\r"), DialogButton(text: "Cancel", keyEquivalent: "")], accessoryView: nil)
 }*/
 
-public func dialogYesNoWithCustomIcon(question: String, text: String, style: NSAlertStyle, icon: NSImage?) -> Bool {
+public func dialogYesNoWithCustomIcon(question: String, text: String, style: NSAlert.Style, icon: NSImage?) -> Bool {
 	return genericDialogDisplay(message: question, informative: text, style: style, icon: icon, buttons: [DialogButton(text: "Yes", keyEquivalent: "\r"), DialogButton(text: "No", keyEquivalent: "")], accessoryView: nil)
 }
 
-public func dialogCustomWithCustomIcon(question: String, text: String, style: NSAlertStyle, mainButtonText: String, secondButtonText: String, icon: NSImage?) -> Bool {
+public func dialogCustomWithCustomIcon(question: String, text: String, style: NSAlert.Style, mainButtonText: String, secondButtonText: String, icon: NSImage?) -> Bool {
 	return genericDialogDisplay(message: question, informative: text, style: style, icon: icon, buttons: [DialogButton(text: mainButtonText, keyEquivalent: nil), DialogButton(text: secondButtonText, keyEquivalent: nil)], accessoryView: nil)
 }
 
-public func dialogCriticalWithCustomIcon(question: String, text: String, style: NSAlertStyle, proceedButtonText: String, cancelButtonText: String, icon: NSImage?) -> Bool {
+public func dialogCriticalWithCustomIcon(question: String, text: String, style: NSAlert.Style, proceedButtonText: String, cancelButtonText: String, icon: NSImage?) -> Bool {
 	return !genericDialogDisplay(message: question, informative: text, style: style, icon: icon, buttons: [DialogButton(text: proceedButtonText, keyEquivalent: ""), DialogButton(text: cancelButtonText, keyEquivalent: "\r")], accessoryView: nil)
 }
 
 //With app icon
 
-@inline(__always) public func msgBox(_ title: String,_ text: String,_ style: NSAlertStyle){
+@inline(__always) public func msgBox(_ title: String,_ text: String,_ style: NSAlert.Style){
 	msgBoxWithCustomIcon(title, text, style, nil)
 }
 
@@ -70,15 +70,15 @@ public func dialogOKCancel(question: String, text: String, style: NSAlertStyle) 
 }
 */
 
-public func dialogYesNo(question: String, text: String, style: NSAlertStyle) -> Bool {
+public func dialogYesNo(question: String, text: String, style: NSAlert.Style) -> Bool {
 	return dialogYesNoWithCustomIcon(question: question, text: text, style: style, icon: nil)
 }
 
-public func dialogCustom(question: String, text: String, style: NSAlertStyle, mainButtonText: String, secondButtonText: String) -> Bool {
+public func dialogCustom(question: String, text: String, style: NSAlert.Style, mainButtonText: String, secondButtonText: String) -> Bool {
 	return dialogCustomWithCustomIcon(question: question, text: text, style: style, mainButtonText: mainButtonText, secondButtonText: secondButtonText, icon: nil)
 }
 
-public func dialogCritical(question: String, text: String, style: NSAlertStyle, proceedButtonText: String, cancelButtonText: String) -> Bool {
+public func dialogCritical(question: String, text: String, style: NSAlert.Style, proceedButtonText: String, cancelButtonText: String) -> Bool {
 	return dialogCriticalWithCustomIcon(question: question, text: text, style: style, proceedButtonText: proceedButtonText, cancelButtonText: cancelButtonText, icon: nil)
 }
 

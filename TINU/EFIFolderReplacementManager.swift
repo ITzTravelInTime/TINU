@@ -102,7 +102,7 @@ import Foundation
 						
 						do{
 							if !fm.fileExists(atPath: parent.path){
-								try fm.createDirectory(at: parent, withIntermediateDirectories: true, attributes: [:])
+								try fm.createDirectory(at: parent, withIntermediateDirectories: true, attributes: convertToOptionalFileAttributeKeyDictionary([:]))
 								print("      Creating EFI Folder subdirectory: \(parent.path)")
 							}
 						}catch let err{
@@ -121,7 +121,7 @@ import Foundation
 								
 								do{
 									if !fm.fileExists(atPath: file.path) {
-										try fm.createDirectory(at: file, withIntermediateDirectories: true, attributes: [:])
+										try fm.createDirectory(at: file, withIntermediateDirectories: true, attributes: convertToOptionalFileAttributeKeyDictionary([:]))
 										print("      Creating EFI Folder subdirectory: \(parent.path)")
 									}
 									
@@ -232,7 +232,7 @@ import Foundation
 		}
 		
 		private func scanDir(_ dir: String) -> Bool{
-			Swift.print("Scanning EFI Folder's Directory: \(dir)")
+			Swift.print("Scanning EFI Folder's Directory: \n    \(dir)")
 			var r = true
 			let fm = FileManager.default
 			
@@ -248,8 +248,11 @@ import Foundation
 						var name = "/"
 						
 						if file != firstDir{
-							name = file.substring(from: firstDir.endIndex)
+							//name = file.substring(from: firstDir.endIndex)
+							name = String(file[firstDir.endIndex...])
 						}
+						
+						Swift.print("        Item name: \(name)")
 						
 						let url = URL(fileURLWithPath: name, isDirectory: false)
 						
@@ -265,7 +268,8 @@ import Foundation
 							
 							sharedEFIFolderTempData[name] = refData
 							
-							Swift.print("Finished scanning EFI Folder's Directory on: \(file)")
+							Swift.print("Finished scanning EFI Folder's Directory on: \n    \(file)")
+							
 						}else{
 							
 							if url.lastPathComponent == ".DS_Store"{
@@ -343,3 +347,9 @@ import Foundation
 
 
 #endif
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalFileAttributeKeyDictionary(_ input: [String: Any]?) -> [FileAttributeKey: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (FileAttributeKey(rawValue: key), value)})
+}

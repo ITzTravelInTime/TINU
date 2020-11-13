@@ -86,7 +86,7 @@ public final class EFIPartitionMounterModel{
 				
 				if !partition.isMounted(){ continue }
 				
-				part.drivePartIcon = NSWorkspace.shared().icon(forFile: partition.MountPoint!)
+				part.drivePartIcon = NSWorkspace.shared.icon(forFile: partition.MountPoint!)
 				
 				res.completeDrivePartitions.append(part)
 			}
@@ -421,7 +421,7 @@ public final class EFIPartitionMounterModel{
 			
 			mount = mp
 			
-			tempPartition.drivePartIcon = NSWorkspace.shared().icon(forFile: mp)
+			tempPartition.drivePartIcon = NSWorkspace.shared.icon(forFile: mp)
 			
 		}else{
 			print("                        Partition not mounted, it will not be added to the list")

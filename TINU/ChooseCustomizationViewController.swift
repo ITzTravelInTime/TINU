@@ -33,7 +33,7 @@ class ChooseCustomizationViewController: GenericViewController {
 		DispatchQueue.main.async {
 			
 			cvm.shared.sharedMediaIsCustomized = true
-			self.sawpCurrentViewController(with: "Customize")
+			self.swapCurrentViewController("Customize")
 		}
     }
     
@@ -44,16 +44,16 @@ class ChooseCustomizationViewController: GenericViewController {
 			checkOtherOptions()
 		
 			cvm.shared.sharedMediaIsCustomized = false
-			self.sawpCurrentViewController(with: "Confirm")
+			self.swapCurrentViewController("Confirm")
 		}
     }
     
     @IBAction func goBack(_ sender: Any) {
 		DispatchQueue.main.async {
 			if showProcessLicense && sharedInstallMac{
-				self.sawpCurrentViewController(with: "License")
+				self.swapCurrentViewController("License")
 			}else{
-				self.sawpCurrentViewController(with: "ChoseApp")
+				self.swapCurrentViewController("ChoseApp")
 			}
 		}
     }

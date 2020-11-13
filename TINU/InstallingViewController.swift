@@ -122,7 +122,7 @@ class InstallingViewController: GenericViewController, ViewID{
 			//self.setTitleLabel(text: "The drive and macOS installer below will be used, are you sure?")
 		}else{
 			let sv = cm.sharedVolume!
-			driveImage.image = NSWorkspace.shared().icon(forFile: sv)
+			driveImage.image = NSWorkspace.shared.icon(forFile: sv)
 			driveName.stringValue = FileManager.default.displayName(atPath: sv)
 		}
 		
@@ -174,7 +174,7 @@ class InstallingViewController: GenericViewController, ViewID{
 		
 		checkOtherOptions()
 		
-		self.sawpCurrentViewController(with: "MainDone")
+		self.swapCurrentViewController("MainDone")
 	}
 	
 	func goToFinalScreen(id: String, success: Bool = false, parseList: [String: String]! = nil){
@@ -215,7 +215,7 @@ class InstallingViewController: GenericViewController, ViewID{
 		//resets window and auths
 		restoreWindow()
 		
-		self.sawpCurrentViewController(with: "Confirm")
+		self.swapCurrentViewController("Confirm")
 	}
 	
 	@IBAction func cancel(_ sender: Any) {
@@ -250,7 +250,7 @@ class InstallingViewController: GenericViewController, ViewID{
 	}
 	
 	func enableItems(enabled: Bool){
-		if let apd = NSApplication.shared().delegate as? AppDelegate{
+		if let apd = NSApplication.shared.delegate as? AppDelegate{
 			if sharedIsOnRecovery{
 				apd.InstallMacOSItem.isEnabled = enabled
 			}

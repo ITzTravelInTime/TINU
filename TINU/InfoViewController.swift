@@ -120,13 +120,13 @@ class InfoViewController: GenericViewController, ViewID{
 
     @IBAction func ok(_ sender: Any) {
         if sharedShowLicense{
-            let _ = sawpCurrentViewController(with: "License")
+            let _ = swapCurrentViewController("License")
         }else{
-            let _ = sawpCurrentViewController(with: "ChoseDrive")
+            let _ = swapCurrentViewController("ChoseDrive")
         }
     }
 
     @IBAction func back(_ sender: Any) {
-        sawpCurrentViewController(with: "chooseSide")
+        swapCurrentViewController("chooseSide")
     }
 }

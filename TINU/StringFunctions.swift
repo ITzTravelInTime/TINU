@@ -6,7 +6,7 @@
 //  Copyright © 2020 Pietro Caruso. All rights reserved.
 //
 
-import Foundation
+import AppKit
 
 public func parse(messange: String, keys: [String: String]) -> String{
 	var ret = ""

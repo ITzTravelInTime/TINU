@@ -202,7 +202,7 @@ public final class TaskKillManager: ViewID{
 	}
 	
 	class func terminateAppsWithAsk(byCommonParameter ids: [String], parameterKind pk: ParameterKind, mustBeEqual eq: Bool, firstFailedToCloseName ff: inout String?) -> Bool!{
-		for info in NSWorkspace.shared().runningApplications{
+		for info in NSWorkspace.shared.runningApplications{
 			var par: String!
 			
 			switch pk{

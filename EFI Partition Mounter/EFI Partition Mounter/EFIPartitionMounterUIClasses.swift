@@ -178,7 +178,7 @@ public class EFIPartitionToolInterface{
 			
 			self.addSubview(ejectButton)
 			
-			spinner.style = .spinningStyle
+			spinner.style = .spinning
 			
 			spinner.frame.size = NSSize(width: 30, height: 30)
 			
@@ -306,7 +306,7 @@ public class EFIPartitionToolInterface{
 			DispatchQueue.global(qos: .background).async {
 				guard let mountPoint = dm.getMountPointFromPartitionBSDID(self.bsdid) else { return }
 				
-				NSWorkspace.shared().open(URL(fileURLWithPath: mountPoint, isDirectory: true))
+				NSWorkspace.shared.open(URL(fileURLWithPath: mountPoint, isDirectory: true))
 			}
 		}
 		
@@ -343,19 +343,19 @@ public class EFIPartitionToolInterface{
 				
 					switch item.installedAppName{
 					case "":
-						if NSWorkspace.shared().openFile(configLocation){ return }
+						if NSWorkspace.shared.openFile(configLocation){ return }
 						
 						msgboxWithManagerGeneric(EFIPMTextManager, self, name: "impossible", parseList: nil, style: .warning, icon: IconsManager.shared.warningIcon)
 						break
 					case "{openLink}" :
-						NSWorkspace.shared().open(URL(string: item.download)!)
+						NSWorkspace.shared.open(URL(string: item.download)!)
 						break
 					default:
-						if NSWorkspace.shared().openFile(configLocation, withApplication: item.installedAppName){ return }
+						if NSWorkspace.shared.openFile(configLocation, withApplication: item.installedAppName){ return }
 						
 						let list = ["{appName}" : item.installedAppName]
 						if dialogWithManagerGeneric(EFIPMTextManager as TextManagerGet, self, name: "download", parseList: list){
-							NSWorkspace.shared().open(URL(string: item.download)!)
+							NSWorkspace.shared.open(URL(string: item.download)!)
 						}
 						break
 					}

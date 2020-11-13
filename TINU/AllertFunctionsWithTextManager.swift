@@ -8,7 +8,7 @@
 
 import Cocoa
 
-public func msgboxWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlertStyle = NSAlertStyle.warning, icon: NSImage? = IconsManager.shared.warningIcon){
+public func msgboxWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon){
 	var title = manager.getViewString(context: handle, stringID: name + "Title")
 	var content = manager.getViewString(context: handle, stringID: name)
 	
@@ -25,7 +25,7 @@ public func msgboxWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID
 	msgBoxWithCustomIcon(title!, content!, style, icon)
 }
 
-public func dialogWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlertStyle = NSAlertStyle.warning, icon: NSImage? = IconsManager.shared.warningIcon) -> Bool{
+public func dialogWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon) -> Bool{
 	
 	var title = manager.getViewString(context: handle, stringID: name + "Title")
 	var content = manager.getViewString(context: handle, stringID: name)
@@ -46,7 +46,7 @@ public func dialogWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID
 	return dialogCustomWithCustomIcon(question: title!, text: content!, style: style, mainButtonText: yes!, secondButtonText: no!, icon: icon)
 }
 
-public func dialogGenericWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlertStyle = NSAlertStyle.warning, icon: NSImage? = IconsManager.shared.warningIcon) -> NSAlert{
+public func dialogGenericWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon) -> NSAlert{
 	
 	var title = manager.getViewString(context: handle, stringID: name + "Title")
 	var content = manager.getViewString(context: handle, stringID: name)
@@ -89,26 +89,26 @@ public func dialogGenericWithManagerGeneric(_ manager: TextManagerGet, _ handle:
 	return genericDialogCreate(message: title!, informative: content!, style: style, icon: icon, buttons: buttons, accessoryView: nil)
 }
 
-@inline(__always) public func dialogGenericWithManagerBoolGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlertStyle = NSAlertStyle.warning, icon: NSImage? = IconsManager.shared.warningIcon) -> Bool{
-	return dialogGenericWithManager(handle, name: name, parseList: parseList, style: style, icon: icon).runModal() == NSAlertFirstButtonReturn
+@inline(__always) public func dialogGenericWithManagerBoolGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon) -> Bool{
+	return dialogGenericWithManager(handle, name: name, parseList: parseList, style: style, icon: icon).runModal() == NSApplication.ModalResponse.alertFirstButtonReturn
 }
 
 #if TINU
 
-@inline(__always) public func msgboxWithManager(_ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlertStyle = NSAlertStyle.warning, icon: NSImage? = IconsManager.shared.warningIcon){
+@inline(__always) public func msgboxWithManager(_ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon){
 	msgboxWithManagerGeneric(TextManager, handle, name: name, parseList: parseList, style: style, icon: icon)
 }
 
-@inline(__always) public func dialogWithManager(_ handle: ViewID, name: String, parseList: [String: String]! = nil, defaultAlternate: Bool = false, style: NSAlertStyle = NSAlertStyle.warning, icon: NSImage? = IconsManager.shared.warningIcon) -> Bool{
+@inline(__always) public func dialogWithManager(_ handle: ViewID, name: String, parseList: [String: String]! = nil, defaultAlternate: Bool = false, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon) -> Bool{
 	return dialogWithManagerGeneric(TextManager, handle, name: name, parseList: parseList, style: style, icon: icon)
 }
 
-@inline(__always) public func dialogGenericWithManager(_ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlertStyle = NSAlertStyle.warning, icon: NSImage? = IconsManager.shared.warningIcon) -> NSAlert{
+@inline(__always) public func dialogGenericWithManager(_ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon) -> NSAlert{
 	return dialogGenericWithManagerGeneric(TextManager, handle, name: name, parseList: parseList, style: style, icon: icon)
 }
 
-@inline(__always) public func dialogGenericWithManagerBool(_ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlertStyle = NSAlertStyle.warning, icon: NSImage? = IconsManager.shared.warningIcon) -> Bool{
-	return dialogGenericWithManagerGeneric(TextManager, handle, name: name, parseList: parseList, style: style, icon: icon).runModal() == NSAlertFirstButtonReturn
+@inline(__always) public func dialogGenericWithManagerBool(_ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon) -> Bool{
+	return dialogGenericWithManagerGeneric(TextManager, handle, name: name, parseList: parseList, style: style, icon: icon).runModal() == NSApplication.ModalResponse.alertFirstButtonReturn
 }
 
 #endif

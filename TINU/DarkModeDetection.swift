@@ -22,7 +22,7 @@ extension NSView {
 		get{
 			
 			if #available(OSX 10.14, *) {
-				return self.effectiveAppearance.name == NSAppearanceNameDarkAqua
+				return self.effectiveAppearance.name.rawValue == NSAppearance.Name.darkAqua.rawValue
 			}
 			
 			return false

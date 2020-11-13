@@ -38,7 +38,7 @@ public class DriveDetectInfoViewController: GenericViewController, ViewID {
 		
 		textView.textColor = NSColor.textColor
 		
-		if self.presenting == nil{
+		if self.presentingViewController == nil{
 		//if self.window != sharedWindow{
 			self.button.title = TextManager.getViewString(context: self, stringID: "backButton")
 		}
@@ -58,7 +58,7 @@ public class DriveDetectInfoViewController: GenericViewController, ViewID {
 	}*/
 	
     @IBAction func buttonClick(_ sender: Any) {
-		if self.presenting == nil{
+		if self.presentingViewController == nil{
 			self.window.close()
 		}else{
 			self.window.sheetParent?.endSheet(self.window)

@@ -46,13 +46,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         return true
     }
     
-    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplicationTerminateReply {
+    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
 		log("Should terminate called")
 		
         if CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress{
             //msgBoxWarning("You can't quit now", "You can't quit from TINU now, wait for the first part of the process to end or press the cancel button on the windows that asks for the password, and then quit if you want")
 			msgboxWithManager(self, name: "cantQuiNow")
-            return NSApplicationTerminateReply.terminateCancel
+            return NSApplication.TerminateReply.terminateCancel
         }else if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress{
 			var spd: Bool!
 				
@@ -61,15 +61,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 			if let stopped = spd{
 				if !stopped{
 					print("Terminate failed")
-					return NSApplicationTerminateReply.terminateCancel
+					return NSApplication.TerminateReply.terminateCancel
 				}
 			}else{
 				print("Terminate cancelled")
-				return NSApplicationTerminateReply.terminateCancel
+				return NSApplication.TerminateReply.terminateCancel
 			}
         }
 		
-        return NSApplicationTerminateReply.terminateNow
+        return NSApplication.TerminateReply.terminateNow
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -164,7 +164,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 			
 			InstallMacOSItem.title = TextManager.getViewString(context: self, stringID: "switchText")
 			
-            sharedWindow.contentViewController?.sawpCurrentViewController(with: "Info")
+            sharedWindow.contentViewController?.swapCurrentViewController("Info")
 			
             //restoreOtherOptions()
             
@@ -256,7 +256,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 	
 	private func openURl(_ sURL: String){
 		if let checkURL = NSURL(string: sURL) {
-			if NSWorkspace.shared().open(checkURL as URL) {
+			if NSWorkspace.shared.open(checkURL as URL) {
 				print("url successfully opened: " + String(describing: checkURL))
 			}
 		} else {

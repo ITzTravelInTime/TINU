@@ -42,7 +42,7 @@ public class GenericViewController: NSViewController {
 			label.frame.size.width = self.view.frame.width - CGFloat(36)
 			label.frame.origin.y = self.view.frame.height - 44
 			label.isHidden = false
-			label.autoresizingMask = [.viewWidthSizable, .viewMinYMargin, .viewMinXMargin, .viewMaxXMargin]
+			label.autoresizingMask = [NSView.AutoresizingMask.width, NSView.AutoresizingMask.minYMargin, NSView.AutoresizingMask.minXMargin, NSView.AutoresizingMask.maxXMargin]
 			self.view.addSubview(label)
 		}
 	}

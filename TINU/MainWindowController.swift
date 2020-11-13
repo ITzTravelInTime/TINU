@@ -16,7 +16,7 @@ public class mainWindowController: GenericWindowController {
         
         window?.delegate = self
         
-        window?.toolbar = NSApplication.shared().windows[0].toolbar
+        window?.toolbar = NSApplication.shared.windows[0].toolbar
         
         //we have got all the needed data, so we can setup the look properly
         self.setUI()
@@ -34,10 +34,10 @@ public class mainWindowController: GenericWindowController {
     }
     
     override public func windowWillClose(_ notification: Notification){
-        NSApplication.shared().terminate(self)
+        NSApplication.shared.terminate(self)
     }
     
-    func windowShouldClose(_ sender: Any) -> Bool {
+    @objc func windowShouldClose(_ sender: Any) -> Bool {
 		print("main Window should close called")
         if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress{
 			if let d = InstallMediaCreationManager.shared.stopWithAsk(){

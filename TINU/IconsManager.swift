@@ -15,7 +15,7 @@ public final class IconsManager{
 	//warning icon used by the app
 	public var warningIcon: NSImage!{
 		get{
-			return NSImage.init(named: NSImageNameCaution)//getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertCautionIcon.icns", name: "warning")
+			return NSImage.init(named: NSImage.cautionName)//getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertCautionIcon.icns", name: "warning")
 		}
 	}
 	
@@ -60,7 +60,7 @@ public final class IconsManager{
 	public var copyIcon: NSImage!{
 		get{
 			//return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/MultipleItemsIcon.icns", name: "warning")
-			return NSImage.init(named: NSImageNameMultipleDocuments)
+			return NSImage.init(named: NSImage.multipleDocumentsName)
 		}
 	}
 	
@@ -100,7 +100,7 @@ public final class IconsManager{
 			}
 		}
 		
-		return NSWorkspace.shared().icon(forFile: app)
+		return NSWorkspace.shared.icon(forFile: app)
 	}
 	
 	//gets an icon from a file, if the file do not exists, it uses an icon from the assets

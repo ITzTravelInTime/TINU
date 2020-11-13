@@ -70,7 +70,7 @@ class ConfirmViewController: GenericViewController, ViewID {
         ps = cm.sharedVolumeNeedsPartitionMethodChange
         //fs = sharedVolumeNeedsFormat
         
-        if let a = NSApplication.shared().delegate as? AppDelegate{
+        if let a = NSApplication.shared.delegate as? AppDelegate{
             a.QuitMenuButton.isEnabled = true
         }
 		
@@ -143,7 +143,7 @@ class ConfirmViewController: GenericViewController, ViewID {
 				self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "titleDrive"))
 			}else{
 				let sv = cm.sharedVolume!
-				driveImage.image = NSWorkspace.shared().icon(forFile: sv)
+				driveImage.image = NSWorkspace.shared.icon(forFile: sv)
 				driveName.stringValue = FileManager.default.displayName(atPath: sv)
 			}
 			
@@ -175,7 +175,7 @@ class ConfirmViewController: GenericViewController, ViewID {
 		}else{*/
 		#if skipChooseCustomization
 			cm.sharedMediaIsCustomized = false
-			sawpCurrentViewController(with: "ChoseApp")
+			swapCurrentViewController("ChoseApp")
 		#else
 			if cm.sharedMediaIsCustomized{
 				openSubstituteWindow(windowStoryboardID: "Customize")
@@ -198,7 +198,7 @@ class ConfirmViewController: GenericViewController, ViewID {
 		
 		tmpWin = nil
 		
-        let _ = sawpCurrentViewController(with: "Install")
+        let _ = swapCurrentViewController("Install")
     }
     
 	@IBAction func openAdvancedOptions(_ sender: Any) {
@@ -210,7 +210,7 @@ class ConfirmViewController: GenericViewController, ViewID {
 		tmpWin = sharedStoryboard.instantiateController(withIdentifier: "Customize") as? GenericViewController
 		
 		if tmpWin != nil{
-		self.presentViewControllerAsSheet(tmpWin)
+		self.presentAsSheet(tmpWin)
 		
 		tmpWin.window.isFullScreenEnaled = false
 		}
