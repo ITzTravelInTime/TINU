@@ -1,11 +1,13 @@
 # TINU
-TINU, the bootable macOS installer creation tool
+TINU, the open tool to create bootable macOS installers 
 
 [TINU Is Not Unibe**t]
 
-This software is intended to be used to create a bootable macOS installer for mac and hackintosh, it's basically a GUI for the createinstallmedia executable that could be found in any macOS installer app from Mavericks up to the latest versions.
+This software is intended to be used to create a bootable macOS installer for computers capable of running Apple's macOS, this app is basically a GUI for the createinstallmedia executable that could be found in any macOS installer app from Mavericks up to the latest versions.
 
 Allows you to create easily a macOS install media without messing around with command line stuff and without using disk utility, and also detects and prevents the most common errors with the creation of bootable vanilla macOS installers. 
+
+# For the latest Source code check out the delopment branch!
 
 # Features:
 - Simple-to-use UI that allows you to easily start the bootable macOS installer creation process.
