@@ -66,7 +66,9 @@ public let simulateRecovery = false
 //this is used to set the usage of shadows in the UI
 public let simulateDisableShadows = false
 
-//non ui testing conditions
+//this is used to simulate a disabled/enabled sip
+// - true/false simulate on/off state of sip
+// - nil use actual sip state
+public let simulateSIPStatus: Bool! = nil
 
-//this variable tells to the app to use the alternative apple script cmd for the creation process
-//public let simulateUseScriptAuth = !false
+//non ui testing conditions

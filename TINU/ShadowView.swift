@@ -19,7 +19,7 @@ public class ShadowView: NSView{
         self.needsLayout = true
 		
 		if canShadow{
-			self.layer?.shadowColor = isDarkMode ? CGColor.black : CGColor.init(gray: 0.4, alpha: 1);
+			self.layer?.shadowColor = (isDarkMode ? NSColor.controlDarkShadowColor : NSColor.controlShadowColor).cgColor //isDarkMode ? CGColor.black : CGColor.init(gray: 0.4, alpha: 1);
 			self.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
 		}else{
 			self.layer?.backgroundColor = NSColor.transparent.cgColor

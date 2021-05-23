@@ -18,14 +18,41 @@ public class CreditsViewController: GenericViewController, ViewID {
     
     @IBOutlet weak var sourceButton: NSButton!
     @IBOutlet weak var contactButton: NSButton!
-    
+	@IBOutlet weak var closeButton: NSButton!
+	
 	@IBOutlet weak var italianHackGroupLabel: NSTextField!
 	
     override public func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
 		
-        versionLabel.stringValue = TextManager.getViewString(context: self, stringID: "version") + Bundle.main.version! + " (" + Bundle.main.build! + ")"
+		print("Setting up CrditsViewController")
+		
+		let archs = Bundle.main.executableArchitectures!
+		var supportedArchs = [NSBundleExecutableArchitectureX86_64: "x86_64", NSBundleExecutableArchitectureI386: "i386", NSBundleExecutableArchitecturePPC: "PPC", NSBundleExecutableArchitecturePPC64: "PPC_64"]
+		
+		if #available(OSX 11.0, *) {
+			supportedArchs[NSBundleExecutableArchitectureARM64] = "ARM64"
+		}else{
+			supportedArchs[16777228] = "ARM64"
+		}
+		
+		print("Supported architecture values: ")
+		print(supportedArchs)
+		
+		print("Bundle architectures: ")
+		print(archs)
+		
+		versionLabel.stringValue = TextManager.getViewString(context: self, stringID: "version") + Bundle.main.version! + " (" + Bundle.main.build! + ") ( "
+		
+		for arch in supportedArchs{
+			if archs.contains(NSNumber(value: arch.key)){
+				versionLabel.stringValue += arch.value + " "
+			}
+		}
+		
+		versionLabel.stringValue += ")"
+		
         copyrigthLabel.stringValue = Bundle.main.copyright! + TextManager.getViewString(context: self, stringID: "license")
         
         if sharedIsOnRecovery{
@@ -33,9 +60,16 @@ public class CreditsViewController: GenericViewController, ViewID {
             sourceButton.isEnabled = false
         }
 		
+		contactButton.title = TextManager.getViewString(context: self, stringID: "contactsButton")
+		sourceButton.title = TextManager.getViewString(context: self, stringID: "sourceCodeButton")
+		
+		closeButton.title = TextManager.getViewString(context: self, stringID: "closeButton")
+		
 		#if macOnlyMode
 			italianHackGroupLabel.isHidden = true
 		#endif
+		
+		print("Setup end")
     }
     
     @IBAction func closeWindow(_ sender: Any) {

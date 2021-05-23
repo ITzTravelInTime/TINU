@@ -10,37 +10,33 @@
 
 -continue with ui revision
 
--maybe rework the share button in the log window to do everything inside the window controller
-
--dialog localization
-
 -copyright string localization
-
--installation unsupported apps (lion and mountain lion) mark instead of hiding
 
 -EFI PM memory leak
 
--remoovable disk detecion code repetition fix
-
 -divide language files in folders one for each language rather than re-naming them according to the language to use
 
--translate you can now remoove messange in efi pmte
+-debug and test all of the features
 
--terminate with ask translation + messange bug fix
+-remove partitions unmount hardcode (detect the partitions to unmount)
 
--keep usb drive name options
+-install clover and open core efi folder label fix
 
--drive name constant while installing (maybe put a "(renamed to ... )" messange)
+-adopt sf symbols icons when possible
 
--drive removable detection function in dm
+-menu items text from json
 
--standardized drive icon function
+-credits view controller text from json (probably requires a custom json)
 
+-contacts view controller text from json (probably requires a cutom json)
 
+-macOS installer version icons as .icns
 
 */
 
 /*TODO but with less priority:
+
+-installation unsupported apps (lion and mountain lion) mark instead of hiding
 
 -reimplement efi partition mounter's back end using codable classes (Work in progress)
 
@@ -58,15 +54,11 @@
 
 -optimize efi partition mounter for menu usage (not a lot of priority)
 
--touch id efi partition mounter (big maybe)
-
 -show all mounted volumes in the drive detection but don't make them usable if they can't be used, and show a no go sign like with installer apps
 
 -send notitifcation if the tinu version is not up to date (use a json file containing the reference link and the reference information to get)
 
 -initial screen more like a home menu with more features ready to use + help section in this new home screen (which in cludes con tact us and help info and faqs)
-
--find a way to have the drive icon choosen accordignly to the disk type, maybe detecting is it's internal or not
 
 -dynamic contact us window using the text assets or a json file (maybe the second option is the better one)
 

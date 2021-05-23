@@ -36,7 +36,7 @@ fileprivate func getDiagnosticsModeFolder() -> String!{
 }
 
 fileprivate	func getDiagnosticsModeFileLocation(sudo: Bool) -> String!{
-	let resourceName = "/" + (sudo ? "DebugScriptSudo" : "DebugScript") + ".command"
+	let resourceName = "/DebugScript" + (sudo ? "Sudo" : "") + ".command"
 	
 	return getDiagnosticsModeFolder() + resourceName
 }

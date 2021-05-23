@@ -15,7 +15,7 @@ public struct EFIPMTextManagerStruct: TextManagerGet, CodableDefaults, Codable, 
 	
 	public func getViewString(context: ViewID, stringID: String) -> String!{
 		
-		let asset = remAsset ?? EFIPMTextManagerStruct.defaultResourceFileName + "En" + EFIPMTextManagerStruct.defaultResourceFileExtension
+		let asset = remAsset ?? EFIPMTextManagerStruct.defaultResourceFileName + "En." + EFIPMTextManagerStruct.defaultResourceFileExtension
 		
 		guard let view = viewStrings[context.id] else{
 			

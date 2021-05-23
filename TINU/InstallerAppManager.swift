@@ -116,6 +116,7 @@ public final class InstallerAppManager{
 	
 	//returns the version number of the mac os installer app, returns nil if it was not found, returns an epty string if it's an unrecognized version
 	public func installerAppVersion() -> String!{
+		print("Detecting app version")
 		if checkSharedBundleVersion(){
 			var subVer = String(cvm.shared.sharedBundleVersion.prefix(3))
 			
@@ -124,16 +125,45 @@ public final class InstallerAppManager{
 			
 			let hexString = String(UInt8(subVer, radix: 36)! - 10)
 			
-			return String(UInt(String(cvm.shared.sharedBundleVersion.prefix(2)))! - 4) + "." + hexString
+			let ret = String(UInt(String(cvm.shared.sharedBundleVersion.prefix(2)))! - 4) + "." + hexString
+			print("Detected app version (using the build number): \(ret)")
+			return ret
 			
 		}
 		
 		if checkSharedBundleName(){
 			
-			//fallback, really not used a lot
+			//fallback method, really not used a lot and not that precise, but it's tested to work
+			
+			let checkList: [UInt: ([String], [String])] = [16: (["big sur", "10.16", "11."], []), 15: (["catalina", "10.15"], []), 14: (["mojave", "10.14"], []), 13: (["high sierra", "high", "10.13"], []), 12: (["sierra", "10.12"], ["high"]), 11: (["el capitan", "el", "capitan", "10.11"], []), 10: (["yosemite", "10.10"], []), 9: (["mavericks", "10.9"], [])]
 			
 			let lc = cvm.shared.sharedBundleName.lowercased()
-			if lc.contains("big sur") || lc.contains("10.16") || lc.contains("11.0"){
+			
+			
+			check: for item in checkList{
+				for s in item.value.0{
+					if lc.contains(s){
+						var correct: Bool = true
+						
+						for t in item.value.1{
+							if lc.contains(t){
+								correct = false
+								break
+							}
+						}
+						
+						if correct{
+							print("Detected app version (using the bundle name): \(item.key)")
+							return String(item.key)
+						}else{
+							continue check
+						}
+					}
+				}
+			}
+			
+			/*
+			if lc.contains("big sur") || lc.contains("10.16") || lc.contains("11."){
 				return "16"
 			}
 			if lc.contains("catalina") || lc.contains("10.15"){
@@ -156,7 +186,8 @@ public final class InstallerAppManager{
 			}
 			if lc.contains("mavericks") || lc.contains("10.9"){
 				return "9"
-			}
+			}*/
+			
 			return ""
 		}else{
 			return nil
@@ -234,10 +265,12 @@ public final class InstallerAppManager{
 		return installerAppGoesUpToThatVersion(version: 11)
 	}
 	
-	@inline(__always) public func sharedAppNeedsIABoot() -> Bool!{
+	#if !macOnlyMode
+	@inline(__always) public func sharedAppSupportsIAEdit() -> Bool!{
 		print("Checking if the installer app supports the creation of .IABootFiles folder")
-		return !installerAppGoesUpToThatVersion(version: 13.4)
+		return !installerAppGoesUpToThatVersion(version: 13.4) && installerAppGoesUpToThatVersion(version: 14.0)
 	}
+	#endif
 	
 }
 

@@ -105,7 +105,14 @@ public class EFIReplacementView: NSView, ViewID{
 		
 		self.addSubview(pathLabel)
 		
-		checkImage.image = NSImage(named: "checkVector")
+		if #available(macOS 11.0, *){
+			checkImage.image = NSImage(systemSymbolName: "checkmark.circle.fill", accessibilityDescription: nil)!
+			checkImage.image!.isTemplate = true
+			checkImage.contentTintColor = .systemGreen
+		}else{
+			checkImage.image = NSImage(named: "checkVector")
+		}
+		
 		checkImage.frame.size = NSSize(width: imgSide, height: imgSide)
 		checkImage.frame.origin = NSPoint(x: self.frame.size.width - 5 - imgSide, y: pathLabel.frame.origin.y + (pathLabel.frame.height / 2) - (imgSide / 2))
 		checkImage.imageScaling = .scaleProportionallyUpOrDown

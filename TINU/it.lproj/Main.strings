@@ -258,7 +258,7 @@
 "SkF-ZK-107.title" = "Scarica un'app di installazione di macOS";
 
 /* Class = "NSMenuItem"; title = "Related to TINU"; ObjectID = "TBQ-DB-mnf"; */
-"TBQ-DB-mnf.title" = "Altro ...";
+"TBQ-DB-mnf.title" = "Altro...";
 
 /* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "TBZ-N3-HQO"; */
 "TBZ-N3-HQO.title" = "Annulla";
@@ -276,7 +276,7 @@
 "TvO-Ld-v0Z.title" = "Sviluppo:";
 
 /* Class = "NSMenu"; title = "Related to TINU"; ObjectID = "URd-Yp-HZH"; */
-"URd-Yp-HZH.title" = "Altro ...";
+"URd-Yp-HZH.title" = "Altro...";
 
 /* Class = "NSTextFieldCell"; title = "TINU"; ObjectID = "V4U-oN-2Lt"; */
 "V4U-oN-2Lt.title" = "TINU";
@@ -362,8 +362,8 @@
 /* Class = "NSTextFieldCell"; title = "Version: "; ObjectID = "cbv-XH-G2E"; */
 "cbv-XH-G2E.title" = "Versione: ";
 
-/* Class = "NSTextFieldCell"; title = "Apple (macOS system Icons), Pablo Melo prcmelo@gmail.com (EFI Partition Mounter Icon)"; ObjectID = "cdb-AU-e6h"; */
-"cdb-AU-e6h.title" = "Apple (Icone di systema di macOS), Pablo Melo prcmelo@gmail.com (Icona di EFI Partition Mounter)";
+/* Class = "NSTextFieldCell"; title = "Gianmarco Gargiulo (App icon), Apple (macOS system Icons), Pablo Melo prcmelo@gmail.com (EFI Partition Mounter Icon)"; ObjectID = "cdb-AU-e6h"; */
+"cdb-AU-e6h.title" = "Gianmarco Gargiulo (Icona App, e icona chiavetta), Apple (Icone di macOS), Pablo Melo prcmelo@gmail.com (Icona di EFI Partition Mounter)";
 
 /* Class = "NSButtonCell"; title = "Close"; ObjectID = "dA4-Vh-7dJ"; */
 "dA4-Vh-7dJ.title" = "Chiudi";
@@ -458,8 +458,8 @@
 /* Class = "NSMenu"; title = "Speech"; ObjectID = "npr-VC-upM"; */
 "npr-VC-upM.title" = "Pronuncia";
 
-/* Class = "NSTextFieldCell"; title = "Michele Vitiello Bonaventura, Giorglio Dall'Aglio, Davide Dessí"; ObjectID = "oMO-Hx-Iin"; */
-"oMO-Hx-Iin.title" = "Michele Vitiello Bonaventura, Giorglio Dall'Aglio, Davide Dessí";
+/* Class = "NSTextFieldCell"; title = "Michele Vitiello Bonaventura, Giorgio Dall'Aglio, Davide Dessí"; ObjectID = "oMO-Hx-Iin"; */
+"oMO-Hx-Iin.title" = "Michele Vitiello Bonaventura, Giorgio Dall'Aglio, Davide Dessí";
 
 /* Class = "NSTextFieldCell"; title = "TINU on insanelymac (ITA)"; ObjectID = "oQJ-95-zja"; */
 "oQJ-95-zja.title" = "TINU su insanelymac (ITA)";

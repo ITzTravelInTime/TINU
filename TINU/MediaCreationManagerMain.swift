@@ -104,7 +104,7 @@ public final class InstallMediaCreationManager: ViewID{
 	public func stop(mustStop: Bool) -> Bool!{
 		if let success = TaskKillManager.terminateProcess(PID: CreateinstallmediaSmallManager.shared.process.processIdentifier){
 			if success{
-				//if we need to stop the process ...
+				//if we need to stop the process...
 				if mustStop{
 					
 					CreateinstallmediaSmallManager.shared.process.terminate()

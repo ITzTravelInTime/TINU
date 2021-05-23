@@ -145,7 +145,7 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
         self.spinner.startAnimation(self)
         
         DispatchQueue.global(qos: .background).async {
-            
+			self.watcherTriggerd = true
             self.watcher = DirectoryObserver(URL: URL(fileURLWithPath: "/Volumes", isDirectory: false), block: {
                 
                 print("Change in /Volumes")
@@ -161,7 +161,7 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
                     }
                 }
                 
-                self.watcherTriggerd.toggle()
+                
                 
             })
             
@@ -204,6 +204,7 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
     }
     
 	@objc @IBAction func refresh(_ sender: Any) {
+		self.watcherTriggerd = false
 		scrollView.isHidden = true
 		
 		hideFailureImage()
@@ -217,6 +218,7 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
         
         setScrollView()
 		
+		self.watcherTriggerd = true
 	}
 	
 	@IBAction func close(_ sender: Any) {
@@ -318,7 +320,7 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
 					
 					self.scrollView.isHidden = true
 					
-					self.setFailureImage(image: IconsManager.shared.warningIcon)
+					self.defaultFailureImage()
                     self.showFailureImage()
                     
 					self.setFailureLabel(text: EFIPMTextManager.getViewString(context: self, stringID: "noEFIPartitions"))//"No EFI partitions found")

@@ -84,14 +84,15 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		//print(TextManager!)
 		//print(CodableCreation<TINUTextsManagerStruct>.getEncoded(TextManager!)!)
 		
-		createUSBButton.upperImage.image = IconsManager.shared.removableDiskIcon //NSImage(named: "Removable")
-		createUSBButton.upperTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstaller")//"Create a bootable\nmacOS installer"
+		//createUSBButton.cImage.image = IconsManager.shared.removableDiskIcon //NSImage(named: "Removable")
+		createUSBButton.cImage.image = NSImage(named: "drive")
+		createUSBButton.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstaller")//"Create a bootable\nmacOS installer"
 		
-		installButton.upperImage.image = NSImage(named: NSImage.computerName)//NSImage(named: "OSInstall")
-		installButton.upperTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstallation")//"Install macOS"
+		installButton.cImage.image = NSImage(named: NSImage.computerName)//NSImage(named: "OSInstall")
+		installButton.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstallation")//"Install macOS"
 		
-		efiButton.upperImage.image = NSImage(named: "EFIIcon")
-		efiButton.upperTitle.stringValue = TextManager.getViewString(context: self, stringID: "openEFIMounter")//"Use \nEFI Partition Mounter"
+		efiButton.cImage.image = NSImage(named: "EFIIcon")
+		efiButton.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openEFIMounter")//"Use \nEFI Partition Mounter"
 		
 		
 		/*if sharedIsOnRecovery{
@@ -135,7 +136,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 					b.frame.origin = CGPoint.zero
 					b.wantsLayer = true
 					
-					b.upperTitle.textColor = NSColor.textColor
+					b.cTitle.textColor = NSColor.textColor
 					
 					var shadowView: NSView!
 					

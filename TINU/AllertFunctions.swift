@@ -15,7 +15,7 @@ public struct DialogButton: Equatable {
 	let keyEquivalent: String!
 }
 
-public func genericDialogCreate(message: String, informative: String, style: NSAlert.Style, icon: NSImage?, buttons: [DialogButton], accessoryView: NSView?) -> NSAlert{
+public func genericDialogCreate(message: String, informative: String, style: NSAlert.Style, icon: NSImage? = nil, buttons: [DialogButton], accessoryView: NSView?) -> NSAlert{
 	let dialog = NSAlert()
 	dialog.messageText = message
 	dialog.informativeText = informative
@@ -33,13 +33,13 @@ public func genericDialogCreate(message: String, informative: String, style: NSA
 	return dialog
 }
 
-@inline(__always) public func genericDialogDisplay(message: String, informative: String, style: NSAlert.Style, icon: NSImage?, buttons: [DialogButton], accessoryView: NSView?) -> Bool{
+@inline(__always) public func genericDialogDisplay(message: String, informative: String, style: NSAlert.Style, icon: NSImage? = nil, buttons: [DialogButton], accessoryView: NSView?) -> Bool{
 	return genericDialogCreate(message: message, informative: informative, style: style, icon: icon, buttons: buttons, accessoryView: accessoryView).runModal() == NSApplication.ModalResponse.alertFirstButtonReturn
 }
 
 //settable icon
 
-@inline(__always) public func msgBoxWithCustomIcon(_ title: String,_ text: String,_ style: NSAlert.Style, _ icon: NSImage?){
+@inline(__always) public func msgBoxWithCustomIcon(_ title: String,_ text: String,_ style: NSAlert.Style, _ icon: NSImage? = nil){
 	genericDialogCreate(message: title, informative: text, style: style, icon: icon, buttons: [], accessoryView: nil).runModal()
 }
 /*public func dialogOKCancelWithCustomIcon(question: String, text: String, style: NSAlertStyle, icon: NSImage?) -> Bool {

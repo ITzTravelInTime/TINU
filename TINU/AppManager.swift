@@ -57,7 +57,8 @@ public final class AppManager{
 			simulateCreateinstallmediaFail != nil,
 			simulateNoSpecialOperations != nil,
 			simulateSpecialOperationsFail,
-			simulateRecovery
+			simulateRecovery,
+			simulateSIPStatus != nil
 		]
 		
 		_sharedTestingMode = false

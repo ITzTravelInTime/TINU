@@ -141,7 +141,7 @@ public class SettingsSectionItem: NSView{
 				
 				item.option = i.value
 				
-				isGray = !isGray
+				isGray.toggle()
 				
 				count += itemHeigth
 				

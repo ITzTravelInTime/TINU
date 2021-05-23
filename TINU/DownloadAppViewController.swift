@@ -231,7 +231,7 @@ fileprivate class DownloadAppItem: ShadowView, ViewID{
 	@objc func downloadApp(_ sender: Any){
 		if link!.pathExtension == "dmg"{
 			//if dialogCustomWarning(question: "Remeber to open the download", text: "The intaller file you are about to download will need to be opened after being downloaded in order to be usable with TINU", mainButtonText: "Continue", secondButtonText: "Cancel"){
-			if dialogWithManager(self, name: "downloadDialog"){
+			if !dialogWithManager(self, name: "downloadDialog"){
 				return
 			}
 			

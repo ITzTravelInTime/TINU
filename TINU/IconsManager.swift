@@ -20,8 +20,7 @@ public final class IconsManager{
 	}
 	
 	//executable file icon
-	//stop icon used by the app
-	public var executableIcon: NSImage!{
+	/*public var executableIcon: NSImage!{
 		get{
 			
 			if let i = getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ExecutableBinaryIcon.icns", name: "warning"){
@@ -30,7 +29,7 @@ public final class IconsManager{
 				return NSImage(named: "uncheck")
 			}
 		}
-	}
+	}*/
 	
 	//stop icon used by the app
 	public var stopIcon: NSImage!{
@@ -118,6 +117,25 @@ public final class IconsManager{
 		}else{
 			return alternate
 		}
+	}
+	
+	public func getCorrectDiskIcon(_ id: String) -> NSImage{
+		
+		if let mount = dm.getMountPointFromPartitionBSDID(id){
+			if !(mount.isEmpty){
+				return NSWorkspace.shared.icon(forFile: mount)
+			}
+		}
+		
+		var image = IconsManager.shared.removableDiskIcon
+		
+		if let i = dm.getDriveIsRemovable(id){
+			if !i{
+				image = IconsManager.shared.internalDiskIcon
+			}
+		}
+		
+		return image
 	}
 	
 }

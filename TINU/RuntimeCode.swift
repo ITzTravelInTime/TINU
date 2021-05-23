@@ -16,118 +16,97 @@ public func checkOtherOptions(){
 		oom.shared.restoreOtherOptions()
 		
 		#if !macOnlyMode
-			//BootFilesReplacementManager.shared.eraseReplacementFilesData()
+		//BootFilesReplacementManager.shared.eraseReplacementFilesData()
 		
-			#if useEFIReplacement
-				let _ = EFIFolderReplacementManager.shared.unloadEFIFolder()
-			#endif
+		#if useEFIReplacement
+		let _ = EFIFolderReplacementManager.shared.unloadEFIFolder()
+		#endif
 		
 		#endif
 		
 		processLicense = ""
 		
-		if var item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionForceToFormatID]{
+		if var item = oom.shared.otherOptions[.otherOptionForceToFormatID]{
 			
 			if let st = cvm.shared.sharedVolumeNeedsPartitionMethodChange{
 				item.isUsable = !st
 				item.isActivated = st
 			}
 			
-			oom.shared.otherOptions[oom.OtherOptionID.otherOptionForceToFormatID] = item
+			oom.shared.otherOptions[.otherOptionForceToFormatID] = item
 		}
 		
 		if cvm.shared.sharedApp != nil{
-			if let version = iam.shared.targetAppBundleVersion(), let name = iam.shared.targetAppBundleName(){
-				cvm.shared.sharedBundleVersion = version
-				cvm.shared.sharedBundleName = name
+			guard let version = iam.shared.targetAppBundleVersion(), let name = iam.shared.targetAppBundleName() else { return }
+			
+			cvm.shared.sharedBundleVersion = version
+			cvm.shared.sharedBundleName = name
+			
+			var supportsTINU = false
+			
+			if let st = iam.shared.sharedAppNotSupportsTINU(){
+				supportsTINU = st
+			}
+			
+			if var item = oom.shared.otherOptions[.otherOptionTinuCopyID]{
+				item.isUsable = !supportsTINU
+				item.isActivated = !supportsTINU
+				oom.shared.otherOptions[.otherOptionTinuCopyID] = item
+			}
+			
+			if sharedInstallMac{
+				var supportsAPFS = false
 				
-				var supportsTINU = false
-				
-				if let st = iam.shared.sharedAppNotSupportsTINU(){
-					supportsTINU = st
+				if let st = iam.shared.sharedAppNotSupportsAPFS(){
+					supportsAPFS = st
 				}
+				
+				if let st = iam.shared.sharedAppNotIsMojave(){
+					if !st{
+						supportsAPFS = true
+					}
+				}
+				
+				
+				if var item = oom.shared.otherOptions[.otherOptionDoNotUseApfsID]{
+					item.isVisible = !supportsAPFS
+					item.isActivated = !cvm.shared.sharedSVReallyIsAPFS
+					item.isUsable = !cvm.shared.sharedSVReallyIsAPFS
+					
+					oom.shared.otherOptions[.otherOptionDoNotUseApfsID] = item
+				}
+			}else{
+				
+				#if !macOnlyMode
 				
 				var needsIA = false
 				
-				if let na = iam.shared.sharedAppNeedsIABoot(){
+				if let na = iam.shared.sharedAppSupportsIAEdit(){
 					needsIA = na
 				}
 				
-				if var item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionTinuCopyID]{
-					item.isUsable = !supportsTINU
-					item.isActivated = !supportsTINU
-					oom.shared.otherOptions[oom.OtherOptionID.otherOptionTinuCopyID] = item
+				if var item = oom.shared.otherOptions[.otherOptionCreateAIBootFID]{
+					item.isActivated = false
+					item.isUsable = needsIA
+					oom.shared.otherOptions[.otherOptionCreateAIBootFID] = item
 				}
 				
-				if sharedInstallMac{
-					var supportsAPFS = false
-					
-					if let st = iam.shared.sharedAppNotSupportsAPFS(){
-						supportsAPFS = st
-					}
-					
-					if let st = iam.shared.sharedAppNotIsMojave(){
-						if !st{
-							supportsAPFS = true
-						}
-					}
-					
-					
-					if var item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionDoNotUseApfsID]{
-						item.isVisible = !supportsAPFS
-						item.isActivated = !cvm.shared.sharedSVReallyIsAPFS
-						item.isUsable = !cvm.shared.sharedSVReallyIsAPFS
-						
-						oom.shared.otherOptions[oom.OtherOptionID.otherOptionDoNotUseApfsID] = item
-					}
-				}else{
-					/*
-					#if !macOnlyMode
-					
-					for i in 0...(BootFilesReplacementManager.shared.filesToReplace.count - 1){
-						let item = BootFilesReplacementManager.shared.filesToReplace[i]
-						
-						switch item.filename{
-						case "prelinkedkernel":
-							item.visible = !supportsTINU
-						case "kernelcache":
-							item.visible = supportsTINU
-						case "immutablekernel", "BridgeVersion.bin", "SecureBoot.bundle":
-							item.visible = needsIA
-						default:
-							break
-						}
-						
-					}
-					
-					#endif
-					*/
-					
-					#if !macOnlyMode
-					
-					if var item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionCreateAIBootFID]{
-						item.isActivated = false
-						item.isUsable = needsIA
-						oom.shared.otherOptions[oom.OtherOptionID.otherOptionCreateAIBootFID] = item
-					}
-					
-					if var item = oom.shared.otherOptions[oom.OtherOptionID.otherOptionDeleteIAPMID]{
-						item.isActivated = false
-						item.isUsable = needsIA
-						oom.shared.otherOptions[oom.OtherOptionID.otherOptionDeleteIAPMID] = item
-					}
-					
-					#endif
+				if var item = oom.shared.otherOptions[.otherOptionDeleteIAPMID]{
+					item.isActivated = false
+					item.isUsable = needsIA
+					oom.shared.otherOptions[.otherOptionDeleteIAPMID] = item
 				}
 				
+				#endif
 			}
 			
-			
-			
-			
 		}
+		
+		
+		
+		
 	}
-
+	
 }
 
 func checkProcessReadySate(_ useDriveIcon: inout Bool) -> Bool {

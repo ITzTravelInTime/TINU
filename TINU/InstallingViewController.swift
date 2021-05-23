@@ -90,34 +90,28 @@ class InstallingViewController: GenericViewController, ViewID{
 		
 		if !simulateInstallGetDataFail{
 			state = !checkProcessReadySate(&drive)
+		}else{
+			state = true
 		}
 		
 		if state {
-			
-			
-			
-			//setActivityLabelText("Error with inst. app or target drive")
-			
 			setActivityLabelText("activityLabel2")
 			
-			
 			log("Couldn't get valid info about the installer app and/or the drive")
-			//temporary dialong util a soulution for the go back in the view controller problem is solved
-			/*if !dialogYesNoWarning(question: "Quit the app?", text: "There was an error while trying to get drive or installer app data, do you want to quit the app?", style: .critical){
-			NSApplication.shared().terminate(self)
-			}else{*/
+			
 			DispatchQueue.global(qos: .background).async{
 				DispatchQueue.main.async {
 					self.goBack()
 				}
 			}
+			
 			return
 		}
 		
 		let cm = cvm.shared
 		
 		if drive{
-			driveImage.image = IconsManager.shared.removableDiskIcon
+			driveImage.image = IconsManager.shared.getCorrectDiskIcon(cvm.shared.sharedBSDDrive)
 			driveName.stringValue = dm.getCurrentDriveName()!
 			//self.setTitleLabel(text: "The drive and macOS installer below will be used, are you sure?")
 		}else{
@@ -194,7 +188,7 @@ class InstallingViewController: GenericViewController, ViewID{
 		goToFinalScreen(title: etitle, success: success)
 	}
 	
-	func goBack(){
+	@objc func goBack(){
 		//this code opens the previus window
 		
 		if (CreateinstallmediaSmallManager.shared.sharedIsBusy){

@@ -5,7 +5,7 @@
 				"mountButton" : "Apri partizione EFI",
 				"unmountButton" : "Espelli partizione EFI",
 				"openInfinderButton" : "Mostra nel Finder",
-				"editConfigButtonOther" : "Apri config.plist con ...",
+				"editConfigButtonOther" : "Apri config.plist con...",
 				"noPartitionsLabel" : "Nessuna partizione attiva trovata",
 				"downloadTitle" : "Vuoi scaricare \"${appName}\" ?",
 				"download" : "L'applicazione \"${appName}\" non è installata sul computer, vuoi scaricarla?",

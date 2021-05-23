@@ -154,30 +154,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 			
 			log("        Item display name is: \(drivei.volume.stringValue)")
 			
-			drivei.image.image = nil
-			
-			if !prt.isDrive{
-				if item!.isMounted(){
-					drivei.image.image = NSWorkspace.shared.icon(forFile: item.MountPoint!)
-				}
-			}else{
-				var property = "Ejectable"
-				
-				if #available(OSX 10.12, *){
-					property = "RemovableMediaOrExternalDevice"
-				}
-				
-				if let i = dm.getDevicePropertyInfoBoolNew(prt.bsdName, propertyName: property) {
-					if !i{
-						drivei.image.image = IconsManager.shared.internalDiskIcon
-					}
-				}
-			}
-			
-			if drivei.image.image == nil{
-				drivei.image.image = IconsManager.shared.removableDiskIcon
-			}
-			
+			drivei.image.image = IconsManager.shared.getCorrectDiskIcon(prt.bsdName)
 			
 			drivei.isApp = false
 			drivei.part = prt
@@ -364,7 +341,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 					self.scoller.isHidden = true
 					
 					if self.failureLabel == nil || self.failureImageView == nil || self.failureButtons.isEmpty{
-						self.setFailureImage(image: IconsManager.shared.warningIcon)
+						self.defaultFailureImage()
 						//TextManager.getViewString(context: self, stringID: "agreeButtonFail")
 						
 						self.setFailureLabel(text: TextManager.getViewString(context: self, stringID: "failureText"))

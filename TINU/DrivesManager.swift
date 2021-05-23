@@ -188,6 +188,16 @@ public final class DrivesManager{
 		return "disk" + tmpBSDName
 	}
 	
+	class func getDriveIsRemovable(_ id: String) -> Bool!{
+		var property = "Ejectable"
+		
+		if #available(OSX 10.12, *){
+			property = "RemovableMediaOrExternalDevice"
+		}
+		
+		return dm.getDevicePropertyInfoBoolNew(id, propertyName: property)
+	}
+	
 	
 	
 }

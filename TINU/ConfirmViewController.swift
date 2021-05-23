@@ -65,7 +65,13 @@ class ConfirmViewController: GenericViewController, ViewID {
 			advancedOptionsButton.isHidden = true
 		#endif
         
-        warning.image = IconsManager.shared.warningIcon
+		if #available(macOS 11.0, *){
+			warning.image = NSImage(systemSymbolName: "exclamationmark.triangle.fill", accessibilityDescription: nil)
+			warning.image!.isTemplate = true
+			warning.contentTintColor = .systemYellow
+		}else{
+			warning.image = IconsManager.shared.warningIcon
+		}
         
         ps = cm.sharedVolumeNeedsPartitionMethodChange
         //fs = sharedVolumeNeedsFormat
@@ -85,6 +91,8 @@ class ConfirmViewController: GenericViewController, ViewID {
 		//just to simulate a failure to get data for the drive and the app
 		if !simulateConfirmGetDataFail{
 			state = !checkProcessReadySate(&drive)
+		}else{
+			state = true
 		}
 		
 		fail = state
@@ -110,7 +118,7 @@ class ConfirmViewController: GenericViewController, ViewID {
 			self.warning.isHidden = true
 			
 			if self.failureImageView == nil || self.failureLabel == nil{
-				self.setFailureImage(image: IconsManager.shared.warningIcon)
+				self.defaultFailureImage()
 				self.setFailureLabel(text: TextManager.getViewString(context: self, stringID: "failureText"))
 			}
 			
@@ -124,40 +132,20 @@ class ConfirmViewController: GenericViewController, ViewID {
 			advancedOptionsButton.stringValue = TextManager.getViewString(context: self, stringID: "optionsButton")
 			
 			if drive{
-				
-				driveImage.image = IconsManager.shared.removableDiskIcon
-				
-				var property = "Ejectable"
-				
-				if #available(OSX 10.12, *){
-					property = "RemovableMediaOrExternalDevice"
-				}
-				
-				if let i = dm.getDevicePropertyInfoBoolNew(dm.getDriveBSDIDFromVolumeBSDID(volumeID: cvm.shared.currentPart.bsdName), propertyName: property) {
-					if !i{
-						driveImage.image = IconsManager.shared.internalDiskIcon
-					}
-				}
-				
 				driveName.stringValue = dm.getCurrentDriveName()!
 				self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "titleDrive"))
 			}else{
 				let sv = cm.sharedVolume!
-				driveImage.image = NSWorkspace.shared.icon(forFile: sv)
 				driveName.stringValue = FileManager.default.displayName(atPath: sv)
 			}
+			
+			driveImage.image = IconsManager.shared.getCorrectDiskIcon(cvm.shared.currentPart.bsdName)
 			
 			let sa = cm.sharedApp!
 			appImage.image = IconsManager.shared.getInstallerAppIconFrom(path: sa)
 			appName.stringValue = FileManager.default.displayName(atPath: sa)
 			
 			let reps = ["{driveName}" : driveName.stringValue]
-			/*
-			if sharedInstallMac{
-				warningField.stringValue = "If you go ahead, this app will modify the volume you selected \"${driveName}\", and macOS will be installed on it. If you are sure, continue at your own risk."
-			}else{
-				warningField.stringValue = "If you go ahead, this app will erase \"${driveName}\"! All the data on it will be lost and replaced with the bootable macOS installer. If you are sure, continue at your own risk."
-			}*/
 			
 			warningField.stringValue = parse(messange: TextManager.getViewString(context: self, stringID: "warningText"), keys: reps)
 			

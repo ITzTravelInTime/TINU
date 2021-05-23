@@ -87,7 +87,27 @@ public class GenericViewController: NSViewController {
 		}
 	}
 	
-	func setFailureImage(image: NSImage){
+	func defaultFailureImage(){
+		if #available(macOS 11.0, *){
+			self.setFailureImage(image: NSImage(systemSymbolName: "exclamationmark.triangle.fill", accessibilityDescription: nil))
+			self.failureImageView.image!.isTemplate = true
+			self.failureImageView.contentTintColor = .systemYellow
+		}else{
+			self.setFailureImage(image: IconsManager.shared.warningIcon)
+		}
+	}
+	
+	func setFailureImage(image: NSImage!){
+		if failureImageView != nil{
+			failureImageView.image = nil
+			failureImageView.removeFromSuperview()
+			failureImageView = nil
+		}
+		
+		if image == nil{
+			return
+		}
+		
 		failureImageView = NSImageView()
 		failureImageView.isEditable = false
 		failureImageView.imageAlignment = .alignCenter

@@ -35,23 +35,46 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
 		
 		var image = NSImage()
         if !FinalScreenSmallManager.shared.isOk{
-            image = IconsManager.shared.stopIcon
+			if #available(macOS 11.0, *){
+				image = NSImage(systemSymbolName: "xmark.circle.fill", accessibilityDescription: nil)!
+				image.isTemplate = true
+			}else{
+				image = IconsManager.shared.stopIcon
+			}
+			
             continueButton.isEnabled = true
             continueButton.frame.size.width = exitButton.frame.size.width
             continueButton.frame.origin.x = exitButton.frame.origin.x
 			exitButton.isHidden = true
         }else{
 			exitButton.title = TextManager.getViewString(context: self, stringID: "exitButton")
-            image = NSImage(named: "checkVector")!
+			if #available(macOS 11.0, *){
+				image = NSImage(systemSymbolName: "checkmark.circle.fill", accessibilityDescription: nil)!
+				image.isTemplate = true
+			}else{
+				image = NSImage(named: "checkVector")!
+			}
             continueButton.isEnabled = true
             continueButton.isHidden = false
         }
 		
 		setFailureImage(image: image)
+		
+		if #available(macOS 11.0, *){
+			if failureImageView != nil{
+				failureImageView.contentTintColor = FinalScreenSmallManager.shared.isOk ? .systemGreen : .systemRed
+			}
+		}
+		
 		showFailureImage()
 		
 		setFailureLabel(text: FinalScreenSmallManager.shared.title)
-		failureLabel.font = NSFont.boldSystemFont(ofSize: failureLabel.font!.pointSize)
+		if #available(macOS 11.0, *){
+			failureLabel.font = NSFont.systemFont(ofSize: failureLabel.font!.pointSize)
+		}else{
+			failureLabel.font = NSFont.boldSystemFont(ofSize: failureLabel.font!.pointSize)
+		}
+		
 		let old = failureLabel.frame.size.height
 		failureLabel.frame.size.height *= 3
 		failureLabel.frame.origin.y -= old * 2

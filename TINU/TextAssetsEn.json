@@ -91,7 +91,10 @@
 		{
 			"unmutable" : {
 				"version" : "Version: ",
-				"license" : "\nReleased under the GNU GPL V3 License"
+				"license" : "\nReleased under the GNU GPL V3 License",
+				"closeButton" : "Close",
+				"sourceCodeButton" : "Source Code",
+				"contactsButton" : "Contact us"
 			}
 		},
 		"DriveDetectionInfo" :
@@ -118,7 +121,7 @@
 				"improperDialogTitle": "The folder \"${pathName}\" is not a proper ${bootloader} efi folder",
 				"improperDialog" : "The folder you selected \"${path}\" does not contain the required element \"${missing}\", make sure to open just the folder named EFI and that it cointains all the needed elements",
 				"alreadyChoosen" : "You have already choosen a ${bootloader} EFI folder",
-				"buttonChoose" : "Chose Folder ...",
+				"buttonChoose" : "Chose Folder...",
 				"buttonRemoove" : "Remoove",
 				"errorUnloadingTitle" : "Error while restoring default settings",
 				"errorUnloading" : "Error durning the cleanup of TINU's Stored EFI folder memory, please close and then re-open the app to clean this memory."
@@ -194,12 +197,14 @@
 				"nextButtonFail" : "Quit",
 				"failureText" : "No macOS installer apps found",
 				"failureButtonGetInstaller" : "Get an installer app",
-				"failureButtonOpen" : "Open ...",
-				"buttonGetInstaller" : "Get installer ...",
-				"buttonOpen" : "Open ...",
+				"failureButtonOpen" : "Open...",
+				"buttonGetInstaller" : "Get installer...",
+				"buttonOpen" : "Open...",
 				"buttonRefresh" : "Refresh",
 				"invalidAppDialogTitle" : "Unusable app",
 				"invalidAppDialog" : "The app you chose${fileName} is not usable because it isn't a macOS installer or is a damaged or unsupported macOS installer.",
+				"invalidAppDialogSizeTitle" : "Unusable app",
+				"invalidAppDialogSize" : "The app you chose${fileName} is not usable because it's too bit for your storage device.",
 				"invalidAliasDialogTitle" : "Bad alias",
 				"invalidAliasDialog" : "The file you chose${fileName} is not usable because it's a Finder Alias that can't be intepreted.",
 				"errorOpeningTitle" : "Error: no files chosen!",
@@ -277,7 +282,7 @@
 				"activityLabel5" : "Applaying custom options",
 				"activityLabel6" : "Formatting target drive",
 				"activityLabel7" : "Unmounting partitions",
-				"activityLabel8" : "Process ended, exiting ...",
+				"activityLabel8" : "Process ended, exiting...",
 				"activityLabel9" : "Checking partitions",
 				"activityLabel10" : "Applying options",
 				"activityLabel12" : "Chiusura dei programmi che causano conflitto",
@@ -392,7 +397,8 @@
 				"stop2" : "Don't stop",
 				"stop2Key" : "\r",
 				"stop1" : "Stop",
-				"stop1Key" : ""
+				"stop1Key" : "",
+				"renamed" : "Renamed to"
 			}
 		},
 		"TaskKillManager":{
@@ -403,7 +409,7 @@
 				"quitInstaller1Key" : "\r",
 				"quitInstaller2" : "No",
 				"quitInstaller2Key" : "",
-				"quitTile" : "Close \"${name}\"?",
+				"quitTitle" : "Close \"${name}\"?",
 				"quit" : "TINU needs to close \"${name}\" in order to continue, do you want to close it?",
 				"quit1" : "Yes",
 				"quit1Key" : "\r",

@@ -39,7 +39,7 @@ public final class TaskKillManager: ViewID{
 			if let num = cpid?.uIntValue{
 				switch num{
 				case ..<10:
-					log("Provvided PID for \"\(name)\" is form a system process, so it can't be stopped, exiting ...")
+					log("Provvided PID for \"\(name)\" is form a system process, so it can't be stopped, exiting...")
 					return nil
 				default:
 					recalculate = false
@@ -60,7 +60,7 @@ public final class TaskKillManager: ViewID{
 					return true
 				}
 				
-				log("Recalculating provvided PID for \"\(name)\" ...")
+				log("Recalculating provvided PID for \"\(name)\"...")
 				if let npid = getPid(name: name){
 					cpid = npid
 					log("Provvided PID for \"\(name)\" recalculated and changed to \"\(cpid!)\"")
@@ -170,7 +170,7 @@ public final class TaskKillManager: ViewID{
 			if answer == nil{
 			//answer = !dialogYesNoWarning(question: "Close \"\(name)\"?", text: "TINU needs to close \"\(name)\" in order to continue, do you want to close it?\n\nIf yes, you will need to enter your credentials")
 				
-				answer = dialogGenericWithManagerBool(ref, name: "stop", parseList: ["{name}": name])
+				answer = dialogGenericWithManagerBool(ref, name: "quit", parseList: ["{name}": name])
 			}
 			
 		}
@@ -234,7 +234,7 @@ public final class TaskKillManager: ViewID{
 						}
 						
 						DispatchQueue.main.sync {
-							answer = !dialogYesNoWarning(question: "Do you want to close \"\(name)\"?", text: Bundle.main.name! + " needs to close \"\(name)\" in order to continue, do you want to close it?")
+							answer = dialogGenericWithManagerBool(ref, name: "quit", parseList: ["{name}": name])
 						}
 						
 						ff = name

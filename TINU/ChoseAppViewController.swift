@@ -140,71 +140,68 @@ class ChoseAppViewController: GenericViewController, ViewID {
 		
 		open.beginSheetModal(for: self.window, completionHandler: {response in
 			
-			for _ in 0...0{
-				if response != NSApplication.ModalResponse.OK{
-					continue
-				}
-				
-				if open.urls.isEmpty{
-					//msgBoxWarning("Error: no files chosen!", "No files seems to have been chosen , proably this is an internal error")
-					
-					msgboxWithManager(self, name: "errorOpening")
-					
-					continue
-				}
-				
-				guard var path = open.urls.first?.path else {
-					//msgBoxWarning("Error while opening the file's path", "Impossible to obtain the file's location for some reason")
-					
-					msgboxWithManager(self, name: "errorPath")
-					
-					continue
-				}
-				
-				let manager = FileManager.default
-				
-				let replist = ["{fileName}" : ((open.urls.first?.lastPathComponent != nil) ? ", \"\(open.urls.first!.lastPathComponent)\"," : "")]
-				
-				var tmpURL: URL?
-				if let isAlias = FileAliasManager.finderAlias(open.urls.first!, resolvedURL: &tmpURL){
-					if isAlias{
-						path = tmpURL!.path
-					}
-				}else{
-					
-					msgboxWithManager(self, name: "invalidAliasDialog", parseList: replist)
-				}
-				
-				let needed = ChoseAppViewController.installerAppNeededFiles
-				var check: Int = needed.count
-				for c in needed{
-					if c.isEmpty{
-						check-=1
-						continue
-					}
-					for d in c{
-						if manager.fileExists(atPath: path + d){
-							check-=1
-							break
-						}
-					}
-				}
-				
-				if check == 0 {
-					
-					cvm.shared.sharedApp = path
-					
-					cvm.shared.sharedVolumeNeedsPartitionMethodChange = self.ps
-					
-					self.next(self)
-					
-				}else{
-					
-					msgboxWithManager(self, name: "invalidAppDialog", parseList: replist)
-				}
-				
-				
+			if response != NSApplication.ModalResponse.OK{
+				return
 			}
+			
+			if open.urls.isEmpty{
+				msgboxWithManager(self, name: "errorOpening")
+				return
+			}
+			
+			guard var path = open.urls.first?.path else {
+				msgboxWithManager(self, name: "errorPath")
+				return
+			}
+			
+			let manager = FileManager.default
+			
+			let replist = ["{fileName}" : ((open.urls.first?.lastPathComponent != nil) ? ", \"\(open.urls.first!.lastPathComponent)\"," : "")]
+			
+			var tmpURL: URL?
+			if let isAlias = FileAliasManager.finderAlias(open.urls.first!, resolvedURL: &tmpURL){
+				if isAlias{
+					path = tmpURL!.path
+				}
+			}else{
+				msgboxWithManager(self, name: "invalidAliasDialog", parseList: replist)
+				return
+			}
+			
+			let needed = ChoseAppViewController.installerAppNeededFiles
+			var check: Int = needed.count
+			for c in needed{
+				if c.isEmpty{
+					check-=1
+					continue
+				}
+				for d in c{
+					if manager.fileExists(atPath: path + d){
+						check-=1
+						break
+					}
+				}
+			}
+			
+			if check == 0 {
+				
+				cvm.shared.sharedApp = path
+				cvm.shared.sharedVolumeNeedsPartitionMethodChange = self.ps
+				
+				self.next(self)
+				
+			}else{
+				msgboxWithManager(self, name: "invalidAppDialog", parseList: replist)
+				return
+			}
+			
+			guard let sz = manager.directorySize(open.urls.first!) else {return}
+			
+			if !cvm.shared.compareSize(to: UInt64(sz)){
+				msgboxWithManager(self, name: "invalidAppDialogSize", parseList: replist)
+				return
+			}
+			
 			
 		})
 	}
@@ -353,20 +350,8 @@ class ChoseAppViewController: GenericViewController, ViewID {
 				}
 				
 			}
-			
-			/*
-			print("This contains the URLs for the paths in which we will try find the installer apps:")
-			print("[")
-			
-			for f in foldersURLS{
-				if let ff = f{
-					print("\(ff), ")
-				}
-			}
-			print("]\n\n")
-			*/
 
-			print("Starting installer apps scan ...")
+			print("Starting installer apps scan...")
 			
 			var h: CGFloat = 0
 			
@@ -434,7 +419,6 @@ class ChoseAppViewController: GenericViewController, ViewID {
 						if !isInstaller{
 							continue
 						}
-						
 						
 						//DispatchQueue.main.sync {
 						dirs.append(appPath)
@@ -541,7 +525,8 @@ class ChoseAppViewController: GenericViewController, ViewID {
 					self.normalOpen.isHidden = true
 					
 					if self.failureLabel == nil || self.failureImageView == nil || self.failureButtons.isEmpty{
-						self.setFailureImage(image: IconsManager.shared.warningIcon)
+						self.defaultFailureImage()
+						
 						self.setFailureLabel(text: TextManager.getViewString(context: self, stringID: "failureText"))
 						//"failureButtonGetInstaller"
 						if !sharedIsOnRecovery{
@@ -556,7 +541,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 						if !sharedIsOnRecovery{
 						self.addFailureButton(buttonTitle: "Get an Installer", target: self, selector: #selector(ChoseAppViewController.openGetAnApp))
 						}
-						self.addFailureButton(buttonTitle: "Open an installer ...", target: self, selector: #selector(ChoseAppViewController.chooseExternal))
+						self.addFailureButton(buttonTitle: "Open an installer...", target: self, selector: #selector(ChoseAppViewController.chooseExternal))
 						
 						*/
 					}

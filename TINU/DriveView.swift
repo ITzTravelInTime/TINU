@@ -31,7 +31,9 @@ class DriveView: ShadowView, ViewID {
     public var applicationPath = ""
     
     public var part: Part!
-    
+	
+	let gradientLayer = CAGradientLayer()
+	
 	var image: NSImageView!
 	var volume: NSTextField!
 	
@@ -48,12 +50,15 @@ class DriveView: ShadowView, ViewID {
 		self.appearance = sharedWindow.effectiveAppearance
 		
 		if isSelected{
+			//self.gradientLayer.removeFromSuperlayer()
 			self.backgroundColor = NSColor.selectedControlColor
+		}else{
+			//gradientLayer.colors = [NSColor.controlBackgroundColor, NSColor.controlColor].map({$0.cgColor})
+			//self.layer?.insertSublayer(gradientLayer, at: 0)
 		}
 		
 		if self.isEnabled{
 			self.volume.textColor = NSColor.textColor
-			
 		}
 		
 	}
@@ -86,14 +91,18 @@ class DriveView: ShadowView, ViewID {
 	}
 	
     private func refreshUI(){
-        //self.borderColor = NSColor.red.cgColor
-        //self.backgroundColor = NSColor.blue
 		
 		if blockShadow{
 			self.canShadow = false
-			self.wantsLayer = true
-			self.layer?.cornerRadius = 15
 		}
+		
+		self.wantsLayer = true
+		self.layer?.cornerRadius = 15
+		
+		self.layer?.masksToBounds = true
+		
+		gradientLayer.frame = self.bounds
+		gradientLayer.cornerRadius = self.layer!.cornerRadius
 		
 		if image != nil{
 			image.removeFromSuperview();
@@ -108,6 +117,8 @@ class DriveView: ShadowView, ViewID {
 		image.backgroundColor = NSColor.transparent
         self.addSubview(image)
 		
+		image.layer!.zPosition = self.layer!.zPosition + 1
+		
 		if volume != nil{
 			volume.removeFromSuperview();
 			volume = nil
@@ -121,12 +132,16 @@ class DriveView: ShadowView, ViewID {
         volume.isBordered = false
         volume.alignment = .center
 		volume.drawsBackground = false
-        
-        //volume.isSelectable = false
         self.addSubview(volume)
+		
+		volume.layer!.zPosition = self.layer!.zPosition + 1
         
         volume.isEnabled = isEnabled
         image.isEnabled = isEnabled
+		
+		self.isSelected = false
+		
+		updateLayer()
 		
     }
     
@@ -144,6 +159,7 @@ class DriveView: ShadowView, ViewID {
             setSelectedAspect()
             
             if isApp{
+				
 				cm.sharedApp = applicationPath
 				Swift.print("The application that the user has selected is: " + applicationPath)
 				
@@ -158,8 +174,6 @@ class DriveView: ShadowView, ViewID {
 				if part != nil{
 					if part.partScheme != .gUID || !part.hasEFI{
 						cm.sharedVolumeNeedsPartitionMethodChange = true
-						/*}else{
-						sharedVolumeNeedsPartitionMethodChange = false*/
 					}
 					
 					if !sharedInstallMac && part.fileSystem == .aPFS{
@@ -173,18 +187,9 @@ class DriveView: ShadowView, ViewID {
 					if part.tmDisk{
 						cm.sharedDoTimeMachineWarn = true
 					}
-					
-					
-					/*
-					if part.fileSystem == "Other" && !sharedVolumeNeedsPartitionMethodChange{
-					sharedVolumeNeedsFormat = true
-					}else{
-					sharedVolumeNeedsFormat = false
-					}*/
 				}
 				
-				cm.sharedSVReallyIsAPFS = part.fileSystem == .aPFS_container
-				
+				cm.sharedSVReallyIsAPFS = (part.fileSystem == .aPFS_container)
 				cm.currentPart = part
 				
 				Swift.print("The volume that the user has selected is: " + part.mountPoint!)
@@ -192,29 +197,21 @@ class DriveView: ShadowView, ViewID {
 			
 		}
 		
-			if isApp{
-				if let s = self.window?.contentViewController as? ChoseAppViewController{
-					s.ok.isEnabled = isEnabled
-				}
-			}else{
-				if let s = self.window?.contentViewController as? ChoseDriveViewController{
-					s.ok.isEnabled = isEnabled
-				}
+		if isApp{
+			if let s = self.window?.contentViewController as? ChoseAppViewController{
+				s.ok.isEnabled = isEnabled
 			}
-		
+		}else{
+			if let s = self.window?.contentViewController as? ChoseDriveViewController{
+				s.ok.isEnabled = isEnabled
+			}
+		}
     }
 	
-    public func setDefaultAspect(){
+	public func setDefaultAspect(){
 		
 		if !isApp{
 			if sz == nil{
-				/*
-				if let s = part?.size{
-					sz = "Size: \(self.roundInt(number: s))"
-				}else{
-					sz = "Size: 0 Byte"
-				}
-				*/
 				
 				let s = (part != nil) ? part!.size : 0
 				sz = TextManager.getViewString(context: self, stringID: "sizePrefix") + "\(self.roundInt(number: s))"
@@ -223,9 +220,9 @@ class DriveView: ShadowView, ViewID {
 		}
 		
 		DispatchQueue.main.async {
-        	//self.layer?.backgroundColor = NSColor.transparent.cgColor
+			//self.layer?.backgroundColor = NSColor.transparent.cgColor
 			self.isSelected = false
-		
+			
 			self.appearance = sharedWindow.effectiveAppearance
 			self.updateLayer()
 			
@@ -246,116 +243,118 @@ class DriveView: ShadowView, ViewID {
 				self.warnImage = nil
 			}
 			
-        if self.isEnabled{
+			if self.isEnabled{
 				
-			if self.volume.superview == nil{
-				self.addSubview(self.volume)
-			}
-			
-			
-			if self.isApp{
-				//self.toolTip = "Path: " + self.applicationPath
-				self.setToolTipAndWarn("appNormal")
-			}else{
-				self.setToolTipAndWarn("driveNormal")
-			}
-			
-        }else{
-			
-			var notBigger: Bool = false
-			
-			if self.isApp{
-				if self.sz != nil{
-					notBigger = !cvm.shared.compareSize(to: self.sz)
+				if self.volume.superview == nil{
+					self.addSubview(self.volume)
 				}
-			}
-			
-			if (notBigger){
-				self.overlay = NSImageView(frame: self.image.frame)
-				self.overlay.image = IconsManager.shared.unsupportedOverlay
-				self.overlay.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
-				self.overlay.imageAlignment = .alignBottom
 				
-				self.addSubview(self.overlay)
 				
-				self.warnText = NSTextField(frame: self.volume.frame)
-				self.warnText.font = self.volume.font
+				if self.isApp{
+					//self.toolTip = "Path: " + self.applicationPath
+					self.setToolTipAndWarn("appNormal")
+				}else{
+					self.setToolTipAndWarn("driveNormal")
+				}
 				
-				/*
-				self.warnText.stringValue = "App too big: " + self.volume.stringValue
-				self.toolTip = "This macOS installer app is not usable bacause you choose a target drive which is too small\n\nPath: " + self.applicationPath
-				*/
-				
-				self.setToolTipAndWarn("appTooBig")
-				
-				self.warnText.isEditable = false
-				self.warnText.isBordered = false
-				self.warnText.alignment = .center
-				self.warnText.textColor = .systemGray
-				(self.warnText as NSView).backgroundColor = NSColor.transparent
-				
-				//volume.isSelectable = false
-				self.addSubview(self.warnText)
 			}else{
-			
-				//let y: CGFloat = 15//self.volume.frame.origin.y + ((self.volume.frame.size.width / 2) - ((self.frame.width / 5) / 2))
-				//let h: CGFloat = self.image.frame.origin.y - 15 - 3//height: self.frame.width / 5
-				let w: CGFloat = self.frame.width / 3
-				let margin: CGFloat = 15
-			
-				self.warnImage = NSImageView(frame: NSRect(x: self.frame.width - w - margin, y: self.image.frame.origin.y, width: w, height: w))
-				self.warnImage.image = IconsManager.shared.warningIcon
-				self.warnImage.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
-				(self.warnImage as NSView).backgroundColor = NSColor.transparent
-			
-				self.addSubview(self.warnImage)
-			
-				self.warnText = NSTextField(frame: self.volume.frame)
-				self.warnText.font = self.volume.font
+				
+				var notBigger: Bool = false
 				
 				if self.isApp{
 					if self.sz != nil{
-						/*
-						self.warnText.stringValue = "Damaged app: " + self.volume.stringValue
-						self.toolTip = "This macOS installer app is not usable bacause it's missing some internal elements, you need the full installer app \nwhich weights more than 5 gb\n\nPath: " + self.applicationPath
-						*/
-						self.setToolTipAndWarn("appDamaged")
-					}else{
-						/*
-						self.warnText.stringValue = "Error: " + self.volume.stringValue
-						self.toolTip = "This macOS installer app is not usable bacause there was an error while trying to calculate it's size\n\nPath: " + self.applicationPath*/
-						self.setToolTipAndWarn("appError")
+						notBigger = !cvm.shared.compareSize(to: self.sz)
 					}
 				}
 				
+				self.warnText = NSTextField(frame: self.volume.frame)
+				self.warnText.wantsLayer = true
+				
+				self.warnText.layer!.zPosition = self.image.layer!.zPosition + 2
+				
+				self.warnText.font = self.volume.font
 				self.warnText.isEditable = false
 				self.warnText.isBordered = false
 				self.warnText.alignment = .center
-				self.warnText.textColor = .systemYellow
-				(self.warnText as NSView).backgroundColor = NSColor.transparent
-			
-				//volume.isSelectable = false
+				self.warnText.drawsBackground = false
 				self.addSubview(self.warnText)
 				
-			}
-			
-			self.volume.removeFromSuperview()
-			
-			if !self.isApp{
-				/*
-				if sharedInstallMac{
-					self.toolTip = "This drive can't be used to\ninstall macOS in it now."
+				let w: CGFloat = self.frame.width / 3
+				//let margin: CGFloat = 15
+				
+				
+				if (notBigger){
+					
+					self.overlay = NSImageView(frame: self.image.frame)
+					self.overlay.wantsLayer = true
+					self.overlay.layer!.zPosition = self.image.layer!.zPosition + 1
+					self.overlay.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
+					self.overlay.imageAlignment = .alignBottom
+					
+					/*
+					if #available(macOS 11.0, *){
+						//self.warnImage.image = NSImage(systemSymbolName: "nosign", accessibilityDescription: nil)
+						//self.warnImage.image!.isTemplate = true
+						//self.warnImage.contentTintColor = .systemGray
+						//self.addSubview(self.warnImage)
+						
+						self.overlay.image = NSImage(systemSymbolName: "nosign", accessibilityDescription: nil)
+						self.overlay.image!.isTemplate = true
+						self.overlay.contentTintColor = .systemGray
+						
+					}else{
+						self.overlay.image = IconsManager.shared.unsupportedOverlay
+					}*/
+					
+					self.overlay.image = IconsManager.shared.unsupportedOverlay
+					self.addSubview(self.overlay)
+					
+					self.warnText.textColor = .systemGray
+					
+					self.setToolTipAndWarn("appTooBig")
+					
 				}else{
-					self.toolTip = "This drive can't be used to\ncreate a bootable macOS installer"
-				}*/
+					
+					self.warnImage = NSImageView(frame: NSRect(x: self.frame.width - w - 5, y: self.image.frame.origin.y, width: w, height: w))
+					self.warnImage.wantsLayer = true
+					self.warnImage.layer!.zPosition = self.image.layer!.zPosition + 1
+					
+					self.warnImage.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
+					self.warnImage.imageAlignment = .alignBottom
+					
+					
+					if #available(macOS 11.0, *){
+						self.warnImage.image = NSImage(systemSymbolName: "exclamationmark.triangle.fill", accessibilityDescription: nil)
+						self.warnImage.image!.isTemplate = true
+						self.warnImage.contentTintColor = .systemYellow
+					}else{
+						self.warnImage.image = IconsManager.shared.warningIcon
+					}
+					
+					self.addSubview(self.warnImage)
+					
+					self.warnText.textColor = .systemYellow
+					
+					if self.isApp{
+						if self.sz != nil{
+							self.setToolTipAndWarn("appDamaged")
+						}else{
+							self.setToolTipAndWarn("appError")
+						}
+					}
+					
+				}
 				
-				self.toolTip = TextManager.getViewString(context: self, stringID: "driveNotUsableToolTip")
+				self.volume.removeFromSuperview()
+				
+				if !self.isApp{
+					self.toolTip = TextManager.getViewString(context: self, stringID: "driveNotUsableToolTip")
+				}
 				
 			}
-        }
 		}
-        
-    }
+		
+	}
 	
 	private func setToolTipAndWarn(_ id: String){
 		var list = ["{path}" : self.applicationPath, "{name}" : self.volume.stringValue]

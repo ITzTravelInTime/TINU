@@ -12,7 +12,7 @@ extension InstallMediaCreationManager{
 	
 	func install(){
 		
-		log("\nStarting the process ...")
+		log("\nStarting the process...")
 		
 		//to have an usable UI during the install we need to use a parallel thread
 		DispatchQueue.global(qos: .background).async {
@@ -136,7 +136,7 @@ extension InstallMediaCreationManager{
 					
 					log("""
 						
-						Waiting for the \(pname) executable to finish ...
+						Waiting for the \(pname) executable to finish...
 						
 						""")
 					

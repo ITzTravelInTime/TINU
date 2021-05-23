@@ -28,11 +28,7 @@ class OtherOptionsCheckBox: NSView {
 		
 		checkBox.isEnabled = option.isUsable
 		
-        if option.isActivated{
-            checkBox.state = .on
-        }else{
-            checkBox.state = .off
-        }
+        checkBox.state = option.isActivated ? .on : .off
 		
 		checkBox.font = NSFont.systemFont(ofSize: 13)
 		
@@ -76,7 +72,7 @@ class OtherOptionsCheckBox: NSView {
 		option.isActivated = newState
 		
 		//this code here is used to deactivate the APFS convertion stuff if the user has choosen to format the target drive
-		if !sharedInstallMac || !cvm.shared.sharedSVReallyIsAPFS || option.id != oom.OtherOptionID.otherOptionForceToFormatID{
+		if !sharedInstallMac || !cvm.shared.sharedSVReallyIsAPFS || (option.id != oom.OtherOptionID.otherOptionForceToFormatID){
 			return
 		}
 		

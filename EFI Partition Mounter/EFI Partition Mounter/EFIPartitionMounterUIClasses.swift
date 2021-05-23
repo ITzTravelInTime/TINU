@@ -389,9 +389,33 @@ public class EFIPartitionToolInterface{
 					controller.watcherSkip = true
 				}
 				
-				text = getOut(cmd: "diskutil unmountDisk \(driveID)")
+				text = getOut(cmd: "diskutil eject \(driveID)")
+				//text = getOut(cmd: "diskutil unmountDisk \(driveID)")
 				
-				res = (text.contains("Unmount of all volumes on") && text.contains("was successful")) || (text.isEmpty)
+				//res = (text.contains("Unmount of all volumes on") && text.contains("was successful")) || (text.isEmpty)
+				
+				let resSrc: [(Bool, [String])] = [(true, [""]), (false, ["Unmount of all volumes on", "was successful"]), (false, ["Disk", "ejected"])]
+				
+				for s in resSrc{
+					if !s.0{
+						var breaked = false
+						for r in s.1{
+							if !text.contains(r){
+								breaked = true
+								break
+							}
+						} 
+						if breaked{
+							continue
+						}
+					}else if !s.1.isEmpty{
+						if text != s.1.first!{
+							continue
+						}
+					}
+					
+					res = true
+				}
 				
 				if res{
 					log("Drive unmounted with success: \(driveID)")
@@ -411,9 +435,10 @@ public class EFIPartitionToolInterface{
 					log("Drive not unmounted, error generated: \(text)")
 					
 					//msgBoxWarning("Impossible to eject \"\(driveID)\"", "There was an error while trying to eject this disk: \(driveID)\n\nDiagnostics info: \n\nCommand executed: diskutil unmountDisk \(driveID)\nOutput: \(text)")
-					
-					let list = ["{disk}" : self.titleLabel.stringValue, "{text}" : text]
-					msgboxWithManagerGeneric(EFIPMTextManager, self, name: "notEject", parseList: list, style: .warning, icon: IconsManager.shared.warningIcon)
+					DispatchQueue.main.sync {
+						let list = ["{disk}" : self.titleLabel.stringValue, "{text}" : text]
+						msgboxWithManagerGeneric(EFIPMTextManager, self, name: "notEject", parseList: list, style: .warning, icon: IconsManager.shared.warningIcon)
+					}
 					
 					
 				}

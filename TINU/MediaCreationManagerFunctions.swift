@@ -112,6 +112,7 @@ extension InstallMediaCreationManager{
 			}else{
 				return ""
 			}
+			
 		}else{
 			print("Auth failed: Emergency remount")
 			print(getOut(cmd: "diskutil mount " + id))
@@ -243,7 +244,7 @@ extension InstallMediaCreationManager{
 			DispatchQueue.main.async {
 				if let name = cvm.shared.sharedVolume{
 					self.viewController.driveImage.image = NSWorkspace.shared.icon(forFile: name)
-					self.viewController.driveName.stringValue = FileManager.default.displayName(atPath: name)
+					self.viewController.driveName.stringValue += "\n(" + TextManager.getViewString(context: self, stringID: "renamed") + " " + FileManager.default.displayName(atPath: name) + ")"
 				}
 				
 				log("@@@Volume format process ended with success\n\n")
@@ -284,7 +285,7 @@ extension InstallMediaCreationManager{
 			}
 			
 			if !canFormat {
-				if let o = oom.shared.otherOptions[oom.OtherOptionID.otherOptionForceToFormatID]?.canBeUsed(){
+				if let o = oom.shared.otherOptions[.otherOptionForceToFormatID]?.canBeUsed(){
 					if o && !simulateFormatSkip{
 						canFormat = true
 						log("   Forced drive erase enabled")
@@ -294,7 +295,7 @@ extension InstallMediaCreationManager{
 		}
 		
 		if sharedInstallMac{
-			if let o = oom.shared.otherOptions[oom.OtherOptionID.otherOptionDoNotUseApfsID]?.canBeUsed(){
+			if let o = oom.shared.otherOptions[.otherOptionDoNotUseApfsID]?.canBeUsed(){
 				if o {
 					useAPFS = false
 					log("   Forced APFS automatic upgrade enabled")

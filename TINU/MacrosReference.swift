@@ -36,7 +36,7 @@ To enable each macro you need to go into the build settings section of the Xcode
 	This will hide and/or disable all the hackintosh-specific stuff and hackintosh references, made to make this app to be more apple friendly in case of a possible app store release (is apple would allow for this kind of tool to even be on the app store)
 
 - useEFIReplacement
-	This is used to compile and show stuff related to the "Install ... EFI Folder" advanced settings
+	This is used to compile and show stuff related to the "Install... EFI Folder" advanced settings
 
 - useFileReplacement
 	This allows the usage of the bootfiles replacement menu

@@ -104,9 +104,6 @@ public class LogWindowController: NSWindowController, ViewID {
 		self.copyLogBigItem.action = #selector(self.copyLog(_:))
 		self.shareLogBigItem.action = #selector(self.shareLog(_:))
 		
-		self.saveLogItem.image = IconsManager.shared.internalDiskIcon
-		self.saveLogBigItem.image = self.saveLogItem.image
-		
 		self.saveLogItem.label = TextManager.getViewString(context: self, stringID: "saveButton")
 		self.saveLogBigItem.label = self.saveLogItem.label
 		
@@ -115,6 +112,18 @@ public class LogWindowController: NSWindowController, ViewID {
 		
 		self.shareLogItem.label = TextManager.getViewString(context: self, stringID: "shareButton")
 		self.shareLogBigItem.label = self.shareLogItem.label
+		
+		if #available(OSX 11.0, *) {
+			self.saveLogItem.image = NSImage(systemSymbolName: "tray.and.arrow.down", accessibilityDescription: nil)
+			self.shareLogItem.image = NSImage(systemSymbolName: "square.and.arrow.up", accessibilityDescription: nil)
+			self.copyLogItem.image = NSImage(systemSymbolName: "doc.on.clipboard", accessibilityDescription: nil)
+		} else {
+			self.saveLogItem.image = IconsManager.shared.internalDiskIcon
+		}
+		
+		self.saveLogBigItem.image = self.saveLogItem.image
+		self.shareLogBigItem.image = self.shareLogItem.image
+		self.copyLogBigItem.image = self.copyLogItem.image
 		
 	}
 

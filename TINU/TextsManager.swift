@@ -8,6 +8,8 @@
 
 import Foundation
 
+
+
 public struct TINUTextsManagerStruct: TextManagerGet, CodableDefaults, Codable, Equatable{
 	
 	private var readme: TextManagementStructs.InstallerInstallation<TextManagementStructs.MessangeFormatSpecificsMachine<String>>

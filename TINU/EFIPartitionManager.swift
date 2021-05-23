@@ -172,7 +172,7 @@ import Foundation
             var usableDrives: [String]! = nil
             
             do{
-                print("Waiting for the drives data ...")
+                print("Waiting for the drives data...")
                 
                 let out = getOut(cmd: "diskutil list -plist")
                 

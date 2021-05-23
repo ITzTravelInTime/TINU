@@ -40,7 +40,7 @@ extension NSViewController{
 			return
 		}
 		
-		print("    Performing View Controller sawp ...")
+		print("    Performing View Controller sawp...")
 		
 		self.view.window?.contentViewController = NSViewController.tmpViewController.last!!
 		self.view.window?.contentView = NSViewController.tmpViewController.last!!.view

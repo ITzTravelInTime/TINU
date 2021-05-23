@@ -27,7 +27,7 @@ extension InstallMediaCreationManager{
 			
 			var unmount = true
 			
-			if let o = oom.shared.otherOptions[oom.OtherOptionID.otherOptionKeepEFIpartID]?.canBeUsed(){
+			if let o = oom.shared.otherOptions[.otherOptionKeepEFIpartID]?.canBeUsed(){
 				unmount = !o
 			}
 			
@@ -48,7 +48,7 @@ extension InstallMediaCreationManager{
 				
 				self.setProgressValue(self.progressMaxVal - IMCM.unit)
 				
-				//self.setActivityLabelText("Process ended, exiting ...")
+				//self.setActivityLabelText("Process ended, exiting...")
 				self.setActivityLabelText("activityLabel8")
 			
 				if !ok.result{

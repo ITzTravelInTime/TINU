@@ -91,7 +91,10 @@
 		{
 			"unmutable" : {
 				"version" : "Versione: ",
-				"license" : "\nRilasciato sotto la licenza GNU GPL v3"
+				"license" : "\nRilasciato sotto la licenza GNU GPL v3",
+				"closeButton" : "Chiudi",
+				"sourceCodeButton" : "Codice Sorgente",
+				"contactsButton" : "Contattaci"
 			}
 		},
 		"DriveDetectionInfo" :
@@ -118,7 +121,7 @@
 				"improperDialogTitle": "La cartella \"${pathName}\" non è una cartella EFI di ${bootloader}",
 				"improperDialog" : "La cartella che hai scelto \"${path}\" non contiene il file \"${missing}\" che è richiesto, assicurati di aprire solo la cartella chiamata EFI e che essa contenga tutti i file necessari",
 				"alreadyChoosen" : "Hai già scelto una cartella EFI di ${bootloader}",
-				"buttonChoose" : "Apri Cartella ...",
+				"buttonChoose" : "Apri Cartella...",
 				"buttonRemoove" : "Cancella",
 				"errorUnloadingTitle" : "Errore durante il reset delle impostazioni",
 				"errorUnloading" : "Non è stato possibile rimuovere la cartella EFI selezionata dalla memoria di TINU, si consiglia di chiudere e riaprire TINU per resettare la memoria dell'app"
@@ -143,7 +146,7 @@
 				}
 			},
 			"unmutable" : {
-				"title" : "Recquisiti",
+				"title" : "Requisiti",
 			}
 		},
 		"LicenseViewController" : {
@@ -194,11 +197,13 @@
 				"nextButton" : "Avanti",
 				"nextButtonFail" : "Esci",
 				"failureText" : "Nessun'app di installazione è stata trovata",
-				"failureButtonGetInstaller" : "Ottieni installer ...",
-				"failureButtonOpen" : "Apri ...",
-				"buttonGetInstaller" : "Ottieni app ...",
-				"buttonOpen" : "Apri ...",
+				"failureButtonGetInstaller" : "Ottieni app...",
+				"failureButtonOpen" : "Apri app...",
+				"buttonGetInstaller" : "Ottieni app...",
+				"buttonOpen" : "Apri...",
 				"buttonRefresh" : "Aggiorna",
+				"invalidAppDialogSizeTitle" : "App non utilizzabile",
+				"invalidAppDialogSize" : "L'app che hai scelto${fileName} non è utilizzabile perchè è troppo grande per il disco che hai scelto.",
 				"invalidAppDialogTitle" : "App non utilizzabile",
 				"invalidAppDialog" : "L'app che hai scelto${fileName} non è utilizzabile perchè non è un'app di installazione di macOS oppure è un app di installazione danneggiata o non supportata.",
 				"invalidAliasDialogTitle" : "Impossibile usare alias",
@@ -278,7 +283,7 @@
 				"activityLabel5" : "Applicazione delle impostazioni",
 				"activityLabel6" : "Formattazione del disco scelto",
 				"activityLabel7" : "Espulsione delle partizioni",
-				"activityLabel8" : "Processo completato, chiusura in corso ...",
+				"activityLabel8" : "Processo completato, chiusura in corso...",
 				"activityLabel9" : "Controllo delle partizioni",
 				"activityLabel10" : "Applicando le impostazioni",
 				"activityLabel12" : "Chiusura dei processi",
@@ -390,7 +395,8 @@
 				"stop2" : "No",
 				"stop2Key" : "\r",
 				"stop1" : "Si",
-				"stop1Key" : ""
+				"stop1Key" : "",
+				"renamed" : "Rinominato in"
 			}
 		},
 		"TaskKillManager" : {
@@ -401,13 +407,12 @@
 				"quitInstaller1Key" : "\r",
 				"quitInstaller2" : "No",
 				"quitInstaller2Key" : "",
-				"quitTile" : "Chiudere \"${name}\"?",
+				"quitTitle" : "Chiudere \"${name}\"?",
 				"quit" : "TINU necessita che il programma \"${name}\" venga chiuso per poter continuare, vuoi chiuderlo?",
 				"quit1" : "Si",
 				"quit1Key" : "\r",
 				"quit2" : "No",
 				"quit2Key" : ""
-				
 			}
 		},
 		"template":{

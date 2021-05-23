@@ -5,7 +5,7 @@
 				"mountButton" : "Mount EFI partition",
 				"unmountButton" : "Unmount EFI partition",
 				"openInfinderButton" : "Show in Finder",
-				"editConfigButtonOther" : "Open config.plist with ...",
+				"editConfigButtonOther" : "Open config.plist with...",
 				"noPartitionsLabel" : "No mounted partitions found",
 				"downloadTitle" : "Download \"${appName}\" ?",
 				"download" : "the app \"${appName}\" is not installed, do you want to download it?",

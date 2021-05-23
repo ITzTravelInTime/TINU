@@ -26,6 +26,7 @@ public final class OtherOptionsManager{
 		
 		//usable only if efi partition mounting is enabled and if there no mac-only mode active
 		case otherOptionKeepEFIpartID = 8
+		
 	}
 	
 	public struct OtherOptionString: Codable, Equatable{
@@ -72,24 +73,25 @@ public final class OtherOptionsManager{
 			r.objects = TextManager!.optionsDescpriptions! //= getStrings()
 			r.tmpDict = [:]
 			
-			addOtheroOption(&r, id: OtherOptionID.otherOptionTinuCopyID, activated: true, visible: true, isAdvanced: false)
-			addOtheroOption(&r, id: OtherOptionID.otherOptionCreateIconID, activated: true, visible: true, isAdvanced: false)
-			addOtheroOption(&r, id: OtherOptionID.otherOptionCreateReadmeID, activated: true, visible: true, isAdvanced: false)
-			addOtheroOption(&r, id: OtherOptionID.otherOptionForceToFormatID, activated: false, visible: true, isAdvanced: true)
+			addOtheroOption(&r, id: .otherOptionTinuCopyID, activated: true, visible: true, isAdvanced: false)
+			addOtheroOption(&r, id: .otherOptionCreateIconID, activated: true, visible: true, isAdvanced: false)
+			addOtheroOption(&r, id: .otherOptionCreateReadmeID, activated: true, visible: true, isAdvanced: false)
 			
-			addOtheroOption(&r, id: OtherOptionID.otherOptionDoNotUseApfsID, activated: true, visible: true, isAdvanced: true)
+			
+			
+			addOtheroOption(&r, id: .otherOptionForceToFormatID, activated: false, visible: true, isAdvanced: true)
+			addOtheroOption(&r, id: .otherOptionDoNotUseApfsID, activated: true, visible: true, isAdvanced: true)
 			
 			#if !macOnlyMode
 				
-			addOtheroOption(&r, id: OtherOptionID.otherOptionCreateAIBootFID, activated: false, visible: true, isAdvanced: true)
-			addOtheroOption(&r, id: OtherOptionID.otherOptionDeleteIAPMID, activated: false, visible: true, isAdvanced: true)
+			addOtheroOption(&r, id: .otherOptionCreateAIBootFID, activated: false, visible: true, isAdvanced: true)
+			addOtheroOption(&r, id: .otherOptionDeleteIAPMID, activated: false, visible: true, isAdvanced: true)
 				
 			#endif
 			
-			
 			#if useEFIReplacement && !macOnlyMode
 			
-			addOtheroOption(&r, id: OtherOptionID.otherOptionKeepEFIpartID, activated: false, visible: true, isAdvanced: true)
+			addOtheroOption(&r, id: .otherOptionKeepEFIpartID, activated: false, visible: true, isAdvanced: true)
 			
 			#endif
 			
