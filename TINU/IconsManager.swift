@@ -15,84 +15,89 @@ public final class IconsManager{
 	//warning icon used by the app
 	public var warningIcon: NSImage!{
 		get{
-			return NSImage.init(named: NSImage.cautionName)//getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertCautionIcon.icns", name: "warning")
+			return getIconFor(path: "", symbol: "exclamationmark.triangle", name: NSImage.cautionName)
 		}
 	}
 	
-	//executable file icon
-	/*public var executableIcon: NSImage!{
+	public var alertWarningIcon: NSImage!{
 		get{
-			
-			if let i = getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ExecutableBinaryIcon.icns", name: "warning"){
-				return i
-			}else{
-				return NSImage(named: "uncheck")
-			}
+			return NSImage(named: NSImage.cautionName)
 		}
-	}*/
+	}
 	
 	//stop icon used by the app
 	public var stopIcon: NSImage!{
 		get{
-			
-			if let i = getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertStopIcon.icns", name: "warning"){
-				return i
-			}else{
-				return NSImage(named: "uncheck")
-			}
+			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertStopIcon.icns", symbol: "xmark.circle", name: "uncheck")
+		}
+	}
+	
+	public var checkIcon: NSImage!{
+		get{
+			return getIconFor(path: "", symbol: "checkmark.circle", name: "checkVector")
 		}
 	}
 	
 	//gets the overlay for usupported stuff
 	public var unsupportedOverlay: NSImage!{
 		get{
-			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/Unsupported.icns", name: "warning")
+			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/Unsupported.icns", symbol: "nosign", name: NSImage.cautionName)
 		}
 	}
 	
 	public var infoIcon: NSImage!{
 		get{
-			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertNoteIcon.icns", name: "warning")
+			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertNoteIcon.icns", symbol: "info.circle", name: NSImage.cautionName)
 		}
 	}
 	
 	public var copyIcon: NSImage!{
 		get{
-			//return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/MultipleItemsIcon.icns", name: "warning")
-			return NSImage.init(named: NSImage.multipleDocumentsName)
+			return getIconFor(path: "", symbol: "doc.on.doc", name: NSImage.multipleDocumentsName)
 		}
 	}
 	
 	public var saveIcon: NSImage!{
 		get{
-			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericDocumentIcon.icns", name: "warning")
+			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericDocumentIcon.icns", symbol: "tray.and.arrow.down", name: NSImage.multipleDocumentsName)
 		}
 	}
 	
 	public var removableDiskIcon: NSImage{
 		get{
-			return getIconFor(path: "/System/Library/Extensions/IOStorageFamily.kext/Contents/Resources/Removable.icns", name: "Removable")
+			return getIconFor(path: "/System/Library/Extensions/IOStorageFamily.kext/Contents/Resources/Removable.icns", symbol: "externaldrive", name: "Removable")
 		}
 	}
 	
 	public var externalDiskIcon: NSImage{
 		get{
-			return getIconFor(path: "/System/Library/Extensions/IOStorageFamily.kext/Contents/Resources/External.icns", name: "Removable")
+			return getIconFor(path: "/System/Library/Extensions/IOStorageFamily.kext/Contents/Resources/External.icns", symbol: "externaldrive", alternate: removableDiskIcon)
 		}
 	}
 	
 	public var internalDiskIcon: NSImage{
 		get{
-			return getIconFor(path: "/System/Library/Extensions/IOStorageFamily.kext/Contents/Resources/Internal.icns", name: "Removable")
+			return getIconFor(path: "/System/Library/Extensions/IOStorageFamily.kext/Contents/Resources/Internal.icns", symbol: "internaldrive", alternate: removableDiskIcon)
 		}
 	}
 	
+	public var timeMachineDiskIcon: NSImage{
+		get{
+			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericTimeMachineDiskIcon.icns", symbol: "externaldrive.badge.timemachine", alternate: removableDiskIcon)
+		}
+	}
+	
+	
+	public var genericInstallerAppIcon: NSImage{
+		get{
+			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericApplicationIcon.icns", symbol: "square.and.arrow.down", name: "InstallApp", alternateFirst: true)
+		}
+	}
 	
 	//return the icon of thespecified installer app
 	
 	func getInstallerAppIconFrom(path app: String) ->NSImage{
 		let iconp = app + "/Contents/Resources/InstallAssistant.icns"
-		
 		if FileManager.default.fileExists(atPath: iconp){
 			if let i = NSImage(contentsOfFile: iconp){
 				return i
@@ -103,16 +108,20 @@ public final class IconsManager{
 	}
 	
 	//gets an icon from a file, if the file do not exists, it uses an icon from the assets
-	public func getIconFor(path: String, name: String) -> NSImage!{
-		if FileManager.default.fileExists(atPath: path){
-			return NSImage(contentsOfFile: path)
-		}else{
-			return NSImage(named: name)
-		}
+	public func getIconFor(path: String, symbol: String, name: String, alternateFirst: Bool = false) -> NSImage!{
+		return getIconFor(path: path, symbol: symbol, alternate: NSImage(named: name), alternateFirst: alternateFirst)
 	}
 	
-	public func getIconFor(path: String, alternate: NSImage!) -> NSImage!{
-		if FileManager.default.fileExists(atPath: path){
+	public func getIconFor(path: String, symbol: String, alternate: NSImage! = nil, alternateFirst: Bool = false) -> NSImage!{
+		if #available(macOS 11.0, *), look == .bigSurUp, !symbol.isEmpty{
+			let ret = NSImage(systemSymbolName: symbol, accessibilityDescription: nil)
+			ret?.isTemplate = true
+			return ret
+		}
+		if path.isEmpty{
+			return alternate
+		}
+		if FileManager.default.fileExists(atPath: path) && !(alternate != nil && alternateFirst){
 			return NSImage(contentsOfFile: path)
 		}else{
 			return alternate
@@ -123,7 +132,13 @@ public final class IconsManager{
 		
 		if let mount = dm.getMountPointFromPartitionBSDID(id){
 			if !(mount.isEmpty){
-				return NSWorkspace.shared.icon(forFile: mount)
+				if !FileManager.default.directoryExistsAtPath(mount + "/Backups.backupdb"){
+					if FileManager.default.fileExists(atPath: mount + "/.VolumeIcon.icns"){
+						return NSWorkspace.shared.icon(forFile: mount)
+					}
+				}else{
+					return timeMachineDiskIcon
+				}
 			}
 		}
 		

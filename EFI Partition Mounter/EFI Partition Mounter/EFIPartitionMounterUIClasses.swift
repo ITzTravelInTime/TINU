@@ -166,7 +166,7 @@ public class EFIPartitionToolInterface{
 			
 			ejectButton.imageScaling = .scaleProportionallyUpOrDown
 			ejectButton.imagePosition = .imageOnly
-			ejectButton.image = IconsManager.shared.getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/EjectMediaIcon.icns", name: "EFIIcon")
+			ejectButton.image = IconsManager.shared.getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/EjectMediaIcon.icns", symbol: "eject", name: "EFIIcon")
 			
 			ejectButton.frame.size = NSSize(width: titleLabel.frame.height, height: titleLabel.frame.height)
 			

@@ -110,18 +110,35 @@ class InstallingViewController: GenericViewController, ViewID{
 		
 		let cm = cvm.shared
 		
+		driveImage.image = IconsManager.shared.getCorrectDiskIcon(cvm.shared.sharedBSDDrive)
+		
 		if drive{
 			driveImage.image = IconsManager.shared.getCorrectDiskIcon(cvm.shared.sharedBSDDrive)
 			driveName.stringValue = dm.getCurrentDriveName()!
 			//self.setTitleLabel(text: "The drive and macOS installer below will be used, are you sure?")
 		}else{
 			let sv = cm.sharedVolume!
-			driveImage.image = NSWorkspace.shared.icon(forFile: sv)
+			//driveImage.image = NSWorkspace.shared.icon(forFile: sv)
 			driveName.stringValue = FileManager.default.displayName(atPath: sv)
 		}
 		
+		if #available(macOS 11.0, *), look == .bigSurUp{
+			driveImage.contentTintColor = .systemGray
+			driveImage.image = driveImage.image?.withSymbolWeight(.thin)
+		}
+		
 		let sa = cm.sharedApp!
-		appImage.image = IconsManager.shared.getInstallerAppIconFrom(path: sa)
+		
+		if look == .bigSurUp{
+			appImage.image = IconsManager.shared.genericInstallerAppIcon
+			if #available(macOS 11.0, *){
+				appImage.contentTintColor = .systemGray
+				appImage.image = appImage.image?.withSymbolWeight(.thin)
+			}
+		}else{
+			appImage.image = IconsManager.shared.getInstallerAppIconFrom(path: sa)
+		}
+		
 		appName.stringValue = FileManager.default.displayName(atPath: sa)
 		
 		log("Everything is ready to start the creation/installation process")

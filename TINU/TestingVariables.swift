@@ -49,8 +49,8 @@ public let simulateAbnormalExitcode = false
 
 //this variable tells to the app to ignore special operations after the end of the createinstallmedia process
 //values:
-// - true:  the advanced option will be skipped with true as resoult
-// - false: the advanced options will be skipped with false as resoult
+// - true:  the advanced option will be skipped with true as result
+// - false: the advanced options will be skipped with false as result
 // - nil:   (default) all normal
 public let simulateNoSpecialOperations: Bool! = nil
 
@@ -70,5 +70,8 @@ public let simulateDisableShadows = false
 // - true/false simulate on/off state of sip
 // - nil use actual sip state
 public let simulateSIPStatus: Bool! = nil
+
+//this vasriables forces a UI Style if not nil, see the AppLook enum for the oossible values
+public let simulateLook: AppLook! = nil//.bigSurUp
 
 //non ui testing conditions

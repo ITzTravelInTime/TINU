@@ -35,12 +35,8 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
 		
 		var image = NSImage()
         if !FinalScreenSmallManager.shared.isOk{
-			if #available(macOS 11.0, *){
-				image = NSImage(systemSymbolName: "xmark.circle.fill", accessibilityDescription: nil)!
-				image.isTemplate = true
-			}else{
-				image = IconsManager.shared.stopIcon
-			}
+			
+			image = IconsManager.shared.stopIcon
 			
             continueButton.isEnabled = true
             continueButton.frame.size.width = exitButton.frame.size.width
@@ -48,20 +44,17 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
 			exitButton.isHidden = true
         }else{
 			exitButton.title = TextManager.getViewString(context: self, stringID: "exitButton")
-			if #available(macOS 11.0, *){
-				image = NSImage(systemSymbolName: "checkmark.circle.fill", accessibilityDescription: nil)!
-				image.isTemplate = true
-			}else{
-				image = NSImage(named: "checkVector")!
-			}
+			image = IconsManager.shared.checkIcon
             continueButton.isEnabled = true
             continueButton.isHidden = false
         }
 		
 		setFailureImage(image: image)
 		
-		if #available(macOS 11.0, *){
+		if #available(macOS 11.0, *), look == .bigSurUp{
 			if failureImageView != nil{
+				failureImageView.contentTintColor = .systemGray
+				failureImageView.image = failureImageView.image?.withSymbolWeight(.thin)
 				failureImageView.contentTintColor = FinalScreenSmallManager.shared.isOk ? .systemGreen : .systemRed
 			}
 		}

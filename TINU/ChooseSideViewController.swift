@@ -84,14 +84,28 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		//print(TextManager!)
 		//print(CodableCreation<TINUTextsManagerStruct>.getEncoded(TextManager!)!)
 		
-		//createUSBButton.cImage.image = IconsManager.shared.removableDiskIcon //NSImage(named: "Removable")
-		createUSBButton.cImage.image = NSImage(named: "drive")
+		if #available(macOS 11.0, *), look == .bigSurUp {
+			createUSBButton.cImage.image = NSImage(systemSymbolName: "externaldrive.badge.plus", accessibilityDescription: nil)?.withSymbolWeight(.ultraLight)
+			createUSBButton.cImage.contentTintColor = .systemGray
+			installButton.cImage.image = NSImage(systemSymbolName: "desktopcomputer", accessibilityDescription: nil)?.withSymbolWeight(.ultraLight)
+			installButton.cImage.contentTintColor = .systemGray
+			efiButton.cImage.image = NSImage(systemSymbolName: "tray", accessibilityDescription: nil)?.withSymbolWeight(.ultraLight)
+			efiButton.cImage.contentTintColor = .systemGray
+		} else {
+			//createUSBButton.cImage.image = IconsManager.shared.removableDiskIcon //NSImage(named: "Removable")
+			createUSBButton.cImage.image = IconsManager.shared.removableDiskIcon
+			
+			installButton.cImage.image = NSImage(named: NSImage.computerName)//NSImage(named: "OSInstall")
+			
+			efiButton.cImage.image = NSImage(named: "EFIIcon")
+		}
+		
 		createUSBButton.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstaller")//"Create a bootable\nmacOS installer"
 		
-		installButton.cImage.image = NSImage(named: NSImage.computerName)//NSImage(named: "OSInstall")
+		
 		installButton.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstallation")//"Install macOS"
 		
-		efiButton.cImage.image = NSImage(named: "EFIIcon")
+		
 		efiButton.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openEFIMounter")//"Use \nEFI Partition Mounter"
 		
 		
@@ -140,6 +154,22 @@ class ChooseSideViewController: GenericViewController, ViewID {
 					
 					var shadowView: NSView!
 					
+					switch look {
+					case .yosemiteToCatalina, .bigSurUp:
+						shadowView = ShadowView()
+						(shadowView as? ShadowView)?.setModeFromCurrentLook()
+						b.isBordered = false
+						b.layer?.backgroundColor = NSColor.transparent.cgColor
+						b.layer?.masksToBounds = true
+						b.layer?.cornerRadius = shadowView.layer!.cornerRadius
+						break
+					default:
+						shadowView = NSView()
+						shadowView.backgroundColor = NSColor.transparent
+						break
+					}
+					
+					/*
 					if !blockShadow{
 						shadowView = ShadowView()
 						b.isBordered = false
@@ -151,6 +181,8 @@ class ChooseSideViewController: GenericViewController, ViewID {
 						shadowView = NSView()
 						shadowView.backgroundColor = NSColor.transparent
 					}
+					*/
+					
 					
 					shadowView.frame.size = b.frame.size
 					
@@ -231,18 +263,33 @@ class ChooseSideViewController: GenericViewController, ViewID {
 	}
 	
 	@IBAction func openEFIMounter(_ sender: Any){
+		if let sen = sender as? AdvancedOptionsButton{
+			if let parent = sen.superview as? ShadowView{
+				parent.isSelected = true
+			}
+		}
 		if let apd = NSApp.delegate as? AppDelegate{
 			apd.openEFIPartitionTool(sender)
 		}
 	}
 	
 	@IBAction func createUSB(_ sender: Any) {
+		if let sen = sender as? AdvancedOptionsButton{
+			if let parent = sen.superview as? ShadowView{
+				parent.isSelected = true
+			}
+		}
 		if let apd = NSApplication.shared.delegate as? AppDelegate{
 			apd.swichMode(isInstall: false)
 		}
 	}
 	
 	@IBAction func install(_ sender: Any) {
+		if let sen = sender as? AdvancedOptionsButton{
+			if let parent = sen.superview as? ShadowView{
+				parent.isSelected = true
+			}
+		}
 		if let apd = NSApplication.shared.delegate as? AppDelegate{
 			apd.swichMode(isInstall: true)
 		}

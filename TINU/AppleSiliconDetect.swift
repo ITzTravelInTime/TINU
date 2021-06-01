@@ -43,9 +43,12 @@ extension ProcessInfo {
 
 enum CpuArchitecture: String, Codable, Equatable, CaseIterable{
 	case ppc     = "ppc"
-	case ppcG3   = "ppc970"
+	case ppcG1   = "ppc601"
+	case ppcG2   = "ppc604"
+	case ppcG3   = "ppc750"
 	case ppcG4   = "ppc7400"
-	case ppcG5   = "ppc64"
+	case ppcG5   = "ppc970"
+	case ppc64   = "ppc64"
 	case intel32 = "i386"
 	case intel64 = "x86_64"
 	case arm     = "arm"
@@ -63,11 +66,23 @@ enum CpuArchitecture: String, Codable, Equatable, CaseIterable{
 			return arm64
 		}
 		
-		if arch.rawValue.contains("ppc") && mode == .emulated{
+		if arch.isPPC() && mode == .emulated{
 			return intel32
 		}
 		
 		return arch
 		
+	}
+	
+	func isPPC() -> Bool{
+		return self.rawValue.starts(with: "ppc")
+	}
+	
+	func isPPC64() -> Bool{
+		return self == .ppc64 || self == .ppcG5
+	}
+	
+	func isPPC32() -> Bool{
+		return isPPC() && !isPPC64()
 	}
 }

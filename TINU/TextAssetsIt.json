@@ -254,8 +254,8 @@
 			"unmutable" : {
 				"downloadButtonAppStore" : "Vedi nell'App Store",
 				"downloadButtonApple" : "Scarica da Apple",
-				"downloadDialogTitle" : "Ricordati di aprire il download",
-				"downloadDialog" : "Il file che stai per scaricare contiene l'installer di macOS che dovrai usare con TINU e pertanto deve essere aprto prima dell'uso per permettere a tinu di rilevare l'installer.",
+				"downloadDialogTitle" : "Ricordati di aprire ed installare il download",
+				"downloadDialog" : "Il file che stai per scaricare contiene il programma di installazione dell'app di macOS che dovrai usare con TINU e pertanto deve essere aprto ed installato prima dell'uso per permettere a tinu di rilevare l'installer.",
 				"downloadDialogYes" : "Continua",
 				"downloadDialogNo" : "Annulla"
 			}

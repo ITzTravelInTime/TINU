@@ -34,7 +34,11 @@ public class GenericViewController: NSViewController {
 		titleLabel.frame.origin.x = 18
 		titleLabel.frame.size.height = 24
 		
-		titleLabel.font = NSFont.boldSystemFont(ofSize: 14)
+		if look == .bigSurUp{
+			titleLabel.font = NSFont.systemFont(ofSize: 16)
+		}else{
+			titleLabel.font = NSFont.boldSystemFont(ofSize: 14)
+		}
 	}
 	
 	func showTitleLabel(){
@@ -88,12 +92,9 @@ public class GenericViewController: NSViewController {
 	}
 	
 	func defaultFailureImage(){
+		self.setFailureImage(image: IconsManager.shared.warningIcon)
 		if #available(macOS 11.0, *){
-			self.setFailureImage(image: NSImage(systemSymbolName: "exclamationmark.triangle.fill", accessibilityDescription: nil))
-			self.failureImageView.image!.isTemplate = true
 			self.failureImageView.contentTintColor = .systemYellow
-		}else{
-			self.setFailureImage(image: IconsManager.shared.warningIcon)
 		}
 	}
 	

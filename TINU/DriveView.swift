@@ -25,7 +25,7 @@ class DriveView: ShadowView, ViewID {
         }
     }
 	
-	var isSelected = false
+	//var isSelected = false
 
     public var isApp = false
     public var applicationPath = ""
@@ -38,9 +38,8 @@ class DriveView: ShadowView, ViewID {
 	var volume: NSTextField!
 	
 	var warnImage: NSImageView!
-	var warnText: NSTextField!
-    
-    var overlay: NSImageView!
+	private var warnText: String = ""
+	var appName: String = ""
 	
 	var sz: String!
 	
@@ -49,16 +48,34 @@ class DriveView: ShadowView, ViewID {
 		
 		self.appearance = sharedWindow.effectiveAppearance
 		
+		/*
 		if isSelected{
-			//self.gradientLayer.removeFromSuperlayer()
 			self.backgroundColor = NSColor.selectedControlColor
 		}else{
-			//gradientLayer.colors = [NSColor.controlBackgroundColor, NSColor.controlColor].map({$0.cgColor})
-			//self.layer?.insertSublayer(gradientLayer, at: 0)
+			self.backgroundColor = NSColor.controlColor
+		}
+		*/
+		
+		if image != nil{
+			if #available(macOS 11.0, *), look == .bigSurUp{
+				if !isSelected{
+					image.contentTintColor = .systemGray
+				}else{
+					image.contentTintColor = .alternateSelectedControlTextColor
+				}
+			}
 		}
 		
-		if self.isEnabled{
-			self.volume.textColor = NSColor.textColor
+		if volume != nil{
+			if isEnabled{
+				if isSelected && look == .bigSurUp{
+					self.volume.textColor = .alternateSelectedControlTextColor
+				}else{
+					self.volume.textColor = .textColor
+				}
+			}else{
+				self.volume.textColor = .systemGray
+			}
 		}
 		
 	}
@@ -92,14 +109,9 @@ class DriveView: ShadowView, ViewID {
 	
     private func refreshUI(){
 		
-		if blockShadow{
-			self.canShadow = false
-		}
+		setModeFromCurrentLook()
 		
 		self.wantsLayer = true
-		self.layer?.cornerRadius = 15
-		
-		self.layer?.masksToBounds = true
 		
 		gradientLayer.frame = self.bounds
 		gradientLayer.cornerRadius = self.layer!.cornerRadius
@@ -109,12 +121,13 @@ class DriveView: ShadowView, ViewID {
 			image = nil
 		}
         
-        image = NSImageView(frame: NSRect(x: 15, y: 55, width: self.frame.size.width - 30, height: self.frame.size.height - 60))
+        image = NSImageView(frame: NSRect(x: 15, y: 55, width: self.frame.size.width - 30, height: self.frame.size.height - 65))
 		image.wantsLayer = true
         image.isEditable = false
         image.imageAlignment = .alignCenter
         image.imageScaling = .scaleProportionallyUpOrDown
 		image.backgroundColor = NSColor.transparent
+		
         self.addSubview(image)
 		
 		image.layer!.zPosition = self.layer!.zPosition + 1
@@ -126,8 +139,14 @@ class DriveView: ShadowView, ViewID {
         
         volume = NSTextField(frame: NSRect(x: 5, y: 5, width: self.frame.size.width - 10, height: 45))
 		volume.wantsLayer = true
-        volume.font = NSFont.boldSystemFont(ofSize: 10)
-        volume.stringValue = ""
+		
+		if look == .bigSurUp{
+			volume.font = NSFont.systemFont(ofSize: 10)
+		}else{
+			volume.font = NSFont.boldSystemFont(ofSize: 10)
+		}
+		
+		volume.stringValue = ""
         volume.isEditable = false
         volume.isBordered = false
         volume.alignment = .center
@@ -226,29 +245,33 @@ class DriveView: ShadowView, ViewID {
 			self.appearance = sharedWindow.effectiveAppearance
 			self.updateLayer()
 			
-			if self.overlay != nil{
-				self.overlay.image = nil
-				self.overlay.removeFromSuperview()
-				self.overlay = nil
-			}
-			
-			if self.warnText != nil{
-				self.warnText.removeFromSuperview()
-				self.warnText = nil
-			}
-			
 			if self.warnImage != nil{
 				self.warnImage.image = nil
 				self.warnImage.removeFromSuperview()
 				self.warnImage = nil
 			}
 			
+			let w: CGFloat = self.frame.width / 3
+			//let margin: CGFloat = 15
+			
+			let activateWarningImage = (look == .bigSurUp) && self.isApp
+			
+			if activateWarningImage || !self.isEnabled{
+			self.warnImage = NSImageView(frame: NSRect(x: self.frame.width - w - 5, y: self.image.frame.origin.y, width: w, height: w))
+			self.warnImage.wantsLayer = true
+			self.warnImage.layer!.zPosition = self.image.layer!.zPosition + 1
+			
+			self.warnImage.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
+			self.warnImage.imageAlignment = .alignBottom
+			}
+			
+			if self.volume.superview == nil{
+				self.addSubview(self.volume)
+			}
+			
 			if self.isEnabled{
 				
-				if self.volume.superview == nil{
-					self.addSubview(self.volume)
-				}
-				
+				self.volume.stringValue = self.appName
 				
 				if self.isApp{
 					//self.toolTip = "Path: " + self.applicationPath
@@ -257,9 +280,21 @@ class DriveView: ShadowView, ViewID {
 					self.setToolTipAndWarn("driveNormal")
 				}
 				
+				if activateWarningImage{
+					if #available(macOS 11.0, *), look == .bigSurUp{
+						self.warnImage.image = NSImage(systemSymbolName: "checkmark.circle.fill", accessibilityDescription: nil)
+						self.warnImage.image!.isTemplate = true
+						self.warnImage.contentTintColor = .systemGreen
+					}else{
+						self.warnImage.image = IconsManager.shared.checkIcon
+					}
+				}
+				
 			}else{
 				
 				var notBigger: Bool = false
+				
+				self.volume.stringValue = self.warnText
 				
 				if self.isApp{
 					if self.sz != nil{
@@ -267,107 +302,63 @@ class DriveView: ShadowView, ViewID {
 					}
 				}
 				
-				self.warnText = NSTextField(frame: self.volume.frame)
-				self.warnText.wantsLayer = true
-				
-				self.warnText.layer!.zPosition = self.image.layer!.zPosition + 2
-				
-				self.warnText.font = self.volume.font
-				self.warnText.isEditable = false
-				self.warnText.isBordered = false
-				self.warnText.alignment = .center
-				self.warnText.drawsBackground = false
-				self.addSubview(self.warnText)
-				
-				let w: CGFloat = self.frame.width / 3
-				//let margin: CGFloat = 15
-				
-				
-				if (notBigger){
-					
-					self.overlay = NSImageView(frame: self.image.frame)
-					self.overlay.wantsLayer = true
-					self.overlay.layer!.zPosition = self.image.layer!.zPosition + 1
-					self.overlay.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
-					self.overlay.imageAlignment = .alignBottom
-					
-					/*
-					if #available(macOS 11.0, *){
-						//self.warnImage.image = NSImage(systemSymbolName: "nosign", accessibilityDescription: nil)
-						//self.warnImage.image!.isTemplate = true
-						//self.warnImage.contentTintColor = .systemGray
-						//self.addSubview(self.warnImage)
-						
-						self.overlay.image = NSImage(systemSymbolName: "nosign", accessibilityDescription: nil)
-						self.overlay.image!.isTemplate = true
-						self.overlay.contentTintColor = .systemGray
-						
+				if !notBigger{
+					if #available(macOS 11.0, *), look == .bigSurUp{
+						self.warnImage.image = NSImage(systemSymbolName: "xmark.octagon.fill", accessibilityDescription: nil)
+						self.warnImage.image!.isTemplate = true
+						self.warnImage.contentTintColor = .systemRed
 					}else{
-						self.overlay.image = IconsManager.shared.unsupportedOverlay
-					}*/
-					
-					self.overlay.image = IconsManager.shared.unsupportedOverlay
-					self.addSubview(self.overlay)
-					
-					self.warnText.textColor = .systemGray
-					
-					self.setToolTipAndWarn("appTooBig")
-					
+						self.warnImage.image = IconsManager.shared.stopIcon
+					}
 				}else{
-					
-					self.warnImage = NSImageView(frame: NSRect(x: self.frame.width - w - 5, y: self.image.frame.origin.y, width: w, height: w))
-					self.warnImage.wantsLayer = true
-					self.warnImage.layer!.zPosition = self.image.layer!.zPosition + 1
-					
-					self.warnImage.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
-					self.warnImage.imageAlignment = .alignBottom
-					
-					
-					if #available(macOS 11.0, *){
+					if #available(macOS 11.0, *), look == .bigSurUp{
 						self.warnImage.image = NSImage(systemSymbolName: "exclamationmark.triangle.fill", accessibilityDescription: nil)
 						self.warnImage.image!.isTemplate = true
 						self.warnImage.contentTintColor = .systemYellow
 					}else{
 						self.warnImage.image = IconsManager.shared.warningIcon
 					}
-					
-					self.addSubview(self.warnImage)
-					
-					self.warnText.textColor = .systemYellow
-					
-					if self.isApp{
-						if self.sz != nil{
-							self.setToolTipAndWarn("appDamaged")
-						}else{
-							self.setToolTipAndWarn("appError")
-						}
-					}
-					
 				}
 				
-				self.volume.removeFromSuperview()
+				
+				
+				//self.warnText.textColor = .systemYellow
+				
+				if notBigger{
+					self.setToolTipAndWarn("appTooBig")
+				}else if self.isApp{
+					if self.sz != nil{
+						self.setToolTipAndWarn("appDamaged")
+					}else{
+						self.setToolTipAndWarn("appError")
+					}
+				}
 				
 				if !self.isApp{
 					self.toolTip = TextManager.getViewString(context: self, stringID: "driveNotUsableToolTip")
 				}
 				
 			}
+			
+			if activateWarningImage || !self.isEnabled{
+				self.addSubview(self.warnImage)
+			}
 		}
 		
 	}
 	
 	private func setToolTipAndWarn(_ id: String){
-		var list = ["{path}" : self.applicationPath, "{name}" : self.volume.stringValue]
+		var list: [String: String] = ["{path}" : self.applicationPath, "{name}" : appName]
 		
 		list["{mount}"] = (self.part != nil) ? ((self.part!.isDrive) ? "" : "\n\n" + self.part!.mountPoint) : ""
 		
 		list["{size}"] = (self.sz != nil) ? self.sz! : ""
 		
-		if self.warnText != nil{
-			self.warnText.stringValue = parse(messange: TextManager.getViewString(context: self, stringID: id + "Warn")!, keys: list)
-		}
+		print(list)
 		
-		self.toolTip = parse(messange: TextManager.getViewString(context: self, stringID: id + "ToolTip")!, keys: list)
+		self.warnText = parse(messange: TextManager.getViewString(context: self, stringID: id + "Warn") ?? "", keys: list)
+		
+		self.toolTip = parse(messange: TextManager.getViewString(context: self, stringID: id + "ToolTip") ?? "", keys: list)
 		
 		Swift.print(self.toolTip!)
 	}

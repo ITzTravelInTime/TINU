@@ -343,3 +343,13 @@ fileprivate extension URL {
 	}
 }
 
+extension NSImage{
+	func withSymbolWeight( _ weight: NSFont.Weight ) -> NSImage?{
+		if #available(macOS 11.0, *) {
+			return self.withSymbolConfiguration(.init(pointSize: 20, weight: weight))
+		} else {
+			return self
+		}
+	}
+}
+

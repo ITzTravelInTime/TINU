@@ -24,6 +24,7 @@ public class mainWindowController: GenericWindowController {
         sharedWindow = self.window
         
         sharedStoryboard = self.storyboard
+		
         
         //self.contentViewController?.viewDidLoad()
         

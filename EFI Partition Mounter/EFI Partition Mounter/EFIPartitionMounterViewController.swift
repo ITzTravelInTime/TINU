@@ -97,7 +97,7 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
     override func viewWillAppear() {
         super.viewWillAppear()
     
-		self.window.isFullScreenEnaled = false
+		//self.window.isFullScreenEnaled = false
 		
 		self.window.styleMask.insert(.resizable)
     }    

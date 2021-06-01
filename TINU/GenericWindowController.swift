@@ -26,7 +26,7 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
     }
     
     func setUI(){
-        self.window?.isFullScreenEnaled = false
+        //self.window?.isFullScreenEnaled = false
         
         #if !isTool
         self.window?.title = sharedWindowTitlePrefix
@@ -61,23 +61,6 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
 		}
 		
 		self.window?.titleVisibility = .visible
-    }
-    
-    func makeStandard(){
-        //self.window?.isResizable = true
-        
-        self.window?.exitFullScreen()
-        
-        self.window?.isFullScreenEnaled = false
-        
-    }
-    
-    func makeEditable(){
-        //self.window?.isResizable = false
-        
-        self.window?.makeFullScreen()
-        
-        self.window?.isFullScreenEnaled = true
     }
 	
 	

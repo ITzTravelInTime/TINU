@@ -58,7 +58,8 @@ public final class AppManager{
 			simulateNoSpecialOperations != nil,
 			simulateSpecialOperationsFail,
 			simulateRecovery,
-			simulateSIPStatus != nil
+			simulateSIPStatus != nil,
+			simulateLook != nil
 		]
 		
 		_sharedTestingMode = false

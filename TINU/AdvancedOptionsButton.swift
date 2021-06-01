@@ -50,8 +50,14 @@ import Cocoa
         cTitle.drawsBackground = false
         cTitle.isSelectable = false
         //title.font = NSFont.labelFont(ofSize: 13)
-        cTitle.font = NSFont.boldSystemFont(ofSize: 13) 
-        cTitle.usesSingleLineMode = false
+		if look == .bigSurUp{
+			cTitle.font = NSFont.systemFont(ofSize: 13)
+			cTitle.textColor = NSColor.labelColor
+		}else{
+			cTitle.font = NSFont.boldSystemFont(ofSize: 13)
+		}
+		
+		cTitle.usesSingleLineMode = false
         cTitle.lineBreakMode = .byWordWrapping
         cTitle.alignment = .center
         

@@ -22,7 +22,6 @@ public func parse(messange: String, keys: [String: String]) -> String{
 		}
 		
 		ret += s
-		
 	}
 	
 	return ret

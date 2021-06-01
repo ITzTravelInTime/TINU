@@ -34,7 +34,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 				ok.title = TextManager.getViewString(context: self, stringID: "nextButton")
                 ok.isEnabled = false
 				
-				if !blockShadow{
+				if look != .recovery{
 					scoller.drawsBackground = false
 					scoller.borderType = .noBorder
 				}else{
@@ -221,7 +221,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 		self.back.title = TextManager.getViewString(context: self, stringID: "backButton")
 		self.ok.title = TextManager.getViewString(context: self, stringID: "nextButton")
 		
-		if !blockShadow{
+		if look != .recovery{
 			scoller.frame = CGRect.init(x: 0, y: scoller.frame.origin.y, width: self.view.frame.width, height: scoller.frame.height)
 			scoller.drawsBackground = false
 			scoller.borderType = .noBorder
@@ -460,7 +460,12 @@ class ChoseAppViewController: GenericViewController, ViewID {
 							drive.isApp = true
 							drive.applicationPath = appPath
 							drive.image.image = IconsManager.shared.getInstallerAppIconFrom(path: appPath)
-							drive.volume.stringValue = nm
+							
+							if #available(macOS 11.0, *), look == .bigSurUp {
+								drive.image.image = drive.image.image?.withSymbolWeight(.ultraLight)
+							}
+							
+							drive.appName = nm
 							
 							drive.sz = nil
 							
@@ -564,19 +569,23 @@ class ChoseAppViewController: GenericViewController, ViewID {
 						var temp: CGFloat = 20
 						for d in drives{
 							d.frame.origin.x = temp
-							if !blockShadow{
-								temp += d.frame.width + 15
-							}else{
-								temp += d.frame.width
-							}
+							//if !blockShadow{
+							temp += d.frame.width + (( look != .recovery ) ? 15 : 0)
+							//}else{
+							//	temp += d.frame.width
+							//}
 							content.addSubview(d)
 						}
 						
+						content.frame.size.width = temp + ((look != .recovery) ? 5 : 20)
+						
+						/*
 						if !blockShadow{
 							content.frame.size.width = temp + 5
 						}else{
 							content.frame.size.width = temp + 20
 						}
+						*/
 					}
 					
 					if content.frame.size.width < self.scoller.frame.width{

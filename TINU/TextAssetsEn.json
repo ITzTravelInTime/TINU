@@ -253,8 +253,8 @@
 			"unmutable" : {
 				"downloadButtonAppStore" : "View in the App Store",
 				"downloadButtonApple" : "Download from Apple",
-				"downloadDialogTitle" : "Remeber to open the download",
-				"downloadDialog" : "The intaller file you are about to download will need to be opened after being downloaded in order to be usable with TINU",
+				"downloadDialogTitle" : "Remeber to open and install the download",
+				"downloadDialog" : "The intaller file you are about to download will need to be opened and then installed in order to be usable with TINU.",
 				"downloadDialogYes" : "Continue",
 				"downloadDialogNo" : "Cancel"
 			}

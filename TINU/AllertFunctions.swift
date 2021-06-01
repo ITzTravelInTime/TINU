@@ -85,7 +85,7 @@ public func dialogCritical(question: String, text: String, style: NSAlert.Style,
 //With Warning icon
 
 @inline(__always) public func msgBoxWarning(_ title: String,_ text: String){
-	msgBoxWithCustomIcon(title, text, .warning, IconsManager.shared.warningIcon)
+	msgBoxWithCustomIcon(title, text, .warning, IconsManager.shared.alertWarningIcon)
 }
 
 /*
@@ -95,15 +95,15 @@ public func dialogCritical(question: String, text: String, style: NSAlert.Style,
 */
 
 @inline(__always) public func dialogYesNoWarning(question: String, text: String) -> Bool {
-	return dialogYesNoWithCustomIcon(question: question, text: text, style: .warning, icon: IconsManager.shared.warningIcon)
+	return dialogYesNoWithCustomIcon(question: question, text: text, style: .warning, icon: IconsManager.shared.alertWarningIcon)
 }
 
 @inline(__always) public func dialogCustomWarning(question: String, text: String, mainButtonText: String, secondButtonText: String) -> Bool {
-	return dialogCustomWithCustomIcon(question: question, text: text, style: .warning, mainButtonText: mainButtonText, secondButtonText: secondButtonText, icon: IconsManager.shared.warningIcon)
+	return dialogCustomWithCustomIcon(question: question, text: text, style: .warning, mainButtonText: mainButtonText, secondButtonText: secondButtonText, icon: IconsManager.shared.alertWarningIcon)
 }
 
 @inline(__always) public func dialogCriticalWarning(question: String, text: String, proceedButtonText: String, cancelButtonText: String) -> Bool {
-	return dialogCriticalWithCustomIcon(question: question, text: text, style: .warning, proceedButtonText: proceedButtonText, cancelButtonText: cancelButtonText, icon: IconsManager.shared.warningIcon)
+	return dialogCriticalWithCustomIcon(question: question, text: text, style: .warning, proceedButtonText: proceedButtonText, cancelButtonText: cancelButtonText, icon: IconsManager.shared.alertWarningIcon)
 }
 
 

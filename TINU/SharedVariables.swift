@@ -63,6 +63,30 @@ public var sharedWindowTitlePrefix: String{
 
 
 fileprivate let toggleRecoveryModeShadows = !false
+
+public enum AppLook: UInt8, Codable, Equatable, CaseIterable{
+	case yosemiteToCatalina = 0
+	case bigSurUp = 1
+	case recovery = 255
+}
+
+public var look: AppLook{
+	if let lk = simulateLook{
+		return lk
+	}
+	
+	if ((sharedIsOnRecovery && !toggleRecoveryModeShadows) || simulateDisableShadows){
+		return .recovery
+	}
+	if #available(macOS 11.0, *) {
+		return .bigSurUp
+	}else{
+		return .yosemiteToCatalina
+	}
+}
+
+/*
 public var blockShadow: Bool {
 	return ((sharedIsOnRecovery && !toggleRecoveryModeShadows) || simulateDisableShadows)
 }
+*/

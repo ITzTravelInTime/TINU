@@ -8,7 +8,7 @@
 
 import Cocoa
 
-public func msgboxWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon){
+public func msgboxWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.alertWarningIcon){
 	var title = manager.getViewString(context: handle, stringID: name + "Title")
 	var content = manager.getViewString(context: handle, stringID: name)
 	
@@ -25,7 +25,7 @@ public func msgboxWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID
 	msgBoxWithCustomIcon(title!, content!, style, icon)
 }
 
-public func dialogWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon) -> Bool{
+public func dialogWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.alertWarningIcon) -> Bool{
 	
 	var title = manager.getViewString(context: handle, stringID: name + "Title")
 	var content = manager.getViewString(context: handle, stringID: name)
@@ -91,7 +91,7 @@ public func dialogGenericWithManagerGeneric(_ manager: TextManagerGet, _ handle:
 	return genericDialogCreate(message: title!, informative: content!, style: style, icon: icon, buttons: buttons, accessoryView: nil)
 }
 
-@inline(__always) public func dialogGenericWithManagerBoolGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon) -> Bool{
+@inline(__always) public func dialogGenericWithManagerBoolGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.alertWarningIcon) -> Bool{
 	return dialogGenericWithManager(handle, name: name, parseList: parseList, style: style, icon: icon).runModal() == NSApplication.ModalResponse.alertFirstButtonReturn
 }
 

@@ -137,7 +137,7 @@ fileprivate class DownloadAppItem: ShadowView, ViewID{
 	override func viewDidMoveToSuperview() {
 		super.viewDidMoveToSuperview()
 		
-		canShadow = true
+		setModeFromCurrentLook()
 		
 		icon.frame.size = NSSize(width: 70, height: 70)
 		icon.frame.origin = NSPoint(x: 5, y: (self.frame.height - icon.frame.height) / 2)

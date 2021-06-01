@@ -63,7 +63,7 @@ class LicenseViewController: ShadowViewController, ViewID {
 		
 		check.isEnabled = false
 		
-		if !blockShadow{
+		if look != .recovery{
 			scroller.frame = CGRect.init(x: 0, y: scroller.frame.origin.y, width: self.view.frame.width, height: scroller.frame.height)
 			scroller.borderType = .noBorder
 			//scroller.drawsBackground = false

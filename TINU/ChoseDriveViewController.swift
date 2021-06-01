@@ -53,7 +53,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
                 ok.title = TextManager.getViewString(context: self, stringID: "nextButton")
                 ok.isEnabled = false
 				
-				if !blockShadow{
+				if look != .recovery{
 					scoller.drawsBackground = false
 					scoller.borderType = .noBorder
 				}else{
@@ -91,7 +91,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 		
 		ok.title = TextManager.getViewString(context: self, stringID: "nextButton")
 		
-		if !blockShadow{
+		if look != .recovery{
 			scoller.frame = CGRect.init(x: 0, y: scoller.frame.origin.y, width: self.view.frame.width, height: scoller.frame.height)
 			scoller.drawsBackground = false
 			scoller.borderType = .noBorder
@@ -137,12 +137,12 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 			var prt: Part!
 			
 			if isGUIDwEFI{
-				drivei.volume.stringValue = man.displayName(atPath: d.MountPoint!)
-				prt = Part(partitionBSDName: d.DeviceIdentifier, partitionName: drivei.volume.stringValue, partitionPath: d.MountPoint!, partitionFileSystem: Part.FileSystem.other, partitionScheme: Part.PartScheme.gUID , partitionHasEFI: true, partitionSize: d.Size)
+				drivei.appName = man.displayName(atPath: d.MountPoint!)
+				prt = Part(partitionBSDName: d.DeviceIdentifier, partitionName: drivei.appName, partitionPath: d.MountPoint!, partitionFileSystem: Part.FileSystem.other, partitionScheme: Part.PartScheme.gUID , partitionHasEFI: true, partitionSize: d.Size)
 				prt.tmDisk = man.fileExists(atPath: d.MountPoint! + "/tmbootpicker.efi") || man.directoryExistsAtPath(d.MountPoint! + "/Backups.backupdb")
 			}else{
-				drivei.volume.stringValue = dm.getDriveName(from: d.DeviceIdentifier)
-				prt = Part(partitionBSDName: d.DeviceIdentifier, partitionName: drivei.volume.stringValue, partitionPath: (item?.MountPoint == nil) ? "" : item.MountPoint!, partitionFileSystem: .other, partitionScheme: .blank, partitionHasEFI: false, partitionSize: d.Size)
+				drivei.appName = dm.getDriveName(from: d.DeviceIdentifier)
+				prt = Part(partitionBSDName: d.DeviceIdentifier, partitionName: drivei.appName, partitionPath: (item?.MountPoint == nil) ? "" : item.MountPoint!, partitionFileSystem: .other, partitionScheme: .blank, partitionHasEFI: false, partitionSize: d.Size)
 				prt.apfsBDSName = d.DeviceIdentifier
 			}
 			
@@ -152,9 +152,13 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 			
 			prt.size = d.Size
 			
-			log("        Item display name is: \(drivei.volume.stringValue)")
+			log("        Item display name is: \(drivei.appName)")
 			
 			drivei.image.image = IconsManager.shared.getCorrectDiskIcon(prt.bsdName)
+			
+			if #available(macOS 11.0, *), look == .bigSurUp {
+				drivei.image.image = drivei.image.image?.withSymbolWeight(.ultraLight)
+			}
 			
 			drivei.isApp = false
 			drivei.part = prt
@@ -365,19 +369,27 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 					var temp: CGFloat = 20
 					for d in drives.reversed(){
 						d.frame.origin.x = temp
-						if !blockShadow{
+						
+						/*if !blockShadow{
 							temp += d.frame.width + 15
 						}else{
 							temp += d.frame.width
-						}
+						}*/
+						
+						temp += d.frame.width + (( look != .recovery ) ? 15 : 0)
+						
 						content.addSubview(d)
 					}
 					
+					/*
 					if !blockShadow{
 						content.frame.size.width = temp + 5
 					}else{
 						content.frame.size.width = temp + 20
 					}
+					*/
+					
+					content.frame.size.width = temp + ((look != .recovery) ? 5 : 20)
 					
 					if content.frame.size.width < self.scoller.frame.width{
 						let spacer = NSView(frame: NSRect(x: 0, y: 0, width: self.scoller.frame.width - 2, height: self.scoller.frame.height - 2))

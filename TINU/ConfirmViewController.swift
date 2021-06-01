@@ -65,12 +65,11 @@ class ConfirmViewController: GenericViewController, ViewID {
 			advancedOptionsButton.isHidden = true
 		#endif
         
-		if #available(macOS 11.0, *){
-			warning.image = NSImage(systemSymbolName: "exclamationmark.triangle.fill", accessibilityDescription: nil)
-			warning.image!.isTemplate = true
+		warning.image = IconsManager.shared.warningIcon
+		
+		if #available(macOS 11.0, *), look == .bigSurUp{
+			warning.image = warning.image?.withSymbolWeight(.light)
 			warning.contentTintColor = .systemYellow
-		}else{
-			warning.image = IconsManager.shared.warningIcon
 		}
         
         ps = cm.sharedVolumeNeedsPartitionMethodChange
@@ -141,8 +140,23 @@ class ConfirmViewController: GenericViewController, ViewID {
 			
 			driveImage.image = IconsManager.shared.getCorrectDiskIcon(cvm.shared.currentPart.bsdName)
 			
+			if #available(macOS 11.0, *), look == .bigSurUp{
+				driveImage.contentTintColor = .systemGray
+				driveImage.image = driveImage.image?.withSymbolWeight(.thin)
+			}
+			
 			let sa = cm.sharedApp!
-			appImage.image = IconsManager.shared.getInstallerAppIconFrom(path: sa)
+			if look == .bigSurUp{
+				appImage.image = IconsManager.shared.genericInstallerAppIcon
+			}else{
+				appImage.image = IconsManager.shared.getInstallerAppIconFrom(path: sa)
+			}
+			
+			if #available(macOS 11.0, *), look == .bigSurUp{
+				appImage.contentTintColor = .systemGray
+				appImage.image = appImage.image?.withSymbolWeight(.thin)
+			}
+			
 			appName.stringValue = FileManager.default.displayName(atPath: sa)
 			
 			let reps = ["{driveName}" : driveName.stringValue]
