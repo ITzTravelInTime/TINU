@@ -58,7 +58,7 @@ import Foundation
 			get{
 				switch bootloader {
 				case .clover:
-					return [["/BOOT/BOOTX64.efi"], ["/CLOVER/CLOVERX64.efi"], ["/CLOVER/config.plist"], ["/CLOVER/kexts"], ["/CLOVER/kexts/Other"], ["/CLOVER/drivers64UEFI", "/CLOVER/drivers/UEFI"]]
+					return [["/BOOT/BOOTX64.efi"], ["/CLOVER/CLOVERX64.efi"], ["/CLOVER/config.plist"], ["/CLOVER/kexts"], ["/CLOVER/kexts/Other"], ["/CLOVER/drivers64UEFI", "/CLOVER/drivers/UEFI", "/CLOVER/drivers/BIOS", "/CLOVER/drivers64"]]
 				case .openCore:
 					return [["/BOOT/BOOTX64.efi"], ["/OC/OpenCore.efi"], ["/OC/config.plist"], ["/OC/Kexts"], ["/OC/Tools"], ["/OC/Drivers"], ["/OC/ACPI"]]
 				}

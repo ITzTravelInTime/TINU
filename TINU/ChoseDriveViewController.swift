@@ -53,7 +53,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
                 ok.title = TextManager.getViewString(context: self, stringID: "nextButton")
                 ok.isEnabled = false
 				
-				if look != .recovery{
+				if look.supportsShadows() || look.usesSFSymbols() {
 					scoller.drawsBackground = false
 					scoller.borderType = .noBorder
 				}else{
@@ -91,7 +91,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 		
 		ok.title = TextManager.getViewString(context: self, stringID: "nextButton")
 		
-		if look != .recovery{
+		if look.supportsShadows() || look.usesSFSymbols(){
 			scoller.frame = CGRect.init(x: 0, y: scoller.frame.origin.y, width: self.view.frame.width, height: scoller.frame.height)
 			scoller.drawsBackground = false
 			scoller.borderType = .noBorder
@@ -141,7 +141,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 				prt = Part(partitionBSDName: d.DeviceIdentifier, partitionName: drivei.appName, partitionPath: d.MountPoint!, partitionFileSystem: Part.FileSystem.other, partitionScheme: Part.PartScheme.gUID , partitionHasEFI: true, partitionSize: d.Size)
 				prt.tmDisk = man.fileExists(atPath: d.MountPoint! + "/tmbootpicker.efi") || man.directoryExistsAtPath(d.MountPoint! + "/Backups.backupdb")
 			}else{
-				drivei.appName = dm.getDriveName(from: d.DeviceIdentifier)
+				drivei.appName = dm.getDriveName(from: d.DeviceIdentifier) ?? d.DeviceIdentifier
 				prt = Part(partitionBSDName: d.DeviceIdentifier, partitionName: drivei.appName, partitionPath: (item?.MountPoint == nil) ? "" : item.MountPoint!, partitionFileSystem: .other, partitionScheme: .blank, partitionHasEFI: false, partitionSize: d.Size)
 				prt.apfsBDSName = d.DeviceIdentifier
 			}
@@ -156,7 +156,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 			
 			drivei.image.image = IconsManager.shared.getCorrectDiskIcon(prt.bsdName)
 			
-			if #available(macOS 11.0, *), look == .bigSurUp {
+			if #available(macOS 11.0, *), look.usesSFSymbols() {
 				drivei.image.image = drivei.image.image?.withSymbolWeight(.ultraLight)
 			}
 			

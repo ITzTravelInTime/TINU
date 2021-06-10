@@ -12,43 +12,11 @@ import Foundation
 
 import Cocoa
 
-public final class CreateinstallmediaSmallManager{
-	
-	public static let shared = CreateinstallmediaSmallManager()
-	
-	//variables used to manage the creation process
-	public var process = Process()
-	public var errorPipe = Pipe()
-	public var outputPipe = Pipe()
-	
-	//this variable tells if the pre-creation is in progress
-	public var sharedIsPreCreationInProgress = false
-	
-	//this tells to the rest of the app if the creation of the installer is in execution
-	public var sharedIsCreationInProgress = false
-	
-	public var sharedIsBusy: Bool{
-		get{
-			return (sharedIsCreationInProgress || sharedIsPreCreationInProgress)
-		}
-	}
-	
-	public var startTime = Date()
-}
-
 public final class FinalScreenSmallManager{
     static let shared =  FinalScreenSmallManager()
     
-    //just some shared variables to setup the final result window
-    var isOk = false
     var message = ""
     var title = ""
-}
-
-public final class CustomizationWindowManager{
-	static let shared = CustomizationWindowManager()
-	
-	var referenceWindow: NSWindow!
 }
 #endif
 

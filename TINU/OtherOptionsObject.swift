@@ -10,7 +10,7 @@ import Cocoa
 
 //other options
 public struct OtherOptionsObject{
-	var id: oom.OtherOptionID = .unknown
+	var id: OtherOptionsManager.OtherOptionID = .unknown
 	var title: String = ""
 	
 	var isActivated = false
@@ -21,7 +21,7 @@ public struct OtherOptionsObject{
 	
 	var description: String! = ""
 	
-	func canBeUsed(_ referenceID: oom.OtherOptionID) -> Bool{
+	func canBeUsed(_ referenceID: OtherOptionsManager.OtherOptionID) -> Bool{
 		return (id == referenceID) && isActivated && isVisible
 	}
 	

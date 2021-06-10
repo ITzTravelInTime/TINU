@@ -122,14 +122,14 @@ class InstallingViewController: GenericViewController, ViewID{
 			driveName.stringValue = FileManager.default.displayName(atPath: sv)
 		}
 		
-		if #available(macOS 11.0, *), look == .bigSurUp{
+		if #available(macOS 11.0, *), look.usesSFSymbols(){
 			driveImage.contentTintColor = .systemGray
 			driveImage.image = driveImage.image?.withSymbolWeight(.thin)
 		}
 		
 		let sa = cm.sharedApp!
 		
-		if look == .bigSurUp{
+		if look.usesSFSymbols(){
 			appImage.image = IconsManager.shared.genericInstallerAppIcon
 			if #available(macOS 11.0, *){
 				appImage.contentTintColor = .systemGray
@@ -165,9 +165,6 @@ class InstallingViewController: GenericViewController, ViewID{
 		}
 		
 		enableItems(enabled: true)
-		
-		//no more need for auth
-		InstallMediaCreationManager.shared.makeProcessNotInExecution()
 	}
 	
 	func goToFinalScreen(title: String, success: Bool = false){
@@ -177,14 +174,14 @@ class InstallingViewController: GenericViewController, ViewID{
 		restoreWindow()
 		
 		FinalScreenSmallManager.shared.title = title
-		FinalScreenSmallManager.shared.isOk = success
+		//FinalScreenSmallManager.shared.isOk = success
 		
 		CreationVariablesManager.shared.currentPart = Part()
 		
-		InstallerAppManager.shared.resetCachedAppInfo()
+		cvm.shared.app.resetCachedAppInfo()
+		cvm.shared.options.checkOtherOptions()
 		
-		checkOtherOptions()
-		
+		InstallMediaCreationManager.shared.makeProcessNotInExecution(withResult: success)
 		self.swapCurrentViewController("MainDone")
 	}
 	
@@ -193,8 +190,6 @@ class InstallingViewController: GenericViewController, ViewID{
 		log("Bootable macOS installer creation process ended\n\n  Ending messange id: \(id)\n  Ending success: \(success ? "Yes" : "No")")
 		//resets window and auths
 		restoreWindow()
-		
-		
 		
 		var etitle = TextManager.getViewString(context: self, stringID: id)!
 		
@@ -208,7 +203,7 @@ class InstallingViewController: GenericViewController, ViewID{
 	@objc func goBack(){
 		//this code opens the previus window
 		
-		if (CreateinstallmediaSmallManager.shared.sharedIsBusy){
+		if (cvm.shared.process.status.isBusy()){
 			/*
 			let notification = NSUserNotification()
 			
@@ -226,6 +221,7 @@ class InstallingViewController: GenericViewController, ViewID{
 		//resets window and auths
 		restoreWindow()
 		
+		cvm.shared.process.status = .configuration
 		self.swapCurrentViewController("Confirm")
 	}
 	
@@ -234,13 +230,15 @@ class InstallingViewController: GenericViewController, ViewID{
 		
 		var spd: Bool!
 		
-		spd = InstallMediaCreationManager.shared.stopWithAsk()
+		if cvm.shared.process.status == .creation{
+			spd = InstallMediaCreationManager.shared.stopWithAsk()
+		}else{
+			spd = true
+		}
 		
 		if let stopped = spd{
 			if stopped{
-				if !(CreateinstallmediaSmallManager.shared.sharedIsBusy){
-					goBack()
-				}
+				goBack()
 			}else{
 				log("Error while trying to close " + sharedExecutableName + " try to stop it from the termianl or from Activity monitor")
 				let list = ["{executable}" : sharedExecutableName]

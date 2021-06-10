@@ -12,11 +12,11 @@ import Cocoa
 class ChooseSideViewController: GenericViewController, ViewID {
 	let id: String = "ChooseSideViewController"
 
-    @IBOutlet weak var createUSBButton: AdvancedOptionsButton!
+    @IBOutlet weak var createUSBButton: ChoseButton!
     
-    @IBOutlet weak var installButton: AdvancedOptionsButton!
+    @IBOutlet weak var installButton: ChoseButton!
 	
-	@IBOutlet weak var efiButton: AdvancedOptionsButton!
+	@IBOutlet weak var efiButton: ChoseButton!
     
     @IBOutlet weak var titleField: NSTextField!
 	
@@ -84,7 +84,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		//print(TextManager!)
 		//print(CodableCreation<TINUTextsManagerStruct>.getEncoded(TextManager!)!)
 		
-		if #available(macOS 11.0, *), look == .bigSurUp {
+		if #available(macOS 11.0, *), look.usesSFSymbols() {
 			createUSBButton.cImage.image = NSImage(systemSymbolName: "externaldrive.badge.plus", accessibilityDescription: nil)?.withSymbolWeight(.ultraLight)
 			createUSBButton.cImage.contentTintColor = .systemGray
 			installButton.cImage.image = NSImage(systemSymbolName: "desktopcomputer", accessibilityDescription: nil)?.withSymbolWeight(.ultraLight)
@@ -93,7 +93,12 @@ class ChooseSideViewController: GenericViewController, ViewID {
 			efiButton.cImage.contentTintColor = .systemGray
 		} else {
 			//createUSBButton.cImage.image = IconsManager.shared.removableDiskIcon //NSImage(named: "Removable")
-			createUSBButton.cImage.image = IconsManager.shared.removableDiskIcon
+			if !look.usesSFSymbols() && look.supportsShadows(){
+				createUSBButton.cImage.image = NSImage(named: "drive")
+				createUSBButton.useBottomMargin = false
+			}else{
+				createUSBButton.cImage.image = IconsManager.shared.removableDiskIcon
+			}
 			
 			installButton.cImage.image = NSImage(named: NSImage.computerName)//NSImage(named: "OSInstall")
 			
@@ -141,7 +146,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		count = 0
 		
 		for c in self.view.subviews.reversed(){
-			if let b = c as? AdvancedOptionsButton{
+			if let b = c as? ChoseButton{
 				if b.isEnabled{
 					
 					count += 1
@@ -155,7 +160,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 					var shadowView: NSView!
 					
 					switch look {
-					case .yosemiteToCatalina, .bigSurUp:
+					case .shadowsOldIcons, .noShadowsSFSymbols, .shadowsSFSymbols:
 						shadowView = ShadowView()
 						(shadowView as? ShadowView)?.setModeFromCurrentLook()
 						b.isBordered = false
@@ -263,7 +268,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 	}
 	
 	@IBAction func openEFIMounter(_ sender: Any){
-		if let sen = sender as? AdvancedOptionsButton{
+		if let sen = sender as? ChoseButton{
 			if let parent = sen.superview as? ShadowView{
 				parent.isSelected = true
 			}
@@ -274,7 +279,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 	}
 	
 	@IBAction func createUSB(_ sender: Any) {
-		if let sen = sender as? AdvancedOptionsButton{
+		if let sen = sender as? ChoseButton{
 			if let parent = sen.superview as? ShadowView{
 				parent.isSelected = true
 			}
@@ -285,7 +290,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 	}
 	
 	@IBAction func install(_ sender: Any) {
-		if let sen = sender as? AdvancedOptionsButton{
+		if let sen = sender as? ChoseButton{
 			if let parent = sen.superview as? ShadowView{
 				parent.isSelected = true
 			}

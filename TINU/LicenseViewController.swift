@@ -63,16 +63,18 @@ class LicenseViewController: ShadowViewController, ViewID {
 		
 		check.isEnabled = false
 		
-		if look != .recovery{
+		if look.supportsShadows() || look.usesSFSymbols(){
 			scroller.frame = CGRect.init(x: 0, y: scroller.frame.origin.y, width: self.view.frame.width, height: scroller.frame.height)
 			scroller.borderType = .noBorder
 			//scroller.drawsBackground = false
 			
-			setShadowViewsTopBottomOnly(respectTo: scroller, topBottomViewsShadowRadius: 5)
-			setOtherViews(respectTo: scroller)
+			if !look.usesSFSymbols(){
+				setShadowViewsTopBottomOnly(respectTo: scroller, topBottomViewsShadowRadius: 5)
+				setOtherViews(respectTo: scroller)
 			
-			self.topView.isHidden = false
-			self.bottomView.isHidden = false
+				self.topView.isHidden = false
+				self.bottomView.isHidden = false
+			}
 			
 			/*
 			self.lView.isHidden = false
@@ -94,13 +96,13 @@ class LicenseViewController: ShadowViewController, ViewID {
 						
 						var noAPFSSupport = true
 						
-						if let ap = iam.shared.sharedAppNotSupportsAPFS(){
+						if let ap = cvm.shared.app.sharedAppNotSupportsAPFS(){
 							noAPFSSupport = ap
 						}
 						
 						var mojaveSupport = true
 						
-						if let ms = iam.shared.sharedAppNotIsMojave(){
+						if let ms = cvm.shared.app.sharedAppNotIsMojave(){
 							mojaveSupport = !ms
 						}
 						

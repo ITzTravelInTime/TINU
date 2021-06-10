@@ -34,7 +34,7 @@ public class GenericViewController: NSViewController {
 		titleLabel.frame.origin.x = 18
 		titleLabel.frame.size.height = 24
 		
-		if look == .bigSurUp{
+		if look.usesSFSymbols(){
 			titleLabel.font = NSFont.systemFont(ofSize: 16)
 		}else{
 			titleLabel.font = NSFont.boldSystemFont(ofSize: 14)
@@ -94,6 +94,7 @@ public class GenericViewController: NSViewController {
 	func defaultFailureImage(){
 		self.setFailureImage(image: IconsManager.shared.warningIcon)
 		if #available(macOS 11.0, *){
+			self.failureImageView.image = self.failureImageView.image?.withSymbolWeight(.thin)
 			self.failureImageView.contentTintColor = .systemYellow
 		}
 	}

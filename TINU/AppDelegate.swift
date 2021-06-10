@@ -49,11 +49,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
 		log("Should terminate called")
 		
-        if CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress{
+		if cvm.shared.process.status == .preCreation || cvm.shared.process.status == .postCreation {
             //msgBoxWarning("You can't quit now", "You can't quit from TINU now, wait for the first part of the process to end or press the cancel button on the windows that asks for the password, and then quit if you want")
 			msgboxWithManager(self, name: "cantQuiNow")
             return NSApplication.TerminateReply.terminateCancel
-        }else if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress{
+		}else if cvm.shared.process.status == .creation{
 			var spd: Bool!
 				
 			spd = InstallMediaCreationManager.shared.stopWithAsk()
@@ -125,7 +125,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
         
-        if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress{
+		if cvm.shared.process.status == .creation{
 			
 			let list = ["{executable}" : sharedExecutableName]
 			if let s = InstallMediaCreationManager.shared.stop(){
@@ -152,7 +152,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     
     public func swichMode(isInstall: Bool){
 		
-        if !(CreateinstallmediaSmallManager.shared.sharedIsBusy){
+		if !(cvm.shared.process.status.isBusy()){
 			
             sharedInstallMac = isInstall
 			/*

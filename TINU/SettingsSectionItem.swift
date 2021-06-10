@@ -23,6 +23,7 @@ public class SettingsSectionItem: NSView{
 	
 	let normalColor = NSColor.transparent.cgColor
 	var selectedColor = NSColor.selectedControlColor.cgColor
+	var imageColor = NSColor.systemGray
 	
 	override public func draw(_ dirtyRect: NSRect) {
 		
@@ -76,16 +77,37 @@ public class SettingsSectionItem: NSView{
 	override public func updateLayer() {
 		super.updateLayer()
 		
-		selectedColor = NSColor.selectedControlColor.cgColor
+		if #available(macOS 10.14, *), look.usesSFSymbols() {
+			selectedColor = NSColor.controlAccentColor.cgColor
+		} else {
+			selectedColor = NSColor.selectedControlColor.cgColor
+		}
 		
 		if isSelected{
+			if look.usesSFSymbols(){
+				self.layer?.cornerRadius = 3
+			}
 			self.layer?.backgroundColor = selectedColor
 		}else{
 			self.layer?.backgroundColor = normalColor
 		}
+		
+		if #available(macOS 10.14, *), look.usesSFSymbols() && isSelected {
+			self.name.textColor = NSColor.selectedMenuItemTextColor
+		}else{
+			self.name.textColor = NSColor.textColor
+		}
+		
+		if #available(macOS 11.0, *), look.usesSFSymbols(){
+			self.image.contentTintColor = isSelected ? self.name.textColor : self.imageColor
+		}
 	}
 	
 	override public func mouseDown(with event: NSEvent) {
+		select()
+	}
+	
+	func select(){
 		makeSelected()
 		addSettingsToScrollView()
 	}
@@ -127,11 +149,11 @@ public class SettingsSectionItem: NSView{
 			var isGray = true
 			
 			SettingsSectionItem.surface.frame.origin = CGPoint.zero
-			SettingsSectionItem.surface.frame.size = NSSize.init(width: scrollView.frame.size.width - 20, height: itemHeigth * (CGFloat(oom.shared.otherOptions.count)))
+			SettingsSectionItem.surface.frame.size = NSSize.init(width: scrollView.frame.size.width - 20, height: itemHeigth * (CGFloat(cvm.shared.options.list.count)))
 			
 			var count: CGFloat = 0
 			
-			for i in oom.shared.otherOptions.sorted(by: { $0.0.rawValue > $1.0.rawValue }){
+			for i in cvm.shared.options.list.sorted(by: { $0.0.rawValue > $1.0.rawValue }){
 				if !(i.value.isVisible && (i.value.isAdvanced == isAdvanced)){
 					SettingsSectionItem.surface.frame.size.height -= itemHeigth
 					continue

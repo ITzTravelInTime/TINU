@@ -427,7 +427,7 @@ public class EFIPartitionToolInterface{
 						
 						self.checkMounted()
 						
-						controller.refresh(controller)
+						controller.refresh(controller!)
 						
 					}
 					

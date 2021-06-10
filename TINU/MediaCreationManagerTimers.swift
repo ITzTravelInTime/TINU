@@ -14,16 +14,17 @@ extension InstallMediaCreationManager{
 	@objc func checkProcessFinished(_ sender: AnyObject){
 		DispatchQueue.global(qos: .userInteractive).async {
 			
-		let diff = UInt64(abs(CreateinstallmediaSmallManager.shared.startTime.timeIntervalSinceNow))
+			let diff = UInt64(abs(cvm.shared.process.startTime.timeIntervalSinceNow))
 			
 		print("\(diff) seconds")
 			
-		if CreateinstallmediaSmallManager.shared.process.isRunning{
+			if cvm.shared.process.process.isRunning{
 			
 			self.timerProgressIncrement(diff)
 			
 		}else{
-			CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress = false
+			//cvm.shared.process.isCreationInProgress = false
+			cvm.shared.process.status = .postCreation
 			self.timer.invalidate()
 			self.installFinished()
 		}

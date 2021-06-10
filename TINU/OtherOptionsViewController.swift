@@ -19,7 +19,6 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 		case undefined = 0
 		case generalOptions
 		case advancedOptions
-		//case bootFilesReplacement
 		case eFIFolderReplacementClover
 		case eFIFolderReplacementOpenCore
 		
@@ -45,6 +44,14 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 		settingsScrollView.wantsLayer = true
 		settingsScrollView.layer?.cornerRadius = 3.5
 		
+		if look.usesSFSymbols(){
+			settingsScrollView.frame.origin.x -= sectionsScrollView.frame.origin.x - 5
+			settingsScrollView.frame.size.width = self.view.frame.width - settingsScrollView.frame.origin.x - 5
+		
+			sectionsScrollView.frame.origin.x = 5
+			sectionsScrollView.borderType = .noBorder
+		}
+		
 		self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "title"))
 		self.showTitleLabel()
 		
@@ -60,14 +67,24 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 		//general options
 		
 		sections.append(getSectionItem())
-		sections.last!!.image.image = NSImage(named: NSImage.preferencesGeneralName)
+		sections.last!!.image.image = IconsManager.shared.optionsIcon
+		if #available(macOS 11.0, *), look.usesSFSymbols(){
+			sections.last!!.image.image?.isTemplate = true
+			sections.last!!.image.contentTintColor = .systemGray
+			sections.last!!.imageColor = sections.last!!.image.contentTintColor!
+		}
 		sections.last!!.name.stringValue = TextManager.getViewString(context: self, stringID: "optionsSection")
 		sections.last!!.id = SectionsID.generalOptions
 		
 		//advanced options
 		
 		sections.append(getSectionItem())
-		sections.last!!.image.image = NSImage(named: NSImage.advancedName) //"advancedOptionsSection"
+		sections.last!!.image.image = IconsManager.shared.advancedOptionsIcon
+		if #available(macOS 11.0, *), look.usesSFSymbols(){
+			sections.last!!.image.image?.isTemplate = true
+			sections.last!!.image.contentTintColor = .systemGray
+			sections.last!!.imageColor = sections.last!!.image.contentTintColor!
+		}
 		sections.last!!.name.stringValue = TextManager.getViewString(context: self, stringID: "advancedOptionsSection")
 		sections.last!!.id = SectionsID.advancedOptions
 		
@@ -79,7 +96,13 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 				for i in SupportedEFIFolders.allCases{
 					sections.append(getSectionItem())
 			
-					sections.last!!.image.image = NSImage(named: NSImage.folderName)
+					sections.last!!.image.image = IconsManager.shared.folderIcon//NSImage(named: NSImage.folderName)
+					if #available(macOS 11.0, *), look.usesSFSymbols(){
+						sections.last!!.image.image?.isTemplate = true
+						//sections.last!!.image.contentTintColor = .systemBlue
+						sections.last!!.image.contentTintColor = .systemGray
+						sections.last!!.imageColor = sections.last!!.image.contentTintColor!
+					}
 					
 					let rep = ["{bootloader}" : i.rawValue]
 				
@@ -144,9 +167,10 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 			CustomizationWindowManager.shared.referenceWindow = win
 		}
 		
-		if !sections.isEmpty{
-			sections.first??.makeSelected()
-			sections.first??.addSettingsToScrollView()
+		DispatchQueue.main.async {
+			if !self.sections.isEmpty{
+				self.sections.first!!.select()
+			}
 		}
 	}
 	
@@ -183,7 +207,7 @@ class OtherOptionsViewController: GenericViewController, ViewID {
     }
     
     @IBAction func resetOptions(_ sender: Any) {
-        checkOtherOptions()
+		cvm.shared.options.checkOtherOptions()
 		
 		EFIFolderReplacementManager.reset()
 		

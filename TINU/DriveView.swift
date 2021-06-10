@@ -57,18 +57,18 @@ class DriveView: ShadowView, ViewID {
 		*/
 		
 		if image != nil{
-			if #available(macOS 11.0, *), look == .bigSurUp{
-				if !isSelected{
-					image.contentTintColor = .systemGray
-				}else{
+			if #available(macOS 11.0, *), look.usesSFSymbols(){
+				if isSelected{
 					image.contentTintColor = .alternateSelectedControlTextColor
+				}else{
+					image.contentTintColor = .systemGray
 				}
 			}
 		}
 		
 		if volume != nil{
 			if isEnabled{
-				if isSelected && look == .bigSurUp{
+				if isSelected && look.usesSFSymbols(){
 					self.volume.textColor = .alternateSelectedControlTextColor
 				}else{
 					self.volume.textColor = .textColor
@@ -140,7 +140,7 @@ class DriveView: ShadowView, ViewID {
         volume = NSTextField(frame: NSRect(x: 5, y: 5, width: self.frame.size.width - 10, height: 45))
 		volume.wantsLayer = true
 		
-		if look == .bigSurUp{
+		if look.usesSFSymbols(){
 			volume.font = NSFont.systemFont(ofSize: 10)
 		}else{
 			volume.font = NSFont.boldSystemFont(ofSize: 10)
@@ -254,13 +254,19 @@ class DriveView: ShadowView, ViewID {
 			let w: CGFloat = self.frame.width / 3
 			//let margin: CGFloat = 15
 			
-			let activateWarningImage = (look == .bigSurUp) && self.isApp
+			let activateWarningImage = (look.usesSFSymbols()) && self.isApp
 			
 			if activateWarningImage || !self.isEnabled{
 			self.warnImage = NSImageView(frame: NSRect(x: self.frame.width - w - 5, y: self.image.frame.origin.y, width: w, height: w))
+			
 			self.warnImage.wantsLayer = true
 			self.warnImage.layer!.zPosition = self.image.layer!.zPosition + 1
 			
+				if #available(macOS 11.0, *), look.usesSFSymbols() {
+					self.warnImage.backgroundColor = NSColor.controlBackgroundColor
+					self.warnImage.layer?.cornerRadius = self.warnImage.frame.size.width / 2
+				}
+				
 			self.warnImage.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
 			self.warnImage.imageAlignment = .alignBottom
 			}
@@ -281,13 +287,12 @@ class DriveView: ShadowView, ViewID {
 				}
 				
 				if activateWarningImage{
-					if #available(macOS 11.0, *), look == .bigSurUp{
-						self.warnImage.image = NSImage(systemSymbolName: "checkmark.circle.fill", accessibilityDescription: nil)
-						self.warnImage.image!.isTemplate = true
+					self.warnImage.image = IconsManager.shared.checkIcon
+					
+					if #available(macOS 11.0, *), look.usesSFSymbols(){
 						self.warnImage.contentTintColor = .systemGreen
-					}else{
-						self.warnImage.image = IconsManager.shared.checkIcon
 					}
+						
 				}
 				
 			}else{
@@ -303,20 +308,14 @@ class DriveView: ShadowView, ViewID {
 				}
 				
 				if !notBigger{
-					if #available(macOS 11.0, *), look == .bigSurUp{
-						self.warnImage.image = NSImage(systemSymbolName: "xmark.octagon.fill", accessibilityDescription: nil)
-						self.warnImage.image!.isTemplate = true
+					self.warnImage.image = IconsManager.shared.roundStopIcon
+					if #available(macOS 11.0, *), look.usesSFSymbols(){
 						self.warnImage.contentTintColor = .systemRed
-					}else{
-						self.warnImage.image = IconsManager.shared.stopIcon
 					}
 				}else{
-					if #available(macOS 11.0, *), look == .bigSurUp{
-						self.warnImage.image = NSImage(systemSymbolName: "exclamationmark.triangle.fill", accessibilityDescription: nil)
-						self.warnImage.image!.isTemplate = true
+					self.warnImage.image = IconsManager.shared.warningIcon
+					if #available(macOS 11.0, *), look.usesSFSymbols(){
 						self.warnImage.contentTintColor = .systemYellow
-					}else{
-						self.warnImage.image = IconsManager.shared.warningIcon
 					}
 				}
 				

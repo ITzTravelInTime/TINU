@@ -10,8 +10,8 @@ import Cocoa
 
 extension InstallMediaCreationManager{
 
-	func manageSpecialOperations() -> Bool{
-		var ret = true
+	func manageSpecialOperations() -> Bool?{
+		var ret: Bool? = true
 		
 		DispatchQueue.main.sync {
 			self.setProgressValue(self.progressMaxVal - self.processUnit)
@@ -27,7 +27,7 @@ extension InstallMediaCreationManager{
 			
 			var unmount = true
 			
-			if let o = oom.shared.otherOptions[.otherOptionKeepEFIpartID]?.canBeUsed(){
+			if let o = cvm.shared.options.list[.otherOptionKeepEFIpartID]?.canBeUsed(){
 				unmount = !o
 			}
 			
@@ -51,7 +51,12 @@ extension InstallMediaCreationManager{
 				//self.setActivityLabelText("Process ended, exiting...")
 				self.setActivityLabelText("activityLabel8")
 			
-				if !ok.result{
+				if ok.result == nil{
+					ret = nil
+					return
+				}
+				
+				if !ok.result!{
 					
 					ret = false
 					
@@ -97,11 +102,11 @@ extension InstallMediaCreationManager{
 			cvm.shared.sharedVolume = dm.getMountPointFromPartitionBSDID(cvm.shared.sharedBSDDrive!)
 		}
 		
-		print(cvm.shared.sharedVolume)
+		print(cvm.shared.sharedVolume ?? "")
 	}
 	
 	private func checkOperationResult(operation: SettingsRes, res: inout Bool) -> String?{
-		if !operation.result{
+		if !(operation.result ?? false){
 			res = false
 			
 			return operation.messange
@@ -170,7 +175,14 @@ extension InstallMediaCreationManager{
 		if simulateSpecialOperationsFail{
 			counter = 255
 		}
+		
 		while (ok){
+			
+			if cvm.shared.process.status != .postCreation{
+				log("-------- Operation canceled by user --------")
+				return SettingsRes(result: nil, messange: "Operation canceld by the user")
+			}
+			
 			var res = SettingsRes(result: true, messange: nil)
 			var ammount: Double = 1
 			switch counter{
@@ -179,7 +191,7 @@ extension InstallMediaCreationManager{
 				log("+Performing EFI folder copy")
 				res = Operations.shared.mountEFIPartAndCopyEFIFolder()
 				
-				if res.result{
+				if res.result ?? false{
 					self.EFICopyEnded = true
 					ammount = (self.startProgress + IMCM.unit) * -1
 				}

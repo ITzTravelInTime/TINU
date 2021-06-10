@@ -38,6 +38,7 @@
 		C621CFAC1F4F7DF400CC6D5B /* DriveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */; };
 		C631EE4A2657F15D006F8F98 /* AppleSiliconDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C631EE492657F15D006F8F98 /* AppleSiliconDetect.swift */; };
 		C6322574221C1883003A56D4 /* FilesystemObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6322573221C1883003A56D4 /* FilesystemObserver.swift */; };
+		C638857A2670D3BA00A6D1BA /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63885792670D3BA00A6D1BA /* Themes.swift */; };
 		C63DD0282265D921007944A5 /* TaskKillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63DD0272265D921007944A5 /* TaskKillManager.swift */; };
 		C63F035E24E1091400F950B4 /* ProgressBarSettings.json in Resources */ = {isa = PBXBuildFile; fileRef = C63F035D24E1091400F950B4 /* ProgressBarSettings.json */; };
 		C63F036024E3D19300F950B4 /* ProgressBarValuesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63F035F24E3D19300F950B4 /* ProgressBarValuesManager.swift */; };
@@ -104,7 +105,7 @@
 		DDA7FB601F96AE510029F4F2 /* RuntimeCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */; };
 		DDA7FB621F96B13F0029F4F2 /* GenericWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */; };
 		DDCC4ED51FB5C2A7007FBB6F /* OtherOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCC4ED41FB5C2A7007FBB6F /* OtherOptionsViewController.swift */; };
-		DDD038EB1FB7366400D22695 /* AdvancedOptionsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */; };
+		DDD038EB1FB7366400D22695 /* ChoseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD038EA1FB7366400D22695 /* ChoseButton.swift */; };
 		DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */; };
 		DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDF14631F6730DA00953634 /* SharedVariables.swift */; };
 		DDF9A5692159A05800389F78 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF9A5682159A05800389F78 /* ShadowView.swift */; };
@@ -161,6 +162,7 @@
 		C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveView.swift; sourceTree = "<group>"; };
 		C631EE492657F15D006F8F98 /* AppleSiliconDetect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSiliconDetect.swift; sourceTree = "<group>"; };
 		C6322573221C1883003A56D4 /* FilesystemObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesystemObserver.swift; sourceTree = "<group>"; };
+		C63885792670D3BA00A6D1BA /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		C63DD0272265D921007944A5 /* TaskKillManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskKillManager.swift; sourceTree = "<group>"; };
 		C63F035D24E1091400F950B4 /* ProgressBarSettings.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ProgressBarSettings.json; sourceTree = "<group>"; };
 		C63F035F24E3D19300F950B4 /* ProgressBarValuesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarValuesManager.swift; sourceTree = "<group>"; };
@@ -234,7 +236,7 @@
 		DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuntimeCode.swift; sourceTree = "<group>"; };
 		DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWindowController.swift; sourceTree = "<group>"; };
 		DDCC4ED41FB5C2A7007FBB6F /* OtherOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherOptionsViewController.swift; sourceTree = "<group>"; };
-		DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedOptionsButton.swift; sourceTree = "<group>"; };
+		DDD038EA1FB7366400D22695 /* ChoseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoseButton.swift; sourceTree = "<group>"; };
 		DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsViewController.swift; sourceTree = "<group>"; };
 		DDDF14631F6730DA00953634 /* SharedVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedVariables.swift; sourceTree = "<group>"; };
 		DDF9A5682159A05800389F78 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 				C65B5F021F720D680061F1A3 /* SudoManager.swift */,
 				C63DD0272265D921007944A5 /* TaskKillManager.swift */,
 				C60C40B920CCA24000258574 /* TextsManager.swift */,
+				C63885792670D3BA00A6D1BA /* Themes.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -409,7 +412,7 @@
 		C6CE80F125219BA400B28413 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				DDD038EA1FB7366400D22695 /* AdvancedOptionsButton.swift */,
+				DDD038EA1FB7366400D22695 /* ChoseButton.swift */,
 				C6409AC6226D35D200E63762 /* CopyrightLabel.swift */,
 				C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */,
 				C60B646A20B4464200FEDAA6 /* EFIFolderReplcament.swift */,
@@ -595,7 +598,7 @@
 					C6DF04611F4F33C500D200B1 = {
 						CreatedOnToolsVersion = 8.3.1;
 						DevelopmentTeam = 9RSH5734GY;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1240;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.Mac = {
@@ -615,14 +618,14 @@
 					C6DF04721F4F33C500D200B1 = {
 						CreatedOnToolsVersion = 8.3.1;
 						DevelopmentTeam = 9RSH5734GY;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1240;
 						ProvisioningStyle = Automatic;
 						TestTargetID = C6DF04611F4F33C500D200B1;
 					};
 					C6DF047D1F4F33C500D200B1 = {
 						CreatedOnToolsVersion = 8.3.1;
 						DevelopmentTeam = 9RSH5734GY;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1240;
 						ProvisioningStyle = Automatic;
 						TestTargetID = C6DF04611F4F33C500D200B1;
 					};
@@ -760,7 +763,7 @@
 				C60A461723A942E4009ADF4D /* SupportedEFIFolders.swift in Sources */,
 				DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */,
 				C6C1820D1FE7605300617DC2 /* ChooseSideViewController.swift in Sources */,
-				DDD038EB1FB7366400D22695 /* AdvancedOptionsButton.swift in Sources */,
+				DDD038EB1FB7366400D22695 /* ChoseButton.swift in Sources */,
 				C60C40C020CCA9DC00258574 /* CreationVariablesManager.swift in Sources */,
 				DDA7FB601F96AE510029F4F2 /* RuntimeCode.swift in Sources */,
 				C65B5EFF1F72099F0061F1A3 /* ScriptsManager.swift in Sources */,
@@ -797,6 +800,7 @@
 				C6B74D0A20B8E76A001CAD4D /* EFIFolderReplacementManager.swift in Sources */,
 				C6B74D0C20BA2A79001CAD4D /* EFIPartitionManager.swift in Sources */,
 				DDA7FB621F96B13F0029F4F2 /* GenericWindowController.swift in Sources */,
+				C638857A2670D3BA00A6D1BA /* Themes.swift in Sources */,
 				C698B47E204CDAE5007B3CD8 /* MacrosReference.swift in Sources */,
 				C6CE80F42521C3FB00B28413 /* StringFunctions.swift in Sources */,
 				C676D197215EB20E00E900E9 /* MediaCreationManagerMain.swift in Sources */,
@@ -1003,7 +1007,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TINU/TINU.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1027,7 +1031,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Osize";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "x86_64 arm64 arm64e";
 			};
 			name = Debug;
@@ -1045,7 +1049,7 @@
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TINU/TINU.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1069,7 +1073,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Osize";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				VALID_ARCHS = "x86_64 arm64 arm64e";
 			};
 			name = Release;
@@ -1086,7 +1090,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINUTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TINU.app/Contents/MacOS/TINU";
 			};
 			name = Debug;
@@ -1103,7 +1107,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINUTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TINU.app/Contents/MacOS/TINU";
 			};
 			name = Release;
@@ -1119,7 +1123,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINUUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = TINU;
 			};
 			name = Debug;
@@ -1135,7 +1139,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINUUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = TINU;
 			};
 			name = Release;

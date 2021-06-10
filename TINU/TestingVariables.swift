@@ -72,6 +72,6 @@ public let simulateDisableShadows = false
 public let simulateSIPStatus: Bool! = nil
 
 //this vasriables forces a UI Style if not nil, see the AppLook enum for the oossible values
-public let simulateLook: AppLook! = nil//.bigSurUp
+public let simulateLook: AppLook! = nil//.noShadowsSFSymbols
 
 //non ui testing conditions

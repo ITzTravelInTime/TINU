@@ -61,13 +61,15 @@ fileprivate func getDiagnosticsModecontent(sudo: Bool = true) -> String{
 
 public func openDiagnosticsMode(withSudo sudo: Bool){
 	
-	if (CreateinstallmediaSmallManager.shared.sharedIsBusy || sharedIsOnRecovery){
-		//the diagnostics mode button should be blocked at this point if the app is in a recovery or the app is performing a creation process
-		if CreateinstallmediaSmallManager.shared.sharedIsBusy{
-			msgBox("You can't switch mode now", "The bootable macOS installer creation process is currenly running. Please cancel the operation or wait for the operation to end before switching the mode.", .warning)
-		}else if sharedIsOnRecovery{
-			msgBoxWarning("You can't switch the mode right now", "Switching the mode in which TINU is running is not possible while running TINU from this recovery/installer system.")
-		}
+	//the diagnostics mode button should be blocked at this point if the app is in a recovery or the app is performing a creation process
+	//TODO: Maybe localize this
+	if cvm.shared.process.status.isBusy(){
+		msgBox("You can't switch mode now", "The bootable macOS installer creation process is currenly running. Please cancel the operation or wait for the operation to end before switching the mode.", .warning)
+	}else if sharedIsOnRecovery{
+		msgBoxWarning("You can't switch the mode right now", "Switching the mode in which TINU is running is not possible while running TINU from this recovery/installer system.")
+	}
+	
+	if (cvm.shared.process.status.isBusy() || sharedIsOnRecovery){
 		return
 	}
 	

@@ -67,7 +67,7 @@ class ConfirmViewController: GenericViewController, ViewID {
         
 		warning.image = IconsManager.shared.warningIcon
 		
-		if #available(macOS 11.0, *), look == .bigSurUp{
+		if #available(macOS 11.0, *), look.usesSFSymbols(){
 			warning.image = warning.image?.withSymbolWeight(.light)
 			warning.contentTintColor = .systemYellow
 		}
@@ -140,19 +140,19 @@ class ConfirmViewController: GenericViewController, ViewID {
 			
 			driveImage.image = IconsManager.shared.getCorrectDiskIcon(cvm.shared.currentPart.bsdName)
 			
-			if #available(macOS 11.0, *), look == .bigSurUp{
+			if #available(macOS 11.0, *), look.usesSFSymbols(){
 				driveImage.contentTintColor = .systemGray
 				driveImage.image = driveImage.image?.withSymbolWeight(.thin)
 			}
 			
 			let sa = cm.sharedApp!
-			if look == .bigSurUp{
+			if look.usesSFSymbols(){
 				appImage.image = IconsManager.shared.genericInstallerAppIcon
 			}else{
 				appImage.image = IconsManager.shared.getInstallerAppIconFrom(path: sa)
 			}
 			
-			if #available(macOS 11.0, *), look == .bigSurUp{
+			if #available(macOS 11.0, *), look.usesSFSymbols(){
 				appImage.contentTintColor = .systemGray
 				appImage.image = appImage.image?.withSymbolWeight(.thin)
 			}

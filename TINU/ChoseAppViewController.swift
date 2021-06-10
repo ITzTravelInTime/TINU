@@ -34,7 +34,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 				ok.title = TextManager.getViewString(context: self, stringID: "nextButton")
                 ok.isEnabled = false
 				
-				if look != .recovery{
+				if look.supportsShadows() || look.usesSFSymbols(){
 					scoller.drawsBackground = false
 					scoller.borderType = .noBorder
 				}else{
@@ -97,7 +97,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 				swapCurrentViewController("License")
 			}else{
 				
-				checkOtherOptions()
+				cvm.shared.options.checkOtherOptions()
 				#if skipChooseCustomization
 				let _ = self.swapCurrentViewController("Confirm")
 				#else
@@ -221,7 +221,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 		self.back.title = TextManager.getViewString(context: self, stringID: "backButton")
 		self.ok.title = TextManager.getViewString(context: self, stringID: "nextButton")
 		
-		if look != .recovery{
+		if look.supportsShadows() || look.usesSFSymbols(){
 			scoller.frame = CGRect.init(x: 0, y: scoller.frame.origin.y, width: self.view.frame.width, height: scoller.frame.height)
 			scoller.drawsBackground = false
 			scoller.borderType = .noBorder
@@ -282,6 +282,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
         self.refreshButton.frame.origin.x = self.tempRefresh
 		
         cvm.shared.sharedApp = nil
+		cvm.shared.app.resetCachedAppInfo()
         
         //here loads drives
         //let keys: [URLResourceKey] = [.volumeNameKey, .volumeIsRemovableKey]
@@ -461,7 +462,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 							drive.applicationPath = appPath
 							drive.image.image = IconsManager.shared.getInstallerAppIconFrom(path: appPath)
 							
-							if #available(macOS 11.0, *), look == .bigSurUp {
+							if #available(macOS 11.0, *), look.usesSFSymbols() {
 								drive.image.image = drive.image.image?.withSymbolWeight(.ultraLight)
 							}
 							

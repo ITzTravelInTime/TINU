@@ -50,7 +50,7 @@ public final class InstallMediaCreationManager: ViewID{
 	var dname = ""
 	
 	
-	//EFI copyng stuff
+	//EFI copying stuff
 	#if !macOnlyMode
 	
 	var startProgress: Double = 0
@@ -95,28 +95,26 @@ public final class InstallMediaCreationManager: ViewID{
 	}
 	
 	//this functrion just sets those 2 long ones to false
-	public func makeProcessNotInExecution(){
-		CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress = false
-		CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress = false
+	public func makeProcessNotInExecution(withResult res: Bool){
+		//cvm.shared.process.isPreCreationInProgress = false
+		//cvm.shared.process.isCreationInProgress = false
+		
+		cvm.shared.process.status = res ? .doneSuccess : .doneFailure
 	}
 	
 	//this function stops the current executable from running and , it does runs sudo using the password stored in memory
 	public func stop(mustStop: Bool) -> Bool!{
-		if let success = TaskKillManager.terminateProcess(PID: CreateinstallmediaSmallManager.shared.process.processIdentifier){
+		if let success = TaskKillManager.terminateProcess(PID: cvm.shared.process.process.processIdentifier){
 			if success{
 				//if we need to stop the process...
 				if mustStop{
 					
-					CreateinstallmediaSmallManager.shared.process.terminate()
-					//just tell to the rest of the app that the installer creation is no longer running
-					CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress = false
-					CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress = false
+					cvm.shared.process.process.terminate()
 					
 					//dispose timer, bacause it's no longer needed
 					timer.invalidate()
 					
-					//auth is no longer needed
-					makeProcessNotInExecution()
+					makeProcessNotInExecution(withResult: true)
 				}
 				
 				return true

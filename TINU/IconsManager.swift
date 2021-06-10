@@ -28,6 +28,12 @@ public final class IconsManager{
 	//stop icon used by the app
 	public var stopIcon: NSImage!{
 		get{
+			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertStopIcon.icns", symbol: "xmark.octagon", name: "uncheck")
+		}
+	}
+	
+	public var roundStopIcon: NSImage!{
+		get{
 			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertStopIcon.icns", symbol: "xmark.circle", name: "uncheck")
 		}
 	}
@@ -94,6 +100,24 @@ public final class IconsManager{
 		}
 	}
 	
+	public var optionsIcon: NSImage{
+		get{
+			return getIconFor(path: "", symbol: "gearshape", name: NSImage.preferencesGeneralName)
+		}
+	}
+	
+	public var advancedOptionsIcon: NSImage{
+		get{
+			return getIconFor(path: "", symbol: "gearshape.2", name: NSImage.advancedName)
+		}
+	}
+	
+	public var folderIcon: NSImage{
+		get{
+			return getIconFor(path: "", symbol: "folder.fill", name: NSImage.folderName)
+		}
+	}
+	
 	//return the icon of thespecified installer app
 	
 	func getInstallerAppIconFrom(path app: String) ->NSImage{
@@ -113,7 +137,7 @@ public final class IconsManager{
 	}
 	
 	public func getIconFor(path: String, symbol: String, alternate: NSImage! = nil, alternateFirst: Bool = false) -> NSImage!{
-		if #available(macOS 11.0, *), look == .bigSurUp, !symbol.isEmpty{
+		if #available(macOS 11.0, *), look.usesSFSymbols() && !symbol.isEmpty{
 			let ret = NSImage(systemSymbolName: symbol, accessibilityDescription: nil)
 			ret?.isTemplate = true
 			return ret

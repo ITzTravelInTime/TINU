@@ -15,7 +15,7 @@ extension InstallMediaCreationManager{
 		DispatchQueue.global(qos: .background).async {
 			
 			//now the installer creation process has finished running, so our boolean must be false now
-			CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress = false
+			cvm.shared.process.status = .postCreation
 			
 			DispatchQueue.main.async {
 				
@@ -25,7 +25,7 @@ extension InstallMediaCreationManager{
 				
 			}
 			
-			log("process took \(UInt64(abs(CreateinstallmediaSmallManager.shared.startTime.timeIntervalSinceNow))) seconds to finish")
+			log("process took \(UInt64(abs(cvm.shared.process.startTime.timeIntervalSinceNow))) seconds to finish")
 			
 			DispatchQueue.main.sync {
 				//we have finished, so the controls opf the window are restored
@@ -37,14 +37,14 @@ extension InstallMediaCreationManager{
 			}
 			
 			//this code get's the output of teh process
-			let outdata = CreateinstallmediaSmallManager.shared.outputPipe.fileHandleForReading.readDataToEndOfFile()
+			let outdata = cvm.shared.process.outputPipe.fileHandleForReading.readDataToEndOfFile()
 			if var string = String(data: outdata, encoding: .utf8) {
 				string = string.trimmingCharacters(in: .newlines)
 				self.output = string.components(separatedBy: "\n")
 			}
 			
 			//this code gets the errors of the process
-			let errdata = CreateinstallmediaSmallManager.shared.errorPipe.fileHandleForReading.readDataToEndOfFile()
+			let errdata = cvm.shared.process.errorPipe.fileHandleForReading.readDataToEndOfFile()
 			if var string = String(data: errdata, encoding: .utf8) {
 				string = string.trimmingCharacters(in: .newlines)
 				self.error = string.components(separatedBy: "\n")
@@ -137,7 +137,7 @@ extension InstallMediaCreationManager{
 		DispatchQueue.global(qos: .background).async {
 			
 			//gets the termination status for comparison
-			var rc = CreateinstallmediaSmallManager.shared.process.terminationStatus
+			var rc = cvm.shared.process.process.terminationStatus
 			
 			//code used to test if the process has exited with an abnormal code
 			if simulateAbnormalExitcode{
@@ -231,84 +231,6 @@ extension InstallMediaCreationManager{
 			valueList[.llo] = llo
 			valueList[.tt] = tt
 			
-			/*
-			if !success{
-				
-				/*
-
-
-				WARNINING: do not change the text of the arrays after valuesToCheck: in the errors list append, those are essential to let the errors of createinstallmedia to be detected.
-
-
-				*/
-				
-				errorsList = []
-				
-				//add new known errors here
-				
-				//   |   |   |   |   |
-				//  \/  \/  \/  \/  \/
-				
-				
-				
-				//   /\  /\  /\  /\  /\
-				//   |   |   |   |   |
-				
-				//checks for known errors first
-				
-				
-				
-				errorsList.append(CheckItem(chackValues: [.tt, .fe, .le, .lo], stringsToCheck: ["A error occurred erasing the disk."], printMessage: "Bootable macOS installer creation failed, createinstallmedia returned an error while formatting the installer partition, please, erase manually this dirve with disk utility and retry", message: "TINU creation failed to format \"\(self.dname)\"", notError: false, operation: .contains, isBack: false))
-				
-				errorsList.append(CheckItem(chackValues: [.tt, .fe, .le, .me, .lo], stringsToCheck: ["does not appear to be a valid OS installer application"], printMessage: "macOS install media creation failed, createinstallmedia returned an error about the app you are using, please, check your mac installaltion app and if needed download it again. Many thimes this appens ,because the installer downloaded from the mac app store, does not contains all the needed files or contanins wrong or corrupted files, in many cases the mac app store on a virtual machine does not downloads the full macOS installer application", message: "Bootable macOS installer creation failed because the selected macOS installer app is damaged or invalid", notError: false, operation: .contains, isBack: false))
-				
-				errorsList.append(CheckItem(chackValues: [.tt, .fe, .le, .me, .lo], stringsToCheck: ["is not a valid volume mount point"], printMessage: "Bootable macOS installer creation failed because the selected volume is no longer available", message: "Bootable macOS installer creation failed because the drive \"\(self.dname)\" is no longer available", notError: false, operation: .contains, isBack: false))
-				
-				//if #available(OSX 10.15, *){
-					errorsList.append(CheckItem(chackValues: [.tt, .fe, .le, .me, .lo], stringsToCheck: ["IA app name cookie write failed"], printMessage: "Bootable macOS installer creation failed because of an error while copying needed files, make sure that \"\(self.dname)\" is working correctly and that the SIP is disasbled, the SIP enabled can be the real issue in mac versions from Catalina and newer", message: "Bootable macOS installer creation failed because the SIP (System Integrity Protection) is enabled, please disable it and retry", notError: false, operation: .contains, isBack: false))
-				//}
-				
-				errorsList.append(CheckItem(chackValues: [.tt, .fe, .le, .me, .lo], stringsToCheck: ["The copy of the installer app failed"], printMessage: "Bootable macOS installer creation failed because the process failed to copy some elements on it, mainly the installer app or it's content, can't be copied or failed to be copied, please check that your target driver is working properly and just in case erase it with disk utility, if that does not work, use another working target device", message: "Bootable macOS installer creation failed because of an error while copying needed files, make sure that \"\(self.dname)\" is working correctly", notError: false, operation: .contains, isBack: false))
-				
-				errorsList.append(CheckItem(chackValues: [.fe, .le, .me, .lo], stringsToCheck: ["The bless of the installer disk failed"], printMessage: "Bootable macOS installer creation failed because \"\(sharedExecutableName)\" was suddenly closed or crashed, probably due to some killing or by the computer going into a sleep state.", message: "Bootable macOS installer creation failed: The creation process was suddenly closed, make sure that the computer doesn't go in standby mode during the creation process.", notError: false, operation: .contains, isBack: false))
-				
-				errorsList.append(CheckItem(chackValues: [.tt, .fe, .le, .me, .lo], stringsToCheck: ["To use this tool, you must download the macOS installer application on a Mac with"], printMessage: "Installer app not supprted by this mac os version", message: "Bootable macOS installer creation failed: The installer app seems not to be compatible with your mac os version or it wasn't properly downloaded, it's reccomended to re-download it from the App Store or to use a different macOS version", notError: false, operation: .contains, isBack: false))
-				
-				errorsList.append(CheckItem(chackValues: [.le, .fe, .me, .lo], stringsToCheck: ["is not large enough for install media."], printMessage: "The selected drive/partition is not large enought for this macOS installer app, if you want to make an installer of Catalina or later we reccommend you to use a drive/partition of at least 10 gb", message: "Bootable macOS installer creation failed because the volume you choose for the installer is not large enought, please choose a larger one, see the log for more info", notError: false, operation: .contains, isBack: false))
-				
-				//To use this tool, you must download the macOS installer application on a Mac with 10.12.5 or later, or El Capitan 10.11.6. For more information, please see the following: https://support.apple.com/kb/HT201372
-				
-				
-				//if simulateUseScriptAuth{
-					/*
-					//then if the proces has not been completed correclty, probably we have an error output or an unknown output
-					errorsList.append(CheckItem(stringsToCheck: ["\(rc)", "\(px)"], valuesToCheck: ["0"], printMessage: "macOS install media creation failed, unknown output from \"createinstallmedia\" while creating the installer, please, erase this dirve with disk utility and retry", message: "macOS install media creation failed because of an unknown output from \"\(sharedExecutableName)\", check the log for details", notError: false, operation: .equal, isBack: false))
-					*/
-					
-					// checks if the cancel button was pressed in the apple script auth
-				errorsList.append(CheckItem(chackValues: [.fe], stringsToCheck: ["NO"], printMessage: "script auth cancelled by user", message: "", notError: false, operation: .contains, isBack: true))
-					
-				errorsList.append(CheckItem(chackValues: [.le], stringsToCheck: ["execution error:", "(-128)"], printMessage: "Apple script operation cancelled, going to previous screen", message: "", notError: false, operation: .contains, isBack: true))
-					
-				//}
-				
-				
-				//then checks for unknown errors
-				errorsList.append(CheckItem(chackValues: [.rc, .px], stringsToCheck: ["0", "102030100"], printMessage: "Bootable macOS installer creation exited with a not normal exit code, see previous lines in the log to get more info about the error", message: "Bootable macOS installer creation failed because of an unknown error, check the log for details", notError: false, operation: .different, isBack: false))
-				
-				
-			}else{
-				
-				errorsList = []
-				
-				//then checks if the process was completed correctly
-				errorsList.append(CheckItem(chackValues: [.llo], stringsToCheck: ["done", "install media now available at "], printMessage: "Bootable macOS installer created successfully!", message: "Bootable macOS installer created successfully", notError: true, operation: .contains, isBack: false))
-				
-				//then if the proces has not been completed correclty, probably we have an error output or an unknown output
-				errorsList.append(CheckItem(chackValues: [.rc, .px], stringsToCheck: ["0", "102030100"], printMessage: "Bootable macOS installer creation failed, unknown output from \"${executable}\" while creating the installer, please, erase this dirve with disk utility and retry", message: "Bootable macOS installer creation failed because of an unknown error, check the log for details", notError: false, operation: .equal, isBack: false))
-				
-			}*/
-			
 			//sanity check print just so see how the json should look like
 			print(CodableCreation<CheckItemCollection>.getEncoded(CheckItemCollection(itemsList: errorsList))!)
 			
@@ -339,6 +261,7 @@ extension InstallMediaCreationManager{
 				
 				log("\n\(self.parse(messange: item.printMessage))\n")
 				
+				
 				if item.notError{
 					
 					/*DispatchQueue.main.async {
@@ -358,27 +281,41 @@ extension InstallMediaCreationManager{
 					}
 					
 					DispatchQueue.global(qos: .background).sync {
-						if !self.manageSpecialOperations(){
-							print("Advanced options failed")
+						
+						if let res = self.manageSpecialOperations(){
+							if !res{
+								print("Advanced options failed")
 							
-							DispatchQueue.main.sync {
-								//self.viewController.goToFinalScreen(title: "Error: Failed to apply advanced options", success: false)
-								self.viewController.goToFinalScreen(id: "finalScreenAOE")
+								DispatchQueue.main.sync {
+									//self.viewController.goToFinalScreen(title: "Error: Failed to apply advanced options", success: false)
+									self.viewController.goToFinalScreen(id: "finalScreenAOE")
+								}
+							
+								return
+							}else{
+								if item.isBack{
+									DispatchQueue.main.sync {
+										self.viewController.goBack()
+									}
+								}else{
+									DispatchQueue.main.sync {
+										self.viewController.goToFinalScreen(title: self.parse(messange: item.message), success: item.notError)
+									}
+								}
 							}
-							
-							return
 						}
+						
 					}
 					
-				}
-				
-				if item.isBack{
-					DispatchQueue.main.sync {
-						self.viewController.goBack()
-					}
 				}else{
-					DispatchQueue.main.sync {
-						self.viewController.goToFinalScreen(title: self.parse(messange: item.message), success: item.notError)
+					if item.isBack{
+						DispatchQueue.main.sync {
+							self.viewController.goBack()
+						}
+					}else{
+						DispatchQueue.main.sync {
+							self.viewController.goToFinalScreen(title: self.parse(messange: item.message), success: item.notError)
+						}
 					}
 				}
 				

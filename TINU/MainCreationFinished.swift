@@ -29,14 +29,14 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
             a.QuitMenuButton.isEnabled = true
         }
 		
-		let suffix = (FinalScreenSmallManager.shared.isOk ? "Yes" : "No")
+		let suffix = ((cvm.shared.process.status == .doneSuccess) ? "Yes" : "No")
 		continueButton.title = TextManager.getViewString(context: self, stringID: "continueButton" + suffix)
 		logButton.title = TextManager.getViewString(context: self, stringID: "logButton")
 		
 		var image = NSImage()
-        if !FinalScreenSmallManager.shared.isOk{
+        if (cvm.shared.process.status != .doneSuccess){
 			
-			image = IconsManager.shared.stopIcon
+			image = IconsManager.shared.roundStopIcon
 			
             continueButton.isEnabled = true
             continueButton.frame.size.width = exitButton.frame.size.width
@@ -51,18 +51,18 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
 		
 		setFailureImage(image: image)
 		
-		if #available(macOS 11.0, *), look == .bigSurUp{
+		if #available(macOS 11.0, *), look.usesSFSymbols(){
 			if failureImageView != nil{
 				failureImageView.contentTintColor = .systemGray
 				failureImageView.image = failureImageView.image?.withSymbolWeight(.thin)
-				failureImageView.contentTintColor = FinalScreenSmallManager.shared.isOk ? .systemGreen : .systemRed
+				failureImageView.contentTintColor = (cvm.shared.process.status == .doneSuccess) ? .systemGreen : .systemRed
 			}
 		}
 		
 		showFailureImage()
 		
 		setFailureLabel(text: FinalScreenSmallManager.shared.title)
-		if #available(macOS 11.0, *){
+		if #available(macOS 11.0, *), look.usesSFSymbols(){
 			failureLabel.font = NSFont.systemFont(ofSize: failureLabel.font!.pointSize)
 		}else{
 			failureLabel.font = NSFont.boldSystemFont(ofSize: failureLabel.font!.pointSize)

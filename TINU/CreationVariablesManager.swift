@@ -8,9 +8,57 @@
 
 import Foundation
 
-public final class CreationVariablesManager{
+
+
+public class CreationVariablesManager{
+	
+	class CreateinstallmediaSmallManager{
+		
+		enum Status: UInt8, CaseIterable, Codable, Equatable{
+			case configuration = 0
+			case preCreation
+			case creation
+			case postCreation
+			case doneSuccess
+			case doneFailure
+			
+			func isBusy() -> Bool{
+				return (self == .creation || self == .preCreation || self == .postCreation)
+			}
+		}
+		
+		public var status: Status = .configuration
+		
+		//variables used to manage the creation process
+		public var process = Process()
+		public var errorPipe = Pipe()
+		public var outputPipe = Pipe()
+		
+		
+		
+		public var startTime = Date()
+	}
 	
 	static let shared = CreationVariablesManager()
+	
+	init(){
+		process = CreateinstallmediaSmallManager()
+		options = OtherOptionsManager(self)
+		app = InstallerAppManager(self)
+	}
+	
+	var process: CreateinstallmediaSmallManager! = nil
+	var options: OtherOptionsManager! = nil
+	var app    : InstallerAppManager! = nil
+	
+	//this variable tells to the app if the selected drive needs to be formatted using GUID partition method
+	public var sharedVolumeNeedsPartitionMethodChange: Bool!
+	
+	//thi is used to determinate if there is the need for the time machine warn
+	public var sharedDoTimeMachineWarn = false
+
+	//this tells to the app is the install media uses custom settings
+	public var sharedMediaIsCustomized = false
 	
 	public var currentPart: Part!
 	
@@ -52,11 +100,10 @@ public final class CreationVariablesManager{
 		didSet{
 			
 			if sharedApp != nil{
-				InstallerAppManager.shared.resetCachedAppInfo()
+				cvm.shared.app.resetCachedAppInfo()
 			}
 			
-			checkOtherOptions()
-			
+			cvm.shared.options.checkOtherOptions()
 		}
 	}
 	
@@ -73,22 +120,7 @@ public final class CreationVariablesManager{
 		return false
 	}
 	
-	//this variable tells to the app which is the bundle name of the selcted installer app
-	public var sharedBundleName = ""
 	
-	//this is used for the app version
-	public var sharedBundleVersion = ""
-	
-	//this varable tells to the app if the selected volume or drive needs to be reformatted using hfs+ (deprecated)
-	//public var sharedVolumeNeedsFormat: Bool!
-	//this variable tells to the app if the selected drive needs to be formatted using GUID partition method
-	public var sharedVolumeNeedsPartitionMethodChange: Bool!
-	
-	//thi is used to determinate if there is the need for the time machine warn
-	public var sharedDoTimeMachineWarn = false
-
-	//this tells to the app is the install media uses custom settings
-	public var sharedMediaIsCustomized = false
 }
 
 typealias cvm = CreationVariablesManager

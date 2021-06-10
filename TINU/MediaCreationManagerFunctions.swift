@@ -167,11 +167,7 @@ extension InstallMediaCreationManager{
 			return false
 		}
 		
-		var newVolumeName = "macOS install media"
-		
-		if iam.shared.checkSharedBundleName() {
-			newVolumeName = cvm.shared.sharedBundleName
-		}
+		let newVolumeName = cvm.shared.app.bundleName ?? (sharedInstallMac ? "Macintosh HD" : "macOS install media")
 		
 		//this is the command used to erase the disk and create on just one partition with the GUID table
 		let cmd = "diskutil eraseDisk JHFS+ \"" + newVolumeName + "\" /dev/" + tmpBSDName
@@ -285,7 +281,7 @@ extension InstallMediaCreationManager{
 			}
 			
 			if !canFormat {
-				if let o = oom.shared.otherOptions[.otherOptionForceToFormatID]?.canBeUsed(){
+				if let o = cvm.shared.options.list[.otherOptionForceToFormatID]?.canBeUsed(){
 					if o && !simulateFormatSkip{
 						canFormat = true
 						log("   Forced drive erase enabled")
@@ -295,7 +291,7 @@ extension InstallMediaCreationManager{
 		}
 		
 		if sharedInstallMac{
-			if let o = oom.shared.otherOptions[.otherOptionDoNotUseApfsID]?.canBeUsed(){
+			if let o = cvm.shared.options.list[.otherOptionDoNotUseApfsID]?.canBeUsed(){
 				if o {
 					useAPFS = false
 					log("   Forced APFS automatic upgrade enabled")
@@ -308,7 +304,7 @@ extension InstallMediaCreationManager{
 	
 	func buildCommandString(useAPFS: Bool) -> String{
 		
-		let isNotMojave = iam.shared.installerAppGoesUpToThatVersion(version: 14.0)!
+		let isNotMojave = cvm.shared.app.installerAppGoesUpToThatVersion(version: 14.0)!
 		//let isNotCatalina = iam.shared.installerAppGoesUpToThatVersion(version: 15.0)!
 		
 		//this is the name of the executable we need to use now
@@ -330,7 +326,7 @@ extension InstallMediaCreationManager{
 			var noAPFSSupport = true
 			
 			//check if the version of the installer does not supports apfs
-			if let ap = iam.shared.sharedAppNotSupportsAPFS(){
+			if let ap = cvm.shared.app.sharedAppNotSupportsAPFS(){
 				noAPFSSupport = ap
 			}
 			
@@ -416,9 +412,9 @@ extension InstallMediaCreationManager{
 		
 		
 		
-		let remooveHardcoded = ["InstallESD", "OS X InstallESD"]
+		let removeHardcoded = ["InstallESD", "OS X InstallESD"]
 		
-		for r in remooveHardcoded{
+		for r in removeHardcoded{
 			for i in 1...10{
 				let path = "/Volumes/" + r + ((i > 1) ? (" " + String(i)) : "")
 				

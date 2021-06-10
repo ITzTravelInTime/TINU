@@ -40,7 +40,7 @@ public class mainWindowController: GenericWindowController {
     
     @objc func windowShouldClose(_ sender: Any) -> Bool {
 		print("main Window should close called")
-        if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress{
+		if cvm.shared.process.status == .creation {
 			if let d = InstallMediaCreationManager.shared.stopWithAsk(){
 				return d
 			}else{
@@ -48,7 +48,7 @@ public class mainWindowController: GenericWindowController {
 			}
         }
         
-        return !CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress
+		return !(cvm.shared.process.status.isBusy())
     }
     
 }

@@ -1,5 +1,5 @@
 //
-//  AdvancedOptionsButton.swift
+//  ChoseButton.swift
 //  TINU
 //
 //  Created by ITzTravelInTime on 11/11/17.
@@ -9,7 +9,7 @@
 import Cocoa
 
 
-@IBDesignable class AdvancedOptionsButton: NSButton {
+@IBDesignable class ChoseButton: NSButton {
     
 	@IBInspectable var cImage: NSImageView = NSImageView()
 	@IBInspectable var cTitle: NSTextField = NSTextField()
@@ -50,7 +50,7 @@ import Cocoa
         cTitle.drawsBackground = false
         cTitle.isSelectable = false
         //title.font = NSFont.labelFont(ofSize: 13)
-		if look == .bigSurUp{
+		if look.usesSFSymbols(){
 			cTitle.font = NSFont.systemFont(ofSize: 13)
 			cTitle.textColor = NSColor.labelColor
 		}else{

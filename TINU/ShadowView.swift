@@ -12,11 +12,11 @@ public class ShadowView: NSView{
 	
 	func setModeFromCurrentLook(){
 		switch look{
-		case .bigSurUp:
+		case .noShadowsSFSymbols:
 			mode = .borderedButton
 			//mode = .shadowedbutton
 			break
-		case .yosemiteToCatalina:
+		case .shadowsOldIcons, .shadowsSFSymbols:
 			mode = .shadowedbutton
 			break
 		default:
@@ -48,7 +48,24 @@ public class ShadowView: NSView{
 		
 		self.needsDisplay = true
 		self.needsLayout = true
+		let useBorder = mode == .borderedButton
+		if useBorder || look.usesSFSymbols(){
+			if useBorder{
+				self.layer?.borderColor = NSColor.systemGray.cgColor
+			}
+			if #available(macOS 10.14, *) {
+				self.layer?.backgroundColor = isSelected ? NSColor.controlAccentColor.cgColor : (!useBorder ? NSColor.controlBackgroundColor.cgColor : NSColor.transparent.cgColor)
+			}else{
+				self.layer?.backgroundColor = isSelected ? NSColor.selectedMenuItemColor.cgColor : (!useBorder ? NSColor.controlBackgroundColor.cgColor : NSColor.transparent.cgColor)
+			}
+		}else{
+			self.layer?.backgroundColor = isSelected ? NSColor.selectedControlColor.cgColor : ( NSColor.controlBackgroundColor.cgColor )
+			if mode == .shadowedbutton{
+				self.layer?.shadowColor = (isDarkMode ? NSColor.controlDarkShadowColor : NSColor.controlShadowColor).cgColor //isDarkMode ? CGColor.black : CGColor.init(gray: 0.4, alpha: 1);
+			}
+		}
 		
+		/*
 		switch mode {
 		case .shadowedbutton:
 			self.layer?.shadowColor = (isDarkMode ? NSColor.controlDarkShadowColor : NSColor.controlShadowColor).cgColor //isDarkMode ? CGColor.black : CGColor.init(gray: 0.4, alpha: 1);
@@ -65,7 +82,7 @@ public class ShadowView: NSView{
 		default:
 			self.layer?.backgroundColor = isSelected ? NSColor.selectedControlColor.cgColor : NSColor.transparent.cgColor
 			break
-		}
+		}*/
 	}
 	
 	override public func draw(_ dirtyRect: NSRect) {

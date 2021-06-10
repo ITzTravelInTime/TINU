@@ -63,28 +63,28 @@ class OtherOptionsCheckBox: NSView {
 		}
 		}*/
 		
-		if oom.shared.otherOptions[option.id] == nil { return }
+		if cvm.shared.options.list[option.id] == nil { return }
 		
 		let newState = (checkBox.state.rawValue == 1)
 		
 		//this as been done in this way instead of an if var because of possible errors
-		oom.shared.otherOptions[option.id]?.isActivated = newState
+		cvm.shared.options.list[option.id]?.isActivated = newState
 		option.isActivated = newState
 		
 		//this code here is used to deactivate the APFS convertion stuff if the user has choosen to format the target drive
-		if !sharedInstallMac || !cvm.shared.sharedSVReallyIsAPFS || (option.id != oom.OtherOptionID.otherOptionForceToFormatID){
+		if !sharedInstallMac || !cvm.shared.sharedSVReallyIsAPFS || (option.id != OtherOptionsManager.OtherOptionID.otherOptionForceToFormatID){
 			return
 		}
 		
 		for item in self.superview!.subviews{
 			guard let opt = item as? OtherOptionsCheckBox else { continue }
 			
-			if opt.option.id != oom.OtherOptionID.otherOptionDoNotUseApfsID{
+			if opt.option.id != OtherOptionsManager.OtherOptionID.otherOptionDoNotUseApfsID{
 				continue
 			}
 			
-			oom.shared.otherOptions[opt.option.id]?.isActivated = newState
-			oom.shared.otherOptions[opt.option.id]?.isUsable = newState
+			cvm.shared.options.list[opt.option.id]?.isActivated = newState
+			cvm.shared.options.list[opt.option.id]?.isUsable = newState
 			opt.option.isActivated = newState
 			opt.option.isUsable = newState
 			opt.checkBox.isEnabled = newState

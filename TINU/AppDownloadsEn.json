@@ -1,6 +1,12 @@
 {
 	"downloads" : [
 		{
+			"DownloadLink" : "macappstores:\/\/itunes.apple.com\/app\/macos-big-sur\/id1526878132",
+			"name" : "macOS Big Sur",
+			"image" : "Big_Sur",
+			"version" : "11.x"
+		},
+		{
 			"DownloadLink" : "macappstores:\/\/itunes.apple.com\/app\/macos-catalina\/id1466841314",
 			"name" : "macOS Catalina",
 			"image" : "Catalina",

@@ -41,7 +41,7 @@ class ChooseCustomizationViewController: GenericViewController {
 		DispatchQueue.main.async {
 			
 			//restoreOtherOptions()
-			checkOtherOptions()
+			cvm.shared.options.checkOtherOptions()
 		
 			cvm.shared.sharedMediaIsCustomized = false
 			self.swapCurrentViewController("Confirm")

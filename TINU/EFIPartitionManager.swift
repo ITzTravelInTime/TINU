@@ -50,7 +50,7 @@ import Foundation
 					text = getOut(cmd: mountCMD)
 				}
 				
-				print(text)
+				print(text ?? "")
                 
                 if text == nil{
                     return false

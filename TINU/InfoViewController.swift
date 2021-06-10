@@ -96,7 +96,7 @@ class InfoViewController: GenericViewController, ViewID{
 			
 		}
 		
-		if #available(macOS 11.0, *), look == .bigSurUp {
+		if #available(macOS 11.0, *), look.usesSFSymbols() {
 			driveIcon.image = driveIcon.image?.withSymbolWeight(.thin)
 			driveIcon.contentTintColor = .systemGray
 			appIcon.image = appIcon.image?.withSymbolWeight(.thin)

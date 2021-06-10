@@ -105,12 +105,10 @@ public class EFIReplacementView: NSView, ViewID{
 		
 		self.addSubview(pathLabel)
 		
-		if #available(macOS 11.0, *){
-			checkImage.image = NSImage(systemSymbolName: "checkmark.circle.fill", accessibilityDescription: nil)!
-			checkImage.image!.isTemplate = true
+		
+		checkImage.image = IconsManager.shared.checkIcon
+		if #available(macOS 11.0, *), look.usesSFSymbols(){
 			checkImage.contentTintColor = .systemGreen
-		}else{
-			checkImage.image = NSImage(named: "checkVector")
 		}
 		
 		checkImage.frame.size = NSSize(width: imgSide, height: imgSide)

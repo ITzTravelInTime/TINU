@@ -47,6 +47,16 @@ public var sharedExecutableName: String{
 	if sharedInstallMac{
 		return "startosinstall"
 	}
+	
+	
+	
+	//only on yosemite use the dedicated executable provvided by the macOS 12+ installer app
+	if #available(macOS 10.10, *){ if #available(macOS 10.11, *){ } else{
+		if cvm.shared.app.installerAppSupportsThatVersion(version: 17) ?? false{
+			return "createinstallmedia_yosemite"
+		}
+	}}
+	
 	return "createinstallmedia"
 }
 
@@ -61,29 +71,6 @@ public var sharedWindowTitlePrefix: String{
     }
 }
 
-
-fileprivate let toggleRecoveryModeShadows = !false
-
-public enum AppLook: UInt8, Codable, Equatable, CaseIterable{
-	case yosemiteToCatalina = 0
-	case bigSurUp = 1
-	case recovery = 255
-}
-
-public var look: AppLook{
-	if let lk = simulateLook{
-		return lk
-	}
-	
-	if ((sharedIsOnRecovery && !toggleRecoveryModeShadows) || simulateDisableShadows){
-		return .recovery
-	}
-	if #available(macOS 11.0, *) {
-		return .bigSurUp
-	}else{
-		return .yosemiteToCatalina
-	}
-}
 
 /*
 public var blockShadow: Bool {

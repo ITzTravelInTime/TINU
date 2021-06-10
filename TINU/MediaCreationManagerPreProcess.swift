@@ -19,7 +19,8 @@ extension InstallMediaCreationManager{
 			
 			controlFor: for _ in 0...0{
 				
-				CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress = true
+				//cvm.shared.process.isPreCreationInProgress = true
+				cvm.shared.process.status = .preCreation
 				
 				var canFormat = false //chck if volume needs to be formatted, in particular if it needs to be repartitioned and completely erased
 				var useAPFS = false //this variables enables or not automatic apfs conversion
@@ -72,7 +73,7 @@ extension InstallMediaCreationManager{
 								self.setActivityLabelText("activityLabel10")
 							}
 							
-							success = !self.manageSpecialOperations()
+							success = !(self.manageSpecialOperations() ?? false)
 						}
 					case 7:
 						tCMD = self.buildCommandString(useAPFS: useAPFS)
@@ -82,9 +83,9 @@ extension InstallMediaCreationManager{
 						log("The script that will be performed is (including quotes): " + tCMD)
 						
 						//switches state because now we are starting the process of the real creation / instllation
-						CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress = false
-						CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress = true
-						
+						//cvm.shared.process.isPreCreationInProgress = false
+						//cvm.shared.process.isCreationInProgress = true
+						cvm.shared.process.status = .creation
 					default:
 						break
 					}
@@ -163,11 +164,11 @@ extension InstallMediaCreationManager{
 					
 					//here insted just uses a timer to see if the process has finished and stops this thread
 					//assign processes variables
-					CreateinstallmediaSmallManager.shared.process = r.process
-					CreateinstallmediaSmallManager.shared.errorPipe = r.errorPipe
-					CreateinstallmediaSmallManager.shared.outputPipe = r.outputPipe
+					cvm.shared.process.process = r.process
+					cvm.shared.process.errorPipe = r.errorPipe
+					cvm.shared.process.outputPipe = r.outputPipe
 					
-					CreateinstallmediaSmallManager.shared.startTime = Date()
+					cvm.shared.process.startTime = Date()
 					
 					
 					DispatchQueue.main.sync {

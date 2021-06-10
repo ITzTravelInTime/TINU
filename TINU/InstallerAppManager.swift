@@ -8,16 +8,58 @@
 
 import Cocoa
 
-public final class InstallerAppManager{
+extension CreationVariablesManager{
+public /*final*/ class InstallerAppManager{
 	
-	static let shared = InstallerAppManager()
+	//static let shared = InstallerAppManager()
+	
+	let ref: CreationVariablesManager
+	
+	init(_ reference: CreationVariablesManager) {
+		ref = reference
+	}
 	
 	private var cachedAppInfo: [String: Any]!
 	
+	private var internalBundleName: String!
+	private var internalBundleVersion: String!
+	
+	//this variable tells to the app which is the bundle name of the selcted installer app
+	public var bundleName: String!{
+		if cachedAppInfo == nil{
+			return nil
+		}
+		
+		if (internalBundleName ?? "").isEmpty {
+			guard let n = targetAppBundleName() else {return nil}
+			internalBundleName = n
+			return n
+		}else{
+			return internalBundleName
+		}
+	}
+	
+	//this is used for the app version
+	public var bundleVersion: String!{
+		if cachedAppInfo == nil{
+			return nil
+		}
+		
+		if (internalBundleVersion ?? "").isEmpty {
+			guard let n = targetAppBundleVersion() else {return nil}
+			internalBundleVersion = n
+			return n
+		}else{
+			return internalBundleVersion
+		}
+	}
+	
 	public func resetCachedAppInfo(){
 		cachedAppInfo = nil
+		internalBundleName = nil
+		internalBundleVersion = nil
 		
-		if let sa = cvm.shared.sharedApp{
+		if let sa = ref.sharedApp{
 			if FileManager.default.fileExists(atPath: sa + "/Contents/Info.plist"){
 				do{
 					let result = try DecodeManager.decodePlistDictionary(xml: try String.init(contentsOfFile: sa + "/Contents/Info.plist")) as? [String: Any]
@@ -81,64 +123,31 @@ public final class InstallerAppManager{
 		return targetAppInfoPlistItem(itemKey: "DTSDKBuild")
 	}
 	
-	//checks the bundle name of the chosen installer app
-	public func checkSharedBundleName() -> Bool{
-		if cvm.shared.sharedBundleName.isEmpty {
-			if let n = targetAppBundleName(){
-				cvm.shared.sharedBundleName = n
-				return true
-			}else{
-				return false
-			}
-		}else{
-			return true
-		}
-	}
-	
-	//checks the bundle version of the choosen installer app
-	public func checkSharedBundleVersion() -> Bool{
-		if cvm.shared.sharedBundleVersion.isEmpty {
-			if let n = targetAppBundleVersion(){
-				cvm.shared.sharedBundleVersion = n
-				return true
-			}else{
-				return false
-			}
-		}else{
-			return true
-		}
-	}
-	
-	//checks both shared bundle name and shared bundle version
-	@inline(__always) public func checkSharedBundleItems() -> Bool{
-		return checkSharedBundleName() && checkSharedBundleVersion()
-	}
-	
 	//returns the version number of the mac os installer app, returns nil if it was not found, returns an epty string if it's an unrecognized version
 	public func installerAppVersion() -> String!{
 		print("Detecting app version")
-		if checkSharedBundleVersion(){
-			var subVer = String(cvm.shared.sharedBundleVersion.prefix(3))
+		if bundleVersion != nil{
+			var subVer = String(bundleVersion!.prefix(3))
 			
 			subVer.removeFirst()
 			subVer.removeFirst()
 			
-			let hexString = String(UInt8(subVer, radix: 36)! - 10)
+			let hexString = UInt8(subVer, radix: 36)! - 10
 			
-			let ret = String(UInt(String(cvm.shared.sharedBundleVersion.prefix(2)))! - 4) + "." + hexString
+			let ret = String(UInt(String(bundleVersion!.prefix(2)))! - 4) + "." + String(hexString)
+			
 			print("Detected app version (using the build number): \(ret)")
 			return ret
 			
 		}
 		
-		if checkSharedBundleName(){
+		if bundleName != nil{
 			
 			//fallback method, really not used a lot and not that precise, but it's tested to work
 			
-			let checkList: [UInt: ([String], [String])] = [16: (["big sur", "10.16", "11."], []), 15: (["catalina", "10.15"], []), 14: (["mojave", "10.14"], []), 13: (["high sierra", "high", "10.13"], []), 12: (["sierra", "10.12"], ["high"]), 11: (["el capitan", "el", "capitan", "10.11"], []), 10: (["yosemite", "10.10"], []), 9: (["mavericks", "10.9"], [])]
+			let checkList: [UInt: ([String], [String])] = [17: (["12", "Monterey"], ["10.12"]), 16: (["big sur", "10.16", "11."], []), 15: (["catalina", "10.15"], []), 14: (["mojave", "10.14"], []), 13: (["high sierra", "high", "10.13"], []), 12: (["sierra", "10.12"], ["high"]), 11: (["el capitan", "el", "capitan", "10.11"], []), 10: (["yosemite", "10.10"], []), 9: (["mavericks", "10.9"], [])]
 			
-			let lc = cvm.shared.sharedBundleName.lowercased()
-			
+			let lc = bundleName!.lowercased()
 			
 			check: for item in checkList{
 				for s in item.value.0{
@@ -162,89 +171,32 @@ public final class InstallerAppManager{
 				}
 			}
 			
-			/*
-			if lc.contains("big sur") || lc.contains("10.16") || lc.contains("11."){
-				return "16"
-			}
-			if lc.contains("catalina") || lc.contains("10.15"){
-				return "15"
-			}
-			if lc.contains("mojave") || lc.contains("10.14"){
-				return "14"
-			}
-			if lc.contains("high sierra") || lc.contains("10.13"){
-				return "13"
-			}
-			if (lc.contains("sierra") && !lc.contains("high")) || lc.contains("10.12"){
-				return "12"
-			}
-			if lc.contains("el capitan") || lc.contains("10.11"){
-				return "11"
-			}
-			if lc.contains("yosemite") || lc.contains("10.10"){
-				return "10"
-			}
-			if lc.contains("mavericks") || lc.contains("10.9"){
-				return "9"
-			}*/
-			
 			return ""
 		}else{
 			return nil
 		}
 	}
 	
-	//returns if the version of the installer app is the spcified version
+	public func installerAppVersion() -> Float!{
+		guard let v: String = installerAppVersion() else {return nil}
+		
+		if v.isEmpty{ return nil }
+		
+		print("detected version: \(v)")
+		
+		return Float(v)
+	}
+	
+	//returns if the version of the installer app is the spcified version or a newer one
 	public func installerAppSupportsThatVersion(version: Float) -> Bool!{
-		/*if checkSharedBundleVersion(){
-		return (Int(String(sharedBundleVersion.characters.prefix(2)))! - 4) <= version
-		}
-		
-		if checkSharedBundleName(){
-		
-		
-		if let n = Int(installerAppVersion()){
-		return n <= version
-		}
-		}*/
-		
-		if let v = installerAppVersion(){
-			if !v.isEmpty{
-				print("detected version: \(v)")
-				if let n = Float(v){
-					return n <= version
-				}
-			}
-		}
-		
-		return nil
+		guard let ver: Float = installerAppVersion() else { return nil }
+		return ver >= version
 	}
 	
 	//returns if the installer app version is earlyer than the specified one
-	
 	public func installerAppGoesUpToThatVersion(version: Float) -> Bool!{
-		/*if checkSharedBundleVersion(){
-		return (Int(String(sharedBundleVersion.characters.prefix(2)))! - 4) <= version
-		}
-		
-		if checkSharedBundleName(){
-		
-		
-		if let n = Int(installerAppVersion()){
-		return n <= version
-		}
-		}*/
-		
-		if let v = installerAppVersion(){
-			if !v.isEmpty{
-				print("detected version: \(v)")
-				if let n = Float(v){
-					return n < version
-				}
-			}
-		}
-		
-		return nil
+		guard let ver: Float = installerAppVersion() else { return nil }
+		return ver < version
 	}
 	
 	//checks if the selected macOS installer application version has apfs support
@@ -274,4 +226,6 @@ public final class InstallerAppManager{
 	
 }
 
-typealias iam = InstallerAppManager
+}
+
+//typealias iam = InstallerAppManager

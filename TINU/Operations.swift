@@ -9,7 +9,7 @@
 import Cocoa
 
 public struct SettingsRes: Equatable{
-	let result: Bool
+	let result: Bool?
 	let messange: String?
 	
 	static let resTrueNil: SettingsRes = SettingsRes(result: true, messange: nil)
@@ -90,7 +90,7 @@ public final class Operations{
 	
 	func createReadme() -> SettingsRes{
 		
-		if let o = oom.shared.otherOptions[.otherOptionCreateReadmeID]?.canBeUsed(){
+		if let o = cvm.shared.options.list[.otherOptionCreateReadmeID]?.canBeUsed(){
 			if o {
 				//creates a readme file into the target drive
 				
@@ -131,7 +131,7 @@ public final class Operations{
 	#if !macOnlyMode
 	func createAIBootFiles() -> SettingsRes{
 		
-		if let o = oom.shared.otherOptions[.otherOptionCreateAIBootFID]?.canBeUsed(){
+		if let o = cvm.shared.options.list[.otherOptionCreateAIBootFID]?.canBeUsed(){
 			if o && !sharedInstallMac{
 				let iaFolder = cvm.shared.sharedVolume + "/.IABootFiles"
 				
@@ -196,7 +196,7 @@ public final class Operations{
 	
 	#if !macOnlyMode
 	func deleteIAPMID() -> SettingsRes{
-		if let o = oom.shared.otherOptions[.otherOptionDeleteIAPMID]?.canBeUsed(){
+		if let o = cvm.shared.options.list[.otherOptionDeleteIAPMID]?.canBeUsed(){
 			if o && !sharedInstallMac{
 				let iaFile = cvm.shared.sharedVolume + "/.IAPhysicalMedia"
 				
@@ -235,7 +235,7 @@ public final class Operations{
 	
 	func createIcon() -> SettingsRes{
 		
-		if let o = oom.shared.otherOptions[.otherOptionCreateIconID]?.canBeUsed(){
+		if let o = cvm.shared.options.list[.otherOptionCreateIconID]?.canBeUsed(){
 			if o{
 				
 				var ok = true
@@ -299,7 +299,7 @@ public final class Operations{
 	}
 	
 	func createTINUCopy() -> SettingsRes{
-		if let o = oom.shared.otherOptions[.otherOptionTinuCopyID]?.canBeUsed(){
+		if let o = cvm.shared.options.list[.otherOptionTinuCopyID]?.canBeUsed(){
 			if o {
 				//trys to crerate a copy of this app on the mac os install media
 				
