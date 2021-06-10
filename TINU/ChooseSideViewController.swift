@@ -75,8 +75,8 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		
 		//code setup
 		
-		if let w = sharedWindow{
-			w.title = sharedWindowTitlePrefix
+		if let w = UIManager.shared.window{
+			w.title = UIManager.shared.windowTitlePrefix
 		}
 		
 		//ui setup
@@ -242,7 +242,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 				if !ChooseSideViewController._already_prompted{
 					if (SIPManager.checkSIP()){
 				
-						openDiagnosticsMode(withSudo: true)
+						DiagnosticsModeManager.shared.open(withSudo: true)
 					
 					}else{
 					

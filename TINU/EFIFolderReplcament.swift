@@ -71,7 +71,7 @@ public class EFIReplacementView: NSView, ViewID{
 		expLabel.frame.size = NSSize(width: self.frame.size.width - 10 , height: fieldHeigth * 4)
 		expLabel.font = NSFont.systemFont(ofSize: 13)
 		
-		if let drive = dm.getCurrentDriveName(){
+		if let drive = cvm.shared.disk.driveName(){
 			let replaceList = ["{drive}": drive, "{bootloader}": bootloader.rawValue]
 			
 			/*

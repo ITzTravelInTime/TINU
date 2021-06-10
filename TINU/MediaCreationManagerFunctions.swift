@@ -20,7 +20,7 @@ extension InstallMediaCreationManager{
 			***Trying to close conflicting processes
 			If those conflicting processes are running,
 			they may interfere with the success of
-			the \"\(sharedExecutableName)\" operation
+			the \"\(cvm.shared.executableName)\" operation
 			
 			""")
 		
@@ -43,17 +43,17 @@ extension InstallMediaCreationManager{
 			return false
 		}
 		
-		if let success = TaskKillManager.terminateProcessWithAsk(name: sharedExecutableName){
+		if let success = TaskKillManager.terminateProcessWithAsk(name: cvm.shared.executableName){
 			if !success{
-				log("***Failed to close conflicting processes \(sharedExecutableName)!!!")
+				log("***Failed to close conflicting processes \(cvm.shared.executableName)!!!")
 				DispatchQueue.main.sync {
 					//self.viewController.goToFinalScreen(title: "TINU failed to stop conflicting process \"\(sharedExecutableName)\"\nTry to restart the computer and try again", success: false)
-					self.viewController.goToFinalScreen(id: "finalScreenCFE", success: false, parseList: ["{process}" : sharedExecutableName])
+					self.viewController.goToFinalScreen(id: "finalScreenCFE", success: false, parseList: ["{process}" : cvm.shared.executableName])
 				}
 				return false
 			}
 		}else{
-			log("***Failed to terminate conflicting process: \"" + sharedExecutableName + "\" because the user denid to close it\n\n")
+			log("***Failed to terminate conflicting process: \"" + cvm.shared.executableName + "\" because the user denid to close it\n\n")
 			DispatchQueue.main.sync {
 				self.viewController.goBack()
 			}
@@ -74,7 +74,7 @@ extension InstallMediaCreationManager{
 			Those volumes may be mounted images
 			from inside the macOS installer app
 			and may interfere with the success of
-			the \"\(sharedExecutableName)\" operation
+			the \"\(cvm.shared.executableName)\" operation
 			
 			""")
 		
@@ -132,7 +132,7 @@ extension InstallMediaCreationManager{
 		if simulateFormatFail{
 			didChangePS = false
 			print("Process format fail simulation")
-			if sharedInstallMac{
+			if cvm.shared.installMac{
 				//self.viewController.goToFinalScreen(title: "TINU failed to format \"\(dname)\" [SIMULATED]", success: false)
 				
 				self.viewController.goToFinalScreen(id: "finalScreenCVE", success: false, parseList: ["{volume}" : dname])
@@ -149,7 +149,7 @@ extension InstallMediaCreationManager{
 		
 		log("    The disk needs to be unmounted, in order to be formatted")
 		
-		guard let tmpBSDName = InstallMediaCreationManager.unmountDiskAndGetDiskId(id: cvm.shared.sharedBSDDrive) else {
+		guard let tmpBSDName = InstallMediaCreationManager.unmountDiskAndGetDiskId(id: cvm.shared.disk.bSDDrive) else {
 			log("@@@ Failed to authenticate to eject the drive!!!!\n[The app made sure that the drive has been re-mounted to let the user to use it]\n\n")
 			DispatchQueue.main.sync {
 				self.viewController.goBack()
@@ -157,7 +157,7 @@ extension InstallMediaCreationManager{
 			return false
 		}
 		
-		if tmpBSDName.isEmpty || cvm.shared.sharedBSDDrive == nil{
+		if tmpBSDName.isEmpty || cvm.shared.disk.bSDDrive == nil{
 			log("@@@ Failed to unmount the disk\n\n")
 			DispatchQueue.main.sync {
 				//self.viewController.goToFinalScreen(title: "Failed to unmount the chosen Disk, check log for more details", success: false)
@@ -167,7 +167,7 @@ extension InstallMediaCreationManager{
 			return false
 		}
 		
-		let newVolumeName = cvm.shared.app.bundleName ?? (sharedInstallMac ? "Macintosh HD" : "macOS install media")
+		let newVolumeName = cvm.shared.app.bundleName ?? (cvm.shared.installMac ? "Macintosh HD" : "macOS install media")
 		
 		//this is the command used to erase the disk and create on just one partition with the GUID table
 		let cmd = "diskutil eraseDisk JHFS+ \"" + newVolumeName + "\" /dev/" + tmpBSDName
@@ -179,7 +179,7 @@ extension InstallMediaCreationManager{
 		guard let out = getOutWithSudo(cmd: cmd) else{
 			log("Failed to perform needed authentication to format target drive\n\n")
 			
-			print(getOut(cmd: "diskutil mount " + cvm.shared.sharedBSDDrive))
+			print(getOut(cmd: "diskutil mount " + cvm.shared.disk.bSDDrive))
 			
 			DispatchQueue.main.sync {
 				self.viewController.goBack()
@@ -224,21 +224,21 @@ extension InstallMediaCreationManager{
 			//we can set this boolean to true because the process has been successfoul
 			didChangePS = true
 			//setup variables for the \createinstall media, the target partition is always the second partition into the drive, the first one is the EFI partition
-			cvm.shared.sharedBSDDrive = "/dev/" + tmpBSDName + "s2"
+			cvm.shared.disk.bSDDrive = "/dev/" + tmpBSDName + "s2"
 			
-			if sharedInstallMac{
-				cvm.shared.sharedBSDDriveAPFS = nil
+			if cvm.shared.installMac{
+				cvm.shared.disk.part.apfsBDSName = nil
 			}
 			
-			cvm.shared.sharedVolume = dm.getMountPointFromPartitionBSDID(cvm.shared.sharedBSDDrive)
+			cvm.shared.disk.path = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive)
 			
-			if cvm.shared.sharedVolume == nil{
+			if cvm.shared.disk.path == nil{
 				//cvm.shared.sharedVolume = "/Volumes/" + newVolumeName
-				cvm.shared.sharedVolume = dm.getMountPointFromPartitionBSDID(cvm.shared.sharedBSDDrive)
+				cvm.shared.disk.path = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive)
 			}
 			
 			DispatchQueue.main.async {
-				if let name = cvm.shared.sharedVolume{
+				if let name = cvm.shared.disk.path{
 					self.viewController.driveImage.image = NSWorkspace.shared.icon(forFile: name)
 					self.viewController.driveName.stringValue += "\n(" + TextManager.getViewString(context: self, stringID: "renamed") + " " + FileManager.default.displayName(atPath: name) + ")"
 				}
@@ -276,9 +276,13 @@ extension InstallMediaCreationManager{
 		
 		//checks the options to use in this function
 		if !simulateFormatSkip{
-			if let s = cvm.shared.sharedVolumeNeedsPartitionMethodChange {
+			/*
+			if let s = cvm.shared.disk.shouldErase {
 				canFormat = s
 			}
+			*/
+			
+			canFormat = cvm.shared.disk.shouldErase
 			
 			if !canFormat {
 				if let o = cvm.shared.options.list[.otherOptionForceToFormatID]?.canBeUsed(){
@@ -290,7 +294,7 @@ extension InstallMediaCreationManager{
 			}
 		}
 		
-		if sharedInstallMac{
+		if cvm.shared.installMac{
 			if let o = cvm.shared.options.list[.otherOptionDoNotUseApfsID]?.canBeUsed(){
 				if o {
 					useAPFS = false
@@ -308,19 +312,19 @@ extension InstallMediaCreationManager{
 		//let isNotCatalina = iam.shared.installerAppGoesUpToThatVersion(version: 15.0)!
 		
 		//this is the name of the executable we need to use now
-		let pname = sharedExecutableName
+		let pname = cvm.shared.executableName
 		
 		//this strting is used to define the main command to use, then the prefix is added
-		var mainCMD = "\"\(cvm.shared.sharedApp!)/Contents/Resources/\(pname)\" --volume \"\(cvm.shared.sharedVolume!)\""
+		var mainCMD = "\"\(cvm.shared.app.path!)/Contents/Resources/\(pname)\" --volume \"\(cvm.shared.disk.path!)\""
 		
 		//mojave instalelr do not supports this argument
 		//if isNotMojave || !isNotCatalina{
 			//log("This is an older macOS installer app, it needs the --applicationpath argument to use " + pname)
-		mainCMD += " --applicationpath \"\(cvm.shared.sharedApp!)\""
+		mainCMD += " --applicationpath \"\(cvm.shared.app.path!)\""
 		//}
 		
 		//if tinu have to create a mac os installation on the selected drive
-		if sharedInstallMac{
+		if cvm.shared.installMac{
 			
 			///Volumes/Image\ Volume/Install\ macOS\ High\ Sierra.app/Contents/Resources/startosinstall --volume /Volumes/MAC --converttoapfs NO
 			var noAPFSSupport = true
@@ -334,7 +338,7 @@ extension InstallMediaCreationManager{
 			
 			//the command is adjusted if the version of the installer supports apfs and if the user prefers to avoid upgrading to apfs
 			if !noAPFSSupport || !isNotMojave{
-				if useAPFS || cvm.shared.sharedBSDDriveAPFS != nil{
+				if useAPFS || cvm.shared.disk.aPFSContaninerBSDDrive != nil{
 					mainCMD += " --converttoapfs YES"
 				}else{
 					mainCMD += " --converttoapfs NO"
@@ -357,7 +361,7 @@ extension InstallMediaCreationManager{
 				//replace with the test commands
 				if !scf{
 					if !isNotMojave{
-						mainCMD = "echo \"Install media now available at \"\(cvm.shared.sharedVolume!)\"\""
+						mainCMD = "echo \"Install media now available at \"\(cvm.shared.disk.path!)\"\""
 					}else{
 						mainCMD = "echo \"done test\""
 					}

@@ -8,7 +8,8 @@
 
 import Foundation
 
-public class OtherOptionsManager{
+extension CreationVariablesManager{
+	public class OtherOptionsManager: CreationVariablesManagerSection {
 	
 	/** Values used to identify options, they are hardcoded to fixed values to prevent problems with reading values from json files*/
 	public enum OtherOptionID: UInt8, Codable, Equatable, CaseIterable {
@@ -41,8 +42,8 @@ public class OtherOptionsManager{
 	typealias OtherOptionRaps = (objects: OtherOptionsStringList, tmpDict: OtherOptionsList)
 	
 	let ref: CreationVariablesManager
-	
-	init(_ reference: CreationVariablesManager) {
+		
+	required init(reference: CreationVariablesManager) {
 		ref = reference
 	}
 	
@@ -115,15 +116,15 @@ public class OtherOptionsManager{
 			
 			if var item = self.list[.otherOptionForceToFormatID]{
 				
-				if let st = self.ref.sharedVolumeNeedsPartitionMethodChange{
-					item.isUsable = !st
-					item.isActivated = st
-				}
+				//if let st = self.ref.disk.shouldErase{
+					item.isUsable = !self.ref.disk.shouldErase
+					item.isActivated = self.ref.disk.shouldErase
+				//}
 				
 				self.list[.otherOptionForceToFormatID] = item
 			}
 			
-			if self.ref.sharedApp != nil{
+			if self.ref.app.path != nil{
 				
 				var supportsTINU = false
 				
@@ -137,7 +138,7 @@ public class OtherOptionsManager{
 					self.list[.otherOptionTinuCopyID] = item
 				}
 				
-				if sharedInstallMac{
+				if cvm.shared.installMac{
 					var supportsAPFS = false
 					
 					if let st = self.ref.app.sharedAppNotSupportsAPFS(){
@@ -153,8 +154,8 @@ public class OtherOptionsManager{
 					
 					if var item = self.list[.otherOptionDoNotUseApfsID]{
 						item.isVisible = !supportsAPFS
-						item.isActivated = !self.ref.sharedSVReallyIsAPFS
-						item.isUsable = !self.ref.sharedSVReallyIsAPFS
+						item.isActivated = !self.ref.disk.isAPFS
+						item.isUsable = !self.ref.disk.isAPFS
 						
 						self.list[.otherOptionDoNotUseApfsID] = item
 					}
@@ -195,3 +196,5 @@ public class OtherOptionsManager{
 }
 
 //typealias oom = OtherOptionsManager
+
+}

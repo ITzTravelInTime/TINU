@@ -9,13 +9,13 @@
 import Cocoa
 
 extension CreationVariablesManager{
-public /*final*/ class InstallerAppManager{
+	public /*final*/ class InstallerAppManager: CreationVariablesManagerSection{
 	
 	//static let shared = InstallerAppManager()
 	
 	let ref: CreationVariablesManager
 	
-	init(_ reference: CreationVariablesManager) {
+	required init(reference: CreationVariablesManager) {
 		ref = reference
 	}
 	
@@ -23,6 +23,23 @@ public /*final*/ class InstallerAppManager{
 	
 	private var internalBundleName: String!
 	private var internalBundleVersion: String!
+		
+	deinit {
+		cachedAppInfo = nil
+		internalBundleName = nil
+		internalBundleVersion = nil
+	}
+	
+	public var path: String!{
+		didSet{
+			
+			if path != nil{
+				resetCachedAppInfo()
+			}
+			
+			ref.options.checkOtherOptions()
+		}
+	}
 	
 	//this variable tells to the app which is the bundle name of the selcted installer app
 	public var bundleName: String!{
@@ -59,7 +76,7 @@ public /*final*/ class InstallerAppManager{
 		internalBundleName = nil
 		internalBundleVersion = nil
 		
-		if let sa = ref.sharedApp{
+		if let sa = path{
 			if FileManager.default.fileExists(atPath: sa + "/Contents/Info.plist"){
 				do{
 					let result = try DecodeManager.decodePlistDictionary(xml: try String.init(contentsOfFile: sa + "/Contents/Info.plist")) as? [String: Any]

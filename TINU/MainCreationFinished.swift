@@ -20,7 +20,7 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let w = sharedWindow{
+        if let w = UIManager.shared.window{
             w.isClosingEnabled = true
             w.isMiniaturizeEnaled = true
         }
@@ -32,18 +32,16 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
 		let suffix = ((cvm.shared.process.status == .doneSuccess) ? "Yes" : "No")
 		continueButton.title = TextManager.getViewString(context: self, stringID: "continueButton" + suffix)
 		logButton.title = TextManager.getViewString(context: self, stringID: "logButton")
+		exitButton.title = TextManager.getViewString(context: self, stringID: "exitButton")
 		
 		var image = NSImage()
         if (cvm.shared.process.status != .doneSuccess){
-			
 			image = IconsManager.shared.roundStopIcon
 			
             continueButton.isEnabled = true
             continueButton.frame.size.width = exitButton.frame.size.width
             continueButton.frame.origin.x = exitButton.frame.origin.x
-			exitButton.isHidden = true
         }else{
-			exitButton.title = TextManager.getViewString(context: self, stringID: "exitButton")
 			image = IconsManager.shared.checkIcon
             continueButton.isEnabled = true
             continueButton.isHidden = false
@@ -88,11 +86,11 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
     }
     
     @IBAction func checkLog(_ sender: Any) {
-        if logWindow == nil {
-            logWindow = LogWindowController()
+        if UIManager.shared.logWC == nil {
+			UIManager.shared.logWC = LogWindowController()
         }
         
-        logWindow!.showWindow(self)
+		UIManager.shared.logWC?.showWindow(self)
  }
     
 }

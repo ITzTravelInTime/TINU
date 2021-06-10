@@ -9,8 +9,7 @@
 import Foundation
 import AppKit
 
-fileprivate let toggleRecoveryModeShadows = !false
-
+extension UIManager{
 public enum AppLook: UInt8, Codable, Equatable, CaseIterable{
 	case shadowsOldIcons    = 0
 	case noShadowsSFSymbols = 1
@@ -28,20 +27,6 @@ public enum AppLook: UInt8, Codable, Equatable, CaseIterable{
 		return false
 	}
 }
-
-public var look: AppLook{
-	if let lk = simulateLook{
-		return lk
-	}
-	
-	if ((sharedIsOnRecovery && !toggleRecoveryModeShadows) || simulateDisableShadows){
-		return .recovery
-	}
-	if #available(macOS 11.0, *) {
-		return .shadowsSFSymbols
-	}else{
-		return .shadowsOldIcons
-	}
 }
 
 #if !isTool

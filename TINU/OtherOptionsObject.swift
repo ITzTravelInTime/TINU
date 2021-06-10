@@ -6,8 +6,9 @@
 //  Copyright © 2018 Pietro Caruso. All rights reserved.
 //
 
-import Cocoa
+import Foundation
 
+extension CreationVariablesManager{
 //other options
 public struct OtherOptionsObject{
 	var id: OtherOptionsManager.OtherOptionID = .unknown
@@ -34,8 +35,10 @@ public struct OtherOptionsObject{
 	}
 }
 
-extension OtherOptionsObject{
-	init(from other: OtherOptionsObject) {
+}
+
+extension CreationVariablesManager.OtherOptionsObject{
+	init(from other: CreationVariablesManager.OtherOptionsObject) {
 		self.init()
 		
 		self = other

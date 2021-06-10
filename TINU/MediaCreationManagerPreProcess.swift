@@ -27,9 +27,9 @@ extension InstallMediaCreationManager{
 				
 				var tCMD = ""
 				
-				let pname = sharedExecutableName
+				let pname = cvm.shared.executableName
 				
-				self.dname = dm.getCurrentDriveName()
+				self.dname = cvm.shared.disk.driveName()
 				
 				DispatchQueue.main.sync {
 					self.setProgressValue(0)
@@ -66,7 +66,7 @@ extension InstallMediaCreationManager{
 						processLicense = ""
 					case 6:
 						//if the process will install mac, special operations are performed before the beginning of the "startosinstall" process
-						if sharedInstallMac{
+						if cvm.shared.installMac{
 							DispatchQueue.main.sync {
 								self.setProgressValue(0.01)
 								//self.setActivityLabelText("Applying options")
@@ -78,8 +78,8 @@ extension InstallMediaCreationManager{
 					case 7:
 						tCMD = self.buildCommandString(useAPFS: useAPFS)
 						
-						log("The application that will be used is: " + cvm.shared.sharedApp!)
-						log("The target drive is: " + cvm.shared.sharedVolume!)
+						log("The application that will be used is: " + cvm.shared.app.path )
+						log("The target drive is: " + cvm.shared.disk.path )
 						log("The script that will be performed is (including quotes): " + tCMD)
 						
 						//switches state because now we are starting the process of the real creation / instllation
@@ -91,12 +91,12 @@ extension InstallMediaCreationManager{
 					}
 					
 					if success{
-						success = cvm.shared.sharedVolume != nil && cvm.shared.sharedApp != nil && cvm.shared.sharedBSDDrive != nil
+						success = cvm.shared.disk.path != nil && cvm.shared.app.path != nil && cvm.shared.disk.bSDDrive != nil
 						if !success{
 							let err = "[ERROR: No data available]"
-							log("Choosen volume path is: \(cvm.shared.sharedVolume ?? err)")
-							log("Choosen volume BSDID is: \(cvm.shared.sharedBSDDrive ?? err)")
-							log("Choosen installer app path is: \(cvm.shared.sharedApp ?? err)")
+							log("Choosen volume path is: \(cvm.shared.disk.path ?? err)")
+							log("Choosen volume BSDID is: \(cvm.shared.disk.bSDDrive ?? err)")
+							log("Choosen installer app path is: \(cvm.shared.app.path ?? err)")
 						}
 					}
 					
@@ -127,7 +127,7 @@ extension InstallMediaCreationManager{
 				
 				if let r = startC{
 					
-					if sharedInstallMac{
+					if cvm.shared.installMac{
 						log("\n\nmacOS installation process started\n")
 					}else{
 						log("\n\nInstaller creation process started\n")
@@ -155,7 +155,7 @@ extension InstallMediaCreationManager{
 						//cancel button and the close button can be restored
 						self.viewController.cancelButton.isEnabled = true
 						
-						if let ww = sharedWindow{
+						if let ww = UIManager.shared.window{
 							//ww.isMiniaturizeEnaled = false
 							ww.isClosingEnabled = true
 							//ww.canHide = false

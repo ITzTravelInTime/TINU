@@ -29,7 +29,7 @@ extension InstallMediaCreationManager{
 			
 			DispatchQueue.main.sync {
 				//we have finished, so the controls opf the window are restored
-				if let w = sharedWindow{
+				if let w = UIManager.shared.window{
 					w.isMiniaturizeEnaled = true
 					w.isClosingEnabled = true
 					w.canHide = true
@@ -51,7 +51,7 @@ extension InstallMediaCreationManager{
 			}
 			
 			//if there is a not normal code it will be logged
-			log("\"\(sharedExecutableName)\" has finished")
+			log("\"\(cvm.shared.executableName)\" has finished")
 			
 			log("process output produced: ")
 			
@@ -151,9 +151,9 @@ extension InstallMediaCreationManager{
 				self.setActivityLabelText("activityLabel4")
 			}
 			
-			log("Checking the \(sharedExecutableName) process")
+			log("Checking the \(cvm.shared.executableName) process")
 			
-			if sharedInstallMac{
+			if cvm.shared.installMac{
 				//probably this will end up never executing
 				DispatchQueue.main.sync {
 					//102030100
@@ -270,7 +270,7 @@ extension InstallMediaCreationManager{
 					}*/
 					
 					//here createinstall media succedes in creating the installer
-					log("\(sharedExecutableName) process ended with success")
+					log("\(cvm.shared.executableName) process ended with success")
 					log("Bootable macOS installer created successfully!")
 					
 					//extra operations here
@@ -374,7 +374,7 @@ extension InstallMediaCreationManager{
 	}
 	
 	private func parse(messange: String) -> String{
-		return TINU.parse(messange: messange, keys: ["{executable}": sharedExecutableName, "{drive}": self.dname])
+		return TINU.parse(messange: messange, keys: ["{executable}": cvm.shared.executableName, "{drive}": self.dname])
 	}
 	
 }

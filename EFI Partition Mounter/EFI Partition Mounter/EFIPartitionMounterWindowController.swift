@@ -40,7 +40,7 @@ public class EFIPartitionMounterWindowController: AppWindowController {
 	public override func windowWillClose(_ notification: Notification){
 		
 		#if TINU
-			EFIPartitionMonuterTool = nil
+		UIManager.shared.EFIPartitionMonuterTool = nil
 		#endif
 		
 	}

@@ -604,15 +604,15 @@
             <objects>
                 <viewController id="byj-JF-Hql" customClass="CreditsViewController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="zZP-ca-JNf">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="560"/>
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="580"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="JVJ-Nn-bca">
-                                <rect key="frame" x="20" y="335" width="440" height="5"/>
+                                <rect key="frame" x="20" y="355" width="440" height="5"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             </box>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z8p-em-a5o">
-                                <rect key="frame" x="18" y="401" width="444" height="31"/>
+                                <rect key="frame" x="18" y="421" width="444" height="31"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="TINU" id="b2L-ht-3Hn">
                                     <font key="font" usesAppearanceFont="YES"/>
@@ -621,12 +621,12 @@
                                 </textFieldCell>
                             </textField>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D7s-lp-eRA">
-                                <rect key="frame" x="190" y="440" width="100" height="100"/>
+                                <rect key="frame" x="190" y="460" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="AppIcon" id="SlX-3R-AzI"/>
                             </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z4N-WY-xgG">
-                                <rect key="frame" x="18" y="346" width="443" height="28"/>
+                                <rect key="frame" x="18" y="366" width="443" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Copyrigth Copyrigth" id="02w-3c-QF0">
                                     <font key="font" metaFont="smallSystem"/>
@@ -645,7 +645,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RtS-qT-7Vu">
-                                <rect key="frame" x="18" y="288" width="444" height="14"/>
+                                <rect key="frame" x="18" y="308" width="444" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Development:" id="TvO-Ld-v0Z">
                                     <font key="font" metaFont="smallSystemBold"/>
@@ -654,7 +654,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z1Z-Ka-mbC">
-                                <rect key="frame" x="66" y="267" width="395" height="14"/>
+                                <rect key="frame" x="66" y="287" width="395" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Pietro Caruso (ITzTravelInTime), Thomas Tempelmann" id="7vv-ZS-5eD">
                                     <font key="font" metaFont="smallSystem"/>
@@ -663,7 +663,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BSV-gd-Ocs">
-                                <rect key="frame" x="18" y="246" width="444" height="14"/>
+                                <rect key="frame" x="18" y="266" width="444" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Icons:" id="FFu-la-Iyd">
                                     <font key="font" metaFont="smallSystemBold"/>
@@ -672,7 +672,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yIf-gH-ki4">
-                                <rect key="frame" x="66" y="210" width="375" height="28"/>
+                                <rect key="frame" x="66" y="230" width="375" height="28"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="cdb-AU-e6h">
                                     <font key="font" metaFont="smallSystem"/>
@@ -682,7 +682,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AjV-pz-5Yz">
-                                <rect key="frame" x="18" y="188" width="444" height="14"/>
+                                <rect key="frame" x="18" y="208" width="444" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Special thanks to:" id="mNh-1f-wsf">
                                     <font key="font" metaFont="smallSystemBold"/>
@@ -691,7 +691,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ntc-vU-Ihg">
-                                <rect key="frame" x="18" y="310" width="444" height="19"/>
+                                <rect key="frame" x="18" y="330" width="444" height="19"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Credits:" id="Phu-dt-TGi">
                                     <font key="font" metaFont="systemBold" size="16"/>
@@ -710,7 +710,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eT1-JR-PMx">
-                                <rect key="frame" x="66" y="144" width="396" height="14"/>
+                                <rect key="frame" x="66" y="164" width="396" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Ermanno Nicoletti, Tommaso Dimatore, Massimiliano Faralli" id="Y6d-QA-zNU">
                                     <font key="font" metaFont="smallSystem"/>
@@ -719,7 +719,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jF5-h9-cPE">
-                                <rect key="frame" x="66" y="103" width="396" height="14"/>
+                                <rect key="frame" x="66" y="123" width="396" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Francesco Perchiazzi, Peter Paul Chato" id="DH7-Se-hcg">
                                     <font key="font" metaFont="smallSystem"/>
@@ -728,7 +728,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fq0-P4-26D">
-                                <rect key="frame" x="66" y="83" width="396" height="14"/>
+                                <rect key="frame" x="66" y="103" width="396" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Italian hackintosh group!!! on Facebook for testing" id="tTo-33-TWD">
                                     <font key="font" metaFont="smallSystem"/>
@@ -737,7 +737,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uIz-9c-geX">
-                                <rect key="frame" x="66" y="166" width="396" height="14"/>
+                                <rect key="frame" x="66" y="186" width="396" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa" id="GPN-6Q-q2a">
                                     <font key="font" metaFont="smallSystem"/>
@@ -746,7 +746,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GdJ-mf-BGP">
-                                <rect key="frame" x="66" y="123" width="396" height="14"/>
+                                <rect key="frame" x="66" y="143" width="396" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Michele Vitiello Bonaventura, Giorgio Dall'Aglio, Davide Dessí" id="oMO-Hx-Iin">
                                     <font key="font" metaFont="smallSystem"/>
@@ -755,7 +755,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wta-jN-81i">
-                                <rect key="frame" x="66" y="61" width="395" height="14"/>
+                                <rect key="frame" x="66" y="81" width="395" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Hackintosh Italia on Telegram for using TINU" id="dQh-zU-FdC">
                                     <font key="font" metaFont="smallSystem"/>
@@ -764,7 +764,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8se-aw-38X">
-                                <rect key="frame" x="17" y="382" width="444" height="17"/>
+                                <rect key="frame" x="17" y="402" width="444" height="17"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Version: " id="cbv-XH-G2E">
                                     <font key="font" metaFont="system"/>
@@ -803,27 +803,18 @@
                 </viewController>
                 <customObject id="4H3-H2-GAy" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2652" y="802"/>
+            <point key="canvasLocation" x="-2652" y="812"/>
         </scene>
         <!--Contacts View Controller-->
         <scene sceneID="0Xk-dj-y7d">
             <objects>
                 <viewController id="h6T-6F-uOe" customClass="ContactsViewController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="us4-ff-JI1">
-                        <rect key="frame" x="0.0" y="0.0" width="512" height="560"/>
+                        <rect key="frame" x="0.0" y="0.0" width="512" height="507"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ziA-0i-bQO">
-                                <rect key="frame" x="68" y="391" width="183" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Insanelymac.com profile:" id="mhZ-50-Yxj">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i15-Md-rm8">
-                                <rect key="frame" x="68" y="466" width="183" height="17"/>
+                                <rect key="frame" x="68" y="413" width="183" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Email:" id="2Lg-yP-iI3">
                                     <font key="font" metaFont="system"/>
@@ -831,20 +822,8 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HF4-tv-1Di" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="253" y="391" width="242" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Pietro Caruso (ITzTravelInTime)" id="1E2-eu-ixH">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://www.insanelymac.com/forum/profile/1390153-itztravelintime/"/>
-                                </userDefinedRuntimeAttributes>
-                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Naq-3y-Ru8" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="253" y="466" width="242" height="17"/>
+                                <rect key="frame" x="253" y="413" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="piecaruso97@gmail.com" id="i1Y-56-9xB">
                                     <font key="font" metaFont="system"/>
@@ -856,7 +835,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oCg-sC-zAg">
-                                <rect key="frame" x="68" y="441" width="183" height="17"/>
+                                <rect key="frame" x="68" y="388" width="183" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="GitHub profile:" id="MoD-aV-pdr">
                                     <font key="font" metaFont="system"/>
@@ -865,7 +844,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JE3-W9-Oaf" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="253" y="441" width="242" height="17"/>
+                                <rect key="frame" x="253" y="388" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="ITzTravelInTime on GitHub" id="B9x-q4-in1">
                                     <font key="font" metaFont="system"/>
@@ -876,8 +855,48 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/ITzTravelInTime"/>
                                 </userDefinedRuntimeAttributes>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u9s-RU-fmQ">
+                                <rect key="frame" x="18" y="438" width="231" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Project creator:" id="Hej-ux-MBS">
+                                    <font key="font" metaFont="systemBold"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fZR-tS-1tl">
+                                <rect key="frame" x="68" y="363" width="183" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Reddit profile:" id="K9v-Pm-o93">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tse-RC-lAd" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
+                                <rect key="frame" x="253" y="363" width="242" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="/u/ITzTravelInTime" id="ZKW-1x-LjN">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://www.reddit.com/user/ITzTravelInTime"/>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cOR-Pu-tTy">
+                                <rect key="frame" x="13" y="25" width="71" height="32"/>
+                                <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mo2-Gg-3xB">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="systemBold"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="closeWindow:" target="h6T-6F-uOe" id="g45-tJ-IH3"/>
+                                </connections>
+                            </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wa4-pK-vn2">
-                                <rect key="frame" x="57" y="305" width="194" height="17"/>
+                                <rect key="frame" x="57" y="291" width="194" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Discussion (English):" id="bVL-S9-CMT">
                                     <font key="font" metaFont="system"/>
@@ -886,7 +905,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mzo-1X-Ac7" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="253" y="305" width="242" height="17"/>
+                                <rect key="frame" x="253" y="291" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="TINU on insanelymac (EN)" id="ohg-Ii-b6n">
                                     <font key="font" metaFont="system"/>
@@ -898,7 +917,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bmE-Px-pW3">
-                                <rect key="frame" x="69" y="280" width="182" height="17"/>
+                                <rect key="frame" x="69" y="266" width="182" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Discussion (Italian):" id="FCq-px-z8x">
                                     <font key="font" metaFont="system"/>
@@ -907,7 +926,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9j2-up-grk" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="253" y="280" width="242" height="17"/>
+                                <rect key="frame" x="253" y="266" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="TINU on insanelymac (ITA)" id="oQJ-95-zja">
                                     <font key="font" metaFont="system"/>
@@ -921,7 +940,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Y7-pH-crI">
-                                <rect key="frame" x="18" y="330" width="232" height="17"/>
+                                <rect key="frame" x="18" y="316" width="232" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Project links:" id="5yW-M5-GLB">
                                     <font key="font" metaFont="systemBold"/>
@@ -929,42 +948,12 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u9s-RU-fmQ">
-                                <rect key="frame" x="18" y="491" width="231" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Project creator:" id="Hej-ux-MBS">
-                                    <font key="font" metaFont="systemBold"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fZR-tS-1tl">
-                                <rect key="frame" x="68" y="416" width="183" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Reddit profile:" id="K9v-Pm-o93">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tse-RC-lAd" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="253" y="416" width="242" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="/u/ITzTravelInTime" id="ZKW-1x-LjN">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://www.reddit.com/user/ITzTravelInTime"/>
-                                </userDefinedRuntimeAttributes>
-                            </textField>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="PE4-Rr-oRg">
-                                <rect key="frame" x="20" y="366" width="472" height="5"/>
+                                <rect key="frame" x="20" y="352" width="472" height="5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </box>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="toF-MC-ZRl">
-                                <rect key="frame" x="68" y="213" width="182" height="34"/>
+                                <rect key="frame" x="68" y="199" width="182" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Discussion on hackintosh-froum.de:" id="Vvp-bt-y01">
                                     <font key="font" metaFont="system"/>
@@ -973,7 +962,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sqs-9R-zjf" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="253" y="221" width="242" height="17"/>
+                                <rect key="frame" x="253" y="207" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="TINU on hackintosh-forum.de" id="yvR-rs-KrU">
                                     <font key="font" metaFont="system"/>
@@ -985,7 +974,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OJU-fB-CJy">
-                                <rect key="frame" x="68" y="188" width="181" height="17"/>
+                                <rect key="frame" x="68" y="174" width="181" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Issues report:" id="vKF-dh-I2L">
                                     <font key="font" metaFont="system"/>
@@ -994,7 +983,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sz5-yd-vgL" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="253" y="188" width="242" height="17"/>
+                                <rect key="frame" x="253" y="174" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="TINU's issues report on GitHub" id="ycM-Oc-r3R">
                                     <font key="font" metaFont="system"/>
@@ -1006,7 +995,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MMH-10-KfX" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="253" y="116" width="250" height="17"/>
+                                <rect key="frame" x="253" y="102" width="250" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Italian Hackintosh group!!! on Facebook" id="g4Q-wX-rQw">
                                     <font key="font" metaFont="system"/>
@@ -1018,7 +1007,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7ih-rE-y7W">
-                                <rect key="frame" x="69" y="116" width="183" height="17"/>
+                                <rect key="frame" x="69" y="102" width="183" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Hackintosh help (italian):" id="Egc-bw-b29">
                                     <font key="font" metaFont="system"/>
@@ -1027,7 +1016,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9oV-rb-nbe">
-                                <rect key="frame" x="18" y="141" width="232" height="17"/>
+                                <rect key="frame" x="18" y="127" width="232" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Other related links:" id="GRO-s8-g4s">
                                     <font key="font" metaFont="systemBold"/>
@@ -1036,11 +1025,11 @@
                                 </textFieldCell>
                             </textField>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="YUL-C2-3ul">
-                                <rect key="frame" x="20" y="173" width="470" height="5"/>
+                                <rect key="frame" x="20" y="159" width="470" height="5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </box>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nKW-NM-75S">
-                                <rect key="frame" x="69" y="255" width="181" height="17"/>
+                                <rect key="frame" x="69" y="241" width="181" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Beta testing (English):" id="GPd-Ba-rrP">
                                     <font key="font" metaFont="system"/>
@@ -1049,7 +1038,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="10N-F6-1WZ" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="253" y="255" width="242" height="17"/>
+                                <rect key="frame" x="253" y="241" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="TINU Beta testing on Telegram" id="wtl-f5-tKW">
                                     <font key="font" metaFont="system"/>
@@ -1061,7 +1050,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EeZ-d6-d2n">
-                                <rect key="frame" x="68" y="91" width="183" height="17"/>
+                                <rect key="frame" x="68" y="77" width="183" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Hackintosh Italia (Italian):" id="ThU-kc-cIe">
                                     <font key="font" metaFont="system"/>
@@ -1070,7 +1059,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uhI-Xk-lP5" customClass="ExternalLinkTextField" customModule="TINU" customModuleProvider="target">
-                                <rect key="frame" x="253" y="91" width="242" height="17"/>
+                                <rect key="frame" x="253" y="77" width="242" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Hackintosh Italia on Telegram" id="dIy-XZ-Hcc">
                                     <font key="font" metaFont="system"/>
@@ -1081,16 +1070,6 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://t.me/hackintoshitalia"/>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cOR-Pu-tTy">
-                                <rect key="frame" x="13" y="25" width="71" height="32"/>
-                                <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mo2-Gg-3xB">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="systemBold"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="closeWindow:" target="h6T-6F-uOe" id="g45-tJ-IH3"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="cOR-Pu-tTy" firstAttribute="leading" secondItem="us4-ff-JI1" secondAttribute="leading" constant="20" symbolic="YES" id="F3D-na-x3P"/>
@@ -1104,7 +1083,7 @@
                 </viewController>
                 <customObject id="dha-iC-vAs" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2062" y="802"/>
+            <point key="canvasLocation" x="-2062" y="775.5"/>
         </scene>
         <!--License View Controller-->
         <scene sceneID="RGc-0Q-p9u">

@@ -62,7 +62,7 @@ extension InstallMediaCreationManager{
 					
 					//installer creation failed, bacause of an error with the advanced options
 					
-					if sharedInstallMac{
+					if cvm.shared.installMac{
 						
 						log("\nOne or more errors detected during the execution of the options, the macOS installation process has been canceld, check the messages printed before this one for more details abut that erros\n")
 						
@@ -92,17 +92,17 @@ extension InstallMediaCreationManager{
 	}
 	
 	private func prepareToPerformSpecialOperations(){
-		if sharedInstallMac{
-			if let a = cvm.shared.sharedBSDDriveAPFS{
-				cvm.shared.sharedVolume = dm.getMountPointFromPartitionBSDID(a)
+		if cvm.shared.installMac{
+			if let a = cvm.shared.disk.aPFSContaninerBSDDrive{
+				cvm.shared.disk.path = dm.getMountPointFromPartitionBSDID(a)
 			}else{
-				cvm.shared.sharedVolume = dm.getMountPointFromPartitionBSDID(cvm.shared.sharedBSDDrive!)
+				cvm.shared.disk.path = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive!)
 			}
 		}else{
-			cvm.shared.sharedVolume = dm.getMountPointFromPartitionBSDID(cvm.shared.sharedBSDDrive!)
+			cvm.shared.disk.path = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive!)
 		}
 		
-		print(cvm.shared.sharedVolume ?? "")
+		print(cvm.shared.disk.path ?? "")
 	}
 	
 	private func checkOperationResult(operation: SettingsRes, res: inout Bool) -> String?{

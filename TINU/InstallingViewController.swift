@@ -43,7 +43,7 @@ class InstallingViewController: GenericViewController, ViewID{
 		self.showTitleLabel()
 		
 		//disable the close button of the window
-		if let w = sharedWindow{
+		if let w = UIManager.shared.window{
 			w.isMiniaturizeEnaled = false
 			w.isClosingEnabled = false
 			w.canHide = false
@@ -89,7 +89,7 @@ class InstallingViewController: GenericViewController, ViewID{
 		var state = false
 		
 		if !simulateInstallGetDataFail{
-			state = !checkProcessReadySate(&drive)
+			state = !cvm.shared.checkProcessReadySate(&drive)
 		}else{
 			state = true
 		}
@@ -110,14 +110,14 @@ class InstallingViewController: GenericViewController, ViewID{
 		
 		let cm = cvm.shared
 		
-		driveImage.image = IconsManager.shared.getCorrectDiskIcon(cvm.shared.sharedBSDDrive)
+		driveImage.image = IconsManager.shared.getCorrectDiskIcon(cvm.shared.disk.bSDDrive)
 		
 		if drive{
-			driveImage.image = IconsManager.shared.getCorrectDiskIcon(cvm.shared.sharedBSDDrive)
-			driveName.stringValue = dm.getCurrentDriveName()!
+			driveImage.image = IconsManager.shared.getCorrectDiskIcon(cvm.shared.disk.bSDDrive)
+			driveName.stringValue = cvm.shared.disk.driveName()!
 			//self.setTitleLabel(text: "The drive and macOS installer below will be used, are you sure?")
 		}else{
-			let sv = cm.sharedVolume!
+			let sv = cm.disk.path!
 			//driveImage.image = NSWorkspace.shared.icon(forFile: sv)
 			driveName.stringValue = FileManager.default.displayName(atPath: sv)
 		}
@@ -127,7 +127,7 @@ class InstallingViewController: GenericViewController, ViewID{
 			driveImage.image = driveImage.image?.withSymbolWeight(.thin)
 		}
 		
-		let sa = cm.sharedApp!
+		let sa = cm.app.path!
 		
 		if look.usesSFSymbols(){
 			appImage.image = IconsManager.shared.genericInstallerAppIcon
@@ -158,7 +158,7 @@ class InstallingViewController: GenericViewController, ViewID{
 		//resets window
 		//spinner.isHidden = true
 		//spinner.stopAnimation(self)
-		if let w = sharedWindow{
+		if let w = UIManager.shared.window{
 			w.isMiniaturizeEnaled = true
 			w.isClosingEnabled = true
 			w.canHide = true
@@ -176,7 +176,7 @@ class InstallingViewController: GenericViewController, ViewID{
 		FinalScreenSmallManager.shared.title = title
 		//FinalScreenSmallManager.shared.isOk = success
 		
-		CreationVariablesManager.shared.currentPart = Part()
+		CreationVariablesManager.shared.disk.part = Part()
 		
 		cvm.shared.app.resetCachedAppInfo()
 		cvm.shared.options.checkOtherOptions()
@@ -240,8 +240,8 @@ class InstallingViewController: GenericViewController, ViewID{
 			if stopped{
 				goBack()
 			}else{
-				log("Error while trying to close " + sharedExecutableName + " try to stop it from the termianl or from Activity monitor")
-				let list = ["{executable}" : sharedExecutableName]
+				log("Error while trying to close " + cvm.shared.executableName + " try to stop it from the termianl or from Activity monitor")
+				let list = ["{executable}" : cvm.shared.executableName]
 				//msgBoxWarning("Error while trying to exit from the process", "There was an error while trying to close the creation process: \n\nFailed to stop ${executable} process")
 				
 				msgboxWithManager(self, name: "stopError", parseList: list)
@@ -251,11 +251,11 @@ class InstallingViewController: GenericViewController, ViewID{
 	
 	//shows the log window
 	@IBAction func showLog(_ sender: Any) {
-		if logWindow == nil {
-			logWindow = LogWindowController()
+		if UIManager.shared.logWC == nil {
+			UIManager.shared.logWC = LogWindowController()
 		}
 		
-		logWindow!.showWindow(self)
+		UIManager.shared.logWC?.showWindow(self)
 	}
 	
 	func enableItems(enabled: Bool){
@@ -269,14 +269,14 @@ class InstallingViewController: GenericViewController, ViewID{
 		}
 		
 		#if !macOnlyMode
-		if let tool = EFIPartitionMonuterTool{
+		if let tool = UIManager.shared.EFIPartitionMonuterTool{
 			tool.close()
 		}
 		#endif
 	}
 	
 	public func setActivityLabelText(_ texta: String){
-		let list = ["{executable}" : sharedExecutableName]
+		let list = ["{executable}" : cvm.shared.executableName]
 		let text = parse(messange: TextManager.getViewString(context: self, stringID: texta)!, keys: list)
 		self.activityLabel.stringValue = text
 		print("Set activity label text: \(text)")

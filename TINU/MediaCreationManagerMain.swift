@@ -80,7 +80,7 @@ public final class InstallMediaCreationManager: ViewID{
 		
 		reset()
 		
-		viewController = sharedWindow.contentViewController as? InstallingViewController
+		viewController = UIManager.shared.window.contentViewController as? InstallingViewController
 		
 		if viewController == nil{
 			fatalError("Can't get installing ViewController")

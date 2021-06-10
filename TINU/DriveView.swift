@@ -46,7 +46,7 @@ class DriveView: ShadowView, ViewID {
 	override func updateLayer() {
 		super.updateLayer()
 		
-		self.appearance = sharedWindow.effectiveAppearance
+		self.appearance = UIManager.shared.window.effectiveAppearance
 		
 		/*
 		if isSelected{
@@ -90,7 +90,7 @@ class DriveView: ShadowView, ViewID {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
 		
-		self.appearance = sharedWindow.effectiveAppearance
+		self.appearance = UIManager.shared.window.effectiveAppearance
 		
         refreshUI()
 		
@@ -179,37 +179,11 @@ class DriveView: ShadowView, ViewID {
             
             if isApp{
 				
-				cm.sharedApp = applicationPath
+				cm.app.path = applicationPath
 				Swift.print("The application that the user has selected is: " + applicationPath)
 				
             }else{
-				cm.sharedSVReallyIsAPFS = false
-				
-				//sharedVolumeNeedsFormat = nil
-				cm.sharedVolumeNeedsPartitionMethodChange = nil
-				
-				cm.sharedDoTimeMachineWarn = false
-				
-				if part != nil{
-					if part.partScheme != .gUID || !part.hasEFI{
-						cm.sharedVolumeNeedsPartitionMethodChange = true
-					}
-					
-					if !sharedInstallMac && part.fileSystem == .aPFS{
-						cm.sharedVolumeNeedsPartitionMethodChange = true
-					}
-					
-					if sharedInstallMac && (part.fileSystem == .other || !part.hasEFI){
-						cm.sharedVolumeNeedsPartitionMethodChange = true
-					}
-					
-					if part.tmDisk{
-						cm.sharedDoTimeMachineWarn = true
-					}
-				}
-				
-				cm.sharedSVReallyIsAPFS = (part.fileSystem == .aPFS_container)
-				cm.currentPart = part
+				cm.disk = cvm.DiskInfo(reference: cvm.shared.disk.ref, newPart: part)
 				
 				Swift.print("The volume that the user has selected is: " + part.mountPoint!)
             }
@@ -242,7 +216,7 @@ class DriveView: ShadowView, ViewID {
 			//self.layer?.backgroundColor = NSColor.transparent.cgColor
 			self.isSelected = false
 			
-			self.appearance = sharedWindow.effectiveAppearance
+			self.appearance = UIManager.shared.window.effectiveAppearance
 			self.updateLayer()
 			
 			if self.warnImage != nil{
@@ -303,7 +277,7 @@ class DriveView: ShadowView, ViewID {
 				
 				if self.isApp{
 					if self.sz != nil{
-						notBigger = !cvm.shared.compareSize(to: self.sz)
+						notBigger = !cvm.shared.disk.compareSize(to: self.sz)
 					}
 				}
 				

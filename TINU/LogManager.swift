@@ -58,7 +58,7 @@ public final class LogManager{
 		logs = []
 		
 		logHasBeenUpdated = false
-		if let lw = logWindow{
+		if let lw = UIManager.shared.logWC{
 			if (lw.window?.isVisible)!{
 				logHasBeenUpdated = true
 			}

@@ -108,9 +108,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 			toolsMenuItem.isHidden = true
 		#endif
 		
-		sharedShowLicense = (Bundle.main.url(forResource: "License", withExtension: "rtf") != nil)
+		UIManager.shared.showLicense = (Bundle.main.url(forResource: "License", withExtension: "rtf") != nil)
 		
-		if sharedShowLicense{
+		if UIManager.shared.showLicense{
             print("License agreement file not found")
         }else{
             print("License agreement file found")
@@ -127,7 +127,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         
 		if cvm.shared.process.status == .creation{
 			
-			let list = ["{executable}" : sharedExecutableName]
+			let list = ["{executable}" : cvm.shared.executableName]
 			if let s = InstallMediaCreationManager.shared.stop(){
 				if !s{
 					//msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
@@ -147,14 +147,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 	
     
     @IBAction func installMacActivate(_ sender: Any) {
-        swichMode(isInstall: !sharedInstallMac)
+        swichMode(isInstall: !cvm.shared.installMac)
     }
     
     public func swichMode(isInstall: Bool){
 		
 		if !(cvm.shared.process.status.isBusy()){
 			
-            sharedInstallMac = isInstall
+			cvm.shared.installMac = isInstall
 			/*
             if sharedInstallMac{
                 InstallMacOSItem.title = "Use TINU to create a bootable macOS installer"
@@ -164,44 +164,44 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 			
 			InstallMacOSItem.title = TextManager.getViewString(context: self, stringID: "switchText")
 			
-            sharedWindow.contentViewController?.swapCurrentViewController("Info")
+			UIManager.shared.window.contentViewController?.swapCurrentViewController("Info")
 			
             //restoreOtherOptions()
             
             //eraseReplacementFilesData()
 			
-			cvm.shared.currentPart = Part()
+			cvm.shared.disk.part = Part()
         }
 		
     }
     
     @IBAction func showLog(_ sender: Any) {
-        if logWindow == nil {
-            logWindow = LogWindowController()
+        if UIManager.shared.logWC == nil {
+			UIManager.shared.logWC = LogWindowController()
         }
         
-        logWindow!.showWindow(self)
+		UIManager.shared.logWC!.showWindow(self)
     }
     
     @IBAction func openContacts(_ sender: Any) {
         //open here a window with all the contacts inside
         
-        if contactsWindowController == nil {
-            contactsWindowController = ContactsWindowController()
+        if UIManager.shared.contactsWC == nil {
+			UIManager.shared.contactsWC = ContactsWindowController()
         }
         
-        contactsWindowController?.showWindow(self)
+		UIManager.shared.contactsWC?.showWindow(self)
         
     }
     
     @IBAction func openCredits(_ sender: Any) {
         //open here a window with all the credits inside
         
-        if creditsWindowController == nil {
-            creditsWindowController = CreditsWindowController()
+        if UIManager.shared.creditsWC == nil {
+			UIManager.shared.creditsWC = CreditsWindowController()
         }
         
-        creditsWindowController?.showWindow(self)
+		UIManager.shared.creditsWC?.showWindow(self)
         
     }
 	
@@ -209,29 +209,29 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		
 		#if !macOnlyMode
 		
-		if EFIPartitionMonuterTool == nil{
-			EFIPartitionMonuterTool = EFIPartitionMounterWindowController()
+		if UIManager.shared.EFIPartitionMonuterTool == nil{
+			UIManager.shared.EFIPartitionMonuterTool = EFIPartitionMounterWindowController()
 		}
 		
-		EFIPartitionMonuterTool.showWindow(self)
+		UIManager.shared.EFIPartitionMonuterTool.showWindow(self)
 		
 		#endif
 	}
 	
 	@IBAction func openWMSDIND(_ sender: Any) {
-		if wMSDINDWindow == nil{
-			wMSDINDWindow = DriveDetectInfoWindowController()
+		if UIManager.shared.detectionInfoWC == nil{
+			UIManager.shared.detectionInfoWC = DriveDetectInfoWindowController()
 		}
 		
-		wMSDINDWindow.showWindow(self)
+		UIManager.shared.detectionInfoWC.showWindow(self)
 	}
 	
 	@IBAction func openDownloadMacApp(_ sender: Any) {
-		if downloadAppWindow == nil{
-			downloadAppWindow = DownloadAppWindowController()
+		if UIManager.shared.downloadAppWC == nil{
+			UIManager.shared.downloadAppWC = DownloadAppWindowController()
 		}
 		
-		downloadAppWindow.showWindow(self)
+		UIManager.shared.downloadAppWC.showWindow(self)
 	}
 	
 	@IBAction func openFAQs(_ sender: Any) {
@@ -265,7 +265,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 	}
     
     @IBAction func openVerbose(_ sender: Any) {
-       openDiagnosticsMode(withSudo: ((sender as! NSMenuItem) == verboseItemSudo))
+		DiagnosticsModeManager.shared.open(withSudo: ((sender as! NSMenuItem) == verboseItemSudo))
     }
 	
 }

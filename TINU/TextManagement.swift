@@ -28,7 +28,7 @@ public final class TextManagementStructs{
 		let installer: T
 		
 		public var appropriateValue: T{
-			return sharedInstallMac ? installation : installer
+			return cvm.shared.installMac ? installation : installer
 		}
 	}
 	

@@ -10,6 +10,7 @@
 //useless stuff
 import Cocoa
 
+//TODO: This view should be deprecated and removed
 class ChooseCustomizationViewController: GenericViewController {
 	@IBOutlet weak var infoText: NSTextField!
     @IBOutlet weak var infoImage: NSImageView!
@@ -23,7 +24,7 @@ class ChooseCustomizationViewController: GenericViewController {
         
         infoImage.image = IconsManager.shared.infoIcon
 		
-		if sharedInstallMac{
+		if cvm.shared.installMac{
 			titleLabel.stringValue = "Choose the options for the macOS installation"
 			infoText.stringValue = "The reccommended default options will: install macOS, apply the icon of the installer app to the target volume, copy create a copy of TINU in /Applications, create the \"README\" file, and reboot the computer"
 		}
@@ -31,8 +32,6 @@ class ChooseCustomizationViewController: GenericViewController {
     
     @IBAction func useCustom(_ sender: Any) {
 		DispatchQueue.main.async {
-			
-			cvm.shared.sharedMediaIsCustomized = true
 			self.swapCurrentViewController("Customize")
 		}
     }
@@ -42,15 +41,13 @@ class ChooseCustomizationViewController: GenericViewController {
 			
 			//restoreOtherOptions()
 			cvm.shared.options.checkOtherOptions()
-		
-			cvm.shared.sharedMediaIsCustomized = false
 			self.swapCurrentViewController("Confirm")
 		}
     }
     
     @IBAction func goBack(_ sender: Any) {
 		DispatchQueue.main.async {
-			if showProcessLicense && sharedInstallMac{
+			if showProcessLicense && cvm.shared.installMac{
 				self.swapCurrentViewController("License")
 			}else{
 				self.swapCurrentViewController("ChoseApp")

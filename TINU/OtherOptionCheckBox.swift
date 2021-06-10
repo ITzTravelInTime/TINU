@@ -10,7 +10,7 @@ import Cocoa
 
 class OtherOptionsCheckBox: NSView {
     
-    var option = OtherOptionsObject()
+	var option = CreationVariablesManager.OtherOptionsObject()
     
     var checkBox = NSButton()
 	
@@ -72,14 +72,14 @@ class OtherOptionsCheckBox: NSView {
 		option.isActivated = newState
 		
 		//this code here is used to deactivate the APFS convertion stuff if the user has choosen to format the target drive
-		if !sharedInstallMac || !cvm.shared.sharedSVReallyIsAPFS || (option.id != OtherOptionsManager.OtherOptionID.otherOptionForceToFormatID){
+		if !cvm.shared.installMac || !cvm.shared.disk.isAPFS || (option.id != CreationVariablesManager.OtherOptionsManager.OtherOptionID.otherOptionForceToFormatID){
 			return
 		}
 		
 		for item in self.superview!.subviews{
 			guard let opt = item as? OtherOptionsCheckBox else { continue }
 			
-			if opt.option.id != OtherOptionsManager.OtherOptionID.otherOptionDoNotUseApfsID{
+			if opt.option.id != CreationVariablesManager.OtherOptionsManager.OtherOptionID.otherOptionDoNotUseApfsID{
 				continue
 			}
 			
@@ -93,7 +93,7 @@ class OtherOptionsCheckBox: NSView {
 	}
 	
 	@objc func showInfo(){
-		let vc = sharedStoryboard.instantiateController(withIdentifier: "OtherOptionInfoViewController") as! OtherOptionsInfoViewController
+		let vc = UIManager.shared.storyboard.instantiateController(withIdentifier: "OtherOptionInfoViewController") as! OtherOptionsInfoViewController
 		
 		vc.associatedOption = option
 		

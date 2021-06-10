@@ -36,6 +36,7 @@
 
 /*TODO but with less priority:
 
+-right to left languages ui support
 -installation unsupported apps (lion and mountain lion) mark instead of hiding
 
 -reimplement efi partition mounter's back end using codable classes (Work in progress)

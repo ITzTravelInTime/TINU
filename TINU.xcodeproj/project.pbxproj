@@ -39,6 +39,7 @@
 		C631EE4A2657F15D006F8F98 /* AppleSiliconDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C631EE492657F15D006F8F98 /* AppleSiliconDetect.swift */; };
 		C6322574221C1883003A56D4 /* FilesystemObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6322573221C1883003A56D4 /* FilesystemObserver.swift */; };
 		C638857A2670D3BA00A6D1BA /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63885792670D3BA00A6D1BA /* Themes.swift */; };
+		C638857C26725BEC00A6D1BA /* UIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C638857B26725BEC00A6D1BA /* UIManager.swift */; };
 		C63DD0282265D921007944A5 /* TaskKillManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63DD0272265D921007944A5 /* TaskKillManager.swift */; };
 		C63F035E24E1091400F950B4 /* ProgressBarSettings.json in Resources */ = {isa = PBXBuildFile; fileRef = C63F035D24E1091400F950B4 /* ProgressBarSettings.json */; };
 		C63F036024E3D19300F950B4 /* ProgressBarValuesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63F035F24E3D19300F950B4 /* ProgressBarValuesManager.swift */; };
@@ -163,6 +164,7 @@
 		C631EE492657F15D006F8F98 /* AppleSiliconDetect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSiliconDetect.swift; sourceTree = "<group>"; };
 		C6322573221C1883003A56D4 /* FilesystemObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesystemObserver.swift; sourceTree = "<group>"; };
 		C63885792670D3BA00A6D1BA /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
+		C638857B26725BEC00A6D1BA /* UIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIManager.swift; sourceTree = "<group>"; };
 		C63DD0272265D921007944A5 /* TaskKillManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskKillManager.swift; sourceTree = "<group>"; };
 		C63F035D24E1091400F950B4 /* ProgressBarSettings.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ProgressBarSettings.json; sourceTree = "<group>"; };
 		C63F035F24E3D19300F950B4 /* ProgressBarValuesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarValuesManager.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 				C63DD0272265D921007944A5 /* TaskKillManager.swift */,
 				C60C40B920CCA24000258574 /* TextsManager.swift */,
 				C63885792670D3BA00A6D1BA /* Themes.swift */,
+				C638857B26725BEC00A6D1BA /* UIManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -765,6 +768,7 @@
 				C6C1820D1FE7605300617DC2 /* ChooseSideViewController.swift in Sources */,
 				DDD038EB1FB7366400D22695 /* ChoseButton.swift in Sources */,
 				C60C40C020CCA9DC00258574 /* CreationVariablesManager.swift in Sources */,
+				C638857C26725BEC00A6D1BA /* UIManager.swift in Sources */,
 				DDA7FB601F96AE510029F4F2 /* RuntimeCode.swift in Sources */,
 				C65B5EFF1F72099F0061F1A3 /* ScriptsManager.swift in Sources */,
 				C61AE89420C2F16400229FEC /* OtherOptionInfoViewController.swift in Sources */,

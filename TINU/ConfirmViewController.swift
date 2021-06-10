@@ -31,12 +31,12 @@ class ConfirmViewController: GenericViewController, ViewID {
 	@IBOutlet weak var advancedOptionsButton: NSButton!
     
 	@IBOutlet weak var back: NSButton!
-	private var ps: Bool!
+	private var ps: Bool = false
     //private var fs: Bool!
     override func viewDidAppear() {
         super.viewDidAppear()
         
-        if let w = sharedWindow{
+		if let w = UIManager.shared.window{
             w.isMiniaturizeEnaled = true
             w.isClosingEnabled = true
             w.canHide = true
@@ -72,7 +72,7 @@ class ConfirmViewController: GenericViewController, ViewID {
 			warning.contentTintColor = .systemYellow
 		}
         
-        ps = cm.sharedVolumeNeedsPartitionMethodChange
+		ps = cm.disk.shouldErase
         //fs = sharedVolumeNeedsFormat
         
         if let a = NSApplication.shared.delegate as? AppDelegate{
@@ -89,7 +89,7 @@ class ConfirmViewController: GenericViewController, ViewID {
 		
 		//just to simulate a failure to get data for the drive and the app
 		if !simulateConfirmGetDataFail{
-			state = !checkProcessReadySate(&drive)
+			state = !cvm.shared.checkProcessReadySate(&drive)
 		}else{
 			state = true
 		}
@@ -131,21 +131,21 @@ class ConfirmViewController: GenericViewController, ViewID {
 			advancedOptionsButton.stringValue = TextManager.getViewString(context: self, stringID: "optionsButton")
 			
 			if drive{
-				driveName.stringValue = dm.getCurrentDriveName()!
+				driveName.stringValue = cvm.shared.disk.driveName()!
 				self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "titleDrive"))
 			}else{
-				let sv = cm.sharedVolume!
+				let sv = cvm.shared.disk.path!
 				driveName.stringValue = FileManager.default.displayName(atPath: sv)
 			}
 			
-			driveImage.image = IconsManager.shared.getCorrectDiskIcon(cvm.shared.currentPart.bsdName)
+			driveImage.image = IconsManager.shared.getCorrectDiskIcon(cvm.shared.disk.bSDDrive)
 			
 			if #available(macOS 11.0, *), look.usesSFSymbols(){
 				driveImage.contentTintColor = .systemGray
 				driveImage.image = driveImage.image?.withSymbolWeight(.thin)
 			}
 			
-			let sa = cm.sharedApp!
+			let sa = cm.app.path!
 			if look.usesSFSymbols(){
 				appImage.image = IconsManager.shared.genericInstallerAppIcon
 			}else{
@@ -170,16 +170,15 @@ class ConfirmViewController: GenericViewController, ViewID {
     @IBOutlet weak var yes: NSButton!
     
     @IBAction func goBack(_ sender: Any) {
-        cm.sharedVolumeNeedsPartitionMethodChange = ps
+		cm.disk.shouldErase = ps
         //sharedVolumeNeedsFormat = fs
         /*if sharedInstallMac{
             openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
 		}else{*/
 		#if skipChooseCustomization
-			cm.sharedMediaIsCustomized = false
 			swapCurrentViewController("ChoseApp")
 		#else
-			if cm.sharedMediaIsCustomized{
+			if cm.disk.usesCustomSettings{
 				openSubstituteWindow(windowStoryboardID: "Customize")
 			}else{
             	openSubstituteWindow(windowStoryboardID: "ChooseCustomize")
@@ -191,7 +190,7 @@ class ConfirmViewController: GenericViewController, ViewID {
     }
     
     @IBAction func install(_ sender: Any) {
-        cm.sharedVolumeNeedsPartitionMethodChange = ps
+		cm.disk.shouldErase = ps
         //sharedVolumeNeedsFormat = fs
         if fail{
             NSApp.terminate(sender)
@@ -209,7 +208,7 @@ class ConfirmViewController: GenericViewController, ViewID {
 			//openSubstituteWindow(windowStoryboardID: "Customize", sender: sender)
 		
 		tmpWin = nil
-		tmpWin = sharedStoryboard.instantiateController(withIdentifier: "Customize") as? GenericViewController
+		tmpWin = UIManager.shared.storyboard.instantiateController(withIdentifier: "Customize") as? GenericViewController
 		
 		if tmpWin != nil{
 		self.presentAsSheet(tmpWin)

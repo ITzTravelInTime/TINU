@@ -89,11 +89,11 @@ public class CreditsViewController: GenericViewController, ViewID {
     }
 	
 	@IBAction func openContacts(_ sender: Any) {
-		if contactsWindowController == nil {
-			contactsWindowController = ContactsWindowController()
+		if UIManager.shared.contactsWC == nil {
+			UIManager.shared.contactsWC = ContactsWindowController()
 		}
 		
-		contactsWindowController?.showWindow(self)
+		UIManager.shared.contactsWC?.showWindow(self)
 		
 	}
 }

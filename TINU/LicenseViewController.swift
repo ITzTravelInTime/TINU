@@ -84,14 +84,14 @@ class LicenseViewController: ShadowViewController, ViewID {
 		
 		DispatchQueue.global(qos: .background).async {
 			
-			if showProcessLicense && sharedInstallMac{
+			if showProcessLicense && cvm.shared.installMac{
 				DispatchQueue.main.async {
 					self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "macOSLicenseTitle"))
 					self.backButton.title = TextManager.getViewString(context: self, stringID: "macOSLicenseBackButton")
 				}
 				
 				if processLicense.isEmpty{
-					if let app = cvm.shared.sharedApp, let volume = cvm.shared.sharedVolume{
+					if let app = cvm.shared.app.path, let volume = cvm.shared.disk.path{
 						var cmd = ""
 						
 						var noAPFSSupport = true
@@ -123,13 +123,13 @@ class LicenseViewController: ShadowViewController, ViewID {
 							
 							switch(counter % prios.count){
 							case prios[0]:
-								cmd = "\"" + app + "/Contents/Resources/" + sharedExecutableName + "\" --applicationpath \"" + app + "\" --volume \"" + volume + "\" --license"
+								cmd = "\"" + app + "/Contents/Resources/" + cvm.shared.executableName + "\" --applicationpath \"" + app + "\" --volume \"" + volume + "\" --license"
 							case prios[1]:
-								cmd = "\"" + app + "/Contents/Resources/" + sharedExecutableName + "\" --applicationpath \"" + app + "\" --license"
+								cmd = "\"" + app + "/Contents/Resources/" + cvm.shared.executableName + "\" --applicationpath \"" + app + "\" --license"
 							case prios[2]:
-								cmd = "\"" + app + "/Contents/Resources/" + sharedExecutableName + "\"  --license"
+								cmd = "\"" + app + "/Contents/Resources/" + cvm.shared.executableName + "\"  --license"
 							default:
-								cmd = "\"" + app + "/Contents/Resources/" + sharedExecutableName + "\" --applicationpath \"" + app + "\" --volume \"" + volume + "\" --license"
+								cmd = "\"" + app + "/Contents/Resources/" + cvm.shared.executableName + "\" --applicationpath \"" + app + "\" --volume \"" + volume + "\" --license"
 							}
 							
 							print("Getting installer license with the command: " + cmd)
@@ -225,7 +225,7 @@ class LicenseViewController: ShadowViewController, ViewID {
 		self.spinner.isHidden = true
 		self.spinner.stopAnimation(self)
 		self.scroller.isHidden = false
-		if showProcessLicense && sharedInstallMac{
+		if showProcessLicense && cvm.shared.installMac{
 			#if skipChooseCustomization
 				let _ = self.swapCurrentViewController("Confirm")
 			#else
@@ -243,7 +243,7 @@ class LicenseViewController: ShadowViewController, ViewID {
 		self.spinner.isHidden = true
 		self.spinner.stopAnimation(self)
 		self.scroller.isHidden = false
-		if showProcessLicense && sharedInstallMac{
+		if showProcessLicense && cvm.shared.installMac{
 			showProcessLicense = false
 			let _ = self.swapCurrentViewController("ChoseApp")
 		}else{

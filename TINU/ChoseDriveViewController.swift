@@ -187,12 +187,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 		
 		//let man = FileManager.default
 		
-		cvm.shared.sharedDoTimeMachineWarn = false
-        
-        //sharedVolumeNeedsFormat = nil
-        cvm.shared.sharedVolumeNeedsPartitionMethodChange = nil
-		
-		cvm.shared.currentPart = nil
+		cvm.shared.disk = cvm.DiskInfo(reference: cvm.shared.disk.ref)
         
         var drives = [DriveView]()
         
@@ -424,7 +419,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 	private var tmpWin: GenericViewController!
 	@objc func openDetectStorageSuggestions(){
 		tmpWin = nil
-		tmpWin = sharedStoryboard.instantiateController(withIdentifier: "DriveDetectionInfoVC") as? GenericViewController
+		tmpWin = UIManager.shared.storyboard.instantiateController(withIdentifier: "DriveDetectionInfoVC") as? GenericViewController
 		
 		if tmpWin != nil{
 			self.presentAsSheet(tmpWin)
@@ -432,7 +427,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 	}
 	
 	@IBAction func goBack(_ sender: Any) {
-		if sharedShowLicense{
+		if UIManager.shared.showLicense{
 			let _ = swapCurrentViewController("License")
 		}else{
 			let _ = swapCurrentViewController("Info")
@@ -443,22 +438,22 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 	@IBAction func next(_ sender: Any) {
 		if !empty{
 			
-			let dname = dm.getCurrentDriveName()!
-			let pname = cvm.shared.currentPart.name
+			let dname = cvm.shared.disk.driveName()!
+			let pname = cvm.shared.disk.part.name
 			
 			let parseList = ["{diskName}" : dname, "{partitionName}" : pname]
 			//let title = parse(messange: TextManager.getViewString(context: self, stringID: "formatDialogTitle"), keys: parseList)
 			
-			if cvm.shared.sharedVolumeNeedsPartitionMethodChange != nil /*&& sharedVolumeNeedsFormat != nil*/{
+			//if cvm.shared.disk.shouldErase != nil /*&& sharedVolumeNeedsFormat != nil*/{
 				
-				if cvm.shared.sharedVolumeNeedsPartitionMethodChange{
+				if cvm.shared.disk.shouldErase{
 					if !dialogGenericWithManagerBool(self, name: "formatDialog", parseList: parseList){
 						return
 					}
 				}
-			}
+			//}
 			
-			if cvm.shared.sharedDoTimeMachineWarn{
+			if cvm.shared.disk.warnForTimeMachine{
 				if !dialogGenericWithManagerBool(self, name: "formatDialogTimeMachine", parseList: parseList){
 					return
 				}
@@ -569,7 +564,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 			return !(bytes <= (2 * gb)) // 2 gb
 		}
 		
-        if sharedInstallMac{
+        if cvm.shared.installMac{
             return !(bytes <= (20 * gb)) //20 gb
         }
 		

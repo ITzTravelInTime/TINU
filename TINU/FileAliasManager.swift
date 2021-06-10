@@ -10,21 +10,21 @@ import Foundation
 
 public final class FileAliasManager{
 	
-	@inline(__always) class func resolveFinderAlias(at url: URL) -> String? {
+	@inline(__always) class func resolve(at url: URL) -> String? {
 		var origin: URL!
-		if finderAlias(url, resolvedURL: &origin) != nil{
+		if process(url, resolvedURL: &origin) != nil{
 			return origin?.path
 		}
 		return nil
 	}
 	
-	@inline(__always) class func resolveFinderAlias(at path: String) -> String? {
-		return resolveFinderAlias(at: URL(fileURLWithPath: path, isDirectory: true))
+	@inline(__always) class func resolve(at path: String) -> String? {
+		return resolve(at: URL(fileURLWithPath: path, isDirectory: true))
 	}
 	
 	@inline(__always) class func isAlias(_ url: URL) -> Bool?{
 		var origin: URL!
-		return finderAlias(url, resolvedURL: &origin)
+		return process(url, resolvedURL: &origin)
 	}
 	
 	@inline(__always) class func isAlias(_ path: String) -> Bool?{
@@ -33,12 +33,12 @@ public final class FileAliasManager{
 	
 	@inline(__always) class func finderAlias(_ path: String, resolvedPath: inout String?) -> Bool?{
 		var tmp: URL?
-		let res = finderAlias(URL(fileURLWithPath: path, isDirectory: true), resolvedURL: &tmp)
+		let res = process(URL(fileURLWithPath: path, isDirectory: true), resolvedURL: &tmp)
 		resolvedPath = tmp?.path
 		return res
 	}
 	
-	class func finderAlias(_ url: URL, resolvedURL: inout URL?) -> Bool?{
+	class func process(_ url: URL, resolvedURL: inout URL?) -> Bool?{
 		do {
 			if try !url.resourceValues(forKeys: [.isAliasFileKey]).isAliasFile! {
 				resolvedURL = url
@@ -52,7 +52,7 @@ public final class FileAliasManager{
 				return nil
 			}
 				
-			if finderAlias(original ,resolvedURL: &resolvedURL) == nil{
+			if process(original ,resolvedURL: &resolvedURL) == nil{
 				resolvedURL = nil
 				return nil
 			}

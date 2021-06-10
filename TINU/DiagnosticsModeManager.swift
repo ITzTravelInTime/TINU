@@ -8,162 +8,164 @@
 
 import AppKit
 
-public func getAppSupportDirectory(create: Bool = true, subFolderName: String! = nil) -> String!{
-	let paths = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-	if paths.count > 0{
-		if let start = paths.first?.path{
-			if let folderName = Bundle.main.bundleIdentifier{
-				let directory = start + "/" + folderName + ((subFolderName != nil) ? ("/" + subFolderName!) : "")
-				if !FileManager.default.fileExists(atPath: directory){
-					do {
-						try FileManager.default.createDirectory(atPath: directory, withIntermediateDirectories: true, attributes: convertToOptionalFileAttributeKeyDictionary([:]))
-						
-					}catch let err{
-						print(err.localizedDescription)
-						return nil
+final class DiagnosticsModeManager{
+	
+	static let shared = DiagnosticsModeManager()
+	
+	class func getAppSupportDirectory(create: Bool = true, subFolderName: String! = nil) -> String!{
+		let paths = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+		if paths.count > 0{
+			if let start = paths.first?.path{
+				if let folderName = Bundle.main.bundleIdentifier{
+					let directory = start + "/" + folderName + ((subFolderName != nil) ? ("/" + subFolderName!) : "")
+					if !FileManager.default.fileExists(atPath: directory){
+						do {
+							try FileManager.default.createDirectory(atPath: directory, withIntermediateDirectories: true)
+							
+						}catch let err{
+							print(err.localizedDescription)
+							return nil
+						}
 					}
+					
+					return directory
 				}
-				
-				return directory
 			}
 		}
-	}
-	return nil
-}
-
-fileprivate func getDiagnosticsModeFolder() -> String!{
-	return getAppSupportDirectory(create: true, subFolderName: "DiagnosticsMode")
-}
-
-fileprivate	func getDiagnosticsModeFileLocation(sudo: Bool) -> String!{
-	let resourceName = "/DebugScript" + (sudo ? "Sudo" : "") + ".command"
-	
-	return getDiagnosticsModeFolder() + resourceName
-}
-
-fileprivate func getDiagnosticsModecontent(sudo: Bool = true) -> String{
-	var str = "echo \"Opening \(Bundle.main.name!) in log mode"
-	
-	if sudo{
-		str += " with administrator privileges\"\necho \"Please enter your admin/user passowrd: "
+		return nil
 	}
 	
-	str += "\"\n"
-	
-	if sudo{
-		str += "sudo "
+	private func getFolder() -> String!{
+		return DiagnosticsModeManager.getAppSupportDirectory(create: true, subFolderName: "DiagnosticsMode")
 	}
 	
-	str += "\"" + Bundle.main.executablePath! + "\" > \"" + getDiagnosticsModeFolder() + "/DebugLog.txt\""
-	
-	return str
-}
-
-public func openDiagnosticsMode(withSudo sudo: Bool){
-	
-	//the diagnostics mode button should be blocked at this point if the app is in a recovery or the app is performing a creation process
-	//TODO: Maybe localize this
-	if cvm.shared.process.status.isBusy(){
-		msgBox("You can't switch mode now", "The bootable macOS installer creation process is currenly running. Please cancel the operation or wait for the operation to end before switching the mode.", .warning)
-	}else if sharedIsOnRecovery{
-		msgBoxWarning("You can't switch the mode right now", "Switching the mode in which TINU is running is not possible while running TINU from this recovery/installer system.")
-	}
-	
-	if (cvm.shared.process.status.isBusy() || sharedIsOnRecovery){
-		return
-	}
-	
-	print("trying to use diagnostics mode")
-	
-	//let resourceName = sudo ? "DebugScriptSudo" : "DebugScript"
-	
-	//if let scriptPath = Bundle.main.url(forResource: resourceName, withExtension: "sh")?.path {
-	
-	guard let scriptPath = getDiagnosticsModeFileLocation(sudo: sudo) else {
-		print("Disgnostics mode script not found!")
+	private	func getFileLocation(sudo: Bool) -> String!{
+		let resourceName = "/DebugScript" + (sudo ? "Sudo" : "") + ".command"
 		
-		msgBoxWarning("Impossible to use diagnostics mode", "Needed files can't be created, so the diagnostics mode can't be used. Make sure the app has write access to the ~/Library/Application Support folder")
-		return
+		return getFolder() + resourceName
 	}
 	
-	let expectedContent = getDiagnosticsModecontent(sudo: sudo)
+	private func getScriptContent(sudo: Bool = true) -> String{
+		var str = "echo \"Opening \(Bundle.main.name!) in log mode"
+		
+		if sudo{
+			str += " with administrator privileges\"\necho \"Please enter your admin/user passowrd: "
+		}
+		
+		str += "\"\n"
+		
+		if sudo{
+			str += "sudo "
+		}
+		
+		str += "\"" + Bundle.main.executablePath! + "\" > \"" + getFolder() + "/DebugLog.txt\""
+		
+		return str
+	}
 	
-	if !FileManager.default.fileExists(atPath: scriptPath){
-		do{
-			let content = expectedContent
-			try content.write(toFile: scriptPath, atomically: true, encoding: .utf8)
-		}catch let err{
-			msgBoxWarning("Impossible to use diagnostics mode", "Impossible to create the script file needed to run TINU in diagnostics mode, make sure the app has read access to the ~/Library/Application Support folder\n\n\nError info \(err.localizedDescription)")
+	public func open(withSudo sudo: Bool){
+		
+		//the diagnostics mode button should be blocked at this point if the app is in a recovery or the app is performing a creation process
+		//TODO: Maybe localize this
+		if cvm.shared.process.status.isBusy(){
+			msgBox("You can't switch mode now", "The bootable macOS installer creation process is currenly running. Please cancel the operation or wait for the operation to end before switching the mode.", .warning)
+		}else if sharedIsOnRecovery{
+			msgBoxWarning("You can't switch the mode right now", "Switching the mode in which TINU is running is not possible while running TINU from this recovery/installer system.")
+		}
+		
+		if (cvm.shared.process.status.isBusy() || sharedIsOnRecovery){
 			return
 		}
-	}else{
-		do{
-			let content = try String.init(contentsOfFile: scriptPath)
+		
+		print("trying to use diagnostics mode")
+		
+		//let resourceName = sudo ? "DebugScriptSudo" : "DebugScript"
+		
+		//if let scriptPath = Bundle.main.url(forResource: resourceName, withExtension: "sh")?.path {
+		
+		guard let scriptPath = getFileLocation(sudo: sudo) else {
+			print("Disgnostics mode script not found!")
 			
-			if content != expectedContent{
-				try FileManager.default.removeItem(atPath: scriptPath)
-				
-				return openDiagnosticsMode(withSudo: sudo)
-			}
-			
-		}catch let err{
-			msgBoxWarning("Impossible to use diagnostics mode", "Impossible to read or modify the content of the script file needed to run TINU in diagnostics mode, make sure the app has read and write access to the ~/Library/Application Support folder\n\n\nError info \(err.localizedDescription)")
+			msgBoxWarning("Impossible to use diagnostics mode", "Needed files can't be created, so the diagnostics mode can't be used. Make sure the app has write access to the ~/Library/Application Support folder")
 			return
 		}
-	}
-	
-	var val: Int16 = 0x7fff;
-	
-	do{
 		
-		if let perm = (try FileManager.default.attributesOfItem(atPath: scriptPath)[FileAttributeKey.posixPermissions] as? NSNumber)?.int16Value{
-			val = perm
-		}
+		let expectedContent = getScriptContent(sudo: sudo)
 		
-	}catch let err{
-		print("impossible to determinate file permitions for diagnosticd mode script")
-		print(err)
-		return
-	}
-	
-	if val != 0o771{
-		
-		let theScript = "do shell script \"chmod -R 771 \'" + scriptPath + "\'\" with administrator privileges"
-		
-		print(theScript)
-		
-		let appleScript = NSAppleScript(source: theScript)
-		
-		if let eventResult = appleScript?.executeAndReturnError(nil){
-			if let result = eventResult.stringValue{
-				if result.isEmpty || result == "\n" || result == "Password:"{
-					val = 0;
-				}else{
-					print("error with the script output: " + result)
-					msgBoxWarning("Impossible to use diagnostics mode", "Something went wrong when preparing the script file for diagnostics mode.\n\n[error code: 0]\n\nScript output: \(result)")
-					return
-				}
+		if !FileManager.default.fileExists(atPath: scriptPath){
+			do{
+				let content = expectedContent
+				try content.write(toFile: scriptPath, atomically: true, encoding: .utf8)
+			}catch let err{
+				msgBoxWarning("Impossible to use diagnostics mode", "Impossible to create the script file needed to run TINU in diagnostics mode, make sure the app has read access to the ~/Library/Application Support folder\n\n\nError info \(err.localizedDescription)")
+				return
 			}
 		}else{
-			print("impossible to execute the apple script to prepare the app")
+			do{
+				let content = try String.init(contentsOfFile: scriptPath)
+				
+				if content != expectedContent{
+					try FileManager.default.removeItem(atPath: scriptPath)
+					
+					return open(withSudo: sudo)
+				}
+				
+			}catch let err{
+				msgBoxWarning("Impossible to use diagnostics mode", "Impossible to read or modify the content of the script file needed to run TINU in diagnostics mode, make sure the app has read and write access to the ~/Library/Application Support folder\n\n\nError info \(err.localizedDescription)")
+				return
+			}
+		}
+		
+		var val: Int16 = 0x7fff;
+		
+		do{
 			
-			msgBoxWarning("Impossible to use diagnostics mode", "Impossible to prepare the script file for diagnostics mode, make sure tha app has write access to the ~/Library/Application Support folder.\n\n[error code: 1, apple script execution failed]")
+			if let perm = (try FileManager.default.attributesOfItem(atPath: scriptPath)[FileAttributeKey.posixPermissions] as? NSNumber)?.int16Value{
+				val = perm
+			}
+			
+		}catch let err{
+			print("impossible to determinate file permitions for diagnosticd mode script")
+			print(err)
 			return
 		}
 		
-	}else{
-		val = 0
+		if val != 0o771{
+			
+			let theScript = "do shell script \"chmod -R 771 \'" + scriptPath + "\'\" with administrator privileges"
+			
+			print(theScript)
+			
+			let appleScript = NSAppleScript(source: theScript)
+			
+			if let eventResult = appleScript?.executeAndReturnError(nil){
+				if let result = eventResult.stringValue{
+					if result.isEmpty || result == "\n" || result == "Password:"{
+						val = 0;
+					}else{
+						print("error with the script output: " + result)
+						msgBoxWarning("Impossible to use diagnostics mode", "Something went wrong when preparing the script file for diagnostics mode.\n\n[error code: 0]\n\nScript output: \(result)")
+						return
+					}
+				}
+			}else{
+				print("impossible to execute the apple script to prepare the app")
+				
+				msgBoxWarning("Impossible to use diagnostics mode", "Impossible to prepare the script file for diagnostics mode, make sure tha app has write access to the ~/Library/Application Support folder.\n\n[error code: 1, apple script execution failed]")
+				return
+			}
+			
+		}else{
+			val = 0
+		}
+		
+		if val == 0{
+			NSWorkspace.shared.openFile(scriptPath, withApplication: "Terminal")
+			NSApplication.shared.terminate(NSApp!)
+		}
+		
 	}
 	
-	if val == 0{
-		NSWorkspace.shared.openFile(scriptPath, withApplication: "Terminal")
-		NSApplication.shared.terminate(NSApp!)
-	}
 	
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToOptionalFileAttributeKeyDictionary(_ input: [String: Any]?) -> [FileAttributeKey: Any]? {
-	guard let input = input else { return nil }
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (FileAttributeKey(rawValue: key), value)})
+	
 }

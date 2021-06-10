@@ -21,9 +21,9 @@ public class mainWindowController: GenericWindowController {
         //we have got all the needed data, so we can setup the look properly
         self.setUI()
         
-        sharedWindow = self.window
+		UIManager.shared.window = self.window
         
-        sharedStoryboard = self.storyboard
+		UIManager.shared.storyboard = self.storyboard
 		
         
         //self.contentViewController?.viewDidLoad()

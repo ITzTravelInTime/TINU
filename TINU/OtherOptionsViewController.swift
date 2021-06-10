@@ -24,7 +24,7 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 		
 	}
 	
-    private var ps: Bool!
+    private var ps: Bool = false
 	
 	@IBOutlet weak var sectionsScrollView: NSScrollView!
 	@IBOutlet weak var settingsScrollView: NSScrollView!
@@ -57,10 +57,10 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 		
 		sections.removeAll()
         //avoids some porblems of sharedVolumeNeedsPartitionMethodChange being nill when it should not be
-        ps = cvm.shared.sharedVolumeNeedsPartitionMethodChange
+		ps = cvm.shared.disk.shouldErase
         
         //just in case of errors
-        if cvm.shared.sharedVolume == nil || cvm.shared.sharedApp == nil{
+		if cvm.shared.disk.path == nil || cvm.shared.app.path == nil{
             swapCurrentViewController("Confirm")
         }
 		
@@ -182,7 +182,7 @@ class OtherOptionsViewController: GenericViewController, ViewID {
     
     
     @IBAction func goBack(_ sender: Any) {
-        cvm.shared.sharedVolumeNeedsPartitionMethodChange = ps
+		cvm.shared.disk.shouldErase = ps
 		
 		CustomizationWindowManager.shared.referenceWindow = nil
 		

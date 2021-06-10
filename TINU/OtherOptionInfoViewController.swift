@@ -18,7 +18,7 @@ public class OtherOptionsInfoViewController: GenericViewController, ViewID {
 	
 	@IBOutlet weak var scroller: NSScrollView!
 	
-	public var associatedOption: OtherOptionsObject!
+	public var associatedOption: CreationVariablesManager.OtherOptionsObject!
 	
 	override public func viewDidLoad() {
 		super.viewDidLoad()

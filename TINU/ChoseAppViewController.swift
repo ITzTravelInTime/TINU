@@ -74,8 +74,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 	
 	private var tempRefresh: CGFloat = 0
     
-    private var ps: Bool!
-    //private var fs: Bool!
+    private var ps: Bool = false
     
     private let spacerID = "spacer"
     
@@ -85,14 +84,14 @@ class ChoseAppViewController: GenericViewController, ViewID {
     
     @IBAction func next(_ sender: Any) {
         if !empty{
-            cvm.shared.sharedVolumeNeedsPartitionMethodChange = ps
+			cvm.shared.disk.shouldErase = ps
             //sharedVolumeNeedsFormat = fs
             /*if sharedInstallMac{
              openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
              }else{*/
 			
 			
-			if sharedInstallMac{
+			if cvm.shared.installMac{
 				showProcessLicense = true
 				swapCurrentViewController("License")
 			}else{
@@ -125,7 +124,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 	private static var installerAppNeededFiles: [[String]]{
 		get{
 			//the first element of the first of this array of arrays should always be executable to look for
-			return ([ ["/Contents/Resources/" + sharedExecutableName],["/Contents/Info.plist"],["/Contents/SharedSupport"], ["/Contents/SharedSupport/InstallESD.dmg", "/Contents/SharedSupport/SharedSupport.dmg"]])
+			return ([ ["/Contents/Resources/" + cvm.shared.executableName],["/Contents/Info.plist"],["/Contents/SharedSupport"], ["/Contents/SharedSupport/InstallESD.dmg", "/Contents/SharedSupport/SharedSupport.dmg"]])
 		}
 	}
 	
@@ -159,7 +158,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 			let replist = ["{fileName}" : ((open.urls.first?.lastPathComponent != nil) ? ", \"\(open.urls.first!.lastPathComponent)\"," : "")]
 			
 			var tmpURL: URL?
-			if let isAlias = FileAliasManager.finderAlias(open.urls.first!, resolvedURL: &tmpURL){
+			if let isAlias = FileAliasManager.process(open.urls.first!, resolvedURL: &tmpURL){
 				if isAlias{
 					path = tmpURL!.path
 				}
@@ -185,8 +184,8 @@ class ChoseAppViewController: GenericViewController, ViewID {
 			
 			if check == 0 {
 				
-				cvm.shared.sharedApp = path
-				cvm.shared.sharedVolumeNeedsPartitionMethodChange = self.ps
+				cvm.shared.app.path = path
+				cvm.shared.disk.shouldErase = self.ps
 				
 				self.next(self)
 				
@@ -197,7 +196,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 			
 			guard let sz = manager.directorySize(open.urls.first!) else {return}
 			
-			if !cvm.shared.compareSize(to: UInt64(sz)){
+			if !cvm.shared.disk.compareSize(to: UInt64(sz)){
 				msgboxWithManager(self, name: "invalidAppDialogSize", parseList: replist)
 				return
 			}
@@ -256,11 +255,11 @@ class ChoseAppViewController: GenericViewController, ViewID {
     }*/
 	
 	@objc func openGetAnApp(){
-		self.presentAsSheet(sharedStoryboard.instantiateController(withIdentifier: "DownloadAppVC") as! NSViewController)
+		self.presentAsSheet(UIManager.shared.storyboard.instantiateController(withIdentifier: "DownloadAppVC") as! NSViewController)
 	}
     
     private func loadApps(){
-        ps = cvm.shared.sharedVolumeNeedsPartitionMethodChange
+		ps = cvm.shared.disk.shouldErase
         //fs = sharedVolumeNeedsFormat
         
         scoller.isHidden = true
@@ -281,7 +280,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
         
         self.refreshButton.frame.origin.x = self.tempRefresh
 		
-        cvm.shared.sharedApp = nil
+		cvm.shared.app.path = nil
 		cvm.shared.app.resetCachedAppInfo()
         
         //here loads drives
@@ -302,7 +301,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 			
 			print(foldersURLS)
 			
-			let driveb = dm.getMountPointFromPartitionBSDID(cvm.shared.sharedBSDDrive)
+			let driveb = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive)
 			
 			for d in fm.mountedVolumeURLs(includingResourceValuesForKeys: [URLResourceKey.isVolumeKey], options: [.skipHiddenVolumes])!{
 				let p = d.path
@@ -360,7 +359,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 				h = ((self.scoller.frame.height - 17) / 2) - (DriveView.itemSize.height / 2)
 			}
 			
-			let ex = sharedExecutableName
+			let ex = cvm.shared.executableName
 			
 			print("Current executable name: \(ex)")
 			
@@ -482,7 +481,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 								if let size = res{
 									print("    Got installer app size \(size / Int(pow(10.0, 9.0))) GB")
 									drive.sz = "\(size)"
-									drive.isEnabled = (cvm.shared.compareSize(to: UInt64(size)))
+									drive.isEnabled = (cvm.shared.disk.compareSize(to: UInt64(size)))
 									
 									if !drive.isEnabled{
 										print("      Drive is too small to be used with this installer app")

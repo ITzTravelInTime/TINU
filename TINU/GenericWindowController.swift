@@ -29,7 +29,7 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
         //self.window?.isFullScreenEnaled = false
         
         #if !isTool
-        self.window?.title = sharedWindowTitlePrefix
+        self.window?.title = UIManager.shared.windowTitlePrefix
         #endif
         
         //checkVibrant()
