@@ -37,7 +37,7 @@ extension CreationVariablesManager{
 				resetCachedAppInfo()
 			}
 			
-			ref.options.checkOtherOptions()
+			ref.options.check()
 		}
 	}
 	

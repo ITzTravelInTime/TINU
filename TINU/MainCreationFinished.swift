@@ -60,6 +60,7 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
 		showFailureImage()
 		
 		setFailureLabel(text: FinalScreenSmallManager.shared.title)
+		
 		if #available(macOS 11.0, *), look.usesSFSymbols(){
 			failureLabel.font = NSFont.systemFont(ofSize: failureLabel.font!.pointSize)
 		}else{
@@ -80,7 +81,7 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
     }
     
     @IBAction func goNext(_ sender: Any) {
-        LogManager.clearLog(true)
+        LogManager.clear(true)
 		
 		swapCurrentViewController("chooseSide")
     }

@@ -1,5 +1,5 @@
 //
-//  AppleSiliconDetect.swift
+//  CPUArchDetect.swift
 //  TINU
 //
 //  Created by Pietro Caruso on 21/05/21.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-enum AppExecution: Int32, Codable, Equatable, CaseIterable{
+enum AppExecutionMode: Int32, Codable, Equatable, CaseIterable{
 	case unkown = -1
 	case native = 0
 	case emulated = 1
 	
-	static func current() -> AppExecution?{
+	static func current() -> AppExecutionMode?{
 		var ret: Int32 = 0
 		var size = ret.bitWidth / 8
 		
@@ -21,24 +21,24 @@ enum AppExecution: Int32, Codable, Equatable, CaseIterable{
 		
 		if result == -1 {
 			if (errno == ENOENT){
-				return AppExecution.native
+				return AppExecutionMode.native
 			}
-			return AppExecution.unkown
+			return AppExecutionMode.unkown
 		}
 		
-		return AppExecution(rawValue: ret)
+		return AppExecutionMode(rawValue: ret)
 	}
 }
 
 extension ProcessInfo {
-		var machineHardwareName: String? {
-				var sysinfo = utsname()
-				let result = uname(&sysinfo)
-				guard result == EXIT_SUCCESS else { return nil }
-				let data = Data(bytes: &sysinfo.machine, count: Int(_SYS_NAMELEN))
-				guard let identifier = String(bytes: data, encoding: .ascii) else { return nil }
-				return identifier.trimmingCharacters(in: .controlCharacters)
-		}
+	var machineHardwareName: String? {
+		var sysinfo = utsname()
+		let result = uname(&sysinfo)
+		guard result == EXIT_SUCCESS else { return nil }
+		let data = Data(bytes: &sysinfo.machine, count: Int(_SYS_NAMELEN))
+		guard let identifier = String(bytes: data, encoding: .ascii) else { return nil }
+		return identifier.trimmingCharacters(in: .controlCharacters)
+	}
 }
 
 enum CpuArchitecture: String, Codable, Equatable, CaseIterable{
@@ -60,7 +60,7 @@ enum CpuArchitecture: String, Codable, Equatable, CaseIterable{
 	
 	static func actualCurrent() -> CpuArchitecture?{
 		guard let arch = current() else { return nil }
-		guard let mode = AppExecution.current() else { return nil }
+		guard let mode = AppExecutionMode.current() else { return nil }
 		
 		if arch == .intel64 && mode == .emulated{
 			return arm64

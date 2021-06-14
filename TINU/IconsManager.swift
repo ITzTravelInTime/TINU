@@ -14,108 +14,78 @@ public final class IconsManager{
 	
 	//warning icon used by the app
 	public var warningIcon: NSImage!{
-		get{
-			return getIconFor(path: "", symbol: "exclamationmark.triangle", name: NSImage.cautionName)
-		}
+		return getIconFor(path: "", symbol: "exclamationmark.triangle", name: NSImage.cautionName)
+	}
+	
+	public var roundWarningIcon: NSImage!{
+		return getIconFor(path: "", symbol: "exclamationmark.circle", name: NSImage.cautionName)
 	}
 	
 	public var alertWarningIcon: NSImage!{
-		get{
-			return NSImage(named: NSImage.cautionName)
-		}
+		return NSImage(named: NSImage.cautionName)
 	}
 	
 	//stop icon used by the app
 	public var stopIcon: NSImage!{
-		get{
-			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertStopIcon.icns", symbol: "xmark.octagon", name: "uncheck")
-		}
+		return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertStopIcon.icns", symbol: "xmark.octagon", name: "uncheck")
 	}
 	
 	public var roundStopIcon: NSImage!{
-		get{
-			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertStopIcon.icns", symbol: "xmark.circle", name: "uncheck")
-		}
+		return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertStopIcon.icns", symbol: "xmark.circle", name: "uncheck")
 	}
 	
 	public var checkIcon: NSImage!{
-		get{
-			return getIconFor(path: "", symbol: "checkmark.circle", name: "checkVector")
-		}
+		return getIconFor(path: "", symbol: "checkmark.circle", name: "checkVector")
 	}
 	
 	//gets the overlay for usupported stuff
 	public var unsupportedOverlay: NSImage!{
-		get{
-			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/Unsupported.icns", symbol: "nosign", name: NSImage.cautionName)
-		}
+		return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/Unsupported.icns", symbol: "nosign", name: NSImage.cautionName)
 	}
 	
 	public var infoIcon: NSImage!{
-		get{
-			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertNoteIcon.icns", symbol: "info.circle", name: NSImage.cautionName)
-		}
+		return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertNoteIcon.icns", symbol: "info.circle", name: NSImage.cautionName)
 	}
 	
 	public var copyIcon: NSImage!{
-		get{
-			return getIconFor(path: "", symbol: "doc.on.doc", name: NSImage.multipleDocumentsName)
-		}
+		return getIconFor(path: "", symbol: "doc.on.doc", name: NSImage.multipleDocumentsName)
 	}
 	
 	public var saveIcon: NSImage!{
-		get{
-			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericDocumentIcon.icns", symbol: "tray.and.arrow.down", name: NSImage.multipleDocumentsName)
-		}
+		return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericDocumentIcon.icns", symbol: "tray.and.arrow.down", name: NSImage.multipleDocumentsName)
 	}
 	
 	public var removableDiskIcon: NSImage{
-		get{
-			return getIconFor(path: "/System/Library/Extensions/IOStorageFamily.kext/Contents/Resources/Removable.icns", symbol: "externaldrive", name: "Removable")
-		}
+		return getIconFor(path: "/System/Library/Extensions/IOStorageFamily.kext/Contents/Resources/Removable.icns", symbol: "externaldrive", name: "Removable")
 	}
 	
 	public var externalDiskIcon: NSImage{
-		get{
-			return getIconFor(path: "/System/Library/Extensions/IOStorageFamily.kext/Contents/Resources/External.icns", symbol: "externaldrive", alternate: removableDiskIcon)
-		}
+		return getIconFor(path: "/System/Library/Extensions/IOStorageFamily.kext/Contents/Resources/External.icns", symbol: "externaldrive", alternate: removableDiskIcon)
 	}
 	
 	public var internalDiskIcon: NSImage{
-		get{
-			return getIconFor(path: "/System/Library/Extensions/IOStorageFamily.kext/Contents/Resources/Internal.icns", symbol: "internaldrive", alternate: removableDiskIcon)
-		}
+		return getIconFor(path: "/System/Library/Extensions/IOStorageFamily.kext/Contents/Resources/Internal.icns", symbol: "internaldrive", alternate: removableDiskIcon)
 	}
 	
 	public var timeMachineDiskIcon: NSImage{
-		get{
-			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericTimeMachineDiskIcon.icns", symbol: "externaldrive.badge.timemachine", alternate: removableDiskIcon)
-		}
+		return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericTimeMachineDiskIcon.icns", symbol: "externaldrive.badge.timemachine", alternate: removableDiskIcon)
 	}
 	
 	
 	public var genericInstallerAppIcon: NSImage{
-		get{
-			return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericApplicationIcon.icns", symbol: "square.and.arrow.down", name: "InstallApp", alternateFirst: true)
-		}
+		return getIconFor(path: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericApplicationIcon.icns", symbol: "square.and.arrow.down", name: "InstallApp", alternateFirst: true)
 	}
 	
 	public var optionsIcon: NSImage{
-		get{
-			return getIconFor(path: "", symbol: "gearshape", name: NSImage.preferencesGeneralName)
-		}
+		return getIconFor(path: "", symbol: "gearshape", name: NSImage.preferencesGeneralName)
 	}
 	
 	public var advancedOptionsIcon: NSImage{
-		get{
-			return getIconFor(path: "", symbol: "gearshape.2", name: NSImage.advancedName)
-		}
+		return getIconFor(path: "", symbol: "gearshape.2", name: NSImage.advancedName)
 	}
 	
 	public var folderIcon: NSImage{
-		get{
-			return getIconFor(path: "", symbol: "folder.fill", name: NSImage.folderName)
-		}
+		return getIconFor(path: "", symbol: "folder.fill", name: NSImage.folderName)
 	}
 	
 	//return the icon of thespecified installer app

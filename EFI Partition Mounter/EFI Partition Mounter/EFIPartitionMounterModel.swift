@@ -112,7 +112,7 @@ public final class EFIPartitionMounterModel{
 			
 			print("    Waiting for the volumes data for the tool...")
 			
-			let commandData = getOut(cmd: "diskutil list -plist")
+			let commandData = CommandsManager.getOut(cmd: "diskutil list -plist")
 			
 			//print(commandData)
 			
@@ -381,6 +381,7 @@ public final class EFIPartitionMounterModel{
 		
 		var mount = ""
 		
+		//Those if lets are not replecable with guard lets
 		if let mp = array["MountPoint"] as? String{
 			print("                        Partiton mount point is: \(mp)")
 			

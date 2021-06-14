@@ -120,7 +120,7 @@
 		{
 			"isBack" : false,
 			"operation" : 0,
-			"message" : "Bootable macOS installer creation failed because the volume you choose for the installer is not large enought, please choose a larger one, see the log for more info",
+			"message" : "Bootable macOS installer creation failed because the volume you chose for the installer is not large enought, please choose a larger one, see the log for more info",
 			"stringsToCheck" : [
 				"is not large enough for install media."
 			],

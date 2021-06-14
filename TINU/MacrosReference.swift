@@ -41,7 +41,7 @@ To enable each macro you need to go into the build settings section of the Xcode
 - useFileReplacement
 	This allows the usage of the bootfiles replacement menu
 
-- skipChooseCustomization
+- skipChooseCustomization //TODO: deprecate this macro and the corresponding view
 	This will skip the screen that prompts for the customization options and instead shoing the confirm screen with a button which allows to customize the advanced settings, setted by default, please keep it enabled, or some users may have a bad time using the app
 
 - TINU

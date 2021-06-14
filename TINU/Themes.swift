@@ -10,11 +10,11 @@ import Foundation
 import AppKit
 
 extension UIManager{
-public enum AppLook: UInt8, Codable, Equatable, CaseIterable{
-	case shadowsOldIcons    = 0
-	case noShadowsSFSymbols = 1
-	case   shadowsSFSymbols = 2
-	case recovery = 255
+public enum AppLook: String, Codable, Equatable, CaseIterable{
+	case shadowsOldIcons    = "shadowsOldIcons"
+	case noShadowsSFSymbols = "noShadowsSFSymbols"
+	case   shadowsSFSymbols = "shadowSFSymbols"
+	case recovery = "recovery"
 	
 	func supportsShadows() -> Bool{
 		return self == .shadowsOldIcons || self == .shadowsSFSymbols

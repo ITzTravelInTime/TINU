@@ -207,7 +207,7 @@ class OtherOptionsViewController: GenericViewController, ViewID {
     }
     
     @IBAction func resetOptions(_ sender: Any) {
-		cvm.shared.options.checkOtherOptions()
+		cvm.shared.options.check()
 		
 		EFIFolderReplacementManager.reset()
 		

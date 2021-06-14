@@ -107,35 +107,34 @@ public final class TaskKillManager: ViewID{
 	
 	class func terminateProcess(PID pid: Int32) -> Bool!{
 		
+		guard let res = CommandsManager.sudo.run(cmd: "/bin/sh", args: ["-c", "kill \(pid)"]) else{
+			log("Failed to close \"\(pid)\" because of an authentication failure")
+			return nil
+		}
 		
-			if let res = runCommandWithSudo(cmd: "/bin/sh", args: ["-c", "kill \(pid)"]){
-				
-				if res.exitCode != 0{
-					log("Failed to close \"\(pid)\" because the closing process has exited with a code that is not 0: \n     exit code: \(res.exitCode)\n    output: \(res.output)\n     error/s produced: \(res.error)")
-					return false
-				}
-				
-				if let f = res.output.first{
-					if (f.isEmpty || f == "Password:" || f == "\n"){
-						log("Process \"\(pid)\" stopped with success")
-						return true
-					}else{
-						log("Failed to close \"\(pid)\": \n     exit code: \(res.exitCode)\n    output: \(res.output)\n     error/s produced: \(res.error)")
-						return false
-					}
-				}else{
-					log("Failed to close \"\(pid)\" because is not possible to get the output of the termination process")
-					return false
-				}
+		if res.exitCode != 0{
+			log("Failed to close \"\(pid)\" because the closing process has exited with a code that is not 0: \n     exit code: \(res.exitCode)\n    output: \(res.output)\n     error/s produced: \(res.error)")
+			return false
+		}
+		
+		if let f = res.output.first{
+			if (f.isEmpty || f == "Password:" || f == "\n"){
+				log("Process \"\(pid)\" stopped with success")
+				return true
 			}else{
-				log("Failed to close \"\(pid)\" because of an authentication failure")
-				return nil
+				log("Failed to close \"\(pid)\": \n     exit code: \(res.exitCode)\n    output: \(res.output)\n     error/s produced: \(res.error)")
+				return false
 			}
+		}else{
+			log("Failed to close \"\(pid)\" because is not possible to get the output of the termination process")
+			return false
+		}
 		
+		//This function is kept on purose without a final return so all the cases will be considered
 	}
 	
 	private class func getPid(name: String) -> String!{
-		let pid = getOut(cmd:"ps -Ac -o pid,comm | awk '/^ *[0-9]+ " + name + "$/ {print $1}'")
+		let pid = CommandsManager.getOut(cmd:"ps -Ac -o pid,comm | awk '/^ *[0-9]+ " + name + "$/ {print $1}'")
 		
 		if pid.isEmpty{
 			return nil

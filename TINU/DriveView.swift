@@ -32,8 +32,6 @@ class DriveView: ShadowView, ViewID {
     
     public var part: Part!
 	
-	let gradientLayer = CAGradientLayer()
-	
 	var image: NSImageView!
 	var volume: NSTextField!
 	
@@ -63,6 +61,10 @@ class DriveView: ShadowView, ViewID {
 				}else{
 					image.contentTintColor = .systemGray
 				}
+				if warnImage != nil{
+					self.warnImage.backgroundColor = NSColor.controlBackgroundColor
+					self.warnImage.layer?.cornerRadius = self.warnImage.frame.size.width / 2
+				}
 			}
 		}
 		
@@ -83,7 +85,6 @@ class DriveView: ShadowView, ViewID {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 		
-		//self.appearance = sharedWindow.effectiveAppearance
 		self.updateLayer()
     }
 	
@@ -103,6 +104,23 @@ class DriveView: ShadowView, ViewID {
         super.init(coder: coder)
     }
 	
+	deinit {
+		if volume != nil{
+			volume.removeFromSuperview();
+			volume = nil
+		}
+		
+		if image != nil{
+			image.removeFromSuperview();
+			image = nil
+		}
+		
+		if warnImage != nil{
+			warnImage.removeFromSuperview();
+			warnImage = nil
+		}
+	}
+	
 	override func viewDidMoveToSuperview() {
 		self.setDefaultAspect()
 	}
@@ -112,25 +130,25 @@ class DriveView: ShadowView, ViewID {
 		setModeFromCurrentLook()
 		
 		self.wantsLayer = true
-		
-		gradientLayer.frame = self.bounds
-		gradientLayer.cornerRadius = self.layer!.cornerRadius
-		
+		/*
 		if image != nil{
 			image.removeFromSuperview();
 			image = nil
 		}
-        
-        image = NSImageView(frame: NSRect(x: 15, y: 55, width: self.frame.size.width - 30, height: self.frame.size.height - 65))
-		image.wantsLayer = true
-        image.isEditable = false
-        image.imageAlignment = .alignCenter
-        image.imageScaling = .scaleProportionallyUpOrDown
-		image.backgroundColor = NSColor.transparent
+        */
 		
-        self.addSubview(image)
+		if image == nil{
+			image = NSImageView(frame: NSRect(x: 15, y: 55, width: self.frame.size.width - 30, height: self.frame.size.height - 65))
+			image.wantsLayer = true
+			image.isEditable = false
+			image.imageAlignment = .alignCenter
+			image.imageScaling = .scaleProportionallyUpOrDown
+			image.backgroundColor = NSColor.transparent
 		
-		image.layer!.zPosition = self.layer!.zPosition + 1
+			self.addSubview(image)
+			
+			image.layer!.zPosition = self.layer!.zPosition + 1
+		}
 		
 		if volume != nil{
 			volume.removeFromSuperview();
@@ -151,6 +169,13 @@ class DriveView: ShadowView, ViewID {
         volume.isBordered = false
         volume.alignment = .center
 		volume.drawsBackground = false
+		
+		if isEnabled{
+			self.volume.stringValue = self.appName
+		}else{
+			self.volume.stringValue = self.warnText
+		}
+		
         self.addSubview(volume)
 		
 		volume.layer!.zPosition = self.layer!.zPosition + 1
@@ -158,36 +183,116 @@ class DriveView: ShadowView, ViewID {
         volume.isEnabled = isEnabled
         image.isEnabled = isEnabled
 		
-		self.isSelected = false
+		if !isApp{
+			if sz == nil{
+				
+				let s = (part != nil) ? part!.size : 0
+				sz = TextManager.getViewString(context: self, stringID: "sizePrefix") + "\(self.roundInt(number: s))"
+				
+			}
+		}
+		
+		if self.warnImage != nil{
+			self.warnImage.image = nil
+			self.warnImage.removeFromSuperview()
+			self.warnImage = nil
+		}
+		
+		let w: CGFloat = self.frame.width / 3
+		//let margin: CGFloat = 15
+		
+		let activateWarningImage = (look.usesSFSymbols()) && self.isApp
+		var notBigger: Bool = false
+		
+		if self.isApp{
+			if self.sz != nil{
+				notBigger = !cvm.shared.disk.compareSize(to: self.sz)
+			}
+		}
+		
+		if activateWarningImage || (!self.isEnabled && self.isApp){
+			self.warnImage = NSImageView(frame: NSRect(x: self.frame.width - w - 5, y: self.image.frame.origin.y, width: w, height: w))
+			
+			self.warnImage.wantsLayer = true
+			self.warnImage.layer!.zPosition = self.image.layer!.zPosition + 1
+			
+			self.warnImage.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
+			self.warnImage.imageAlignment = .alignBottom
+			
+			if isEnabled{
+				self.warnImage.image = IconsManager.shared.checkIcon
+				
+				if #available(macOS 11.0, *), look.usesSFSymbols(){
+					self.warnImage.contentTintColor = .systemGreen
+				}
+			}else{
+				
+				if !notBigger{
+					self.warnImage.image = IconsManager.shared.roundStopIcon
+					if #available(macOS 11.0, *), look.usesSFSymbols(){
+						self.warnImage.contentTintColor = .systemRed
+					}
+				}else{
+					self.warnImage.image = IconsManager.shared.roundWarningIcon
+					if #available(macOS 11.0, *), look.usesSFSymbols(){
+						self.warnImage.contentTintColor = .systemYellow
+					}
+				}
+			}
+			
+			self.addSubview(self.warnImage)
+		}
+		
+		if self.isEnabled{
+			
+			if self.isApp{
+				//self.toolTip = "Path: " + self.applicationPath
+				self.setToolTipAndWarn("appNormal")
+			}else{
+				self.setToolTipAndWarn("driveNormal")
+			}
+			
+		}else{
+			
+			if notBigger{
+				self.setToolTipAndWarn("appTooBig")
+			}else if self.isApp{
+				if self.sz != nil{
+					self.setToolTipAndWarn("appDamaged")
+				}else{
+					self.setToolTipAndWarn("appError")
+				}
+			}
+			
+			if !self.isApp{
+				self.toolTip = TextManager.getViewString(context: self, stringID: "driveNotUsableToolTip")
+			}
+			
+		}
 		
 		updateLayer()
-		
     }
     
     override func mouseDown(with event: NSEvent) {
         
         for c in (self.superview?.subviews)!{
-            if let d = c as? DriveView{
-                if d != self{
-                    d.setDefaultAspect()
-                }
-            }
+			guard let d = c as? DriveView else { continue }
+			
+			if d != self{
+				d.setDefaultAspect()
+			}
         }
         
         if isEnabled{
             setSelectedAspect()
             
             if isApp{
-				
 				cm.app.path = applicationPath
 				Swift.print("The application that the user has selected is: " + applicationPath)
-				
             }else{
 				cm.disk = cvm.DiskInfo(reference: cvm.shared.disk.ref, newPart: part)
-				
 				Swift.print("The volume that the user has selected is: " + part.mountPoint!)
             }
-			
 		}
 		
 		if isApp{
@@ -203,119 +308,24 @@ class DriveView: ShadowView, ViewID {
 	
 	public func setDefaultAspect(){
 		
-		if !isApp{
-			if sz == nil{
-				
-				let s = (part != nil) ? part!.size : 0
-				sz = TextManager.getViewString(context: self, stringID: "sizePrefix") + "\(self.roundInt(number: s))"
-				
-			}
+		DispatchQueue.main.async {
+			
+			self.refreshUI()
+			
+			self.isSelected = false
+			self.updateLayer()
 		}
 		
+	}
+	
+	public func setSelectedAspect(){
+		
 		DispatchQueue.main.async {
-			//self.layer?.backgroundColor = NSColor.transparent.cgColor
-			self.isSelected = false
 			
-			self.appearance = UIManager.shared.window.effectiveAppearance
+			self.refreshUI()
+			
+			self.isSelected = true
 			self.updateLayer()
-			
-			if self.warnImage != nil{
-				self.warnImage.image = nil
-				self.warnImage.removeFromSuperview()
-				self.warnImage = nil
-			}
-			
-			let w: CGFloat = self.frame.width / 3
-			//let margin: CGFloat = 15
-			
-			let activateWarningImage = (look.usesSFSymbols()) && self.isApp
-			
-			if activateWarningImage || !self.isEnabled{
-			self.warnImage = NSImageView(frame: NSRect(x: self.frame.width - w - 5, y: self.image.frame.origin.y, width: w, height: w))
-			
-			self.warnImage.wantsLayer = true
-			self.warnImage.layer!.zPosition = self.image.layer!.zPosition + 1
-			
-				if #available(macOS 11.0, *), look.usesSFSymbols() {
-					self.warnImage.backgroundColor = NSColor.controlBackgroundColor
-					self.warnImage.layer?.cornerRadius = self.warnImage.frame.size.width / 2
-				}
-				
-			self.warnImage.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
-			self.warnImage.imageAlignment = .alignBottom
-			}
-			
-			if self.volume.superview == nil{
-				self.addSubview(self.volume)
-			}
-			
-			if self.isEnabled{
-				
-				self.volume.stringValue = self.appName
-				
-				if self.isApp{
-					//self.toolTip = "Path: " + self.applicationPath
-					self.setToolTipAndWarn("appNormal")
-				}else{
-					self.setToolTipAndWarn("driveNormal")
-				}
-				
-				if activateWarningImage{
-					self.warnImage.image = IconsManager.shared.checkIcon
-					
-					if #available(macOS 11.0, *), look.usesSFSymbols(){
-						self.warnImage.contentTintColor = .systemGreen
-					}
-						
-				}
-				
-			}else{
-				
-				var notBigger: Bool = false
-				
-				self.volume.stringValue = self.warnText
-				
-				if self.isApp{
-					if self.sz != nil{
-						notBigger = !cvm.shared.disk.compareSize(to: self.sz)
-					}
-				}
-				
-				if !notBigger{
-					self.warnImage.image = IconsManager.shared.roundStopIcon
-					if #available(macOS 11.0, *), look.usesSFSymbols(){
-						self.warnImage.contentTintColor = .systemRed
-					}
-				}else{
-					self.warnImage.image = IconsManager.shared.warningIcon
-					if #available(macOS 11.0, *), look.usesSFSymbols(){
-						self.warnImage.contentTintColor = .systemYellow
-					}
-				}
-				
-				
-				
-				//self.warnText.textColor = .systemYellow
-				
-				if notBigger{
-					self.setToolTipAndWarn("appTooBig")
-				}else if self.isApp{
-					if self.sz != nil{
-						self.setToolTipAndWarn("appDamaged")
-					}else{
-						self.setToolTipAndWarn("appError")
-					}
-				}
-				
-				if !self.isApp{
-					self.toolTip = TextManager.getViewString(context: self, stringID: "driveNotUsableToolTip")
-				}
-				
-			}
-			
-			if activateWarningImage || !self.isEnabled{
-				self.addSubview(self.warnImage)
-			}
 		}
 		
 	}
@@ -335,15 +345,6 @@ class DriveView: ShadowView, ViewID {
 		
 		Swift.print(self.toolTip!)
 	}
-    
-    public func setSelectedAspect(){
-		//DispatchQueue.main.async {
-			self.isSelected = true
-			
-			self.updateLayer()
-			
-		//}
-    }
 	
 	func roundInt(number: UInt64) -> String{
 		var n = number

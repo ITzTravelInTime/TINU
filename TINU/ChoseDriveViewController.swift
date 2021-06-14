@@ -11,16 +11,26 @@ import Cocoa
 class ChoseDriveViewController: ShadowViewController, ViewID {
 	let id: String = "ChoseDriveViewController"
 	
-	fileprivate let guid = "GUID_partition_scheme"
-	fileprivate let mbr = "FDisk_partition_scheme"
-	fileprivate let applePS = "Apple_partition_scheme"
+	/*
+	enum PartitionSchemes: String, Equatable, Codable, CaseIterable, RawRepresentable{
+		case guid = "GUID_partition_scheme"
+		case mbr = "FDisk_partition_scheme"
+		case applePS = "Apple_partition_scheme"
+	}
 	
-	fileprivate let apfs = "Apple_APFS"
-	fileprivate let hfs = "Apple_HFS"
-	fileprivate let core = "Apple_CoreStorage"
-	fileprivate let efi = "EFI"
+	enum PartitionFormats: String, Equatable, Codable, CaseIterable, RawRepresentable{
+		case apfs = "Apple_APFS"
+		case hfs = "Apple_HFS"
+		case core = "Apple_CoreStorage"
+		case efi = "EFI"
+		case appleBoot = "Apple_Boot"
+		case appleKernelCoreDump = "Apple_KernelCoreDump"
 	
-	fileprivate let ignore = ["Apple_Boot", "Apple_KernelCoreDump"]
+		static func ignoredList() -> [PartitionFormats]{
+			return [.appleBoot, .appleKernelCoreDump]
+		}
+	}
+	*/
 	
     @IBOutlet weak var scoller: NSScrollView!
     @IBOutlet weak var ok: NSButton!
@@ -64,20 +74,6 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
         }
     }
     
-    
-    /*override func viewDidSetVibrantLook(){
-        super.viewDidSetVibrantLook()
-        if let document = scoller.documentView{
-            if document.identifier == "spacer"{
-                document.frame = NSRect(x: 0, y: 0, width: self.scoller.frame.width - 2, height: self.scoller.frame.height - 2)
-                if let content = document.subviews.first{
-                    content.frame.origin = NSPoint(x: document.frame.width / 2 - content.frame.width / 2, y: 0)
-                }
-                self.scoller.documentView = document
-            }
-        }
-    }*/
-    
     @IBAction func refresh(_ sender: Any) {
         updateDrives()
     }
@@ -95,18 +91,6 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 			scoller.frame = CGRect.init(x: 0, y: scoller.frame.origin.y, width: self.view.frame.width, height: scoller.frame.height)
 			scoller.drawsBackground = false
 			scoller.borderType = .noBorder
-			
-			/*
-			if !simulateDisableShadows{
-			setShadowViewsAll(respectTo: scoller, topBottomViewsShadowRadius: 5, sideViewsShadowRadius: 3)
-			setOtherViews(respectTo: scoller)
-			
-			self.uView.isHidden = true
-			self.bView.isHidden = true
-			
-			self.lView.isHidden = true
-			self.rView.isHidden = true
-			}*/
 			
 		}else{
 			scoller.frame = CGRect.init(x: 20, y: scoller.frame.origin.y, width: self.view.frame.width - 40, height: scoller.frame.height)
@@ -250,7 +234,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 								continue
 							}
 							
-							if !self.checkDriveSizeUint(bytes: p.Size){
+							if !cvm.shared.disk.meetsRequirements(size: p.Size){
 								log("            Partition is not big enought to be used as a mac os installer or to house a macOS installation")
 								continue
 							}
@@ -275,7 +259,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 						log("        Drive is not GPT/GUID or doesn't seem to have an EFI partition, it will be detected only as a drive instead of showing the partitions as well")
 					}
 					
-					if !self.checkDriveSizeUint(bytes: d.Size){
+					if !cvm.shared.disk.meetsRequirements(size: d.Size){
 						log("        Drive is not big enought for our purposes")
 						continue
 					}
@@ -386,11 +370,12 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 					
 					content.frame.size.width = temp + ((look != .recovery) ? 5 : 20)
 					
+					//TODO: this is not ok for resizable windows
 					if content.frame.size.width < self.scoller.frame.width{
 						let spacer = NSView(frame: NSRect(x: 0, y: 0, width: self.scoller.frame.width - 2, height: self.scoller.frame.height - 2))
 						spacer.backgroundColor = NSColor.transparent
 						
-						spacer.identifier = NSUserInterfaceItemIdentifier(rawValue: "spacer")
+						spacer.identifier = NSUserInterfaceItemIdentifier(rawValue: self.spacerID)
 						
 						content.frame.origin = NSPoint(x: spacer.frame.width / 2 - content.frame.width / 2, y: 15 / 2)
 						spacer.addSubview(content)
@@ -438,20 +423,13 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 	@IBAction func next(_ sender: Any) {
 		if !empty{
 			
-			let dname = cvm.shared.disk.driveName()!
-			let pname = cvm.shared.disk.part.name
-			
-			let parseList = ["{diskName}" : dname, "{partitionName}" : pname]
-			//let title = parse(messange: TextManager.getViewString(context: self, stringID: "formatDialogTitle"), keys: parseList)
-			
-			//if cvm.shared.disk.shouldErase != nil /*&& sharedVolumeNeedsFormat != nil*/{
+			let parseList = ["{diskName}" : cvm.shared.disk.driveName()!, "{partitionName}" : cvm.shared.disk.part.name]
 				
-				if cvm.shared.disk.shouldErase{
-					if !dialogGenericWithManagerBool(self, name: "formatDialog", parseList: parseList){
-						return
-					}
+			if cvm.shared.disk.shouldErase{
+				if !dialogGenericWithManagerBool(self, name: "formatDialog", parseList: parseList){
+					return
 				}
-			//}
+			}
 			
 			if cvm.shared.disk.warnForTimeMachine{
 				if !dialogGenericWithManagerBool(self, name: "formatDialogTimeMachine", parseList: parseList){
@@ -556,19 +534,5 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 	private func get1024Pow(exp: Float) -> UInt64{
 		return UInt64(pow(1024.0, exp))
 	}*/
-    
-    func checkDriveSizeUint(bytes: UInt64) -> Bool{
-        let gb = UInt64(pow(10.0, 9.0))
-		
-		if simulateCreateinstallmediaFail != nil{
-			return !(bytes <= (2 * gb)) // 2 gb
-		}
-		
-        if cvm.shared.installMac{
-            return !(bytes <= (20 * gb)) //20 gb
-        }
-		
-        return !(bytes <= (6 * gb)) // 6 gb
-    }
     
 }

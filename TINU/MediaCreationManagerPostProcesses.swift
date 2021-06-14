@@ -94,12 +94,12 @@ extension InstallMediaCreationManager{
 	private func prepareToPerformSpecialOperations(){
 		if cvm.shared.installMac{
 			if let a = cvm.shared.disk.aPFSContaninerBSDDrive{
-				cvm.shared.disk.path = dm.getMountPointFromPartitionBSDID(a)
+				cvm.shared.disk.part.mountPoint = dm.getMountPointFromPartitionBSDID(a)
 			}else{
-				cvm.shared.disk.path = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive!)
+				cvm.shared.disk.part.mountPoint = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive!)
 			}
 		}else{
-			cvm.shared.disk.path = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive!)
+			cvm.shared.disk.part.mountPoint = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive!)
 		}
 		
 		print(cvm.shared.disk.path ?? "")

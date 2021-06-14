@@ -134,7 +134,7 @@ class LicenseViewController: ShadowViewController, ViewID {
 							
 							print("Getting installer license with the command: " + cmd)
 							
-							license = getOut(cmd: cmd)
+							license = CommandsManager.getOut(cmd: cmd)
 							
 							print(license)
 							

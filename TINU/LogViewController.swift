@@ -66,7 +66,7 @@ class LogViewController: GenericViewController, NSSharingServicePickerDelegate, 
     
 	@objc func updateLog(_ sender: AnyObject){
         //print("Log updated")
-        if let l = LogManager.readLog(){
+        if let l = LogManager.read(){
             content.text = l
         }
     }

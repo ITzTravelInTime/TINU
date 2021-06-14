@@ -14,7 +14,7 @@ public struct TINUTextsManagerStruct: TextManagerGet, CodableDefaults, Codable, 
 	
 	private var readme: TextManagementStructs.InstallerInstallation<TextManagementStructs.MessangeFormatSpecificsMachine<String>>
 	private var helpfoulMessange: TextManagementStructs.InstallerInstallation<String>
-	private var optionsDescs: TextManagementStructs.InstallerInstallation<CreationVariablesManager.OtherOptionsManager.OtherOptionsStringList>
+	private var optionsDescs: TextManagementStructs.InstallerInstallation<CreationVariablesManager.OtherOptionsManager.StringList>
 	
 	private let viewStrings: TextManagementStructs.ViewStringsCollection
 	
@@ -41,7 +41,7 @@ public struct TINUTextsManagerStruct: TextManagerGet, CodableDefaults, Codable, 
 		return ret
 	}
 	
-	public var optionsDescpriptions: CreationVariablesManager.OtherOptionsManager.OtherOptionsStringList! {
+	public var optionsDescpriptions: CreationVariablesManager.OtherOptionsManager.StringList! {
 		return optionsDescs.appropriateValue
 	}
 	

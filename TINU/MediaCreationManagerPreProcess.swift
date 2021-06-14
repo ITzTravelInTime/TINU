@@ -123,7 +123,7 @@ extension InstallMediaCreationManager{
 				let noFAuth = false
 				#endif
 				
-				let startC = (simulateCreateinstallmediaFail != nil && noFAuth) ? startCommand(cmd: exec, args: args) : startCommandWithSudo(cmd: exec, args: args)
+				let startC = (simulateCreateinstallmediaFail != nil && noFAuth) ? CommandsManager.start(cmd: exec, args: args) : CommandsManager.sudo.start(cmd: exec, args: args)
 				
 				if let r = startC{
 					

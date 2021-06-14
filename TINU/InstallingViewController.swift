@@ -174,12 +174,12 @@ class InstallingViewController: GenericViewController, ViewID{
 		restoreWindow()
 		
 		FinalScreenSmallManager.shared.title = title
-		//FinalScreenSmallManager.shared.isOk = success
 		
+		//TODO: this should not be really necessary
 		CreationVariablesManager.shared.disk.part = Part()
 		
 		cvm.shared.app.resetCachedAppInfo()
-		cvm.shared.options.checkOtherOptions()
+		cvm.shared.options.check()
 		
 		InstallMediaCreationManager.shared.makeProcessNotInExecution(withResult: success)
 		self.swapCurrentViewController("MainDone")

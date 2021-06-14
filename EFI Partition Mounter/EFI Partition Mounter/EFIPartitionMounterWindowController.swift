@@ -48,12 +48,11 @@ public class EFIPartitionMounterWindowController: AppWindowController {
     #else
     
     public override func windowWillClose(_ notification: Notification){
-        if let win = self.window?.contentViewController as? EFIPartitionMounterViewController{
+		guard let win = self.window?.contentViewController as? EFIPartitionMounterViewController else { return }
             
-            if !win.barMode{
-                NSApplication.shared().terminate(self)
-            }
-        }
+		if !win.barMode{
+			NSApplication.shared().terminate(self)
+		}
     }
     
     #endif

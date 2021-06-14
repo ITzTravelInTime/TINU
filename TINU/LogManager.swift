@@ -19,16 +19,16 @@ public final class LogManager{
 #endif
 	
 	//returs the whole log, if you do not have alreay read it, it's better to not use it
-	public class func readLog() -> String!{
+	public class func read() -> String!{
 		if !logHasBeenUpdated{
 			return nil
 		}else{
-			return readAllLog()
+			return readAll()
 		}
 	}
 	
 	//returs the whole log, but it will always return the log
-	public class func readAllLog() -> String{
+	public class func readAll() -> String{
 		var ret = ""
 		for i in logs{
 			ret += i + "\n"
@@ -38,21 +38,21 @@ public final class LogManager{
 	}
 	
 	//returns the latest log line
-	@inline(__always) public class func readAllLatestLog() -> String!{
+	@inline(__always) public class func readAllLatest() -> String!{
 		return logs.last
 	}
 	
 	
 	//returs the latest log line only if you don't have alreay read it, it's better to not use it because it's used by the log window thaty will not work without
-	@inline(__always) public class func readLatestLog() -> String!{
+	@inline(__always) public class func readLatest() -> String!{
 		if !logs.isEmpty{
-			return readAllLatestLog()
+			return readAllLatest()
 		}
 		return nil
 	}
 	
 	//resets the initial state of the log control
-	@inline(__always) public class func clearLog(_ printBanner: Bool = false){
+	@inline(__always) public class func clear(_ printBanner: Bool = false){
 		
 		logs.removeAll()
 		logs = []

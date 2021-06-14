@@ -61,7 +61,7 @@ class InfoViewController: GenericViewController, ViewID{
         //}
 		
 		#if macOnlyMode
-		if !sharedIsOnRecovery{
+		if !isOnRecovery{
 			backButton.isHidden = true
 		}
 		#endif
@@ -117,12 +117,12 @@ class InfoViewController: GenericViewController, ViewID{
 		
 		if #available(OSX 10.15, *){
 			if !isRootUser{
-				SIPManager.checkSIPAndLetTheUserKnow()
+				SIPManager.checkStatusAndLetTheUserKnow()
 			}
 		}
 		
 		#if noFirstAuth
-			if !sharedIsOnRecovery{
+			if !isOnRecovery{
 				msgBoxWarning("WARNING", "This app has been compiled with first step authentication disabled.\nIt may be less secure to use, use it at your own risk!")
 			}
 		#endif

@@ -25,27 +25,19 @@ import Foundation
 		private var missingFile: String!
 		
 		public var openedDirectory: String!{
-			get{
-				return oDirectory
-			}
+			return oDirectory
 		}
 		
 		public var copyProcessProgress: Double!{
-			get{
-				return cProgress
-			}
+			return cProgress
 		}
 		
 		public var filesCount: Double!{
-			get{
-				return Double(sharedEFIFolderTempData.count)
-			}
+			return Double(sharedEFIFolderTempData.count)
 		}
 		
 		public var missingFileFromOpenedFolder: String!{
-			get{
-				return missingFile
-			}
+			return missingFile
 		}
 		
 		public var currentEFIFolderType: SupportedEFIFolders{
@@ -55,128 +47,125 @@ import Foundation
 		private var bootloader: SupportedEFIFolders = .clover
 		
 		private var contentToCheck: [[String]]{
-			get{
-				switch bootloader {
+			switch bootloader {
 				case .clover:
 					return [["/BOOT/BOOTX64.efi"], ["/CLOVER/CLOVERX64.efi"], ["/CLOVER/config.plist"], ["/CLOVER/kexts"], ["/CLOVER/kexts/Other"], ["/CLOVER/drivers64UEFI", "/CLOVER/drivers/UEFI", "/CLOVER/drivers/BIOS", "/CLOVER/drivers64"]]
 				case .openCore:
 					return [["/BOOT/BOOTX64.efi"], ["/OC/OpenCore.efi"], ["/OC/config.plist"], ["/OC/Kexts"], ["/OC/Tools"], ["/OC/Drivers"], ["/OC/ACPI"]]
-				}
-				
 			}
 		}
 		
 		public func saveEFIFolder(_ toPath: String) -> Bool{
-			if let c = checkSavedEFIFolder(){
-				if c{
-					
-					let fm = FileManager.default
-					
-					let unit = 1 / filesCount
-					
-					cProgress = 0
-					
-					var res = true
-					
-					let cp = URL(fileURLWithPath: toPath, isDirectory: true)
-					
-					do{
-						if fm.fileExists(atPath: toPath){
-							try fm.removeItem(at: cp)
-						}
-					}catch let err{
-						print("        EFI Folder delete error (\(toPath))\n                \(err.localizedDescription)")
-						res = false
-						
-						cProgress = nil
-						return false
+			guard let c = checkSavedEFIFolder() else {
+				log("No EFI Folder saved, impossible to proceed")
+				return false
+			}
+			
+			if !c {
+				log("Saved EFI Folderis invalid, impossible to proceed")
+				return false
+			}
+			
+			let fm = FileManager.default
+			
+			let unit = 1 / filesCount
+			
+			cProgress = 0
+			
+			var res = true
+			
+			let cp = URL(fileURLWithPath: toPath, isDirectory: true)
+			
+			do{
+				if fm.fileExists(atPath: toPath){
+					try fm.removeItem(at: cp)
+				}
+			}catch let err{
+				print("        EFI Folder delete error (\(toPath))\n                \(err.localizedDescription)")
+				res = false
+				
+				cProgress = nil
+				return false
+			}
+			
+			for f in sharedEFIFolderTempData{
+				
+				let file = URL(fileURLWithPath: cp.path + f.key)
+				
+				let parent = file.deletingLastPathComponent()
+				
+				print("        Replacing EFI Folder file: \(file.path)")
+				
+				do{
+					if !fm.fileExists(atPath: parent.path){
+						try fm.createDirectory(at: parent, withIntermediateDirectories: true)
+						print("      Creating EFI Folder subdirectory: \(parent.path)")
 					}
+				}catch let err{
+					log("        EFI Folder subfolder error (\(parent.path))\n                \(err.localizedDescription)")
+					res = false
+					continue
+				}
+				
+				do{
 					
-					for f in sharedEFIFolderTempData{
+					if f.value != refData{
 						
-						let file = URL(fileURLWithPath: cp.path + f.key)
+						try f.value!.write(to: file)
 						
-						let parent = file.deletingLastPathComponent()
-						
-						print("        Replacing EFI Folder file: \(file.path)")
+					}else{
 						
 						do{
-							if !fm.fileExists(atPath: parent.path){
-								try fm.createDirectory(at: parent, withIntermediateDirectories: true, attributes: convertToOptionalFileAttributeKeyDictionary([:]))
+							if !fm.fileExists(atPath: file.path) {
+								try fm.createDirectory(at: file, withIntermediateDirectories: true)
 								print("      Creating EFI Folder subdirectory: \(parent.path)")
 							}
+							
 						}catch let err{
-							log("        EFI Folder subfolder error (\(parent.path))\n                \(err.localizedDescription)")
+							print("        EFI Folder subfolder creation error (\(parent.path))\n                \(err.localizedDescription)")
 							res = false
 							continue
 						}
-						
-						do{
-							
-							if f.value != refData{
-							
-								try f.value!.write(to: file)
-								
-							}else{
-								
-								do{
-									if !fm.fileExists(atPath: file.path) {
-										try fm.createDirectory(at: file, withIntermediateDirectories: true, attributes: convertToOptionalFileAttributeKeyDictionary([:]))
-										print("      Creating EFI Folder subdirectory: \(parent.path)")
-									}
-									
-								}catch let err{
-									print("        EFI Folder subfolder creation error (\(parent.path))\n                \(err.localizedDescription)")
-									res = false
-									continue
-								}
-								
-							}
-							
-						}catch let err{
-							print("        EFI Folder file error (\(file.path))\n                \(err.localizedDescription)")
-							res = false
-							continue
-						}
-						
-						cProgress! += unit
 						
 					}
 					
-					cProgress = nil
-					return res
+				}catch let err{
+					print("        EFI Folder file error (\(file.path))\n                \(err.localizedDescription)")
+					res = false
+					continue
 				}
-			}else{
-				print("No EFI Folder saved, impossible to proceed")
+				
+				cProgress! += unit
+				
 			}
 			
-			return false
+			cProgress = nil
+			return res
 		}
 		
-		public func unloadEFIFolder() -> Bool{
+		public func unloadEFIFolder(){
 		
-			if sharedEFIFolderTempData != nil{
-				for i in sharedEFIFolderTempData.keys{
-					//in some instances 
-					if sharedEFIFolderTempData == nil{
-						break
-					}
-					
-					print("Removing value from the saved EFI folder: \(i)")
-					sharedEFIFolderTempData[i] = nil
-					sharedEFIFolderTempData.removeValue(forKey: i)
-				}
-				
-				sharedEFIFolderTempData.removeAll()
-				sharedEFIFolderTempData = nil
-				
-				print("Saved EFI folder cleaned and reset")
-				
-				oDirectory = nil
+			if sharedEFIFolderTempData == nil{
+				return
 			}
 			
-			return true
+			for i in sharedEFIFolderTempData.keys{
+				//in some instances
+				if sharedEFIFolderTempData == nil{
+					break
+				}
+				
+				print("Removing value from the saved EFI folder: \(i)")
+				sharedEFIFolderTempData[i] = nil
+				sharedEFIFolderTempData.removeValue(forKey: i)
+			}
 			
+			sharedEFIFolderTempData.removeAll()
+			sharedEFIFolderTempData = nil
+			
+			print("Saved EFI folder cleaned and reset")
+			
+			oDirectory = nil
 		}
 		
 		public func loadEFIFolder(_ fromPath: String, currentBootloader: SupportedEFIFolders) -> Bool!{
@@ -184,7 +173,7 @@ import Foundation
 			
 			bootloader = currentBootloader
 			
-			let _ = unloadEFIFolder()
+			unloadEFIFolder()
 			
 			for c in contentToCheck{
 				var check: Bool = false
@@ -210,15 +199,15 @@ import Foundation
 			if scanDir(fromPath){
 				if let check = checkSavedEFIFolder(){
 					if !check{
-						let _ = unloadEFIFolder()
+						unloadEFIFolder()
 						return nil
 					}
 				}else{
-					let _ = unloadEFIFolder()
+					unloadEFIFolder()
 					return false
 				}
 			}else{
-				let _ = unloadEFIFolder()
+				unloadEFIFolder()
 				return false
 			}
 			
@@ -244,42 +233,42 @@ import Foundation
 					
 					var id: ObjCBool = false;
 					
-					if fm.fileExists(atPath: file, isDirectory: &id){
-						var name = "/"
+					if !fm.fileExists(atPath: file, isDirectory: &id){ continue }
+					
+					var name = "/"
+					
+					if file != firstDir{
+						//name = file.substring(from: firstDir.endIndex)
+						name = String(file[firstDir.endIndex...])
+					}
+					
+					Swift.print("        Item name: \(name)")
+					
+					let url = URL(fileURLWithPath: name, isDirectory: false)
+					
+					if id.boolValue{
 						
-						if file != firstDir{
-							//name = file.substring(from: firstDir.endIndex)
-							name = String(file[firstDir.endIndex...])
-						}
-						
-						Swift.print("        Item name: \(name)")
-						
-						let url = URL(fileURLWithPath: name, isDirectory: false)
-						
-						if id.boolValue{
-							
-							if url.deletingLastPathComponent().path == firstDir{
-								if url.lastPathComponent != "BOOT" && url.lastPathComponent != "CLOVER" && url.lastPathComponent != "OC"{
-									continue
-								}
-							}
-							
-							r = scanDir(file)
-							
-							sharedEFIFolderTempData[name] = refData
-							
-							Swift.print("Finished scanning EFI Folder's Directory on: \n    \(file)")
-							
-						}else{
-							
-							if url.lastPathComponent == ".DS_Store"{
+						if url.deletingLastPathComponent().path == firstDir{
+							if url.lastPathComponent != "BOOT" && url.lastPathComponent != "CLOVER" && url.lastPathComponent != "OC"{
 								continue
 							}
-							
-							Swift.print("        File ID: " + name)
-							
-							sharedEFIFolderTempData[name] = try Data.init(contentsOf: URL(fileURLWithPath: file))
 						}
+						
+						r = scanDir(file)
+						
+						sharedEFIFolderTempData[name] = refData
+						
+						Swift.print("Finished scanning EFI Folder's Directory on: \n    \(file)")
+						
+					}else{
+						
+						if url.lastPathComponent == ".DS_Store"{
+							continue
+						}
+						
+						Swift.print("        File ID: " + name)
+						
+						sharedEFIFolderTempData[name] = try Data.init(contentsOf: URL(fileURLWithPath: file))
 					}
 					
 				}
@@ -337,7 +326,7 @@ import Foundation
 		
 		class func reset(){
 			if sharedi != nil{
-				let _ = sharedi.unloadEFIFolder()
+				sharedi.unloadEFIFolder()
 			}
 			sharedi = nil
 			sharedi = EFIFolderReplacementManager()
@@ -347,9 +336,3 @@ import Foundation
 
 
 #endif
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToOptionalFileAttributeKeyDictionary(_ input: [String: Any]?) -> [FileAttributeKey: Any]? {
-	guard let input = input else { return nil }
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (FileAttributeKey(rawValue: key), value)})
-}

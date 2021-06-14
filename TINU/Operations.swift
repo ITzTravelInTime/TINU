@@ -99,7 +99,7 @@ public final class Operations{
 				try TextManager!.readmeText!.write(toFile: sv + "/README.txt", atomically: true, encoding: .utf8)
 				
 				//trys to change the file attributes of the readme file to make it visible
-				let e = getErr(cmd: "chflags nohidden \"" + sv + "/README.txt\"")
+				let e = CommandsManager.getErr(cmd: "chflags nohidden \"" + sv + "/README.txt\"")
 				if (e != "" && e != "Password:"){
 					log("       The readme file file can'be maked visible")
 					ok = false

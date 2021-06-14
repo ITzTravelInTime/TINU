@@ -2,11 +2,11 @@
 	"readme":{
 		"installation":{
 			"hackintosh": "Thank you for using TINU\n\nIf you want to use this macOS system on an hackintosh, please download and install either the Clover or the OpenCore bootloader, you can find Clover here:\n https://github.com/CloverHackyColor/CloverBootloader/releases\n\nor OpenCore here:\n https://github.com/acidanthera/OpenCorePkg/releases \n\n(note that the bootloaders mentioned needs to be installed and configured properly depending on the hw configuration of the system you want to install on, for help about that go to: www.insanelymac.com or r/Hackintosh)\n\nIf you want to use this macOS system on a standard mac, you don`t have to do any extra steps, it`s ready to be used.",
-			"mac": "Thank you for using TINU\n\nRemember that this macOS installation will work just with macs officially supported by the version of the OS you choose and not with unsupported machines"
+			"mac": "Thank you for using TINU\n\nRemember that this macOS installation will work just with macs officially supported by the version of the OS you chose and not with unsupported machines"
 		},
 		"installer":{
 			"hackintosh": "Thank you for using TINU\n\nIf you want to use this bootable macOS installer on an hackintosh, please download and install either the Clover or the OpenCore bootloader, you can find Clover here:\n https://github.com/CloverHackyColor/CloverBootloader/releases\n\nor OpenCore here:\n https://github.com/acidanthera/OpenCorePkg/releases \n\n(note that the bootloaders mentioned needs to be installed and configured properly depending on the hw configuration of the system you want to install on, for help about that go to: www.insanelymac.com or r/Hackintosh)\n\nIf you want to use this bootable macOS installer on a standard mac, you don`t have to do any extra steps, it`s ready to be used.",
-			"mac": "Thank you for using TINU\n\nRemember that this installer will work just with macs officially supported by the version of macOS you choose and not with unsupported machines"
+			"mac": "Thank you for using TINU\n\nRemember that this installer will work just with macs officially supported by the version of macOS you chose and not with unsupported machines"
 		}
 	},
 	"helpfoulMessange":{
@@ -18,7 +18,7 @@
 			1,
 			{
 				"title" : "Create a copy of TINU on the installer",
-				"desc" : "Creates a copy of this application inside the choosen drive.\nOnce you boot into the USB installer you can open TINU by performing this command into the terminal:\n\n/Volumes/Image\\ Volume/TINU.app/Contents/MacOS/TINU\n\nUsing TINU in this way it allows you to create bootable macOS installers from a macOS installer/recovery or allows you to install macOS from TINU.\n\nWorks only with Mac OS X El Capitan or newer versions of the macOS installer/macOS recovery."
+				"desc" : "Creates a copy of this application inside the chosen drive.\nOnce you boot into the USB installer you can open TINU by performing this command into the terminal:\n\n/Volumes/Image\\ Volume/TINU.app/Contents/MacOS/TINU\n\nUsing TINU in this way it allows you to create bootable macOS installers from a macOS installer/recovery or allows you to install macOS from TINU.\n\nWorks only with Mac OS X El Capitan or newer versions of the macOS installer/macOS recovery."
 			},
 			2,
 			{
@@ -32,8 +32,8 @@
 			},
 			4,
 			{
-				"title" : "Format the choosen drive entirely",
-				"desc" : "Erases all the contentent of the choosen storage device, and then formats it using a macOS Extended Journaled (HFS+) main partition with the GUID partition table for the drive.\nThis operation is mandatory (and it will be performed automatically) if you chose a drive."
+				"title" : "Format the chosen drive entirely",
+				"desc" : "Erases all the contentent of the chosen storage device, and then formats it using a macOS Extended Journaled (HFS+) main partition with the GUID partition table for the drive.\nThis operation is mandatory (and it will be performed automatically) if you chose a drive."
 			},
 			6,
 			{
@@ -69,8 +69,8 @@
 			},
 			4,
 			{
-				"title" : "Format the choosen drive entirely",
-				"desc" : "Erases all the contentent of the choosen storage device, and then formats it using a macOS Extended Journaled (HFS+) main partition with the GUID partition table for the drive.\nThis operation is mandatory (and it will be performed automatically) if you chose a drive."
+				"title" : "Format the chosen drive entirely",
+				"desc" : "Erases all the contentent of the chosen storage device, and then formats it using a macOS Extended Journaled (HFS+) main partition with the GUID partition table for the drive.\nThis operation is mandatory (and it will be performed automatically) if you chose a drive."
 			},
 			5,
 			{
@@ -120,8 +120,8 @@
 				"errorDialog" : "There was an unkown error while trying to open the selcted EFI folder",
 				"improperDialogTitle": "The folder \"${pathName}\" is not a proper ${bootloader} efi folder",
 				"improperDialog" : "The folder you selected \"${path}\" does not contain the required element \"${missing}\", make sure to open just the folder named EFI and that it cointains all the needed elements",
-				"alreadyChoosen" : "You have already choosen a ${bootloader} EFI folder",
-				"buttonChoose" : "Chose Folder...",
+				"alreadyChoosen" : "You are already using a ${bootloader} EFI folder",
+				"buttonChoose" : "Choose Folder...",
 				"buttonRemoove" : "Remoove",
 				"errorUnloadingTitle" : "Error while restoring default settings",
 				"errorUnloading" : "Error durning the cleanup of TINU's Stored EFI folder memory, please close and then re-open the app to clean this memory."
@@ -240,7 +240,7 @@
 				"defaultButton" : "Set default options",
 				"optionsSection" : "General options",
 				"advancedOptionsSection" : "Advanced options",
-				"bootloaderSection" : "Install clover ${bootloader}\nEFI folder"
+				"bootloaderSection" : "Install ${bootloader}\nEFI folder"
 			}
 		},
 		"DownloadAppViewController":{
@@ -335,7 +335,7 @@
 				"appNormalWarn" : "${name}",
 				"appNormalToolTip" : "Path: ${path}",
 				"appTooBigWarn" : "App too big: ${name}",
-				"appTooBigToolTip" : "This macOS installer app is not usable bacause you choose a target drive which is too small\n\nPath: ${path}",
+				"appTooBigToolTip" : "This macOS installer app is not usable bacause you chose a target drive which is too small\n\nPath: ${path}",
 				"appDamagedWarn" : "Damaged app: ${name}",
 				"appDamagedToolTip" : "This macOS installer app is not usable bacause it's missing some internal elements, you need the full installer app from the App Store which weights more than 5 gb\n\nPath: ${path}",
 				"appErrorWarn" : "Error: ${name}",

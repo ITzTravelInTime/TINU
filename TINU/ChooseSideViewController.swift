@@ -65,7 +65,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		#endif
 		
 		#if noFirstAuth
-		if !sharedIsOnRecovery{
+		if !isOnRecovery{
 			print("WARNING: this app has been compiled with the first step authentication disabled, it may be less secure to use!")
 			//msgBoxWarning("WARNING", "This app has been compiled with first step authentication disabled, it may be less secure to use, use it at your own risk!")
 		}
@@ -240,7 +240,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 			if !isRootUser{
 			
 				if !ChooseSideViewController._already_prompted{
-					if (SIPManager.checkSIP()){
+					if (SIPManager.checkStatus()){
 				
 						DiagnosticsModeManager.shared.open(withSudo: true)
 					

@@ -36,7 +36,7 @@
 		C61AE89420C2F16400229FEC /* OtherOptionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61AE89320C2F16400229FEC /* OtherOptionInfoViewController.swift */; };
 		C621CFA71F4F6A6500CC6D5B /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */; };
 		C621CFAC1F4F7DF400CC6D5B /* DriveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */; };
-		C631EE4A2657F15D006F8F98 /* AppleSiliconDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C631EE492657F15D006F8F98 /* AppleSiliconDetect.swift */; };
+		C631EE4A2657F15D006F8F98 /* CPUArchDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C631EE492657F15D006F8F98 /* CPUArchDetect.swift */; };
 		C6322574221C1883003A56D4 /* FilesystemObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6322573221C1883003A56D4 /* FilesystemObserver.swift */; };
 		C638857A2670D3BA00A6D1BA /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63885792670D3BA00A6D1BA /* Themes.swift */; };
 		C638857C26725BEC00A6D1BA /* UIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C638857B26725BEC00A6D1BA /* UIManager.swift */; };
@@ -60,7 +60,7 @@
 		C65AA61F1F4F497A00C43223 /* ClassExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65AA61E1F4F497A00C43223 /* ClassExtensions.swift */; };
 		C65AA6211F4F4C0400C43223 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65AA6201F4F4C0400C43223 /* InfoViewController.swift */; };
 		C65AA6241F4F4C3400C43223 /* ChoseDriveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65AA6221F4F4C3400C43223 /* ChoseDriveViewController.swift */; };
-		C65B5EFF1F72099F0061F1A3 /* ScriptsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B5EFE1F72099F0061F1A3 /* ScriptsManager.swift */; };
+		C65B5EFF1F72099F0061F1A3 /* CommandsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B5EFE1F72099F0061F1A3 /* CommandsManager.swift */; };
 		C65B5F031F720D680061F1A3 /* SudoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B5F021F720D680061F1A3 /* SudoManager.swift */; };
 		C660D1972529AEB30027FCA0 /* TextManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C660D1962529AEB30027FCA0 /* TextManagement.swift */; };
 		C660D1992529BB260027FCA0 /* EFIPMTextAssetsIt.json in Resources */ = {isa = PBXBuildFile; fileRef = C660D1982529BB260027FCA0 /* EFIPMTextAssetsIt.json */; };
@@ -161,7 +161,7 @@
 		C61AE89320C2F16400229FEC /* OtherOptionInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherOptionInfoViewController.swift; sourceTree = "<group>"; };
 		C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveView.swift; sourceTree = "<group>"; };
-		C631EE492657F15D006F8F98 /* AppleSiliconDetect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSiliconDetect.swift; sourceTree = "<group>"; };
+		C631EE492657F15D006F8F98 /* CPUArchDetect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUArchDetect.swift; sourceTree = "<group>"; };
 		C6322573221C1883003A56D4 /* FilesystemObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesystemObserver.swift; sourceTree = "<group>"; };
 		C63885792670D3BA00A6D1BA /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		C638857B26725BEC00A6D1BA /* UIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIManager.swift; sourceTree = "<group>"; };
@@ -185,7 +185,7 @@
 		C65AA61E1F4F497A00C43223 /* ClassExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassExtensions.swift; sourceTree = "<group>"; };
 		C65AA6201F4F4C0400C43223 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		C65AA6221F4F4C3400C43223 /* ChoseDriveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoseDriveViewController.swift; sourceTree = "<group>"; };
-		C65B5EFE1F72099F0061F1A3 /* ScriptsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScriptsManager.swift; sourceTree = "<group>"; };
+		C65B5EFE1F72099F0061F1A3 /* CommandsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandsManager.swift; sourceTree = "<group>"; };
 		C65B5F021F720D680061F1A3 /* SudoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudoManager.swift; sourceTree = "<group>"; };
 		C660D1962529AEB30027FCA0 /* TextManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextManagement.swift; sourceTree = "<group>"; };
 		C660D1982529BB260027FCA0 /* EFIPMTextAssetsIt.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = EFIPMTextAssetsIt.json; sourceTree = "<group>"; };
@@ -286,6 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				C60C40BB20CCA2BB00258574 /* AppManager.swift */,
+				C65B5EFE1F72099F0061F1A3 /* CommandsManager.swift */,
 				C60C40BF20CCA9DC00258574 /* CreationVariablesManager.swift */,
 				C6BEA10124A3A5AE008997CF /* DiagnosticsModeManager.swift */,
 				C60C40C620CCAE6200258574 /* DrivesManager.swift */,
@@ -301,7 +302,6 @@
 				C60C40C320CCACB600258574 /* PlistXMLManager.swift */,
 				C63F035F24E3D19300F950B4 /* ProgressBarValuesManager.swift */,
 				C6D9EE58210AED4700019818 /* Reachability.swift */,
-				C65B5EFE1F72099F0061F1A3 /* ScriptsManager.swift */,
 				C6C8A8B0249E9C8A009C3D6E /* SIPManager.swift */,
 				C6F68E8A20D0277B00F7A0F4 /* SmallManagers.swift */,
 				C65B5F021F720D680061F1A3 /* SudoManager.swift */,
@@ -433,7 +433,7 @@
 		C6CE80F225219BE900B28413 /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				C631EE492657F15D006F8F98 /* AppleSiliconDetect.swift */,
+				C631EE492657F15D006F8F98 /* CPUArchDetect.swift */,
 				C6AEE8FA24E41A49006135FB /* CodablesGeneric.swift */,
 				C6AD9344239A684D0004704C /* DiskutilListCodable.swift */,
 				C6322573221C1883003A56D4 /* FilesystemObserver.swift */,
@@ -770,7 +770,7 @@
 				C60C40C020CCA9DC00258574 /* CreationVariablesManager.swift in Sources */,
 				C638857C26725BEC00A6D1BA /* UIManager.swift in Sources */,
 				DDA7FB601F96AE510029F4F2 /* RuntimeCode.swift in Sources */,
-				C65B5EFF1F72099F0061F1A3 /* ScriptsManager.swift in Sources */,
+				C65B5EFF1F72099F0061F1A3 /* CommandsManager.swift in Sources */,
 				C61AE89420C2F16400229FEC /* OtherOptionInfoViewController.swift in Sources */,
 				C6F68E8B20D0277B00F7A0F4 /* SmallManagers.swift in Sources */,
 				C60C40BA20CCA24000258574 /* TextsManager.swift in Sources */,
@@ -810,7 +810,7 @@
 				C676D197215EB20E00E900E9 /* MediaCreationManagerMain.swift in Sources */,
 				C647B3A0211CF2C40024B9A1 /* EFIPartitionMounterUIClasses.swift in Sources */,
 				DD3AC14C1FBB974C00C71F53 /* OtherOptionCheckBox.swift in Sources */,
-				C631EE4A2657F15D006F8F98 /* AppleSiliconDetect.swift in Sources */,
+				C631EE4A2657F15D006F8F98 /* CPUArchDetect.swift in Sources */,
 				C615B817216B0B8900913BFF /* MediaCreationManagerErrorChecking.swift in Sources */,
 				C6188D9C25157F8400BCBC51 /* LanguageSelection.swift in Sources */,
 				C6188D96251306FC00BCBC51 /* AllertFunctionsWithTextManager.swift in Sources */,

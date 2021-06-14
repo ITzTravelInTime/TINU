@@ -193,12 +193,11 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
     
     @IBAction func toggleIconMode(_ sender: Any) {
 		#if isTool
-		if !sharedIsOnRecovery{
+		if !isOnRecovery{
         	if let appDelegate = NSApplication.shared().delegate as? AppDelegate{
             	appDelegate.toggleStatusItem()
             	appDelegate.togglePopover(self)
         	}
-            
 		}
 		#endif
     }
@@ -302,9 +301,9 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
 						
 						if let documentView = self.scrollView.documentView{
 							documentView.scroll(NSPoint.init(x: 0, y: documentView.bounds.size.height))
-                            if !(self.scrollView.verticalScroller?.isEnabled)!{
+                            //if !(self.scrollView.verticalScroller?.isEnabled)!{
                                // documentView.frame.size.width -= 12
-                            }
+                            //}
 						}
                         
                         

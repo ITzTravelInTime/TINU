@@ -8,13 +8,9 @@
 
 /*TODO:
 
+-EFIPM SF Symbols icons for volumes
+
 -continue with ui revision
-
--copyright string localization
-
--EFI PM memory leak
-
--divide language files in folders one for each language rather than re-naming them according to the language to use
 
 -debug and test all of the features
 
@@ -22,22 +18,36 @@
 
 -install clover and open core efi folder label fix
 
--adopt sf symbols icons when possible
-
 -menu items text from json
 
 -credits view controller text from json (probably requires a custom json)
 
 -contacts view controller text from json (probably requires a cutom json)
 
--macOS installer version icons as .icns
+-thank you messange in the final screen (if successful)
+
+-credits button in the final screen (if successful)
+
+-"Star this project on github" button in the final screen (if successful)
+
+-Maybe opening a terminal window and using it for the "createinstallmedia" process is the better way to avoid the SIP on issues, investigate
+
+-Test if the SIP on issues are a thing on big sur and monterey
+
+-Make UI Sketches for the multiple installer creation process
+
+-Links should not be hardcoded
+
+-EFIFolderReplacementManager should be part of CreationVariablesManager
 
 */
 
 /*TODO but with less priority:
-
+-EFI PM memory leak
+-copyright string localization
 -right to left languages ui support
 -installation unsupported apps (lion and mountain lion) mark instead of hiding
+-divide language files in folders one for each language rather than re-naming them according to the language to use
 
 -reimplement efi partition mounter's back end using codable classes (Work in progress)
 

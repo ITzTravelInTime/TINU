@@ -40,7 +40,7 @@ class ChooseCustomizationViewController: GenericViewController {
 		DispatchQueue.main.async {
 			
 			//restoreOtherOptions()
-			cvm.shared.options.checkOtherOptions()
+			cvm.shared.options.check()
 			self.swapCurrentViewController("Confirm")
 		}
     }

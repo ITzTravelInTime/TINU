@@ -45,21 +45,6 @@ class ChoseAppViewController: GenericViewController, ViewID {
         }
     }
     
-    
-    /*override func viewDidSetVibrantLook(){
-        super.viewDidSetVibrantLook()
-        if let document = scoller.documentView{
-            if document.identifier == spacerID{
-                document.frame = NSRect(x: 0, y: 0, width: self.scoller.frame.width - 2, height: self.scoller.frame.height - 2)
-                if let content = document.subviews.first{
-                    content.frame.origin = NSPoint(x: document.frame.width / 2 - content.frame.width / 2, y: 0)
-                }
-                self.scoller.documentView = document
-            }
-        }
-		
-    }*/
-    
     @IBOutlet weak var ok: NSButton!
     
     @IBOutlet weak var spinner: NSProgressIndicator!
@@ -96,7 +81,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 				swapCurrentViewController("License")
 			}else{
 				
-				cvm.shared.options.checkOtherOptions()
+				cvm.shared.options.check()
 				#if skipChooseCustomization
 				let _ = self.swapCurrentViewController("Confirm")
 				#else
@@ -122,10 +107,9 @@ class ChoseAppViewController: GenericViewController, ViewID {
 	}
 	
 	private static var installerAppNeededFiles: [[String]]{
-		get{
 			//the first element of the first of this array of arrays should always be executable to look for
+			//TODO: Maybe check for the base system, this search might be more difficoult
 			return ([ ["/Contents/Resources/" + cvm.shared.executableName],["/Contents/Info.plist"],["/Contents/SharedSupport"], ["/Contents/SharedSupport/InstallESD.dmg", "/Contents/SharedSupport/SharedSupport.dmg"]])
-		}
 	}
 	
 	@objc func chooseExternal() {
@@ -588,6 +572,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 						*/
 					}
 					
+					//TODO: this is not ok for resizable windows
 					if content.frame.size.width < self.scoller.frame.width{
 						let spacer = NSView(frame: NSRect(x: 0, y: 0, width: self.scoller.frame.width - 2, height: self.scoller.frame.height - 2))
 						spacer.backgroundColor = NSColor.transparent

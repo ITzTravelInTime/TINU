@@ -13,15 +13,20 @@ let toggleRecoveryModeShadows = !false
 
 public var look: UIManager.AppLook{
 	if let lk = simulateLook{
+		print("Forcing a simulated Theme \(lk.rawValue)")
 		return lk
 	}
 	
 	if ((sharedIsOnRecovery && !toggleRecoveryModeShadows) || simulateDisableShadows){
+		print("Recovery theme will be used")
 		return .recovery
 	}
+	
 	if #available(macOS 11.0, *) {
+		print("Shadows SF Symbols theme will be used")
 		return .shadowsSFSymbols
 	}else{
+		print("Shadows Old Icons theme will be used")
 		return .shadowsOldIcons
 	}
 }

@@ -36,7 +36,7 @@ import Foundation
 				let mountCMD = "diskutil mount \(withBSDID)"
 				
 				if #available(OSX 10.13.6, *), !sharedIsReallyOnRecovery{
-						if let res = runCommandWithSudo(cmd: "/bin/sh", args: ["-c", mountCMD]){
+					if let res = CommandsManager.sudo.run(cmd: "/bin/sh", args: ["-c", mountCMD]){
 						
 							text = ""
 						
@@ -44,10 +44,10 @@ import Foundation
 								text += i + "\n"
 							}
 						}else{
-							text = getOutWithSudo(cmd: mountCMD)
+							text = CommandsManager.sudo.getOut(cmd: mountCMD)
 						}
 				}else{
-					text = getOut(cmd: mountCMD)
+					text = CommandsManager.getOut(cmd: mountCMD)
 				}
 				
 				print(text ?? "")
@@ -117,7 +117,7 @@ import Foundation
 				/*if #available(OSX 10.13.6, *){
 					text = getOutWithSudo(cmd: "diskutil unmount \(withBSDID)")
 				}else{*/
-					text = getOut(cmd: "diskutil unmount \(withBSDID)")
+				text = CommandsManager.getOut(cmd: "diskutil unmount \(withBSDID)")
 				//}
 				
 				res = (text.contains("unmounted") && (text.contains("Volume EFI on") || text.contains("Volume (null) on") || (text.contains("Volume ") && text.contains("on")))) || (text.isEmpty)
@@ -161,112 +161,109 @@ import Foundation
             return res
         }
         
-        public func listPartitions() -> [String]!{
+		public func listPartitions() -> [String]!{
 			
 			if !(partitionsCache == nil || partitionsCache == []){
-                	return partitionsCache
+				return partitionsCache
 			}
 			
 			isUpdatingPartitionsCache = true
-            
-            var usableDrives: [String]! = nil
-            
-            do{
-                print("Waiting for the drives data...")
-                
-                let out = getOut(cmd: "diskutil list -plist")
-                
-                //print(out)
-                
-                if let diskutilData = try (DecodeManager.decodePlistDictionaryOpt(xml: out) as? [String: Any]){
-                    
-                    print("Got drives data")
-                    
-                    /*if let drives = diskutilData["AllDisks"] as? [String]{
-                        for drive in drives{
-                            
-                            if !drive.hasSuffix("s1"){
-                                continue
-                            }
-                            
-                            var type: String!
-                            
-                            type = dm.getDevicePropertyInfo(drive, propertyName: "Content")
-                            
-                            if let partType = type{
-                                
-                                if partType == "EFI"{
-                                    
-                                    usableDrives.append(drive)
-                                    
-                                    print("    New EFI partition found: \(drive)")
-                                    
-                                }else{
-                                    continue
-                                }
-                                
-                            }else{
-                                continue
-                            }
-                        }
-                        
-                    }else{
-                        print("    Wrong disks data!!! 1")
-                        return nil
-                    }*/
-                    
-                    if let drives = diskutilData["AllDisksAndPartitions"] as? [[String: Any]]{
-                        for drive in drives{
-                            
-                            if !((drive["Content"] as? String) == "GUID_partition_scheme"){
-                                continue
-                            }
-                            
-                            if let partitions = drive["Partitions"] as? [[String: Any]]{
-                                for partition in partitions{
-                                    if let content = partition["Content"] as? String{
-                                        if content == "EFI"{
-											
-											if let id = partition["DeviceIdentifier"] as? String{
-											
-												if usableDrives == nil{
-													usableDrives = []
-												}
-												
-                                            	usableDrives.append(id)
-                                            	print("    New EFI partition found: \(id)")
-												
-											}
-											
-                                        }
-                                    }
-                                }
-                            }
-                            
-                        }
-                    }else{
-                        print("    Wrong disks data!!! 2")
-                        return nil
-                    }
-                    
-                }else{
-                    print("    Wrong diskutil data!!!")
-                    return nil
-                }
-                
-            }catch let err{
-                print("EFI partitions listing error: \(err)")
-                return nil
-            }
-            
-            isUpdatingPartitionsCache = false
+			
+			var usableDrives: [String]! = nil
+			
+			do{
+				print("Waiting for the drives data...")
+				
+				let out = CommandsManager.getOut(cmd: "diskutil list -plist")
+				
+				//print(out)
+				
+				guard let diskutilData = try (DecodeManager.decodePlistDictionaryOpt(xml: out) as? [String: Any]) else {
+					print("    Wrong diskutil data!!!")
+					return nil
+				}
+				
+				print("Got drives data")
+				
+				/*if let drives = diskutilData["AllDisks"] as? [String]{
+				for drive in drives{
+				
+				if !drive.hasSuffix("s1"){
+				continue
+				}
+				
+				var type: String!
+				
+				type = dm.getDevicePropertyInfo(drive, propertyName: "Content")
+				
+				if let partType = type{
+				
+				if partType == "EFI"{
+				
+				usableDrives.append(drive)
+				
+				print("    New EFI partition found: \(drive)")
+				
+				}else{
+				continue
+				}
+				
+				}else{
+				continue
+				}
+				}
+				
+				}else{
+				print("    Wrong disks data!!! 1")
+				return nil
+				}*/
+				
+				guard let drives = diskutilData["AllDisksAndPartitions"] as? [[String: Any]] else{
+					print("    Wrong disks data!!! 2")
+					return nil
+				}
+				
+				for drive in drives{
+					
+					if !((drive["Content"] as? String) == "GUID_partition_scheme"){
+						continue
+					}
+					
+					guard let partitions = drive["Partitions"] as? [[String: Any]] else { continue }
+					
+					for partition in partitions{
+						guard let content = partition["Content"] as? String else { continue }
+						
+						if content != "EFI"{
+							continue
+						}
+						
+						guard let id = (partition["DeviceIdentifier"] as? String) else { continue }
+						
+						if usableDrives == nil{
+							usableDrives = []
+						}
+						
+						usableDrives.append(id)
+						print("    New EFI partition found: \(id)")
+						
+					}
+					
+				}
+				
+			}catch let err{
+				print("EFI partitions listing error: \(err)")
+				return nil
+			}
+			
+			isUpdatingPartitionsCache = false
 			
 			if usableDrives != nil && partitionsCache == []{
 				partitionsCache = usableDrives
 			}
-            
-            return usableDrives
-        }
-}
+			
+			return usableDrives
+		}
+	}
 
 #endif

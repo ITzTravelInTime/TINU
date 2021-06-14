@@ -24,7 +24,7 @@ public final class DrivesManager{
 			//probably another check is needed to avoid having different devices plugged one after the other and all having the same id being used with the info from one
 			if _id != id || _out == nil{
 				_id = id
-				_out = getOut(cmd: "diskutil info -plist \"" + id + "\"")
+				_out = CommandsManager.getOut(cmd: "diskutil info -plist \"" + id + "\"")
 				
 				if _out.isEmpty{
 					return nil
@@ -70,7 +70,7 @@ public final class DrivesManager{
 	
 	//gets the drive mount point from it's bsd name
 	class func getBSDIDFromDriveName(_ path: String) -> String!{
-		let res = getOut(cmd: "df -lH | grep \"" + path + "\" | awk '{print $1}'")
+		let res = CommandsManager.getOut(cmd: "df -lH | grep \"" + path + "\" | awk '{print $1}'")
 		
 		if res.isEmpty{
 			return nil

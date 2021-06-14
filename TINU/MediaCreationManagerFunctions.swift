@@ -103,7 +103,7 @@ extension InstallMediaCreationManager{
 		
 		log("    Disks unmount will be done with command: \n    \(unmountComm)")
 		
-		if let out = getOutWithSudo(cmd: unmountComm){
+		if let out = CommandsManager.sudo.getOut(cmd: unmountComm){
 			
 			print(out)
 			
@@ -115,7 +115,7 @@ extension InstallMediaCreationManager{
 			
 		}else{
 			print("Auth failed: Emergency remount")
-			print(getOut(cmd: "diskutil mount " + id))
+			print(CommandsManager.getOut(cmd: "diskutil mount " + id))
 		}
 		
 		return nil
@@ -176,10 +176,10 @@ extension InstallMediaCreationManager{
 		
 		//gets the output of the format script
 		//out is nil only if the authentication has failed
-		guard let out = getOutWithSudo(cmd: cmd) else{
+		guard let out = CommandsManager.sudo.getOut(cmd: cmd) else{
 			log("Failed to perform needed authentication to format target drive\n\n")
 			
-			print(getOut(cmd: "diskutil mount " + cvm.shared.disk.bSDDrive))
+			print(CommandsManager.getOut(cmd: "diskutil mount " + cvm.shared.disk.bSDDrive))
 			
 			DispatchQueue.main.sync {
 				self.viewController.goBack()
@@ -224,17 +224,17 @@ extension InstallMediaCreationManager{
 			//we can set this boolean to true because the process has been successfoul
 			didChangePS = true
 			//setup variables for the \createinstall media, the target partition is always the second partition into the drive, the first one is the EFI partition
-			cvm.shared.disk.bSDDrive = "/dev/" + tmpBSDName + "s2"
+			cvm.shared.disk.part.bsdName = "/dev/" + tmpBSDName + "s2"
 			
 			if cvm.shared.installMac{
 				cvm.shared.disk.part.apfsBDSName = nil
 			}
 			
-			cvm.shared.disk.path = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive)
+			cvm.shared.disk.part.mountPoint = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive)
 			
 			if cvm.shared.disk.path == nil{
 				//cvm.shared.sharedVolume = "/Volumes/" + newVolumeName
-				cvm.shared.disk.path = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive)
+				cvm.shared.disk.part.mountPoint = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive)
 			}
 			
 			DispatchQueue.main.async {
@@ -327,17 +327,11 @@ extension InstallMediaCreationManager{
 		if cvm.shared.installMac{
 			
 			///Volumes/Image\ Volume/Install\ macOS\ High\ Sierra.app/Contents/Resources/startosinstall --volume /Volumes/MAC --converttoapfs NO
-			var noAPFSSupport = true
-			
-			//check if the version of the installer does not supports apfs
-			if let ap = cvm.shared.app.sharedAppNotSupportsAPFS(){
-				noAPFSSupport = ap
-			}
 			
 			mainCMD += " --agreetolicense"
 			
 			//the command is adjusted if the version of the installer supports apfs and if the user prefers to avoid upgrading to apfs
-			if !noAPFSSupport || !isNotMojave{
+			if !(cvm.shared.app.sharedAppNotSupportsAPFS() ?? true) || !isNotMojave{
 				if useAPFS || cvm.shared.disk.aPFSContaninerBSDDrive != nil{
 					mainCMD += " --converttoapfs YES"
 				}else{

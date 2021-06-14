@@ -43,7 +43,7 @@ public final class AppManager{
 		
 		//log(AppBanner.banner)
 		
-		LogManager.clearLog(true)
+		LogManager.clear(true)
 		
 		let testingConditions = [
 			simulateFormatFail,
@@ -79,14 +79,14 @@ public final class AppManager{
 	public func checkUser(){
 		if sharedIsReallyOnRecovery{
 			print("Running on the root user on a mac os recovery")
-			sharedIsOnRecovery = true
+			RecoveryModeManager.shared.isOn = true
 		}else{
-			sharedIsOnRecovery = false
+			RecoveryModeManager.shared.isOn = false
 			print("Running on this user: " + NSUserName())
 			
 			if simulateRecovery{
 				print("Recovery mode simulation activated")
-				sharedIsOnRecovery = true
+				RecoveryModeManager.shared.isOn = true
 			}
 			
 		}

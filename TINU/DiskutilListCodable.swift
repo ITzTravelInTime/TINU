@@ -155,7 +155,7 @@ public struct DiskutilList: Codable, Equatable{
 		
 		log("Getting diskutil data to detect storage devices")
 		
-		let out = getOut(cmd: "diskutil list -plist")
+		let out = CommandsManager.getOut(cmd: "diskutil list -plist")
 		print(out)
 		
 		log("Got diskutil data? " + (!out.isEmpty ? "YES" : "NO") )

@@ -389,7 +389,7 @@ public class EFIPartitionToolInterface{
 					controller.watcherSkip = true
 				}
 				
-				text = getOut(cmd: "diskutil eject \(driveID)")
+				text = CommandsManager.getOut(cmd: "diskutil eject \(driveID)")
 				//text = getOut(cmd: "diskutil unmountDisk \(driveID)")
 				
 				//res = (text.contains("Unmount of all volumes on") && text.contains("was successful")) || (text.isEmpty)

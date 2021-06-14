@@ -79,13 +79,14 @@ public class CreditsViewController: GenericViewController, ViewID {
     }
     
     @IBAction func openSource(_ sender: Any) {
-        if let checkURL = NSURL(string: "https://github.com/ITzTravelInTime/TINU") {
-            if NSWorkspace.shared.open(checkURL as URL) {
-                print("url successfully opened: " + String(describing: checkURL))
-            }
-        } else {
-            print("invalid url")
-        }
+		guard let checkURL = NSURL(string: "https://github.com/ITzTravelInTime/TINU") else {
+			print("invalid url")
+			return
+		}
+           
+		if NSWorkspace.shared.open(checkURL as URL) {
+			print("url successfully opened: " + String(describing: checkURL))
+		}
     }
 	
 	@IBAction func openContacts(_ sender: Any) {

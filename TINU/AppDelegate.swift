@@ -58,13 +58,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 				
 			spd = InstallMediaCreationManager.shared.stopWithAsk()
 				
-			if let stopped = spd{
-				if !stopped{
-					print("Terminate failed")
-					return NSApplication.TerminateReply.terminateCancel
-				}
-			}else{
+			guard let stopped = spd else{
 				print("Terminate cancelled")
+				return NSApplication.TerminateReply.terminateCancel
+			}
+			
+			if !stopped{
+				print("Terminate failed")
 				return NSApplication.TerminateReply.terminateCancel
 			}
         }
@@ -128,19 +128,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		if cvm.shared.process.status == .creation{
 			
 			let list = ["{executable}" : cvm.shared.executableName]
-			if let s = InstallMediaCreationManager.shared.stop(){
-				if !s{
-					//msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
-					
-					msgboxWithManager(self, name: "stopFailed", parseList: list)
-					log("Quit error 1")
-				}
-			}else{
+			
+			guard let s = InstallMediaCreationManager.shared.stop() else{
 				//msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
 				
 				msgboxWithManager(self, name: "stopFailed", parseList: list)
 				log("Quit error 2")
+				return
 			}
+			
+			if !s{
+				//msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
+					
+				msgboxWithManager(self, name: "stopFailed", parseList: list)
+				log("Quit error 1")
+			}
+			
         }
     }
     
@@ -255,12 +258,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     }
 	
 	private func openURl(_ sURL: String){
-		if let checkURL = NSURL(string: sURL) {
-			if NSWorkspace.shared.open(checkURL as URL) {
-				print("url successfully opened: " + String(describing: checkURL))
-			}
-		} else {
+		guard let checkURL = NSURL(string: sURL) else {
 			print("invalid url")
+			return
+		}
+			
+		if NSWorkspace.shared.open(checkURL as URL) {
+			print("url successfully opened: " + String(describing: checkURL))
 		}
 	}
     

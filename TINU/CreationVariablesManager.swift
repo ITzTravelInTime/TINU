@@ -8,6 +8,7 @@
 
 import Foundation
 
+//TODO: Make this accept the multiple additional parameters init somehow
 protocol CreationVariablesManagerSection {
 	var ref: CreationVariablesManager { get }
 	init(reference: CreationVariablesManager)
@@ -15,7 +16,8 @@ protocol CreationVariablesManagerSection {
 
 public class CreationVariablesManager{
 	
-	class CreateinstallmediaSmallManager{
+	//TODO: put this into it's own file
+	class CreationProcess{
 		
 		enum Status: UInt8, CaseIterable, Codable, Equatable{
 			case configuration = 0
@@ -40,6 +42,7 @@ public class CreationVariablesManager{
 		public var startTime = Date()
 	}
 	
+	//TODO: put this into it's own file
 	class DiskInfo{
 		
 		var ref: CreationVariablesManager
@@ -86,22 +89,12 @@ public class CreationVariablesManager{
 		
 		//this variable is the drive or partition that the user has selected
 		public var path: String!{
-			get{
-				return part.mountPoint
-			}
-			set{
-				part.mountPoint = newValue
-			}
+			return part.mountPoint
 		}
 		
 		//this variable is the bsd name of the drive or partition currently selected by the user
 		public var bSDDrive: String!{
-			get{
-				return part.bsdName
-			}
-			set{
-				part.bsdName = newValue
-			}
+			return part.bsdName
 		}
 		
 		func driveName() -> String!{
@@ -111,20 +104,30 @@ public class CreationVariablesManager{
 		
 		//this variable is used to store apfs disk bsd id
 		public var aPFSContaninerBSDDrive: String!{
-				return part.apfsBDSName
+			return part.apfsBDSName
 		}
 		
 		func compareSize(to number: UInt64) -> Bool{
-			//print(currentPart.size)
-			//print(number)
 			return (part != nil) ? (part.size > number + UInt64(5 * pow(10.0, 8.0))) : false
 		}
 		
 		func compareSize(to string: String!) -> Bool{
-			if let s = UInt64(string){
-				return compareSize(to: s)
+			guard let s = UInt64(string) else { return false }
+			return compareSize(to: s)
+		}
+		
+		func meetsRequirements(size bytes: UInt64) -> Bool{
+			let gb = UInt64(pow(10.0, 9.0))
+			
+			if simulateCreateinstallmediaFail != nil{
+				return !(bytes <= (2 * gb)) // 2 gb
 			}
-			return false
+			
+			if ref.installMac{
+				return !(bytes <= (20 * gb)) //20 gb
+			}
+			
+			return !(bytes <= (6 * gb)) // 6 gb
 		}
 	}
 	
@@ -147,7 +150,7 @@ public class CreationVariablesManager{
 		
 		InstallMediaCreationManager.shared.OtherOptionsBeforeformat(canFormat: &canFormat, useAPFS: &apfs)
 		
-		if !(cvm.shared.disk.part!.isDrive || canFormat){
+		if !(disk.part!.isDrive || canFormat){
 			print("Getting drive info about the used volume")
 			if let s = disk.path{
 				var sv = s
@@ -156,7 +159,7 @@ public class CreationVariablesManager{
 					if let sb = disk.bSDDrive{
 						if let sd = dm.getPropertyInfoString(sb, propertyName: "MountPoint"){
 							sv = sd
-							disk.path = sv
+							disk.part.mountPoint = sv
 							print("Corrected the name of the target volume")
 						}else{
 							print("Can't get the mount point!!")
@@ -198,8 +201,7 @@ public class CreationVariablesManager{
 			return "startosinstall"
 		}
 		
-		
-		
+		//TODO: add some optimized check (possibly with stuff like caching, maybe using the cache of the app variable) to know if the alternate executable exists
 		//only on yosemite use the dedicated executable provvided by the macOS 12+ installer app
 		if #available(macOS 10.10, *){ if #available(macOS 10.11, *){ } else{
 			if app.installerAppSupportsThatVersion(version: 17) ?? false{
@@ -218,7 +220,7 @@ public class CreationVariablesManager{
 		disk = DiskInfo(reference: self)
 	}
 	
-	let process: CreateinstallmediaSmallManager = CreateinstallmediaSmallManager()
+	let process: CreationProcess = CreationProcess()
 	var disk   : DiskInfo! = nil
 	var app    : InstallerAppManager! = nil
 	var options: OtherOptionsManager! = nil

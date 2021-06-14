@@ -170,45 +170,38 @@ public class EFIReplacementView: NSView, ViewID{
 		open.showsHiddenFiles = true
 		
 		open.beginSheetModal(for: CustomizationWindowManager.shared.referenceWindow, completionHandler: {response in
-			if response == NSApplication.ModalResponse.OK{
-				if !open.urls.isEmpty{
-					
-					let cbootloader = self.bootloader
-					let url = open.urls.first!
-					
-					DispatchQueue.global(qos: .background).async{
-						if let opener = EFIFolderReplacementManager.shared.loadEFIFolder(url.path, currentBootloader: cbootloader){
-							if !opener{
-								DispatchQueue.main.async {
-									
-									//is this really usefoul or needed? can this be better?
-									//msgBoxWarning(TextManager!.getViewString(context: self, stringID: "errorDialogTitle")!, TextManager!.getViewString(context: self, stringID: "errorDialog")!)
-									
-									msgboxWithManager(self, name: "errorDialog")
-								}
-							}else{
-								DispatchQueue.main.sync {
-									self.checkOriginFolder()
-								}
-							}
-						}else{
-							DispatchQueue.main.sync {
-								
-								let replaceList = ["{path}": url.path, "{pathName}": url.lastPathComponent, "{bootloader}": cbootloader.rawValue, "{missing}" : EFIFolderReplacementManager.shared.missingFileFromOpenedFolder!]
-								
-								//let title = parse(messange: TextManager!.getViewString(context: self, stringID: "improperDialogTitle")!, keys: replaceList)
-								//let messange = parse(messange: TextManager!.getViewString(context: self, stringID: "improperDialog")!, keys: replaceList)
-								
-								//msgBoxWarning("The folder \"\(open.urls.first!.path)\" is not a proper \(self.bootloader.rawValue) efi folder", "The folder you selected \"\(open.urls.first!.path)\" does not contain the required element \"\(EFIFolderReplacementManager.shared.missingFileFromOpenedFolder!)\", make sure to open just the folder named EFI and that it cointains all the needed elements")
-								
-								//msgBoxWarning(title, messange)
-								
-								msgboxWithManager(self, name: "improperDialog", parseList: replaceList)
-								
-								EFIFolderReplacementManager.shared.resetMissingFileFromOpenedFolder()
-								
-							}
+			
+			if response != NSApplication.ModalResponse.OK{
+				return
+			}
+			
+			if open.urls.isEmpty{
+				return
+			}
+			
+			let cbootloader = self.bootloader
+			let url = open.urls.first!
+			
+			DispatchQueue.global(qos: .background).async{
+				if let opener = EFIFolderReplacementManager.shared.loadEFIFolder(url.path, currentBootloader: cbootloader){
+					if !opener{
+						DispatchQueue.main.async {
+							msgboxWithManager(self, name: "errorDialog")
 						}
+					}else{
+						DispatchQueue.main.sync {
+							self.checkOriginFolder()
+						}
+					}
+				}else{
+					DispatchQueue.main.sync {
+						
+						let replaceList = ["{path}": url.path, "{pathName}": url.lastPathComponent, "{bootloader}": cbootloader.rawValue, "{missing}" : EFIFolderReplacementManager.shared.missingFileFromOpenedFolder!]
+						
+						msgboxWithManager(self, name: "improperDialog", parseList: replaceList)
+						
+						EFIFolderReplacementManager.shared.resetMissingFileFromOpenedFolder()
+						
 					}
 				}
 			}
@@ -217,6 +210,11 @@ public class EFIReplacementView: NSView, ViewID{
 	
 	@objc func resetClick(){
 		DispatchQueue.global(qos: .background).async{
+			EFIFolderReplacementManager.shared.unloadEFIFolder()
+			DispatchQueue.main.async {
+				self.checkOriginFolder()
+			}
+			/*
 			if !EFIFolderReplacementManager.shared.unloadEFIFolder(){
 				DispatchQueue.main.async {
 					
@@ -231,14 +229,13 @@ public class EFIReplacementView: NSView, ViewID{
 					self.checkOriginFolder()
 				}
 			}
+			*/
 		}
 		
 		
 	}
 	
 	func checkOriginFolder(){
-		
-		
 		
 		if EFIFolderReplacementManager.shared.openedDirectory == nil{
 			pathLabel.stringValue = ""

@@ -23,7 +23,8 @@ let uDen: Double = 5
 
 */
 
-//progressbar fine tuning
+//TODO: Maybe put this inside the UIManager
+//progressbar fine tuning, DO NOT RENAME STUFF
 struct ProcessConsts: CodableDefaults, Codable, Equatable{
 	
 	/*

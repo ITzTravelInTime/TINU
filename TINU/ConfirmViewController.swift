@@ -46,7 +46,7 @@ class ConfirmViewController: GenericViewController, ViewID {
 		
 		if #available(OSX 10.15, *){
 			if !isRootUser{
-				SIPManager.checkSIPAndLetTheUserKnow()
+				SIPManager.checkStatusAndLetTheUserKnow()
 			}
 		}
     }
