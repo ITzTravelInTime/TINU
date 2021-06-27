@@ -14,18 +14,15 @@ import Cocoa
 
 #endif
 
-extension CommandsManager{
+extension Command{
 	
-	final class SudoManager{
+	class Sudo{
 		
 		private static let extra = " with administrator privileges"
 		
-		private var notification: NSUserNotification!
+		private static var notification: NSUserNotification!
 		
-		//this is just a singleton, nothing of interesting to see
-		static let shared = SudoManager()
-		
-		private func sendAuthNotification(){
+		private class func sendAuthNotification(){
 			#if TINU
 			if (cvm.shared.process.status.isBusy()){
 				/*
@@ -45,24 +42,24 @@ extension CommandsManager{
 				*/
 				
 				retireAuthNotification()
-				notification = nil
-				notification = NotificationsManager.sendWith(id: "login", image: nil)
+				Command.Sudo.notification = nil
+				Command.Sudo.notification = NotificationsManager.sendWith(id: "login", image: nil)
 			}
 			#endif
 		}
 		
-		@inline(__always) private func retireAuthNotification(){
+		private class func retireAuthNotification(){
 			#if TINU
-			if let noti = notification{
+			if let noti = Command.Sudo.notification{
 				NSUserNotificationCenter.default.removeDeliveredNotification(noti)
 			}
 			#endif
 		}
 		
-		func getOut(cmd: String) -> String!{
+		class func getOut(cmd: String) -> String!{
 			
-			if isRootUser{
-				return CommandsManager.getOut(cmd: cmd)
+			if User.isRoot{
+				return Command.getOut(cmd: cmd)
 			}
 			
 			//TODO: Maybe unify the 2 codes
@@ -92,7 +89,7 @@ extension CommandsManager{
 				}
 			}
 			
-			let theScript = "do shell script \"echo $(\(ncmd))\"" + SudoManager.extra
+			let theScript = "do shell script \"echo $(\(ncmd))\"" + Sudo.extra
 			
 			print(theScript)
 			
@@ -110,41 +107,14 @@ extension CommandsManager{
 			#endif
 		}
 		
-		func run(cmd : String, args : [String]) -> (output: [String], error: [String], exitCode: Int32)! {
-			
-			var output : [String] = []
-			var error : [String] = []
-			var status = Int32()
-			//runs a process object and then return the outputs
-			
-			if let p = start(cmd: cmd,args: args){
-				
-				p.process.waitUntilExit()
-				
-				let outdata = p.outputPipe.fileHandleForReading.readDataToEndOfFile()
-				if var string = String(data: outdata, encoding: .utf8) {
-					string = string.trimmingCharacters(in: .newlines)
-					output = string.components(separatedBy: "\n")
-				}
-				
-				let errdata = p.errorPipe.fileHandleForReading.readDataToEndOfFile()
-				if var string = String(data: errdata, encoding: .utf8) {
-					string = string.trimmingCharacters(in: .newlines)
-					error = string.components(separatedBy: "\n")
-				}
-				
-				status = p.process.terminationStatus
-				
-				return (output, error, status)
-			}else{
-				return nil
-			}
-			
+		class func run(cmd : String, args : [String]) -> Result! {
+			guard let handle = start(cmd: cmd, args: args) else { return nil }
+			return result(from: handle)
 		}
 		
-		func start(cmd : String, args: [String]) -> (process: Process, errorPipe: Pipe, outputPipe: Pipe)!{
-			if isRootUser {
-				return CommandsManager.start(cmd: cmd, args: args)
+		class func start(cmd : String, args: [String]) -> Handle!{
+			if User.isRoot {
+				return Command.start(cmd: cmd, args: args)
 			}
 			
 			sendAuthNotification()
@@ -161,11 +131,11 @@ extension CommandsManager{
 			
 			pcmd += ""
 			
-			let baseCMD = "osascript -e \'do shell script \"\(pcmd)\"\(SudoManager.extra)\'"
+			let baseCMD = "osascript -e \'do shell script \"\(pcmd)\"\(Sudo.extra)\'"
 			
 			print(baseCMD)
 			
-			let start = CommandsManager.start(cmd: cmd, args: [args[0], baseCMD])
+			let start = Command.start(cmd: cmd, args: [args[0], baseCMD])
 			
 			retireAuthNotification()
 			

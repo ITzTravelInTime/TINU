@@ -8,6 +8,10 @@
 
 import Cocoa
 
+fileprivate func shadowsColor(isDarkMode: Bool) -> CGColor{
+	return (isDarkMode ? NSColor.controlDarkShadowColor : NSColor.controlShadowColor).cgColor //isDarkMode ? CGColor.black : CGColor.init(gray: 0.4, alpha: 1);
+}
+
 public class ShadowView: NSView{
 	
 	func setModeFromCurrentLook(){
@@ -39,7 +43,33 @@ public class ShadowView: NSView{
 	
 	var mode: Mode = .shadowedbutton{
 		didSet{
-			draw(self.bounds)
+			self.shadow = nil
+			switch mode {
+			case .shadowedbutton:
+				self.shadow = NSShadow()
+				self.layer?.shadowRadius = 7
+				self.layer?.shadowOffset = CGSize()
+				
+				self.layer?.shadowPath = CGPath(roundedRect: self.bounds, cornerWidth: 15, cornerHeight: 15, transform: nil)
+			
+				self.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
+				self.layer?.borderWidth = 0
+				break
+			case .borderedButton:
+				self.layer?.borderWidth = 2
+				break
+			default:
+				self.layer?.backgroundColor = NSColor.transparent.cgColor
+				self.layer?.borderWidth = 0
+				
+				break
+			}
+			
+			if mode != .shadowedbutton{
+				self.layer?.masksToBounds = true
+			}
+			
+			updateColors()
 		}
 	}
 	
@@ -48,75 +78,41 @@ public class ShadowView: NSView{
 		
 		self.needsDisplay = true
 		self.needsLayout = true
+		
+		if mode == .shadowedbutton{
+			self.layer?.shadowColor = shadowsColor(isDarkMode: isDarkMode)
+		}
+		
 		let useBorder = mode == .borderedButton
-		if useBorder || look.usesSFSymbols(){
-			if useBorder{
-				self.layer?.borderColor = NSColor.systemGray.cgColor
-			}
-			if #available(macOS 10.14, *) {
-				self.layer?.backgroundColor = isSelected ? NSColor.controlAccentColor.cgColor : (!useBorder ? NSColor.controlBackgroundColor.cgColor : NSColor.transparent.cgColor)
-			}else{
-				self.layer?.backgroundColor = isSelected ? NSColor.selectedMenuItemColor.cgColor : (!useBorder ? NSColor.controlBackgroundColor.cgColor : NSColor.transparent.cgColor)
-			}
+		if useBorder{
+			self.layer?.borderColor = NSColor.systemGray.cgColor
+		}
+		
+		if !isSelected{
+			self.layer?.backgroundColor = (!useBorder ? NSColor.controlBackgroundColor.cgColor : NSColor.transparent.cgColor)
 		}else{
-			self.layer?.backgroundColor = isSelected ? NSColor.selectedControlColor.cgColor : ( NSColor.controlBackgroundColor.cgColor )
-			if mode == .shadowedbutton{
-				self.layer?.shadowColor = (isDarkMode ? NSColor.controlDarkShadowColor : NSColor.controlShadowColor).cgColor //isDarkMode ? CGColor.black : CGColor.init(gray: 0.4, alpha: 1);
+			if useBorder || look.usesSFSymbols(){
+				if #available(macOS 10.14, *) {
+					self.layer?.backgroundColor = NSColor.controlAccentColor.cgColor
+				}else{
+					self.layer?.backgroundColor = NSColor.selectedMenuItemColor.cgColor
+				}
+			}else{
+				self.layer?.backgroundColor = NSColor.selectedControlColor.cgColor
 			}
 		}
 		
-		/*
-		switch mode {
-		case .shadowedbutton:
-			self.layer?.shadowColor = (isDarkMode ? NSColor.controlDarkShadowColor : NSColor.controlShadowColor).cgColor //isDarkMode ? CGColor.black : CGColor.init(gray: 0.4, alpha: 1);
-			self.layer?.backgroundColor = isSelected ? NSColor.selectedControlColor.cgColor : NSColor.controlBackgroundColor.cgColor
-			break
-		case .borderedButton:
-			self.layer?.borderColor = NSColor.systemGray.cgColor
-			if #available(macOS 10.14, *) {
-				self.layer?.backgroundColor = isSelected ? NSColor.controlAccentColor.cgColor : NSColor.transparent.cgColor
-			} else {
-				self.layer?.backgroundColor = isSelected ? NSColor.selectedMenuItemColor.cgColor : NSColor.transparent.cgColor
-			}
-			break
-		default:
-			self.layer?.backgroundColor = isSelected ? NSColor.selectedControlColor.cgColor : NSColor.transparent.cgColor
-			break
-		}*/
 	}
 	
 	override public func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
 		
 		self.wantsLayer = true
-		self.needsDisplay = true
-		self.needsLayout = true
 		
 		self.layer?.cornerRadius = 15
 		
-		switch mode {
-		case .shadowedbutton:
-			self.shadow = NSShadow()
+		setModeFromCurrentLook()
 		
-			self.layer?.shadowColor = isDarkMode ? CGColor.black : CGColor.init(gray: 0.4, alpha: 1);
-			self.layer?.shadowRadius = 7
-			self.layer?.shadowOffset = CGSize()
-			
-			self.layer?.shadowPath = CGPath(roundedRect: self.bounds, cornerWidth: 15, cornerHeight: 15, transform: nil)
-		
-			self.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
-			//self.layer?.masksToBounds = true
-			break
-		case .borderedButton:
-			self.layer?.borderWidth = 2
-			self.layer?.masksToBounds = true
-			break
-		default:
-			self.layer?.backgroundColor = NSColor.transparent.cgColor
-			break
-		}
-		
-		updateColors()
 	}
 	
 	override public func viewDidChangeEffectiveAppearance() {
@@ -167,7 +163,7 @@ public class ShadowPanel: NSView{
 		self.backgroundColor = NSColor.windowBackgroundColor
 		
 		if useShadow{
-			self.layer?.shadowColor = isDarkMode ? CGColor.black : CGColor.init(gray: 0.4, alpha: 1)
+			self.layer?.shadowColor = shadowsColor(isDarkMode: isDarkMode)
 		}
 	}
 }

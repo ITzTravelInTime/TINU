@@ -13,21 +13,21 @@ public final class AppBanner{
 	private static let sideBorder = "\u{2551}"
 	private static let topBorder = "\u{2550}"
 	
-	private static let margin: UInt = 4
+	private static let margin: UInt64 = 4
 	
-	private static var width: UInt{
+	private static var width: UInt64{
 		struct MEM{
-			static var w: UInt = 0
+			static var w: UInt64 = 0
 		}
 		
 		if MEM.w > 0{
 			return MEM.w
 		}
 		
-		var max: UInt = 0
+		var max: UInt64 = 0
 		
 		for c in bannerContents{
-			let cc = UInt(c.count)
+			let cc = UInt64(c.count)
 			if cc > max{
 				max = cc
 			}
@@ -70,7 +70,7 @@ public final class AppBanner{
 		}
 		
 		let empty = getEmptyRow()
-		let vfill = strFill(of: empty, length: margin/2, startSeq: nil, endSeq: nil, forget: true)
+		let vfill = strFill(of: empty, length: margin / 2, startSeq: nil, endSeq: nil, forget: true)
 		let m = strFill(of: " ", length: margin, startSeq: nil, endSeq: nil, forget: true)
 		
 		MEM.cBanner += getRow(true) + vfill
@@ -81,7 +81,7 @@ public final class AppBanner{
 				continue
 			}
 			
-			let len = (width - UInt(c.count))
+			let len = (width - UInt64(c.count))
 			
 			MEM.cBanner += sideBorder + m + c + strFill(of: " ", length: len, startSeq: nil, endSeq: nil, forget: true) + m + sideBorder + "\n"
 		}

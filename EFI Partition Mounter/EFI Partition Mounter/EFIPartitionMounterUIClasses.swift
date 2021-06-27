@@ -389,7 +389,7 @@ public class EFIPartitionToolInterface{
 					controller.watcherSkip = true
 				}
 				
-				text = CommandsManager.getOut(cmd: "diskutil eject \(driveID)")
+				text = Command.getOut(cmd: "diskutil eject \(driveID)")
 				//text = getOut(cmd: "diskutil unmountDisk \(driveID)")
 				
 				//res = (text.contains("Unmount of all volumes on") && text.contains("was successful")) || (text.isEmpty)
@@ -451,12 +451,12 @@ public class EFIPartitionToolInterface{
 			
 			changeLoadMode(enabled: false)
 			
-			showInFinderButton.isHidden = !isMounted || sharedIsReallyOnRecovery
+			showInFinderButton.isHidden = !isMounted || Recovery.isActuallyOn
 			unmountButton.isHidden = !isMounted
 			
 			mountButton.isHidden = isMounted
 			
-			editOtherConfigButton.isHidden = !(isMounted && configType != nil && !sharedIsReallyOnRecovery)
+			editOtherConfigButton.isHidden = !(isMounted && configType != nil && !Recovery.isActuallyOn)
 			
 			ejectButton.isHidden = !isEjectable || (isMounted && partitions.isEmpty)
 			

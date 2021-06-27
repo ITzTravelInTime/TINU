@@ -22,7 +22,7 @@ public final class NotificationsManager: ViewID{
 	
 	class func sendWith(id: String, image: NSImage? = NSImage(named: "AppIcon")!) -> NSUserNotification!{
 		
-		if sharedIsOnRecovery{
+		if Recovery.isOn{
 			Swift.print("Recovery mode is active, returning nil for notification send")
 			return nil
 		}

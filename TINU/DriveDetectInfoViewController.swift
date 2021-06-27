@@ -42,6 +42,8 @@ public class DriveDetectInfoViewController: GenericViewController, ViewID {
 		//if self.window != sharedWindow{
 			self.button.title = TextManager.getViewString(context: self, stringID: "backButton")
 		}
+		
+		self.window.minSize = CGSize(width: 620, height: 300)
 	}
 	
 	/*override func viewDidSetVibrantLook() {

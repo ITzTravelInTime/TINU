@@ -36,7 +36,7 @@ public final class UIManager{
 	//this gives the prefix for the window title
 	public var windowTitlePrefix: String{
 		get{
-			if AppManager.shared.sharedTestingMode{
+			if App.isTesting{
 				return "TINU (testing version)"
 			}
 			

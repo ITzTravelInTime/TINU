@@ -9,9 +9,16 @@
 import Cocoa
 
 extension InstallMediaCreationManager{
-
+	
 	func manageSpecialOperations() -> Bool?{
 		var ret: Bool? = true
+		
+		//extra operations here
+		//trys to apply special options
+		DispatchQueue.main.sync {
+			//self.setActivityLabelText("Applaying custom options")
+			self.setActivityLabelText("activityLabel5")
+		}
 		
 		DispatchQueue.main.sync {
 			self.setProgressValue(self.progressMaxVal - self.processUnit)
@@ -19,7 +26,7 @@ extension InstallMediaCreationManager{
 		
 		DispatchQueue.global(qos: .background).sync {
 			
-			prepareToPerformSpecialOperations()
+			updateDriveMountPoint()
 			
 			let ok = self.performSpeacialOperations()
 			
@@ -27,7 +34,7 @@ extension InstallMediaCreationManager{
 			
 			var unmount = true
 			
-			if let o = cvm.shared.options.list[.otherOptionKeepEFIpartID]?.canBeUsed(){
+			if let o = cvm.shared.options.list[.keepEFIMounted]?.canBeUsed(){
 				unmount = !o
 			}
 			
@@ -50,39 +57,43 @@ extension InstallMediaCreationManager{
 				
 				//self.setActivityLabelText("Process ended, exiting...")
 				self.setActivityLabelText("activityLabel8")
-			
-				if ok.result == nil{
-					ret = nil
-					return
-				}
 				
-				if !ok.result!{
+			}
+			
+			if ok.result == nil{
+				ret = nil
+				return
+			}
+			
+			if ok.result!{
+				return
+			}
+			
+			ret = false
+			
+			//installer creation failed, bacause of an error with the advanced options
+			
+			if cvm.shared.installMac{
+				
+				log("\nOne or more errors detected during the execution of the options, the macOS installation process has been canceld, check the messages printed before this one for more details abut that erros\n")
+				
+			}else{
+				
+				log("\nOne or more errors detected during the execution of the advanced options, your bootable macOS installer will probably not work properly, so we sugegst you to restart the whole install media creation process and eventually to format the target drive using terminal or disk utility before using TINU, check the messages printed before this one for more details abut that erros\n")
+				
+			}
+			
+			DispatchQueue.main.sync {
+				
+				if let msg = ok.messange{
 					
-					ret = false
+					self.viewController.goToFinalScreen(title: msg, success: false)
 					
-					//installer creation failed, bacause of an error with the advanced options
+				}else{
 					
-					if cvm.shared.installMac{
-						
-						log("\nOne or more errors detected during the execution of the options, the macOS installation process has been canceld, check the messages printed before this one for more details abut that erros\n")
-						
-					}else{
-						
-						log("\nOne or more errors detected during the execution of the advanced options, your bootable macOS installer will probably not work properly, so we sugegst you to restart the whole install media creation process and eventually to format the target drive using terminal or disk utility before using TINU, check the messages printed before this one for more details abut that erros\n")
-						
-					}
+					//self.viewController.goToFinalScreen(title: "TINU failed to apply the advanced options on the bootable macOS installer, check the log for details", success: false)
 					
-					
-					if let msg = ok.messange{
-						
-						self.viewController.goToFinalScreen(title: msg, success: false)
-						
-					}else{
-						
-						//self.viewController.goToFinalScreen(title: "TINU failed to apply the advanced options on the bootable macOS installer, check the log for details", success: false)
-						
-						self.viewController.goToFinalScreen(id: "finalScreenAOE")
-					}
+					self.viewController.goToFinalScreen(id: "finalScreenAOE")
 				}
 			}
 			
@@ -91,18 +102,24 @@ extension InstallMediaCreationManager{
 		return ret
 	}
 	
-	private func prepareToPerformSpecialOperations(){
-		if cvm.shared.installMac{
+	private func updateDriveMountPoint(){
+		/*if cvm.shared.installMac{
 			if let a = cvm.shared.disk.aPFSContaninerBSDDrive{
-				cvm.shared.disk.part.mountPoint = dm.getMountPointFromPartitionBSDID(a)
+				cvm.shared.disk.current.path = dm.getMountPointFromPartitionBSDID(a)
 			}else{
-				cvm.shared.disk.part.mountPoint = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive!)
+				cvm.shared.disk.current.path = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive!)
 			}
 		}else{
-			cvm.shared.disk.part.mountPoint = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive!)
+			cvm.shared.disk.current.path = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive!)
+		}*/
+		
+		if let a = cvm.shared.disk.aPFSContaninerBSDDrive, cvm.shared.installMac{
+			cvm.shared.disk.current.path = dm.getMountPointFromPartitionBSDID(a)
+		}else{
+			cvm.shared.disk.current.path = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive!)
 		}
 		
-		print(cvm.shared.disk.path ?? "")
+		log("Disk path set to: " + (cvm.shared.disk.path ?? ""))
 	}
 	
 	private func checkOperationResult(operation: SettingsRes, res: inout Bool) -> String?{
@@ -245,54 +262,6 @@ extension InstallMediaCreationManager{
 				return SettingsRes(result: false, messange: m)
 			}
 		}
-		
-		
-		
-		/*
-		//create readme
-		if let m = checkOperationResult(operation: OptionalOperations.shared.createReadme(), res: &ok){
-			return SettingsRes(result: ok, messange: m)
-		}
-		
-		//3
-		incrementProgressUnit()
-		
-		#if !macOnlyMode
-		//create IABootFiles folder
-		if let m = checkOperationResult(operation: OptionalOperations.shared.createAIBootFiles(), res: &ok){
-			return SettingsRes(result: ok, messange: m)
-		}
-		#endif
-		
-		//4
-		incrementProgressUnit()
-		
-		#if !macOnlyMode
-		//delete the IAPhysicalMedia file
-		if let m = checkOperationResult(operation: OptionalOperations.shared.deleteIAPMID(), res: &ok){
-			return SettingsRes(result: ok, messange: m)
-		}
-		#endif
-		
-		//5
-		incrementProgressUnit()
-		
-		//gives to the install media the icon of the mac os installer app
-		if let m = checkOperationResult(operation: OptionalOperations.shared.createIcon(), res: &ok){
-			return SettingsRes(result: ok, messange: m)
-		}
-		
-		//6
-		incrementProgressUnit()
-		
-		//copyes this app on the mac os install media
-		if let m = checkOperationResult(operation: OptionalOperations.shared.createTINUCopy(), res: &ok){
-			return SettingsRes(result: ok, messange: m)
-		}
-		
-		//7 + 8
-		incrementProgressUnit(2)
-		*/
 		
 		//8
 		DispatchQueue.main.sync {

@@ -207,7 +207,8 @@ extension String{
 	}
 	
 	var isInt: Bool {
-		return !isEmpty && Int(self) != nil
+		if isEmpty { return false }
+		return Int(self) != nil
 	}
 	
 	var intValue: Int! {
@@ -215,16 +216,27 @@ extension String{
 	}
 	
 	var isUInt: Bool {
-		return !isEmpty && UInt(self) != nil
+		if isEmpty { return false }
+		return UInt(self) != nil
 	}
 	
 	var uIntValue: UInt! {
 		return UInt(self)
 	}
 	
+	var isUInt64: Bool{
+		if isEmpty { return false }
+		return UInt64(self) != nil
+	}
+	
+	var uInt64Value: UInt64! {
+		return UInt64(self)
+	}
+	
 	func contains(_ str: String) -> Bool{
 		return self.range(of: str) != nil
 	}
+	
 }
 
 extension Bundle {
@@ -241,6 +253,7 @@ extension Bundle {
 		return infoDictionary?["CFBundleName"] as? String
 	}
 }
+
 /*
 extension NSColor {
 	public convenience init?(rgbaHex: String) {

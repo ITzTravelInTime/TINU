@@ -35,6 +35,11 @@ class ExternalLinkTextField: NSTextField {
 			NSAttributedString.Key.foregroundColor.rawValue: NSColor.linkColor
 			,NSAttributedString.Key.underlineStyle.rawValue: NSUnderlineStyle.single.rawValue as AnyObject, NSAttributedString.Key.cursor.rawValue: NSCursor.pointingHand
 		]
+		
+		if self.stringValue.isEmpty{
+			self.stringValue = href
+		}
+		
 		self.attributedStringValue = NSAttributedString(string: self.stringValue, attributes: convertToOptionalNSAttributedStringKeyDictionary(attributes))
 		
 	}

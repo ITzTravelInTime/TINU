@@ -31,7 +31,6 @@ class ConfirmViewController: GenericViewController, ViewID {
 	@IBOutlet weak var advancedOptionsButton: NSButton!
     
 	@IBOutlet weak var back: NSButton!
-	private var ps: Bool = false
     //private var fs: Bool!
     override func viewDidAppear() {
         super.viewDidAppear()
@@ -45,7 +44,7 @@ class ConfirmViewController: GenericViewController, ViewID {
 		self.showTitleLabel()
 		
 		if #available(OSX 10.15, *){
-			if !isRootUser{
+			if !User.isRoot{
 				SIPManager.checkStatusAndLetTheUserKnow()
 			}
 		}
@@ -71,8 +70,6 @@ class ConfirmViewController: GenericViewController, ViewID {
 			warning.image = warning.image?.withSymbolWeight(.light)
 			warning.contentTintColor = .systemYellow
 		}
-        
-		ps = cm.disk.shouldErase
         //fs = sharedVolumeNeedsFormat
         
         if let a = NSApplication.shared.delegate as? AppDelegate{
@@ -130,34 +127,7 @@ class ConfirmViewController: GenericViewController, ViewID {
 			yes.title = TextManager.getViewString(context: self, stringID: "nextButton")
 			advancedOptionsButton.stringValue = TextManager.getViewString(context: self, stringID: "optionsButton")
 			
-			if drive{
-				driveName.stringValue = cvm.shared.disk.driveName()!
-				self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "titleDrive"))
-			}else{
-				let sv = cvm.shared.disk.path!
-				driveName.stringValue = FileManager.default.displayName(atPath: sv)
-			}
-			
-			driveImage.image = IconsManager.shared.getCorrectDiskIcon(cvm.shared.disk.bSDDrive)
-			
-			if #available(macOS 11.0, *), look.usesSFSymbols(){
-				driveImage.contentTintColor = .systemGray
-				driveImage.image = driveImage.image?.withSymbolWeight(.thin)
-			}
-			
-			let sa = cm.app.path!
-			if look.usesSFSymbols(){
-				appImage.image = IconsManager.shared.genericInstallerAppIcon
-			}else{
-				appImage.image = IconsManager.shared.getInstallerAppIconFrom(path: sa)
-			}
-			
-			if #available(macOS 11.0, *), look.usesSFSymbols(){
-				appImage.contentTintColor = .systemGray
-				appImage.image = appImage.image?.withSymbolWeight(.thin)
-			}
-			
-			appName.stringValue = FileManager.default.displayName(atPath: sa)
+			sharedSetSelectedCreationUI(appName: &appName, appImage: &appImage, driveName: &driveName, driveImage: &driveImage, manager: cvm.shared, useDriveName: drive)
 			
 			let reps = ["{driveName}" : driveName.stringValue]
 			
@@ -170,7 +140,6 @@ class ConfirmViewController: GenericViewController, ViewID {
     @IBOutlet weak var yes: NSButton!
     
     @IBAction func goBack(_ sender: Any) {
-		cm.disk.shouldErase = ps
         //sharedVolumeNeedsFormat = fs
         /*if sharedInstallMac{
             openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
@@ -190,7 +159,6 @@ class ConfirmViewController: GenericViewController, ViewID {
     }
     
     @IBAction func install(_ sender: Any) {
-		cm.disk.shouldErase = ps
         //sharedVolumeNeedsFormat = fs
         if fail{
             NSApp.terminate(sender)

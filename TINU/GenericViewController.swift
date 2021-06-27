@@ -74,7 +74,11 @@ public class GenericViewController: NSViewController {
 		failureLabel.frame.origin.x = 18
 		failureLabel.frame.size.height = 24
 		
-		failureLabel.font = NSFont.systemFont(ofSize: 16)
+		if #available(macOS 11.0, *), look.usesSFSymbols(){
+			failureLabel.font = NSFont.systemFont(ofSize: 16)
+		}else{
+			failureLabel.font = NSFont.boldSystemFont(ofSize: 16)
+		}
 	}
 	
 	func showFailureLabel(){

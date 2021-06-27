@@ -49,12 +49,8 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		createUSBButton.isHidden = true
 		installButton.isHidden = true
 		
-		// Do view setup here.
-		//DispatchQueue.global(qos: .background).sync {
-		//those functions are executed here and not into the app delegate, because this is executed first
-		AppManager.shared.checkAppMode()
-		AppManager.shared.checkUser()
-		AppManager.shared.checkSettings()
+		//checks settings here because this function is the first to be executed in the app
+		App.Settings.check()
 		
 		#if demo
 		print("You have successfully enbled the \"demo\" macro!")
@@ -65,7 +61,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		#endif
 		
 		#if noFirstAuth
-		if !isOnRecovery{
+		if !Recovery.isOn{
 			print("WARNING: this app has been compiled with the first step authentication disabled, it may be less secure to use!")
 			//msgBoxWarning("WARNING", "This app has been compiled with first step authentication disabled, it may be less secure to use, use it at your own risk!")
 		}
@@ -73,16 +69,9 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		
 		//}
 		
-		//code setup
-		
 		if let w = UIManager.shared.window{
 			w.title = UIManager.shared.windowTitlePrefix
 		}
-		
-		//ui setup
-		
-		//print(TextManager!)
-		//print(CodableCreation<TINUTextsManagerStruct>.getEncoded(TextManager!)!)
 		
 		if #available(macOS 11.0, *), look.usesSFSymbols() {
 			createUSBButton.cImage.image = NSImage(systemSymbolName: "externaldrive.badge.plus", accessibilityDescription: nil)?.withSymbolWeight(.ultraLight)
@@ -95,7 +84,8 @@ class ChooseSideViewController: GenericViewController, ViewID {
 			//createUSBButton.cImage.image = IconsManager.shared.removableDiskIcon //NSImage(named: "Removable")
 			if !look.usesSFSymbols() && look.supportsShadows(){
 				createUSBButton.cImage.image = NSImage(named: "drive")
-				createUSBButton.useBottomMargin = false
+				createUSBButton.fullSizeImage = true
+				createUSBButton.lowerText     = false
 			}else{
 				createUSBButton.cImage.image = IconsManager.shared.removableDiskIcon
 			}
@@ -107,30 +97,13 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		
 		createUSBButton.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstaller")//"Create a bootable\nmacOS installer"
 		
-		
 		installButton.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstallation")//"Install macOS"
-		
 		
 		efiButton.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openEFIMounter")//"Use \nEFI Partition Mounter"
 		
-		
-		/*if sharedIsOnRecovery{
-		//titleField.stringValue = "TINU (TINU Is Not Unib***t): The macOS tool"
-		/*let delta = (self.view.frame.size.width - (createUSBButton.frame.size.width * 2)) / 4
-		
-		createUSBButton.frame.origin.x = delta
-		
-		installButton.frame.origin.x = (delta * 3) + createUSBButton.frame.size.width*/
-		
-		installButton.isHidden = false
-		}else{
-		createUSBButton.frame.origin.x = self.view.frame.width / 2 - createUSBButton.frame.width / 2
-		installButton.isHidden = true
-		}*/
-		
 		var spacing: CGFloat = 20
 		
-		if !sharedIsOnRecovery{
+		if !Recovery.isOn{
 			installButton.isEnabled = false
 			spacing = (self.view.frame.size.width - (installButton.frame.size.width * 2)) / 3
 		}
@@ -146,69 +119,48 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		count = 0
 		
 		for c in self.view.subviews.reversed(){
-			if let b = c as? ChoseButton{
-				if b.isEnabled{
-					
-					count += 1
-					
-					b.frame.size = installButton.frame.size
-					b.frame.origin = CGPoint.zero
-					b.wantsLayer = true
-					
-					b.cTitle.textColor = NSColor.textColor
-					
-					var shadowView: NSView!
-					
-					switch look {
-					case .shadowsOldIcons, .noShadowsSFSymbols, .shadowsSFSymbols:
-						shadowView = ShadowView()
-						(shadowView as? ShadowView)?.setModeFromCurrentLook()
-						b.isBordered = false
-						b.layer?.backgroundColor = NSColor.transparent.cgColor
-						b.layer?.masksToBounds = true
-						b.layer?.cornerRadius = shadowView.layer!.cornerRadius
-						break
-					default:
-						shadowView = NSView()
-						shadowView.backgroundColor = NSColor.transparent
-						break
-					}
-					
-					/*
-					if !blockShadow{
-						shadowView = ShadowView()
-						b.isBordered = false
-						
-						b.layer?.masksToBounds = true
-						b.layer?.cornerRadius = 15
-						
-					}else{
-						shadowView = NSView()
-						shadowView.backgroundColor = NSColor.transparent
-					}
-					*/
-					
-					
-					shadowView.frame.size = b.frame.size
-					
-					shadowView.frame.origin = NSPoint(x: background.frame.width, y: 20)
-					
-					shadowView.needsLayout = true
-					
-					b.removeFromSuperview()
-					
-					shadowView.addSubview(b)
-					
-					b.isHidden = false
-					
-					background.addSubview(shadowView)
-					
-					background.frame.size.width += installButton.frame.size.width + spacing//((!sharedIsOnRecovery && count == 1) ? (spacing * 1.25) : spacing)
-					
-				}else{
-					b.isHidden = true
-				}
+			guard let b = c as? ChoseButton else{ continue }
+			
+			b.isHidden = !b.isEnabled
+			
+			if !b.isEnabled { continue }
+			
+			count += 1
+			
+			b.removeFromSuperview()
+			
+			b.frame.size = installButton.frame.size
+			b.frame.origin = CGPoint.zero
+			
+			var shadowView: NSView!
+			
+			if look == .recovery{
+				shadowView = NSView()
+				shadowView.backgroundColor = NSColor.transparent
+				b.fullSizeImage = false
+				b.lowerText = true
+			}else{
+				shadowView = ShadowView()
+				
+				b.lowerText = !b.fullSizeImage
+				
+				b.layer?.cornerRadius = shadowView.layer!.cornerRadius
+				b.layer?.masksToBounds = true
 			}
+			
+			shadowView.frame.size = b.frame.size
+			shadowView.frame.origin = NSPoint(x: background.frame.width, y: 20)
+			//shadowView.needsLayout = true
+			shadowView.layer?.masksToBounds = true
+			
+			shadowView.updateLayer()
+			b.updateLayer()
+			
+			shadowView.addSubview(b)
+			
+			background.addSubview(shadowView)
+			
+			background.frame.size.width += installButton.frame.size.width + spacing//((!sharedIsOnRecovery && count == 1) ? (spacing * 1.25) : spacing)
 		}
 		
 		background.frame.origin = NSPoint(x: self.view.frame.width / 2 - background.frame.size.width / 2, y: self.view.frame.height / 2 - background.frame.size.height / 2)
@@ -237,7 +189,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		#if sudoStartup
 		
 		if #available(OSX 10.15, *){
-			if !isRootUser{
+			if !User.isRoot{
 			
 				if !ChooseSideViewController._already_prompted{
 					if (SIPManager.checkStatus()){
@@ -268,33 +220,18 @@ class ChooseSideViewController: GenericViewController, ViewID {
 	}
 	
 	@IBAction func openEFIMounter(_ sender: Any){
-		if let sen = sender as? ChoseButton{
-			if let parent = sen.superview as? ShadowView{
-				parent.isSelected = true
-			}
-		}
 		if let apd = NSApp.delegate as? AppDelegate{
 			apd.openEFIPartitionTool(sender)
 		}
 	}
 	
 	@IBAction func createUSB(_ sender: Any) {
-		if let sen = sender as? ChoseButton{
-			if let parent = sen.superview as? ShadowView{
-				parent.isSelected = true
-			}
-		}
 		if let apd = NSApplication.shared.delegate as? AppDelegate{
 			apd.swichMode(isInstall: false)
 		}
 	}
 	
 	@IBAction func install(_ sender: Any) {
-		if let sen = sender as? ChoseButton{
-			if let parent = sen.superview as? ShadowView{
-				parent.isSelected = true
-			}
-		}
 		if let apd = NSApplication.shared.delegate as? AppDelegate{
 			apd.swichMode(isInstall: true)
 		}

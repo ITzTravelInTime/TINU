@@ -35,8 +35,8 @@ import Foundation
 				
 				let mountCMD = "diskutil mount \(withBSDID)"
 				
-				if #available(OSX 10.13.6, *), !sharedIsReallyOnRecovery{
-					if let res = CommandsManager.sudo.run(cmd: "/bin/sh", args: ["-c", mountCMD]){
+				if #available(OSX 10.13.6, *), !Recovery.isActuallyOn{
+					if let res = Command.Sudo.run(cmd: "/bin/sh", args: ["-c", mountCMD]){
 						
 							text = ""
 						
@@ -44,10 +44,10 @@ import Foundation
 								text += i + "\n"
 							}
 						}else{
-							text = CommandsManager.sudo.getOut(cmd: mountCMD)
+							text = Command.Sudo.getOut(cmd: mountCMD)
 						}
 				}else{
-					text = CommandsManager.getOut(cmd: mountCMD)
+					text = Command.getOut(cmd: mountCMD)
 				}
 				
 				print(text ?? "")
@@ -117,7 +117,7 @@ import Foundation
 				/*if #available(OSX 10.13.6, *){
 					text = getOutWithSudo(cmd: "diskutil unmount \(withBSDID)")
 				}else{*/
-				text = CommandsManager.getOut(cmd: "diskutil unmount \(withBSDID)")
+				text = Command.getOut(cmd: "diskutil unmount \(withBSDID)")
 				//}
 				
 				res = (text.contains("unmounted") && (text.contains("Volume EFI on") || text.contains("Volume (null) on") || (text.contains("Volume ") && text.contains("on")))) || (text.isEmpty)
@@ -174,7 +174,7 @@ import Foundation
 			do{
 				print("Waiting for the drives data...")
 				
-				let out = CommandsManager.getOut(cmd: "diskutil list -plist")
+				let out = Command.getOut(cmd: "diskutil list -plist")
 				
 				//print(out)
 				

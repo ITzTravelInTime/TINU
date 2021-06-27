@@ -63,9 +63,6 @@ public let simulateCreateinstallmediaFailCustomMessage: String = ""
 //this is used to debug the app as it is into the recovery
 public let simulateRecovery = false
 
-//this is used to set the usage of shadows in the UI
-public let simulateDisableShadows = false
-
 //this is used to simulate a disabled/enabled sip
 // - true/false simulate on/off state of sip
 // - nil use actual sip state

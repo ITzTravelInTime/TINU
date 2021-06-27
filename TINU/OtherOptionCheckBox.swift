@@ -10,8 +10,8 @@ import Cocoa
 
 class OtherOptionsCheckBox: NSView {
     
-	var option = CreationVariablesManager.OtherOptionsObject()
-    
+	var optionID: CreationProcess.OptionsManager.ID!
+	
     var checkBox = NSButton()
 	
 	var infoButton = NSButton()
@@ -21,14 +21,16 @@ class OtherOptionsCheckBox: NSView {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 		
+		let option = cvm.shared.options.list[optionID ?? .unknown]
+		
 		checkBox.setButtonType(.switch)
-		checkBox.title = option.title
+		checkBox.title = option?.description.title ?? "[Error: no option specified]"
 		checkBox.target = self
 		checkBox.action = #selector(OtherOptionsCheckBox.checked)
 		
-		checkBox.isEnabled = option.isUsable
+		checkBox.isEnabled = option?.isUsable ?? false
 		
-        checkBox.state = option.isActivated ? .on : .off
+		checkBox.state = (option?.isActivated ?? false) ? .on : .off
 		
 		checkBox.font = NSFont.systemFont(ofSize: 13)
 		
@@ -54,39 +56,37 @@ class OtherOptionsCheckBox: NSView {
 	
 	@objc func checked(){
 		
-		log("Trying to change the value of \"\(option.id)\"")
-		/*for i in 0...(otherOptions.count - 1){
-		if otherOptions[i].id == self.option.id{
-		otherOptions[i].isActivated = (checkBox.state == 1)
-		option.isActivated = otherOptions[i].isActivated
-		log("Activated value changed successfully to \(option.isActivated)")
+		if optionID == nil{
+			return
 		}
-		}*/
 		
-		if cvm.shared.options.list[option.id] == nil { return }
+		log("Trying to change the value of option \"\(optionID!)\"")
+		
+		if cvm.shared.options.list[optionID!] == nil { return }
 		
 		let newState = (checkBox.state.rawValue == 1)
 		
 		//this as been done in this way instead of an if var because of possible errors
-		cvm.shared.options.list[option.id]?.isActivated = newState
-		option.isActivated = newState
+		cvm.shared.options.list[optionID!]?.isActivated = newState
 		
 		//this code here is used to deactivate the APFS convertion stuff if the user has choosen to format the target drive
-		if !cvm.shared.installMac || !cvm.shared.disk.isAPFS || (option.id != CreationVariablesManager.OtherOptionsManager.OtherOptionID.otherOptionForceToFormatID){
+		if !cvm.shared.installMac || !cvm.shared.disk.isAPFS || (optionID! != CreationProcess.OptionsManager.ID.forceToFormat){
 			return
 		}
 		
 		for item in self.superview!.subviews{
 			guard let opt = item as? OtherOptionsCheckBox else { continue }
 			
-			if opt.option.id != CreationVariablesManager.OtherOptionsManager.OtherOptionID.otherOptionDoNotUseApfsID{
+			if opt.optionID == nil{
 				continue
 			}
 			
-			cvm.shared.options.list[opt.option.id]?.isActivated = newState
-			cvm.shared.options.list[opt.option.id]?.isUsable = newState
-			opt.option.isActivated = newState
-			opt.option.isUsable = newState
+			if opt.optionID != CreationProcess.OptionsManager.ID.notUseApfs{
+				continue
+			}
+			
+			cvm.shared.options.list[optionID]?.isActivated = newState
+			cvm.shared.options.list[optionID]?.isUsable = newState
 			opt.checkBox.isEnabled = newState
 			opt.checkBox.state = checkBox.state
 		}
@@ -95,7 +95,7 @@ class OtherOptionsCheckBox: NSView {
 	@objc func showInfo(){
 		let vc = UIManager.shared.storyboard.instantiateController(withIdentifier: "OtherOptionInfoViewController") as! OtherOptionsInfoViewController
 		
-		vc.associatedOption = option
+		vc.optionID = optionID
 		
 		CustomizationWindowManager.shared.referenceWindow.contentViewController?.presentAsSheet(vc)
 		

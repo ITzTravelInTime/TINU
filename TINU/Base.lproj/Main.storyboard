@@ -2213,8 +2213,9 @@ Gw
                     <window key="window" title="TINU: Why my storage device is not detected?" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="07X-dh-bE6">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="245" y="310" width="480" height="270"/>
+                        <rect key="contentRect" x="245" y="310" width="620" height="320"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1050"/>
+                        <value key="minSize" type="size" width="620" height="320"/>
                         <connections>
                             <outlet property="delegate" destination="1oO-Lg-92d" id="yeD-QR-kae"/>
                         </connections>
@@ -2247,7 +2248,7 @@ Gw
                             </button>
                             <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LwU-lx-IuQ">
                                 <rect key="frame" x="20" y="73" width="580" height="238"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" drawsBackground="NO" id="D4h-Ke-c4w">
                                     <rect key="frame" x="1" y="1" width="563" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2309,7 +2310,7 @@ Gw
                             </button>
                             <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="raf-km-Dem">
                                 <rect key="frame" x="20" y="73" width="580" height="238"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" drawsBackground="NO" id="unI-ig-fqM">
                                     <rect key="frame" x="1" y="1" width="563" height="236"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2358,8 +2359,10 @@ Gw
                     <window key="window" title="TINU: Download a macOS installer app from the App Store" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="HOO-gR-4yR">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="245" y="310" width="480" height="270"/>
+                        <rect key="contentRect" x="245" y="310" width="620" height="400"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1050"/>
+                        <value key="minSize" type="size" width="620" height="300"/>
+                        <value key="maxSize" type="size" width="620" height="10000"/>
                         <connections>
                             <outlet property="delegate" destination="VTe-PZ-3Hj" id="CfV-lF-k8e"/>
                         </connections>
@@ -2370,7 +2373,7 @@ Gw
                 </windowController>
                 <customObject id="8Ym-W7-XPP" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1393" y="-388"/>
+            <point key="canvasLocation" x="1393" y="-495"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

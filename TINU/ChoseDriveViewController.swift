@@ -11,27 +11,6 @@ import Cocoa
 class ChoseDriveViewController: ShadowViewController, ViewID {
 	let id: String = "ChoseDriveViewController"
 	
-	/*
-	enum PartitionSchemes: String, Equatable, Codable, CaseIterable, RawRepresentable{
-		case guid = "GUID_partition_scheme"
-		case mbr = "FDisk_partition_scheme"
-		case applePS = "Apple_partition_scheme"
-	}
-	
-	enum PartitionFormats: String, Equatable, Codable, CaseIterable, RawRepresentable{
-		case apfs = "Apple_APFS"
-		case hfs = "Apple_HFS"
-		case core = "Apple_CoreStorage"
-		case efi = "EFI"
-		case appleBoot = "Apple_Boot"
-		case appleKernelCoreDump = "Apple_KernelCoreDump"
-	
-		static func ignoredList() -> [PartitionFormats]{
-			return [.appleBoot, .appleKernelCoreDump]
-		}
-	}
-	*/
-	
     @IBOutlet weak var scoller: NSScrollView!
     @IBOutlet weak var ok: NSButton!
     @IBOutlet weak var spinner: NSProgressIndicator!
@@ -107,7 +86,6 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
     }
 	
 	func makeAndDisplayItem(_ item: DiskutilObject!, _ to: inout [DriveView], _ origin: DiskutilObject! = nil, _ isGUIDwEFI: Bool = true){
-		
 		guard let d: DiskutilObject = ((origin == nil) ? item : origin) else{
 			print("[UI creation] Invalid disk item!")
 			return
@@ -118,34 +96,22 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 		DispatchQueue.main.sync {
 			
 			let drivei = DriveView(frame: NSRect(x: 0, y: itemOriginY, width: DriveView.itemSize.width, height: DriveView.itemSize.height))
-			var prt: Part!
+			let prt = Part(bsdName: d.DeviceIdentifier, fileSystem: .other, partScheme: isGUIDwEFI ? .gUID : .blank, hasEFI: isGUIDwEFI, size: d.Size, isDrive: (origin != nil) || !isGUIDwEFI, path: d.MountPoint)
 			
 			if isGUIDwEFI{
-				drivei.appName = man.displayName(atPath: d.MountPoint!)
-				prt = Part(partitionBSDName: d.DeviceIdentifier, partitionName: drivei.appName, partitionPath: d.MountPoint!, partitionFileSystem: Part.FileSystem.other, partitionScheme: Part.PartScheme.gUID , partitionHasEFI: true, partitionSize: d.Size)
+				//prt.name = man.displayName(atPath: d.MountPoint ?? "")
+				//prt = Part(partitionBSDName: d.DeviceIdentifier, partitionName: drivei.appName, partitionPath: d.MountPoint!, partitionFileSystem: Part.FileSystem.other, partitionScheme: Part.PartScheme.gUID , partitionHasEFI: true, partitionSize: d.Size)
 				prt.tmDisk = man.fileExists(atPath: d.MountPoint! + "/tmbootpicker.efi") || man.directoryExistsAtPath(d.MountPoint! + "/Backups.backupdb")
 			}else{
-				drivei.appName = dm.getDriveName(from: d.DeviceIdentifier) ?? d.DeviceIdentifier
-				prt = Part(partitionBSDName: d.DeviceIdentifier, partitionName: drivei.appName, partitionPath: (item?.MountPoint == nil) ? "" : item.MountPoint!, partitionFileSystem: .other, partitionScheme: .blank, partitionHasEFI: false, partitionSize: d.Size)
+				//prt.name = dm.getDriveName(from: d.DeviceIdentifier) ?? d.DeviceIdentifier
+				//prt = Part(partitionBSDName: d.DeviceIdentifier, partitionName: drivei.appName, partitionPath: (item?.MountPoint == nil) ? "" : item.MountPoint!, partitionFileSystem: .other, partitionScheme: .blank, partitionHasEFI: false, partitionSize: d.Size)
 				prt.apfsBDSName = d.DeviceIdentifier
 			}
 			
-			prt.isDrive = (origin != nil) || !isGUIDwEFI
-			
 			log("        Item type: \(prt.isDrive ? "Drive" : "Partition")")
+			log("        Item display name is: \(prt.displayName)")
 			
-			prt.size = d.Size
-			
-			log("        Item display name is: \(drivei.appName)")
-			
-			drivei.image.image = IconsManager.shared.getCorrectDiskIcon(prt.bsdName)
-			
-			if #available(macOS 11.0, *), look.usesSFSymbols() {
-				drivei.image.image = drivei.image.image?.withSymbolWeight(.ultraLight)
-			}
-			
-			drivei.isApp = false
-			drivei.part = prt
+			drivei.current = prt as UIRepresentable
 			to.append(drivei)
 			
 		}
@@ -312,7 +278,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 				self.empty = res
 				
 				
-				let set = res || sharedIsOnRecovery
+				let set = res || Recovery.isOn
 				self.topView.isHidden = set
 				self.bottomView.isHidden = set
 				
@@ -423,16 +389,16 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 	@IBAction func next(_ sender: Any) {
 		if !empty{
 			
-			let parseList = ["{diskName}" : cvm.shared.disk.driveName()!, "{partitionName}" : cvm.shared.disk.part.name]
+			let parseList = ["{diskName}" : cvm.shared.disk.current.driveName, "{partitionName}" : cvm.shared.disk.current.displayName]
 				
-			if cvm.shared.disk.shouldErase{
-				if !dialogGenericWithManagerBool(self, name: "formatDialog", parseList: parseList){
+			if cvm.shared.disk.warnForTimeMachine{
+				if !dialogGenericWithManagerBool(self, name: "formatDialogTimeMachine", parseList: parseList){
 					return
 				}
 			}
 			
-			if cvm.shared.disk.warnForTimeMachine{
-				if !dialogGenericWithManagerBool(self, name: "formatDialogTimeMachine", parseList: parseList){
+			if cvm.shared.disk.shouldErase{
+				if !dialogGenericWithManagerBool(self, name: "formatDialog", parseList: parseList){
 					return
 				}
 			}

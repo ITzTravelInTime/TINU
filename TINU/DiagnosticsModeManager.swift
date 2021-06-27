@@ -12,31 +12,8 @@ final class DiagnosticsModeManager{
 	
 	static let shared = DiagnosticsModeManager()
 	
-	class func getAppSupportDirectory(create: Bool = true, subFolderName: String! = nil) -> String!{
-		let paths = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-		if paths.count > 0{
-			if let start = paths.first?.path{
-				if let folderName = Bundle.main.bundleIdentifier{
-					let directory = start + "/" + folderName + ((subFolderName != nil) ? ("/" + subFolderName!) : "")
-					if !FileManager.default.fileExists(atPath: directory){
-						do {
-							try FileManager.default.createDirectory(atPath: directory, withIntermediateDirectories: true)
-							
-						}catch let err{
-							print(err.localizedDescription)
-							return nil
-						}
-					}
-					
-					return directory
-				}
-			}
-		}
-		return nil
-	}
-	
 	private func getFolder() -> String!{
-		return DiagnosticsModeManager.getAppSupportDirectory(create: true, subFolderName: "DiagnosticsMode")
+		return App.getApplicationSupportDirectory(create: true, subFolderName: "DiagnosticsMode")
 	}
 	
 	private	func getFileLocation(sudo: Bool) -> String!{
@@ -69,11 +46,11 @@ final class DiagnosticsModeManager{
 		//TODO: Maybe localize this
 		if cvm.shared.process.status.isBusy(){
 			msgBox("You can't switch mode now", "The bootable macOS installer creation process is currenly running. Please cancel the operation or wait for the operation to end before switching the mode.", .warning)
-		}else if sharedIsOnRecovery{
+		}else if Recovery.isOn{
 			msgBoxWarning("You can't switch the mode right now", "Switching the mode in which TINU is running is not possible while running TINU from this recovery/installer system.")
 		}
 		
-		if (cvm.shared.process.status.isBusy() || sharedIsOnRecovery){
+		if (cvm.shared.process.status.isBusy() || Recovery.isOn){
 			return
 		}
 		

@@ -99,7 +99,7 @@ public struct Disk: DiskutilObject, Codable, Equatable {
 	}
 }
 
-public struct APFSStore: DiskutilDiskPointer, Codable, Equatable {
+public struct APFSStore: DiskutilDiskPointer {
 	let DeviceIdentifier: String
 }
 
@@ -155,7 +155,7 @@ public struct DiskutilList: Codable, Equatable{
 		
 		log("Getting diskutil data to detect storage devices")
 		
-		let out = CommandsManager.getOut(cmd: "diskutil list -plist")
+		let out = Command.getOut(cmd: "diskutil list -plist")
 		print(out)
 		
 		log("Got diskutil data? " + (!out.isEmpty ? "YES" : "NO") )

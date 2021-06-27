@@ -18,7 +18,11 @@ public class OtherOptionsInfoViewController: GenericViewController, ViewID {
 	
 	@IBOutlet weak var scroller: NSScrollView!
 	
-	public var associatedOption: CreationVariablesManager.OtherOptionsObject!
+	public var optionID: CreationProcess.OptionsManager.ID!
+	
+	private var associatedOption: CreationProcess.OptionsManager.Object!{
+		return CreationProcess.shared.options.list[optionID]
+	}
 	
 	override public func viewDidLoad() {
 		super.viewDidLoad()
@@ -30,10 +34,10 @@ public class OtherOptionsInfoViewController: GenericViewController, ViewID {
 		showTitleLabel()
 		
 		if let option = associatedOption{
-			titleLabel.stringValue = TextManager.getViewString(context: self, stringID: "infoPrefix") + option.title
+			titleLabel.stringValue = TextManager.getViewString(context: self, stringID: "infoPrefix") + option.description.title
 			
 			if let desc = associatedOption?.description{
-				textView.text = desc
+				textView.text = desc.desc
 			}
 		}
 		
@@ -46,9 +50,11 @@ public class OtherOptionsInfoViewController: GenericViewController, ViewID {
 		
 		textView.textColor = NSColor.textColor
 		
-		if associatedOption == nil || associatedOption.description == nil{
+		if associatedOption == nil{
 			goBack()
 		}
+		
+		self.window.minSize = CGSize(width: 620, height: 300)
 	}
 	
 	@IBAction func buttonClick(_ sender: Any) {

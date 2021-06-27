@@ -71,8 +71,7 @@ public class EFIReplacementView: NSView, ViewID{
 		expLabel.frame.size = NSSize(width: self.frame.size.width - 10 , height: fieldHeigth * 4)
 		expLabel.font = NSFont.systemFont(ofSize: 13)
 		
-		if let drive = cvm.shared.disk.driveName(){
-			let replaceList = ["{drive}": drive, "{bootloader}": bootloader.rawValue]
+			let replaceList = ["{drive}": cvm.shared.disk.current.driveName, "{bootloader}": bootloader.rawValue]
 			
 			/*
 			titleLabel.stringValue = "\(bootloader.rawValue) EFI folder installer"
@@ -84,7 +83,6 @@ public class EFIReplacementView: NSView, ViewID{
 			
 			let title = TextManager!.getViewString(context: self, stringID: "title")!
 			titleLabel.stringValue = parse(messange: title, keys: replaceList)
-		}
 		
 		self.addSubview(expLabel)
 		

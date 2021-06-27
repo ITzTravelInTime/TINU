@@ -85,18 +85,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		//focusAreaItem.isHidden = true
 		//vibrantButton.isHidden = true
 		
-		tinuRelated     .isEnabled = !sharedIsOnRecovery
-		otherApps       .isEnabled = !sharedIsOnRecovery
-		verboseItem     .isEnabled = !sharedIsOnRecovery
-		verboseItemSudo .isEnabled = !sharedIsOnRecovery
-		FAQItem         .isEnabled = !sharedIsOnRecovery
-		getMacOSApp     .isEnabled = !sharedIsOnRecovery
-		wMSDIND         .isEnabled = !sharedIsOnRecovery
+		tinuRelated     .isEnabled = !Recovery.isOn
+		otherApps       .isEnabled = !Recovery.isOn
+		verboseItem     .isEnabled = !Recovery.isOn
+		verboseItemSudo .isEnabled = !Recovery.isOn
+		FAQItem         .isEnabled = !Recovery.isOn
+		getMacOSApp     .isEnabled = !Recovery.isOn
+		wMSDIND         .isEnabled = !Recovery.isOn
 		
-		InstallMacOSItem.isHidden =  !sharedIsOnRecovery
+		InstallMacOSItem.isHidden =  !Recovery.isOn
 		
         
-        if sharedIsOnRecovery{
+        if Recovery.isOn{
 			print("Verbose mode not usable under recovery")
         }
         
@@ -173,7 +173,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
             
             //eraseReplacementFilesData()
 			
-			cvm.shared.disk.part = Part()
+			cvm.shared.disk.current = nil
         }
 		
     }

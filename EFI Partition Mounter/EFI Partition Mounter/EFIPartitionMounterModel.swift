@@ -112,7 +112,7 @@ public final class EFIPartitionMounterModel{
 			
 			print("    Waiting for the volumes data for the tool...")
 			
-			let commandData = CommandsManager.getOut(cmd: "diskutil list -plist")
+			let commandData = Command.getOut(cmd: "diskutil list -plist")
 			
 			//print(commandData)
 			

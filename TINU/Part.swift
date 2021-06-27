@@ -9,9 +9,42 @@
 import Cocoa
 
 //this is just a simple class that represents a drive, used fot the drive scan algoritm
-public struct Part{
+public class Part: UIRepresentable{
 	
-	public enum FileSystem{
+	init(bsdName: String, fileSystem: Part.FileSystem, partScheme: Part.PartScheme, hasEFI: Bool, size: UInt64, isDrive: Bool, path: String? = nil) {
+		self.bsdName = bsdName
+		self.fileSystem = fileSystem
+		self.partScheme = partScheme
+		self.hasEFI = hasEFI
+		self.size = size
+		self.isDrive = isDrive
+		self.path = path
+		
+		calculateChached()
+	}
+	
+	/*
+	enum PartitionSchemes: String, Equatable, Codable, CaseIterable, RawRepresentable{
+		case guid = "GUID_partition_scheme"
+		case mbr = "FDisk_partition_scheme"
+		case applePS = "Apple_partition_scheme"
+	}
+	
+	enum PartitionFormats: String, Equatable, Codable, CaseIterable, RawRepresentable{
+		case apfs = "Apple_APFS"
+		case hfs = "Apple_HFS"
+		case core = "Apple_CoreStorage"
+		case efi = "EFI"
+		case appleBoot = "Apple_Boot"
+		case appleKernelCoreDump = "Apple_KernelCoreDump"
+	
+		static func ignoredList() -> [PartitionFormats]{
+			return [.appleBoot, .appleKernelCoreDump]
+		}
+	}
+	*/
+	
+	enum FileSystem{
 		case blank
 		case other
 		case hFS
@@ -20,59 +53,87 @@ public struct Part{
 		case coreStorage_container
 	}
 	
-	public enum PartScheme{
+	enum PartScheme{
 		case blank
 		case gUID
 		case mBR
 		case aPPLE
 	}
 	
-    var bsdName: String!
-    var apfsBDSName: String!
-    var name: String
-    var mountPoint: String!
-    var fileSystem: FileSystem
-    var partScheme: PartScheme
-    var hasEFI: Bool
-	var isDrive = false
+    let fileSystem: FileSystem
+    let partScheme: PartScheme
+    let hasEFI: Bool
+	let size: UInt64
+	let isDrive: Bool
+	
+	var apfsBDSName: String?
+	
+	var path: String?{
+		didSet{
+			calculateChached()
+		}
+	}
+	
+	var bsdName: String{
+		didSet{
+			calculateChached()
+		}
+	}
 	
 	var tmDisk = false
 	
-	var size: UInt64 = 0
+	var icon: NSImage?{
+		return IconsManager.shared.getCorrectDiskIcon(bsdName)
+	}
 	
-	var usable = false
+	var genericIcon: NSImage?{
+		return icon
+	}
 	
-    public init(){
-        bsdName = "/dev/"
-        name = ""
-        mountPoint = ""
-        fileSystem = .blank
-        partScheme = .blank
-        hasEFI = false
-    }
-    
-    public init(partitionBSDName: String?, partitionName: String, partitionPath: String?, partitionFileSystem: FileSystem, partitionScheme: PartScheme, partitionHasEFI: Bool, partitionSize: UInt64){
-        bsdName = partitionBSDName
-        name = partitionName
-        mountPoint = partitionPath
-        fileSystem = partitionFileSystem
-        partScheme = partitionScheme
-        hasEFI = partitionHasEFI
-        size = partitionSize
-    }
-    
-    public func copy() -> Part{
-        return Part(from: self)
-    }
-    
-    
-    
-}
-
-extension Part{
-	init(from other: Part) {
-		self.init()
+	private func calculateChached(){
+		let man = FileManager.default
 		
-		self = other
+		print("Getting drive display name and name")
+		driveChachedName = dm.getDeviceNameFromVolumeBSDID(bsdName)
+		
+		if hasEFI || !isDrive {
+			if path != nil{
+				print("  Using path-based name")
+				name = man.displayName(atPath: path!)
+				return
+			}else{
+				print("  Should be using not mounted name")
+			}
+		}else{
+			print("  Using actual drive name")
+			name = driveName
+			return
+		}
+		
+		print("  Using BSD name")
+		name = nil
+		
+		
+	}
+	
+	
+	private var name: String?
+	
+	public var displayName: String{
+		return name ?? self.bsdName
+	}
+	
+	private var driveChachedName: String?
+	
+	public var driveName: String{
+		return driveChachedName ?? self.bsdName
+	}
+	
+	var app: InstallerAppInfo?{
+		return nil
+	}
+	
+	var part: Part?{
+		return self
 	}
 }

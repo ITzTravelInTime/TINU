@@ -85,7 +85,7 @@ public final class Operations{
 	
 	func createReadme() -> SettingsRes{
 		
-		guard let o = cvm.shared.options.list[.otherOptionCreateReadmeID]?.canBeUsed() else { return SettingsRes.resTrueNil }
+		guard let o = cvm.shared.options.list[.createReadme]?.canBeUsed() else { return SettingsRes.resTrueNil }
 		
 		if !o { return SettingsRes.resTrueNil }
 		//creates a readme file into the target drive
@@ -99,7 +99,7 @@ public final class Operations{
 				try TextManager!.readmeText!.write(toFile: sv + "/README.txt", atomically: true, encoding: .utf8)
 				
 				//trys to change the file attributes of the readme file to make it visible
-				let e = CommandsManager.getErr(cmd: "chflags nohidden \"" + sv + "/README.txt\"")
+				let e = Command.getErr(cmd: "chflags nohidden \"" + sv + "/README.txt\"")
 				if (e != "" && e != "Password:"){
 					log("       The readme file file can'be maked visible")
 					ok = false
@@ -124,7 +124,7 @@ public final class Operations{
 	#if !macOnlyMode
 	func createAIBootFiles() -> SettingsRes{
 		
-		guard let o = cvm.shared.options.list[.otherOptionCreateAIBootFID]?.canBeUsed() else { return SettingsRes.resTrueNil }
+		guard let o = cvm.shared.options.list[.createAIBootFiles]?.canBeUsed() else { return SettingsRes.resTrueNil }
 		
 		if !(o && !cvm.shared.installMac){
 			return SettingsRes.resTrueNil
@@ -183,7 +183,7 @@ public final class Operations{
 	
 	#if !macOnlyMode
 	func deleteIAPMID() -> SettingsRes{
-		guard let o = cvm.shared.options.list[.otherOptionDeleteIAPMID]?.canBeUsed() else { return SettingsRes.resTrueNil }
+		guard let o = cvm.shared.options.list[.deleteIAPhysicalMedia]?.canBeUsed() else { return SettingsRes.resTrueNil }
 		
 		if !(o && !cvm.shared.installMac){
 			return SettingsRes.resTrueNil
@@ -217,7 +217,7 @@ public final class Operations{
 	
 	func createIcon() -> SettingsRes{
 		
-		guard let o = cvm.shared.options.list[.otherOptionCreateIconID]?.canBeUsed() else { return SettingsRes.resTrueNil }
+		guard let o = cvm.shared.options.list[.createIcon]?.canBeUsed() else { return SettingsRes.resTrueNil }
 		
 		if !o { return SettingsRes.resTrueNil }
 		
@@ -272,7 +272,7 @@ public final class Operations{
 	}
 	
 	func createTINUCopy() -> SettingsRes{
-		guard let o = cvm.shared.options.list[.otherOptionTinuCopyID]?.canBeUsed() else { return SettingsRes.resTrueNil }
+		guard let o = cvm.shared.options.list[.tinuCopy]?.canBeUsed() else { return SettingsRes.resTrueNil }
 		
 		if !o { return SettingsRes.resTrueNil }
 		//trys to crerate a copy of this app on the mac os install media

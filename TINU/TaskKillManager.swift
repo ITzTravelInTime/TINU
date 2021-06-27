@@ -107,7 +107,7 @@ public final class TaskKillManager: ViewID{
 	
 	class func terminateProcess(PID pid: Int32) -> Bool!{
 		
-		guard let res = CommandsManager.sudo.run(cmd: "/bin/sh", args: ["-c", "kill \(pid)"]) else{
+		guard let res = Command.Sudo.run(cmd: "/bin/sh", args: ["-c", "kill \(pid)"]) else{
 			log("Failed to close \"\(pid)\" because of an authentication failure")
 			return nil
 		}
@@ -134,7 +134,7 @@ public final class TaskKillManager: ViewID{
 	}
 	
 	private class func getPid(name: String) -> String!{
-		let pid = CommandsManager.getOut(cmd:"ps -Ac -o pid,comm | awk '/^ *[0-9]+ " + name + "$/ {print $1}'")
+		let pid = Command.getOut(cmd:"ps -Ac -o pid,comm | awk '/^ *[0-9]+ " + name + "$/ {print $1}'")
 		
 		if pid.isEmpty{
 			return nil

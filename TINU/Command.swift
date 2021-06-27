@@ -8,12 +8,22 @@
 
 import Foundation
 
-public final class CommandsManager{
+public final class Command{
 	
-	static let sudo = SudoManager()
+	struct Handle {
+		let process: Process
+		let outputPipe: Pipe
+		let errorPipe: Pipe
+	}
+	
+	struct Result {
+		let exitCode: Int32
+		let output: [String]
+		let error: [String]
+	}
 	
 	//this function stars a process and then returs the objects needed to track it
-	class func start(cmd : String, args : [String]) -> (process: Process, errorPipe: Pipe, outputPipe: Pipe) {
+	class func start(cmd : String, args : [String]) -> Handle {
 		let task = Process()
 		let outpipe = Pipe()
 		let errpipe = Pipe()
@@ -25,17 +35,17 @@ public final class CommandsManager{
 		task.standardError = errpipe
 		task.launch()
 		
-		return (task, errpipe, outpipe)
+		return Handle(process: task, outputPipe: outpipe, errorPipe: errpipe)
 	}
 	
-	//runs a process until it ends and then returs the outputs and the erros
-	class func run(cmd : String, args : [String]) -> (output: [String], error: [String], exitCode: Int32) {
+	//extracts the poutput form a process handle
+	class func result(from handle: Handle) -> Result{
 		var output : [String] = []
 		var error : [String] = []
 		var status = Int32()
 		//runs a process object and then return the outputs
 		
-		let p = start(cmd: cmd, args: args)
+		let p = handle
 		
 		p.process.waitUntilExit()
 		
@@ -53,7 +63,12 @@ public final class CommandsManager{
 		
 		status = p.process.terminationStatus
 		
-		return (output, error, status)
+		return Result(exitCode: status, output: output, error: error)//(output, error, status)
+	}
+	
+	//runs a process until it ends and then returs the outputs and the erros
+	class func run(cmd : String, args : [String]) -> Result {
+		return result(from: start(cmd: cmd, args: args))
 	}
 	
 	//executes a process until it ends end then returns only the output/error

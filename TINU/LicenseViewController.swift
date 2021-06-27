@@ -96,13 +96,13 @@ class LicenseViewController: ShadowViewController, ViewID {
 						
 						var noAPFSSupport = true
 						
-						if let ap = cvm.shared.app.sharedAppNotSupportsAPFS(){
+						if let ap = cvm.shared.app.info.notSupportsAPFS(){
 							noAPFSSupport = ap
 						}
 						
 						var mojaveSupport = true
 						
-						if let ms = cvm.shared.app.sharedAppNotIsMojave(){
+						if let ms = cvm.shared.app.info.isNotMojave(){
 							mojaveSupport = !ms
 						}
 						
@@ -134,7 +134,7 @@ class LicenseViewController: ShadowViewController, ViewID {
 							
 							print("Getting installer license with the command: " + cmd)
 							
-							license = CommandsManager.getOut(cmd: cmd)
+							license = Command.getOut(cmd: cmd)
 							
 							print(license)
 							

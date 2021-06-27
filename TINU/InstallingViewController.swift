@@ -44,26 +44,16 @@ class InstallingViewController: GenericViewController, ViewID{
 		
 		//disable the close button of the window
 		if let w = UIManager.shared.window{
-			w.isMiniaturizeEnaled = false
+			w.isMiniaturizeEnaled = true
 			w.isClosingEnabled = false
 			w.canHide = false
 		}
-		
-		//infoImageView.image = IconsManager.shared.infoIcon
-		
-		//setup of the window if the app is in install macOS mode
-		//if sharedInstallMac{
-			//descriptionField.stringValue = "macOS installation in progress, please wait until the computer reboots and leave the windows as is, after that you should boot from \"macOS install\""
-			
-			//titleLabel.stringValue = "macOS installation in progress"
-		//}
 		
 		//initialization
 		activityLabel.stringValue = ""
 		
 		//placeholder values
 		self.setProgressMax(1000)
-		
 		self.setProgressValue(0)
 		
 		/*if let a = NSApplication.shared().delegate as? AppDelegate{
@@ -75,26 +65,30 @@ class InstallingViewController: GenericViewController, ViewID{
 		print("* PROCESS STARTED *")
 		print("*******************")
 		
+		cancelButton.isEnabled = false
+		enableItems(enabled: false)
+		
 		setActivityLabelText("activityLabel1")
 		
-		//setActivityLabelText("Checking installer appilcation")
+		sharedSetSelectedCreationUI(appName: &appName, appImage: &appImage, driveName: &driveName, driveImage: &driveImage, manager: cvm.shared, useDriveName: cvm.shared.disk.current.isDrive || cvm.shared.disk.shouldErase)
 		
 		print("process window opened")
 		
-		setUI()
 	}
 	
-	func setUI(){
+	override func viewDidAppear() {
+		super.viewDidAppear()
+		
+		log("View appaeared going forward")
+		
 		var drive = false
-		var state = false
+		if (simulateInstallGetDataFail ? true : cvm.shared.checkProcessReadySate(&drive)){
+			sharedSetSelectedCreationUI(appName: &appName, appImage: &appImage, driveName: &driveName, driveImage: &driveImage, manager: cvm.shared, useDriveName: drive)
 		
-		if !simulateInstallGetDataFail{
-			state = !cvm.shared.checkProcessReadySate(&drive)
+			log("Everything is ready to start the creation/installation process")
+			
+			InstallMediaCreationManager.startInstallProcess()
 		}else{
-			state = true
-		}
-		
-		if state {
 			setActivityLabelText("activityLabel2")
 			
 			log("Couldn't get valid info about the installer app and/or the drive")
@@ -104,54 +98,7 @@ class InstallingViewController: GenericViewController, ViewID{
 					self.goBack()
 				}
 			}
-			
-			return
 		}
-		
-		let cm = cvm.shared
-		
-		driveImage.image = IconsManager.shared.getCorrectDiskIcon(cvm.shared.disk.bSDDrive)
-		
-		if drive{
-			driveImage.image = IconsManager.shared.getCorrectDiskIcon(cvm.shared.disk.bSDDrive)
-			driveName.stringValue = cvm.shared.disk.driveName()!
-			//self.setTitleLabel(text: "The drive and macOS installer below will be used, are you sure?")
-		}else{
-			let sv = cm.disk.path!
-			//driveImage.image = NSWorkspace.shared.icon(forFile: sv)
-			driveName.stringValue = FileManager.default.displayName(atPath: sv)
-		}
-		
-		if #available(macOS 11.0, *), look.usesSFSymbols(){
-			driveImage.contentTintColor = .systemGray
-			driveImage.image = driveImage.image?.withSymbolWeight(.thin)
-		}
-		
-		let sa = cm.app.path!
-		
-		if look.usesSFSymbols(){
-			appImage.image = IconsManager.shared.genericInstallerAppIcon
-			if #available(macOS 11.0, *){
-				appImage.contentTintColor = .systemGray
-				appImage.image = appImage.image?.withSymbolWeight(.thin)
-			}
-		}else{
-			appImage.image = IconsManager.shared.getInstallerAppIconFrom(path: sa)
-		}
-		
-		appName.stringValue = FileManager.default.displayName(atPath: sa)
-		
-		log("Everything is ready to start the creation/installation process")
-		
-		//InstallMediaCreationManager.shared.reset()
-		InstallMediaCreationManager.shared.startInstallProcess()
-	}
-	
-	//just to be sure, if the view does disappear the installer creation is stopped
-	override func viewWillDisappear() {
-		/*if CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress{
-			let _ = InstallMediaCreationManager.shared.stop()
-		}*/
 	}
 	
 	private func restoreWindow(){
@@ -173,13 +120,10 @@ class InstallingViewController: GenericViewController, ViewID{
 		//resets window and auths
 		restoreWindow()
 		
-		FinalScreenSmallManager.shared.title = title
+		MainCreationFinishedViewController.title = title
 		
-		//TODO: this should not be really necessary
-		CreationVariablesManager.shared.disk.part = Part()
-		
-		cvm.shared.app.resetCachedAppInfo()
-		cvm.shared.options.check()
+		cvm.shared.disk.current = nil
+		cvm.shared.app.current = nil
 		
 		InstallMediaCreationManager.shared.makeProcessNotInExecution(withResult: success)
 		self.swapCurrentViewController("MainDone")
@@ -188,8 +132,6 @@ class InstallingViewController: GenericViewController, ViewID{
 	func goToFinalScreen(id: String, success: Bool = false, parseList: [String: String]! = nil){
 		//this code opens the final window
 		log("Bootable macOS installer creation process ended\n\n  Ending messange id: \(id)\n  Ending success: \(success ? "Yes" : "No")")
-		//resets window and auths
-		restoreWindow()
 		
 		var etitle = TextManager.getViewString(context: self, stringID: id)!
 		
@@ -204,16 +146,6 @@ class InstallingViewController: GenericViewController, ViewID{
 		//this code opens the previus window
 		
 		if (cvm.shared.process.status.isBusy()){
-			/*
-			let notification = NSUserNotification()
-			
-			notification.title = "TINU: bootable macOS installer creation canceled"
-			notification.informativeText = "The creation of the bootable macOS installer has been canceled, please check the TINU window if you want to try again"
-			notification.contentImage = IconsManager.shared.warningIcon
-			
-			notification.soundName = NSUserNotificationDefaultSoundName
-			NSUserNotificationCenter.default.deliver(notification)
-			*/
 			
 			let _ = NotificationsManager.sendWith(id: "goBack", image: nil)
 		}
@@ -228,25 +160,24 @@ class InstallingViewController: GenericViewController, ViewID{
 	@IBAction func cancel(_ sender: Any) {
 		//displays a dialog to check if the user is sure that user wants to stop the installer creation
 		
-		var spd: Bool!
-		
+		/*
 		if cvm.shared.process.status == .creation{
 			spd = InstallMediaCreationManager.shared.stopWithAsk()
 		}else{
 			spd = true
+		}*/
+		
+		guard let stopped = (cvm.shared.process.status == .creation ? InstallMediaCreationManager.shared.stopWithAsk() : true ) else { return }
+		
+		if stopped{
+			goBack()
+			return
 		}
 		
-		if let stopped = spd{
-			if stopped{
-				goBack()
-			}else{
-				log("Error while trying to close " + cvm.shared.executableName + " try to stop it from the termianl or from Activity monitor")
-				let list = ["{executable}" : cvm.shared.executableName]
-				//msgBoxWarning("Error while trying to exit from the process", "There was an error while trying to close the creation process: \n\nFailed to stop ${executable} process")
-				
-				msgboxWithManager(self, name: "stopError", parseList: list)
-			}
-		}
+		log("Error while trying to close " + cvm.shared.executableName + " try to stop it from the termianl or from Activity monitor")
+		let list = ["{executable}" : cvm.shared.executableName]
+		//msgBoxWarning("Error while trying to exit from the process", "There was an error while trying to close the creation process: \n\nFailed to stop ${executable} process")
+		msgboxWithManager(self, name: "stopError", parseList: list)
 	}
 	
 	//shows the log window
@@ -260,7 +191,7 @@ class InstallingViewController: GenericViewController, ViewID{
 	
 	func enableItems(enabled: Bool){
 		if let apd = NSApplication.shared.delegate as? AppDelegate{
-			if sharedIsOnRecovery{
+			if Recovery.isOn{
 				apd.InstallMacOSItem.isEnabled = enabled
 			}
 			apd.verboseItem.isEnabled = enabled

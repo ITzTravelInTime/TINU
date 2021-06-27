@@ -27,10 +27,10 @@ public func parse(messange: String, keys: [String: String]) -> String{
 	return ret
 }
 
-public func strFill(of section: String, length: UInt, startSeq: String! = nil, endSeq: String! = nil, forget: Bool = false) -> String{
+public func strFill(of section: String, length: UInt64, startSeq: String! = nil, endSeq: String! = nil, forget: Bool = false) -> String{
 	struct FillData: Equatable, Hashable{
 		let section: String
-		let length: UInt
+		let length: UInt64
 		let startSeq: String!
 		let endSeq: String!
 		

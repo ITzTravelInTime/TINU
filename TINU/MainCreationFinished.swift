@@ -11,6 +11,8 @@ import Cocoa
 
 class MainCreationFinishedViewController: GenericViewController, ViewID{
 	
+	static var title: String = ""
+	
 	let id: String = "MainCreationFinishedViewController"
     
     @IBOutlet weak var exitButton: NSButton!
@@ -59,13 +61,7 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
 		
 		showFailureImage()
 		
-		setFailureLabel(text: FinalScreenSmallManager.shared.title)
-		
-		if #available(macOS 11.0, *), look.usesSFSymbols(){
-			failureLabel.font = NSFont.systemFont(ofSize: failureLabel.font!.pointSize)
-		}else{
-			failureLabel.font = NSFont.boldSystemFont(ofSize: failureLabel.font!.pointSize)
-		}
+		setFailureLabel(text: MainCreationFinishedViewController.title)
 		
 		let old = failureLabel.frame.size.height
 		failureLabel.frame.size.height *= 3

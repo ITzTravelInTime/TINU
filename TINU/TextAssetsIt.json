@@ -1,11 +1,11 @@
 {
 	"readme":{
 		"installation":{
-			"hackintosh": "Grazie per aver usato TINU\n\nSe vuoi usare questa installazione di macOS su un hackintosh, perfavore scarica ed installa un bootloader come Clover o OpenCore, puoi trvare Clover qui:\n https://github.com/CloverHackyColor/CloverBootloader/releases\n\ne puoi trovare OpenCore qui:\n https://github.com/acidanthera/OpenCorePkg/releases \n\n(nota che i bootloader menzionati necessitano di essere installati e configurati nel modo giusto a seconda della configurazione hardware del pc sul quale hai installato e vuoi avviare macOS, per aiuto vai su: www.insanelymac.com o sul subreddit r/Hackintosh)\n\nSe vuoi usare questa installazione su un mac originale, non devi fare altro, è già pronta per essere usata.",
+			"hackintosh": "Grazie per aver usato TINU\n\nSe vuoi usare questa installazione di macOS su un hackintosh, perfavore scarica ed installa un bootloader come Clover o OpenCore, puoi trvare Clover qui:\n https://github.com/CloverHackyColor/CloverBootloader/releases\n\ne puoi trovare OpenCore qui:\n https://github.com/acidanthera/OpenCorePkg/releases \n\n(nota che i bootloader menzionati necessitano di essere installati e configurati nel modo giusto a seconda della configurazione hardware del pc sul quale hai installato e vuoi avviare macOS, per aiuto vai su: www.insanelymac.com o sul subreddit r/Hackintosh)\n\nSe vuoi usare questa installazione su un mac originale, non devi fare altro, è pronta all'uso!",
 			"mac": "Grazie per aver usato TINU\n\nRicoarda che questo supporto di installazione di macOS funziona solo con mac ufficialmente supportati dalla versione che hai scelto, non funzionerà con macchine non ufficialmente supportate"
 		},
 		"installer":{
-			"hackintosh": "Grazie per aver usato TINU\n\nSe vuoi usare questo supporto di installazione di macOS su un hackintosh, perfavore scarica ed installa un bootloader come Clover o OpenCore, puoi trvare Clover qui:\n https://github.com/CloverHackyColor/CloverBootloader/releases\n\ne puoi trovare OpenCore qui:\n https://github.com/acidanthera/OpenCorePkg/releases \n\n(nota che i bootloader menzionati necessitano di essere installati e configurati nel modo giusto a seconda della configurazione hardware del pc sul quale hai intenzione di avviare ed installare macOS, per aiuto vai su: www.insanelymac.com o sul subreddit r/Hackintosh)\n\nSe vuoi usare questo supporto di installazione di macOS su un mac originale, non devi fare altro, è già pronta per essere usata.",
+			"hackintosh": "Grazie per aver usato TINU\n\nSe vuoi usare questo supporto di installazione di macOS su un hackintosh, perfavore scarica ed installa un bootloader come Clover o OpenCore, puoi trvare Clover qui:\n https://github.com/CloverHackyColor/CloverBootloader/releases\n\ne puoi trovare OpenCore qui:\n https://github.com/acidanthera/OpenCorePkg/releases \n\n(nota che i bootloader menzionati necessitano di essere installati e configurati nel modo giusto a seconda della configurazione hardware del pc sul quale hai intenzione di avviare ed installare macOS, per aiuto vai su: www.insanelymac.com o sul subreddit r/Hackintosh)\n\nSe vuoi usare questo supporto di installazione di macOS su un mac originale, non devi fare altro, è pronto all'uso!",
 			"mac": "Grazie per aver usato TINU\n\nRicoarda che questo supporto di installazione di macOS funziona solo con mac ufficialmente supportati dalla versione che hai scelto, non funzionerà con macchine non ufficialmente supportate"
 		}
 	},
@@ -48,7 +48,7 @@
 			8,
 			{
 				"title" : "Non espellere la partizione EFI del disco",
-				"desc" : "Durante la creazione del supporto di installazione di macOS, TINU potrebbe aprire la partizione EFI dek disco selezionato, questa opzione impedisce a TINU di espellere questa partizione alla fine del processo."
+				"desc" : "Durante la creazione del supporto di installazione di macOS, TINU potrebbe aprire la partizione EFI del disco selezionato, questa opzione impedisce a TINU di espellere questa partizione alla fine del processo."
 			}
 		],
 		"installation":[
@@ -204,6 +204,8 @@
 				"buttonRefresh" : "Aggiorna",
 				"invalidAppDialogSizeTitle" : "App non utilizzabile",
 				"invalidAppDialogSize" : "L'app che hai scelto${fileName} non è utilizzabile perchè è troppo grande per il disco che hai scelto.",
+				"invalidAppDialogLSizeTitle" : "App non utilizzabile",
+				"invalidAppDialogLSize" : "L'app che hai scelto${fileName} non è utilizzabile perchè è troppo piccola per poter essere un'installer di macOS.",
 				"invalidAppDialogTitle" : "App non utilizzabile",
 				"invalidAppDialog" : "L'app che hai scelto${fileName} non è utilizzabile perchè non è un'app di installazione di macOS oppure è un app di installazione danneggiata o non supportata.",
 				"invalidAliasDialogTitle" : "Impossibile usare alias",
@@ -239,8 +241,8 @@
 				"nextButton" : "Fatto",
 				"nextButtonChoose" : "Avanti",
 				"defaultButton" : "Ripristina default",
-				"optionsSection" : "Opzioni generali",
-				"advancedOptionsSection" : "Opzioni avanzate",
+				"optionsSection" : "Generali",
+				"advancedOptionsSection" : "Avanzate",
 				"bootloaderSection" : "Installa la cartella EFI di\n${bootloader}"
 			}
 		},

@@ -55,7 +55,7 @@ public class CreditsViewController: GenericViewController, ViewID {
 		
         copyrigthLabel.stringValue = Bundle.main.copyright! + TextManager.getViewString(context: self, stringID: "license")
         
-        if sharedIsOnRecovery{
+        if Recovery.isOn{
             contactButton.isEnabled = false
             sourceButton.isEnabled = false
         }

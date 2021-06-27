@@ -161,7 +161,7 @@ public class SettingsSectionItem: NSView{
 				
 				let item = OtherOptionsCheckBox(frame: NSRect(x: 0, y: count, width: SettingsSectionItem.surface.frame.size.width, height: itemHeigth))
 				
-				item.option = i.value
+				item.optionID = i.value.id
 				
 				isGray.toggle()
 				

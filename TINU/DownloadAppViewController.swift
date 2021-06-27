@@ -89,7 +89,6 @@ public class DownloadAppViewController: ShadowViewController, ViewID {
 		plain.backgroundColor = NSColor.windowBackgroundColor
 		scroller.backgroundColor = plain.backgroundColor
 		
-		
     }
 	
 	override public func viewDidAppear() {
@@ -103,6 +102,9 @@ public class DownloadAppViewController: ShadowViewController, ViewID {
 		
 		spinner.stopAnimation(self)
 		spinner.isHidden = true
+		
+		self.window.maxSize = CGSize(width: self.view.frame.width, height: plain.frame.height + scroller.frame.origin.y + (self.view.frame.size.height - scroller.frame.origin.y - scroller.frame.size.height))
+		self.window.minSize = CGSize(width: self.view.frame.width, height: 300)
 	}
 	
 	/*
@@ -136,8 +138,6 @@ fileprivate class DownloadAppItem: ShadowView, ViewID{
 	
 	override func viewDidMoveToSuperview() {
 		super.viewDidMoveToSuperview()
-		
-		setModeFromCurrentLook()
 		
 		icon.frame.size = NSSize(width: 70, height: 70)
 		icon.frame.origin = NSPoint(x: 5, y: (self.frame.height - icon.frame.height) / 2)

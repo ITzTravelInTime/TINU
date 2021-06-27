@@ -116,7 +116,7 @@ class InfoViewController: GenericViewController, ViewID{
 		super.viewDidAppear()
 		
 		if #available(OSX 10.15, *){
-			if !isRootUser{
+			if !User.isRoot{
 				SIPManager.checkStatusAndLetTheUserKnow()
 			}
 		}

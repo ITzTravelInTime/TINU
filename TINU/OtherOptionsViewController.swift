@@ -24,8 +24,6 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 		
 	}
 	
-    private var ps: Bool = false
-	
 	@IBOutlet weak var sectionsScrollView: NSScrollView!
 	@IBOutlet weak var settingsScrollView: NSScrollView!
 	
@@ -56,8 +54,6 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 		self.showTitleLabel()
 		
 		sections.removeAll()
-        //avoids some porblems of sharedVolumeNeedsPartitionMethodChange being nill when it should not be
-		ps = cvm.shared.disk.shouldErase
         
         //just in case of errors
 		if cvm.shared.disk.path == nil || cvm.shared.app.path == nil{
@@ -69,7 +65,6 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 		sections.append(getSectionItem())
 		sections.last!!.image.image = IconsManager.shared.optionsIcon
 		if #available(macOS 11.0, *), look.usesSFSymbols(){
-			sections.last!!.image.image?.isTemplate = true
 			sections.last!!.image.contentTintColor = .systemGray
 			sections.last!!.imageColor = sections.last!!.image.contentTintColor!
 		}
@@ -81,7 +76,6 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 		sections.append(getSectionItem())
 		sections.last!!.image.image = IconsManager.shared.advancedOptionsIcon
 		if #available(macOS 11.0, *), look.usesSFSymbols(){
-			sections.last!!.image.image?.isTemplate = true
 			sections.last!!.image.contentTintColor = .systemGray
 			sections.last!!.imageColor = sections.last!!.image.contentTintColor!
 		}
@@ -182,7 +176,6 @@ class OtherOptionsViewController: GenericViewController, ViewID {
     
     
     @IBAction func goBack(_ sender: Any) {
-		cvm.shared.disk.shouldErase = ps
 		
 		CustomizationWindowManager.shared.referenceWindow = nil
 		
@@ -207,8 +200,8 @@ class OtherOptionsViewController: GenericViewController, ViewID {
     }
     
     @IBAction func resetOptions(_ sender: Any) {
-		cvm.shared.options.check()
 		
+		cvm.shared.options.check()
 		EFIFolderReplacementManager.reset()
 		
 		if let sections = sectionsScrollView.documentView?.subviews as? [SettingsSectionItem]{

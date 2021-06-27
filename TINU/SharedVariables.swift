@@ -9,25 +9,38 @@
 import Cocoa
 
 //here there are all the variables that are accessible in all the app to determinate the status of the app and what it is doing
-let toggleRecoveryModeShadows = !false
+let toggleRecoveryModeShadows = false
 
 public var look: UIManager.AppLook{
-	if let lk = simulateLook{
+	
+	struct MEM{
+		static var result: UIManager.AppLook! = nil
+	}
+	
+	if let r = MEM.result{
+		return r
+	}
+	
+	var ret: UIManager.AppLook! = nil
+	
+	if let lk = simulateLook, ret == nil{
 		print("Forcing a simulated Theme \(lk.rawValue)")
-		return lk
+		ret = lk
 	}
 	
-	if ((sharedIsOnRecovery && !toggleRecoveryModeShadows) || simulateDisableShadows){
+	if (Recovery.isOn && !toggleRecoveryModeShadows && (ret == nil)){
 		print("Recovery theme will be used")
-		return .recovery
+		ret = .recovery
 	}
 	
-	if #available(macOS 11.0, *) {
+	if #available(macOS 11.0, *), ret == nil {
 		print("Shadows SF Symbols theme will be used")
-		return .shadowsSFSymbols
+		ret = .shadowsSFSymbols
 	}else{
 		print("Shadows Old Icons theme will be used")
-		return .shadowsOldIcons
 	}
+	
+	MEM.result = ret ?? .shadowsOldIcons
+	return MEM.result!
 }
 

@@ -43,7 +43,7 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
 		self.window?.isMovableByWindowBackground = true
 		
         #if !isTool
-		if AppManager.shared.sharedTestingMode{
+		if App.isTesting{
 			self.window?.titleVisibility = .visible
 		}else{
 			self.window?.titleVisibility = .hidden

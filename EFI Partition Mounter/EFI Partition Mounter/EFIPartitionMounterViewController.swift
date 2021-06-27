@@ -63,8 +63,8 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
         if startsAsMenu{
             startsAsMenu.toggle()
             
-        	AppManager.shared.checkUser()
-            AppManager.shared.checkSettings()
+        	App.shared.checkUser()
+            App.shared.checkSettings()
         }
         
         #endif

@@ -203,6 +203,8 @@
 				"buttonRefresh" : "Refresh",
 				"invalidAppDialogTitle" : "Unusable app",
 				"invalidAppDialog" : "The app you chose${fileName} is not usable because it isn't a macOS installer or is a damaged or unsupported macOS installer.",
+				"invalidAppDialogLSizeTitle" : "Unusable app",
+				"invalidAppDialogLSize" : "The app you chose${fileName} is not usable because it's too small to be a macOS installer.",
 				"invalidAppDialogSizeTitle" : "Unusable app",
 				"invalidAppDialogSize" : "The app you chose${fileName} is not usable because it's too bit for your storage device.",
 				"invalidAliasDialogTitle" : "Bad alias",
@@ -238,8 +240,8 @@
 				"nextButton" : "Done",
 				"nextButtonChoose" : "Next",
 				"defaultButton" : "Set default options",
-				"optionsSection" : "General options",
-				"advancedOptionsSection" : "Advanced options",
+				"optionsSection" : "General",
+				"advancedOptionsSection" : "Advanced",
 				"bootloaderSection" : "Install ${bootloader}\nEFI folder"
 			}
 		},

@@ -10,91 +10,7 @@ import Cocoa
 
 extension InstallMediaCreationManager{
 	
-	func installFinished(){
-		
-		DispatchQueue.global(qos: .background).async {
-			
-			//now the installer creation process has finished running, so our boolean must be false now
-			cvm.shared.process.status = .postCreation
-			
-			DispatchQueue.main.async {
-				
-				//self.setActivityLabelText("Interpreting the results of the process")
-				
-				self.setActivityLabelText("activityLabel3")
-				
-			}
-			
-			log("process took \(UInt64(abs(cvm.shared.process.startTime.timeIntervalSinceNow))) seconds to finish")
-			
-			DispatchQueue.main.sync {
-				//we have finished, so the controls opf the window are restored
-				if let w = UIManager.shared.window{
-					w.isMiniaturizeEnaled = true
-					w.isClosingEnabled = true
-					w.canHide = true
-				}
-			}
-			
-			//this code get's the output of teh process
-			let outdata = cvm.shared.process.outputPipe.fileHandleForReading.readDataToEndOfFile()
-			if var string = String(data: outdata, encoding: .utf8) {
-				string = string.trimmingCharacters(in: .newlines)
-				self.output = string.components(separatedBy: "\n")
-			}
-			
-			//this code gets the errors of the process
-			let errdata = cvm.shared.process.errorPipe.fileHandleForReading.readDataToEndOfFile()
-			if var string = String(data: errdata, encoding: .utf8) {
-				string = string.trimmingCharacters(in: .newlines)
-				self.error = string.components(separatedBy: "\n")
-			}
-			
-			//if there is a not normal code it will be logged
-			log("\"\(cvm.shared.executableName)\" has finished")
-			
-			log("process output produced: ")
-			
-			if self.output.isEmpty{
-				if let data = String(data: outdata, encoding: .utf8){
-					log(data)
-				}
-			}else if self.output.first!.isEmpty{
-				if let data = String(data: outdata, encoding: .utf8){
-					log(data)
-				}
-			}else{
-				
-				//logs the output of the process
-				for o in self.output{
-					log("      " + o)
-				}
-				
-			}
-			
-			//if the output is empty opr if it's just the standard output of the creation process, it's not logged
-			if !self.error.isEmpty{
-				if !((self.error.first?.contains("Erasing Disk: 0%... 10%... 20%... 30%...100%"))! && self.error.first == self.error.last){
-					
-					log("process error/s produced: ")
-					//logs the errors produced by the process
-					for o in self.error{
-						log("      " + o)
-					}
-				}
-			}else{
-				if let data = String(data: errdata, encoding: .utf8){
-					log("process error/s produced: ")
-					log(data)
-				}
-			}
-			
-			self.analizeError()
-		}
-	}
-	
 	private struct CheckItem: Codable, Equatable{
-		
 		enum Operations: UInt8, Codable, Equatable{
 			case contains = 0
 			case equal = 1
@@ -112,7 +28,6 @@ extension InstallMediaCreationManager{
 			case px = 7
 		}
 		
-		
 		//var valuesToCheck: [String] = []
 		var chackValues: [CheckValues] = []
 		let stringsToCheck: [String?]
@@ -123,7 +38,6 @@ extension InstallMediaCreationManager{
 		var operation: Operations = .contains
 		
 		var isBack = false
-		
 	}
 	
 	private struct CheckItemCollection: CodableDefaults, Codable, Equatable{
@@ -132,43 +46,87 @@ extension InstallMediaCreationManager{
 		internal static let defaultResourceFileExtension = "json"
 	}
 	
-	private func analizeError(){
+	func installFinished(){
+		
+		//now the installer creation process has finished running, so our boolean must be false now
+		cvm.shared.process.status = .postCreation
 		
 		DispatchQueue.global(qos: .background).async {
 			
-			//gets the termination status for comparison
-			var rc = cvm.shared.process.process.terminationStatus
-			
-			//code used to test if the process has exited with an abnormal code
-			if simulateAbnormalExitcode{
-				rc = 1
+			DispatchQueue.main.async {
+				
+				//self.setActivityLabelText("Interpreting the results of the process")
+				
+				self.setActivityLabelText("activityLabel3")
+				
 			}
 			
-			//if the exit code produced is not normal, it's logged
+			log("process took \(UInt64(abs(cvm.shared.process.startTime.timeIntervalSinceNow))) seconds to finish")
+			
+			//if there is a not normal code it will be logged
+			log("\"\(cvm.shared.executableName)\" has finished, extracting output ...")
+			
+			let result = Command.result(from: cvm.shared.process.handle)
+			
+			log("Output extracted: ")
+			
+			//logs the output of the process
+			for o in result.output{
+				log("      " + o)
+			}
+					
+			log("process error/s produced: ")
+			//logs the errors produced by the process
+			for o in result.error{
+				log("      " + o)
+			}
 			
 			DispatchQueue.main.sync {
-				//self.setActivityLabelText("Checking previous operations")
-				self.setActivityLabelText("activityLabel4")
+				//we have finished, so the controls opf the window are restored
+				if let w = UIManager.shared.window{
+					w.isMiniaturizeEnaled = true
+					w.isClosingEnabled = true
+					w.canHide = true
+				}
 			}
 			
-			log("Checking the \(cvm.shared.executableName) process")
+			self.analizeError(result)
 			
-			if cvm.shared.installMac{
-				//probably this will end up never executing
-				DispatchQueue.main.sync {
-					//102030100
-					if (rc == 0){
-						//self.viewController.goToFinalScreen(title: "macOS installed successfully", success: true)
-						self.viewController.goToFinalScreen(id: "finalScreenMIS", success: true)
-					}else{
-						//self.viewController.goToFinalScreen(title: "macOS installation error: check the log for details", success: false)
-						self.viewController.goToFinalScreen(id: "finalScreenMIE")
-					}
-					
+		}
+	}
+	
+	
+	
+	private func analizeError(_ result: Command.Result){
+		
+		DispatchQueue.main.sync {
+			//self.setActivityLabelText("Checking previous operations")
+			self.setActivityLabelText("activityLabel4")
+		}
+		
+		log("Checking the \(cvm.shared.executableName) process")
+		
+		//gets the termination status for comparison
+		let rc = simulateAbnormalExitcode ? 1 : result.exitCode
+		
+		if cvm.shared.installMac{
+			//probably this will end up never executing
+			DispatchQueue.main.sync {
+				//102030100
+				if (rc == 0){
+					//self.viewController.goToFinalScreen(title: "macOS installed successfully", success: true)
+					self.viewController.goToFinalScreen(id: "finalScreenMIS", success: true)
+				}else{
+					//self.viewController.goToFinalScreen(title: "macOS installation error: check the log for details", success: false)
+					self.viewController.goToFinalScreen(id: "finalScreenMIE")
 				}
 				
-				return
 			}
+			
+			return
+		}
+		
+		DispatchQueue.global(qos: .background).async {
 			
 			var px = 0, fe: String!, me: String!, le: String!, lo: String!, llo: String!, tt: String!
 			
@@ -176,19 +134,19 @@ extension InstallMediaCreationManager{
 				tt = simulateCreateinstallmediaFailCustomMessage
 			}
 			
-			fe = self.error.first
-			if self.error.indices.contains(1){
-				me = self.error[1]
+			fe = result.error.first
+			if result.error.indices.contains(1){
+				me = result.error[1]
 			}else{
 				me = nil
 			}
-			le = self.error.last
+			le = result.error.last
 			
 			
 			//fo = self.output.first
-			lo = self.output.last
+			lo = result.output.last
 			
-			llo = self.output.last?.lowercased()
+			llo = result.output.last?.lowercased()
 			
 			var mol = 1
 			
@@ -211,9 +169,9 @@ extension InstallMediaCreationManager{
 			}
 			
 			
-			let success = ((rc == 0) && (px == 0)) || (isRootUser && (px == 102030100) && (rc == 0)) //add rc to the root case
+			let success = ((rc == 0) && (px == 0)) || (User.isRoot && (px == 102030100) && (rc == 0)) //add rc to the root case
 			
-			log("Current user:                           \(NSUserName())")
+			log("Current user:                           \(User.name)")
 			log("Main process exit code:                 \(px)")
 			log("Sub process exit code produced:         \(rc)")
 			log("Detected process outcome:               \(success ? "Positive" : "Negative")")
@@ -236,6 +194,7 @@ extension InstallMediaCreationManager{
 			
 			//checks the conditions of the errorlist array to see if the operation has been complited with success
 			print("Checking errors: ")
+			
 			for item in errorsList{
 				
 				var values: [String?] = []
@@ -252,7 +211,6 @@ extension InstallMediaCreationManager{
 				print("    Strings to check against: \"\(values)\"")
 				print("    Operation to perform: \(item.operation)")
 				
-				
 				if !self.checkMatch(values, item.stringsToCheck, operation: item.operation){
 					continue
 				}
@@ -261,70 +219,66 @@ extension InstallMediaCreationManager{
 				
 				log("\n\(self.parse(messange: item.printMessage))\n")
 				
+				self.performPostProcess(item)
 				
-				if item.notError{
-					
-					/*DispatchQueue.main.async {
-					self.viewController.progress.isHidden = false
-					self.viewController.spinner.isHidden = true
-					}*/
-					
-					//here createinstall media succedes in creating the installer
-					log("\(cvm.shared.executableName) process ended with success")
-					log("Bootable macOS installer created successfully!")
-					
-					//extra operations here
-					//trys to apply special options
-					DispatchQueue.main.sync {
-						//self.setActivityLabelText("Applaying custom options")
-						self.setActivityLabelText("activityLabel5")
-					}
-					
-					DispatchQueue.global(qos: .background).sync {
-						
-						if let res = self.manageSpecialOperations(){
-							if !res{
-								print("Advanced options failed")
-							
-								DispatchQueue.main.sync {
-									//self.viewController.goToFinalScreen(title: "Error: Failed to apply advanced options", success: false)
-									self.viewController.goToFinalScreen(id: "finalScreenAOE")
-								}
-							
-								return
-							}else{
-								if item.isBack{
-									DispatchQueue.main.sync {
-										self.viewController.goBack()
-									}
-								}else{
-									DispatchQueue.main.sync {
-										self.viewController.goToFinalScreen(title: self.parse(messange: item.message), success: item.notError)
-									}
-								}
-							}
-						}
-						
-					}
-					
-				}else{
-					if item.isBack{
-						DispatchQueue.main.sync {
-							self.viewController.goBack()
-						}
-					}else{
-						DispatchQueue.main.sync {
-							self.viewController.goToFinalScreen(title: self.parse(messange: item.message), success: item.notError)
-						}
-					}
-				}
-				
-				
-				return
+				break
 			}
 			
 		}
 		
+	}
+	
+	private func performPostProcess( _ item: CheckItem){
+		
+		if !item.notError{
+			if item.isBack{
+				DispatchQueue.main.sync {
+					self.viewController.goBack()
+				}
+			}else{
+				DispatchQueue.main.sync {
+					self.viewController.goToFinalScreen(title: self.parse(messange: item.message), success: item.notError)
+				}
+			}
+			return
+		}
+		
+		//here createinstallmedia succedes in creating the installer
+		log("\(cvm.shared.executableName) process ended with success")
+		
+		DispatchQueue.global(qos: .background).async {
+			
+			guard let res = self.manageSpecialOperations() else {
+				//operation canceled by the user
+				DispatchQueue.main.sync {
+					self.viewController.goBack()
+				}
+				return
+			}
+			
+			if !res{
+				log("Options application failed")
+				
+				DispatchQueue.main.sync {
+					//self.viewController.goToFinalScreen(title: "Error: Failed to apply advanced options", success: false)
+					self.viewController.goToFinalScreen(id: "finalScreenAOE")
+				}
+				
+				return
+			}
+			
+			if item.isBack{
+				DispatchQueue.main.sync {
+					self.viewController.goBack()
+				}
+			}else{
+				log("Bootable macOS installer created successfully!")
+				DispatchQueue.main.sync {
+					self.viewController.goToFinalScreen(title: self.parse(messange: item.message), success: item.notError)
+				}
+			}
+			
+		}
 	}
 	
 	private func checkMatch(_ stringsToCheck: [String?], _ valuesToCheck: [String?], operation: CheckItem.Operations) -> Bool{
@@ -374,7 +328,7 @@ extension InstallMediaCreationManager{
 	}
 	
 	private func parse(messange: String) -> String{
-		return TINU.parse(messange: messange, keys: ["{executable}": cvm.shared.executableName, "{drive}": self.dname])
+		return TINU.parse(messange: messange, keys: ["{executable}": cvm.shared.executableName, "{drive}": cvm.shared.disk.current.driveName])
 	}
 	
 }

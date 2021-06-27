@@ -26,7 +26,7 @@ final class SIPManager: ViewID{
 					return true
 				}
 			}
-			return (CommandsManager.getOut(cmd: "csrutil status").contains("enabled"))
+			return (Command.getOut(cmd: "csrutil status").contains("enabled"))
 		}else{
 			return false
 		}
