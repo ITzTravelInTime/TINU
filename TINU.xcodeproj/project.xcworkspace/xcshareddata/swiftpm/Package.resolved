@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Command",
+        "repositoryURL": "https://github.com/ITzTravelInTime/Command.git",
+        "state": {
+          "branch": null,
+          "revision": "2b1a7934108476c023e5c4dcda322de133007a22",
+          "version": "1.1.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

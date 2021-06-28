@@ -36,6 +36,7 @@ import Foundation
 				let mountCMD = "diskutil mount \(withBSDID)"
 				
 				if #available(OSX 10.13.6, *), !Recovery.isActuallyOn{
+					//TODO: replace this with the new run implementation that let's us avoid doing this
 					if let res = Command.Sudo.run(cmd: "/bin/sh", args: ["-c", mountCMD]){
 						
 							text = ""
