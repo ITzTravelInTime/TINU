@@ -64,10 +64,10 @@ Contact the project creator (ITzTravelInTime aka Pietro):
 - Create an issue for any problems, bugs, spell/grammar errors, missplacements and suggestions (especially the ones from designers and developers are always welcome).
 
 # Note that:
-- This software is currently under GNU GPL v3 license so any new branch/mod/third party release must be open source and under the same license.
+- This software is currently under GNU GPL v2 license so any new branch/mod/third party release must be open source and under the same license.
 - We (the project creator and othe people involved with active developmment) assume no responsibility for any use of this app and this source code, use them at your own risk!
-- We do not guarantee support to you, this is only an open source project, not a product released by a company!
-- This project is born only for educational and demonstrative purposes, it's not intended to be used for commercial purposes and it will never be.
+- We (the project creator and othe people involved with active developmment) do not guarantee support to you, this is only an open source project done in our free time, not a product released by a company!
+- This project is born only for educational and demonstrative purposes, it's not intended to be used for commercial purposes.
 - This is a no-profit project, born only to let people to create macOS install medias in a more simple way and also to let them learn how to create this kind of apps.
 
 # Credits:
