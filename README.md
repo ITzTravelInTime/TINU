@@ -22,7 +22,7 @@ Allows you to create easily a macOS install media without messing around with co
 - Works using the latest versions of macOS and will also support newer Mac installers out of the box without requiring an update.
 - Automatic Clover and OpenCore EFI folder installer.
 
- (To sugegst a new feature please contact us)
+ (To suggest a new feature please contact us)
 
 # Requirements:
 - A computer that runs Mac OS X Yosemite or a more recent version (Mac OS X El Capitan is required to use TINU inside a macOS Recovery/Installer OS).
