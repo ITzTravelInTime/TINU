@@ -29,25 +29,28 @@ public final class EFIPartitionToolTypes{
 
 	public struct EFIPartitionStandard {
 		var displayName: String = "";
-		var bsdName: String = "";
+		var bsdName: BSDID = BSDID();
 		var isRemovable: Bool = false;
 		var isMounted: Bool = false;
 		var configType: ConfigLocations! = .cloverConfigLocation;
-		var completeDrivePartitions: [PartitionStandard] = []}
+		var completeDrivePartitions: [PartitionStandard] = []
+	}
 	
-	public struct VolumeStandard {var id: String = ""; var isEFI: Bool = false}
+	public struct VolumeStandard {var id: BSDID = BSDID(); var isEFI: Bool = false}
 	
 	public enum ConfigLocations: String, CaseIterable{
 		case cloverConfigLocation = "/EFI/CLOVER/config.plist"
 		case openCoreConfigLocation = "/EFI/OC/config.plist"
 		
-		static func folderHasConfig(_ path: String) -> ConfigLocations!{
+		public init?(_ path: String){
 			for loc in EFIPartitionToolTypes.ConfigLocations.allCases{
 				if !FileManager.default.fileExists(atPath: path + loc.rawValue) { continue }
 				
-				print("This EFI Partition has a config file")
+				print("This EFI Partition has a \(loc.rawValue.split(separator: "/")[2]) config file")
 				
-				return loc
+				self = loc
+				
+				return
 			}
 			
 			return nil

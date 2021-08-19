@@ -130,7 +130,7 @@
 				1,
 				3
 			],
-			"printMessage" : "The selected drive\/partition is not large enought for this macOS installer app, if you want to make an installer of Catalina or later we reccommend you to use a drive\/partition of at least 10 gb",
+			"printMessage" : "The selected drive\/partition is not large enough for this macOS installer app, if you want to make an installer of Catalina or later we reccommend you to use a drive\/partition of at least 10 gb",
 			"notError" : false
 		},
 		{
@@ -163,7 +163,7 @@
 		{
 			"isBack" : false,
 			"operation" : 0,
-			"message" : "Creazione del supporto di installazione di macOS\navvenuta con successo",
+			"message" : "Creazione del supporto di installazione di macOS\navvenuta con successo.\n\nGrazie per aver usato TINU",
 			"stringsToCheck" : [
 				"done",
 				"install media now available at "

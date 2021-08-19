@@ -24,7 +24,8 @@ public final class App{
 		
 		//log(AppBanner.banner)
 		
-		LogManager.clear(true)
+		//LogManager.clear(true)
+		LogManager.clearLog()
 		
 		let testingConditions = [
 			simulateFormatFail,
@@ -99,7 +100,7 @@ public final class App{
 		
 		//this function gets saved settings, should be called only once at app startapp
 		public class func check(){
-			if !Recovery.isOn {
+			if !Recovery.status {
 				#if !isTool && TINU
 				#else
 					#if EFIPM

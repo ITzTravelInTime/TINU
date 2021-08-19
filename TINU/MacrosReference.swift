@@ -17,9 +17,6 @@ To enable each macro you need to go into the build settings section of the Xcode
 - demo
 	This is an example macro to let you test macros effects, and check if you are able to make them to work, by enableing this you will see a message of success at the app startup
 
-- EFIPMAlternateDetection
-	Uses the experimental detection system for EFI Partition Mounter
-
 - noUnmounted
 	This will not let the user to use drives without mounted partitions
 
@@ -40,9 +37,6 @@ To enable each macro you need to go into the build settings section of the Xcode
 
 - useFileReplacement
 	This allows the usage of the bootfiles replacement menu
-
-- skipChooseCustomization //TODO: deprecate this macro and the corresponding view
-	This will skip the screen that prompts for the customization options and instead shoing the confirm screen with a button which allows to customize the advanced settings, setted by default, please keep it enabled, or some users may have a bad time using the app
 
 - TINU
 	This tells to compile the "TINU only" code

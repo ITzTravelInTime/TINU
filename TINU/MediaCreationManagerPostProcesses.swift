@@ -32,13 +32,7 @@ extension InstallMediaCreationManager{
 			
 			#if !macOnlyMode
 			
-			var unmount = true
-			
-			if let o = cvm.shared.options.list[.keepEFIMounted]?.canBeUsed(){
-				unmount = !o
-			}
-			
-			if unmount{
+			if !(cvm.shared.options.list[.keepEFIMounted]?.canBeUsed() ?? false){
 				DispatchQueue.main.sync {
 					//self.setActivityLabelText("Unmounting partitions")
 					self.setActivityLabelText("activityLabel7")
@@ -114,9 +108,9 @@ extension InstallMediaCreationManager{
 		}*/
 		
 		if let a = cvm.shared.disk.aPFSContaninerBSDDrive, cvm.shared.installMac{
-			cvm.shared.disk.current.path = dm.getMountPointFromPartitionBSDID(a)
+			cvm.shared.disk.current.path = a.mountPoint()
 		}else{
-			cvm.shared.disk.current.path = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive!)
+			cvm.shared.disk.current.path = cvm.shared.disk.bSDDrive?.mountPoint()
 		}
 		
 		log("Disk path set to: " + (cvm.shared.disk.path ?? ""))

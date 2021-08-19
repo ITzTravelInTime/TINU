@@ -7,11 +7,13 @@
 //
 
 import Cocoa
+import Command
+import CommandSudo
 
 public final class TaskKillManager: ViewID{
 	
 	public let id: String = "TaskKillManager"
-	private static let ref = TaskKillManager()
+	private static let shared = TaskKillManager()
 	
 	private class func checkPid(pid: inout String?, name: String) -> Bool!{
 		
@@ -80,10 +82,13 @@ public final class TaskKillManager: ViewID{
 	
 	/**Terminates a process using it's name and pid.
 	
-	Returns:
-	-True  - if the process has been killed successfully or if it is not in execution
-	-False - if the process has not been killed successfully
-	-nil   - if the authentication to kill the process has not been gives*/
+	- Returns:
+	
+	`true` if the process has been killed successfully or if it is not in execution
+	`false` if the process has not been killed successfully
+	`nil`  if the authentication to kill the process has not been gives
+	
+	*/
 	class func terminateProcessPidCheck(pid: String!, name: String) -> Bool!{
 		
 		var npid = pid
@@ -107,7 +112,8 @@ public final class TaskKillManager: ViewID{
 	
 	class func terminateProcess(PID pid: Int32) -> Bool!{
 		
-		guard let res = Command.Sudo.run(cmd: "/bin/sh", args: ["-c", "kill \(pid)"]) else{
+		//TODO: unsecure
+		guard let res = Command.Sudo.run(cmd: "/bin/kill", args: ["\(pid)"]) else{
 			log("Failed to close \"\(pid)\" because of an authentication failure")
 			return nil
 		}
@@ -134,7 +140,8 @@ public final class TaskKillManager: ViewID{
 	}
 	
 	private class func getPid(name: String) -> String!{
-		let pid = Command.getOut(cmd:"ps -Ac -o pid,comm | awk '/^ *[0-9]+ " + name + "$/ {print $1}'")
+		//TODO: Replace this with some safer way of getting th PID
+		let pid = Command.getOut(cmd:"ps -Ac -o pid,comm | awk '/^ *[0-9]+ " + name + "$/ {print $1}'") ?? ""
 		
 		if pid.isEmpty{
 			return nil
@@ -162,14 +169,14 @@ public final class TaskKillManager: ViewID{
 			#if TINU
 			if name == "createinstallmedia"{
 				//answer = !dialogYesNoWarning(question: "Quit the other installer creation?", text: "TINU needs to close the installer creation which is currently running in order to continue, do you want to close it?\n\nIf yes, you will need to enter your credentials")
-				answer = dialogGenericWithManagerBool(ref, name: "quitInstaller")
+				answer = dialogGenericWithManagerBool(shared, name: "quitInstaller")
 			}
 			#endif
 			
 			if answer == nil{
 			//answer = !dialogYesNoWarning(question: "Close \"\(name)\"?", text: "TINU needs to close \"\(name)\" in order to continue, do you want to close it?\n\nIf yes, you will need to enter your credentials")
 				
-				answer = dialogGenericWithManagerBool(ref, name: "quit", parseList: ["{name}": name])
+				answer = dialogGenericWithManagerBool(shared, name: "quit", parseList: ["{name}": name])
 			}
 			
 		}
@@ -233,7 +240,7 @@ public final class TaskKillManager: ViewID{
 						}
 						
 						DispatchQueue.main.sync {
-							answer = dialogGenericWithManagerBool(ref, name: "quit", parseList: ["{name}": name])
+							answer = dialogGenericWithManagerBool(shared, name: "quit", parseList: ["{name}": name])
 						}
 						
 						ff = name

@@ -91,7 +91,7 @@
 		{
 			"unmutable" : {
 				"version" : "Version: ",
-				"license" : "\nReleased under the GNU GPL V3 License",
+				"license" : "\nReleased under the GNU GPL V2 License",
 				"closeButton" : "Close",
 				"sourceCodeButton" : "Source Code",
 				"contactsButton" : "Contact us"
@@ -137,8 +137,8 @@
 		"InfoViewController":{
 			"mutable" : {
 				"driveInfo" : {
-					"installer" :    "A USB thumb drive or a partition of 8 GB or higher (9 GB or higher for Catalina, 13 GB or higher for Big Sur)",
-					"installation" : "A drive or partition of 20 GB or higher\n(or possibly at least 30GB)"
+					"installer" :    "A USB thumb drive or a partition of 8 GB or higher (9 GB or higher for Catalina installers, 13 GB or higher for Big Sur and newer installers)",
+					"installation" : "A drive or partition of 30 GB or higher\n(or possibly at least 40GB)"
 				},
 				"appInfo" : {
 					"installer" :    "A macOS installer app downloaded from the App Store (OS X Mavericks or a more recent version is required)",
@@ -208,7 +208,7 @@
 				"invalidAppDialogSizeTitle" : "Unusable app",
 				"invalidAppDialogSize" : "The app you chose${fileName} is not usable because it's too bit for your storage device.",
 				"invalidAliasDialogTitle" : "Bad alias",
-				"invalidAliasDialog" : "The file you chose${fileName} is not usable because it's a Finder Alias that can't be intepreted.",
+				"invalidAliasDialog" : "The file you chose${fileName} is not usable because it's a Finder Alias that can't be interpreted.",
 				"errorOpeningTitle" : "Error: no files chosen!",
 				"errorOpening" : "No files seems to have been chosen , proably this is an internal error",
 				"errorPathTitle" : "Error while opening the file's path",
@@ -298,6 +298,7 @@
 				"finalScreenCVGE" : "Failed to unmount conflicting volumes",
 				"finalScreenFFE" : "Failed to format the disk \"${diskName}\"",
 				"finalScreenFUE" : "Failed to unmount the the target disk",
+				"finalScreenFLE" : "Failed to launch the creation process",
 				"finalScreenMIS" : "macOS installed successfully",
 				"finalScreenMIE" : "macOS installation error, check the log for more details",
 				"finalScreenAOE" : "Failed to apply options"

@@ -24,12 +24,14 @@ extension NSViewController{
 		
 		NSViewController.tmpViewController.append(cstoryboard.instantiateController(withIdentifier: storyboardID) as? NSViewController)
 		
-		if NSViewController.tmpViewController.last! == nil{
-			// :-(
+		if !NSViewController.tmpViewController.isEmpty{
+			if NSViewController.tmpViewController.last! == nil{
+				// :-(
 			
-			let msg = "ViewController \"\(storyboardID)\" not found in the storyboard: \n    \(String(describing: cstoryboard))"
-			print(msg)
-			fatalError(msg)
+				let msg = "ViewController \"\(storyboardID)\" not found in the storyboard: \n    \(String(describing: cstoryboard))"
+				print(msg)
+				fatalError(msg)
+			}
 		}
 		
 		if self.view.window == nil{
@@ -169,7 +171,7 @@ extension NSView {
     }
 }
 
-extension String {
+public extension String {
 	subscript (bounds: CountableClosedRange<Int>) -> String {
 		let start = index(startIndex, offsetBy: bounds.lowerBound)
 		let end = index(startIndex, offsetBy: bounds.upperBound)
@@ -183,8 +185,8 @@ extension String {
 	}
 }
 
-extension String{
-    @inline(__always) public func copy()-> String{
+public extension String{
+    @inline(__always) func copy()-> String{
         return String(self)
     }
     
@@ -235,6 +237,28 @@ extension String{
 	
 	func contains(_ str: String) -> Bool{
 		return self.range(of: str) != nil
+	}
+	
+	var isAlphanumeric: Bool{
+		
+		if self.isEmpty{
+			return false
+		}
+		
+		//let ref = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890"
+		for i in self{
+			if (!i.isLetter && !i.isNumber){
+				return false
+			}
+			
+			/*
+			if !ref.contains(i){
+				return false
+			}
+			*/
+		}
+		
+		return true
 	}
 	
 }
@@ -364,5 +388,25 @@ extension NSImage{
 			return self
 		}
 	}
+	
+	func resized(to newSize: NSSize) -> NSImage? {
+			if let bitmapRep = NSBitmapImageRep(
+				bitmapDataPlanes: nil, pixelsWide: Int(newSize.width), pixelsHigh: Int(newSize.height),
+				bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
+				colorSpaceName: .calibratedRGB, bytesPerRow: 0, bitsPerPixel: 0
+			) {
+				bitmapRep.size = newSize
+				NSGraphicsContext.saveGraphicsState()
+				NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: bitmapRep)
+				draw(in: NSRect(x: 0, y: 0, width: newSize.width, height: newSize.height), from: .zero, operation: .copy, fraction: 1.0)
+				NSGraphicsContext.restoreGraphicsState()
+
+				let resizedImage = NSImage(size: newSize)
+				resizedImage.addRepresentation(bitmapRep)
+				return resizedImage
+			}
+
+			return nil
+		}
 }
 

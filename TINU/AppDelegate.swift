@@ -7,6 +7,8 @@
 //
 
 import Cocoa
+import Command
+import CommandSudo
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate, ViewID {
@@ -75,6 +77,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
 		
+		App.Settings.check()
+		LogManager.readLoggedDebugLines = false
+		LogManager.showPrefixesIntoLoggedLines = false
+		
 		NSUserNotificationCenter.default.delegate = self
 		
 		toolsMenuItem.isEnabled = true
@@ -85,18 +91,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		//focusAreaItem.isHidden = true
 		//vibrantButton.isHidden = true
 		
-		tinuRelated     .isEnabled = !Recovery.isOn
-		otherApps       .isEnabled = !Recovery.isOn
-		verboseItem     .isEnabled = !Recovery.isOn
-		verboseItemSudo .isEnabled = !Recovery.isOn
-		FAQItem         .isEnabled = !Recovery.isOn
-		getMacOSApp     .isEnabled = !Recovery.isOn
-		wMSDIND         .isEnabled = !Recovery.isOn
+		let rec = !Recovery.status
+		tinuRelated     .isEnabled = rec
+		otherApps       .isEnabled = rec
+		verboseItem     .isEnabled = rec
+		verboseItemSudo .isEnabled = rec
+		FAQItem         .isEnabled = rec
+		getMacOSApp     .isEnabled = rec
+		wMSDIND         .isEnabled = rec
 		
-		InstallMacOSItem.isHidden =  !Recovery.isOn
+		InstallMacOSItem.isHidden = rec
 		
         
-        if Recovery.isOn{
+        if !rec{
 			print("Verbose mode not usable under recovery")
         }
         
@@ -116,6 +123,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
             print("License agreement file found")
         }
 		
+		Command.Sudo.authNotification = Notifications.make(id: "login", icon: nil)
+		
 		#if demo
 		demoMacroEnabled = true
 		#endif
@@ -125,7 +134,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
         
-		if cvm.shared.process.status == .creation{
+		if cvm.shared.process.status != .creation{
+			return
+		}
 			
 			let list = ["{executable}" : cvm.shared.executableName]
 			
@@ -143,8 +154,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 				msgboxWithManager(self, name: "stopFailed", parseList: list)
 				log("Quit error 1")
 			}
-			
-        }
     }
     
 	

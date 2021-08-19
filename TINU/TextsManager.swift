@@ -7,8 +7,13 @@
 //
 
 import Foundation
+import TINUNotifications
 
-
+public struct ViewString: Codable, Equatable{
+	public let strings: TextManagementStructs.ViewStrings<String>
+	public let notifications: TextManagementStructs.ViewStrings<TINUNotifications.Notification>?
+	public let alerts: TextManagementStructs.ViewStrings<TINUNotifications.Alert>?
+}
 
 public struct TINUTextsManagerStruct: TextManagerGet, CodableDefaults, Codable, Equatable{
 	
@@ -16,7 +21,8 @@ public struct TINUTextsManagerStruct: TextManagerGet, CodableDefaults, Codable, 
 	private var helpfoulMessange: TextManagementStructs.InstallerInstallation<String>
 	private var optionsDescs: TextManagementStructs.InstallerInstallation<CreationProcess.OptionsManager.DescriptionList>
 	
-	private let viewStrings: TextManagementStructs.ViewStringsCollection
+	private let viewStrings: TextManagementStructs.ViewStringsAlbum<String>
+	//private let views: TextManagementStructs.Album<ViewString>
 	
 	private var remAsset = getLanguageFile(fileName: TINUTextsManagerStruct.defaultResourceFileName, fextension: TINUTextsManagerStruct.defaultResourceFileExtension)
 	

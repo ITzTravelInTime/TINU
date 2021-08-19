@@ -39,6 +39,7 @@ class InstallingViewController: GenericViewController, ViewID{
 		self.cancelButton.title = TextManager.getViewString(context: self, stringID: "cancelButton")
         self.showLogButton.title = TextManager.getViewString(context: self, stringID: "showLogButton")
         self.descriptionField.stringValue = TextManager.getViewString(context: self, stringID: "descriptionField")
+		self.descriptionField.isHidden = true
 		
 		self.showTitleLabel()
 		
@@ -46,7 +47,7 @@ class InstallingViewController: GenericViewController, ViewID{
 		if let w = UIManager.shared.window{
 			w.isMiniaturizeEnaled = true
 			w.isClosingEnabled = false
-			w.canHide = false
+			//w.canHide = false
 		}
 		
 		//initialization
@@ -74,31 +75,27 @@ class InstallingViewController: GenericViewController, ViewID{
 		
 		print("process window opened")
 		
-	}
-	
-	override func viewDidAppear() {
-		super.viewDidAppear()
-		
-		log("View appaeared going forward")
-		
-		var drive = false
-		if (simulateInstallGetDataFail ? true : cvm.shared.checkProcessReadySate(&drive)){
-			sharedSetSelectedCreationUI(appName: &appName, appImage: &appImage, driveName: &driveName, driveImage: &driveImage, manager: cvm.shared, useDriveName: drive)
-		
-			log("Everything is ready to start the creation/installation process")
-			
-			InstallMediaCreationManager.startInstallProcess()
-		}else{
-			setActivityLabelText("activityLabel2")
-			
-			log("Couldn't get valid info about the installer app and/or the drive")
-			
-			DispatchQueue.global(qos: .background).async{
+		DispatchQueue.global(qos: .background).async{
+			var drive = false
+			if (simulateInstallGetDataFail ? true : cvm.shared.checkProcessReadySate(&drive)){
 				DispatchQueue.main.async {
+					sharedSetSelectedCreationUI(appName: &self.appName, appImage: &self.appImage, driveName: &self.driveName, driveImage: &self.driveImage, manager: cvm.shared, useDriveName: drive)
+				}
+				
+				log("Everything is ready to start the creation/installation process")
+				
+				InstallMediaCreationManager.startInstallProcess()
+			}else{
+				self.setActivityLabelText("activityLabel2")
+				
+				log("Couldn't get valid info about the installer app and/or the drive")
+				
+				DispatchQueue.main.sync {
 					self.goBack()
 				}
 			}
 		}
+		
 	}
 	
 	private func restoreWindow(){
@@ -108,7 +105,7 @@ class InstallingViewController: GenericViewController, ViewID{
 		if let w = UIManager.shared.window{
 			w.isMiniaturizeEnaled = true
 			w.isClosingEnabled = true
-			w.canHide = true
+			//w.canHide = true
 		}
 		
 		enableItems(enabled: true)
@@ -146,8 +143,7 @@ class InstallingViewController: GenericViewController, ViewID{
 		//this code opens the previus window
 		
 		if (cvm.shared.process.status.isBusy()){
-			
-			let _ = NotificationsManager.sendWith(id: "goBack", image: nil)
+			Notifications.justSendWith(id: "goBack", icon: nil)
 		}
 		
 		//resets window and auths
@@ -191,7 +187,7 @@ class InstallingViewController: GenericViewController, ViewID{
 	
 	func enableItems(enabled: Bool){
 		if let apd = NSApplication.shared.delegate as? AppDelegate{
-			if Recovery.isOn{
+			if Recovery.status{
 				apd.InstallMacOSItem.isEnabled = enabled
 			}
 			apd.verboseItem.isEnabled = enabled
@@ -229,5 +225,10 @@ class InstallingViewController: GenericViewController, ViewID{
 	func setProgressMax(_ max: Double){
 		self.progress.maxValue = max
 		print("Set progress max: \(max)")
+	}
+	
+	func setProgressBarIndeterminateState(state: Bool){
+		self.progress.isIndeterminate = state
+		print("Progress bar is now \(state ? "indeterminated" : "linear")")
 	}
 }

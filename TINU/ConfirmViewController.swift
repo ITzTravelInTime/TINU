@@ -7,13 +7,12 @@
 //
 
 import Cocoa
+import TINURecovery
 
 class ConfirmViewController: GenericViewController, ViewID {
 	let id: String = "ConfirmViewController"
 	
-	#if skipChooseCustomization
 	var tmpWin: GenericViewController!
-	#endif
 	
 	let cm = cvm.shared
 	private var fail = false
@@ -38,13 +37,13 @@ class ConfirmViewController: GenericViewController, ViewID {
 		if let w = UIManager.shared.window{
             w.isMiniaturizeEnaled = true
             w.isClosingEnabled = true
-            w.canHide = true
+            //w.canHide = true
         }
 		
 		self.showTitleLabel()
 		
 		if #available(OSX 10.15, *){
-			if !User.isRoot{
+			if !CurrentUser.isRoot{
 				SIPManager.checkStatusAndLetTheUserKnow()
 			}
 		}
@@ -59,15 +58,11 @@ class ConfirmViewController: GenericViewController, ViewID {
         
         self.hideFailureImage()
 		self.hideFailureLabel()
-		
-		#if !skipChooseCustomization
-			advancedOptionsButton.isHidden = true
-		#endif
         
-		warning.image = IconsManager.shared.warningIcon
+		warning.image = IconsManager.shared.warningIcon.themedImage()
 		
 		if #available(macOS 11.0, *), look.usesSFSymbols(){
-			warning.image = warning.image?.withSymbolWeight(.light)
+			//warning.image = warning.image?.withSymbolWeight(.thin)
 			warning.contentTintColor = .systemYellow
 		}
         //fs = sharedVolumeNeedsFormat
@@ -124,10 +119,20 @@ class ConfirmViewController: GenericViewController, ViewID {
 			titleLabel.stringValue = TextManager.getViewString(context: self, stringID: "failureTitle")
 		}else{
 			
+			if cvm.shared.disk.current.isDrive || cvm.shared.disk.shouldErase{
+				self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "titleDrive"))
+			}
+			
 			yes.title = TextManager.getViewString(context: self, stringID: "nextButton")
 			advancedOptionsButton.stringValue = TextManager.getViewString(context: self, stringID: "optionsButton")
 			
 			sharedSetSelectedCreationUI(appName: &appName, appImage: &appImage, driveName: &driveName, driveImage: &driveImage, manager: cvm.shared, useDriveName: drive)
+			/*
+			if #available(macOS 11.0, *), look.usesSFSymbols(){
+				driveImage.image = driveImage.image?.withSymbolWeight(.thin)
+				appImage.image = appImage.image?.withSymbolWeight(.thin)
+			}
+			*/
 			
 			let reps = ["{driveName}" : driveName.stringValue]
 			
@@ -144,15 +149,7 @@ class ConfirmViewController: GenericViewController, ViewID {
         /*if sharedInstallMac{
             openSubstituteWindow(windowStoryboardID: "ChoseApp", sender: sender)
 		}else{*/
-		#if skipChooseCustomization
-			swapCurrentViewController("ChoseApp")
-		#else
-			if cm.disk.usesCustomSettings{
-				openSubstituteWindow(windowStoryboardID: "Customize")
-			}else{
-            	openSubstituteWindow(windowStoryboardID: "ChooseCustomize")
-			}
-		#endif
+		swapCurrentViewController("ChoseApp")
         //}
 		
 		tmpWin = nil
@@ -171,7 +168,7 @@ class ConfirmViewController: GenericViewController, ViewID {
     }
     
 	@IBAction func openAdvancedOptions(_ sender: Any) {
-		#if skipChooseCustomization
+		
 			//cm.sharedMediaIsCustomized = true
 			//openSubstituteWindow(windowStoryboardID: "Customize", sender: sender)
 		
@@ -183,7 +180,5 @@ class ConfirmViewController: GenericViewController, ViewID {
 		
 		tmpWin.window.isFullScreenEnaled = false
 		}
-		
-		#endif
 	}
 }

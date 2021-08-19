@@ -10,11 +10,6 @@
 import Cocoa
 
 public class GenericWindowController: NSWindowController, NSWindowDelegate {
-    
-   public let backgroundDefaultMaterial = NSVisualEffectView.Material.titlebar
-   public let backgroundUnselectedMaterial = NSVisualEffectView.Material.light
-    
-    var background: NSVisualEffectView!
 	//var alreadyFullScreen: Bool = false
     
     override public func windowDidLoad() {
@@ -73,7 +68,6 @@ public class GenericWindowController: NSWindowController, NSWindowDelegate {
 	}
 	
 	public func windowDidEndSheet(_ notification: Notification) {
-		
 		activateVibrantWindow()
 	}
 }

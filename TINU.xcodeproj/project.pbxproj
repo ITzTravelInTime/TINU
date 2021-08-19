@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C600803E251BFAD000FE35E2 /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C600803D251BFAD000FE35E2 /* NotificationsManager.swift */; };
 		C60A461523A8571E009ADF4D /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60A461423A8571E009ADF4D /* ToDo.swift */; };
 		C60A461723A942E4009ADF4D /* SupportedEFIFolders.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60A461623A942E4009ADF4D /* SupportedEFIFolders.swift */; };
 		C60B646B20B4464200FEDAA6 /* EFIFolderReplcament.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60B646A20B4464200FEDAA6 /* EFIFolderReplcament.swift */; };
@@ -17,8 +16,8 @@
 		C60C40BC20CCA2BB00258574 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60C40BB20CCA2BB00258574 /* App.swift */; };
 		C60C40C020CCA9DC00258574 /* CreationProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60C40BF20CCA9DC00258574 /* CreationProcess.swift */; };
 		C60C40C220CCAA9900258574 /* InstallerAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60C40C120CCAA9900258574 /* InstallerAppManager.swift */; };
-		C60C40C420CCACB600258574 /* PlistXMLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60C40C320CCACB600258574 /* PlistXMLManager.swift */; };
-		C60C40C720CCAE6200258574 /* DrivesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60C40C620CCAE6200258574 /* DrivesManager.swift */; };
+		C60C40C420CCACB600258574 /* DecodeEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60C40C320CCACB600258574 /* DecodeEncode.swift */; };
+		C60C40C720CCAE6200258574 /* DiskutilInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60C40C620CCAE6200258574 /* DiskutilInfo.swift */; };
 		C60D39B01F5E136500D94834 /* Part.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D39AF1F5E136500D94834 /* Part.swift */; };
 		C60D39B21F5E4AFC00D94834 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */; };
 		C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */; };
@@ -37,7 +36,13 @@
 		C621CFA71F4F6A6500CC6D5B /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */; };
 		C621CFAC1F4F7DF400CC6D5B /* DriveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */; };
 		C6254B5E26855A620082C7F5 /* OptionsExecution.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6254B5D26855A620082C7F5 /* OptionsExecution.swift */; };
-		C631EE4A2657F15D006F8F98 /* CPUArchDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = C631EE492657F15D006F8F98 /* CPUArchDetect.swift */; };
+		C6254B7A26892ADD0082C7F5 /* TINURecovery in Frameworks */ = {isa = PBXBuildFile; productRef = C6254B7926892ADD0082C7F5 /* TINURecovery */; };
+		C6254B7D268933600082C7F5 /* TINUNotifications in Frameworks */ = {isa = PBXBuildFile; productRef = C6254B7C268933600082C7F5 /* TINUNotifications */; };
+		C6254B80268933740082C7F5 /* Command in Frameworks */ = {isa = PBXBuildFile; productRef = C6254B7F268933740082C7F5 /* Command */; };
+		C6254B83268933950082C7F5 /* CommandSudo in Frameworks */ = {isa = PBXBuildFile; productRef = C6254B82268933950082C7F5 /* CommandSudo */; };
+		C6254B8626897EA20082C7F5 /* SwiftCPUDetect in Frameworks */ = {isa = PBXBuildFile; productRef = C6254B8526897EA20082C7F5 /* SwiftCPUDetect */; };
+		C62F545726995A7400F14304 /* DiskutilBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62F545626995A7400F14304 /* DiskutilBase.swift */; };
+		C62F545926995B3D00F14304 /* DiskutilCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62F545826995B3D00F14304 /* DiskutilCommands.swift */; };
 		C6322574221C1883003A56D4 /* FilesystemObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6322573221C1883003A56D4 /* FilesystemObserver.swift */; };
 		C638857A2670D3BA00A6D1BA /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63885792670D3BA00A6D1BA /* Themes.swift */; };
 		C638857C26725BEC00A6D1BA /* UIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C638857B26725BEC00A6D1BA /* UIManager.swift */; };
@@ -46,6 +51,7 @@
 		C63F036024E3D19300F950B4 /* ProgressBarValuesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63F035F24E3D19300F950B4 /* ProgressBarValuesManager.swift */; };
 		C63F036224E40F5500F950B4 /* TextAssetsEn.json in Resources */ = {isa = PBXBuildFile; fileRef = C63F036124E40F5500F950B4 /* TextAssetsEn.json */; };
 		C6409AC7226D35D200E63762 /* CopyrightLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6409AC6226D35D200E63762 /* CopyrightLabel.swift */; };
+		C6422DBA269C33340047DF36 /* diskutilBSDID.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6422DB9269C33340047DF36 /* diskutilBSDID.swift */; };
 		C647B350211CE2C00024B9A1 /* ToolsBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B34F211CE2C00024B9A1 /* ToolsBridge.swift */; };
 		C647B39B211CF2C40024B9A1 /* EFIPartitionMounterTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B395211CF2C40024B9A1 /* EFIPartitionMounterTypes.swift */; };
 		C647B39C211CF2C40024B9A1 /* EFIPartitionMounterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C647B396211CF2C40024B9A1 /* EFIPartitionMounterViewController.swift */; };
@@ -61,8 +67,6 @@
 		C65AA61F1F4F497A00C43223 /* ClassExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65AA61E1F4F497A00C43223 /* ClassExtensions.swift */; };
 		C65AA6211F4F4C0400C43223 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65AA6201F4F4C0400C43223 /* InfoViewController.swift */; };
 		C65AA6241F4F4C3400C43223 /* ChoseDriveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65AA6221F4F4C3400C43223 /* ChoseDriveViewController.swift */; };
-		C65B5EFF1F72099F0061F1A3 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B5EFE1F72099F0061F1A3 /* Command.swift */; };
-		C65B5F031F720D680061F1A3 /* SudoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65B5F021F720D680061F1A3 /* SudoManager.swift */; };
 		C660D1972529AEB30027FCA0 /* TextManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C660D1962529AEB30027FCA0 /* TextManagement.swift */; };
 		C660D1992529BB260027FCA0 /* EFIPMTextAssetsIt.json in Resources */ = {isa = PBXBuildFile; fileRef = C660D1982529BB260027FCA0 /* EFIPMTextAssetsIt.json */; };
 		C660D19C2529BB780027FCA0 /* EFIPMTextAssetsEn.json in Resources */ = {isa = PBXBuildFile; fileRef = C660D19B2529BB780027FCA0 /* EFIPMTextAssetsEn.json */; };
@@ -78,31 +82,29 @@
 		C691D6AB20655C700083D057 /* DriveDetectInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C691D6AA20655C700083D057 /* DriveDetectInfoViewController.swift */; };
 		C698B47E204CDAE5007B3CD8 /* MacrosReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */; };
 		C6A3A36A24FBAC3500CC8E37 /* ErrorDecodingMessangesEn.json in Resources */ = {isa = PBXBuildFile; fileRef = C6A3A36924FBAC3500CC8E37 /* ErrorDecodingMessangesEn.json */; };
-		C6AD9345239A684D0004704C /* DiskutilListCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AD9344239A684D0004704C /* DiskutilListCodable.swift */; };
+		C6AD9345239A684D0004704C /* DiskutilList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AD9344239A684D0004704C /* DiskutilList.swift */; };
 		C6AEE8FB24E41A49006135FB /* CodablesGeneric.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AEE8FA24E41A49006135FB /* CodablesGeneric.swift */; };
-		C6B16958203B27AF00FD2818 /* ChooseCustomizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */; };
 		C6B74D0A20B8E76A001CAD4D /* EFIFolderReplacementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B74D0920B8E76A001CAD4D /* EFIFolderReplacementManager.swift */; };
-		C6B74D0C20BA2A79001CAD4D /* EFIPartitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B74D0B20BA2A79001CAD4D /* EFIPartitionManager.swift */; };
+		C6B74D0C20BA2A79001CAD4D /* EFIPartition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B74D0B20BA2A79001CAD4D /* EFIPartition.swift */; };
 		C6BEA10224A3A5AE008997CF /* DiagnosticsModeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BEA10124A3A5AE008997CF /* DiagnosticsModeManager.swift */; };
+		C6BF64842692B61E00A0B094 /* SwiftLoggedPrint in Frameworks */ = {isa = PBXBuildFile; productRef = C6BF64832692B61E00A0B094 /* SwiftLoggedPrint */; };
 		C6C1820D1FE7605300617DC2 /* ChooseSideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C1820C1FE7605300617DC2 /* ChooseSideViewController.swift */; };
 		C6C2EAA72030710A0033EF85 /* SettingsSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */; };
-		C6C8A8B1249E9C8A009C3D6E /* SIPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C8A8B0249E9C8A009C3D6E /* SIPManager.swift */; };
 		C6CE80F42521C3FB00B28413 /* StringFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CE80F32521C3FB00B28413 /* StringFunctions.swift */; };
 		C6CE80F62521C46200B28413 /* AppBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CE80F52521C46200B28413 /* AppBanner.swift */; };
 		C6CE80F825245BA300B28413 /* ExternalLinkUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CE80F725245BA300B28413 /* ExternalLinkUI.swift */; };
 		C6D82A6A20D802E700A5B5BE /* OptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D82A6920D802E700A5B5BE /* OptionsObject.swift */; };
 		C6D82A6C20D80C7600A5B5BE /* OptionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D82A6B20D80C7600A5B5BE /* OptionsManager.swift */; };
-		C6D9EE59210AED4700019818 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D9EE58210AED4700019818 /* Reachability.swift */; };
 		C6DF04661F4F33C500D200B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF04651F4F33C500D200B1 /* AppDelegate.swift */; };
 		C6DF046D1F4F33C500D200B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6DF046B1F4F33C500D200B1 /* Main.storyboard */; };
 		C6DF04781F4F33C500D200B1 /* TINUTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF04771F4F33C500D200B1 /* TINUTests.swift */; };
 		C6DF04831F4F33C500D200B1 /* TINUUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF04821F4F33C500D200B1 /* TINUUITests.swift */; };
 		C6E32EA7218142EA006D4BEB /* FileAliasManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E32EA6218142EA006D4BEB /* FileAliasManager.swift */; };
-		C6F68E8B20D0277B00F7A0F4 /* SmallManagers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F68E8A20D0277B00F7A0F4 /* SmallManagers.swift */; };
+		C6F0E84326A7A81E00308B9F /* LogWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F0E84226A7A81E00308B9F /* LogWindowController.swift */; };
+		C6F68E8B20D0277B00F7A0F4 /* PackagesWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F68E8A20D0277B00F7A0F4 /* PackagesWrapper.swift */; };
 		C6FFB5D6267FAA3300CD19CE /* InstallerAppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FFB5D5267FAA3300CD19CE /* InstallerAppInfo.swift */; };
-		C6FFB5D82681AAF300CD19CE /* TargetDiskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FFB5D72681AAF300CD19CE /* TargetDiskManager.swift */; };
+		C6FFB5D82681AAF300CD19CE /* CreationProcessDiskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FFB5D72681AAF300CD19CE /* CreationProcessDiskInfo.swift */; };
 		C6FFB5DA2681AF6D00CD19CE /* CreationProcessManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FFB5D92681AF6D00CD19CE /* CreationProcessManagement.swift */; };
-		DD01EBEF1F71BD2A00C94D9B /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */; };
 		DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBF01F71BFE600C94D9B /* LogViewController.swift */; };
 		DD3AC14C1FBB974C00C71F53 /* OtherOptionCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC14B1FBB974C00C71F53 /* OtherOptionCheckBox.swift */; };
 		DD5016061F993D4500FB1407 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5016051F993D4500FB1407 /* GenericViewController.swift */; };
@@ -134,7 +136,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C600803D251BFAD000FE35E2 /* NotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsManager.swift; sourceTree = "<group>"; };
 		C605853025024D6500673F86 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main.strings; sourceTree = "<group>"; };
 		C605853125024D6500673F86 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = "../EFI Partition Mounter/EFI Partition Mounter/it.lproj/EFIPartitionMounterTool.strings"; sourceTree = "<group>"; };
 		C60A461423A8571E009ADF4D /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
@@ -146,8 +147,8 @@
 		C60C40BB20CCA2BB00258574 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		C60C40BF20CCA9DC00258574 /* CreationProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreationProcess.swift; sourceTree = "<group>"; };
 		C60C40C120CCAA9900258574 /* InstallerAppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallerAppManager.swift; sourceTree = "<group>"; };
-		C60C40C320CCACB600258574 /* PlistXMLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistXMLManager.swift; sourceTree = "<group>"; };
-		C60C40C620CCAE6200258574 /* DrivesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivesManager.swift; sourceTree = "<group>"; };
+		C60C40C320CCACB600258574 /* DecodeEncode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeEncode.swift; sourceTree = "<group>"; };
+		C60C40C620CCAE6200258574 /* DiskutilInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskutilInfo.swift; sourceTree = "<group>"; };
 		C60D39AF1F5E136500D94834 /* Part.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Part.swift; sourceTree = "<group>"; };
 		C60D39B11F5E4AFC00D94834 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		C60D48CC1F585F7F00ABF26E /* MainCreationFinished.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCreationFinished.swift; sourceTree = "<group>"; };
@@ -166,7 +167,8 @@
 		C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveView.swift; sourceTree = "<group>"; };
 		C6254B5D26855A620082C7F5 /* OptionsExecution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsExecution.swift; sourceTree = "<group>"; };
-		C631EE492657F15D006F8F98 /* CPUArchDetect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUArchDetect.swift; sourceTree = "<group>"; };
+		C62F545626995A7400F14304 /* DiskutilBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskutilBase.swift; sourceTree = "<group>"; };
+		C62F545826995B3D00F14304 /* DiskutilCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskutilCommands.swift; sourceTree = "<group>"; };
 		C6322573221C1883003A56D4 /* FilesystemObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesystemObserver.swift; sourceTree = "<group>"; };
 		C63885792670D3BA00A6D1BA /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		C638857B26725BEC00A6D1BA /* UIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIManager.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 		C63F035F24E3D19300F950B4 /* ProgressBarValuesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarValuesManager.swift; sourceTree = "<group>"; };
 		C63F036124E40F5500F950B4 /* TextAssetsEn.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = TextAssetsEn.json; sourceTree = "<group>"; };
 		C6409AC6226D35D200E63762 /* CopyrightLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyrightLabel.swift; sourceTree = "<group>"; };
+		C6422DB9269C33340047DF36 /* diskutilBSDID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = diskutilBSDID.swift; sourceTree = "<group>"; };
 		C647B34F211CE2C00024B9A1 /* ToolsBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsBridge.swift; sourceTree = SOURCE_ROOT; };
 		C647B395211CF2C40024B9A1 /* EFIPartitionMounterTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EFIPartitionMounterTypes.swift; path = "EFI Partition Mounter/EFI Partition Mounter/EFIPartitionMounterTypes.swift"; sourceTree = SOURCE_ROOT; };
 		C647B396211CF2C40024B9A1 /* EFIPartitionMounterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EFIPartitionMounterViewController.swift; path = "EFI Partition Mounter/EFI Partition Mounter/EFIPartitionMounterViewController.swift"; sourceTree = SOURCE_ROOT; };
@@ -190,8 +193,6 @@
 		C65AA61E1F4F497A00C43223 /* ClassExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassExtensions.swift; sourceTree = "<group>"; };
 		C65AA6201F4F4C0400C43223 /* InfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		C65AA6221F4F4C3400C43223 /* ChoseDriveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoseDriveViewController.swift; sourceTree = "<group>"; };
-		C65B5EFE1F72099F0061F1A3 /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
-		C65B5F021F720D680061F1A3 /* SudoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SudoManager.swift; sourceTree = "<group>"; };
 		C660D1962529AEB30027FCA0 /* TextManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextManagement.swift; sourceTree = "<group>"; };
 		C660D1982529BB260027FCA0 /* EFIPMTextAssetsIt.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = EFIPMTextAssetsIt.json; sourceTree = "<group>"; };
 		C660D19B2529BB780027FCA0 /* EFIPMTextAssetsEn.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = EFIPMTextAssetsEn.json; path = "EFI Partition Mounter/EFI Partition Mounter/EFIPMTextAssetsEn.json"; sourceTree = SOURCE_ROOT; };
@@ -207,21 +208,18 @@
 		C691D6AA20655C700083D057 /* DriveDetectInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveDetectInfoViewController.swift; sourceTree = "<group>"; };
 		C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacrosReference.swift; sourceTree = "<group>"; };
 		C6A3A36924FBAC3500CC8E37 /* ErrorDecodingMessangesEn.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ErrorDecodingMessangesEn.json; sourceTree = "<group>"; };
-		C6AD9344239A684D0004704C /* DiskutilListCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskutilListCodable.swift; sourceTree = "<group>"; };
+		C6AD9344239A684D0004704C /* DiskutilList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskutilList.swift; sourceTree = "<group>"; };
 		C6AEE8FA24E41A49006135FB /* CodablesGeneric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodablesGeneric.swift; sourceTree = "<group>"; };
-		C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseCustomizationViewController.swift; sourceTree = "<group>"; };
 		C6B74D0920B8E76A001CAD4D /* EFIFolderReplacementManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EFIFolderReplacementManager.swift; sourceTree = "<group>"; };
-		C6B74D0B20BA2A79001CAD4D /* EFIPartitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EFIPartitionManager.swift; sourceTree = "<group>"; };
+		C6B74D0B20BA2A79001CAD4D /* EFIPartition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EFIPartition.swift; sourceTree = "<group>"; };
 		C6BEA10124A3A5AE008997CF /* DiagnosticsModeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsModeManager.swift; sourceTree = "<group>"; };
 		C6C1820C1FE7605300617DC2 /* ChooseSideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSideViewController.swift; sourceTree = "<group>"; };
 		C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSectionItem.swift; sourceTree = "<group>"; };
-		C6C8A8B0249E9C8A009C3D6E /* SIPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIPManager.swift; sourceTree = "<group>"; };
 		C6CE80F32521C3FB00B28413 /* StringFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFunctions.swift; sourceTree = "<group>"; };
 		C6CE80F52521C46200B28413 /* AppBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBanner.swift; sourceTree = "<group>"; };
 		C6CE80F725245BA300B28413 /* ExternalLinkUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalLinkUI.swift; sourceTree = "<group>"; };
 		C6D82A6920D802E700A5B5BE /* OptionsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsObject.swift; sourceTree = "<group>"; };
 		C6D82A6B20D80C7600A5B5BE /* OptionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsManager.swift; sourceTree = "<group>"; };
-		C6D9EE58210AED4700019818 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		C6DE523A247EB6EA00FBD2E1 /* TINU.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TINU.entitlements; sourceTree = "<group>"; };
 		C6DF04621F4F33C500D200B1 /* TINU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TINU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6DF04651F4F33C500D200B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -234,11 +232,11 @@
 		C6DF04821F4F33C500D200B1 /* TINUUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TINUUITests.swift; sourceTree = "<group>"; };
 		C6DF04841F4F33C500D200B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6E32EA6218142EA006D4BEB /* FileAliasManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAliasManager.swift; sourceTree = "<group>"; };
-		C6F68E8A20D0277B00F7A0F4 /* SmallManagers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallManagers.swift; sourceTree = "<group>"; };
+		C6F0E84226A7A81E00308B9F /* LogWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogWindowController.swift; sourceTree = "<group>"; };
+		C6F68E8A20D0277B00F7A0F4 /* PackagesWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesWrapper.swift; sourceTree = "<group>"; };
 		C6FFB5D5267FAA3300CD19CE /* InstallerAppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallerAppInfo.swift; sourceTree = "<group>"; };
-		C6FFB5D72681AAF300CD19CE /* TargetDiskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetDiskManager.swift; sourceTree = "<group>"; };
+		C6FFB5D72681AAF300CD19CE /* CreationProcessDiskInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationProcessDiskInfo.swift; sourceTree = "<group>"; };
 		C6FFB5D92681AF6D00CD19CE /* CreationProcessManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationProcessManagement.swift; sourceTree = "<group>"; };
-		DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
 		DD01EBF01F71BFE600C94D9B /* LogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
 		DD3AC14B1FBB974C00C71F53 /* OtherOptionCheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherOptionCheckBox.swift; sourceTree = "<group>"; };
 		DD5016051F993D4500FB1407 /* GenericViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericViewController.swift; sourceTree = "<group>"; };
@@ -257,6 +255,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6254B80268933740082C7F5 /* Command in Frameworks */,
+				C6254B8626897EA20082C7F5 /* SwiftCPUDetect in Frameworks */,
+				C6254B83268933950082C7F5 /* CommandSudo in Frameworks */,
+				C6254B7A26892ADD0082C7F5 /* TINURecovery in Frameworks */,
+				C6BF64842692B61E00A0B094 /* SwiftLoggedPrint in Frameworks */,
+				C6254B7D268933600082C7F5 /* TINUNotifications in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,28 +298,20 @@
 			isa = PBXGroup;
 			children = (
 				C60C40BB20CCA2BB00258574 /* App.swift */,
-				C65B5EFE1F72099F0061F1A3 /* Command.swift */,
 				C60C40BF20CCA9DC00258574 /* CreationProcess.swift */,
+				C6FFB5D72681AAF300CD19CE /* CreationProcessDiskInfo.swift */,
 				C6FFB5D92681AF6D00CD19CE /* CreationProcessManagement.swift */,
+				C60C40C320CCACB600258574 /* DecodeEncode.swift */,
 				C6BEA10124A3A5AE008997CF /* DiagnosticsModeManager.swift */,
-				C60C40C620CCAE6200258574 /* DrivesManager.swift */,
-				C6B74D0B20BA2A79001CAD4D /* EFIPartitionManager.swift */,
 				C6B74D0920B8E76A001CAD4D /* EFIFolderReplacementManager.swift */,
 				C6E32EA6218142EA006D4BEB /* FileAliasManager.swift */,
 				C60C40C120CCAA9900258574 /* InstallerAppManager.swift */,
-				C600803D251BFAD000FE35E2 /* NotificationsManager.swift */,
 				C615B811216AEF3F00913BFF /* MediaCreationManager */,
-				DD01EBEE1F71BD2A00C94D9B /* LogManager.swift */,
 				C6D82A6B20D80C7600A5B5BE /* OptionsManager.swift */,
 				C6254B5D26855A620082C7F5 /* OptionsExecution.swift */,
 				C60C40B720CC9E4800258574 /* IconsManager.swift */,
-				C60C40C320CCACB600258574 /* PlistXMLManager.swift */,
+				C6F68E8A20D0277B00F7A0F4 /* PackagesWrapper.swift */,
 				C63F035F24E3D19300F950B4 /* ProgressBarValuesManager.swift */,
-				C6D9EE58210AED4700019818 /* Reachability.swift */,
-				C6C8A8B0249E9C8A009C3D6E /* SIPManager.swift */,
-				C6F68E8A20D0277B00F7A0F4 /* SmallManagers.swift */,
-				C65B5F021F720D680061F1A3 /* SudoManager.swift */,
-				C6FFB5D72681AAF300CD19CE /* TargetDiskManager.swift */,
 				C63DD0272265D921007944A5 /* TaskKillManager.swift */,
 				C60C40B920CCA24000258574 /* TextsManager.swift */,
 				C63885792670D3BA00A6D1BA /* Themes.swift */,
@@ -327,6 +323,7 @@
 		C60D39B51F5EB48000D94834 /* WindowsControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C6F0E84226A7A81E00308B9F /* LogWindowController.swift */,
 				C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */,
 				C66411042077A80100454292 /* OtherWindowsControllers.swift */,
 			);
@@ -355,7 +352,6 @@
 				C6553A901F5F7CEA0048965D /* LicenseViewController.swift */,
 				C65AA6221F4F4C3400C43223 /* ChoseDriveViewController.swift */,
 				C64E56361F51D917007B8CEE /* ChoseAppViewController.swift */,
-				C6B16957203B27AF00FD2818 /* ChooseCustomizationViewController.swift */,
 				DDCC4ED41FB5C2A7007FBB6F /* OtherOptionsViewController.swift */,
 				C61AE89320C2F16400229FEC /* OtherOptionInfoViewController.swift */,
 				C64E56381F51E79C007B8CEE /* ConfirmViewController.swift */,
@@ -423,6 +419,19 @@
 			name = JSON;
 			sourceTree = "<group>";
 		};
+		C6A4283726B23D0C00921658 /* Diskutil */ = {
+			isa = PBXGroup;
+			children = (
+				C6B74D0B20BA2A79001CAD4D /* EFIPartition.swift */,
+				C62F545626995A7400F14304 /* DiskutilBase.swift */,
+				C6422DB9269C33340047DF36 /* diskutilBSDID.swift */,
+				C62F545826995B3D00F14304 /* DiskutilCommands.swift */,
+				C60C40C620CCAE6200258574 /* DiskutilInfo.swift */,
+				C6AD9344239A684D0004704C /* DiskutilList.swift */,
+			);
+			path = Diskutil;
+			sourceTree = "<group>";
+		};
 		C6CE80F125219BA400B28413 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -444,9 +453,8 @@
 		C6CE80F225219BE900B28413 /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				C631EE492657F15D006F8F98 /* CPUArchDetect.swift */,
 				C6AEE8FA24E41A49006135FB /* CodablesGeneric.swift */,
-				C6AD9344239A684D0004704C /* DiskutilListCodable.swift */,
+				C6A4283726B23D0C00921658 /* Diskutil */,
 				C6322573221C1883003A56D4 /* FilesystemObserver.swift */,
 				C6FFB5D5267FAA3300CD19CE /* InstallerAppInfo.swift */,
 				C6D82A6920D802E700A5B5BE /* OptionsObject.swift */,
@@ -560,6 +568,14 @@
 			dependencies = (
 			);
 			name = TINU;
+			packageProductDependencies = (
+				C6254B7926892ADD0082C7F5 /* TINURecovery */,
+				C6254B7C268933600082C7F5 /* TINUNotifications */,
+				C6254B7F268933740082C7F5 /* Command */,
+				C6254B82268933950082C7F5 /* CommandSudo */,
+				C6254B8526897EA20082C7F5 /* SwiftCPUDetect */,
+				C6BF64832692B61E00A0B094 /* SwiftLoggedPrint */,
+			);
 			productName = TINU;
 			productReference = C6DF04621F4F33C500D200B1 /* TINU.app */;
 			productType = "com.apple.product-type.application";
@@ -607,12 +623,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 1230;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = "Pietro Caruso";
 				TargetAttributes = {
 					C6DF04611F4F33C500D200B1 = {
 						CreatedOnToolsVersion = 8.3.1;
-						DevelopmentTeam = 9RSH5734GY;
 						LastSwiftMigration = 1240;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -656,6 +671,14 @@
 				it,
 			);
 			mainGroup = C6DF04591F4F33C500D200B1;
+			packageReferences = (
+				C6254B7826892ADD0082C7F5 /* XCRemoteSwiftPackageReference "TINURecovery" */,
+				C6254B7B268933600082C7F5 /* XCRemoteSwiftPackageReference "TINUNotifications" */,
+				C6254B7E268933740082C7F5 /* XCRemoteSwiftPackageReference "Command" */,
+				C6254B81268933950082C7F5 /* XCRemoteSwiftPackageReference "CommandSudo" */,
+				C6254B8426897EA20082C7F5 /* XCRemoteSwiftPackageReference "SwiftCPUDetect" */,
+				C6BF64822692B61E00A0B094 /* XCRemoteSwiftPackageReference "SwiftLoggedPrint" */,
+			);
 			productRefGroup = C6DF04631F4F33C500D200B1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -752,14 +775,12 @@
 				C621CFAC1F4F7DF400CC6D5B /* DriveView.swift in Sources */,
 				C6BEA10224A3A5AE008997CF /* DiagnosticsModeManager.swift in Sources */,
 				C65AA61F1F4F497A00C43223 /* ClassExtensions.swift in Sources */,
-				C6FFB5D82681AAF300CD19CE /* TargetDiskManager.swift in Sources */,
+				C6FFB5D82681AAF300CD19CE /* CreationProcessDiskInfo.swift in Sources */,
 				C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */,
 				C615B815216AF04D00913BFF /* MediaCreationManagerFunctions.swift in Sources */,
-				C6D9EE59210AED4700019818 /* Reachability.swift in Sources */,
 				C64E56391F51E79C007B8CEE /* ConfirmViewController.swift in Sources */,
 				DDCC4ED51FB5C2A7007FBB6F /* OtherOptionsViewController.swift in Sources */,
 				C60C40BC20CCA2BB00258574 /* App.swift in Sources */,
-				C65B5F031F720D680061F1A3 /* SudoManager.swift in Sources */,
 				C615B819216B0E9400913BFF /* MediaCreationManagerTimers.swift in Sources */,
 				C682BBE320FFB23600410370 /* Operations.swift in Sources */,
 				DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */,
@@ -777,33 +798,32 @@
 				C6D82A6A20D802E700A5B5BE /* OptionsObject.swift in Sources */,
 				C6D82A6C20D80C7600A5B5BE /* OptionsManager.swift in Sources */,
 				C60A461723A942E4009ADF4D /* SupportedEFIFolders.swift in Sources */,
+				C62F545926995B3D00F14304 /* DiskutilCommands.swift in Sources */,
 				DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */,
 				C6C1820D1FE7605300617DC2 /* ChooseSideViewController.swift in Sources */,
 				DDD038EB1FB7366400D22695 /* ChoseButton.swift in Sources */,
 				C60C40C020CCA9DC00258574 /* CreationProcess.swift in Sources */,
 				C638857C26725BEC00A6D1BA /* UIManager.swift in Sources */,
 				DDA7FB601F96AE510029F4F2 /* RuntimeCode.swift in Sources */,
-				C65B5EFF1F72099F0061F1A3 /* Command.swift in Sources */,
 				C61AE89420C2F16400229FEC /* OtherOptionInfoViewController.swift in Sources */,
 				C6FFB5D6267FAA3300CD19CE /* InstallerAppInfo.swift in Sources */,
-				C6F68E8B20D0277B00F7A0F4 /* SmallManagers.swift in Sources */,
+				C6F68E8B20D0277B00F7A0F4 /* PackagesWrapper.swift in Sources */,
 				C60C40BA20CCA24000258574 /* TextsManager.swift in Sources */,
 				C61AACC1215B0EE6002D8F89 /* ShadowViewController.swift in Sources */,
 				C60B6C8320F80FCC0088B658 /* AllertFunctions.swift in Sources */,
-				C6AD9345239A684D0004704C /* DiskutilListCodable.swift in Sources */,
+				C6AD9345239A684D0004704C /* DiskutilList.swift in Sources */,
 				C60D39B01F5E136500D94834 /* Part.swift in Sources */,
 				C6409AC7226D35D200E63762 /* CopyrightLabel.swift in Sources */,
 				C660D1972529AEB30027FCA0 /* TextManagement.swift in Sources */,
 				C60B646B20B4464200FEDAA6 /* EFIFolderReplcament.swift in Sources */,
-				C60C40C720CCAE6200258574 /* DrivesManager.swift in Sources */,
+				C60C40C720CCAE6200258574 /* DiskutilInfo.swift in Sources */,
 				C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */,
 				C60C40C220CCAA9900258574 /* InstallerAppManager.swift in Sources */,
 				C63F036024E3D19300F950B4 /* ProgressBarValuesManager.swift in Sources */,
 				DD7C7CC5235E26DC000CC2E0 /* DarkModeDetection.swift in Sources */,
 				DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */,
-				C60C40C420CCACB600258574 /* PlistXMLManager.swift in Sources */,
+				C60C40C420CCACB600258574 /* DecodeEncode.swift in Sources */,
 				C60C40B820CC9E4800258574 /* IconsManager.swift in Sources */,
-				C6B16958203B27AF00FD2818 /* ChooseCustomizationViewController.swift in Sources */,
 				C6E32EA7218142EA006D4BEB /* FileAliasManager.swift in Sources */,
 				C6322574221C1883003A56D4 /* FilesystemObserver.swift in Sources */,
 				C6FFB5DA2681AF6D00CD19CE /* CreationProcessManagement.swift in Sources */,
@@ -812,12 +832,11 @@
 				DDF9A5692159A05800389F78 /* ShadowView.swift in Sources */,
 				C615B81B216B30D000913BFF /* MediaCreationManagerPostProcesses.swift in Sources */,
 				C647B39D211CF2C40024B9A1 /* EFIPartitionMounterWindowController.swift in Sources */,
-				C600803E251BFAD000FE35E2 /* NotificationsManager.swift in Sources */,
 				C6CE80F62521C46200B28413 /* AppBanner.swift in Sources */,
 				DD5016061F993D4500FB1407 /* GenericViewController.swift in Sources */,
 				C647B39F211CF2C40024B9A1 /* EFIPartitionMounterModel.swift in Sources */,
 				C6B74D0A20B8E76A001CAD4D /* EFIFolderReplacementManager.swift in Sources */,
-				C6B74D0C20BA2A79001CAD4D /* EFIPartitionManager.swift in Sources */,
+				C6B74D0C20BA2A79001CAD4D /* EFIPartition.swift in Sources */,
 				DDA7FB621F96B13F0029F4F2 /* GenericWindowController.swift in Sources */,
 				C638857A2670D3BA00A6D1BA /* Themes.swift in Sources */,
 				C698B47E204CDAE5007B3CD8 /* MacrosReference.swift in Sources */,
@@ -825,16 +844,16 @@
 				C676D197215EB20E00E900E9 /* MediaCreationManagerMain.swift in Sources */,
 				C647B3A0211CF2C40024B9A1 /* EFIPartitionMounterUIClasses.swift in Sources */,
 				DD3AC14C1FBB974C00C71F53 /* OtherOptionCheckBox.swift in Sources */,
-				C631EE4A2657F15D006F8F98 /* CPUArchDetect.swift in Sources */,
 				C615B817216B0B8900913BFF /* MediaCreationManagerErrorChecking.swift in Sources */,
 				C6188D9C25157F8400BCBC51 /* LanguageSelection.swift in Sources */,
+				C6422DBA269C33340047DF36 /* diskutilBSDID.swift in Sources */,
 				C6254B5E26855A620082C7F5 /* OptionsExecution.swift in Sources */,
 				C6188D96251306FC00BCBC51 /* AllertFunctionsWithTextManager.swift in Sources */,
+				C6F0E84326A7A81E00308B9F /* LogWindowController.swift in Sources */,
 				C64E563B1F522854007B8CEE /* InstallingViewController.swift in Sources */,
 				C61A3654205DA3F400350BE9 /* DownloadAppViewController.swift in Sources */,
-				C6C8A8B1249E9C8A009C3D6E /* SIPManager.swift in Sources */,
+				C62F545726995A7400F14304 /* DiskutilBase.swift in Sources */,
 				C65AA6241F4F4C3400C43223 /* ChoseDriveViewController.swift in Sources */,
-				DD01EBEF1F71BD2A00C94D9B /* LogManager.swift in Sources */,
 				C66411052077A80100454292 /* OtherWindowsControllers.swift in Sources */,
 				C6553A911F5F7CEA0048965D /* LicenseViewController.swift in Sources */,
 				C6AEE8FB24E41A49006135FB /* CodablesGeneric.swift in Sources */,
@@ -899,6 +918,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -948,7 +968,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -961,6 +981,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1017,53 +1038,8 @@
 		C6DF04881F4F33C500D200B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ARCHS = (
-					arm64,
-					x86_64,
-				);
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_OPTIMIZATION = space;
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = TINU/TINU.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
-				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 96;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 9RSH5734GY;
-				ENABLE_HARDENED_RUNTIME = YES;
-				GCC_OPTIMIZATION_LEVEL = s;
-				INFOPLIST_FILE = TINU/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = "3.0 PUBLIC BETA 5";
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINU;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG useEFIReplacement skipChooseCustomization TINU sudoStartup";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = on;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Osize";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 5.0;
-				VALID_ARCHS = "x86_64 arm64 arm64e";
-			};
-			name = Debug;
-		};
-		C6DF04891F4F33C500D200B1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ARCHS = (
-					arm64,
-					x86_64,
-				);
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_OPTIMIZATION = space;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
@@ -1073,28 +1049,73 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 96;
-				DEVELOPMENT_TEAM = 9RSH5734GY;
+				CURRENT_PROJECT_VERSION = 100;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_TESTABILITY = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = TINU/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = "3.0 PUBLIC BETA 5";
+				MARKETING_VERSION = "3.0 RELEASE CANDIDATE";
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LIBTOOLFLAGS = "-enable-library-evolution";
 				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINU;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "useEFIReplacement skipChooseCustomization TINU sudoStartup";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG useEFIReplacement TINU sudoStartup";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = on;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Osize";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				VALID_ARCHS = "x86_64 arm64 arm64e";
+			};
+			name = Debug;
+		};
+		C6DF04891F4F33C500D200B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_OPTIMIZATION = space;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = TINU/TINU.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 100;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				INFOPLIST_FILE = TINU/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MARKETING_VERSION = "3.0 RELEASE CANDIDATE";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LIBTOOLFLAGS = "-enable-library-evolution";
+				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINU;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "useEFIReplacement TINU sudoStartup";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = on;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Osize";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1106,7 +1127,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9RSH5734GY;
 				INFOPLIST_FILE = TINUTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINUTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -1123,7 +1148,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9RSH5734GY;
 				INFOPLIST_FILE = TINUTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINUTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -1139,7 +1168,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9RSH5734GY;
 				INFOPLIST_FILE = TINUUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINUUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -1155,7 +1188,11 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 9RSH5734GY;
 				INFOPLIST_FILE = TINUUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINUUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -1204,6 +1241,90 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C6254B7826892ADD0082C7F5 /* XCRemoteSwiftPackageReference "TINURecovery" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ITzTravelInTime/TINURecovery.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.7.6;
+			};
+		};
+		C6254B7B268933600082C7F5 /* XCRemoteSwiftPackageReference "TINUNotifications" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ITzTravelInTime/TINUNotifications.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.6;
+			};
+		};
+		C6254B7E268933740082C7F5 /* XCRemoteSwiftPackageReference "Command" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ITzTravelInTime/Command.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.1;
+			};
+		};
+		C6254B81268933950082C7F5 /* XCRemoteSwiftPackageReference "CommandSudo" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ITzTravelInTime/CommandSudo.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.8;
+			};
+		};
+		C6254B8426897EA20082C7F5 /* XCRemoteSwiftPackageReference "SwiftCPUDetect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ITzTravelInTime/SwiftCPUDetect.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
+		C6BF64822692B61E00A0B094 /* XCRemoteSwiftPackageReference "SwiftLoggedPrint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ITzTravelInTime/SwiftLoggedPrint.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C6254B7926892ADD0082C7F5 /* TINURecovery */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C6254B7826892ADD0082C7F5 /* XCRemoteSwiftPackageReference "TINURecovery" */;
+			productName = TINURecovery;
+		};
+		C6254B7C268933600082C7F5 /* TINUNotifications */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C6254B7B268933600082C7F5 /* XCRemoteSwiftPackageReference "TINUNotifications" */;
+			productName = TINUNotifications;
+		};
+		C6254B7F268933740082C7F5 /* Command */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C6254B7E268933740082C7F5 /* XCRemoteSwiftPackageReference "Command" */;
+			productName = Command;
+		};
+		C6254B82268933950082C7F5 /* CommandSudo */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C6254B81268933950082C7F5 /* XCRemoteSwiftPackageReference "CommandSudo" */;
+			productName = CommandSudo;
+		};
+		C6254B8526897EA20082C7F5 /* SwiftCPUDetect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C6254B8426897EA20082C7F5 /* XCRemoteSwiftPackageReference "SwiftCPUDetect" */;
+			productName = SwiftCPUDetect;
+		};
+		C6BF64832692B61E00A0B094 /* SwiftLoggedPrint */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C6BF64822692B61E00A0B094 /* XCRemoteSwiftPackageReference "SwiftLoggedPrint" */;
+			productName = SwiftLoggedPrint;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C6DF045A1F4F33C500D200B1 /* Project object */;
 }

@@ -45,3 +45,11 @@ public final class UIManager{
 	}
 	
 }
+
+#if !isTool
+public final class CustomizationWindowManager{
+	static let shared = CustomizationWindowManager()
+	
+	var referenceWindow: NSWindow!
+}
+#endif

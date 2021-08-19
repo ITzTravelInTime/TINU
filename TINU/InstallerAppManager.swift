@@ -116,7 +116,7 @@ extension CreationProcess{
 				return ret
 			}
 			
-			if !self.isBigEnought(appSize: UInt64(sz)){
+			if !self.isBigEnough(appSize: UInt64(sz)){
 				print(" The app is not valid because it's too small to be a proper installer app")
 				ret.status = .tooLittle
 				return ret
@@ -126,13 +126,13 @@ extension CreationProcess{
 			return ret
 		}
 		
-		public func isBigEnought(appSize: UInt64) -> Bool{
+		public func isBigEnough(appSize: UInt64) -> Bool{
 			return appSize > 5 * UInt64(pow(10.0, 9.0))
 		}
 		
 		public func listApps() -> [InstallerAppInfo]{
 			
-			print("Starting Installer App scanning")
+			log("Starting Installer App scanning")
 			
 			let fm = FileManager.default
 			
@@ -140,18 +140,18 @@ extension CreationProcess{
 			
 			//TINU looks for installer apps in those folders: /Applications ~/Desktop /~Downloads ~/Documents
 			
-			if !Recovery.isActuallyOn{
+			if !Recovery.actualStatus{
 				foldersURLS = [URL(fileURLWithPath: "/Applications"), fm.urls(for: .applicationDirectory, in: .systemDomainMask).first, fm.urls(for: .desktopDirectory, in: .userDomainMask).first, fm.urls(for: .downloadsDirectory, in: .userDomainMask).first, fm.urls(for: .documentDirectory, in: .userDomainMask).first, fm.urls(for: .allApplicationsDirectory, in: .systemDomainMask).first, fm.urls(for: .allApplicationsDirectory, in: .userDomainMask).first]
 			}
 			
 			//print(foldersURLS)
 			
-			let driveb = dm.getMountPointFromPartitionBSDID(ref.disk.bSDDrive)
+			let driveb = ref.disk.bSDDrive.mountPoint()
 			
 			for d in fm.mountedVolumeURLs(includingResourceValuesForKeys: [URLResourceKey.isVolumeKey], options: [.skipHiddenVolumes])!{
 				let p = d.path
 				
-				if p == driveb{//} || sharedIsOnRecovery{
+				if p == driveb{
 					continue
 				}
 				
@@ -210,7 +210,9 @@ extension CreationProcess{
 					continue
 				}
 				
-				print("Scanning for usable apps in \(d.path)")
+				log("Scanning for usable apps in \(d.path)")
+				
+				
 				//let fileNames = try manager.contentsOfDirectory(at: d, includingPropertiesForKeys: nil, options: []).filter{ $0.pathExtension == "app" }.map{ $0.path }
 				
 				do {
@@ -250,7 +252,7 @@ extension CreationProcess{
 						
 						switch capp.status {
 						case .usable, .broken, .tooBig, .tooLittle:
-							print("    \(appURL.path) has been added to the apps list")
+							log("    \(appURL.path) has been added to the apps list")
 							ret.append(capp)
 							break
 						default:
@@ -265,6 +267,7 @@ extension CreationProcess{
 				}
 			}
 			
+			log("Installer App Scanning is complete")
 			print(ret)
 			
 			return ret
@@ -335,7 +338,7 @@ extension CreationProcess{
 				}
 				
 				do{
-					let result = try DecodeManager.decodePlistDictionary(xml: try String.init(contentsOfFile: sa + "/Contents/Info.plist")) as? [String: Any]
+					let result = try Decode.plistToDictionary(from: try String.init(contentsOfFile: sa + "/Contents/Info.plist")) as? [String: Any]
 					
 					if let r = result{
 						

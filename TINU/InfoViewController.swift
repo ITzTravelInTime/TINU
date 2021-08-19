@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import TINURecovery
 
 //the first screen of the app, it has just some labels and a button
 class InfoViewController: GenericViewController, ViewID{
@@ -66,13 +67,13 @@ class InfoViewController: GenericViewController, ViewID{
 		}
 		#endif
 		
-		appIcon.image = IconsManager.shared.genericInstallerAppIcon
+		appIcon.image = IconsManager.shared.genericInstallerAppIcon.themedImage()
         
         if cvm.shared.installMac{
             
             //infoField.stringValue = "This is a tool that helps you to create a bootable macOS installer and also to install macOS\nBefore starting you need:\n   - At least a 20 gb drive or partition\n   - A copy of the macOS installer app (of any version starting from El Capitan) in\n     the root of a storage device connected to the computer"
 			
-			driveIcon.image = IconsManager.shared.internalDiskIcon
+			driveIcon.image = IconsManager.shared.internalDiskIcon.themedImage()
 			
             //driveLabel.stringValue = "A drive or partition of 20 GB or higher"
             
@@ -92,14 +93,14 @@ class InfoViewController: GenericViewController, ViewID{
 				sloganLabel.stringValue = "TINU Is Not Unib***t: The bootable macOS installer creation tool"
 			#endif
 			
-			driveIcon.image = IconsManager.shared.removableDiskIcon
+			driveIcon.image = IconsManager.shared.removableDiskIcon.themedImage()
 			
 		}
 		
 		if #available(macOS 11.0, *), look.usesSFSymbols() {
-			driveIcon.image = driveIcon.image?.withSymbolWeight(.thin)
+			//driveIcon.image = driveIcon.image?.withSymbolWeight(.thin)
 			driveIcon.contentTintColor = .systemGray
-			appIcon.image = appIcon.image?.withSymbolWeight(.thin)
+			//appIcon.image = appIcon.image?.withSymbolWeight(.thin)
 			appIcon.contentTintColor = .systemGray
 		}
 		
@@ -116,7 +117,7 @@ class InfoViewController: GenericViewController, ViewID{
 		super.viewDidAppear()
 		
 		if #available(OSX 10.15, *){
-			if !User.isRoot{
+			if !CurrentUser.isRoot{
 				SIPManager.checkStatusAndLetTheUserKnow()
 			}
 		}

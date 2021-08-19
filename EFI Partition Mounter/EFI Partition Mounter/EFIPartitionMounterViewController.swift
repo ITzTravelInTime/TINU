@@ -14,27 +14,14 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
 	let id: String = "EFIPartitionMounterViewController"
 	
 	@IBOutlet weak var scrollView: NSScrollView!
-	@IBOutlet weak var scrollHeight: NSLayoutConstraint!
-	
+	@IBOutlet weak var scrollerHeight: NSLayoutConstraint!
 	@IBOutlet weak var spinner: NSProgressIndicator!
-	
-	@IBOutlet weak var refreshButton: NSButton!
-	@IBOutlet weak var closeButton: NSButton!
-
-	
-    @IBOutlet weak var iconModeButton: NSButton!
-    
-    
-    
-    public let         eFIManager:         EFIPartitionManager      = EFIPartitionManager()
     
     public var         barMode:            Bool                     = false
     public var         popover:            NSPopover!
     
-    private var        watcher:            DirectoryObserver!
+    private var        watcher:            FileSystemObserver!
     private var        watcherTriggerd:    Bool                     = false
-    
-    public var         watcherSkip:        Bool                     = false
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -76,19 +63,14 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
 		scrollView.borderType = .noBorder
 		scrollView.drawsBackground = false
 		
-		setShadowViewsTopBottomOnly(respectTo: scrollView, topBottomViewsShadowRadius: 5)
+		/*if !look.usesSFSymbols(){
+			setShadowViewsTopBottomOnly(respectTo: scrollView, topBottomViewsShadowRadius: 5)
+		}*/
         
-        self.setTitleLabel(text: EFIPMTextManager.getViewString(context: self, stringID: "title"))
+        //self.setTitleLabel(text: EFIPMTextManager.getViewString(context: self, stringID: "title"))
         self.showTitleLabel()
         
 		setOtherViews(respectTo: scrollView)
-		
-		#if !isTool
-			closeButton.title = EFIPMTextManager.getViewString(context: self, stringID: "closeButtonTINU")//"Close"
-            iconModeButton.isHidden = true
-		#endif
-		
-		refreshButton.title = EFIPMTextManager.getViewString(context: self, stringID: "refreshButton")
 	}
 	
     
@@ -131,46 +113,46 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
         self.spinner.isDisplayedWhenStopped = false
         self.spinner.usesThreadedAnimation = true
         
+		/*
         if barMode{
             iconModeButton.title = EFIPMTextManager.getViewString(context: self, stringID: "windowMode")
         }else{
             iconModeButton.title = EFIPMTextManager.getViewString(context: self, stringID: "toolbarMode")
-        }
+        }*/
         
         #endif
         
-        self.window?.collectionBehavior.subtract(.fullScreenPrimary)
+        //self.window?.collectionBehavior.subtract(.fullScreenPrimary)
         
-        self.spinner.isHidden = false
-        self.spinner.startAnimation(self)
-        
-        DispatchQueue.global(qos: .background).async {
+		self.spinner.isHidden = false
+		self.spinner.startAnimation(self)
+		
+		DispatchQueue.global(qos: .background).async {
 			self.watcherTriggerd = true
-            self.watcher = DirectoryObserver(URL: URL(fileURLWithPath: "/Volumes", isDirectory: false), block: {
-                
-                print("Change in /Volumes")
-                
-                if self.watcherTriggerd{
-                    if self.watcherSkip {
-                        self.watcherSkip.toggle()
-                    }else{
-                        DispatchQueue.main.async {
-                            print("Refreshing list because of a new volume")
-                            self.refresh(self)
-                        }
-                    }
-                }
-                
-                
-                
-            })
-            
-        }
-        
+			self.watcher = FileSystemObserver(url: URL(fileURLWithPath: "/Volumes", isDirectory: false), changeHandler: {
+				
+				print("Change in /Volumes")
+				
+				if self.watcherTriggerd{
+					DispatchQueue.main.async {
+						print("Refreshing list because of a new volume")
+						self.refresh(self)
+					}
+				}
+				
+			})
+			
+		}
+		
         self.setScrollView()
 	}
 	
+	deinit {
+		viewWillDisappear()
+	}
+	
 	override func viewWillDisappear() {
+		super.viewWillDisappear()
         /*
 		#if !isTool
             if !(CreateinstallmediaSmallManager.shared.sharedIsCreationInProgress || CreateinstallmediaSmallManager.shared.sharedIsPreCreationInProgress){
@@ -188,7 +170,6 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
         
         watcher = nil
         watcherTriggerd = false
-        watcherSkip = false
 	}
     
     @IBAction func toggleIconMode(_ sender: Any) {
@@ -202,7 +183,7 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
 		#endif
     }
     
-	@objc @IBAction func refresh(_ sender: Any) {
+	@IBAction func refresh(_ sender: Any) {
 		self.watcherTriggerd = false
 		scrollView.isHidden = true
 		
@@ -210,7 +191,7 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
         hideFailureLabel()
         hideFailureButtons()
 		
-		refreshButton.isHidden = true
+		//refreshButton.isHidden = true
         
         self.spinner.isHidden = false
         self.spinner.startAnimation(self)
@@ -220,130 +201,84 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
 		self.watcherTriggerd = true
 	}
 	
-	@IBAction func close(_ sender: Any) {
-		#if !isTool
-			self.window.close()
-		#else
-            NSApplication.shared().terminate(self)
-		#endif
-	}
-	
     private func setScrollView(){
 		//DispatchQueue.main.sync{
 		/*
 		self.spinner.isHidden = false
 		self.spinner.startAnimation(self)
 		*/
-        
-		var empty = false
 		
 		createEFIPartitionItems(response: { response in
 			
-			if var items = response{
-				
-				items.reverse()
-				
-				//items = []
-				
-				if items.isEmpty{
-					empty = true
-				}else{
-					
-					DispatchQueue.main.sync {
-						
-						let background = NSView()
-						
-                        //background.backgroundColor = .red
-						
-						background.wantsLayer = true
-						
-						
-						background.frame.size.height = 20
-						background.frame.size.width = self.scrollView.frame.width - 2
-						
-						for item in items{
-                            
-							item.frame.origin = NSPoint(x: 20, y: background.frame.height)
-							
-							item.wantsLayer = true
-							
-							item.updateLayer()
-							
-							background.addSubview(item)
-							
-							background.frame.size.height += item.frame.height + 15
-						}
-						
-						background.frame.size.height += 5
-                        
-                        /*if background.frame.height < self.scrollView.frame.height - 2{
-                            let newView = NSView(frame: NSRect(x: 0, y: 0, width: background.frame.width, height: self.scrollView.frame.height - 2))
-                            
-                            //newView.backgroundColor = .green
-                            
-                            background.frame.origin.x = 0
-                            background.frame.origin.y = (newView.frame.height / 2) - background.frame.height / 2
-                            
-                            newView.addSubview(background)
-                            
-                            self.scrollView.documentView = newView
-                        }else{*/
-                            self.scrollView.documentView = background
-                        //}
-						
-						self.scrollHeight.constant = self.scrollView.documentView!.frame.height	// limit window height to the available content in the scroll view
-						
-						self.scrollView.isHidden = false
-						
-						self.refreshButton.isHidden = false
-						
-						self.refreshButton.isHidden = false
-						
-						if let documentView = self.scrollView.documentView{
-							documentView.scroll(NSPoint.init(x: 0, y: documentView.bounds.size.height))
-                            //if !(self.scrollView.verticalScroller?.isEnabled)!{
-                               // documentView.frame.size.width -= 12
-                            //}
-						}
-                        
-                        
-						
-					}
-				}
-			}else{
-				empty = true
+			guard let items = response?.reversed() else {
+				self.empty()
+				return
 			}
 			
-			if empty{
-				DispatchQueue.main.sync {
-					
-					self.scrollView.isHidden = true
-					
-					self.defaultFailureImage()
-                    self.showFailureImage()
-                    
-					self.setFailureLabel(text: EFIPMTextManager.getViewString(context: self, stringID: "noEFIPartitions"))//"No EFI partitions found")
-					self.showFailureLabel()
-                    
-                    if self.failureButtons.count == 0{
-                        self.addFailureButton(buttonTitle: EFIPMTextManager.getViewString(context: self, stringID: "noEFIActionButton")!, target: self, selector: #selector(self.refresh(_:)))
-                    }
-                    
-                    self.showFailureButtons()
-					
-					self.refreshButton.isHidden = true
-					
-				}
+			if items.isEmpty{
+				self.empty()
+				return
 			}
-			
 			
 			DispatchQueue.main.sync {
+				
+				let background = NSView()
+				
+				//background.backgroundColor = .red
+				
+				background.wantsLayer = true
+				
+				
+				background.frame.size.height = 20
+				background.frame.size.width = self.scrollView.frame.width - 2
+				
+				for item in items{
+					
+					item.frame.origin = NSPoint(x: 20, y: background.frame.height)
+					
+					item.wantsLayer = true
+					
+					item.updateLayer()
+					
+					background.addSubview(item)
+					
+					background.frame.size.height += item.frame.height + 15
+				}
+				
+				background.frame.size.height += 5
+				
+				self.scrollView.documentView = background
+				self.scrollerHeight.constant = self.scrollView.documentView!.frame.height	// limit window height to the available content in the scroll view
+				
+				self.scrollView.isHidden = false
+				
+				if let documentView = self.scrollView.documentView{
+					documentView.scroll(NSPoint.init(x: 0, y: documentView.bounds.size.height))
+				}
+				
 				self.spinner.isHidden = true
 				self.spinner.stopAnimation(self)
 			}
 			
 		})
-		//}
+	}
+	
+	private func empty(){
+		DispatchQueue.main.sync {
+			
+			self.scrollView.isHidden = true
+			
+			self.defaultFailureImage()
+			self.showFailureImage()
+			
+			self.setFailureLabel(text: EFIPMTextManager.getViewString(context: self, stringID: "noEFIPartitions"))//"No EFI partitions found")
+			self.showFailureLabel()
+			
+			self.showFailureButtons()
+			
+			self.spinner.isHidden = true
+			self.spinner.stopAnimation(self)
+		}
 	}
 	
 	private func createEFIPartitionItems(response: @escaping ([EFIPartitionToolInterface.EFIPartitionItem]?) -> Void){
@@ -355,23 +290,14 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
 			
 			var items: [EFIItem]! = nil
 			
-			#if EFIPMAlternateDetection
+			EFIPartition.clearPartitionsCache()
 			
 			guard let eFIData = EFIPartitionMounterModel.shared.getEFIPartitionsAndSubprtitionsNew() else {
 				response(items)
 				return
 			}
 			
-			#else
-			
-			guard let eFIData = EFIPartitionMounterModel.shared.getEFIPartitionsAndSubprtitions() else {
-				response(items)
-				return
-			}
-			
-			#endif
-			
-			var EFIParts = [String]()
+			//var EFIParts = [BSDID]()
 			
 			for drive in eFIData{
 				
@@ -381,7 +307,7 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
 					item.titleLabel.stringValue = drive.displayName
 					item.bsdid = drive.bsdName
 					
-					EFIParts.append(drive.bsdName)
+					//EFIParts.append(drive.bsdName)
 					
 					item.frame.size.height = 110
 					
@@ -425,9 +351,10 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
 				}
 			}
 			
-			if EFIParts != []{
-				self.eFIManager.buildPartitionsCache(fromPartitionsList: EFIParts)
-			}
+			//if EFIParts != []{
+				//self.eFIManager = EFIPartitions(from: EFIParts) ?? EFIPartitions()
+				//self.eFIManager.buildPartitionsCache(fromPartitionsList: EFIParts)
+			//}
 			
 			response(items)
 			

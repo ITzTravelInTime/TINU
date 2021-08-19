@@ -7,13 +7,15 @@
 //
 
 import Cocoa
+import TINUNotifications
 
-public func msgboxWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.alertWarningIcon){
+public func msgboxWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon.normalImage()){
 	var title = manager.getViewString(context: handle, stringID: name + "Title")
 	var content = manager.getViewString(context: handle, stringID: name)
 	
 	if title == nil || content == nil{
-		msgBoxWarning("Msbgox text not found!", "The textAseets file for your current language, lacks the at least part of the text for the msgbox: \(name) in the viewId: \(handle.id)\n\nMake sure that the viewID is implemented properly into the textAssets.")
+		//msgBoxWarning("Msbgox text not found!", "The textAseets file for your current language, lacks the at least part of the text for the msgbox: \(name) in the viewId: \(handle.id)\n\nMake sure that the viewID is implemented properly into the textAssets.")
+		Alert(message: "Msbgox text not found!", description: "The textAseets file for your current language, lacks the at least part of the text for the msgbox: \(name) in the viewId: \(handle.id)\n\nMake sure that the viewID is implemented properly into the textAssets.").criticalWithIcon().justSend()
 		fatalError("Message content not found in the text assets")
 	}
 	
@@ -22,10 +24,11 @@ public func msgboxWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID
 		content = parse(messange: content!, keys: list)
 	}
 	
-	msgBoxWithCustomIcon(title!, content!, style, icon)
+	//msgBoxWithCustomIcon(title!, content!, style, icon)
+	Alert(message: title!, description: content!, style: .init(from: style), icon: icon).displayingOnWindow().justSend()
 }
 
-public func dialogWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.alertWarningIcon) -> Bool{
+public func dialogWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon.normalImage()) -> Bool{
 	
 	var title = manager.getViewString(context: handle, stringID: name + "Title")
 	var content = manager.getViewString(context: handle, stringID: name)
@@ -34,7 +37,8 @@ public func dialogWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID
 	let no = manager.getViewString(context: handle, stringID: name + "No")
 	
 	if title == nil || content == nil || yes == nil || no == nil{
-		msgBoxWarning("Dialog text not found!", "The textAseets file for your current language, lacks the at least part of the text for the dialog: \(name) in the viewId: \(handle.id)\n\nMake sure that the viewID is implemented properly into the textAssets.")
+		//msgBoxWarning("Dialog text not found!", "The textAseets file for your current language, lacks the at least part of the text for the dialog: \(name) in the viewId: \(handle.id)\n\nMake sure that the viewID is implemented properly into the textAssets.")
+		Alert(message: "Dialog text not found!", description: "The textAseets file for your current language, lacks the at least part of the text for the dialog: \(name) in the viewId: \(handle.id)\n\nMake sure that the viewID is implemented properly into the textAssets.").criticalWithIcon().justSend()
 		fatalError("Message content not found in the text assets")
 	}
 	
@@ -43,7 +47,8 @@ public func dialogWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID
 		content = parse(messange: content!, keys: list)
 	}
 	
-	return dialogCustomWithCustomIcon(question: title!, text: content!, style: style, mainButtonText: yes!, secondButtonText: no!, icon: icon)
+	//return dialogCustomWithCustomIcon(question: title!, text: content!, style: style, mainButtonText: yes!, secondButtonText: no!, icon: icon)
+	return Alert(message: title!, description: content!, style: .init(from: style), icon: icon).addingButton(title: yes!).addingButton(title: no!).displayingOnWindow().send().ok()
 }
 
 public func dialogGenericWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = nil) -> NSAlert{
@@ -51,8 +56,8 @@ public func dialogGenericWithManagerGeneric(_ manager: TextManagerGet, _ handle:
 	var title = manager.getViewString(context: handle, stringID: name + "Title")
 	var content = manager.getViewString(context: handle, stringID: name)
 	
-	var buttons: [DialogButton] = []
-	var last: DialogButton!
+	var buttons: [Alert.Button] = []
+	var last: Alert.Button!
 	var num: UInt8 = 1
 	
 	repeat{
@@ -65,7 +70,7 @@ public func dialogGenericWithManagerGeneric(_ manager: TextManagerGet, _ handle:
 		
 		if let text = manager.getViewString(context: handle, stringID: bid){
 			let key = manager.getViewString(context: handle, stringID: bid + "Key")
-			last = DialogButton.init(text: text, keyEquivalent: key)
+			last = Alert.Button(text: text, keyEquivalent: key)
 			num += 1
 		}else{
 			last = nil
@@ -77,7 +82,8 @@ public func dialogGenericWithManagerGeneric(_ manager: TextManagerGet, _ handle:
 		print(buttons)
 		print(title == nil)
 		print(content == nil)
-		msgBoxWarning("Dialog text not found!", "The textAseets file for your current language, lacks the at least part of the text for the dialog: \(name) in the viewId: \(handle.id)\n\nMake sure that the viewID is implemented properly into the textAssets.")
+		//msgBoxWarning("Dialog text not found!", "The textAseets file for your current language, lacks the at least part of the text for the dialog: \(name) in the viewId: \(handle.id)\n\nMake sure that the viewID is implemented properly into the textAssets.")
+		Alert(message: "Dialog text not found!", description: "The textAseets file for your current language, lacks the at least part of the text for the dialog: \(name) in the viewId: \(handle.id)\n\nMake sure that the viewID is implemented properly into the textAssets.").criticalWithIcon().justSend()
 		let msg = ("Message content not found in the text assets: \(handle.id) : \(name)")
 		log(msg)
 		fatalError(msg)
@@ -88,11 +94,13 @@ public func dialogGenericWithManagerGeneric(_ manager: TextManagerGet, _ handle:
 		content = parse(messange: content!, keys: list)
 	}
 	
-	return genericDialogCreate(message: title!, informative: content!, style: style, icon: icon, buttons: buttons, accessoryView: nil)
+	//return genericDialogCreate(message: title!, informative: content!, style: style, icon: icon, buttons: buttons, accessoryView: nil)
+	
+	return Alert(message: title!, description: content!, style: .init(from: style), icon: icon, buttons: buttons).displayingOnWindow().create()
 }
 
-@inline(__always) public func dialogGenericWithManagerBoolGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.alertWarningIcon) -> Bool{
-	return dialogGenericWithManager(handle, name: name, parseList: parseList, style: style, icon: icon).runModal() == NSApplication.ModalResponse.alertFirstButtonReturn
+@inline(__always) public func dialogGenericWithManagerBoolGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon.normalImage()) -> Bool{
+	return dialogGenericWithManager(handle, name: name, parseList: parseList, style: style, icon: icon).runModal().ok()
 }
 
 #if TINU
@@ -110,7 +118,7 @@ public func dialogGenericWithManagerGeneric(_ manager: TextManagerGet, _ handle:
 }
 
 @inline(__always) public func dialogGenericWithManagerBool(_ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = nil) -> Bool{
-	return dialogGenericWithManagerGeneric(TextManager, handle, name: name, parseList: parseList, style: style, icon: icon).runModal() == NSApplication.ModalResponse.alertFirstButtonReturn
+	return dialogGenericWithManagerGeneric(TextManager, handle, name: name, parseList: parseList, style: style, icon: icon).runModal().ok()
 }
 
 #endif

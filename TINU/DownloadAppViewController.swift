@@ -51,21 +51,6 @@ public class DownloadAppViewController: ShadowViewController, ViewID {
 		
 		self.scroller.hasHorizontalScroller = false
 		
-		/*
-		
-		let apps: [AppDownloadManager.AppDownload] = [
-			AppDownloadManager.AppDownload(name: "macOS Catalina", version: "10.15.x", DownloadLink: "macappstores://itunes.apple.com/app/macos-catalina/id1466841314", DownloadLinkAlternate: nil, image: "Catalina"),
-			AppDownloadManager.AppDownload(name: "macOS Mojave", version: "10.14.6", DownloadLink: "macappstores://itunes.apple.com/app/macos-mojave/id1398502828", DownloadLinkAlternate: nil, image: "Mojave"),
-			AppDownloadManager.AppDownload(name: "macOS High Sierra", version: "10.13.6", DownloadLink: "macappstores://itunes.apple.com/app/macos-high-sierra/id1246284741", DownloadLinkAlternate: nil, image: "High_Sierra"),
-			AppDownloadManager.AppDownload(name: "macOS Sierra", version: "10.12.6", DownloadLink: "macappstores://itunes.apple.com/app/macos-sierra/id1127487414", DownloadLinkAlternate: "http://updates-http.cdn-apple.com/2019/cert/061-39476-20191023-48f365f4-0015-4c41-9f44-39d3d2aca067/InstallOS.dmg", image: "Sierra"),
-			AppDownloadManager.AppDownload(name: "Mac OS X El Capitan", version: "10.11.6", DownloadLink: "macappstores://itunes.apple.com/app/os-x-el-capitan/id1147835434", DownloadLinkAlternate: "http://updates-http.cdn-apple.com/2019/cert/061-41424-20191024-218af9ec-cf50-4516-9011-228c78eda3d2/InstallMacOSX.dmg", image: "El_Capitan")
-			//this download is just a .pkg thing, not usable with tinu
-			/*,App_download(name: "Mac OS X Yosemite", version: "10.10.6", DownloadLink: "", DownloadLinkAlternate: "http://updates-http.cdn-apple.com/2019/cert/061-41343-20191023-02465f92-3ab5-4c92-bfe2-b725447a070d/InstallMacOSX.dmg", image: NSImage(named: "Yosemite")!)*/
-		]
-		
-		print(AppDownloadManager(downloads: apps).getEncoded()!)
-		*/
-		
 		let apps = CodableCreation<AppDownloadManager>.createFromDefaultFile()!.downloads
 		let segmentHeight: CGFloat = 100
 		let segmentOffset: CGFloat = 20
@@ -86,8 +71,9 @@ public class DownloadAppViewController: ShadowViewController, ViewID {
 			tmp += segmentHeight + segmentOffset
 		}
 		
-		plain.backgroundColor = NSColor.windowBackgroundColor
-		scroller.backgroundColor = plain.backgroundColor
+		plain.backgroundColor = scroller.backgroundColor//NSColor.windowBackgroundColor
+		//scroller.backgroundColor = plain.backgroundColor
+		//scroller.contentView.backgroundColor = plain.backgroundColor
 		
     }
 	
@@ -96,6 +82,9 @@ public class DownloadAppViewController: ShadowViewController, ViewID {
 		if self.presentingViewController == nil{
 		//if self.window != sharedWindow{
 			closeButton.title = TextManager.getViewString(context: self, stringID: "backButton")
+			closeButton.image = NSImage(named: NSImage.stopProgressTemplateName)
+		}else{
+			closeButton.image = NSImage(named: NSImage.goLeftTemplateName)
 		}
 		
 		self.scroller.documentView = plain!

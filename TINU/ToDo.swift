@@ -16,8 +16,6 @@
 
 -remove partitions unmount hardcode (detect the partitions to unmount)
 
--install clover and open core efi folder label fix
-
 -menu items text from json
 
 -credits view controller text from json (probably requires a custom json)

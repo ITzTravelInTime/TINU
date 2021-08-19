@@ -29,7 +29,7 @@ public struct CodableCreation<T: CodableDefaults & Codable & Equatable>{
 			let data = try String.init(contentsOf: fileURL).data(using: .utf8)!
 			let new = try JSONDecoder().decode(T.self, from: data)
 					
-			print(new)
+			//print(new)
 					
 			return new
 			

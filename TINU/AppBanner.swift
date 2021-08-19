@@ -86,7 +86,7 @@ public final class AppBanner{
 			MEM.cBanner += sideBorder + m + c + strFill(of: " ", length: len, startSeq: nil, endSeq: nil, forget: true) + m + sideBorder + "\n"
 		}
 		
-		MEM.cBanner += vfill + getRow(false)
+		MEM.cBanner = "\n\n" + MEM.cBanner + vfill + getRow(false)
 		
 		return MEM.cBanner
 	}
@@ -158,7 +158,7 @@ public final class AppBanner{
 		
 		return MEM.emptyRow*/
 		
-		return strFill(of: " ", length: width + margin * 2, startSeq: sideBorder, endSeq: sideBorder + "\r", forget: true)
+		return strFill(of: " ", length: width + margin * 2, startSeq: sideBorder, endSeq: sideBorder + "\n", forget: true)
 	}
 	
 }

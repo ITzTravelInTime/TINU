@@ -35,5 +35,19 @@ public class CopyrightLabel: NSTextField{
 		self.isHidden = false
 		
 		self.stringValue = Bundle.main.copyright!
+		
+		/*
+		if #available(macOS 10.11, *) {
+			let constraints = [
+				self.centerXAnchor.constraint(equalTo: superview!.centerXAnchor)
+			]
+			
+			NSLayoutConstraint.activate(constraints)
+		} else {
+			// Fallback on earlier versions
+		}*/
+		
+		
+		
 	}
 }

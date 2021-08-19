@@ -10,29 +10,32 @@ import Foundation
 import AppKit
 
 extension UIManager{
-public enum AppLook: String, Codable, Equatable, CaseIterable{
-	case shadowsOldIcons    = "shadowsOldIcons"
-	case noShadowsSFSymbols = "noShadowsSFSymbols"
-	case   shadowsSFSymbols = "shadowSFSymbols"
-	case recovery = "recovery"
-	
-	func supportsShadows() -> Bool{
-		return self == .shadowsOldIcons || self == .shadowsSFSymbols
-	}
-	
-	func usesSFSymbols() -> Bool{
-		if #available(macOS 11.0, *){
-			return self == .noShadowsSFSymbols || self == .shadowsSFSymbols
+	public enum AppLook: String, Codable, Equatable, CaseIterable, RawRepresentable{
+		case noShadowsOldIcons = ""
+		case recovery = "recovery"
+		case noShadowsSFSymbols = "symbols"
+		case noShadowsSFSymbolsFill = "symbols.fill"
+		case shadowsSFSymbols = "shadows.symbols"
+		case shadowsSFSymbolsFill = "shadows.symbols.fill"
+		case shadowsOldIcons    = "shadows"
+		
+		func isRecovery() -> Bool{
+			return self.rawValue.contains("recovery")
 		}
-		return false
+		
+		func supportsShadows() -> Bool{
+			return self.rawValue.contains("shadows")
+		}
+		
+		func usesSFSymbols() -> Bool{
+			if #available(macOS 11.0, *){
+				return self.rawValue.contains("symbols")
+			}
+			return false
+		}
+		
+		func usesFilledSFSymbols() -> Bool{
+			return self.rawValue.contains("symbols.fill")
+		}
 	}
 }
-}
-
-#if !isTool
-public final class CustomizationWindowManager{
-	static let shared = CustomizationWindowManager()
-	
-	var referenceWindow: NSWindow!
-}
-#endif

@@ -10,8 +10,8 @@
 		}
 	},
 	"helpfoulMessange":{
-		"installer": "\n\n******************************************\n\nNote that:\n\n-This process may take a lot of time (usually between 5 and 50 minutes) especially with slow storage devices (like Hard drives, SD/micro SD cards and virtual disks) and slow machines (like most virtual machines), so be patient and wait for it to finish\n\n-If you feel nothing is happening or the program is stuck remeber that TINU is just waiting for the program, createinstallmedia, to take care of the foundamental steps of this process, without knowing when it will finish his opearation. So TINU it's not stuck, it's just waiting.\n\n-The progress shown in the progress bar is just to give to the user the impression of busyness and that something is happening, so that's only cosmethic, but it's not actual progress since there is not a consistent way of obtaining accurate progress values during this step. TINU is just making the bar going forward by using a timer which increments it each few seconds for 50 minutes.\n\n-For more help or questions go to |Menu bar| -> |TINU| -> |Related to TINU| -> |Contact us| there you will find all the links and the contacts related to this project (NOTE: this doesn't work when TINU is running in a macOS recovery environment).\n\n******************************************\n\n",
-		"installation": "\n\n******************************************\n\nNote that:\n\n-This process may take a lot of time (usually between 5 and 50 minutes) especially with slow storage devices (like Hard drives, SD/micro SD cards and virtual disks) and slow machines (like most virtual machines), so be patient and wait for it to finish\n\n-If you feel nothing is happening or the program is stuck remeber that TINU is just waiting for the program, startosinstall, to take care of the foundamental steps of this process, without knowing when it will finish his opearation. So TINU it's not stuck, it's just waiting.\n\n-The progress shown in the progress bar is just to give to the user the impression of busyness and that something is happening, so that's only cosmethic, but it's not actual progress since there is not a consistent way of obtaining accurate progress values during this step. TINU is just making the bar going forward by using a timer which increments it each few seconds for 50 minutes.\n\n-For more help or questions go to |Menu bar| -> |TINU| -> |Related to TINU| -> |Contact us| there you will find all the links and the contacts related to this project (NOTE: this doesn't work when TINU is running in a macOS recovery environment).\n\n******************************************\n\n"
+		"installer": "\n\n******************************************\n\nNote that:\n\n-This process may take a lot of time (usually between 5 and 50 minutes) especially with slow storage devices (like Hard drives, SD/micro SD cards and virtual disks) and slow machines (like most virtual machines), so be patient and wait for it to finish\n\n-If you feel nothing is happening or the program is stuck remeber that TINU is just waiting for the program, createinstallmedia, to take care of the foundamental steps of this process, without knowing when it will finish his opearation. So TINU it's not stuck, it's just waiting.\n\n-The progress shown in the progress bar is just to give to the user the impression of busyness and that something is happening, so that's only cosmethic, but it's not actual progress since there is not a consistent way of obtaining accurate progress values during this step. TINU is just making the bar going forward by using a timer which increments it each few seconds for 50 minutes.\n\n-For more help or questions go to |Menu bar| -> |TINU| -> |About TINU| -> |Contact us| there you will find all the links and the contacts related to this project (NOTE: this doesn't work when TINU is running in a macOS recovery/installer OS environment).\n\n******************************************\n\n",
+		"installation": "\n\n******************************************\n\nNote that:\n\n-This process may take a lot of time (usually between 5 and 50 minutes) especially with slow storage devices (like Hard drives, SD/micro SD cards and virtual disks) and slow machines (like most virtual machines), so be patient and wait for it to finish\n\n-If you feel nothing is happening or the program is stuck remeber that TINU is just waiting for the program, startosinstall, to take care of the foundamental steps of this process, without knowing when it will finish his opearation. So TINU it's not stuck, it's just waiting.\n\n-The progress shown in the progress bar is just to give to the user the impression of busyness and that something is happening, so that's only cosmethic, but it's not actual progress since there is not a consistent way of obtaining accurate progress values during this step. TINU is just making the bar going forward by using a timer which increments it each few seconds for 50 minutes.\n\n-For more help or questions go to |Menu bar| -> |TINU| -> |About TINU| -> |Contact us| there you will find all the links and the contacts related to this project (NOTE: this doesn't work when TINU is running in a macOS recovery environment).\n\n******************************************\n\n"
 	},
 	"optionsDescs":{
 		"installer":[
@@ -91,7 +91,7 @@
 		{
 			"unmutable" : {
 				"version" : "Versione: ",
-				"license" : "\nRilasciato sotto la licenza GNU GPL v3",
+				"license" : "\nRilasciato sotto la licenza GNU GPL v2",
 				"closeButton" : "Chiudi",
 				"sourceCodeButton" : "Codice Sorgente",
 				"contactsButton" : "Contattaci"
@@ -116,7 +116,7 @@
 			"unmutable" : {
 				"desc" : "Questo menù serve ad installare la cartella EFI di ${bootloader} nella partizione EFI del disco \"${drive}\".\nSolo le cartelle EFI di tipo UEFI a 64Bit sono supportate.",
 				"title" : "Installer della cartella EFI di ${bootloader}",
-				"errorDialogTitle" : "Impossibile la cartela selezionata",
+				"errorDialogTitle" : "Impossibile usare la cartela selezionata",
 				"errorDialog" : "C'è stato un errore sconosciuto durante l'apertura della cartella selezionata",
 				"improperDialogTitle": "La cartella \"${pathName}\" non è una cartella EFI di ${bootloader}",
 				"improperDialog" : "La cartella che hai scelto \"${path}\" non contiene il file \"${missing}\" che è richiesto, assicurati di aprire solo la cartella chiamata EFI e che essa contenga tutti i file necessari",
@@ -137,8 +137,8 @@
 		"InfoViewController":{
 			"mutable" : {
 				"driveInfo" : {
-					"installer" :    "Un disco o una partizione di almeno 8 GB (9 GB o più per Catalina, 13 GB o più per Big Sur)",
-					"installation" : "Un disco o una partizione di almeno 20 GB\n(o possibilmente di almeno 30 GB)"
+					"installer" :    "Un disco o una partizione di almeno 8 GB (9 GB o più per installer di Catalina, 13 GB o più per installer di Big Sur e successivi)",
+					"installation" : "Un disco o una partizione di almeno 30 GB\n(o possibilmente di almeno 40 GB)"
 				},
 				"appInfo" : {
 					"installer" :    "Un'app di installazione di macOS scaricata da App Store (è richiesta un'app di OS X Mavericks o di una versione più recente)",
@@ -219,15 +219,15 @@
 		"ConfirmViewController":{
 			"mutable" : {
 				"warningText" : {
-					"installer" :    "Se vai avanti, il disco \"${driveName}\" verrà formattato! Tutto il suo contenuto sarà cancellato e rimpiazzato con l'installer di macOS. Se sei sicuro, continua a tuo rischio.",
-					"installation" : "Se vai avanti, il disco \"${driveName}\" verrà modificato! Tutto il suo contenuto potrebbe essere cancellato e rimpiazzato con l'installazione di macOS. Se sei sicuro, continua a tuo rischio."
+					"installer" :    "Attenzione: Il disco \"${driveName}\" verrà formattato!\nTutto il suo contenuto sarà rimpiazzato con l'installer di macOS. \nSe sei sicuro/a, procedi a tuo rischio.",
+					"installation" : "Attenzione: Il disco \"${driveName}\" verrà formattato!\nTutto il suo contenuto verrà rimpiazzato con l'installazione di macOS. \nSe sei sicuro/a, procedi a tuo rischio."
 				}
 			},
 			"unmutable" : {
-				"title" : "Verranno usati questa partizione e quest'app di installazione, sei sicuro?",
-				"titleDrive" : "Verranno usati, questo disco e ques'app di installazione, sei sicuto?",
+				"title" : "Questa partizione e quest'app verranno usati. Vuoi procedere?",
+				"titleDrive" : "Questo disco e quest'app verranno usati. Vuoi procedere?",
 				"backButton" : "Indietro",
-				"nextButton" : "Si, capisco",
+				"nextButton" : "Si, procedi",
 				"nextButtonFail" : "Esci",
 				"optionsButton" : "Opzioni",
 				"failureTitle" : "Impossiblile procedere",
@@ -279,16 +279,16 @@
 				"showLogButton" : "Mostra il Log",
 				"descriptionField" : "Per favore aspetta e lascia la finestra com'è",
 				"activityLabel1" : "Controllo dell'app di installazione",
-				"activityLabel2" : "Errore con l'app o col disco sceli",
-				"activityLabel3" : "Interpretazione del risultato del processo",
+				"activityLabel2" : "Errore con l'app o col disco rilevato",
+				"activityLabel3" : "Determino l'esito del procedura",
 				"activityLabel4" : "Controllo delle operazioni effettuate",
 				"activityLabel5" : "Applicazione delle impostazioni",
-				"activityLabel6" : "Formattazione del disco scelto",
+				"activityLabel6" : "Formattazione del disco",
 				"activityLabel7" : "Espulsione delle partizioni",
-				"activityLabel8" : "Processo completato, chiusura in corso...",
+				"activityLabel8" : "Processo completato, chiusura in corso",
 				"activityLabel9" : "Controllo delle partizioni",
-				"activityLabel10" : "Applicando le impostazioni",
-				"activityLabel12" : "Chiusura dei processi",
+				"activityLabel10" : "Applicazione delle impostazioni",
+				"activityLabel12" : "Chiusura dei programmi",
 				"activityLabel13" : "Espulsione dei dischi",
 				"activityLabel14" : "Applicazione delle impostazioni",
 				"activityLabel18" : "Costruzione del comando per ${executable}",
@@ -299,6 +299,7 @@
 				"finalScreenCVGE" : "Errore nell'espulsione dei dischi",
 				"finalScreenFFE" : "Errore nel formattare il disco \"${diskName}\"",
 				"finalScreenFUE" : "Errore nell'espellere il disco selezionato",
+				"finalScreenFLE" : "Errore nell'avviare il processo di creazione",
 				"finalScreenMIS" : "macOS installato con successo",
 				"finalScreenMIE" : "Errore dutante l'installazione di macOS,\n vedi il log per maggiori dettagli",
 				"finalScreenAOE" : "Errore nell'applicare le impostazioni"
@@ -342,7 +343,7 @@
 				"appDamagedWarn" : "App danneggiata: ${name}",
 				"appDamagedToolTip" : "Quest'app di installazione di macOS non è utilizzabile perchè è danneggiata e non contiene alcuni elementi richiesti, ti serve l'app di installazione completa presa da App Store, e che pesa come minimo, più di 5 GB \n\nPercorso: ${path}",
 				"appErrorWarn" : "Errore: ${name}",
-				"appErrorToolTip" : "Non è possibile usare quest'app di installazione di macOS perchè si è verificato un errore durante kla verifica della dimensione dell'app stessa.\n\nPercorso: ${path}",
+				"appErrorToolTip" : "Non è possibile usare quest'app di installazione di macOS perchè si è verificato un errore durante la verifica della dimensione dell'app stessa.\n\nPercorso: ${path}",
 				"driveNormalToolTip" : "${size}${mount}"
 			}
 		},

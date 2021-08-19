@@ -45,7 +45,7 @@ public struct InstallerAppInfo: UIRepresentable{
 	
 	var genericIcon: NSImage?{
 		if look.usesSFSymbols(){
-			return IconsManager.shared.genericInstallerAppIcon
+			return IconsManager.shared.genericInstallerAppIcon.themedImage()
 		}else{
 			return icon
 		}

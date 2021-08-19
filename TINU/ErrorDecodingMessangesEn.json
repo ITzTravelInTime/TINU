@@ -120,7 +120,7 @@
 		{
 			"isBack" : false,
 			"operation" : 0,
-			"message" : "Bootable macOS installer creation failed because the volume you chose for the installer is not large enought, please choose a larger one, see the log for more info",
+			"message" : "Bootable macOS installer creation failed because the volume you chose for the installer is not large enough, please choose a larger one, see the log for more info",
 			"stringsToCheck" : [
 				"is not large enough for install media."
 			],
@@ -130,7 +130,7 @@
 				1,
 				3
 			],
-			"printMessage" : "The selected drive\/partition is not large enought for this macOS installer app, if you want to make an installer of Catalina or later we reccommend you to use a drive\/partition of at least 10 gb",
+			"printMessage" : "The selected drive\/partition is not large enough for this macOS installer app, if you want to make an installer of Catalina or later we reccommend you to use a drive\/partition of at least 10 gb",
 			"notError" : false
 		},
 		{
@@ -171,7 +171,7 @@
 			"chackValues" : [
 				4
 			],
-			"printMessage" : "Bootable macOS installer created successfully!",
+			"printMessage" : "Bootable macOS installer created successfully.\nThank you for using TINU",
 			"notError" : true
 		},
 		{

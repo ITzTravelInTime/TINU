@@ -55,10 +55,14 @@ class DriveView: ShadowView, ViewID {
 		}
 		
 		if image.superview != nil && image.image == nil{
-			image.image = current?.icon
+			if image.image == nil{
+				image.image = current?.icon
+			}
+			/*
 			if #available(macOS 11.0, *), look.usesSFSymbols() {
 				image.image = image.image?.withSymbolWeight(.ultraLight)
 			}
+			*/
 		}
 		
 		image.isEnabled = isEnabled
@@ -88,18 +92,18 @@ class DriveView: ShadowView, ViewID {
 		
 		if warnImage.superview != nil && warnImage.image == nil{
 			if isEnabled{
-				self.warnImage.image = IconsManager.shared.checkIcon
+				self.warnImage.image = IconsManager.shared.checkIcon.themedImage()
 				if #available(macOS 11.0, *), look.usesSFSymbols(){
 					self.warnImage.contentTintColor = .systemGreen
 				}
 			}else{
 				if !isBigger{
-					self.warnImage.image = IconsManager.shared.roundStopIcon
+					self.warnImage.image = IconsManager.shared.roundStopIcon.themedImage()
 					if #available(macOS 11.0, *), look.usesSFSymbols(){
 						self.warnImage.contentTintColor = .systemRed
 					}
 				}else{
-					self.warnImage.image = IconsManager.shared.roundWarningIcon
+					self.warnImage.image = IconsManager.shared.roundWarningIcon.themedImage()
 					if #available(macOS 11.0, *), look.usesSFSymbols(){
 						self.warnImage.contentTintColor = .systemYellow
 					}
@@ -171,7 +175,7 @@ class DriveView: ShadowView, ViewID {
 		
 			self.addSubview(image)
 			
-			image.layer!.zPosition = self.layer!.zPosition + 1
+			image.layer?.zPosition = (self.layer?.zPosition ?? 0) + 1
 		}
         
 		if volume.superview == nil{
@@ -184,7 +188,7 @@ class DriveView: ShadowView, ViewID {
 			
 			self.addSubview(volume)
 			
-			volume.layer!.zPosition = self.layer!.zPosition + 1
+			volume.layer?.zPosition = (self.layer?.zPosition ?? 0) + 1
 		}
 		
 		if self.current?.app == nil && self.warnImage.superview != nil{
@@ -196,10 +200,10 @@ class DriveView: ShadowView, ViewID {
 		if (self.current?.app != nil && (look.usesSFSymbols() || !self.isEnabled) && self.warnImage.superview == nil){
 			let w: CGFloat = self.frame.width / 3
 			
-			self.warnImage.frame = (NSRect(x: self.frame.width - w - 5, y: self.image.frame.origin.y, width: w, height: w))
+			self.warnImage.frame = (NSRect(x: 5, y: self.image.frame.origin.y, width: w, height: w))
 			
 			self.warnImage.wantsLayer = true
-			self.warnImage.layer!.zPosition = self.image.layer!.zPosition + 1
+			self.warnImage.layer?.zPosition = (self.image.layer?.zPosition ?? 0) + 1
 			
 			self.warnImage.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
 			self.warnImage.imageAlignment = .alignBottom
@@ -223,10 +227,10 @@ class DriveView: ShadowView, ViewID {
 			
 			if self.current?.app != nil{
 				cm.app.current = self.current?.app
-				Swift.print("The application that the user has selected is: " + (self.current?.path ?? "[error]"))
+				print("The application that the user has selected is: " + (self.current?.path ?? "[error]"))
 			}else if self.current?.part != nil{
 				cm.disk.current = self.current?.part
-				Swift.print("The volume that the user has selected is: " + (self.current!.path ?? ""))
+				print("The volume that the user has selected is: " + (self.current!.path ?? ""))
 			}
 		}
 		
@@ -291,7 +295,7 @@ class DriveView: ShadowView, ViewID {
 			self.toolTip = ""
 		}
 		
-		Swift.print(self.toolTip!)
+		print(self.toolTip!)
 	}
 	
 	func roundInt(number: UInt64) -> String{

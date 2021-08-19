@@ -28,18 +28,22 @@ public class EFIReplacementView: NSView, ViewID{
 	
 	override public func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
-		viewDidMoveToSuperview()
+		setupUI()
 	}
 	
 	var bootloader: SupportedEFIFolders = .clover{
 		didSet{
-			viewDidMoveToSuperview()
+			setupUI()
 		}
 	}
 	
 	override public func viewDidMoveToSuperview() {
 		super.viewDidMoveToSuperview()
 		
+		setupUI()
+	}
+	
+	private func setupUI(){
 		//size constants
 		let buttonsHeigth: CGFloat = 32
 		
@@ -71,7 +75,7 @@ public class EFIReplacementView: NSView, ViewID{
 		expLabel.frame.size = NSSize(width: self.frame.size.width - 10 , height: fieldHeigth * 4)
 		expLabel.font = NSFont.systemFont(ofSize: 13)
 		
-			let replaceList = ["{drive}": cvm.shared.disk.current.driveName, "{bootloader}": bootloader.rawValue]
+			let replaceList = ["{drive}": cvm.shared.disk?.current?.driveName ?? "[error getting drive name]", "{bootloader}": bootloader.rawValue]
 			
 			/*
 			titleLabel.stringValue = "\(bootloader.rawValue) EFI folder installer"
@@ -104,7 +108,7 @@ public class EFIReplacementView: NSView, ViewID{
 		self.addSubview(pathLabel)
 		
 		
-		checkImage.image = IconsManager.shared.checkIcon
+		checkImage.image = IconsManager.shared.checkIcon.themedImage()
 		if #available(macOS 11.0, *), look.usesSFSymbols(){
 			checkImage.contentTintColor = .systemGreen
 		}
@@ -257,7 +261,7 @@ public class EFIReplacementView: NSView, ViewID{
 				
 				let t = EFIFolderReplacementManager.shared.currentEFIFolderType.rawValue
 				
-				//this is still imprecise because it doesn't accounts for the usage of the h as the first letter, but for now it's enought
+				//this is still imprecise because it doesn't accounts for the usage of the h as the first letter, but for now it's enough
 				
 				let replist = ["{bootloader}" : t]
 				

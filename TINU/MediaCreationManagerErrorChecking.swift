@@ -7,6 +7,8 @@
 //
 
 import Cocoa
+import TINURecovery
+import Command
 
 extension InstallMediaCreationManager{
 	
@@ -58,6 +60,7 @@ extension InstallMediaCreationManager{
 				//self.setActivityLabelText("Interpreting the results of the process")
 				
 				self.setActivityLabelText("activityLabel3")
+				self.setProgressBarIndeterminateState(state: false)
 				
 			}
 			
@@ -66,18 +69,18 @@ extension InstallMediaCreationManager{
 			//if there is a not normal code it will be logged
 			log("\"\(cvm.shared.executableName)\" has finished, extracting output ...")
 			
-			let result = Command.result(from: cvm.shared.process.handle)
+			let result = cvm.shared.process.handle.result()
 			
 			log("Output extracted: ")
 			
 			//logs the output of the process
-			for o in result.output{
+			for o in result?.output ?? []{
 				log("      " + o)
 			}
 					
 			log("process error/s produced: ")
 			//logs the errors produced by the process
-			for o in result.error{
+			for o in result?.error ?? []{
 				log("      " + o)
 			}
 			
@@ -86,7 +89,7 @@ extension InstallMediaCreationManager{
 				if let w = UIManager.shared.window{
 					w.isMiniaturizeEnaled = true
 					w.isClosingEnabled = true
-					w.canHide = true
+					//w.canHide = true
 				}
 			}
 			
@@ -97,7 +100,7 @@ extension InstallMediaCreationManager{
 	
 	
 	
-	private func analizeError(_ result: Command.Result){
+	private func analizeError(_ res: Command.Result?){
 		
 		DispatchQueue.main.sync {
 			//self.setActivityLabelText("Checking previous operations")
@@ -105,6 +108,15 @@ extension InstallMediaCreationManager{
 		}
 		
 		log("Checking the \(cvm.shared.executableName) process")
+		
+		guard let result = res else {
+			DispatchQueue.main.sync {
+				//self.viewController.goToFinalScreen(title: "macOS installation error: check the log for details", success: false)
+				self.viewController.goToFinalScreen(id: "finalScreenFLE")
+				
+			}
+			return
+		}
 		
 		//gets the termination status for comparison
 		let rc = simulateAbnormalExitcode ? 1 : result.exitCode
@@ -169,12 +181,12 @@ extension InstallMediaCreationManager{
 			}
 			
 			
-			let success = ((rc == 0) && (px == 0)) || (User.isRoot && (px == 102030100) && (rc == 0)) //add rc to the root case
+			let success = ((rc == 0) && (px == 0)) || (CurrentUser.isRoot && (px == 102030100) && (rc == 0)) //add rc to the root case
 			
-			log("Current user:                           \(User.name)")
+			log("Current user:                           \(CurrentUser.name)")
 			log("Main process exit code:                 \(px)")
 			log("Sub process exit code produced:         \(rc)")
-			log("Detected process outcome:               \(success ? "Positive" : "Negative")")
+			log("Probable process outcome:               \(success ? "Positive" : "Negative")")
 			
 			let errorsList: [CheckItem] =  CodableCreation<CheckItemCollection>.createFromDefaultFile()!.itemsList
 			
@@ -190,7 +202,7 @@ extension InstallMediaCreationManager{
 			valueList[.tt] = tt
 			
 			//sanity check print just so see how the json should look like
-			print(CodableCreation<CheckItemCollection>.getEncoded(CheckItemCollection(itemsList: errorsList))!)
+			//print(CodableCreation<CheckItemCollection>.getEncoded(CheckItemCollection(itemsList: errorsList))!)
 			
 			//checks the conditions of the errorlist array to see if the operation has been complited with success
 			print("Checking errors: ")
@@ -247,6 +259,8 @@ extension InstallMediaCreationManager{
 		log("\(cvm.shared.executableName) process ended with success")
 		
 		DispatchQueue.global(qos: .background).async {
+			
+			Diskutil.Info.resetCache()
 			
 			guard let res = self.manageSpecialOperations() else {
 				//operation canceled by the user

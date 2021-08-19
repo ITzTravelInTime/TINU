@@ -41,6 +41,9 @@ public class DriveDetectInfoViewController: GenericViewController, ViewID {
 		if self.presentingViewController == nil{
 		//if self.window != sharedWindow{
 			self.button.title = TextManager.getViewString(context: self, stringID: "backButton")
+			self.button.image = NSImage(named: NSImage.stopProgressTemplateName)
+		}else{
+			self.button.image = NSImage(named: NSImage.goLeftTemplateName)
 		}
 		
 		self.window.minSize = CGSize(width: 620, height: 300)

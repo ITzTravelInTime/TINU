@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Command
 
 public struct SettingsRes: Equatable{
 	let result: Bool?
@@ -24,8 +25,6 @@ public final class Operations{
 	
 	#if useEFIReplacement && !macOnlyMode
 	func mountEFIPartAndCopyEFIFolder() -> SettingsRes{
-		
-		let efiMan = EFIPartitionManager()
 		
 		let efiRepMan = EFIFolderReplacementManager.shared
 		
@@ -45,34 +44,33 @@ public final class Operations{
 		
 		log("  Trying to mount the EFI partition of the target drive")
 		
-		let bsdid = dm.getDriveBSDIDFromVolumeBSDID(volumeID: cvm.shared.disk.bSDDrive) + "s1"
+		let bsdid = BSDID(cvm.shared.disk.bSDDrive.driveID.rawValue + "s1")
 		
-		log("    The EFI partition of the target drive is: \(bsdid)")
+		if !bsdid.isValid{
+			log("    EFI partition id is not valid!!")
+			return badReturn
+		}
 		
-		if !efiMan.mountPartition(bsdid){
-			
+		log("    The EFI partition of the target drive is: \(bsdid.rawValue)")
+		
+		Diskutil.Info.resetCache()
+		EFIPartition.clearPartitionsCache()
+		
+		guard let efi = EFIPartition(rawValue: bsdid)else{
+			log("    EFI partition object isn't a valid efi partition")
+			return badReturn
+		}
+		
+		if !efi.mount(){
 			log("    EFI partition not mounted!!!")
 			return badReturn
-			
 		}
 		
 		log("    EFI partition \(bsdid) mounted with success")
 		
-		guard let mount = dm.getMountPointFromPartitionBSDID(bsdid) else{
-			log("    Impossible to get a proper mount point for the mounted EFI partition")
-			return badReturn
-		}
+		Diskutil.Info.resetCache()
 		
-		if !FileManager.default.fileExists(atPath: mount){
-			log("    The mount point of the EFI partition does not exist!!!")
-			return badReturn
-		}
-		
-		log("    Mount point for the EFI partition \(bsdid) is: \(mount)")
-		
-		log("    Trying to copy the saved EFI folder in \(mount)")
-		
-		if !efiRepMan!.saveEFIFolder(mount + "/EFI"){
+		if !efiRepMan!.saveEFIFolder(toDisk: efi){
 			log("Error while copying the clover EFI folder, operation canceled")
 			return badReturn
 		}
@@ -93,19 +91,45 @@ public final class Operations{
 		var ok = true
 		
 		do{
-			log("   Creating the readme file")
-			if let sv = cvm.shared.disk.path{
+			for _ in 0...0{
+				
+				log("   Creating the readme file")
+				
+				guard let sv = cvm.shared.disk.path else {
+					log("    Error getting the directory for the README file!!")
+					ok = false
+					continue
+				}
+				
 				//trys to write the readme file on the target drive using the text stored into a special variable
-				try TextManager!.readmeText!.write(toFile: sv + "/README.txt", atomically: true, encoding: .utf8)
+				let file = sv + "/README.txt"
+				
+				log("    The README file will be saved at path: \(file)")
+				
+				try TextManager!.readmeText!.write(toFile: file, atomically: true, encoding: .utf8)
+				
+				if !FileManager.default.fileExists(atPath: file){
+					log("Error: The README file was not saved! ")
+					ok = false
+					continue
+				}
 				
 				//trys to change the file attributes of the readme file to make it visible
-				let e = Command.getErr(cmd: "chflags nohidden \"" + sv + "/README.txt\"")
-				if (e != "" && e != "Password:"){
-					log("       The readme file file can'be maked visible")
+				//let e = Command.getErr(cmd: "chflags nohidden \"" + sv + "/README.txt\"")
+				if let ee = Command.run(cmd: "/usr/bin/chflags", args: ["nohidden", file]){
+					let e = ee.errorString()
+					if (!e.isEmpty && e != "Password:"){
+						log("       The readme file file can'be maked visible")
+						ok = false
+					}
+					
+				}else{
+					log("       The readme file file can'be maked visible because the marking action can't be performed")
 					ok = false
 				}
+				//error handeling
+				
 			}
-			//error handeling
 		}catch let error{
 			log("  Readme file creation failed, error: \n\(error)")
 			ok = false

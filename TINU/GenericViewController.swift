@@ -69,10 +69,10 @@ public class GenericViewController: NSViewController {
 		failureLabel.isBezeled = false
 		failureLabel.alignment = .center
 		
-		failureLabel.frame.origin.y = 114
+		failureLabel.frame.origin.y = 110
         
 		failureLabel.frame.origin.x = 18
-		failureLabel.frame.size.height = 24
+		failureLabel.frame.size.height = 30
 		
 		if #available(macOS 11.0, *), look.usesSFSymbols(){
 			failureLabel.font = NSFont.systemFont(ofSize: 16)
@@ -96,9 +96,9 @@ public class GenericViewController: NSViewController {
 	}
 	
 	func defaultFailureImage(){
-		self.setFailureImage(image: IconsManager.shared.warningIcon)
+		self.setFailureImage(image: IconsManager.shared.warningIcon.themedImage())
 		if #available(macOS 11.0, *){
-			self.failureImageView.image = self.failureImageView.image?.withSymbolWeight(.thin)
+			//self.failureImageView.image = self.failureImageView.image?.withSymbolWeight(.thin)
 			self.failureImageView.contentTintColor = .systemYellow
 		}
 	}
@@ -140,7 +140,7 @@ public class GenericViewController: NSViewController {
 		}
 	}
 	
-	func addFailureButton(buttonTitle: String, target: AnyObject, selector: Selector){
+	func addFailureButton(buttonTitle: String, target: AnyObject, selector: Selector, image: NSImage? = nil){
 		let newButton = NSButton()
 		newButton.target = target
 		newButton.action = selector
@@ -156,6 +156,10 @@ public class GenericViewController: NSViewController {
 		newButton.font = NSFont.systemFont(ofSize: 14)
         
         newButton.frame.origin.y = 70
+		
+		newButton.imageScaling = .scaleProportionallyUpOrDown
+		newButton.imagePosition	= .imageLeft
+		newButton.image = image
 		
 		failureButtons.append(newButton)
 	}

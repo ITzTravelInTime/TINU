@@ -11,6 +11,9 @@ import AppKit
 final class DiagnosticsModeManager{
 	
 	static let shared = DiagnosticsModeManager()
+	private var appName: String{
+		return "\(Bundle.main.name ?? "the program")"
+	}
 	
 	private func getFolder() -> String!{
 		return App.getApplicationSupportDirectory(create: true, subFolderName: "DiagnosticsMode")
@@ -23,7 +26,7 @@ final class DiagnosticsModeManager{
 	}
 	
 	private func getScriptContent(sudo: Bool = true) -> String{
-		var str = "echo \"Opening \(Bundle.main.name!) in log mode"
+		var str = "echo \"Opening \(appName) in log mode"
 		
 		if sudo{
 			str += " with administrator privileges\"\necho \"Please enter your admin/user passowrd: "
@@ -35,24 +38,28 @@ final class DiagnosticsModeManager{
 			str += "sudo "
 		}
 		
-		str += "\"" + Bundle.main.executablePath! + "\" > \"" + getFolder() + "/DebugLog.txt\""
+		str += "\"" + Bundle.main.executablePath! + "\" -disgnostics-mode > \"" + getFolder() + "/DebugLog.txt\""
 		
 		return str
 	}
 	
 	public func open(withSudo sudo: Bool){
 		
+		#if TINU
 		//the diagnostics mode button should be blocked at this point if the app is in a recovery or the app is performing a creation process
 		//TODO: Maybe localize this
 		if cvm.shared.process.status.isBusy(){
-			msgBox("You can't switch mode now", "The bootable macOS installer creation process is currenly running. Please cancel the operation or wait for the operation to end before switching the mode.", .warning)
-		}else if Recovery.isOn{
-			msgBoxWarning("You can't switch the mode right now", "Switching the mode in which TINU is running is not possible while running TINU from this recovery/installer system.")
+			Alert(message: "You can't switch mode now", description: "The bootable macOS installer creation process is currenly running. Please cancel the operation or wait for the operation to end before switching the mode.").warningWithIcon().justSend()
+			//msgBoxWarning("You can't switch mode now", "The bootable macOS installer creation process is currenly running. Please cancel the operation or wait for the operation to end before switching the mode.")
+		}else if Recovery.status{
+			//msgBoxWarning("You can't switch the mode right now", "Switching the mode in which \(appName) is running is not possible while running \(appName) from this recovery/installer system.")
+			Alert(message: "You can't switch the mode right now", description: "Switching the mode in which \(appName) is running is not possible while running \(appName) from this recovery/installer system.").warningWithIcon().justSend()
 		}
 		
-		if (cvm.shared.process.status.isBusy() || Recovery.isOn){
+		if (cvm.shared.process.status.isBusy() || Recovery.status){
 			return
 		}
+		#endif
 		
 		print("trying to use diagnostics mode")
 		
@@ -63,7 +70,9 @@ final class DiagnosticsModeManager{
 		guard let scriptPath = getFileLocation(sudo: sudo) else {
 			print("Disgnostics mode script not found!")
 			
-			msgBoxWarning("Impossible to use diagnostics mode", "Needed files can't be created, so the diagnostics mode can't be used. Make sure the app has write access to the ~/Library/Application Support folder")
+			//msgBoxWarning("Impossible to use diagnostics mode", "Needed files can't be created, so the diagnostics mode can't be used. Make sure the app has write access to the ~/Library/Application Support folder")
+			
+			Alert(message: "Impossible to use diagnostics mode", description: "Needed files can't be created, so the diagnostics mode can't be used. Make sure the app has write access to the ~/Library/Application Support folder").warningWithIcon().justSend()
 			return
 		}
 		
@@ -74,7 +83,8 @@ final class DiagnosticsModeManager{
 				let content = expectedContent
 				try content.write(toFile: scriptPath, atomically: true, encoding: .utf8)
 			}catch let err{
-				msgBoxWarning("Impossible to use diagnostics mode", "Impossible to create the script file needed to run TINU in diagnostics mode, make sure the app has read access to the ~/Library/Application Support folder\n\n\nError info \(err.localizedDescription)")
+				//msgBoxWarning("Impossible to use diagnostics mode", "Impossible to create the script file needed to run TINU in diagnostics mode, make sure the app has read access to the ~/Library/Application Support folder\n\n\nError info \(err.localizedDescription)")
+				Alert(message: "Impossible to use diagnostics mode", description: "Impossible to create the script file needed to run \(appName) in diagnostics mode, make sure the app has read access to the ~/Library/Application Support folder\n\n\nError info \(err.localizedDescription)").warningWithIcon().justSend()
 				return
 			}
 		}else{
@@ -88,7 +98,8 @@ final class DiagnosticsModeManager{
 				}
 				
 			}catch let err{
-				msgBoxWarning("Impossible to use diagnostics mode", "Impossible to read or modify the content of the script file needed to run TINU in diagnostics mode, make sure the app has read and write access to the ~/Library/Application Support folder\n\n\nError info \(err.localizedDescription)")
+				//msgBoxWarning("Impossible to use diagnostics mode", "Impossible to read or modify the content of the script file needed to run \(appName) in diagnostics mode, make sure the app has read and write access to the ~/Library/Application Support folder\n\n\nError info \(err.localizedDescription)")
+				Alert(message: "Impossible to use diagnostics mode", description: "Impossible to read or modify the content of the script file needed to run \(appName) in diagnostics mode, make sure the app has read and write access to the ~/Library/Application Support folder\n\n\nError info \(err.localizedDescription)").criticalWithIcon().justSend()
 				return
 			}
 		}
@@ -121,14 +132,16 @@ final class DiagnosticsModeManager{
 						val = 0;
 					}else{
 						print("error with the script output: " + result)
-						msgBoxWarning("Impossible to use diagnostics mode", "Something went wrong when preparing the script file for diagnostics mode.\n\n[error code: 0]\n\nScript output: \(result)")
+						//msgBoxWarning("Impossible to use diagnostics mode", "Something went wrong when preparing the script file for diagnostics mode.\n\n[error code: 0]\n\nScript output: \(result)")
+						Alert(message: "Impossible to use diagnostics mode", description: "Something went wrong when preparing the script file for diagnostics mode.\n\n[error code: 0]\n\nScript output: \(result)").criticalWithIcon().justSend()
 						return
 					}
 				}
 			}else{
 				print("impossible to execute the apple script to prepare the app")
 				
-				msgBoxWarning("Impossible to use diagnostics mode", "Impossible to prepare the script file for diagnostics mode, make sure tha app has write access to the ~/Library/Application Support folder.\n\n[error code: 1, apple script execution failed]")
+				//msgBoxWarning("Impossible to use diagnostics mode", "Impossible to prepare the script file for diagnostics mode, make sure tha app has write access to the ~/Library/Application Support folder.\n\n[error code: 1, apple script execution failed]")
+				Alert(message: "Impossible to use diagnostics mode", description: "Impossible to prepare the script file for diagnostics mode, make sure tha app has write access to the ~/Library/Application Support folder.\n\n[error code: 1, apple script execution failed]").criticalWithIcon().justSend()
 				return
 			}
 			

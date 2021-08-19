@@ -19,39 +19,43 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 	
 	private let spacerID = "spacer"
 	
-    private var empty: Bool = false{
-        didSet{
-            if self.empty{
-                scoller.drawsBackground = false
-                scoller.borderType = .noBorder
-                ok.title = TextManager.getViewString(context: self, stringID: "nextButtonFail")
-                ok.isEnabled = true
-            }else{
-                //viewDidSetVibrantLook()
-				
-				if let document = scoller.documentView{
-					if document.identifier?.rawValue == spacerID{
-						document.frame = NSRect(x: 0, y: 0, width: self.scoller.frame.width - 2, height: self.scoller.frame.height - 2)
-						if let content = document.subviews.first{
-							content.frame.origin = NSPoint(x: document.frame.width / 2 - content.frame.width / 2, y: 0)
-						}
-						self.scoller.documentView = document
+	private var empty: Bool = false{
+		didSet{
+			if self.empty{
+				scoller.drawsBackground = false
+				scoller.borderType = .noBorder
+				ok.title = TextManager.getViewString(context: self, stringID: "nextButtonFail")
+				ok.image = NSImage(named: NSImage.stopProgressTemplateName)
+				ok.isEnabled = true
+				return
+			}
+			
+			//viewDidSetVibrantLook()
+			
+			if let document = scoller.documentView{
+				if document.identifier?.rawValue == spacerID{
+					document.frame = NSRect(x: 0, y: 0, width: self.scoller.frame.width - 2, height: self.scoller.frame.height - 2)
+					if let content = document.subviews.first{
+						content.frame.origin = NSPoint(x: document.frame.width / 2 - content.frame.width / 2, y: 0)
 					}
+					self.scoller.documentView = document
 				}
-				
-                ok.title = TextManager.getViewString(context: self, stringID: "nextButton")
-                ok.isEnabled = false
-				
-				if look.supportsShadows() || look.usesSFSymbols() {
-					scoller.drawsBackground = false
-					scoller.borderType = .noBorder
-				}else{
-					scoller.drawsBackground = true
-					scoller.borderType = .bezelBorder
-				}
-            }
-        }
-    }
+			}
+			
+			ok.title = TextManager.getViewString(context: self, stringID: "nextButton")
+			ok.image = NSImage(named: NSImage.goRightTemplateName)
+			ok.isEnabled = false
+			
+			if !look.isRecovery() {
+				scoller.drawsBackground = false
+				scoller.borderType = .noBorder
+			}else{
+				scoller.drawsBackground = true
+				scoller.borderType = .bezelBorder
+			}
+			
+		}
+	}
     
     @IBAction func refresh(_ sender: Any) {
         updateDrives()
@@ -66,11 +70,10 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 		
 		ok.title = TextManager.getViewString(context: self, stringID: "nextButton")
 		
-		if look.supportsShadows() || look.usesSFSymbols(){
+		if !look.isRecovery(){
 			scoller.frame = CGRect.init(x: 0, y: scoller.frame.origin.y, width: self.view.frame.width, height: scoller.frame.height)
 			scoller.drawsBackground = false
 			scoller.borderType = .noBorder
-			
 		}else{
 			scoller.frame = CGRect.init(x: 20, y: scoller.frame.origin.y, width: self.view.frame.width - 40, height: scoller.frame.height)
 			scoller.drawsBackground = true
@@ -85,35 +88,45 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
         updateDrives()
     }
 	
-	func makeAndDisplayItem(_ item: DiskutilObject!, _ to: inout [DriveView], _ origin: DiskutilObject! = nil, _ isGUIDwEFI: Bool = true){
-		guard let d: DiskutilObject = ((origin == nil) ? item : origin) else{
-			print("[UI creation] Invalid disk item!")
-			return
-		}
+	func makeAndDisplayItem(_ item: CreationProcess.DiskInfo.DriveListItem, _ to: inout [DriveView]){
 		
 		let man = FileManager.default
 		
+		let isGUIDwEFI = item.partition != nil
+		
 		DispatchQueue.main.sync {
 			
-			let drivei = DriveView(frame: NSRect(x: 0, y: itemOriginY, width: DriveView.itemSize.width, height: DriveView.itemSize.height))
-			let prt = Part(bsdName: d.DeviceIdentifier, fileSystem: .other, partScheme: isGUIDwEFI ? .gUID : .blank, hasEFI: isGUIDwEFI, size: d.Size, isDrive: (origin != nil) || !isGUIDwEFI, path: d.MountPoint)
-			
 			if isGUIDwEFI{
-				//prt.name = man.displayName(atPath: d.MountPoint ?? "")
-				//prt = Part(partitionBSDName: d.DeviceIdentifier, partitionName: drivei.appName, partitionPath: d.MountPoint!, partitionFileSystem: Part.FileSystem.other, partitionScheme: Part.PartScheme.gUID , partitionHasEFI: true, partitionSize: d.Size)
-				prt.tmDisk = man.fileExists(atPath: d.MountPoint! + "/tmbootpicker.efi") || man.directoryExistsAtPath(d.MountPoint! + "/Backups.backupdb")
-			}else{
-				//prt.name = dm.getDriveName(from: d.DeviceIdentifier) ?? d.DeviceIdentifier
-				//prt = Part(partitionBSDName: d.DeviceIdentifier, partitionName: drivei.appName, partitionPath: (item?.MountPoint == nil) ? "" : item.MountPoint!, partitionFileSystem: .other, partitionScheme: .blank, partitionHasEFI: false, partitionSize: d.Size)
-				prt.apfsBDSName = d.DeviceIdentifier
+				let d = item.partition!
+				
+				let drivei = DriveView(frame: NSRect(x: 0, y: itemOriginY, width: DriveView.itemSize.width, height: DriveView.itemSize.height))
+				
+				let prt = Part(bsdName: d.DeviceIdentifier, fileSystem: .other, partScheme: isGUIDwEFI ? .gUID : .blank, hasEFI: isGUIDwEFI, size: d.Size, isDrive: !isGUIDwEFI, path: d.mountPoint)
+				
+				prt.tmDisk = man.fileExists(atPath: d.mountPoint! + "/tmbootpicker.efi") || man.directoryExistsAtPath(d.mountPoint! + "/Backups.backupdb")
+				
+				log("        Item type: \(prt.isDrive ? "Drive" : "Partition")")
+				log("        Item display name is: \(prt.displayName)")
+				
+				drivei.current = prt as UIRepresentable
+				to.append(drivei)
+				
+				return
 			}
+			
+			let d = item.disk
+			
+			let drivei = DriveView(frame: NSRect(x: 0, y: itemOriginY, width: DriveView.itemSize.width, height: DriveView.itemSize.height))
+			
+			let prt = Part(bsdName: d.DeviceIdentifier, fileSystem: .other, partScheme: isGUIDwEFI ? .gUID : .blank, hasEFI: isGUIDwEFI, size: d.Size, isDrive: !isGUIDwEFI, path: d.mountPoint)
+			
+			prt.apfsBDSName = d.DeviceIdentifier
 			
 			log("        Item type: \(prt.isDrive ? "Drive" : "Partition")")
 			log("        Item display name is: \(prt.displayName)")
 			
 			drivei.current = prt as UIRepresentable
 			to.append(drivei)
-			
 		}
 	}
     
@@ -137,9 +150,8 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 		
 		//let man = FileManager.default
 		
+		//Re-initialize the current disk
 		cvm.shared.disk = cvm.DiskInfo(reference: cvm.shared.disk.ref)
-        
-        var drives = [DriveView]()
         
         self.ok.isEnabled = false
 		
@@ -151,134 +163,22 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
         DispatchQueue.global(qos: .background).async {
 			
 			print("Actual detection thread started")
+			
+			var drives = [DriveView]()
             
-            //just need to know which is the boot volume, to not allow the user to choose it
-			let boot = dm.getDeviceBSDIDFromMountPoint("/")!
-			var boot_drive = [dm.getDriveBSDIDFromVolumeBSDID(volumeID: boot)]
-			let execp = Bundle.main.executablePath!
-			
-			print("Boot volume BSDID: \(boot)")
-			
-			//new Codable-Based storage devices search
-			if let data = DiskutilManagement.DiskutilList.readFromTerminal(){
-				log("Analyzing diskutil data to detect usable storage devices")
-				
-				for d in data.AllDisksAndPartitions{
-					if d.DeviceIdentifier != boot_drive.first!{
-						continue
-					}
-					
-					guard let stores = d.APFSPhysicalStores else { continue }
-					
-					for s in stores {
-						boot_drive.append(dm.getDriveBSDIDFromVolumeBSDID(volumeID: s.DeviceIdentifier))
-					}
-				}
-				
-				print("The boot drive devices are: ")
-				print(boot_drive)
-				
-				alldiskFor: for d in data.AllDisksAndPartitions{
-					log("    Drive: \(d.DeviceIdentifier)")
-					
-					if boot_drive.contains(d.DeviceIdentifier){
-						log("        Skipping this drive, it's the boot drive or in the boot drive")
-						continue
-					}
-					
-					if d.hasEFIPartition(){ // <=> has and efi partition and has some sort of GPT or GUID partition table
-						log("        Drive has EFI partition and is GUID")
-						log("        All the partitions of the drive will be scanned in order to detect the usable partitions")
-						for p in d.Partitions!{
-							log("        Partition/Volume: \(p.DeviceIdentifier)")
-							let t = p.getUsableType()
-							
-							log("            Partition/Volume content: \( t == DiskutilManagement.PartitionContentStrings.unusable ? "Other file system" : t.rawValue )")
-							
-							if t == .aPFSContainer || t == .coreStorageContainer{
-								log("            Partition is a container disk")
-								continue
-							}
-							
-							if !cvm.shared.disk.meetsRequirements(size: p.Size){
-								log("            Partition is not big enought to be used as a mac os installer or to house a macOS installation")
-								continue
-							}
-							
-							if !p.isMounted(){
-								log("            Partition is not mounted, it needs to be mounted in order to be detected and usable with what we need to do later on")
-								continue
-							}
-							
-							if execp.contains(p.MountPoint!) {
-								log("            TINU is running from this partition, skipping to the next drive")
-								continue alldiskFor
-							}
-							
-							log("            Partition meets all the requirements, it will be added to the dectected partitions list")
-							
-							self.makeAndDisplayItem(p, &drives)
-							
-							log("            Partition added to the list")
-						}
-					}else{
-						log("        Drive is not GPT/GUID or doesn't seem to have an EFI partition, it will be detected only as a drive instead of showing the partitions as well")
-					}
-					
-					if !cvm.shared.disk.meetsRequirements(size: d.Size){
-						log("        Drive is not big enought for our purposes")
-						continue
-					}
-					
-					var ref: DiskutilObject!
-					
-					if d.isVolume(){
-						if d.isMounted(){
-							ref = d
-						}
-					}else{
-						
-						for p in d.Partitions!{
-							if p.isMounted(){
-								ref = p
-								break
-							}
-						}
-						
-					}
-					
-					#if noUnmounted
-					if ref == nil{
-						log("        Drive has no mounted partitions, those are needed in order to detect a drive")
-						continue
-					}
-					#endif
-					
-					log("        Drive seems to meet all the requirements for our purposes, it will be added to the list")
-					
-					self.makeAndDisplayItem(ref, &drives, d, false)
-					
-					log("        Drive added to list")
-					
-					
-				}
+			for item in cvm.shared.disk.getUsableDriveListNew() ?? []{
+				self.makeAndDisplayItem(item, &drives)
 			}
 			
 			DispatchQueue.main.sync {
 				
 				self.scoller.hasVerticalScroller = false
 				
-				var res = (drives.count == 0)
-				
-				//this is just to test if there are no usable drives
-				if simulateNoUsableDrives {
-					res = true
-				}
+				let res = simulateNoUsableDrives ? true : (drives.count == 0)
 				
 				self.empty = res
 				
-				
-				let set = res || Recovery.isOn
+				let set = res || Recovery.status
 				self.topView.isHidden = set
 				self.bottomView.isHidden = set
 				
@@ -294,12 +194,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 						//TextManager.getViewString(context: self, stringID: "agreeButtonFail")
 						
 						self.setFailureLabel(text: TextManager.getViewString(context: self, stringID: "failureText"))
-						self.addFailureButton(buttonTitle: TextManager.getViewString(context: self, stringID: "failureButton"), target: self, selector: #selector(ChoseDriveViewController.openDetectStorageSuggestions))
-						
-						/*
-						self.setFailureLabel(text: "No usable storage devices detected")
-						self.addFailureButton(buttonTitle: "Why is my storage device not detected?", target: self, selector: #selector(ChoseDriveViewController.openDetectStorageSuggestions))
-						*/
+						self.addFailureButton(buttonTitle: TextManager.getViewString(context: self, stringID: "failureButton"), target: self, selector: #selector(ChoseDriveViewController.openDetectStorageSuggestions), image: NSImage(named: NSImage.infoName))
 					}
 					
 					self.showFailureImage()
@@ -312,27 +207,14 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 					self.scoller.hasHorizontalScroller = true
 					
 					var temp: CGFloat = 20
-					for d in drives.reversed(){
+					for d in drives{
 						d.frame.origin.x = temp
-						
-						/*if !blockShadow{
-							temp += d.frame.width + 15
-						}else{
-							temp += d.frame.width
-						}*/
 						
 						temp += d.frame.width + (( look != .recovery ) ? 15 : 0)
 						
 						content.addSubview(d)
+						d.draw(d.bounds)
 					}
-					
-					/*
-					if !blockShadow{
-						content.frame.size.width = temp + 5
-					}else{
-						content.frame.size.width = temp + 20
-					}
-					*/
 					
 					content.frame.size.width = temp + ((look != .recovery) ? 5 : 20)
 					
@@ -346,16 +228,18 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 						content.frame.origin = NSPoint(x: spacer.frame.width / 2 - content.frame.width / 2, y: 15 / 2)
 						spacer.addSubview(content)
 						self.scoller.documentView = spacer
+						spacer.draw(spacer.bounds)
 					}else{
 						self.scoller.documentView = content
+						content.draw(content.bounds)
 					}
 					
 					if let documentView = self.scoller.documentView{
 						documentView.scroll(NSPoint.init(x: 0, y: documentView.bounds.size.height))
+						self.scoller.automaticallyAdjustsContentInsets = true
 					}
 					
 					self.scoller.usesPredominantAxisScrolling = true
-					
 				}
 				
 				self.scoller.isHidden = false
@@ -367,9 +251,10 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 	}
 	
 	
+	
 	private var tmpWin: GenericViewController!
 	@objc func openDetectStorageSuggestions(){
-		tmpWin = nil
+		//tmpWin = nil
 		tmpWin = UIManager.shared.storyboard.instantiateController(withIdentifier: "DriveDetectionInfoVC") as? GenericViewController
 		
 		if tmpWin != nil{

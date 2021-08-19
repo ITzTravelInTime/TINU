@@ -11,7 +11,7 @@ import Cocoa
 //this is just a simple class that represents a drive, used fot the drive scan algoritm
 public class Part: UIRepresentable{
 	
-	init(bsdName: String, fileSystem: Part.FileSystem, partScheme: Part.PartScheme, hasEFI: Bool, size: UInt64, isDrive: Bool, path: String? = nil) {
+	init(bsdName: BSDID, fileSystem: Part.FileSystem, partScheme: Part.PartScheme, hasEFI: Bool, size: UInt64, isDrive: Bool, path: String? = nil) {
 		self.bsdName = bsdName
 		self.fileSystem = fileSystem
 		self.partScheme = partScheme
@@ -66,7 +66,7 @@ public class Part: UIRepresentable{
 	let size: UInt64
 	let isDrive: Bool
 	
-	var apfsBDSName: String?
+	var apfsBDSName: BSDID?
 	
 	var path: String?{
 		didSet{
@@ -74,7 +74,7 @@ public class Part: UIRepresentable{
 		}
 	}
 	
-	var bsdName: String{
+	var bsdName: BSDID{
 		didSet{
 			calculateChached()
 		}
@@ -94,7 +94,7 @@ public class Part: UIRepresentable{
 		let man = FileManager.default
 		
 		print("Getting drive display name and name")
-		driveChachedName = dm.getDeviceNameFromVolumeBSDID(bsdName)
+		driveChachedName = bsdName.driveName()
 		
 		if hasEFI || !isDrive {
 			if path != nil{
@@ -112,21 +112,19 @@ public class Part: UIRepresentable{
 		
 		print("  Using BSD name")
 		name = nil
-		
-		
 	}
 	
 	
 	private var name: String?
 	
 	public var displayName: String{
-		return name ?? self.bsdName
+		return name ?? self.bsdName.rawValue
 	}
 	
 	private var driveChachedName: String?
 	
 	public var driveName: String{
-		return driveChachedName ?? self.bsdName
+		return driveChachedName ?? self.bsdName.rawValue
 	}
 	
 	var app: InstallerAppInfo?{

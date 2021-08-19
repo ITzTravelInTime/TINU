@@ -28,14 +28,14 @@ public var look: UIManager.AppLook{
 		ret = lk
 	}
 	
-	if (Recovery.isOn && !toggleRecoveryModeShadows && (ret == nil)){
+	if (Recovery.status && !toggleRecoveryModeShadows && (ret == nil)){
 		print("Recovery theme will be used")
 		ret = .recovery
 	}
 	
 	if #available(macOS 11.0, *), ret == nil {
 		print("Shadows SF Symbols theme will be used")
-		ret = .shadowsSFSymbols
+		ret = .shadowsSFSymbolsFill
 	}else{
 		print("Shadows Old Icons theme will be used")
 	}

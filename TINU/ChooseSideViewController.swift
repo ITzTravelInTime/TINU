@@ -7,7 +7,8 @@
 //
 
 import Cocoa
-
+import TINURecovery
+import Command
 
 class ChooseSideViewController: GenericViewController, ViewID {
 	let id: String = "ChooseSideViewController"
@@ -33,24 +34,14 @@ class ChooseSideViewController: GenericViewController, ViewID {
 	private static let _prompt_sip_result = "SIPPromptResult"
 	#endif
 	
-	
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		/*
-		DispatchQueue.global(qos: .background).async {
-		print(runCommandWithSudo(cmd: "/bin/sh", args: ["-c", "whoami"])!)
-		}*/
 		
 		spinner.isHidden = false
 		spinner.startAnimation(self)
 		
-		createUSBButton.isHidden = true
-		installButton.isHidden = true
-		
-		//checks settings here because this function is the first to be executed in the app
-		App.Settings.check()
+		createUSBButton?.isHidden = true
+		installButton?.isHidden = true
 		
 		#if demo
 		print("You have successfully enbled the \"demo\" macro!")
@@ -61,7 +52,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		#endif
 		
 		#if noFirstAuth
-		if !Recovery.isOn{
+		if !Recovery.status{
 			print("WARNING: this app has been compiled with the first step authentication disabled, it may be less secure to use!")
 			//msgBoxWarning("WARNING", "This app has been compiled with first step authentication disabled, it may be less secure to use, use it at your own risk!")
 		}
@@ -69,68 +60,116 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		
 		//}
 		
-		if let w = UIManager.shared.window{
-			w.title = UIManager.shared.windowTitlePrefix
-		}
+		#if sudoStartup
 		
-		if #available(macOS 11.0, *), look.usesSFSymbols() {
-			createUSBButton.cImage.image = NSImage(systemSymbolName: "externaldrive.badge.plus", accessibilityDescription: nil)?.withSymbolWeight(.ultraLight)
-			createUSBButton.cImage.contentTintColor = .systemGray
-			installButton.cImage.image = NSImage(systemSymbolName: "desktopcomputer", accessibilityDescription: nil)?.withSymbolWeight(.ultraLight)
-			installButton.cImage.contentTintColor = .systemGray
-			efiButton.cImage.image = NSImage(systemSymbolName: "tray", accessibilityDescription: nil)?.withSymbolWeight(.ultraLight)
-			efiButton.cImage.contentTintColor = .systemGray
-		} else {
-			//createUSBButton.cImage.image = IconsManager.shared.removableDiskIcon //NSImage(named: "Removable")
-			if !look.usesSFSymbols() && look.supportsShadows(){
-				createUSBButton.cImage.image = NSImage(named: "drive")
-				createUSBButton.fullSizeImage = true
-				createUSBButton.lowerText     = false
-			}else{
-				createUSBButton.cImage.image = IconsManager.shared.removableDiskIcon
+		if #available(OSX 10.15, *){
+			if !ChooseSideViewController._already_prompted{
+				if (SIPManager.status.resultsEnabled && !CommandLine.arguments.contains("-disgnostics-mode")){
+					DiagnosticsModeManager.shared.open(withSudo: true)
+					return
+				}
+				ChooseSideViewController._already_prompted = true
 			}
-			
-			installButton.cImage.image = NSImage(named: NSImage.computerName)//NSImage(named: "OSInstall")
-			
-			efiButton.cImage.image = NSImage(named: "EFIIcon")
 		}
 		
-		createUSBButton.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstaller")//"Create a bootable\nmacOS installer"
+		#endif
 		
-		installButton.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstallation")//"Install macOS"
+		Command.Printer.enabled = sharedEnableDebugPrints
 		
-		efiButton.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openEFIMounter")//"Use \nEFI Partition Mounter"
+		createUSBButton.isHidden = true
+		installButton?.isHidden = true
+		efiButton.isHidden = true
+	}
+	
+	override func viewWillAppear() {
+		super.viewWillAppear()
 		
-		var spacing: CGFloat = 20
+		/*if count < 2{
+			DispatchQueue.global(qos: .background).async {
+				DispatchQueue.main.sync {
+					self.stopAnimationAndShowbuttons()
+					self.swapCurrentViewController("Info")
+				}
+			}
+		}else{*/
+		//stopAnimationAndShowbuttons()
+		//}
+	}
+	
+	private var showed = false
+	
+	override func viewDidAppear() {
+		super.viewDidAppear()
 		
-		if !Recovery.isOn{
-			installButton.isEnabled = false
-			spacing = (self.view.frame.size.width - (installButton.frame.size.width * 2)) / 3
+		if showed{
+			return
+		}
+		
+		showed = true
+		
+		DispatchQueue.main.async {
+		if #available(macOS 11.0, *), look.usesSFSymbols() {} else {
+			if look != .recovery{
+				self.createUSBButton.fullSizeImage = true
+				self.createUSBButton.lowerText     = false
+			}
+		}
+		
+			self.createUSBButton?.cImage.image = Icon(path: nil, symbol: SFSymbol(name: "externaldrive.badge.plus"), imageName: !look.isRecovery() ? "drive" : nil, alternative: IconsManager.shared.removableDiskIcon.themedImage()).themedImage()
+		
+			self.installButton?.cImage.image = Icon(path: nil, symbol: SFSymbol(name: "desktopcomputer"), imageName: NSImage.computerName).themedImage()
+		
+			self.efiButton?.cImage.image = Icon(path: nil, symbol: SFSymbol(name: "tray"), imageName: "EFIIcon").themedImage()
+		
+			self.createUSBButton?.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstaller")//"Create a bootable\nmacOS installer"
+		
+			self.installButton?.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstallation")//"Install macOS"
+		
+			self.efiButton?.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openEFIMounter")//"Use \nEFI Partition Mounter"
+		
+		var spacing: CGFloat = 22
+		let buttonSize = CGSize(width: 180, height: 180)
+		
+		if !Recovery.status{
+			self.installButton?.isEnabled = false
+			spacing = (self.view.frame.size.width - (buttonSize.width * 2)) / 3
+			spacing *= 1.2//1.05
+		}else{
+			self.installButton?.isEnabled = true
+			spacing = (self.view.frame.size.width - (buttonSize.width * 3)) / 4
 		}
 		
 		#if macOnlyMode
 		efiButton.isEnabled = false
 		#endif
+			
+			for v in self.background.subviews{
+				for vv in self.background.subviews{
+					vv.removeFromSuperview()
+				}
+				v.removeFromSuperview()
+			}
+			
+			self.background.removeFromSuperview()
 		
-		background.frame.size.height = installButton.frame.size.height + 40
+			self.background.frame.size.height = buttonSize.height + 40
 		
-		background.frame.size.width = spacing//(!sharedIsOnRecovery ? (spacing * 1.25) : spacing)
+			self.background.frame.size.width = spacing//(!sharedIsOnRecovery ? (spacing * 1.25) : spacing)
 		
-		count = 0
+			self.count = 0
 		
 		for c in self.view.subviews.reversed(){
 			guard let b = c as? ChoseButton else{ continue }
 			
 			b.isHidden = !b.isEnabled
 			
-			if !b.isEnabled { continue }
-			
-			count += 1
-			
 			b.removeFromSuperview()
 			
-			b.frame.size = installButton.frame.size
-			b.frame.origin = CGPoint.zero
+			if !b.isEnabled { continue }
+			
+			self.count += 1
+			
+			//b.frame.size = installButton.frame.size
 			
 			var shadowView: NSView!
 			
@@ -140,76 +179,47 @@ class ChooseSideViewController: GenericViewController, ViewID {
 				b.fullSizeImage = false
 				b.lowerText = true
 			}else{
-				shadowView = ShadowView()
+				 let _shadowView = ShadowView()
+				
+				_shadowView.setModeFromCurrentLook()
 				
 				b.lowerText = !b.fullSizeImage
 				
-				b.layer?.cornerRadius = shadowView.layer!.cornerRadius
+				b.layer?.cornerRadius = _shadowView.layer?.cornerRadius ?? 5
 				b.layer?.masksToBounds = true
+				
+				shadowView = _shadowView as NSView
 			}
 			
-			shadowView.frame.size = b.frame.size
-			shadowView.frame.origin = NSPoint(x: background.frame.width, y: 20)
-			//shadowView.needsLayout = true
-			shadowView.layer?.masksToBounds = true
+			shadowView.frame.size = buttonSize
+			b.frame.size = buttonSize
+			b.frame.origin = CGPoint.zero
+			shadowView.frame.origin = NSPoint(x: self.background.frame.width, y: 20)
+			shadowView.needsLayout = true
+			//shadowView.layer?.masksToBounds = true
+			
+			shadowView.addSubview(b)
+			self.background.addSubview(shadowView)
+			
+			//self.view.addSubview(shadowView)
 			
 			shadowView.updateLayer()
 			b.updateLayer()
 			
-			shadowView.addSubview(b)
-			
-			background.addSubview(shadowView)
-			
-			background.frame.size.width += installButton.frame.size.width + spacing//((!sharedIsOnRecovery && count == 1) ? (spacing * 1.25) : spacing)
+			self.background.frame.size.width += buttonSize.width + spacing//((!sharedIsOnRecovery && count == 1) ? (spacing * 1.25) : spacing)
 		}
 		
-		background.frame.origin = NSPoint(x: self.view.frame.width / 2 - background.frame.size.width / 2, y: self.view.frame.height / 2 - background.frame.size.height / 2)
-	}
-	
-	override func viewWillAppear() {
-		super.viewWillAppear()
-		
-		if count < 2{
-			DispatchQueue.global(qos: .background).async {
-				DispatchQueue.main.sync {
-					self.stopAnimationAndShowbuttons()
-					
-					self.swapCurrentViewController("Info")
-					
-				}
-			}
-		}else{
-			stopAnimationAndShowbuttons()
+			self.background.frame.origin = NSPoint(x: self.view.frame.width / 2 - self.background.frame.size.width / 2, y: self.view.frame.height / 2 - self.background.frame.size.height / 2)
+			self.background.backgroundColor = .transparent
+			
+			self.view.addSubview(self.background)
+			
+			self.createUSBButton?.isHidden = false
+			self.installButton?.isHidden = false
+			self.efiButton?.isHidden = false
+			
+			self.stopAnimationAndShowbuttons()
 		}
-	}
-	
-	override func viewDidAppear() {
-		super.viewDidAppear()
-		
-		#if sudoStartup
-		
-		if #available(OSX 10.15, *){
-			if !User.isRoot{
-			
-				if !ChooseSideViewController._already_prompted{
-					if (SIPManager.checkStatus()){
-				
-						DiagnosticsModeManager.shared.open(withSudo: true)
-					
-					}else{
-					
-					}
-				
-					ChooseSideViewController._already_prompted = true
-				
-				}
-			
-				//NSApplication.shared().terminate(self)
-			
-			}
-		}
-		
-		#endif
 	}
 	
 	func stopAnimationAndShowbuttons(){
@@ -217,6 +227,8 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		self.spinner.isHidden =  true
 		
 		self.view.addSubview(background)
+		
+		self.window?.makeKey()
 	}
 	
 	@IBAction func openEFIMounter(_ sender: Any){

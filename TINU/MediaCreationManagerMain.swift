@@ -75,13 +75,18 @@ public final class InstallMediaCreationManager: ViewID{
 		//cleans it's own memory first
 		IMCM.shared = InstallMediaCreationManager()
 		
-		IMCM.shared.viewController = UIManager.shared.window.contentViewController as? InstallingViewController
+		DispatchQueue.main.sync {
+			IMCM.shared.viewController = UIManager.shared.window.contentViewController as? InstallingViewController
+		}
+		
 		
 		if IMCM.shared.viewController == nil{
 			fatalError("Can't get installing ViewController")
 		}
 		
-		IMCM.shared.viewController.setProgressMax(IMCM.cpc.pMaxVal)
+		DispatchQueue.main.sync {
+			IMCM.shared.viewController.setProgressMax(IMCM.cpc.pMaxVal)
+		}
 		
 		IMCM.shared.install()
 	}
@@ -165,6 +170,14 @@ public final class InstallMediaCreationManager: ViewID{
 	
 	func getProgressBarValue() -> Double{
 		return self.viewController!.getProgressBarValue()
+	}
+	
+	func setProgressBarIndeterminateState(state: Bool){
+		self.viewController?.setProgressBarIndeterminateState(state: state)
+	}
+	
+	func getProgressBarIndeterminateState() -> Bool{
+		return self.viewController.progress.isIndeterminate
 	}
 	
 }

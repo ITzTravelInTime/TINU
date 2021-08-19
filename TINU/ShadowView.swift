@@ -15,6 +15,16 @@ fileprivate func shadowsColor(isDarkMode: Bool) -> CGColor{
 public class ShadowView: NSView{
 	
 	func setModeFromCurrentLook(){
+		
+		if look.supportsShadows(){
+			mode = .shadowedbutton
+		}else if look == .recovery{
+			mode = .none
+		}else{
+			mode = .borderedButton
+		}
+		
+		/*
 		switch look{
 		case .noShadowsSFSymbols:
 			mode = .borderedButton
@@ -27,6 +37,7 @@ public class ShadowView: NSView{
 			mode = .none
 			break
 		}
+		*/
 	}
 	
 	var isSelected = false{
@@ -44,24 +55,24 @@ public class ShadowView: NSView{
 	var mode: Mode = .shadowedbutton{
 		didSet{
 			self.shadow = nil
+			self.layer?.cornerRadius = 15
+			self.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
+			self.layer?.borderWidth = 0.65//0.2
+			
 			switch mode {
 			case .shadowedbutton:
 				self.shadow = NSShadow()
-				self.layer?.shadowRadius = 7
-				self.layer?.shadowOffset = CGSize()
+				self.layer?.shadowRadius = 5 //7
+				//self.layer?.shadowOffset = CGSize()
+				self.layer?.shadowOffset = CGSize(width: 0, height: -3)
 				
-				self.layer?.shadowPath = CGPath(roundedRect: self.bounds, cornerWidth: 15, cornerHeight: 15, transform: nil)
-			
-				self.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
-				self.layer?.borderWidth = 0
+				self.layer?.shadowPath = CGPath(roundedRect: self.bounds, cornerWidth: self.layer?.cornerRadius ?? 15, cornerHeight: self.layer?.cornerRadius ?? 15, transform: nil)
 				break
-			case .borderedButton:
-				self.layer?.borderWidth = 2
-				break
-			default:
+			case .none:
 				self.layer?.backgroundColor = NSColor.transparent.cgColor
 				self.layer?.borderWidth = 0
-				
+				break
+			default:
 				break
 			}
 			
@@ -84,12 +95,12 @@ public class ShadowView: NSView{
 		}
 		
 		let useBorder = mode == .borderedButton
-		if useBorder{
+		if useBorder || mode == .shadowedbutton{
 			self.layer?.borderColor = NSColor.systemGray.cgColor
 		}
 		
 		if !isSelected{
-			self.layer?.backgroundColor = (!useBorder ? NSColor.controlBackgroundColor.cgColor : NSColor.transparent.cgColor)
+			self.layer?.backgroundColor = /*(!useBorder ?*/ NSColor.controlBackgroundColor.cgColor /*: NSColor.transparent.cgColor)*/
 		}else{
 			if useBorder || look.usesSFSymbols(){
 				if #available(macOS 10.14, *) {
@@ -108,8 +119,6 @@ public class ShadowView: NSView{
 		super.draw(dirtyRect)
 		
 		self.wantsLayer = true
-		
-		self.layer?.cornerRadius = 15
 		
 		setModeFromCurrentLook()
 		

@@ -8,6 +8,7 @@
 
 import Foundation
 import Cocoa
+import SwiftCPUDetect
 
 public class CreditsViewController: GenericViewController, ViewID {
 	public let id: String = "CreditsViewController"
@@ -28,34 +29,19 @@ public class CreditsViewController: GenericViewController, ViewID {
 		
 		print("Setting up CrditsViewController")
 		
-		let archs = Bundle.main.executableArchitectures!
-		var supportedArchs = [NSBundleExecutableArchitectureX86_64: "x86_64", NSBundleExecutableArchitectureI386: "i386", NSBundleExecutableArchitecturePPC: "PPC", NSBundleExecutableArchitecturePPC64: "PPC_64"]
-		
-		if #available(OSX 11.0, *) {
-			supportedArchs[NSBundleExecutableArchitectureARM64] = "ARM64"
-		}else{
-			supportedArchs[16777228] = "ARM64"
-		}
-		
-		print("Supported architecture values: ")
-		print(supportedArchs)
-		
-		print("Bundle architectures: ")
-		print(archs)
+		//TODO: use the bundle cpu arch support from the swiftcpdetect library
 		
 		versionLabel.stringValue = TextManager.getViewString(context: self, stringID: "version") + Bundle.main.version! + " (" + Bundle.main.build! + ") ( "
 		
-		for arch in supportedArchs{
-			if archs.contains(NSNumber(value: arch.key)){
-				versionLabel.stringValue += arch.value + " "
-			}
+		for arch in SwiftCPUDetect.CpuArchitecture.currentExecutableArchitectures() {
+				versionLabel.stringValue += arch.rawValue + " "
 		}
 		
 		versionLabel.stringValue += ")"
 		
         copyrigthLabel.stringValue = Bundle.main.copyright! + TextManager.getViewString(context: self, stringID: "license")
         
-        if Recovery.isOn{
+        if Recovery.status{
             contactButton.isEnabled = false
             sourceButton.isEnabled = false
         }
@@ -94,7 +80,9 @@ public class CreditsViewController: GenericViewController, ViewID {
 			UIManager.shared.contactsWC = ContactsWindowController()
 		}
 		
-		UIManager.shared.contactsWC?.showWindow(self)
-		
+		//UIManager.shared.contactsWC?.showWindow(self)
+		self.window.beginSheet(UIManager.shared.contactsWC!.window!, completionHandler: { response in
+			
+		})
 	}
 }

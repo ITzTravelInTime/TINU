@@ -6,7 +6,9 @@
 //  Copyright © 2018 Pietro Caruso. All rights reserved.
 //
 
+import Foundation
 import Cocoa
+import Command
 
 extension InstallMediaCreationManager{
 	
@@ -36,14 +38,14 @@ extension InstallMediaCreationManager{
 		let minutes: UInt64 = secs / 60
 		
 		let diffm = UInt64(abs(Int32(minutes - self.lastMinute)))
-		if (diffm > 0){
+		if (diffm >= 1){
 			self.lastMinute = minutes
-			for i in diffm...1{
+			for i in 1...diffm{
 				log("Please wait, the process is still going, minutes since process beginning: \(minutes - i + 1)")
 			}
 		}
 		
-		let diffs = (secs - self.lastSecs)
+		let diffs = (secs >= self.lastSecs) ? (secs - self.lastSecs) : (self.lastSecs - secs)
 		
 		if diffs < 5{
 			return
@@ -57,6 +59,9 @@ extension InstallMediaCreationManager{
 			let max = Double(IMCM.cpc.pMidDuration + IMCM.cpc.pExtDuration)
 			
 			if val >= max{
+				if !getProgressBarIndeterminateState(){
+					setProgressBarIndeterminateState(state: true)
+				}
 				return
 			}
 			

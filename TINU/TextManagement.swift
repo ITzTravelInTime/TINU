@@ -9,8 +9,16 @@
 import Foundation
 
 public protocol ViewID{
+	//static var manager: TextManagerGet { get }
 	var id: String { get }
 }
+
+/*
+public extension ViewID{
+	func getAssest(stringNamed id: String) -> String?{
+		return Self.manager.getViewString(context: self, stringID: id)
+	}
+}*/
 
 public protocol AlternateValueSupport{
 	associatedtype T: Codable & Equatable
@@ -49,11 +57,11 @@ public final class TextManagementStructs{
 		}
 	}
 	
-	public struct ViewStrings: Codable & Equatable{
-		let mutable: [String: InstallerInstallation<String>]!
-		let unmutable: [String: String]
+	public struct ViewStrings<T: Codable & Equatable>: Codable & Equatable{
+		let mutable: [String: InstallerInstallation<T>]!
+		let unmutable: [String: T]
 		
-		func getString(_ id: String) -> String!{
+		func getString(_ id: String) -> T!{
 			if let s = mutable?[id]{
 				return s.appropriateValue
 			}
@@ -62,5 +70,7 @@ public final class TextManagementStructs{
 		}
 	}
 	
-	public typealias ViewStringsCollection = [String: ViewStrings]
+	public typealias Album<T: Codable & Equatable> = [String: T]
+	public typealias ViewStringsAlbum<T: Codable & Equatable> = Album<ViewStrings<T>>
+	
 }

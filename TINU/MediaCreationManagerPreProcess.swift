@@ -7,8 +7,16 @@
 //
 
 import Cocoa
+import Command
+import CommandSudo
 
 extension InstallMediaCreationManager{
+	
+	struct ExecInfo{
+		var path: Path
+		var args: [String]
+		var shouldNotUseSudo: Bool
+	}
 	
 	func install(){
 		
@@ -19,7 +27,7 @@ extension InstallMediaCreationManager{
 			//cvm.shared.process.isPreCreationInProgress = true
 			cvm.shared.process.status = .preCreation
 			
-			var tCMD = ""
+			var tCMD = ExecInfo(path: "", args: [], shouldNotUseSudo: true)
 			
 			//self.dname = cvm.shared.disk.current.driveName
 			
@@ -32,7 +40,7 @@ extension InstallMediaCreationManager{
 			preFor: for i in 1...InstallMediaCreationManager.preCount{
 				
 				if !success{
-					continue preFor
+					break
 				}
 				
 				//activity label text id calculation
@@ -56,7 +64,9 @@ extension InstallMediaCreationManager{
 				self.OtherOptionsBeforeformat(canFormat: &canFormat, useAPFS: &useAPFS)
 				break*/
 				case 4:
-					success = self.formatTargetDrive(canFormat: cvm.shared.options.execution.canFormat, useAPFS: cvm.shared.options.execution.canUseApfs)
+					if cvm.shared.options.execution.canFormat{
+						success = self.formatTargetDrive()
+					}
 					break
 				case 5:
 					processLicense = ""
@@ -78,7 +88,7 @@ extension InstallMediaCreationManager{
 					
 					log("The application that will be used is: " + cvm.shared.app.path )
 					log("The target drive is: " + cvm.shared.disk.path )
-					log("The script that will be performed is (including quotes): " + tCMD)
+					log("The script that will be performed is (including quotes): " + tCMD.path + " " + tCMD.args.stringLine() )
 					
 					break
 				default:
@@ -91,7 +101,7 @@ extension InstallMediaCreationManager{
 						log("Data error: ")
 						let err = "[ERROR: No data available]"
 						log("    Choosen volume path is: \(cvm.shared.disk.path ?? err)")
-						log("    Choosen volume BSDID is: \(cvm.shared.disk.bSDDrive ?? err)")
+						log("    Choosen volume BSDID is: \(cvm.shared.disk.bSDDrive?.rawValue ?? err)")
 						log("    Choosen installer app path is: \(cvm.shared.app.path ?? err)")
 					}
 				}
@@ -109,16 +119,36 @@ extension InstallMediaCreationManager{
 				self.setProgressValue(self.processUnit)
 			}
 			
-			self.launchExecution(tCMD: tCMD)
+			self.launchExecution(tCMD)
 		}
 	}
 	
-	fileprivate func launchExecution(tCMD: String){
+	fileprivate func launchExecution(_ info: ExecInfo){
+		
+		var check = info.path
+		if check.first == "\""{
+			check.removeFirst()
+		}
+		if check.last == "\""{
+			check.removeLast()
+		}
+		
+		if !FileManager.default.fileExists(atPath: check){
+			DispatchQueue.main.sync {
+				log("Invalid app executable")
+				self.viewController.goBack()
+			}
+				
+			return
+		}
 		
 		cvm.shared.process.status = .creation
 		
-		let args = ["-c", tCMD]
-		let exec = "/bin/zsh"
+		//let args = ["-c", tCMD]
+		//let exec = "/bin/zsh"
+		
+		//let args = ["-c", tCMD]
+		//let exec = "/bin/zsh"
 		
 		#if noFirstAuth
 		let noFAuth = true
@@ -126,7 +156,7 @@ extension InstallMediaCreationManager{
 		let noFAuth = false
 		#endif
 		
-		cvm.shared.process.handle = (simulateCreateinstallmediaFail != nil && noFAuth) ? Command.start(cmd: exec, args: args) : Command.Sudo.start(cmd: exec, args: args)
+		cvm.shared.process.handle = (!info.shouldNotUseSudo || noFAuth) ? Command.start(cmd: info.path, args: info.args) : Command.Sudo.start(cmd: info.path, args: info.args)
 		
 		if cvm.shared.process.handle == nil{
 			

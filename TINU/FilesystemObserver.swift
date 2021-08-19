@@ -8,26 +8,65 @@
 
 import Foundation
 
-class DirectoryObserver {
+public class FileSystemObserver {
 	
-	private let fileDescriptor: CInt
-	private let source: DispatchSourceProtocol
+	private var fileHandle: CInt?
+	private var eventSource: DispatchSourceProtocol?
+	private var observingStarted: Bool = false
+	
+	private let path: String
+	private let handler: () -> Void
+	
+	
+	public var isObserving: Bool{
+		return fileHandle != nil && eventSource != nil && observingStarted
+	}
 	
 	deinit {
 		
-		self.source.cancel()
-		close(fileDescriptor)
+		stop()
 		
 	}
 	
-	init(URL: URL, block: @escaping ()->Void) {
+	public required init(path: String, changeHandler: @escaping ()->Void, startObservationNow: Bool = true) {
+		assert(!path.isEmpty, "The filesystem object to observe must have a path!")
+		self.path = path
+		self.handler = changeHandler
 		
-		self.fileDescriptor = open(URL.path, O_EVTONLY)
-		self.source = DispatchSource.makeFileSystemObjectSource(fileDescriptor: self.fileDescriptor, eventMask: .all, queue: DispatchQueue.global())
-		self.source.setEventHandler {
-			block()
+		if startObservationNow{
+			start()
 		}
-		self.source.resume()
+	}
+	
+	public convenience init(url: URL, changeHandler: @escaping ()->Void, startObservationNow: Bool = true) {
+		self.init(path: url.path, changeHandler: { changeHandler() }, startObservationNow: startObservationNow)
+	}
+	
+	
+	public func stop() {
+		self.eventSource?.cancel()
+		if fileHandle != nil{
+			close(fileHandle!)
+		}
+		
+		self.eventSource = nil
+		self.fileHandle = nil
+		self.observingStarted = false
+	}
+	
+	public func start() {
+		
+		if fileHandle != nil || eventSource != nil{
+			stop()
+		}
+		
+		self.fileHandle = open(path, O_EVTONLY)
+		self.eventSource = DispatchSource.makeFileSystemObjectSource(fileDescriptor: self.fileHandle!, eventMask: .all, queue: DispatchQueue.global(qos: .utility))
+		self.eventSource!.setEventHandler {
+			self.handler()
+		}
+		self.eventSource!.resume()
+		self.observingStarted = true
 	}
 	
 }

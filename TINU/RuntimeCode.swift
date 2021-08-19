@@ -20,7 +20,7 @@ func sharedSetSelectedCreationUI( appName: inout NSTextField, appImage: inout NS
 	
 	if #available(macOS 11.0, *), look.usesSFSymbols(){
 		driveImage.contentTintColor = .systemGray
-		driveImage.image = driveImage.image?.withSymbolWeight(.thin)
+		//driveImage.image = driveImage.image?.withSymbolWeight(.thin)
 	}
 	
 	if useDriveName{
@@ -29,11 +29,11 @@ func sharedSetSelectedCreationUI( appName: inout NSTextField, appImage: inout NS
 		driveName.stringValue = manager.disk.current.displayName
 	}
 	
-	appImage.image = manager.app.current.genericIcon
+	appImage.image = manager.app.current.icon
 	
 	if #available(macOS 11.0, *), look.usesSFSymbols(){
 		appImage.contentTintColor = .systemGray
-		appImage.image = appImage.image?.withSymbolWeight(.thin)
+		//appImage.image = appImage.image?.withSymbolWeight(.thin)
 	}
 	
 	appName.stringValue = manager.app.current.displayName

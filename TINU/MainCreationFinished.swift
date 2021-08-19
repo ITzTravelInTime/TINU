@@ -36,15 +36,15 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
 		logButton.title = TextManager.getViewString(context: self, stringID: "logButton")
 		exitButton.title = TextManager.getViewString(context: self, stringID: "exitButton")
 		
-		var image = NSImage()
+		var image: NSImage!
         if (cvm.shared.process.status != .doneSuccess){
-			image = IconsManager.shared.roundStopIcon
+			image = IconsManager.shared.roundStopIcon.themedImage()
 			
             continueButton.isEnabled = true
             continueButton.frame.size.width = exitButton.frame.size.width
             continueButton.frame.origin.x = exitButton.frame.origin.x
         }else{
-			image = IconsManager.shared.checkIcon
+			image = IconsManager.shared.checkIcon.themedImage()
             continueButton.isEnabled = true
             continueButton.isHidden = false
         }
@@ -53,8 +53,8 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
 		
 		if #available(macOS 11.0, *), look.usesSFSymbols(){
 			if failureImageView != nil{
-				failureImageView.contentTintColor = .systemGray
-				failureImageView.image = failureImageView.image?.withSymbolWeight(.thin)
+				//failureImageView.contentTintColor = .systemGray
+				//failureImageView.image = failureImageView.image?.withSymbolWeight(.thin)
 				failureImageView.contentTintColor = (cvm.shared.process.status == .doneSuccess) ? .systemGreen : .systemRed
 			}
 		}
@@ -69,7 +69,7 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
 		
 		showFailureLabel()
 		
-		let _ = NotificationsManager.sendWith(id: "processEnd" + suffix, image: nil)
+		Notifications.justSendWith(id: "processEnd" + suffix, icon: nil)
     }
 
     @IBAction func exit(_ sender: Any) {
@@ -77,7 +77,8 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
     }
     
     @IBAction func goNext(_ sender: Any) {
-        LogManager.clear(true)
+        //LogManager.clear(true)
+		LogManager.clearLog()
 		
 		swapCurrentViewController("chooseSide")
     }

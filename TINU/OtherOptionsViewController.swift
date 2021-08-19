@@ -9,6 +9,7 @@
 
 
 import Cocoa
+import TINUNotifications
 
 class OtherOptionsViewController: GenericViewController, ViewID {
 	
@@ -48,6 +49,8 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 		
 			sectionsScrollView.frame.origin.x = 5
 			sectionsScrollView.borderType = .noBorder
+			
+			sectionsScrollView.backgroundColor = .transparent
 		}
 		
 		self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "title"))
@@ -63,7 +66,7 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 		//general options
 		
 		sections.append(getSectionItem())
-		sections.last!!.image.image = IconsManager.shared.optionsIcon
+		sections.last!!.image.image = IconsManager.shared.optionsIcon.themedImage()
 		if #available(macOS 11.0, *), look.usesSFSymbols(){
 			sections.last!!.image.contentTintColor = .systemGray
 			sections.last!!.imageColor = sections.last!!.image.contentTintColor!
@@ -74,7 +77,7 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 		//advanced options
 		
 		sections.append(getSectionItem())
-		sections.last!!.image.image = IconsManager.shared.advancedOptionsIcon
+		sections.last!!.image.image = IconsManager.shared.advancedOptionsIcon.themedImage()
 		if #available(macOS 11.0, *), look.usesSFSymbols(){
 			sections.last!!.image.contentTintColor = .systemGray
 			sections.last!!.imageColor = sections.last!!.image.contentTintColor!
@@ -90,7 +93,7 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 				for i in SupportedEFIFolders.allCases{
 					sections.append(getSectionItem())
 			
-					sections.last!!.image.image = IconsManager.shared.folderIcon//NSImage(named: NSImage.folderName)
+					sections.last!!.image.image = IconsManager.shared.folderIcon.themedImage()
 					if #available(macOS 11.0, *), look.usesSFSymbols(){
 						sections.last!!.image.image?.isTemplate = true
 						//sections.last!!.image.contentTintColor = .systemBlue
@@ -140,17 +143,14 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 			container!.addSubview(i!)
 		}
 		
+		container.backgroundColor = .transparent//self.view.backgroundColor
+		
 		sectionsScrollView.documentView = container!
 		
 		defaultButton.title = TextManager.getViewString(context: self, stringID: "defaultButton")
 		
-		#if skipChooseCustomization
-			backButton.isHidden = true
-			nextButton.title = TextManager.getViewString(context: self, stringID: "nextButton")
-		#else
-			backButton.title = TextManager.getViewString(context: self, stringID: "backButton")
-			nextButton.title = TextManager.getViewString(context: self, stringID: "nextButtonChoose")
-		#endif
+		backButton.isHidden = true
+		nextButton.title = TextManager.getViewString(context: self, stringID: "nextButton")
 		
     }
 	
@@ -158,6 +158,7 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 		
 		if let win = self.window{
 			win.isFullScreenEnaled = false
+			TINUNotifications.Alert.window = win
 			CustomizationWindowManager.shared.referenceWindow = win
 		}
 		
@@ -191,12 +192,7 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 		
 		CustomizationWindowManager.shared.referenceWindow = nil
 		
-		#if skipChooseCustomization
-			self.window.sheetParent?.endSheet(self.window)
-		#else
-        	openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
-        	cvm.shared.sharedVolumeNeedsPartitionMethodChange = ps
-		#endif
+		self.window.sheetParent?.endSheet(self.window)
     }
     
     @IBAction func resetOptions(_ sender: Any) {

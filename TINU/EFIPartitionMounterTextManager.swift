@@ -9,7 +9,7 @@
 import Foundation
 
 public struct EFIPMTextManagerStruct: TextManagerGet, CodableDefaults, Codable, Equatable{
-	let viewStrings: TextManagementStructs.ViewStringsCollection
+	let viewStrings: TextManagementStructs.ViewStringsAlbum<String>
 	
 	private var remAsset = getLanguageFile(fileName: EFIPMTextManagerStruct.defaultResourceFileName, fextension: EFIPMTextManagerStruct.defaultResourceFileExtension)
 	

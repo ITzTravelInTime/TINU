@@ -17,6 +17,8 @@ class ChoseAppViewController: GenericViewController, ViewID {
                 scoller.drawsBackground = false
                 scoller.borderType = .noBorder
                 ok.title = TextManager.getViewString(context: self, stringID: "nextButtonFail")
+				ok.image = NSImage(named: NSImage.goRightTemplateName)
+				ok.image = NSImage(named: NSImage.stopProgressTemplateName)
                 ok.isEnabled = true
             }else{
                 //viewDidSetVibrantLook()
@@ -32,9 +34,10 @@ class ChoseAppViewController: GenericViewController, ViewID {
 				}
 				
 				ok.title = TextManager.getViewString(context: self, stringID: "nextButton")
+				ok.image = NSImage(named: NSImage.goRightTemplateName)
                 ok.isEnabled = false
 				
-				if look.supportsShadows() || look.usesSFSymbols(){
+				if !look.isRecovery(){
 					scoller.drawsBackground = false
 					scoller.borderType = .noBorder
 				}else{
@@ -60,13 +63,15 @@ class ChoseAppViewController: GenericViewController, ViewID {
 	private var tempRefresh: CGFloat = 0
     
     private let spacerID = "spacer"
+	
+	private var opened = false
     
     @IBAction func goBack(_ sender: Any) {
         let _ = swapCurrentViewController("ChoseDrive")
     }
     
     @IBAction func next(_ sender: Any) {
-        if !empty{
+        if !empty || opened {
             /*if sharedInstallMac{
              openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
              }else{*/
@@ -78,11 +83,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 			}else{
 				
 				cvm.shared.options.check()
-				#if skipChooseCustomization
 				let _ = self.swapCurrentViewController("Confirm")
-				#else
-				let _ = self.openSubstituteWindow(windowStoryboardID: "ChooseCustomize", sender: sender)
-				#endif
 			}
 			
             //openSubstituteWindow(windowStoryboardID: "Customize", sender: sender)
@@ -114,7 +115,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 		open.showsHiddenFiles = true
 		open.allowedFileTypes = ["app"]
 		
-		open.beginSheetModal(for: self.window, completionHandler: {response in
+		open.beginSheetModal(for: self.window, completionHandler: { [self]response in
 			
 			if response != NSApplication.ModalResponse.OK{
 				return
@@ -137,7 +138,9 @@ class ChoseAppViewController: GenericViewController, ViewID {
 				case .usable:
 					if capp.url != nil {
 						cvm.shared.app.current = capp
-					
+						
+						self.opened = true
+						
 						self.next(self)
 					}else{
 						msgboxWithManager(self, name: "invalidAliasDialog", parseList: replist)
@@ -157,52 +160,6 @@ class ChoseAppViewController: GenericViewController, ViewID {
 					return
 			}
 			
-			/*
-			var tmpURL: URL?
-			if let isAlias = FileAliasManager.process(open.urls.first!, resolvedURL: &tmpURL){
-				if isAlias{
-					path = tmpURL!.path
-				}
-			}else{
-				msgboxWithManager(self, name: "invalidAliasDialog", parseList: replist)
-				return
-			}
-			
-			let needed = cvm.shared.app.neededFiles
-			var check: Int = needed.count
-			for c in needed{
-				if c.isEmpty{
-					check-=1
-					continue
-				}
-				for d in c{
-					if manager.fileExists(atPath: path + d){
-						check-=1
-						break
-					}
-				}
-			}
-			
-			if check == 0 {
-				
-				cvm.shared.app.path = path
-				cvm.shared.disk.shouldErase = self.ps
-				
-				self.next(self)
-				
-			}else{
-				msgboxWithManager(self, name: "invalidAppDialog", parseList: replist)
-				return
-			}
-			
-			guard let sz = manager.directorySize(open.urls.first!) else {return}
-			
-			if !cvm.shared.disk.compareSize(to: UInt64(sz)){
-				msgboxWithManager(self, name: "invalidAppDialogSize", parseList: replist)
-				return
-			}*/
-			
-			
 		})
 	}
     
@@ -221,7 +178,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 		self.back.title = TextManager.getViewString(context: self, stringID: "backButton")
 		self.ok.title = TextManager.getViewString(context: self, stringID: "nextButton")
 		
-		if look.supportsShadows() || look.usesSFSymbols(){
+		if !look.isRecovery(){
 			scoller.frame = CGRect.init(x: 0, y: scoller.frame.origin.y, width: self.view.frame.width, height: scoller.frame.height)
 			scoller.drawsBackground = false
 			scoller.borderType = .noBorder
@@ -271,7 +228,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 		scoller.documentView = NSView(frame: scoller.frame)
 		scoller.hasHorizontalScroller = false
 		
-		self.DownloadAppsAlways.isHidden = Recovery.isOn
+		self.DownloadAppsAlways.isHidden = Recovery.status
 		
 		self.hideFailureLabel()
 		self.hideFailureImage()
@@ -327,7 +284,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 				
 				self.empty = simulateNoUsableApps ? true : (drives.count == 0)
 				
-				if !Recovery.isOn{
+				if !Recovery.status{
 					self.DownloadAppsAlways.isHidden = self.empty
 				}
 				
@@ -341,10 +298,11 @@ class ChoseAppViewController: GenericViewController, ViewID {
 						
 						self.setFailureLabel(text: TextManager.getViewString(context: self, stringID: "failureText"))
 						//"failureButtonGetInstaller"
-						if !Recovery.isOn{
-							self.addFailureButton(buttonTitle: TextManager.getViewString(context: self, stringID: "failureButtonGetInstaller"), target: self, selector: #selector(ChoseAppViewController.openGetAnApp))
+						if !Recovery.status{
+							self.addFailureButton(buttonTitle: TextManager.getViewString(context: self, stringID: "failureButtonGetInstaller"), target: self, selector: #selector(ChoseAppViewController.openGetAnApp), image: NSImage(named: NSImage.networkName))
 						}
-						self.addFailureButton(buttonTitle: TextManager.getViewString(context: self, stringID: "failureButtonOpen"), target: self, selector: #selector(ChoseAppViewController.chooseExternal))
+						
+						self.addFailureButton(buttonTitle: TextManager.getViewString(context: self, stringID: "failureButtonOpen"), target: self, selector: #selector(ChoseAppViewController.chooseExternal), image: NSImage(named: NSImage.folderName))
 					}
 					
 					self.showFailureImage()
@@ -356,12 +314,9 @@ class ChoseAppViewController: GenericViewController, ViewID {
 					print("UI Failure mode!")
 				}else{
 					
-					
 					let content = NSView(frame: NSRect(x: 0, y: 0, width: 0, height: self.scoller.frame.size.height - 17))
 					
-					
 					self.scoller.hasHorizontalScroller = true
-					
 					
 					DispatchQueue.global(qos: .background).sync {
 						var temp: CGFloat = 20

@@ -77,7 +77,7 @@ public class CreationProcess{
 					return false
 				}
 				
-				guard let sd = dm.getMountPointFromPartitionBSDID(sb) else{
+				guard let sd = sb.mountPoint() else{
 					print("Can't get the mount point!!")
 					return false
 				}

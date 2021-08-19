@@ -69,7 +69,7 @@
 "6H1-Ij-pJT.title" = "This is a tool that helps you to create a macOS install media. Before starting you need:   - At least an 8 GB USB Flash Drive   - A copy of the macOS installer app (of any version starting from Mavericks) in your      /Applications folder or in the root of a storage device connected to the computer";
 
 /* Class = "NSTextFieldCell"; title = "Pietro Caruso (ITzTravelInTime), Thomas Tempelmann"; ObjectID = "7vv-ZS-5eD"; */
-"7vv-ZS-5eD.title" = "Pietro Caruso (ITzTravelInTime), Thomas Tempelmann";
+"7vv-ZS-5eD.title" = "Pietro Caruso (ITzTravelInTime) - Sviluppatore principale\nThomas Tempelmann";
 
 /* Class = "NSMenuItem"; title = "Tools"; ObjectID = "89I-JN-t0I"; */
 "89I-JN-t0I.title" = "Strumenti";
@@ -150,7 +150,7 @@
 "Fdy-fu-iW5.title" = "Ottieni un installer di macOS";
 
 /* Class = "NSTextFieldCell"; title = "Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa"; ObjectID = "GPN-6Q-q2a"; */
-"GPN-6Q-q2a.title" = "Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa";
+"GPN-6Q-q2a.title" = "Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa, Ermanno Nicoletti, Tommaso Dimatore, Massimiliano Faralli, Francesco Perchiazzi, Peter Paul Chato.\nItalian hackintosh group!!! su Facebook per il loro aiuto.\nHackintosh Italia su Telegram per l'uso di TINU.\nHackintosh-forum.de per raccomandare TINU.";
 
 /* Class = "NSTextFieldCell"; title = "Beta testing (English):"; ObjectID = "GPd-Ba-rrP"; */
 "GPd-Ba-rrP.title" = "Beta testing (Inglese):";
@@ -273,7 +273,7 @@
 "ThU-kc-cIe.title" = "Hackintosh Italia (Italiano):";
 
 /* Class = "NSTextFieldCell"; title = "Development:"; ObjectID = "TvO-Ld-v0Z"; */
-"TvO-Ld-v0Z.title" = "Sviluppo:";
+"TvO-Ld-v0Z.title" = "Programmazione:";
 
 /* Class = "NSMenu"; title = "Related to TINU"; ObjectID = "URd-Yp-HZH"; */
 "URd-Yp-HZH.title" = "Altro...";
