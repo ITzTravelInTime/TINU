@@ -56,6 +56,15 @@ Contact the project creator (ITzTravelInTime aka Pietro):
     https://www.reddit.com/user/ITzTravelInTime
 - email:                  
     piecaruso97@gmail.com
+    
+# Swift packages used:
+
+- https://github.com/ITzTravelInTime/Command
+- https://github.com/ITzTravelInTime/CommandSudo
+- https://github.com/ITzTravelInTime/SwiftCPUDetect
+- https://github.com/ITzTravelInTime/SwiftLoggedPrint
+- https://github.com/ITzTravelInTime/TINUNotifications
+- https://github.com/ITzTravelInTime/TINURecovery
 
 # Repository rules:
 - If you want to create your own spin-off version of TINU please let the project maintainers know!

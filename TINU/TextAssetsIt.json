@@ -228,7 +228,7 @@
 				"titleDrive" : "Questo disco e quest'app verranno usati. Vuoi procedere?",
 				"backButton" : "Indietro",
 				"nextButton" : "Si, procedi",
-				"nextButtonFail" : "Esci",
+				"nextButtonFail" : "Riprova",
 				"optionsButton" : "Opzioni",
 				"failureTitle" : "Impossiblile procedere",
 				"failureText" : "Errore durante l'ottenimento delle informazioni relative al disco o alla partizione scelti."

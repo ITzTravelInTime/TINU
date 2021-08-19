@@ -31,6 +31,8 @@ class ConfirmViewController: GenericViewController, ViewID {
     
 	@IBOutlet weak var back: NSButton!
     //private var fs: Bool!
+	
+	
     override func viewDidAppear() {
         super.viewDidAppear()
         
@@ -98,6 +100,10 @@ class ConfirmViewController: GenericViewController, ViewID {
 			//yes.isEnabled = false
 			
 			yes.title = TextManager.getViewString(context: self, stringID: "nextButtonFail")
+			yes.image = NSImage(named: NSImage.refreshTemplateName)
+			yes.imagePosition = .imageLeft
+			
+			back.isHidden = true
 			info.isHidden = true
 			
 			driveName.isHidden = true
@@ -157,12 +163,11 @@ class ConfirmViewController: GenericViewController, ViewID {
     
     @IBAction func install(_ sender: Any) {
         //sharedVolumeNeedsFormat = fs
+		tmpWin = nil
         if fail{
-            NSApp.terminate(sender)
+			let _ = swapCurrentViewController("ChoseDrive")
             return
         }
-		
-		tmpWin = nil
 		
         let _ = swapCurrentViewController("Install")
     }

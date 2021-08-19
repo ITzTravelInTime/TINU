@@ -100,6 +100,8 @@
 		C6DF04781F4F33C500D200B1 /* TINUTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF04771F4F33C500D200B1 /* TINUTests.swift */; };
 		C6DF04831F4F33C500D200B1 /* TINUUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF04821F4F33C500D200B1 /* TINUUITests.swift */; };
 		C6E32EA7218142EA006D4BEB /* FileAliasManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E32EA6218142EA006D4BEB /* FileAliasManager.swift */; };
+		C6E335AF26CED3570078FC0D /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = C6E335AD26CED3570078FC0D /* LICENSE */; };
+		C6E335B026CED3570078FC0D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C6E335AE26CED3570078FC0D /* README.md */; };
 		C6F0E84326A7A81E00308B9F /* LogWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F0E84226A7A81E00308B9F /* LogWindowController.swift */; };
 		C6F68E8B20D0277B00F7A0F4 /* PackagesWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F68E8A20D0277B00F7A0F4 /* PackagesWrapper.swift */; };
 		C6FFB5D6267FAA3300CD19CE /* InstallerAppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FFB5D5267FAA3300CD19CE /* InstallerAppInfo.swift */; };
@@ -232,6 +234,8 @@
 		C6DF04821F4F33C500D200B1 /* TINUUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TINUUITests.swift; sourceTree = "<group>"; };
 		C6DF04841F4F33C500D200B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C6E32EA6218142EA006D4BEB /* FileAliasManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAliasManager.swift; sourceTree = "<group>"; };
+		C6E335AD26CED3570078FC0D /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
+		C6E335AE26CED3570078FC0D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		C6F0E84226A7A81E00308B9F /* LogWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogWindowController.swift; sourceTree = "<group>"; };
 		C6F68E8A20D0277B00F7A0F4 /* PackagesWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackagesWrapper.swift; sourceTree = "<group>"; };
 		C6FFB5D5267FAA3300CD19CE /* InstallerAppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallerAppInfo.swift; sourceTree = "<group>"; };
@@ -489,6 +493,8 @@
 		C6DF04641F4F33C500D200B1 /* TINU */ = {
 			isa = PBXGroup;
 			children = (
+				C6E335AD26CED3570078FC0D /* LICENSE */,
+				C6E335AE26CED3570078FC0D /* README.md */,
 				C6DE523A247EB6EA00FBD2E1 /* TINU.entitlements */,
 				C6DF046E1F4F33C500D200B1 /* Info.plist */,
 				C691BFED1F6DEEA800589EF8 /* Assets.xcassets */,
@@ -701,9 +707,11 @@
 				C660D1A2252C94860027FCA0 /* ConfigMenuAppsIt.json in Resources */,
 				C660D1A0252C7A160027FCA0 /* ConfigMenuAppsEn.json in Resources */,
 				C660D1992529BB260027FCA0 /* EFIPMTextAssetsIt.json in Resources */,
+				C6E335B026CED3570078FC0D /* README.md in Resources */,
 				C63F036224E40F5500F950B4 /* TextAssetsEn.json in Resources */,
 				C691BFEE1F6DEEA800589EF8 /* Assets.xcassets in Resources */,
 				C660D19C2529BB780027FCA0 /* EFIPMTextAssetsEn.json in Resources */,
+				C6E335AF26CED3570078FC0D /* LICENSE in Resources */,
 				C68C79F22505205A00BBDA37 /* TextAssetsIt.json in Resources */,
 				C6188D982513828E00BCBC51 /* AppDownloadsEn.json in Resources */,
 				C6A3A36A24FBAC3500CC8E37 /* ErrorDecodingMessangesEn.json in Resources */,

@@ -227,7 +227,7 @@
 				"titleDrive" : "The drive and macOS installer below will be used, are you sure?",
 				"backButton" : "Back",
 				"nextButton" : "Yes, I understand",
-				"nextButtonFail" : "Quit",
+				"nextButtonFail" : "Retry",
 				"optionsButton" : "Options",
 				"failureTitle" : "Impossible to create the macOS install meadia",
 				"failureText" : "Error while getting volume/drive and installer app information"

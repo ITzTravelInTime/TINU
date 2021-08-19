@@ -86,11 +86,11 @@ class InstallingViewController: GenericViewController, ViewID{
 				
 				InstallMediaCreationManager.startInstallProcess()
 			}else{
-				self.setActivityLabelText("activityLabel2")
 				
 				log("Couldn't get valid info about the installer app and/or the drive")
 				
 				DispatchQueue.main.sync {
+					self.setActivityLabelText("activityLabel2")
 					self.goBack()
 				}
 			}
