@@ -245,37 +245,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		
 		UIManager.shared.downloadAppWC.showWindow(self)
 	}
-	
-	@IBAction func openFAQs(_ sender: Any) {
-		openURl("https://github.com/ITzTravelInTime/TINU/wiki/FAQs")
-	}
-	
-	@IBAction func OpenGithub(_ sender: Any) {
-		openURl("https://github.com/ITzTravelInTime/TINU")
-	}
-	
-	@IBAction func InsanelyMacThread(_ sender: Any) {
-		openURl("http://www.insanelymac.com/forum/topic/326959-tinu-the-macos-installer-creator-app-mac-app/")
-	}
-	
-	@IBAction func InsanelyMacThreadIta(_ sender: Any) {
-		openURl("https://www.insanelymac.com/forum/forums/topic/333261-tinu-app-per-creare-chiavette-di-installazione-di-macos-thread-in-italiano/")
-	}
-	
-    @IBAction func VoodooTSCSyncConfigurator(_ sender: Any) {
-		openURl("http://www.insanelymac.com/forum/files/file/744-voodootscsync-configurator/")
-    }
-	
-	private func openURl(_ sURL: String){
-		guard let checkURL = NSURL(string: sURL) else {
-			print("invalid url")
-			return
-		}
-			
-		if NSWorkspace.shared.open(checkURL as URL) {
-			print("url successfully opened: " + String(describing: checkURL))
-		}
-	}
     
     @IBAction func openVerbose(_ sender: Any) {
 		DiagnosticsModeManager.shared.open(withSudo: ((sender as! NSMenuItem) == verboseItemSudo))
