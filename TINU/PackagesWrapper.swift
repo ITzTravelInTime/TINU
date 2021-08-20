@@ -32,7 +32,7 @@ public final class SIPManager: SIP, ViewID {
 	
 	public class func checkStatusAndLetTheUserKnow(){
 		DispatchQueue.global(qos: .background).async {
-			if status.resultsEnabled && !CommandLine.arguments.contains("-disgnostics-mode"){
+			if !status.isOkForTINU && !CommandLine.arguments.contains("-disgnostics-mode"){
 				//msgBoxWithCustomIcon("TINU: Please disable SIP", "SIP (system integrity protection) is enabled and will not allow TINU to complete successfully the installer creation process, please disable it or use the diagnostics mode with administrator privileges", .warning , IconsManager.shared.stopIcon)
 				DispatchQueue.main.async {
 					msgboxWithManager(ref, name: "disable", parseList: nil, style: NSAlert.Style.critical, icon: nil)
@@ -41,6 +41,13 @@ public final class SIPManager: SIP, ViewID {
 		}
 	}
 
+}
+
+public extension SIP.SIPIntegerFormat{
+	var isOkForTINU: Bool{
+		let mask = SIPManager.SIPBits.CSR_ALLOW_UNRESTRICTED_FS.rawValue | SIPManager.SIPBits.CSR_ALLOW_TASK_FOR_PID.rawValue
+		return (self & mask) == mask
+	}
 }
 
 internal class LogManager: SwiftLoggedPrint.LoggedPrinter{
