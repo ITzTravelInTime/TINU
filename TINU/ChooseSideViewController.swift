@@ -64,7 +64,9 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		
 		if #available(OSX 10.15, *){
 			if !ChooseSideViewController._already_prompted{
-				if (SIPManager.status.resultsEnabled && !CommandLine.arguments.contains("-disgnostics-mode")){
+				let mask = SIPManager.SIPBits.CSR_ALLOW_UNRESTRICTED_FS.rawValue | SIPManager.SIPBits.CSR_ALLOW_TASK_FOR_PID.rawValue
+				
+				if ((SIPManager.status & mask) != mask && !CommandLine.arguments.contains("-disgnostics-mode")){
 					DiagnosticsModeManager.shared.open(withSudo: true)
 					return
 				}
