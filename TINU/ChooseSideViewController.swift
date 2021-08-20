@@ -37,8 +37,8 @@ class ChooseSideViewController: GenericViewController, ViewID {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		spinner.isHidden = false
-		spinner.startAnimation(self)
+		spinner?.isHidden = false
+		spinner?.startAnimation(self)
 		
 		createUSBButton?.isHidden = true
 		installButton?.isHidden = true
@@ -76,9 +76,9 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		
 		Command.Printer.enabled = sharedEnableDebugPrints
 		
-		createUSBButton.isHidden = true
+		createUSBButton?.isHidden = true
 		installButton?.isHidden = true
-		efiButton.isHidden = true
+		efiButton?.isHidden = true
 	}
 	
 	override func viewWillAppear() {
