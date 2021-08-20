@@ -45,7 +45,7 @@ public final class SIPManager: SIP, ViewID {
 
 public extension SIP.SIPIntegerFormat{
 	var isOkForTINU: Bool{
-		let mask = SIPManager.SIPBits.CSR_ALLOW_UNRESTRICTED_FS.rawValue | SIPManager.SIPBits.CSR_ALLOW_TASK_FOR_PID.rawValue
+		let mask = SIPManager.SIPBits.CSR_ALLOW_UNRESTRICTED_FS.rawValue
 		return (self & mask) == mask
 	}
 }
