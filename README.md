@@ -7,7 +7,7 @@ This software is intended to be used to create a bootable macOS installer for co
 
 Allows you to create easily a macOS install media without messing around with command line stuff and without using disk utility, and also detects and prevents the most common errors with the creation of bootable vanilla macOS installers. 
 
-# For the latest Source code check out the delopment branch!
+# For the latest Source code check out the development branch!
 
 # Features:
 - Fully open: You can see how this programs works and you can freely contribute to it! (See the `Repository rules` and the `Note that` sections of this file)

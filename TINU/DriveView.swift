@@ -48,16 +48,19 @@ class DriveView: ShadowView, ViewID {
 				image.contentTintColor = .systemGray
 			}
 			
+			
 			if warnImage.superview != nil{
 				self.warnImage.backgroundColor = NSColor.controlBackgroundColor
 				self.warnImage.layer?.cornerRadius = self.warnImage.frame.size.width / 2
 			}
+			
 		}
 		
 		if image.superview != nil && image.image == nil{
 			if image.image == nil{
 				image.image = current?.icon
 			}
+			
 			/*
 			if #available(macOS 11.0, *), look.usesSFSymbols() {
 				image.image = image.image?.withSymbolWeight(.ultraLight)
@@ -206,7 +209,7 @@ class DriveView: ShadowView, ViewID {
 			self.warnImage.layer?.zPosition = (self.image.layer?.zPosition ?? 0) + 1
 			
 			self.warnImage.imageScaling = NSImageScaling.scaleProportionallyUpOrDown
-			self.warnImage.imageAlignment = .alignBottom
+			self.warnImage.imageAlignment = .alignCenter
 			
 			self.addSubview(self.warnImage)
 		}
