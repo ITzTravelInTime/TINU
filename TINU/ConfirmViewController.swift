@@ -44,11 +44,12 @@ class ConfirmViewController: GenericViewController, ViewID {
 		
 		self.showTitleLabel()
 		
+		/*
 		if #available(OSX 10.15, *){
 			if !CurrentUser.isRoot{
 				SIPManager.checkStatusAndLetTheUserKnow()
 			}
-		}
+		}*/
     }
     
     

@@ -375,8 +375,8 @@
 		},
 		"SIPManager" : {
 			"unmutable" : {
-				"disableTitle" : "TINU: Please disable SIP",
-				"disable" : "SIP (system integrity protection) is enabled and will not allow TINU to to work properly (on Catalina and newer versions), please disable it or use the diagnostics mode with administrator privileges"
+				"disableTitle" : "TINU: The installer creation will fail!",
+				"disable" : "SIP (system integrity protection) is enabled and will not allow TINU to to work properly (on Catalina and newer versions).\n\nIf you continue the installer creation process will most likely fail.\n\nIf you don't want that to happen you can disable SIP (unreccommended) or use the diagnostics mode with administrator privileges (it can be found on the menu bar under the TINU menu)."
 			}
 		},
 		"OtherOptionsInfoViewController" : {

@@ -79,4 +79,4 @@ public let simulateLook: UIManager.AppLook! = nil//.shadowsSFSymbolsFill//.shado
 //non ui testing conditions
 
 ///Enables some disabled debug prints
-public let sharedEnableDebugPrints: Bool = false
+public let sharedEnableDebugPrints: Bool = true

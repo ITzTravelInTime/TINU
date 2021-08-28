@@ -19,7 +19,9 @@ public extension Diskutil{
 		
 		DispatchQueue.global(qos: .background).sync {
 			
-			ret = (useAdminPrivileges ? Command.Sudo.run(cmd: "/usr/sbin/diskutil", args: args) : Command.run(cmd: "/usr/sbin/diskutil", args: args))
+			let exec = "/usr/sbin/diskutil"
+			
+			ret = (useAdminPrivileges ? Command.Sudo.run(cmd: exec, args: args) : Command.run(cmd: exec, args: args))
 			
 		}
 		

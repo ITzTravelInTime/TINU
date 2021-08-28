@@ -42,6 +42,9 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		
 		createUSBButton?.isHidden = true
 		installButton?.isHidden = true
+		efiButton?.isHidden = true
+		
+		Command.Printer.enabled = sharedEnableDebugPrints
 		
 		#if demo
 		print("You have successfully enbled the \"demo\" macro!")
@@ -60,25 +63,6 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		
 		//}
 		
-		#if sudoStartup
-		
-		if #available(OSX 10.15, *){
-			if !ChooseSideViewController._already_prompted{
-				if (!SIPManager.status.isOkForTINU && !CommandLine.arguments.contains("-disgnostics-mode")){
-					DiagnosticsModeManager.shared.open(withSudo: true)
-					return
-				}
-				ChooseSideViewController._already_prompted = true
-			}
-		}
-		
-		#endif
-		
-		Command.Printer.enabled = sharedEnableDebugPrints
-		
-		createUSBButton?.isHidden = true
-		installButton?.isHidden = true
-		efiButton?.isHidden = true
 	}
 	
 	override func viewWillAppear() {
@@ -106,6 +90,36 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		}
 		
 		showed = true
+		
+		#if sudoStartup
+		
+		if #available(OSX 10.15, *){
+			for _ in 0...0{
+				if ChooseSideViewController._already_prompted{
+					continue
+				}
+				
+				ChooseSideViewController._already_prompted = true
+				
+				if (SIPManager.status.isOkForTINU || CommandLine.arguments.contains("-disgnostics-mode")){
+					continue
+				}
+				
+				Alert.window = self.window
+				
+				//todo: localize this
+				let alert = Alert(message: "TINU Needs to be opened using diagnostics mode in order to work!", description: "SIP (System Integrity Protection) is currently enabled, and it will prevent TINU from working (this is due to a problem introduced in Catalina).\n\nYou can avoid this by chosing to use the diagnostics mode with administrator privileges (because it avoids this issue by using the privileges provvided by the terminal) or by .").adding(button: .init(text: "Use diagnostics mode", keyEquivalent: "\r")).adding(button: .init(text: "Continue anyway")).send().isFirstButton()
+				
+				if alert{
+					
+					DiagnosticsModeManager.shared.open(withSudo: true)
+					return
+				}
+				
+			}
+		}
+		
+		#endif
 		
 		DispatchQueue.main.async {
 		if #available(macOS 11.0, *), look.usesSFSymbols() {} else {

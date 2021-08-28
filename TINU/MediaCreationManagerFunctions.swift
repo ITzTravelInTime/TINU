@@ -9,6 +9,7 @@
 import Cocoa
 import Command
 import CommandSudo
+import TINURecovery
 
 extension InstallMediaCreationManager{
 	
@@ -204,12 +205,24 @@ extension InstallMediaCreationManager{
 		
 		//this string is used to define the main command to use, then the prefix is added
 		
-		var mainCMD = ["--volume \"\(cvm.shared.disk.path!)\""]
+		var mainCMD = [String]()
+		
+		if CurrentUser.isRoot{
+			mainCMD.append("--volume")
+			mainCMD.append(cvm.shared.disk.path!)
+		}else{
+			mainCMD.append("--volume \"\(cvm.shared.disk.path!)\"")
+		}
 		
 		//mojave instalelr do not supports this argument
 		//if isNotMojave || !isNotCatalina{
 			//log("This is an older macOS installer app, it needs the --applicationpath argument to use " + pname)
-		mainCMD.append("--applicationpath \"\(cvm.shared.app.path!)\"")
+		if CurrentUser.isRoot{
+			mainCMD.append("--applicationpath")
+			mainCMD.append(cvm.shared.app.path!)
+		}else{
+			mainCMD.append("--applicationpath \"\(cvm.shared.app.path!)\"")
+		}
 		//}
 		
 		//if tinu have to create a mac os installation on the selected drive
@@ -220,8 +233,13 @@ extension InstallMediaCreationManager{
 			mainCMD.append("--agreetolicense")
 			
 			//the command is adjusted if the version of the installer supports apfs and if the user prefers to avoid upgrading to apfs
+			
 			if !(cvm.shared.app.info.notSupportsAPFS() ?? true) || !isNotMojave{
-				if useAPFS || cvm.shared.disk.aPFSContaninerBSDDrive != nil{
+				let shouldConvert = useAPFS || cvm.shared.disk.aPFSContaninerBSDDrive != nil
+				if CurrentUser.isRoot{
+					mainCMD.append("--converttoapfs")
+					mainCMD.append(shouldConvert ? "YES" : "NO")
+				}else if shouldConvert{
 					mainCMD.append("--converttoapfs YES")
 				}else{
 					mainCMD.append("--converttoapfs NO")
@@ -234,6 +252,11 @@ extension InstallMediaCreationManager{
 		}
 		
 		var exec = "\"\(cvm.shared.app.path!)/Contents/Resources/\(cvm.shared.executableName)\""
+		
+		if CurrentUser.isRoot{
+			exec.removeFirst()
+			exec.removeLast()
+		}
 		
 		//this code is used to simulate results of createinstallmedia, saves time hen tesing the fial screen
 		if let scf = simulateCreateinstallmediaFail{

@@ -5,54 +5,54 @@
         "package": "Command",
         "repositoryURL": "https://github.com/ITzTravelInTime/Command.git",
         "state": {
-          "branch": null,
-          "revision": "9961c707fc6dedbd75ad34af48debe54d19fde8b",
-          "version": "2.1.1"
+          "branch": "main",
+          "revision": "c27ceb8df4724c6f5520e7267938661a0c0dec06",
+          "version": null
         }
       },
       {
         "package": "CommandSudo",
         "repositoryURL": "https://github.com/ITzTravelInTime/CommandSudo.git",
         "state": {
-          "branch": null,
-          "revision": "107ac9906ebd282075308db12afa15bd79cc9f02",
-          "version": "1.1.8"
+          "branch": "main",
+          "revision": "7782ea07ffb980e1e44e6514157a8d4c9bf4d2de",
+          "version": null
         }
       },
       {
         "package": "SwiftCPUDetect",
         "repositoryURL": "https://github.com/ITzTravelInTime/SwiftCPUDetect.git",
         "state": {
-          "branch": null,
+          "branch": "main",
           "revision": "97a6bb29ca63a14368ec557c3f401148ed290814",
-          "version": "1.2.0"
+          "version": null
         }
       },
       {
         "package": "SwiftLoggedPrint",
         "repositoryURL": "https://github.com/ITzTravelInTime/SwiftLoggedPrint.git",
         "state": {
-          "branch": null,
+          "branch": "main",
           "revision": "2dc90f3715e158635a9a278a46f5e2eb11ef606b",
-          "version": "3.0.3"
+          "version": null
         }
       },
       {
         "package": "TINUNotifications",
         "repositoryURL": "https://github.com/ITzTravelInTime/TINUNotifications.git",
         "state": {
-          "branch": null,
+          "branch": "main",
           "revision": "389a8cd77ad8efc0084cd1e04991c94ed272427e",
-          "version": "3.0.6"
+          "version": null
         }
       },
       {
         "package": "TINURecovery",
         "repositoryURL": "https://github.com/ITzTravelInTime/TINURecovery.git",
         "state": {
-          "branch": null,
+          "branch": "main",
           "revision": "afab6b83fec07cd7b5f7a5c94129538721552047",
-          "version": "3.7.6"
+          "version": null
         }
       }
     ]
