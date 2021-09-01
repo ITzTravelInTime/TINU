@@ -161,20 +161,25 @@ extension InstallMediaCreationManager{
 			llo = result.output.last?.lowercased()
 			
 			var mol = 1
+			var opened = false
 			
-			if le != nil{
+			if !(le ?? "osascript").contains("osascript"){
 				for c in le.reversed(){
 					if c == ")"{
 						px = 0
 						mol = 1
+						opened = true
+						continue
 					}
 					
-					if let n = Int(String(c)){
+					if let n = Int(String(c)), opened{
 						px += n * mol;
 						mol *= 10
+						continue
 					}
 					
 					if c == "("{
+						opened = false
 						break
 					}
 				}

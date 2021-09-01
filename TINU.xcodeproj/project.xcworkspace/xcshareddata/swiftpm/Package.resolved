@@ -6,7 +6,7 @@
         "repositoryURL": "https://github.com/ITzTravelInTime/Command.git",
         "state": {
           "branch": "main",
-          "revision": "c27ceb8df4724c6f5520e7267938661a0c0dec06",
+          "revision": "2eed73ce5907ca99be1ff9221db9ca1c7147b93e",
           "version": null
         }
       },
@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/ITzTravelInTime/CommandSudo.git",
         "state": {
           "branch": "main",
-          "revision": "7782ea07ffb980e1e44e6514157a8d4c9bf4d2de",
+          "revision": "fdac139218b7d3fc93a7e43433b55b7d32398bd4",
           "version": null
         }
       },
