@@ -5,54 +5,54 @@
         "package": "Command",
         "repositoryURL": "https://github.com/ITzTravelInTime/Command.git",
         "state": {
-          "branch": "main",
+          "branch": null,
           "revision": "2eed73ce5907ca99be1ff9221db9ca1c7147b93e",
-          "version": null
+          "version": "2.1.2"
         }
       },
       {
         "package": "CommandSudo",
         "repositoryURL": "https://github.com/ITzTravelInTime/CommandSudo.git",
         "state": {
-          "branch": "main",
-          "revision": "4455f4f616c5cc5f6a19c83bcf08f5fb2e028057",
-          "version": null
+          "branch": null,
+          "revision": "3d78be5f2d5d4ab63da88b3ad8928658a6c7ad3a",
+          "version": "1.1.13"
         }
       },
       {
         "package": "SwiftCPUDetect",
         "repositoryURL": "https://github.com/ITzTravelInTime/SwiftCPUDetect.git",
         "state": {
-          "branch": "main",
+          "branch": null,
           "revision": "97a6bb29ca63a14368ec557c3f401148ed290814",
-          "version": null
+          "version": "1.2.0"
         }
       },
       {
         "package": "SwiftLoggedPrint",
         "repositoryURL": "https://github.com/ITzTravelInTime/SwiftLoggedPrint.git",
         "state": {
-          "branch": "main",
+          "branch": null,
           "revision": "2dc90f3715e158635a9a278a46f5e2eb11ef606b",
-          "version": null
+          "version": "3.0.3"
         }
       },
       {
         "package": "TINUNotifications",
         "repositoryURL": "https://github.com/ITzTravelInTime/TINUNotifications.git",
         "state": {
-          "branch": "main",
+          "branch": null,
           "revision": "389a8cd77ad8efc0084cd1e04991c94ed272427e",
-          "version": null
+          "version": "3.0.6"
         }
       },
       {
         "package": "TINURecovery",
         "repositoryURL": "https://github.com/ITzTravelInTime/TINURecovery.git",
         "state": {
-          "branch": "main",
+          "branch": null,
           "revision": "afab6b83fec07cd7b5f7a5c94129538721552047",
-          "version": null
+          "version": "3.7.6"
         }
       }
     ]

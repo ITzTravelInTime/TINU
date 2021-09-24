@@ -1249,48 +1249,48 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ITzTravelInTime/TINURecovery.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.7.6;
 			};
 		};
 		C6254B7B268933600082C7F5 /* XCRemoteSwiftPackageReference "TINUNotifications" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ITzTravelInTime/TINUNotifications.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.6;
 			};
 		};
 		C6254B7E268933740082C7F5 /* XCRemoteSwiftPackageReference "Command" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ITzTravelInTime/Command.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.2;
 			};
 		};
 		C6254B81268933950082C7F5 /* XCRemoteSwiftPackageReference "CommandSudo" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ITzTravelInTime/CommandSudo.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.13;
 			};
 		};
 		C6254B8426897EA20082C7F5 /* XCRemoteSwiftPackageReference "SwiftCPUDetect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ITzTravelInTime/SwiftCPUDetect.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
 			};
 		};
 		C6BF64822692B61E00A0B094 /* XCRemoteSwiftPackageReference "SwiftLoggedPrint" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ITzTravelInTime/SwiftLoggedPrint.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

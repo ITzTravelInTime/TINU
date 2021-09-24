@@ -21,7 +21,7 @@ public extension Diskutil{
 			
 			let exec = "/usr/sbin/diskutil"
 			
-			ret = (useAdminPrivileges ? Command.Sudo.run(cmd: exec, args: args, shouldUseSudo: false) : Command.run(cmd: exec, args: args))
+			ret = (useAdminPrivileges ? Command.Sudo.run(cmd: exec, args: args, shouldActuallyUseSudo: false) : Command.run(cmd: exec, args: args))
 			
 		}
 		
