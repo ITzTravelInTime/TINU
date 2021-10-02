@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSAppleEventsUsageDescription</key>
-	<string>TINU needs to peform apple scripts in order to work</string>
-	<key>NSSystemAdministrationUsageDescription</key>
-	<string>TINU needs to perform privileged operations in order to successfully create bootable macOS installers</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -28,11 +24,15 @@
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>TINU needs to peform apple scripts in order to work</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright (c) 2017-2021 Pietro Caruso (ITzTravelInTime)</string>
 	<key>NSMainStoryboardFile</key>
 	<string>Main</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSSystemAdministrationUsageDescription</key>
+	<string>TINU needs to perform privileged operations in order to successfully create bootable macOS installers</string>
 </dict>
 </plist>
