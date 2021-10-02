@@ -65,6 +65,7 @@ extension CreationProcess{
 			let needed = neededFiles
 			var check: Int = needed.count
 			var isCurrentExecutable = false
+			var hasDMG = false
 			for c in needed{
 				if c.isEmpty{
 					check-=1
@@ -75,6 +76,9 @@ extension CreationProcess{
 				for d in c{
 					if manager.fileExists(atPath: app.path + d){
 						check-=1
+						if URL(fileURLWithPath: app.path + d).pathExtension == "dmg"{
+							hasDMG = true
+						}
 						breaked.toggle()
 						break
 					}
@@ -89,12 +93,17 @@ extension CreationProcess{
 							break
 						}
 					}
-					break
+					
+					if !isCurrentExecutable && hasDMG {
+						isCurrentExecutable.toggle()
+					}
+					
+					//break
 				}
 			}
 			
 			if isCurrentExecutable{
-				ret.status = .notInstaller
+				ret.status = hasDMG ? .unsupported : .notInstaller
 				return ret
 			}
 			
@@ -251,7 +260,7 @@ extension CreationProcess{
 						}
 						
 						switch capp.status {
-						case .usable, .broken, .tooBig, .tooLittle:
+						case .usable, .broken, .tooBig, .tooLittle, .unsupported:
 							log("    \(appURL.path) has been added to the apps list")
 							ret.append(capp)
 							break

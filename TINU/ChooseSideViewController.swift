@@ -27,7 +27,6 @@ class ChooseSideViewController: GenericViewController, ViewID {
 	
 	private var count = 0
 	
-	
 	#if sudoStartup
 	private static var _already_prompted = false
 	private static let _prompt_sip = "SIPPrompt"
@@ -108,7 +107,9 @@ class ChooseSideViewController: GenericViewController, ViewID {
 				Alert.window = self.window
 				
 				//todo: localize this
-				let alert = Alert(message: "TINU Needs to be opened using diagnostics mode in order to work!", description: "SIP (System Integrity Protection) is currently enabled, and it will prevent TINU from working (this is due to a problem introduced in Catalina).\n\nYou can avoid this by chosing to use the diagnostics mode with administrator privileges (because it avoids this issue by using the privileges provvided by the terminal) or by .").adding(button: .init(text: "Use diagnostics mode", keyEquivalent: "\r")).adding(button: .init(text: "Continue anyway")).send().isFirstButton()
+				//let alert = Alert(message: "TINU needs be re-opened using diagnostics mode!", description: "SIP (System Integrity Protection) is currently enabled, and it will prevent TINU from working (this is due to a problem introduced in Catalina).\n\nYou can avoid this by chosing to use the diagnostics mode with administrator privileges (because it avoids this issue by using the privileges provvided by the terminal).").adding(button: .init(text: "Use diagnostics mode", keyEquivalent: "\r")).adding(button: .init(text: "Continue anyway")).send().isFirstButton()
+				
+				let alert = dialogGenericWithManagerBool(self, name: "SIPDialog")
 				
 				if alert{
 					

@@ -131,7 +131,13 @@
 			"unmutable" : {
 				"openEFIMounter" : "Use\nEFI Partition Mounter",
 				"openInstallation" : "Install macOS",
-				"openInstaller" : "Create a bootable\nmacOS installer"
+				"openInstaller" : "Create a bootable\nmacOS installer",
+				"SIPDialogTitle" : "TINU needs be re-opened using diagnostics mode!",
+				"SIPDialog" : "SIP (System Integrity Protection) is currently enabled, and it will prevent TINU from working (this is due to a problem introduced in Catalina).\n\nYou can avoid this by chosing to use the diagnostics mode with administrator privileges (because it avoids this issue by using the privileges provvided by the terminal).",
+				"SIPDialog1" : "Use diagnostics mode",
+				"SIPDialog1Key" : "\r",
+				"SIPDialog2" : "Continue anyway",
+				"SIPDialog2Key" : ""
 			}
 		},
 		"InfoViewController":{
@@ -343,6 +349,8 @@
 				"appDamagedToolTip" : "This macOS installer app is not usable bacause it's missing some internal elements, you need the full installer app from the App Store which weights more than 5 gb\n\nPath: ${path}",
 				"appErrorWarn" : "Error: ${name}",
 				"appErrorToolTip" : "This macOS installer app is not usable bacause there was an error while trying to calculate it's size\n\nPath: ${path}",
+				"appUnsupportedWarn" : "Unsupported: ${name}",
+				"appUnsupportedToolTip" : "This macOS installer app is not usable bacause it isn't supported by TINU\n\nPath: ${path}",
 				"driveNormalToolTip" : "${size}${mount}"
 			}
 		},

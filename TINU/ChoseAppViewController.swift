@@ -158,6 +158,9 @@ class ChoseAppViewController: GenericViewController, ViewID {
 				case .badAlias:
 					msgboxWithManager(self, name: "invalidAliasDialog", parseList: replist)
 					return
+			case .unsupported:
+				msgboxWithManager(self, name: "invalidAppDialog", parseList: replist)
+				return
 			}
 			
 		})

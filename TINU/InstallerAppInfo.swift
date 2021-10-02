@@ -28,6 +28,7 @@ public struct InstallerAppInfo: UIRepresentable{
 		case tooBig
 		case tooLittle
 		case badAlias
+		case unsupported = 255
 	}
 	
 	var status: Status

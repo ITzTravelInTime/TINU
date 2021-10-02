@@ -131,7 +131,13 @@
 			"unmutable" : {
 				"openEFIMounter" : "Usa\nEFI Partition Mounter",
 				"openInstallation" : "Installa macOS",
-				"openInstaller" : "Crea un supporto di\ninstallazione di macOS"
+				"openInstaller" : "Crea un supporto di\ninstallazione di macOS",
+				"SIPDialogTitle" : "TINU deve essere riaperto usando la Modalità diagnostica",
+				"SIPDialog" : "La SIP (System Integrity Protection) è attivata, ed impedisce a TINU di funzionare come dovrebbe (questo succede a causa di alcune limitazioni introdotte in Catalina).\n\nPuoi evitare questo se scegli di usare la modalità diagnostica con privilegi di amministratore (perchè sfrutta i privilegi di accesso forniti dal terminale per evitare questo problema).",
+				"SIPDialog1" : "Usa la mod. diagnostica",
+				"SIPDialog1Key" : "\r",
+				"SIPDialog2" : "Continua lo stesso",
+				"SIPDialog2Key" : ""
 			}
 		},
 		"InfoViewController":{
@@ -344,6 +350,8 @@
 				"appDamagedToolTip" : "Quest'app di installazione di macOS non è utilizzabile perchè è danneggiata e non contiene alcuni elementi richiesti, ti serve l'app di installazione completa presa da App Store, e che pesa come minimo, più di 5 GB \n\nPercorso: ${path}",
 				"appErrorWarn" : "Errore: ${name}",
 				"appErrorToolTip" : "Non è possibile usare quest'app di installazione di macOS perchè si è verificato un errore durante la verifica della dimensione dell'app stessa.\n\nPercorso: ${path}",
+				"appUnsupportedWarn" : "Non supportata: ${name}",
+				"appUnsupportedToolTip" : "Non è possibile usare quest'app di installazione di macOS perchè non è supportata da TINU.\n\nPercorso: ${path}",
 				"driveNormalToolTip" : "${size}${mount}"
 			}
 		},

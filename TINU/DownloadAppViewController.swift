@@ -23,7 +23,6 @@ fileprivate struct AppDownloadManager: CodableDefaults, Codable, Equatable{
 	static let defaultResourceFileExtension = "json"
 }
 
-
 public class DownloadAppViewController: ShadowViewController, ViewID {
 	
 	public let id: String = "DownloadAppViewController"

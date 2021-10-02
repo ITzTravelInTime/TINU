@@ -132,10 +132,16 @@ class DriveView: ShadowView, ViewID {
 				if isBigger{
 					self.setToolTipAndWarn("appTooBig")
 				}else{
-					if self.current!.app!.status == .broken{
+					switch current!.app!.status{
+					case .broken:
 						self.setToolTipAndWarn("appDamaged")
-					}else{
+						break
+					case .unsupported:
+						self.setToolTipAndWarn("appUnsupported")
+						break
+					default:
 						self.setToolTipAndWarn("appError")
+						break
 					}
 				}
 			}
