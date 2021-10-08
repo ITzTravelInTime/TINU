@@ -10,17 +10,18 @@ Allows you to create easily a macOS install media without messing around with co
 # For the latest Source code check out the development branch!
 
 # Features:
+- No need for guides or instructions! Just follow the very simple on-screen indications to very easily start the bootable macOS installer creation process.
 - Fully open: You can see how this programs works and you can freely contribute to it! (See the `Repository rules` and the `Note that` sections of this file)
-- Simple-to-use UI that allows you to easily start the bootable macOS installer creation process.
-- Support for multiple languages (currently just italian, but more will be added with future updates once the system which allows it gets improoved)
-- Can work with every macOS installer app that has the createinstallmedia executable inside its resources folder (including also beta and newly released installers).
-- You can use any erasable volume that's large enought (see the `Requirements` section for size requirements).
-- 100% clean: The bootable macOS installers created with this tool are completely vanilla, just as if you created them using the command line "createinstallmedia" method in the Terminal.
-- Does not require any special preparations. Just open the program, make sure you have a USB drive plugged in and have a macOS installer app on your disk.
+- Support for multiple languages (currently just italian and english, but more will be added with future updates once the system which allows it gets improoved)
+- Can work with every macOS installer app that has the `createinstallmedia` executable inside its internal resources folder (including also beta and newly released installers).
+- 100% clean using the official apple's method: The bootable macOS installers created with this tool are made using the official apple's `createinstallmedia` method, just as if you created them using the command line, this ensures the best and the cleanest results avoiding all the problems that modded installers have.
+- Does not require any special preparations. Just open the program, make sure you have a big enought USB drive plugged in (see the `Requirements` section) and have a macOS installer app on your disk.
 - No need to use Disk Utility first. TINU can format your drive or partition for you, if it's necessary.
+- Integrated downloads from apple for the macOS installer apps (to access them open the app, go to the menu bar, and then `Tools->Download a macOS installer`).
 - Integrated EFI partition mounter tool.
-- Works using the latest versions of macOS and will also support newer Mac installers out of the box without requiring an update.
 - Automatic Clover and OpenCore EFI folder installer.
+- Tested to work on all the latest macOS releases.
+- Makes use of the latest Swift 5 language and the latest Xcode releases.
 
  (To suggest a new feature please contact us)
 
@@ -70,7 +71,6 @@ Contact the project creator (ITzTravelInTime aka Pietro):
 - Create an issue here on github for any problems, bugs, spell/grammar errors, missplacements or just for suggestions (especially the ones from designers and developers are always welcome).
 
 # Note that:
-- This software is currently under GNU GPL v2 license so any new branch/mod/third party release must be open source and under the same license.
 - We (the project creator and othe people involved with active developmment) assume no responsibility for any use of this app and this source code, use them at your own risk!
 - We (the project creator and othe people involved with active developmment) do not guarantee support to you, this is only an open source project done in our free time, not a product released by a company!
 - This project is born only for educational and demonstrative purposes, it's not intended to be used for commercial purposes.
@@ -100,4 +100,3 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
