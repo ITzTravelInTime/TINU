@@ -18,7 +18,7 @@
 "144-fg-Jw3.title" = "Usa selezione per trovare";
 
 /* Class = "NSMenu"; title = "Other Apps by Pietro Caruso"; ObjectID = "1A2-ia-PxP"; */
-"1A2-ia-PxP.title" = "Altre App di Pietro Caruso";
+"1A2-ia-PxP.title" = "Altre App di ITzTravelInTime (Pietro Caruso)";
 
 /* Class = "NSTextFieldCell"; title = "Pietro Caruso (ITzTravelInTime)"; ObjectID = "1E2-eu-ixH"; */
 "1E2-eu-ixH.title" = "Pietro Caruso (ITzTravelInTime)";
@@ -201,7 +201,7 @@
 "LE2-aR-0XJ.title" = "Porta tutto in primo piano";
 
 /* Class = "NSMenuItem"; title = "Other Apps by Pietro Caruso"; ObjectID = "LYj-L2-bAi"; */
-"LYj-L2-bAi.title" = "Altre App di Pietro Caruso";
+"LYj-L2-bAi.title" = "Altre App di ITzTravelInTime (Pietro Caruso)";
 
 /* Class = "NSMenuItem"; title = "Find"; ObjectID = "LZN-j7-Fpu"; */
 "LZN-j7-Fpu.title" = "Cerca";
@@ -491,6 +491,9 @@
 /* Class = "NSButtonCell"; title = "Contact us"; ObjectID = "quU-KF-LqR"; */
 "quU-KF-LqR.title" = "Contattaci";
 
+/* Class = "NSMenuItem"; title = "Contact us"; ObjectID = "gy0-M1-t4M"; */
+"gy0-M1-t4M.title" = "Contattaci";
+
 /* Class = "NSButtonCell"; title = "Back"; ObjectID = "r7I-fo-ahn"; */
 "r7I-fo-ahn.title" = "Indietro";
 
@@ -568,3 +571,6 @@
 
 /* Class = "NSMenu"; title = "Tools"; ObjectID = "zyp-Xz-sYh"; */
 "zyp-Xz-sYh.title" = "Strumenti";
+
+/* Class = "NSButtonCell"; title = "License"; ObjectID = "6Pb-re-MWT"; */
+"6Pb-re-MWT.title" = "Licenza";

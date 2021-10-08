@@ -29,47 +29,17 @@
                                                 <action selector="openCredits:" target="Voe-Tx-rLC" id="yOb-s9-3P2"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Frequently Asked Questions (FAQs)" id="FbI-OH-25A" customClass="ExternalLinkMenuItem" customModule="TINU" customModuleProvider="target">
+                                        <menuItem isSeparatorItem="YES" id="hoX-sj-Tyv"/>
+                                        <menuItem title="TINU's Github repo" id="FbI-OH-25A" customClass="ExternalLinkMenuItem" customModule="TINU" customModuleProvider="target">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/ITzTravelInTime/TINU/wiki/FAQs"/>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/ITzTravelInTime/TINU"/>
                                             </userDefinedRuntimeAttributes>
                                         </menuItem>
-                                        <menuItem title="Related to TINU" id="TBQ-DB-mnf">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Related to TINU" id="URd-Yp-HZH">
-                                                <items>
-                                                    <menuItem title="Contact us" id="Yz5-Q0-A5t">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="openContacts:" target="Voe-Tx-rLC" id="wun-HG-6aq"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Source code on GITHub" id="i9l-T5-q7n" customClass="ExternalLinkMenuItem" customModule="TINU" customModuleProvider="target">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/ITzTravelInTime/TINU"/>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </menuItem>
-                                                    <menuItem title="Discussion (English)" id="xmZ-Va-1RL" customClass="ExternalLinkMenuItem" customModule="TINU" customModuleProvider="target">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://www.insanelymac.com/forum/topic/326959-tinu-the-bootable-macos-installer-creation-tool-mac-app/"/>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </menuItem>
-                                                    <menuItem title="Discussion (Italian)" id="qkb-CO-bYt" customClass="ExternalLinkMenuItem" customModule="TINU" customModuleProvider="target">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://www.insanelymac.com/forum/topic/333261-tinu-app-per-creare-chiavette-di-installazione-di-macos-thread-in-italiano/"/>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </menuItem>
-                                                </items>
-                                            </menu>
-                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="yCB-So-MEx"/>
-                                        <menuItem title="Other Apps by Pietro Caruso" id="LYj-L2-bAi">
+                                        <menuItem title="Other Apps by ITzTravelInTime (Pietro Caruso)" id="LYj-L2-bAi">
                                             <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Other Apps by Pietro Caruso" id="1A2-ia-PxP">
+                                            <menu key="submenu" title="Other Apps by ITzTravelInTime (Pietro Caruso)" id="1A2-ia-PxP">
                                                 <items>
                                                     <menuItem title="EFI Partition Mounter" hidden="YES" id="GbK-s1-Pag" customClass="ExternalLinkMenuItem" customModule="TINU" customModuleProvider="target">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
@@ -392,14 +362,13 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Tools" autoenablesItems="NO" id="zyp-Xz-sYh">
                                     <items>
-                                        <menuItem title="EFI partition mounter" id="h6A-oj-VQy">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="EFI partition mounter" keyEquivalent="e" id="h6A-oj-VQy">
                                             <connections>
                                                 <action selector="openEFIPartitionTool:" target="Voe-Tx-rLC" id="fJv-q6-pEO"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Download a macOS Installer" id="SkF-ZK-107">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        <menuItem title="Download a macOS Installer" keyEquivalent="d" id="SkF-ZK-107">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                             <connections>
                                                 <action selector="openDownloadMacApp:" target="Voe-Tx-rLC" id="qdi-pe-FGC"/>
                                             </connections>
@@ -411,9 +380,14 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Help" systemMenu="help" autoenablesItems="NO" id="F2S-fz-NVQ">
                                     <items>
-                                        <menuItem title="TINU Help" enabled="NO" keyEquivalent="?" id="FKE-Sm-Kum">
+                                        <menuItem title="TINU Help" hidden="YES" enabled="NO" keyEquivalent="?" id="FKE-Sm-Kum">
                                             <connections>
                                                 <action selector="showHelp:" target="Ady-hI-5gd" id="y7X-2Q-9no"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Contact us" keyEquivalent="?" id="gy0-M1-t4M">
+                                            <connections>
+                                                <action selector="openContacts:" target="Voe-Tx-rLC" id="BlU-iZ-zam"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Frequently asked questions (FAQs)" id="3Mm-4Z-mGB" customClass="ExternalLinkMenuItem" customModule="TINU" customModuleProvider="target">
@@ -444,11 +418,11 @@
                         <outlet property="InstallMacOSItem" destination="yxk-al-dbr" id="Q6E-ge-g3D"/>
                         <outlet property="LogItem" destination="09g-wy-2rt" id="D75-er-mVJ"/>
                         <outlet property="QuitMenuButton" destination="4sb-4s-VLi" id="Hqz-MU-ipf"/>
+                        <outlet property="contactUS" destination="gy0-M1-t4M" id="obg-jh-a6Q"/>
                         <outlet property="efiMounterMenuItem" destination="h6A-oj-VQy" id="uKs-fC-dDf"/>
                         <outlet property="getMacOSApp" destination="SkF-ZK-107" id="Ge4-jP-edm"/>
                         <outlet property="otherApps" destination="LYj-L2-bAi" id="apI-dP-89Y"/>
                         <outlet property="otherAppsSeparator" destination="yCB-So-MEx" id="H9l-41-Hfd"/>
-                        <outlet property="tinuRelated" destination="TBQ-DB-mnf" id="fTG-h2-afS"/>
                         <outlet property="toolsMenuItem" destination="89I-JN-t0I" id="CnG-M0-fLU"/>
                         <outlet property="verboseItem" destination="qpo-04-kkH" id="4PZ-7O-xKZ"/>
                         <outlet property="verboseItemSudo" destination="AEE-nJ-CZk" id="mpw-du-usL"/>
@@ -591,8 +565,9 @@
                 <windowController storyboardIdentifier="Credits" id="Fa1-hC-JST" customClass="CreditsWindowController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" identifier="Credits" title="TINU: credits" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="creditsWindow" tabbingMode="disallowed" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="qfy-fU-dmC">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" fullSizeContentView="YES"/>
-                        <rect key="contentRect" x="294" y="328" width="480" height="265"/>
+                        <rect key="contentRect" x="294" y="328" width="520" height="265"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1050"/>
+                        <value key="minSize" type="size" width="540" height="265"/>
                         <connections>
                             <outlet property="delegate" destination="Fa1-hC-JST" id="c5H-Ut-OD3"/>
                         </connections>
@@ -603,22 +578,22 @@
                 </windowController>
                 <customObject id="780-ZK-2AD" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2652" y="222.5"/>
+            <point key="canvasLocation" x="-2632" y="220"/>
         </scene>
         <!--Credits View Controller-->
         <scene sceneID="q53-Jx-mMW">
             <objects>
                 <viewController id="byj-JF-Hql" customClass="CreditsViewController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="zZP-ca-JNf">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="577"/>
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="577"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="JVJ-Nn-bca">
-                                <rect key="frame" x="20" y="352" width="440" height="5"/>
+                                <rect key="frame" x="20" y="352" width="500" height="5"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             </box>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z8p-em-a5o">
-                                <rect key="frame" x="18" y="418" width="444" height="31"/>
+                                <rect key="frame" x="18" y="418" width="504" height="31"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="TINU" id="b2L-ht-3Hn">
                                     <font key="font" metaFont="system" size="20"/>
@@ -626,11 +601,6 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D7s-lp-eRA">
-                                <rect key="frame" x="190" y="457" width="100" height="100"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="AppIcon" id="SlX-3R-AzI"/>
-                            </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z4N-WY-xgG">
                                 <rect key="frame" x="18" y="363" width="443" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -641,7 +611,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L9S-67-FyL">
-                                <rect key="frame" x="340" y="25" width="126" height="32"/>
+                                <rect key="frame" x="400" y="25" width="126" height="32"/>
                                 <buttonCell key="cell" type="push" title="Contact us" bezelStyle="rounded" image="NSListViewTemplate" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="quU-KF-LqR">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -651,7 +621,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RtS-qT-7Vu">
-                                <rect key="frame" x="18" y="305" width="444" height="14"/>
+                                <rect key="frame" x="18" y="305" width="504" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Coding:" id="TvO-Ld-v0Z">
                                     <font key="font" metaFont="smallSystemBold"/>
@@ -660,7 +630,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z1Z-Ka-mbC">
-                                <rect key="frame" x="66" y="270" width="395" height="28"/>
+                                <rect key="frame" x="66" y="270" width="455" height="28"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Pietro Caruso (ITzTravelInTime) - Main developer Thomas Tempelmann" id="7vv-ZS-5eD">
                                     <font key="font" metaFont="smallSystem"/>
@@ -669,7 +639,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BSV-gd-Ocs">
-                                <rect key="frame" x="17" y="248" width="444" height="14"/>
+                                <rect key="frame" x="17" y="248" width="504" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Icons:" id="FFu-la-Iyd">
                                     <font key="font" metaFont="smallSystemBold"/>
@@ -678,7 +648,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yIf-gH-ki4">
-                                <rect key="frame" x="65" y="190" width="375" height="50"/>
+                                <rect key="frame" x="65" y="190" width="435" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="cdb-AU-e6h">
                                     <font key="font" metaFont="smallSystem"/>
@@ -688,7 +658,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ntc-vU-Ihg">
-                                <rect key="frame" x="18" y="327" width="444" height="19"/>
+                                <rect key="frame" x="18" y="327" width="504" height="19"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Credits:" id="Phu-dt-TGi">
                                     <font key="font" metaFont="systemBold" size="16"/>
@@ -707,7 +677,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8se-aw-38X">
-                                <rect key="frame" x="17" y="399" width="444" height="17"/>
+                                <rect key="frame" x="17" y="399" width="504" height="17"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Version: " id="cbv-XH-G2E">
                                     <font key="font" metaFont="system"/>
@@ -716,7 +686,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jwm-Ad-YWq">
-                                <rect key="frame" x="203" y="25" width="137" height="32"/>
+                                <rect key="frame" x="263" y="25" width="137" height="32"/>
                                 <buttonCell key="cell" type="push" title="Source code" bezelStyle="rounded" image="NSListViewTemplate" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C2J-4U-6T1">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -726,7 +696,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AjV-pz-5Yz">
-                                <rect key="frame" x="17" y="168" width="444" height="14"/>
+                                <rect key="frame" x="17" y="168" width="504" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Special thanks to:" id="mNh-1f-wsf">
                                     <font key="font" metaFont="smallSystemBold"/>
@@ -735,7 +705,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uIz-9c-geX">
-                                <rect key="frame" x="65" y="76" width="396" height="84"/>
+                                <rect key="frame" x="65" y="76" width="456" height="84"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="GPN-6Q-q2a">
                                     <font key="font" metaFont="smallSystem"/>
@@ -744,8 +714,25 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gIY-z1-fOV">
+                                <rect key="frame" x="156" y="25" width="107" height="32"/>
+                                <buttonCell key="cell" type="push" title="License" bezelStyle="rounded" image="NSListViewTemplate" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6Pb-re-MWT">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="openLicense:" target="byj-JF-Hql" id="jn8-eh-c5q"/>
+                                </connections>
+                            </button>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D7s-lp-eRA">
+                                <rect key="frame" x="218" y="457" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="AppIcon" id="SlX-3R-AzI"/>
+                            </imageView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="jwm-Ad-YWq" firstAttribute="leading" secondItem="gIY-z1-fOV" secondAttribute="trailing" constant="12" symbolic="YES" id="6KS-s3-JMp"/>
+                            <constraint firstAttribute="bottom" secondItem="gIY-z1-fOV" secondAttribute="bottom" constant="32" id="7ho-m9-gCU"/>
                             <constraint firstAttribute="trailing" secondItem="L9S-67-FyL" secondAttribute="trailing" constant="20" symbolic="YES" id="UJY-we-v0l"/>
                             <constraint firstAttribute="bottom" secondItem="jwm-Ad-YWq" secondAttribute="bottom" constant="32" id="ZTu-nL-7Pg"/>
                             <constraint firstItem="fr8-GD-yes" firstAttribute="leading" secondItem="zZP-ca-JNf" secondAttribute="leading" constant="20" symbolic="YES" id="dBu-SQ-xAl"/>
@@ -764,7 +751,7 @@
                 </viewController>
                 <customObject id="4H3-H2-GAy" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2652" y="810.5"/>
+            <point key="canvasLocation" x="-2635.5" y="810.5"/>
         </scene>
         <!--Contacts View Controller-->
         <scene sceneID="0Xk-dj-y7d">

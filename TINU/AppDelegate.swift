@@ -1,10 +1,21 @@
-//
-//  AppDelegate.swift
-//  TINU
-//
-//  Created by Pietro Caruso on 24/08/17.
-//  Copyright © 2017 Pietro Caruso. All rights reserved.
-//
+/*
+TINU, the open tool to create bootable macOS installers.
+Copyright (C) 2017-2021 Pietro Caruso (ITzTravelInTime)
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*/
 
 import Cocoa
 import Command
@@ -18,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     @IBOutlet weak var verboseItemSudo: NSMenuItem!
 	@IBOutlet weak var verboseItem: NSMenuItem!
     //@IBOutlet weak var vibrantButton: NSMenuItem!
-    @IBOutlet weak var tinuRelated: NSMenuItem!
+    @IBOutlet weak var contactUS: NSMenuItem!
     @IBOutlet weak var otherApps: NSMenuItem!
     @IBOutlet weak var QuitMenuButton: NSMenuItem!
     //@IBOutlet weak var focusAreaItem: NSMenuItem!
@@ -92,7 +103,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		//vibrantButton.isHidden = true
 		
 		let rec = !Recovery.status
-		tinuRelated     .isEnabled = rec
+		contactUS       .isEnabled = rec
 		otherApps       .isEnabled = rec
 		verboseItem     .isEnabled = rec
 		verboseItemSudo .isEnabled = rec
@@ -115,13 +126,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 			toolsMenuItem.isHidden = true
 		#endif
 		
-		UIManager.shared.showLicense = (Bundle.main.url(forResource: "License", withExtension: "rtf") != nil)
+		UIManager.shared.showLicense = false//(Bundle.main.url(forResource: "License", withExtension: "rtf") != nil)
 		
+		/*
 		if UIManager.shared.showLicense{
             print("License agreement file not found")
         }else{
             print("License agreement file found")
         }
+		*/
 		
 		Command.Sudo.authNotification = Notifications.make(id: "login", icon: nil)
 		
