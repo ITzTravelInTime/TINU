@@ -565,7 +565,7 @@
                 <windowController storyboardIdentifier="Credits" id="Fa1-hC-JST" customClass="CreditsWindowController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" identifier="Credits" title="TINU: credits" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="creditsWindow" tabbingMode="disallowed" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="qfy-fU-dmC">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" fullSizeContentView="YES"/>
-                        <rect key="contentRect" x="294" y="328" width="520" height="265"/>
+                        <rect key="contentRect" x="294" y="328" width="540" height="265"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1050"/>
                         <value key="minSize" type="size" width="540" height="265"/>
                         <connections>
