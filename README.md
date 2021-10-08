@@ -1,5 +1,5 @@
 # TINU
-TINU, the open tool to create bootable macOS installers 
+TINU, the open tool to create bootable macOS installers.
 
 [TINU Is Not Unibe**t]
 
@@ -75,6 +75,7 @@ Contact the project creator (ITzTravelInTime aka Pietro):
 - We (the project creator and othe people involved with active developmment) do not guarantee support to you, this is only an open source project done in our free time, not a product released by a company!
 - This project is born only for educational and demonstrative purposes, it's not intended to be used for commercial purposes.
 - This is a no-profit project, born only to let people to create macOS install medias in a more simple way and also to let them learn how to create this kind of apps.
+- Changes to the provvided source code are documented using git, so for any info about any changes made please see the commit history here on the repo.
 
 # Credits:
 - Apple for macos and installer apps and scripts.
@@ -85,6 +86,7 @@ Francesco Perchiazzi, Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa, Er
 - Pietro Caruso (ITzTravelInTime) project creator, maintainer and main developer.
 
 # Copyright
+TINU, the open tool to create bootable macOS installers.
 Copyright (C) 2017-2021 Pietro Caruso (ITzTravelInTime)
 
 This program is free software; you can redistribute it and/or modify
