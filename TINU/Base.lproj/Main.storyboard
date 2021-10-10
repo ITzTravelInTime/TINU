@@ -709,7 +709,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="GPN-6Q-q2a">
                                     <font key="font" metaFont="smallSystem"/>
-                                    <string key="title">Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa, Ermanno Nicoletti, Tommaso Dimatore, Massimiliano Faralli, Francesco Perchiazzi, Peter Paul Chato. Italian hackintosh group!!! on Facebook for testing. Hackintosh Italia on Telegram for using TINU. Hackintosh-forum.de for using TINU.</string>
+                                    <mutableString key="title">Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa, Ermanno Nicoletti, Tommaso Dimatore, Massimiliano Faralli, Francesco Perchiazzi, Peter Paul Chato, Antonio De Masi. Italian hackintosh group!!! on Facebook for testing. Hackintosh Italia on Telegram for using TINU. Hackintosh-forum.de for using TINU.</mutableString>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>

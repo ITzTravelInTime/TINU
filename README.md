@@ -80,7 +80,7 @@ Contact the project creator (ITzTravelInTime aka Pietro):
 # Credits:
 - Apple for macos and installer apps and scripts.
 - Special tahnks to:
-Francesco Perchiazzi, Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa, Ermanno Nicoletti, Tommaso Dimatore, Michele Vitiello Bonaventura, Massimiliano Faralli, Davide Dessì, Giorgio Dall'Aglio, Peter Paul Chato, the Facebook group ["Italian Hackintosh group!!"](https://www.facebook.com/groups/Italia.hackintosh/?fref=ts), the Telegram group ["Hackintosh Italia"](https://t.me/Hackintoshitalia).
+Francesco Perchiazzi, Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa, Ermanno Nicoletti, Tommaso Dimatore, Michele Vitiello Bonaventura, Massimiliano Faralli, Davide Dessì, Giorgio Dall'Aglio, Peter Paul Chato, Antonio De Masi, the Facebook group ["Italian Hackintosh group!!"](https://www.facebook.com/groups/Italia.hackintosh/?fref=ts), the Telegram group ["Hackintosh Italia"](https://t.me/Hackintoshitalia).
 - Gianmarco Gargiulo for the New app icon and usb drive image.
 - Thomas Tempelmann for help with the UI, grammar and the code.
 - Pietro Caruso (ITzTravelInTime) project creator, maintainer and main developer.
