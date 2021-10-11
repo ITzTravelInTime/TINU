@@ -507,7 +507,7 @@
 		C6DF04641F4F33C500D200B1 /* TINU */ = {
 			isa = PBXGroup;
 			children = (
-				DD223ECB27149C260048EA0F /* Screenshots */,
+				DD223EDC27149D0A0048EA0F /* Screenshots */,
 				C6E335AD26CED3570078FC0D /* LICENSE */,
 				C6E335AE26CED3570078FC0D /* README.md */,
 				C6DE523A247EB6EA00FBD2E1 /* TINU.entitlements */,
@@ -571,7 +571,7 @@
 			name = SharedCode;
 			sourceTree = "<group>";
 		};
-		DD223ECB27149C260048EA0F /* Screenshots */ = {
+		DD223EDC27149D0A0048EA0F /* Screenshots */ = {
 			isa = PBXGroup;
 			children = (
 				DD223ECD27149C5D0048EA0F /* 1.png */,
@@ -583,7 +583,7 @@
 				DD223ED327149C5D0048EA0F /* 7.png */,
 				DD223ED127149C5D0048EA0F /* 8.png */,
 			);
-			name = Screenshots;
+			path = Screenshots;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
