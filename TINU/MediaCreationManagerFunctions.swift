@@ -185,7 +185,7 @@ extension InstallMediaCreationManager{
 		
 		let oldPart = cvm.shared.disk.current
 		let newBSD = BSDID(tmpBSDName!.rawValue + "s2")
-		let newPart = Part(bsdName: newBSD, fileSystem: .hFS, partScheme: oldPart!.partScheme, hasEFI: true, size: oldPart!.size, isDrive: false, path: newBSD.mountPoint())
+		let newPart = Part(bsdName: newBSD, fileSystem: .hFS, isGUID: true, hasEFI: true, size: oldPart!.size, isDrive: false, path: newBSD.mountPoint(), support: .ok)
 		
 		cvm.shared.disk.current = newPart
 		

@@ -136,9 +136,10 @@ class DriveView: ShadowView, ViewID {
 			}
 			
 		}else{
-			
+			//TODO: Add support for multiple disk unusable states
 			if self.current?.app == nil{
-				self.toolTip = TextManager.getViewString(context: self, stringID: "driveNotUsableToolTip")
+				//self.toolTip = TextManager.getViewString(context: self, stringID: "driveNotUsableToolTip")
+				self.setToolTipAndWarn("driveUnusable")
 			}else{
 				if isBigger{
 					self.setToolTipAndWarn("appTooBig")
@@ -217,7 +218,7 @@ class DriveView: ShadowView, ViewID {
 			self.warnImage = NSImageView()
 		}
 		
-		if (self.current?.app != nil && (look.usesSFSymbols() || !self.isEnabled) && self.warnImage.superview == nil){
+		if ((look.usesSFSymbols() || !self.isEnabled) && self.warnImage.superview == nil){
 			let w: CGFloat = self.frame.width / 3
 			
 			self.warnImage.frame = (NSRect(x: 5, y: self.image.frame.origin.y, width: w, height: w))
@@ -288,7 +289,7 @@ class DriveView: ShadowView, ViewID {
 	private func setToolTipAndWarn(_ id: String){
 		var list: [String: String] = ["{path}" : (current?.path ?? ""), "{name}" : (current?.displayName ?? "")]
 		
-		list["{mount}"] = "\n\n" + (self.current?.path ?? "")
+		list["{mount}"] = self.current?.path != nil ? ("\n\n" + self.current!.path!) : ""
 		
 		var sz: String!
 		if self.current?.part != nil{

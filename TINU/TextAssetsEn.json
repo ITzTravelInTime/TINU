@@ -351,6 +351,8 @@
 				"appErrorToolTip" : "This macOS installer app is not usable bacause there was an error while trying to calculate it's size\n\nPath: ${path}",
 				"appUnsupportedWarn" : "Unsupported: ${name}",
 				"appUnsupportedToolTip" : "This macOS installer app is not usable bacause it isn't supported by TINU\n\nPath: ${path}",
+				"driveUnusableWarn": "Unusable: ${name}",
+				"driveUnusableToolTip": "The disk \"${name}\", can't be used for the creation of a bootable macOS installer!\n${size}${mount}",
 				"driveNormalToolTip" : "${size}${mount}"
 			}
 		},

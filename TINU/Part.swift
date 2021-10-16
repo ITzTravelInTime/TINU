@@ -22,14 +22,15 @@ import Cocoa
 //this is just a simple class that represents a drive, used fot the drive scan algoritm
 public class Part: UIRepresentable{
 	
-	init(bsdName: BSDID, fileSystem: Part.FileSystem, partScheme: Part.PartScheme, hasEFI: Bool, size: UInt64, isDrive: Bool, path: String? = nil) {
+	init(bsdName: BSDID, fileSystem: FileSystem, isGUID: Bool, hasEFI: Bool, size: UInt64, isDrive: Bool, path: String? = nil, support: CreationProcess.DiskInfo.DriveListItem.UsableState) {
 		self.bsdName = bsdName
 		self.fileSystem = fileSystem
-		self.partScheme = partScheme
+		self.isGUID = isGUID
 		self.hasEFI = hasEFI
 		self.size = size
 		self.isDrive = isDrive
 		self.path = path
+		self.status = support
 		
 		calculateChached()
 	}
@@ -55,6 +56,7 @@ public class Part: UIRepresentable{
 	}
 	*/
 	
+	
 	enum FileSystem{
 		case blank
 		case other
@@ -64,6 +66,9 @@ public class Part: UIRepresentable{
 		case coreStorage_container
 	}
 	
+	let fileSystem: FileSystem
+	
+	/*
 	enum PartScheme{
 		case blank
 		case gUID
@@ -71,11 +76,15 @@ public class Part: UIRepresentable{
 		case aPPLE
 	}
 	
-    let fileSystem: FileSystem
     let partScheme: PartScheme
-    let hasEFI: Bool
+    */
+	
+	let isGUID: Bool
+	
+	let hasEFI: Bool
 	let size: UInt64
 	let isDrive: Bool
+	let status: CreationProcess.DiskInfo.DriveListItem.UsableState
 	
 	var apfsBDSName: BSDID?
 	
@@ -107,7 +116,7 @@ public class Part: UIRepresentable{
 		print("Getting drive display name and name")
 		driveChachedName = bsdName.driveName()
 		
-		if hasEFI || !isDrive {
+		if !isDrive {
 			if path != nil{
 				print("  Using path-based name")
 				name = man.displayName(atPath: path!)

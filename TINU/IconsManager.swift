@@ -488,6 +488,10 @@ public final class IconsManager{
 		if let i = id.isRemovable(){
 			if !i{
 				image = IconsManager.shared.internalDiskIcon
+			}else if let i = id.isExternalHardDrive(){
+				if !i{
+					image = IconsManager.shared.externalDiskIcon
+				}
 			}
 		}
 		

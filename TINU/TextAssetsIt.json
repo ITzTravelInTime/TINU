@@ -352,6 +352,8 @@
 				"appErrorToolTip" : "Non è possibile usare quest'app di installazione di macOS perchè si è verificato un errore durante la verifica della dimensione dell'app stessa.\n\nPercorso: ${path}",
 				"appUnsupportedWarn" : "Non supportata: ${name}",
 				"appUnsupportedToolTip" : "Non è possibile usare quest'app di installazione di macOS perchè non è supportata da TINU.\n\nPercorso: ${path}",
+				"driveUnusableWarn": "Inutilizzabile: ${name}",
+				"driveUnusableToolTip": "Il dico \"${name}\", non può essere utilizzato per creare un support di installazione di macOS!\n${size}${mount}",
 				"driveNormalToolTip" : "${size}${mount}"
 			}
 		},

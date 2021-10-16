@@ -185,6 +185,12 @@ public struct BSDID: Codable, Hashable, Equatable, RawRepresentable{
 		return mountPoint() != nil
 	}
 	
+	///Used to detect external hard drives
+	public func isExternalHardDrive() -> Bool?{
+		let property = "EjectableOnly"
+		return (isDrive ? self : driveID).getInfoPropertyBool(named: property)
+	}
+	
 	public func isRemovable() -> Bool?{
 		var property = "Ejectable"
 		

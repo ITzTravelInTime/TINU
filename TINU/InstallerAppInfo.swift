@@ -32,7 +32,7 @@ public struct InstallerAppInfo: UIRepresentable{
 		return url?.path
 	}
 	
-	public enum Status: UInt8, Equatable{
+	public enum Status: UInt8, Equatable, Codable{
 		case usable = 0
 		case notInstaller
 		case broken

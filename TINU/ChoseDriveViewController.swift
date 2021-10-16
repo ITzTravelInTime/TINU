@@ -103,16 +103,16 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 		
 		let man = FileManager.default
 		
-		let isGUIDwEFI = item.partition != nil
-		
 		DispatchQueue.main.sync {
 			
-			if isGUIDwEFI{
+			if item.partition != nil{
 				let d = item.partition!
 				
 				let drivei = DriveView(frame: NSRect(x: 0, y: itemOriginY, width: DriveView.itemSize.width, height: DriveView.itemSize.height))
 				
-				let prt = Part(bsdName: d.DeviceIdentifier, fileSystem: .other, partScheme: isGUIDwEFI ? .gUID : .blank, hasEFI: isGUIDwEFI, size: d.Size, isDrive: !isGUIDwEFI, path: d.mountPoint)
+				drivei.isEnabled = (item.state == .ok)
+				
+				let prt = Part(bsdName: d.DeviceIdentifier, fileSystem: .other, isGUID: true, hasEFI: true, size: d.Size, isDrive: false, path: d.mountPoint, support: item.state)
 				
 				prt.tmDisk = man.fileExists(atPath: d.mountPoint! + "/tmbootpicker.efi") || man.directoryExistsAtPath(d.mountPoint! + "/Backups.backupdb")
 				
@@ -129,7 +129,9 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 			
 			let drivei = DriveView(frame: NSRect(x: 0, y: itemOriginY, width: DriveView.itemSize.width, height: DriveView.itemSize.height))
 			
-			let prt = Part(bsdName: d.DeviceIdentifier, fileSystem: .other, partScheme: isGUIDwEFI ? .gUID : .blank, hasEFI: isGUIDwEFI, size: d.Size, isDrive: !isGUIDwEFI, path: d.mountPoint)
+			drivei.isEnabled = (item.state == .ok)
+			
+			let prt = Part(bsdName: d.DeviceIdentifier.driveID, fileSystem: .other, isGUID: d.content == .gUID, hasEFI: d.hasEFIPartition(), size: d.Size, isDrive: true, path: d.mountPoint, support: item.state)
 			
 			prt.apfsBDSName = d.DeviceIdentifier
 			
@@ -177,7 +179,13 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 			
 			var drives = [DriveView]()
             
+			/*
 			for item in cvm.shared.disk.getUsableDriveListNew() ?? []{
+				self.makeAndDisplayItem(item, &drives)
+			}
+			*/
+			
+			for item in cvm.shared.disk.getUsableDriveListAll() ?? []{
 				self.makeAndDisplayItem(item, &drives)
 			}
 			

@@ -37,7 +37,7 @@ extension CreationProcess{
 				return false
 			}
 			
-			if current!.partScheme != .gUID || !(current!.hasEFI){
+			if !current!.isGUID || !current!.hasEFI || current.isDrive{
 				return true
 			}
 				
@@ -86,22 +86,156 @@ extension CreationProcess{
 		}
 		
 		func meetsRequirements(size bytes: UInt64) -> Bool{
-			let gb = UInt64(pow(10.0, 9.0))
+			let gbyte = UInt64(pow(10.0, 9.0))
 			
 			if simulateCreateinstallmediaFail != nil{
-				return !(bytes <= (2 * gb)) // 2 gb
+				return (bytes >= (2 * gbyte)) // 2 gb
 			}
 			
 			if ref.installMac{
-				return !(bytes <= (20 * gb)) //20 gb
+				return (bytes >= (30 * gbyte)) //20 gb
 			}
 			
-			return !(bytes <= (6 * gb)) // 6 gb
+			return (bytes >= (6 * gbyte)) // 6 gb
 		}
 		
 		struct DriveListItem{
+			enum UsableState: UInt8, Codable, Equatable{
+				case ok = 0
+				case tooSmall
+				case belongsToBoot
+				case runningThisAppFrom
+				case undefined
+			}
 			public let disk: Diskutil.Disk
 			public var partition: Diskutil.Partition! = nil
+			public var state: UsableState
+		}
+		
+		func getUsableDriveListAll() -> [DriveListItem]?{
+			var ret = [DriveListItem]()
+			
+			//just need to know which is the boot volume, to not allow the user to choose it
+			let boot = BSDID(fromMountPoint: "/")!
+			var boot_drives = [boot.driveID]
+			let execp = Bundle.main.executablePath!
+			
+			print("Boot volume BSDID: \(boot)")
+			
+			//new Codable-Based storage devices search
+			guard let data = Diskutil.List() else { return nil }
+			
+			log("Analyzing diskutil data to detect usable storage devices")
+			
+			//Retives the boot-volume virtual disks
+			for disk in data.allDisksAndPartitions{
+				if disk.DeviceIdentifier != boot_drives.first!{
+					continue
+				}
+				
+				guard let stores = disk.APFSPhysicalStores else { continue }
+				
+				for s in stores {
+					boot_drives.append(s.DeviceIdentifier.driveID)
+				}
+			}
+			
+			print("The boot drive devices are: ")
+			print(boot_drives)
+			
+			alldiskFor: for disk in data.allDisksAndPartitions{
+				log("    Drive: \(disk.DeviceIdentifier)")
+				
+				if disk.isAPFSContainer(){
+					log("      Drive is a container drive, skipping it")
+					continue
+				}
+				
+				ret.append(DriveListItem(disk: disk, partition: nil, state: .undefined))
+				let diskIndex = ret.count - 1
+				
+				if !meetsRequirements(size: disk.Size){
+					log("      Drive is not big enougth to be used for macOS installers, marking as unusable")
+					ret[diskIndex].state = .tooSmall
+					continue
+				}
+				
+				if (boot_drives.contains(disk.DeviceIdentifier)){
+					log("      Drive belongs to the boot drive")
+					ret[diskIndex].state = .belongsToBoot
+				}
+				
+				log("      Drive meets all the requirements")
+				
+				if ret[diskIndex].state == .undefined{
+					ret[diskIndex].state = .ok
+				}
+				
+				log("      scanning the partitions to find usable ones:")
+				
+				let hasEFI = disk.hasEFIPartition()
+				
+				partitionFor: for partition in disk.Partitions ?? []{
+					log("        Partition/Volume: \(partition.DeviceIdentifier)")
+					
+					let t = partition.content
+					
+					log("            Partition/Volume content: \( t == Diskutil.PartitionContentStrings.unusable ? "Other file system" : t.rawValue )")
+					
+					if t == .aPFSContainer || t == .coreStorageContainer{
+						log("            Partition is a container disk, skipping it")
+						continue
+					}
+					
+					/*
+					if t == .eFI{
+						log("            Partition is an EFI partition, skipping it")
+						continue
+					}
+					*/
+
+					if !partition.isMounted(){
+						log("            Partition is not mounted, it needs to be mounted in order to be detected and usable with what we need to do later on")
+						continue
+					}
+					
+					if hasEFI{
+						ret.append(.init(disk: disk, partition: partition, state: .undefined))
+					}
+					
+					let partIndex = hasEFI ? ret.count - 1 : diskIndex
+					
+					if !meetsRequirements(size: partition.Size){
+						log("            Partition is not big enough to be used as a mac os installer or to house a macOS installation, it will be marked as unusable")
+						
+						if hasEFI{
+							ret[partIndex].state = .tooSmall
+						}
+						
+						continue
+					}
+					
+					if execp.contains(partition.mountPoint!) {
+						log("            TINU is running from this partition, marking it as unusable")
+						
+						for i in diskIndex...partIndex{
+							ret[i].state = .runningThisAppFrom
+						}
+						
+						continue
+					}
+					
+					log("            Partition meets all the requirements, it will be added to the detected partitions list as usable")
+					
+					if hasEFI{
+						if ret[partIndex].state == .undefined{
+							ret[partIndex].state = .ok
+						}
+					}
+				}
+			}
+			
+			return ret
 		}
 		
 		func getUsableDriveListNew() -> [DriveListItem]?{
@@ -169,7 +303,7 @@ extension CreationProcess{
 				
 				//self.makeAndDisplayItem(ref, &drives, d, false)
 				
-				ret.append(.init(disk: d))
+				ret.append(.init(disk: d, partition: nil, state: .ok))
 				
 				log("        Drive added to list")
 				
@@ -212,7 +346,7 @@ extension CreationProcess{
 					
 					//self.makeAndDisplayItem(p, &drives)
 					
-					ret.append(.init(disk: d, partition: p))
+					ret.append(.init(disk: d, partition: p, state: .ok))
 					
 					log("            Partition added to the list")
 				}
