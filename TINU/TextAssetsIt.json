@@ -353,7 +353,13 @@
 				"appUnsupportedWarn" : "Non supportata: ${name}",
 				"appUnsupportedToolTip" : "Non è possibile usare quest'app di installazione di macOS perchè non è supportata da TINU.\n\nPercorso: ${path}",
 				"driveUnusableWarn": "Inutilizzabile: ${name}",
-				"driveUnusableToolTip": "Il dico \"${name}\", non può essere utilizzato per creare un support di installazione di macOS!\n${size}${mount}",
+				"driveUnusableToolTip": "Il dico \"${name}\", non può essere utilizzato per creare un supporto di installazione di macOS!\n${size}${mount}",
+				"driveTooSmallWarn": "Troppo piccolo: ${name}",
+				"driveTooSmallToolTip": "Il disco \"${name}\", non può essere utilizzato per creare un supporto di installazione di macOS perché è troppo piccolo.\n${size}${mount}",
+				"driveBootWarn": "Disco di avvio: ${name}",
+				"driveBootToolTip": "Il disco \"${name}\", non può essere utilizzato per creare un supporto di installazione di macOS perché appartine al disco usato per avviare il sistema operativo.\n${size}${mount}",
+				"driveTINUWarn": "Inutilizzabile: ${name}",
+				"driveTINUToolTip": "Il disco \"${name}\", non può essere utilizzato per creare un supporto di installazione di macOS perché è fa appartine del disco dal quale è stato aperto TINU.\n${size}${mount}",
 				"driveNormalToolTip" : "${size}${mount}"
 			}
 		},

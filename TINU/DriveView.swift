@@ -136,15 +136,29 @@ class DriveView: ShadowView, ViewID {
 			}
 			
 		}else{
-			//TODO: Add support for multiple disk unusable states
 			if self.current?.app == nil{
-				//self.toolTip = TextManager.getViewString(context: self, stringID: "driveNotUsableToolTip")
-				self.setToolTipAndWarn("driveUnusable")
+				switch(self.current?.part?.status ?? .ok){
+				case .undefined:
+					self.setToolTipAndWarn("driveUnusable")
+					 break
+				case .tooSmall:
+					self.setToolTipAndWarn("driveTooSmall")
+					break
+				case .belongsToBoot:
+					self.setToolTipAndWarn("driveBoot")
+					break
+				case .runningThisAppFrom:
+					self.setToolTipAndWarn("driveTINU")
+					break
+				case .ok:
+					self.setToolTipAndWarn("driveNormal")
+					break
+				}
 			}else{
 				if isBigger{
 					self.setToolTipAndWarn("appTooBig")
 				}else{
-					switch current!.app!.status{
+					switch (current?.app?.status ?? .usable){
 					case .broken:
 						self.setToolTipAndWarn("appDamaged")
 						break
