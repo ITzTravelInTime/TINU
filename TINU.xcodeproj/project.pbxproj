@@ -40,6 +40,7 @@
 		C6254B80268933740082C7F5 /* Command in Frameworks */ = {isa = PBXBuildFile; productRef = C6254B7F268933740082C7F5 /* Command */; };
 		C6254B83268933950082C7F5 /* CommandSudo in Frameworks */ = {isa = PBXBuildFile; productRef = C6254B82268933950082C7F5 /* CommandSudo */; };
 		C6254B8626897EA20082C7F5 /* SwiftCPUDetect in Frameworks */ = {isa = PBXBuildFile; productRef = C6254B8526897EA20082C7F5 /* SwiftCPUDetect */; };
+		C62BD176271BE2E800F4ADAD /* AppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = C62BD175271BE2E800F4ADAD /* AppIcon.png */; };
 		C62F545726995A7400F14304 /* DiskutilBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62F545626995A7400F14304 /* DiskutilBase.swift */; };
 		C62F545926995B3D00F14304 /* DiskutilCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62F545826995B3D00F14304 /* DiskutilCommands.swift */; };
 		C6322574221C1883003A56D4 /* FilesystemObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6322573221C1883003A56D4 /* FilesystemObserver.swift */; };
@@ -174,6 +175,7 @@
 		C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveView.swift; sourceTree = "<group>"; };
 		C6254B5D26855A620082C7F5 /* OptionsExecution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsExecution.swift; sourceTree = "<group>"; };
+		C62BD175271BE2E800F4ADAD /* AppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon.png; sourceTree = "<group>"; };
 		C62F545626995A7400F14304 /* DiskutilBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskutilBase.swift; sourceTree = "<group>"; };
 		C62F545826995B3D00F14304 /* DiskutilCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskutilCommands.swift; sourceTree = "<group>"; };
 		C6322573221C1883003A56D4 /* FilesystemObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilesystemObserver.swift; sourceTree = "<group>"; };
@@ -582,6 +584,7 @@
 				DD223ED227149C5D0048EA0F /* 6.png */,
 				DD223ED327149C5D0048EA0F /* 7.png */,
 				DD223ED127149C5D0048EA0F /* 8.png */,
+				C62BD175271BE2E800F4ADAD /* AppIcon.png */,
 			);
 			path = Screenshots;
 			sourceTree = "<group>";
@@ -739,6 +742,7 @@
 				C6DF046D1F4F33C500D200B1 /* Main.storyboard in Resources */,
 				DD223EDA27149C5D0048EA0F /* 6.png in Resources */,
 				C660D1A2252C94860027FCA0 /* ConfigMenuAppsIt.json in Resources */,
+				C62BD176271BE2E800F4ADAD /* AppIcon.png in Resources */,
 				C660D1A0252C7A160027FCA0 /* ConfigMenuAppsEn.json in Resources */,
 				C660D1992529BB260027FCA0 /* EFIPMTextAssetsIt.json in Resources */,
 				DD223ED827149C5D0048EA0F /* 3.png in Resources */,
