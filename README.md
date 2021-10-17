@@ -1,6 +1,6 @@
 # TINU
 
-! [AppIcon] (./TINU/Screenshots/AppIcon.png)
+![AppIcon](./TINU/Screenshots/AppIcon.png)
 
 TINU, the open tool to create bootable macOS installers.
 
