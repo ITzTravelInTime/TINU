@@ -115,6 +115,8 @@ extension CreationProcess{
 		func getUsableDriveListAll() -> [DriveListItem]?{
 			var ret = [DriveListItem]()
 			
+			print("Detecting drives and partitions")
+			
 			//just need to know which is the boot volume, to not allow the user to choose it
 			let boot = BSDID(fromMountPoint: "/")!
 			var boot_drives = [boot.driveID]
@@ -125,7 +127,7 @@ extension CreationProcess{
 			//new Codable-Based storage devices search
 			guard let data = Diskutil.List() else { return nil }
 			
-			log("Analyzing diskutil data to detect usable storage devices")
+			print("Successfully got diskutil data")
 			
 			//Retives the boot-volume virtual disks
 			for disk in data.allDisksAndPartitions{
@@ -142,6 +144,8 @@ extension CreationProcess{
 			
 			print("The boot drive devices are: ")
 			print(boot_drives)
+			
+			log("Analyzing disk data to detect usable storage devices")
 			
 			alldiskFor: for disk in data.allDisksAndPartitions{
 				log("    Drive: \(disk.DeviceIdentifier)")

@@ -96,7 +96,6 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
     }    
     #endif
     
-    
 	override func viewDidAppear() {
 		super.viewDidAppear()
         
@@ -139,7 +138,7 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
 		self.spinner.startAnimation(self)
 		
 		DispatchQueue.global(qos: .background).async {
-			self.watcherTriggerd = true
+			self.watcherTriggerd = false
 			self.watcher = FileSystemObserver(url: URL(fileURLWithPath: "/Volumes", isDirectory: false), changeHandler: {
 				
 				print("Change in /Volumes")
@@ -150,6 +149,8 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
 						self.refresh(self)
 					}
 				}
+				
+				self.watcherTriggerd.toggle()
 				
 			})
 			
