@@ -6,7 +6,7 @@ TINU, the open tool to create bootable macOS installers.
 
 [TINU Is Not Unibe**t]
 
-This software is intended to be used to create a bootable macOS installer for computers capable of running Apple's macOS, this app is basically a GUI for the createinstallmedia executable that could be found in any macOS installer app from Mavericks up to the latest versions.
+This software is intended to be used to create a bootable macOS installer for computers capable of running Apple's macOS, this app, amoung other things is also a GUI for the createinstallmedia executable that could be found in any macOS installer app from Mavericks up to the latest versions.
 
 Allows you to create easily a macOS install media without messing around with command line stuff and without using disk utility, and also detects and prevents the most common errors with the creation of bootable vanilla macOS installers. 
 
@@ -14,13 +14,13 @@ Allows you to create easily a macOS install media without messing around with co
 
 # Features:
 - No need for guides or instructions! Just follow the very simple on-screen indications to very easily start the bootable macOS installer creation process.
-- Fully open: You can see how this programs works and you can freely contribute to it! (See the `Repository rules` and the `Note that` sections of this file)
+- Fully open: You can see how this programs works and you can freely contribute to it! (See the `Repository rules` and the `Note that` sections of this page)
 - Support for multiple languages (currently just italian and english, but more will be added with future updates once the system which allows it gets improoved)
 - Can work with every macOS installer app that has the `createinstallmedia` executable inside its internal resources folder (including also beta and newly released installers).
 - 100% clean using the official apple's method: The bootable macOS installers created with this tool are made using the official apple's `createinstallmedia` method, just as if you created them using the command line, this ensures the best and the cleanest results avoiding all the problems that modded installers have.
 - Does not require any special preparations. Just open the program, make sure you have a big enought USB drive plugged in (see the `Requirements` section) and have a macOS installer app on your disk.
 - No need to use Disk Utility first. TINU can format your drive or partition for you, if it's necessary.
-- Integrated downloads from apple for the macOS installer apps (to access them open the app, go to the menu bar, and then `Tools->Download a macOS installer`).
+- Integrated downloads from Apple for lots of macOS/OS X installer apps (to access them open the app, go to the menu bar, and then `Tools->Download a macOS installer`).
 - Integrated EFI partition mounter tool.
 - Automatic Clover and OpenCore EFI folder installer.
 - Tested to work on all the latest macOS releases.
@@ -37,7 +37,7 @@ Allows you to create easily a macOS install media without messing around with co
 - You can download the pre-made executable of the app here: https://github.com/ITzTravelInTime/TINU/releases
 
 # Building/Compiling requirements: 
-- To compile a copy this app using the source code provvided in this repo, Xcode 12.x is required and so a machine running at least Catalina is needed.
+- To compile a copy this app using the source code provvided in this repo, Xcode 12.x or newer is required and so a machine running at least Catalina is needed.
 
 # Frequently asked questions
 https://github.com/ITzTravelInTime/TINU/wiki/FAQs
@@ -83,12 +83,12 @@ Contact the project creator (ITzTravelInTime aka Pietro):
 # Credits:
 - Apple for macOS, system icons and installer apps (and their createinstallmedia executable).
 - Special tahnks to:
-Francesco Perchiazzi, Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa, Ermanno Nicoletti, Tommaso Dimatore, Michele Vitiello Bonaventura, Massimiliano Faralli, Davide Dessì, Giorgio Dall'Aglio, Peter Paul Chato, Antonio De Masi, the Facebook group ["Italian Hackintosh group!!"](https://www.facebook.com/groups/Italia.hackintosh/?fref=ts), the Telegram group ["Hackintosh Italia"](https://t.me/Hackintoshitalia).
-- Gianmarco Gargiulo for the New app icon and usb drive image.
+Francesco Perchiazzi, Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa, Ermanno Nicoletti, Tommaso Dimatore, Michele Vitiello Bonaventura, Massimiliano Faralli, Davide Dessì, Giorgio Dall'Aglio, Peter Paul Chato, Antonio De Masi, the Facebook group ["Italian Hackintosh group!!"](https://www.facebook.com/groups/Italia.hackintosh/?fref=ts), the Telegram group ["Hackintosh Italia"](https://t.me/Hackintoshitalia) and the commiunity from hackintosh-forum.de .
+- Gianmarco Gargiulo for the current app icon and usb drive image.
 - Thomas Tempelmann for help with the UI, grammar and the code.
 - Pietro Caruso (ITzTravelInTime) project creator, maintainer and main developer.
 
-# Copyright
+# Legal info:
 TINU, the open tool to create bootable macOS installers.
 Copyright (C) 2017-2021 Pietro Caruso (ITzTravelInTime)
 
