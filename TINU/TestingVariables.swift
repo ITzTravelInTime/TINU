@@ -84,6 +84,13 @@ public let simulateRecovery = false
 /// - nil use actual sip state
 public let simulateSIPStatus: Bool! = nil
 
+///Simulates the detected pixel size for the screens currently attached to the computer
+///
+///Values:
+/// - [numeric value] simulates HIDPI pixel size
+/// - nil use the actual detected HIDPI pixel size
+public let simulateHIDPIStatus: CGFloat! = nil
+
 ///This variable forces a UI Style if not nil, see the AppLook enum for the oossible values
 public let simulateLook: UIManager.AppLook! = nil//.shadowsSFSymbolsFill//.shadowsOldIcons//.recovery
 

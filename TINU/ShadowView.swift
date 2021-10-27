@@ -68,7 +68,7 @@ public class ShadowView: NSView{
 			self.shadow = nil
 			self.layer?.cornerRadius = 15
 			self.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
-			self.layer?.borderWidth = HIDPIDetectionManager.status ? 0.65 : 1
+			self.layer?.borderWidth = (HIDPIDetectionManager.numberOfScreens == 1) ? (1 / HIDPIDetectionManager.status) : (HIDPIDetectionManager.isHIDPIEnabledOnAllScreens ? 0.65 : 1)
 			
 			switch mode {
 			case .shadowedbutton:

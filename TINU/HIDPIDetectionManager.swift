@@ -12,13 +12,15 @@ import Cocoa
 
 public final class HIDPIDetectionManager: SimulatableDetectable{
 	
-	public static var simulatedStatus: Bool? = nil
+	public static var simulatedStatus: CGFloat?{
+		return simulateHIDPIStatus
+	}
 	
-	public static var actualStatus: Bool{
+	public static var actualStatus: CGFloat{
 		struct Mem{
 			private static var expiration: Date = Date(timeIntervalSinceReferenceDate: 0)
-			private static var storedStatus: Bool? = nil
-			static var status: Bool?{
+			private static var storedStatus: CGFloat? = nil
+			static var status: CGFloat?{
 				get{
 					if storedStatus == nil{
 						print("HIDPI: currently stored status is invalid, recalculating ...")
@@ -46,24 +48,31 @@ public final class HIDPIDetectionManager: SimulatableDetectable{
 		
 		if Mem.status == nil{
 			print("HIDPI: Calculating new status")
-			var allHIDPI = true
+			var pixelMax: CGFloat = 0
 			
 			for i in NSScreen.screens{
-				if i.backingScaleFactor <= 1{
-					allHIDPI = false
-					break
+				if i.backingScaleFactor > pixelMax{
+					pixelMax = i.backingScaleFactor
 				}
 			}
 			
-			Mem.status = allHIDPI
+			Mem.status = pixelMax
 			
 		}else{
 			print("HIDPI: Using stored status")
 		}
 		
-		print("HIDPI: status is \(Mem.status ?? false)")
+		print("HIDPI: status is \(Mem.status ?? 1)")
 		
-		return Mem.status ?? false
+		return Mem.status ?? 1
+	}
+	
+	static var isHIDPIEnabledOnAllScreens: Bool{
+		return status > 1
+	}
+	
+	static var numberOfScreens: UInt{
+		return UInt(NSScreen.screens.count)
 	}
 	
 	public init(){ }

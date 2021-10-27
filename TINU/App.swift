@@ -52,6 +52,7 @@ public final class App{
 			simulateSpecialOperationsFail,
 			simulateRecovery,
 			simulateSIPStatus != nil,
+			simulateHIDPIStatus != nil,
 			simulateLook != nil
 		]
 		
