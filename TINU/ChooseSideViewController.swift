@@ -104,31 +104,32 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		#if sudoStartup
 		
 		if #available(OSX 10.15, *){
-			for _ in 0...0{
-				if ChooseSideViewController._already_prompted{
-					continue
-				}
-				
-				ChooseSideViewController._already_prompted = true
-				
-				if (SIPManager.status.isOkForTINU || CommandLine.arguments.contains("-disgnostics-mode")){
-					continue
-				}
-				
-				Alert.window = self.window
-				
-				//todo: localize this
-				//let alert = Alert(message: "TINU needs be re-opened using diagnostics mode!", description: "SIP (System Integrity Protection) is currently enabled, and it will prevent TINU from working (this is due to a problem introduced in Catalina).\n\nYou can avoid this by chosing to use the diagnostics mode with administrator privileges (because it avoids this issue by using the privileges provvided by the terminal).").adding(button: .init(text: "Use diagnostics mode", keyEquivalent: "\r")).adding(button: .init(text: "Continue anyway")).send().isFirstButton()
-				
-				let alert = dialogGenericWithManagerBool(self, name: "SIPDialog")
-				
-				if alert{
+			
+			DispatchQueue.global(qos: .background).async {
+				DispatchQueue.main.sync {
 					
-					DiagnosticsModeManager.shared.open(withSudo: true)
-					return
+						if ChooseSideViewController._already_prompted{
+							return						}
+						
+						ChooseSideViewController._already_prompted = true
+						
+						if (SIPManager.status.isOkForTINU || CommandLine.arguments.contains("-disgnostics-mode")){
+							return
+						}
+						
+						Alert.window = self.window
+						
+						//todo: localize this
+						//let alert = Alert(message: "TINU needs be re-opened using diagnostics mode!", description: "SIP (System Integrity Protection) is currently enabled, and it will prevent TINU from working (this is due to a problem introduced in Catalina).\n\nYou can avoid this by chosing to use the diagnostics mode with administrator privileges (because it avoids this issue by using the privileges provvided by the terminal).").adding(button: .init(text: "Use diagnostics mode", keyEquivalent: "\r")).adding(button: .init(text: "Continue anyway")).send().isFirstButton()
+						
+						let alert = dialogGenericWithManagerBool(self, name: "SIPDialog")
+						
+						if alert{
+							DiagnosticsModeManager.shared.open(withSudo: true)
+						}
 				}
-				
 			}
+			
 		}
 		
 		#endif

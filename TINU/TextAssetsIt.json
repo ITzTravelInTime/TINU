@@ -132,8 +132,8 @@
 				"openEFIMounter" : "Usa\nEFI Partition Mounter",
 				"openInstallation" : "Installa macOS",
 				"openInstaller" : "Crea un supporto di\ninstallazione di macOS",
-				"SIPDialogTitle" : "TINU deve essere riaperto usando la Modalità diagnostica",
-				"SIPDialog" : "La SIP (System Integrity Protection) è attivata, ed impedisce a TINU di funzionare come dovrebbe (questo succede a causa di alcune limitazioni introdotte in Catalina).\n\nPuoi evitare questo se scegli di usare la modalità diagnostica con privilegi di amministratore (perchè sfrutta i privilegi di accesso forniti dal terminale per evitare questo problema).",
+				"SIPDialogTitle" : "TINU ha bisgno di privilegi speciali!",
+				"SIPDialog" : "Su questo computer è attiva la SIP (System Integrity Protection), quindi, per far funzionare TINU, sono richiesti privilegi speciali (Questo accade perché da Catalina in poi la sicurezza del sistema operativo è stata rinforzata).\n\nPoi scegliere di usare la mod. diagnostica con privilegi di amministratore per dare a TINU i permessi di accesso necessari (questo grazie al fatto che il terminale fornisce tali privilegi, però questo richiede l'inserimento della password di amministratore una o due volte, e che poi l'intera app funzioni come root) oppure puoi disattivare la SIP (scelta sconsigliata).\n\nSe hai delle preoccupazioni riguardo la sicurezza puoi sempre consultare il codice sorgente visto che l'app è software libero ed open source (Puoi trovare un collegamento al codice sorgente nella finestra \"Info su TINU\").",
 				"SIPDialog1" : "Usa la mod. diagnostica",
 				"SIPDialog1Key" : "\r",
 				"SIPDialog2" : "Continua lo stesso",
@@ -393,7 +393,7 @@
 		"SIPManager" : {
 			"unmutable" : {
 				"disableTitle" : "TINU: La creazione dell'installer fallirà!",
-				"disable" : "La SIP (system integrity protection) è abilitata e non permette a TINU di funzionare correttamente (su Catalina e successivi).\n\nSe continui è molto probabile che la creazione dell'installer fallirà.\n\nSe vuoi evitare che ciò accada puoi disattivare la SIP (non raccomandato) o usare la modalità diagnostica con privilegi di amministratore (che si trova sulla barra dei menù in alto sotto la voce TINU)."
+				"disable" : "La SIP (system integrity protection) è abilitata, e stai usando TINU senza i neccessari privilegi di accesso (richiesti su Catalina e successivi), quindi, se continui, è molto probabile che la creazione dell'installer fallirà.\n\nSe vuoi evitare che ciò accada puoi usare la modalità diagnostica con privilegi di amministratore (che si trova sulla barra dei menù in alto sotto la voce TINU) oopure disattivare la SIP su questo computer (scelta sconsigliata)."
 			}
 		},
 		"OtherOptionsInfoViewController" : {

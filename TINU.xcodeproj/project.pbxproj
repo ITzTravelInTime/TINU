@@ -116,6 +116,7 @@
 		DD223EDB27149C5D0048EA0F /* 7.png in Resources */ = {isa = PBXBuildFile; fileRef = DD223ED327149C5D0048EA0F /* 7.png */; };
 		DD3AC14C1FBB974C00C71F53 /* OtherOptionCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC14B1FBB974C00C71F53 /* OtherOptionCheckBox.swift */; };
 		DD5016061F993D4500FB1407 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5016051F993D4500FB1407 /* GenericViewController.swift */; };
+		DD75F56D2729BC6000A26474 /* HIDPIDetectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD75F56C2729BC6000A26474 /* HIDPIDetectionManager.swift */; };
 		DD7C7CC5235E26DC000CC2E0 /* DarkModeDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7C7CC4235E26DC000CC2E0 /* DarkModeDetection.swift */; };
 		DDA7FB601F96AE510029F4F2 /* RuntimeCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */; };
 		DDA7FB621F96B13F0029F4F2 /* GenericWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */; };
@@ -259,6 +260,7 @@
 		DD223ED327149C5D0048EA0F /* 7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 7.png; sourceTree = "<group>"; };
 		DD3AC14B1FBB974C00C71F53 /* OtherOptionCheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherOptionCheckBox.swift; sourceTree = "<group>"; };
 		DD5016051F993D4500FB1407 /* GenericViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericViewController.swift; sourceTree = "<group>"; };
+		DD75F56C2729BC6000A26474 /* HIDPIDetectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDPIDetectionManager.swift; sourceTree = "<group>"; };
 		DD7C7CC4235E26DC000CC2E0 /* DarkModeDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkModeDetection.swift; sourceTree = "<group>"; };
 		DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuntimeCode.swift; sourceTree = "<group>"; };
 		DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericWindowController.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 				C615B811216AEF3F00913BFF /* MediaCreationManager */,
 				C6D82A6B20D80C7600A5B5BE /* OptionsManager.swift */,
 				C6254B5D26855A620082C7F5 /* OptionsExecution.swift */,
+				DD75F56C2729BC6000A26474 /* HIDPIDetectionManager.swift */,
 				C60C40B720CC9E4800258574 /* IconsManager.swift */,
 				C6F68E8A20D0277B00F7A0F4 /* PackagesWrapper.swift */,
 				C63F035F24E3D19300F950B4 /* ProgressBarValuesManager.swift */,
@@ -824,6 +827,7 @@
 				C621CFAC1F4F7DF400CC6D5B /* DriveView.swift in Sources */,
 				C6BEA10224A3A5AE008997CF /* DiagnosticsModeManager.swift in Sources */,
 				C65AA61F1F4F497A00C43223 /* ClassExtensions.swift in Sources */,
+				DD75F56D2729BC6000A26474 /* HIDPIDetectionManager.swift in Sources */,
 				C6FFB5D82681AAF300CD19CE /* CreationProcessDiskInfo.swift in Sources */,
 				C691BFF01F6DFBDB00589EF8 /* TestingVariables.swift in Sources */,
 				C615B815216AF04D00913BFF /* MediaCreationManagerFunctions.swift in Sources */,
@@ -1097,7 +1101,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 106;
+				CURRENT_PROJECT_VERSION = 107;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1108,7 +1112,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = "RE\U0010LEASE 3.0";
+				MARKETING_VERSION = "RE\U0010LEASE 3.0.1";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LIBTOOLFLAGS = "-enable-library-evolution";
 				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINU;
@@ -1138,7 +1142,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 106;
+				CURRENT_PROJECT_VERSION = 107;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_TESTABILITY = NO;
@@ -1149,7 +1153,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = "RE\U0010LEASE 3.0";
+				MARKETING_VERSION = "RE\U0010LEASE 3.0.1";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LIBTOOLFLAGS = "-enable-library-evolution";
 				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINU;

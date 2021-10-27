@@ -132,8 +132,8 @@
 				"openEFIMounter" : "Use\nEFI Partition Mounter",
 				"openInstallation" : "Install macOS",
 				"openInstaller" : "Create a bootable\nmacOS installer",
-				"SIPDialogTitle" : "TINU needs be re-opened using diagnostics mode!",
-				"SIPDialog" : "SIP (System Integrity Protection) is currently enabled, and it will prevent TINU from working (this is due to a problem introduced in Catalina).\n\nYou can avoid this by chosing to use the diagnostics mode with administrator privileges (because it avoids this issue by using the privileges provvided by the terminal).",
+				"SIPDialogTitle" : "TINU needs special privileges in order to work!",
+				"SIPDialog" : "This system has SIP (System Integrity Protection) currently enabled, and therefor to let TINU work, special privileges are needed (this is due to extra security features first introduced in Catalina).\n\nYou can chose to use the diagnostics mode with administrator privileges to give TINU the extra privileges needed (thanks to the terminal app which is used to get them, however, this requires you to enter the admin password 1 or 2 times and running the whole app as root) or you can disable SIP (not reccommended).\n\nIf you have any security concers you can always take a look at the source code for this app since this is free and open source software (you can find a shortcut to that in the \"About TINU\" window).",
 				"SIPDialog1" : "Use diagnostics mode",
 				"SIPDialog1Key" : "\r",
 				"SIPDialog2" : "Continue anyway",
@@ -392,8 +392,8 @@
 		},
 		"SIPManager" : {
 			"unmutable" : {
-				"disableTitle" : "TINU: The installer creation will fail!",
-				"disable" : "SIP (system integrity protection) is enabled and will not allow TINU to to work properly (on Catalina and newer versions).\n\nIf you continue the installer creation process will most likely fail.\n\nIf you don't want that to happen you can disable SIP (unreccommended) or use the diagnostics mode with administrator privileges (it can be found on the menu bar under the TINU menu)."
+				"disableTitle" : "TINU: the installer creation will fail!",
+				"disable" : "This system has SIP (system integrity protection) enabled and TINU is running without the extra access privileges it needs (since extra security features were introduced in Catalina and newer).\n\nIf you continue without using the extra privileges the installer creation process will most likely fail, if you don't want that to happen you can disable SIP (unreccommended) or use the diagnostics mode with administrator privileges (it can be found on the menu bar under the TINU menu)."
 			}
 		},
 		"OtherOptionsInfoViewController" : {
