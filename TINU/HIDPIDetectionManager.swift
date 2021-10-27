@@ -16,23 +16,26 @@ public final class HIDPIDetectionManager: SimulatableDetectable{
 	
 	public static var actualStatus: Bool{
 		struct Mem{
-			private static var expiration: Date? = nil
+			private static var expiration: Date = Date(timeIntervalSinceReferenceDate: 0)
 			private static var storedStatus: Bool? = nil
 			static var status: Bool?{
 				get{
-					if storedStatus == nil || expiration == nil{
+					if storedStatus == nil{
+						print("HIDPI: currently stored status is invalid, recalculating ...")
 						return nil
 					}
 					
-					if let exp = expiration{
-						if exp.timeIntervalSinceNow < (60) {
-							return storedStatus
-						}else{
-							expiration = nil
-						}
+					let min = Calendar.current.component(.minute, from: Date(timeIntervalSinceReferenceDate: Date() - expiration))
+						
+					print("HIDPI: time since last status check: \(min) minute/s")
+						
+					if min < 1 {
+						return storedStatus
+					}else{
+						print("HIDPI: currently stored status is expired, recalculating ...")
+						return nil
 					}
 					
-					return nil
 				}
 				set{
 					storedStatus = newValue
@@ -42,11 +45,11 @@ public final class HIDPIDetectionManager: SimulatableDetectable{
 		}
 		
 		if Mem.status == nil{
-			
+			print("HIDPI: Calculating new status")
 			var allHIDPI = true
 			
 			for i in NSScreen.screens{
-				if i.backingScaleFactor == 1{
+				if i.backingScaleFactor <= 1{
 					allHIDPI = false
 					break
 				}
@@ -54,9 +57,11 @@ public final class HIDPIDetectionManager: SimulatableDetectable{
 			
 			Mem.status = allHIDPI
 			
+		}else{
+			print("HIDPI: Using stored status")
 		}
 		
-		print("HIDPI status: \(Mem.status ?? false)")
+		print("HIDPI: status is \(Mem.status ?? false)")
 		
 		return Mem.status ?? false
 	}
