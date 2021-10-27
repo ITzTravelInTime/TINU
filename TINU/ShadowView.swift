@@ -25,6 +25,10 @@ fileprivate func shadowsColor(isDarkMode: Bool) -> CGColor{
 
 public class ShadowView: NSView{
 	
+	private var borderWidth: CGFloat{
+		return (HIDPIDetectionManager.numberOfScreens == 1) ? (1 / HIDPIDetectionManager.PointSizeDetector.status) : (HIDPIDetectionManager.isHIDPIEnabledOnAllScreens ? 0.65 : 1)
+	}
+	
 	func setModeFromCurrentLook(){
 		
 		if look.supportsShadows(){
@@ -68,7 +72,7 @@ public class ShadowView: NSView{
 			self.shadow = nil
 			self.layer?.cornerRadius = 15
 			self.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
-			self.layer?.borderWidth = (HIDPIDetectionManager.numberOfScreens == 1) ? (1 / HIDPIDetectionManager.status) : (HIDPIDetectionManager.isHIDPIEnabledOnAllScreens ? 0.65 : 1)
+			self.layer?.borderWidth = borderWidth
 			
 			switch mode {
 			case .shadowedbutton:
