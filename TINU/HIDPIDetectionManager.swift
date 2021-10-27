@@ -10,6 +10,12 @@ import Foundation
 import TINURecovery
 import Cocoa
 
+fileprivate func hIDPIPrint( _ text: Any ){
+	if sharedEnableDebugPrints {
+		print("HIDPI: \(text)")
+	}
+}
+
 public final class HIDPIDetectionManager: SimulatableDetectable{
 	
 	public static var simulatedStatus: CGFloat?{
@@ -23,18 +29,18 @@ public final class HIDPIDetectionManager: SimulatableDetectable{
 			static var status: CGFloat?{
 				get{
 					if storedStatus == nil{
-						print("HIDPI: currently stored status is invalid, recalculating ...")
+						hIDPIPrint("Currently stored status is invalid, recalculating ...")
 						return nil
 					}
 					
 					let min = Calendar.current.component(.minute, from: Date(timeIntervalSinceReferenceDate: Date() - expiration))
 						
-					print("HIDPI: time since last status check: \(min) minute/s")
+					hIDPIPrint("Time since last status check: \(min) minute/s")
 						
 					if min < 1 {
 						return storedStatus
 					}else{
-						print("HIDPI: currently stored status is expired, recalculating ...")
+						hIDPIPrint("Currently stored status is expired, recalculating ...")
 						return nil
 					}
 					
@@ -47,7 +53,7 @@ public final class HIDPIDetectionManager: SimulatableDetectable{
 		}
 		
 		if Mem.status == nil{
-			print("HIDPI: Calculating new status")
+			hIDPIPrint("Calculating new status")
 			var pixelMax: CGFloat = 0
 			
 			for i in NSScreen.screens{
@@ -59,10 +65,10 @@ public final class HIDPIDetectionManager: SimulatableDetectable{
 			Mem.status = pixelMax
 			
 		}else{
-			print("HIDPI: Using stored status")
+			hIDPIPrint("Using stored status")
 		}
 		
-		print("HIDPI: status is \(Mem.status ?? 1)")
+		hIDPIPrint("Status is \(Mem.status ?? 1)")
 		
 		return Mem.status ?? 1
 	}
