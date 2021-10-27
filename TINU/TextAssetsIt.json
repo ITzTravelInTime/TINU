@@ -263,7 +263,7 @@
 				"downloadButtonAppStore" : "Vedi nell'App Store",
 				"downloadButtonApple" : "Scarica da Apple",
 				"downloadDialogTitle" : "Ricordati di aprire ed installare il download",
-				"downloadDialog" : "Il file che stai per scaricare contiene il programma di installazione dell'app di macOS che dovrai usare con TINU e pertanto deve essere aprto ed installato prima dell'uso per permettere a tinu di rilevare l'installer.",
+				"downloadDialog" : "Il file che stai per scaricare è un file di immagine .dmg al cui interno si trova un file di installazione .pkg che va usato per installre l'app di installazione di macOS/OS X che hai scelto nella cartella applicazioni.\n\nQuesto passaggio è necessario e serve per poter avere un'app di installazione compatibile con TINU.",
 				"downloadDialogYes" : "Continua",
 				"downloadDialogNo" : "Annulla"
 			}

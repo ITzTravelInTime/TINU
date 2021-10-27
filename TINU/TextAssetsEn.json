@@ -262,7 +262,7 @@
 				"downloadButtonAppStore" : "View in the App Store",
 				"downloadButtonApple" : "Download from Apple",
 				"downloadDialogTitle" : "Remeber to open and install the download",
-				"downloadDialog" : "The intaller file you are about to download will need to be opened and then installed in order to be usable with TINU.",
+				"downloadDialog" : "The file you are about to download is a .dmg disk image file, inside of it there is a .pkg installer file that you need to use in order to install the selected macOS/OS X installer app inside the Applications folder.\n\nThis operation is mandatory if you want to have an installer app that's compatible with TINU.",
 				"downloadDialogYes" : "Continue",
 				"downloadDialogNo" : "Cancel"
 			}
