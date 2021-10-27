@@ -34,6 +34,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 - Make UI Sketches for the multiple installer creation process
 
+- Lion/mountain lion installer creation
+
+- Installer to dmg creation
+
+- Main menu overhaul (put an icon there to access the installer apps downloads)
+
 # TO DO but with less priority:
 - EFI PM memory leak
 - copyright string localization

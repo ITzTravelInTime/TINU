@@ -77,7 +77,7 @@ extension CreationProcess{
 		}
 		
 		func compareSize(to number: UInt64) -> Bool{
-			return (current != nil) ? (current?.size ?? 0 > number + UInt64(5 * pow(10.0, 8.0))) : false
+			return (current != nil) ? (current?.size ?? 0 > number + UInt64(pow(10.0, 9.0))) : false
 		}
 		
 		func compareSize(to string: String!) -> Bool{

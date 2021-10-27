@@ -14,7 +14,7 @@
 		C60C40BA20CCA24000258574 /* TextsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60C40B920CCA24000258574 /* TextsManager.swift */; };
 		C60C40BC20CCA2BB00258574 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60C40BB20CCA2BB00258574 /* App.swift */; };
 		C60C40C020CCA9DC00258574 /* CreationProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60C40BF20CCA9DC00258574 /* CreationProcess.swift */; };
-		C60C40C220CCAA9900258574 /* InstallerAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60C40C120CCAA9900258574 /* InstallerAppManager.swift */; };
+		C60C40C220CCAA9900258574 /* CreationProcessInstallerAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60C40C120CCAA9900258574 /* CreationProcessInstallerAppManager.swift */; };
 		C60C40C420CCACB600258574 /* DecodeEncode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60C40C320CCACB600258574 /* DecodeEncode.swift */; };
 		C60C40C720CCAE6200258574 /* DiskutilInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60C40C620CCAE6200258574 /* DiskutilInfo.swift */; };
 		C60D39B01F5E136500D94834 /* Part.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D39AF1F5E136500D94834 /* Part.swift */; };
@@ -155,7 +155,7 @@
 		C60C40B920CCA24000258574 /* TextsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextsManager.swift; sourceTree = "<group>"; };
 		C60C40BB20CCA2BB00258574 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		C60C40BF20CCA9DC00258574 /* CreationProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreationProcess.swift; sourceTree = "<group>"; };
-		C60C40C120CCAA9900258574 /* InstallerAppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallerAppManager.swift; sourceTree = "<group>"; };
+		C60C40C120CCAA9900258574 /* CreationProcessInstallerAppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationProcessInstallerAppManager.swift; sourceTree = "<group>"; };
 		C60C40C320CCACB600258574 /* DecodeEncode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeEncode.swift; sourceTree = "<group>"; };
 		C60C40C620CCAE6200258574 /* DiskutilInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskutilInfo.swift; sourceTree = "<group>"; };
 		C60D39AF1F5E136500D94834 /* Part.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Part.swift; sourceTree = "<group>"; };
@@ -322,12 +322,12 @@
 				C60C40BB20CCA2BB00258574 /* App.swift */,
 				C60C40BF20CCA9DC00258574 /* CreationProcess.swift */,
 				C6FFB5D72681AAF300CD19CE /* CreationProcessDiskInfo.swift */,
+				C60C40C120CCAA9900258574 /* CreationProcessInstallerAppManager.swift */,
 				C6FFB5D92681AF6D00CD19CE /* CreationProcessManagement.swift */,
 				C60C40C320CCACB600258574 /* DecodeEncode.swift */,
 				C6BEA10124A3A5AE008997CF /* DiagnosticsModeManager.swift */,
 				C6B74D0920B8E76A001CAD4D /* EFIFolderReplacementManager.swift */,
 				C6E32EA6218142EA006D4BEB /* FileAliasManager.swift */,
-				C60C40C120CCAA9900258574 /* InstallerAppManager.swift */,
 				C615B811216AEF3F00913BFF /* MediaCreationManager */,
 				C6D82A6B20D80C7600A5B5BE /* OptionsManager.swift */,
 				C6254B5D26855A620082C7F5 /* OptionsExecution.swift */,
@@ -870,7 +870,7 @@
 				C60B646B20B4464200FEDAA6 /* EFIFolderReplcament.swift in Sources */,
 				C60C40C720CCAE6200258574 /* DiskutilInfo.swift in Sources */,
 				C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */,
-				C60C40C220CCAA9900258574 /* InstallerAppManager.swift in Sources */,
+				C60C40C220CCAA9900258574 /* CreationProcessInstallerAppManager.swift in Sources */,
 				C63F036024E3D19300F950B4 /* ProgressBarValuesManager.swift in Sources */,
 				DD7C7CC5235E26DC000CC2E0 /* DarkModeDetection.swift in Sources */,
 				DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */,

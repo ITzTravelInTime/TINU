@@ -147,7 +147,7 @@ extension CreationProcess{
 		}
 		
 		public func isBigEnough(appSize: UInt64) -> Bool{
-			return appSize > 5 * UInt64(pow(10.0, 9.0))
+			return appSize > 4 * UInt64(pow(10.0, 9.0))
 		}
 		
 		public func listApps() -> [InstallerAppInfo]{
@@ -232,59 +232,63 @@ extension CreationProcess{
 				
 				log("Scanning for usable apps in \(d.path)")
 				
-				
 				//let fileNames = try manager.contentsOfDirectory(at: d, includingPropertiesForKeys: nil, options: []).filter{ $0.pathExtension == "app" }.map{ $0.path }
+				var appURLs = [URL]()
 				
 				do {
-					appfor: for appURL in (try fm.contentsOfDirectory(at: d, includingPropertiesForKeys: nil, options: []).filter{ $0.pathExtension == "app" }) {
-						
-						if let dsk = ref.disk?.path{
-							if !dsk.isEmpty{
-								if appURL.path.starts(with: (dsk)){
-									print("    Skipping \(appURL.path) because it belongs to the chosen drive")
-									continue
-								}
-							}
-						}
-						
-						guard let capp = self.validate(at: appURL) else {
-							print("    Skipping \(appURL.path) because it can't be validated")
-							continue
-						}
-						
-						if capp.url == nil{
-							print("    Skipping \(appURL.path) because it doesn't have a path setted")
-							continue
-						}
-						
-						var found = false
-						for a in ret{
-							if a.url == capp.url{
-								found.toggle()
-								break
-							}
-						}
-						
-						if found{
-							print("    Skipping \(appURL.path) because it is a duplicate")
-							continue
-						}
-						
-						switch capp.status {
-						case .usable, .broken, .tooBig, .tooLittle, .unsupported:
-							log("    \(appURL.path) has been added to the apps list")
-							ret.append(capp)
-							break
-						default:
-							print("    Skipping \(appURL.path) because it is not an installer app or has errors")
-							continue
-						}
-						
-					}
+					appURLs = (try fm.contentsOfDirectory(at: d, includingPropertiesForKeys: nil, options: []).filter{ $0.pathExtension == "app" })
 				} catch let error as NSError {
 					print("  Can't get contents of \(d.path)")
 					print(error.localizedDescription)
+					continue
 				}
+				
+				appfor: for appURL in appURLs {
+					
+					if let dsk = ref.disk?.path{
+						if !dsk.isEmpty{
+							if appURL.path.starts(with: (dsk)){
+								print("    Skipping \(appURL.path) because it belongs to the chosen drive")
+								continue
+							}
+						}
+					}
+					
+					guard let capp = self.validate(at: appURL) else {
+						print("    Skipping \(appURL.path) because it can't be validated")
+						continue
+					}
+					
+					if capp.url == nil{
+						print("    Skipping \(appURL.path) because it doesn't have a path setted")
+						continue
+					}
+					
+					var found = false
+					for a in ret{
+						if a.url == capp.url{
+							found.toggle()
+							break
+						}
+					}
+					
+					if found{
+						print("    Skipping \(appURL.path) because it is a duplicate")
+						continue
+					}
+					
+					switch capp.status {
+					case .usable, .broken, .tooBig, .tooLittle, .unsupported:
+						log("    \(appURL.path) has been added to the apps list")
+						ret.append(capp)
+						break
+					default:
+						print("    Skipping \(appURL.path) because it is not an installer app or has errors")
+						continue
+					}
+					
+				}
+				
 			}
 			
 			log("Installer App Scanning is complete")
