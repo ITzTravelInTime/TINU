@@ -108,25 +108,25 @@ class ChooseSideViewController: GenericViewController, ViewID {
 			DispatchQueue.global(qos: .background).async {
 				DispatchQueue.main.sync {
 					
-						if ChooseSideViewController._already_prompted{
-							return						}
-						
-						ChooseSideViewController._already_prompted = true
-						
-						if (SIPManager.status.isOkForTINU || CommandLine.arguments.contains("-disgnostics-mode")){
-							return
-						}
-						
-						Alert.window = self.window
-						
-						//todo: localize this
-						//let alert = Alert(message: "TINU needs be re-opened using diagnostics mode!", description: "SIP (System Integrity Protection) is currently enabled, and it will prevent TINU from working (this is due to a problem introduced in Catalina).\n\nYou can avoid this by chosing to use the diagnostics mode with administrator privileges (because it avoids this issue by using the privileges provvided by the terminal).").adding(button: .init(text: "Use diagnostics mode", keyEquivalent: "\r")).adding(button: .init(text: "Continue anyway")).send().isFirstButton()
-						
-						let alert = dialogGenericWithManagerBool(self, name: "SIPDialog")
-						
-						if alert{
-							DiagnosticsModeManager.shared.open(withSudo: true)
-						}
+					if ChooseSideViewController._already_prompted{
+						return						}
+					
+					ChooseSideViewController._already_prompted = true
+					
+					if (SIPManager.status.isOkForTINU || CommandLine.arguments.contains("-disgnostics-mode")){
+						return
+					}
+					
+					Alert.window = self.window
+					
+					//todo: localize this
+					//let alert = Alert(message: "TINU needs be re-opened using diagnostics mode!", description: "SIP (System Integrity Protection) is currently enabled, and it will prevent TINU from working (this is due to a problem introduced in Catalina).\n\nYou can avoid this by chosing to use the diagnostics mode with administrator privileges (because it avoids this issue by using the privileges provvided by the terminal).").adding(button: .init(text: "Use diagnostics mode", keyEquivalent: "\r")).adding(button: .init(text: "Continue anyway")).send().isFirstButton()
+					
+					let alert = dialogGenericWithManagerBool(self, name: "SIPDialog")
+					
+					if alert{
+						DiagnosticsModeManager.shared.open(withSudo: true)
+					}
 				}
 			}
 			
@@ -135,40 +135,40 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		#endif
 		
 		DispatchQueue.main.async {
-		if #available(macOS 11.0, *), look.usesSFSymbols() {} else {
-			if look != .recovery{
-				self.createUSBButton.fullSizeImage = true
-				self.createUSBButton.lowerText     = false
+			if #available(macOS 11.0, *), look.usesSFSymbols() {} else {
+				if look != .recovery{
+					self.createUSBButton.fullSizeImage = true
+					self.createUSBButton.lowerText     = false
+				}
 			}
-		}
-		
+			
 			self.createUSBButton?.cImage.image = Icon(path: nil, symbol: SFSymbol(name: "externaldrive.badge.plus"), imageName: !look.isRecovery() ? "drive" : nil, alternative: IconsManager.shared.removableDiskIcon.themedImage()).themedImage()
-		
+			
 			self.installButton?.cImage.image = Icon(path: nil, symbol: SFSymbol(name: "desktopcomputer"), imageName: NSImage.computerName).themedImage()
-		
+			
 			self.efiButton?.cImage.image = Icon(path: nil, symbol: SFSymbol(name: "tray"), imageName: "EFIIcon").themedImage()
-		
+			
 			self.createUSBButton?.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstaller")//"Create a bootable\nmacOS installer"
-		
+			
 			self.installButton?.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstallation")//"Install macOS"
-		
+			
 			self.efiButton?.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openEFIMounter")//"Use \nEFI Partition Mounter"
-		
-		var spacing: CGFloat = 22
-		let buttonSize = CGSize(width: 180, height: 180)
-		
-		if !Recovery.status{
-			self.installButton?.isEnabled = false
-			spacing = (self.view.frame.size.width - (buttonSize.width * 2)) / 3
-			spacing *= 1.2//1.05
-		}else{
-			self.installButton?.isEnabled = true
-			spacing = (self.view.frame.size.width - (buttonSize.width * 3)) / 4
-		}
-		
-		#if macOnlyMode
-		efiButton.isEnabled = false
-		#endif
+			
+			var spacing: CGFloat = 22
+			let buttonSize = CGSize(width: 180, height: 180)
+			
+			if !Recovery.status{
+				self.installButton?.isEnabled = false
+				spacing = (self.view.frame.size.width - (buttonSize.width * 2)) / 3
+				spacing *= 1.2//1.05
+			}else{
+				self.installButton?.isEnabled = true
+				spacing = (self.view.frame.size.width - (buttonSize.width * 3)) / 4
+			}
+			
+			#if macOnlyMode
+			efiButton.isEnabled = false
+			#endif
 			
 			for v in self.background.subviews{
 				for vv in self.background.subviews{
@@ -178,63 +178,63 @@ class ChooseSideViewController: GenericViewController, ViewID {
 			}
 			
 			self.background.removeFromSuperview()
-		
+			
 			self.background.frame.size.height = buttonSize.height + 40
-		
+			
 			self.background.frame.size.width = spacing//(!sharedIsOnRecovery ? (spacing * 1.25) : spacing)
-		
+			
 			self.count = 0
-		
-		for c in self.view.subviews.reversed(){
-			guard let b = c as? ChoseButton else{ continue }
 			
-			b.isHidden = !b.isEnabled
-			
-			b.removeFromSuperview()
-			
-			if !b.isEnabled { continue }
-			
-			self.count += 1
-			
-			//b.frame.size = installButton.frame.size
-			
-			var shadowView: NSView!
-			
-			if look == .recovery{
-				shadowView = NSView()
-				shadowView.backgroundColor = NSColor.transparent
-				b.fullSizeImage = false
-				b.lowerText = true
-			}else{
-				 let _shadowView = ShadowView()
+			for c in self.view.subviews.reversed(){
+				guard let b = c as? ChoseButton else{ continue }
 				
-				_shadowView.setModeFromCurrentLook()
+				b.isHidden = !b.isEnabled
 				
-				b.lowerText = !b.fullSizeImage
+				b.removeFromSuperview()
 				
-				b.layer?.cornerRadius = _shadowView.layer?.cornerRadius ?? 5
-				b.layer?.masksToBounds = true
+				if !b.isEnabled { continue }
 				
-				shadowView = _shadowView as NSView
+				self.count += 1
+				
+				//b.frame.size = installButton.frame.size
+				
+				var shadowView: NSView!
+				
+				if look == .recovery{
+					shadowView = NSView()
+					shadowView.backgroundColor = NSColor.transparent
+					b.fullSizeImage = false
+					b.lowerText = true
+				}else{
+					let _shadowView = ShadowView()
+					
+					_shadowView.setModeFromCurrentLook()
+					
+					b.lowerText = !b.fullSizeImage
+					
+					b.layer?.cornerRadius = _shadowView.layer?.cornerRadius ?? 5
+					b.layer?.masksToBounds = true
+					
+					shadowView = _shadowView as NSView
+				}
+				
+				shadowView.frame.size = buttonSize
+				b.frame.size = buttonSize
+				b.frame.origin = CGPoint.zero
+				shadowView.frame.origin = NSPoint(x: self.background.frame.width, y: 20)
+				shadowView.needsLayout = true
+				//shadowView.layer?.masksToBounds = true
+				
+				shadowView.addSubview(b)
+				self.background.addSubview(shadowView)
+				
+				//self.view.addSubview(shadowView)
+				
+				shadowView.updateLayer()
+				b.updateLayer()
+				
+				self.background.frame.size.width += buttonSize.width + spacing//((!sharedIsOnRecovery && count == 1) ? (spacing * 1.25) : spacing)
 			}
-			
-			shadowView.frame.size = buttonSize
-			b.frame.size = buttonSize
-			b.frame.origin = CGPoint.zero
-			shadowView.frame.origin = NSPoint(x: self.background.frame.width, y: 20)
-			shadowView.needsLayout = true
-			//shadowView.layer?.masksToBounds = true
-			
-			shadowView.addSubview(b)
-			self.background.addSubview(shadowView)
-			
-			//self.view.addSubview(shadowView)
-			
-			shadowView.updateLayer()
-			b.updateLayer()
-			
-			self.background.frame.size.width += buttonSize.width + spacing//((!sharedIsOnRecovery && count == 1) ? (spacing * 1.25) : spacing)
-		}
 		
 			self.background.frame.origin = NSPoint(x: self.view.frame.width / 2 - self.background.frame.size.width / 2, y: self.view.frame.height / 2 - self.background.frame.size.height / 2)
 			self.background.backgroundColor = .transparent

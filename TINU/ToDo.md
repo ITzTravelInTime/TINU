@@ -36,19 +36,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 - Lion/mountain lion installer creation
 
-- Installer to dmg creation
+- Installer to dmg creation (check free space on the computer first, use hdiutil, modifiy the requirements screen for this, avoid the drive select screen)
 
 - Main menu overhaul (put an icon there to access the installer apps downloads)
 
 # TO DO but with less priority:
-- EFI PM memory leak
-- copyright string localization
 - right to left languages ui support
-- installation unsupported apps (lion and mountain lion) mark instead of hiding
 - divide language files in folders one for each language rather than re-naming them according to the language to use
-
 - reimplement efi partition mounter's back end using codable classes (Work in progress)
-
 - download installer app window resizable
 - installer app download background dark in dark mode
 
@@ -56,13 +51,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 - it's better to no longer mention directly hackintosh and hackintoshing in the tool, since it can be couse of possible problems maybe?
 
-- the license prompt is useless, perhps remove it.
-
-- show all mounted volumes in the drive detection but don't make them usable if they can't be used, and show a no go sign like with installer apps.
-
 - send notitifcation if the tinu version is not up to date (use a json file containing the reference link and the reference information to get)
 
-- initial screen more like a home menu with more features ready to use + help section in this new home screen (which in cludes con tact us and help info and faqs)
+- initial screen more like a home menu with more features ready to use + help section in this new home screen (which includes con tact us and help info and faqs)
 
 - dynamic contact us window using the text assets or a json file (maybe the second option is the better one)
 
