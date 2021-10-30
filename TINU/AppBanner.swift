@@ -92,7 +92,9 @@ public final class AppBanner{
 				continue
 			}
 			
-			let len = (width - UInt64(c.count))
+			var len = (width - UInt64(c.count))
+			
+			len = (len == 0) ? 1 : len
 			
 			MEM.cBanner += sideBorder + m + c + strFill(of: " ", length: len, startSeq: nil, endSeq: nil, forget: true) + m + sideBorder + "\n"
 		}
