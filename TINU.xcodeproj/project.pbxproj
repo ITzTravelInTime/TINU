@@ -1116,7 +1116,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = "RE\U0010LEASE 3.1";
+				MARKETING_VERSION = "RE\U0010LEASE 3.1 BETA 1";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LIBTOOLFLAGS = "-enable-library-evolution";
 				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINU;
@@ -1157,7 +1157,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
-				MARKETING_VERSION = "RE\U0010LEASE 3.1";
+				MARKETING_VERSION = "RE\U0010LEASE 3.1 BETA 1";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LIBTOOLFLAGS = "-enable-library-evolution";
 				PRODUCT_BUNDLE_IDENTIFIER = org.pietrocaruso.TINU;
