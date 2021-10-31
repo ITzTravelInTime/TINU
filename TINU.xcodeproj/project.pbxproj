@@ -34,6 +34,7 @@
 		C61AE89420C2F16400229FEC /* OtherOptionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61AE89320C2F16400229FEC /* OtherOptionInfoViewController.swift */; };
 		C621CFA71F4F6A6500CC6D5B /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */; };
 		C621CFAC1F4F7DF400CC6D5B /* DriveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */; };
+		C6246AF3272E9FE00074216B /* HorizzontalScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6246AF2272E9FE00074216B /* HorizzontalScrollView.swift */; };
 		C6254B5E26855A620082C7F5 /* OptionsExecution.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6254B5D26855A620082C7F5 /* OptionsExecution.swift */; };
 		C6254B7A26892ADD0082C7F5 /* TINURecovery in Frameworks */ = {isa = PBXBuildFile; productRef = C6254B7926892ADD0082C7F5 /* TINURecovery */; };
 		C6254B7D268933600082C7F5 /* TINUNotifications in Frameworks */ = {isa = PBXBuildFile; productRef = C6254B7C268933600082C7F5 /* TINUNotifications */; };
@@ -175,6 +176,7 @@
 		C61AE89320C2F16400229FEC /* OtherOptionInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherOptionInfoViewController.swift; sourceTree = "<group>"; };
 		C621CFA61F4F6A6500CC6D5B /* MainWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		C621CFAB1F4F7DF400CC6D5B /* DriveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriveView.swift; sourceTree = "<group>"; };
+		C6246AF2272E9FE00074216B /* HorizzontalScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizzontalScrollView.swift; sourceTree = "<group>"; };
 		C6254B5D26855A620082C7F5 /* OptionsExecution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsExecution.swift; sourceTree = "<group>"; };
 		C62BD175271BE2E800F4ADAD /* AppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon.png; sourceTree = "<group>"; };
 		C62F545626995A7400F14304 /* DiskutilBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskutilBase.swift; sourceTree = "<group>"; };
@@ -465,6 +467,7 @@
 				C6CE80F725245BA300B28413 /* ExternalLinkUI.swift */,
 				DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */,
 				DD5016051F993D4500FB1407 /* GenericViewController.swift */,
+				C6246AF2272E9FE00074216B /* HorizzontalScrollView.swift */,
 				DD3AC14B1FBB974C00C71F53 /* OtherOptionCheckBox.swift */,
 				C6C2EAA62030710A0033EF85 /* SettingsSectionItem.swift */,
 				C61AACC0215B0EE6002D8F89 /* ShadowViewController.swift */,
@@ -867,6 +870,7 @@
 				C60D39B01F5E136500D94834 /* Part.swift in Sources */,
 				C6409AC7226D35D200E63762 /* CopyrightLabel.swift in Sources */,
 				C660D1972529AEB30027FCA0 /* TextManagement.swift in Sources */,
+				C6246AF3272E9FE00074216B /* HorizzontalScrollView.swift in Sources */,
 				C60B646B20B4464200FEDAA6 /* EFIFolderReplcament.swift in Sources */,
 				C60C40C720CCAE6200258574 /* DiskutilInfo.swift in Sources */,
 				C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */,

@@ -76,6 +76,8 @@ class ChoseAppViewController: GenericViewController, ViewID {
     private let spacerID = "spacer"
 	
 	private var opened = false
+	
+	@IBOutlet weak var scoller: HorizontalScrollview!
     
     @IBAction func goBack(_ sender: Any) {
         let _ = swapCurrentViewController("ChoseDrive")
@@ -104,18 +106,15 @@ class ChoseAppViewController: GenericViewController, ViewID {
             NSApplication.shared.terminate(self)
         }
     }
+	
     @IBAction func refreshPressed(_ sender: Any) {
         //loadApps()
 		loadAppsNew()
     }
-    
-    @IBOutlet weak var scoller: NSScrollView!
 	
 	@IBAction func chooseElsewere( _ sender: Any){
 		chooseExternal()
 	}
-	
-	
 	
 	@objc func chooseExternal() {
 		let open = NSOpenPanel()
@@ -210,6 +209,8 @@ class ChoseAppViewController: GenericViewController, ViewID {
         }*/
         
         tempRefresh = refreshButton.frame.origin.x
+		
+		self.scoller.scrollerStyle = .legacy
 		
         //loadApps()
 		loadAppsNew()

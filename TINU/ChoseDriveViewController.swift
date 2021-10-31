@@ -22,7 +22,7 @@ import Cocoa
 class ChoseDriveViewController: ShadowViewController, ViewID {
 	let id: String = "ChoseDriveViewController"
 	
-    @IBOutlet weak var scoller: NSScrollView!
+    @IBOutlet weak var scoller: HorizontalScrollview!
     @IBOutlet weak var ok: NSButton!
     @IBOutlet weak var spinner: NSProgressIndicator!
 	
@@ -96,6 +96,8 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
             titleLabel.stringValue = "Choose a drive or a partition to install macOS on"
         }*/
         
+		self.scoller.scrollerStyle = .legacy
+		
         updateDrives()
     }
 	
