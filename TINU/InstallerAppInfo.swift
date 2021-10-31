@@ -39,6 +39,7 @@ public struct InstallerAppInfo: UIRepresentable{
 		case tooBig
 		case tooLittle
 		case badAlias
+		case legacy
 		case unsupported = 255
 	}
 	

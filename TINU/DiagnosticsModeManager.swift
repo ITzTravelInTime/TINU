@@ -49,7 +49,7 @@ final class DiagnosticsModeManager{
 			str += "sudo "
 		}
 		
-		str += "\"" + Bundle.main.executablePath! + "\" -disgnostics-mode > \"" + getFolder() + "/DebugLog.txt\""
+		str += "\"" + Bundle.main.executablePath! + "\" -disgnostics-mode >> \"" + getFolder() + "/DebugLog.txt\""
 		
 		return str
 	}

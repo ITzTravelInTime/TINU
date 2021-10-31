@@ -136,6 +136,14 @@ public class CreationProcess{
 		
 		return "createinstallmedia"
 	}
+	
+	public var actualExecutableName: String{
+		if app.current.status == .legacy{
+			return "asr"
+		}
+		
+		return executableName
+	}
 }
 
 typealias cvm = CreationProcess

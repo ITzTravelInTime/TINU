@@ -145,7 +145,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 			}
 			
 			switch capp.status{
-				case .usable:
+				case .usable, .legacy:
 					if capp.url != nil {
 						cvm.shared.app.current = capp
 						
@@ -283,7 +283,7 @@ class ChoseAppViewController: GenericViewController, ViewID {
 					let drive = DriveView(frame: NSRect(x: 0, y: h, width: DriveView.itemSize.width, height: DriveView.itemSize.height))
 					drive.current = capp as UIRepresentable
 					
-					drive.isEnabled = capp.status == .usable
+					drive.isEnabled = capp.status == .usable || capp.status == .legacy
 					
 					drives.append(drive)
 					

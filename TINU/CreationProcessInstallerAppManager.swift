@@ -25,28 +25,146 @@ extension CreationProcess{
 		//static let shared = InstallerAppManager()
 		
 		let ref: CreationProcess
-		public let info: InfoPlist
+		public private(set) var info: InfoPlist
 		
 		required init(reference: CreationProcess) {
 			ref = reference
-			info = InfoPlist(reference: reference)
+			info = InfoPlistProcess(reference: reference)
 		}
 		
 		public var neededFiles: [[String]]{
 			//the first element of the first of this array of arrays should always be executable to look for
 			//TODO: Maybe check for the base system, this search might be more difficoult
-			return ([ ["/Contents/Resources/" + ref.executableName],["/Contents/Info.plist"],["/Contents/SharedSupport"], ["/Contents/SharedSupport/InstallESD.dmg", "/Contents/SharedSupport/SharedSupport.dmg"]])
+			return [["/Contents/Resources/" + ref.executableName], ["/Contents/SharedSupport/InstallESD.dmg", "/Contents/SharedSupport/SharedSupport.dmg"],["/Contents/Info.plist"],["/Contents/SharedSupport"]]
 		}
 		
 		public var current: InstallerAppInfo!{
 			didSet{
-				info.resetCache()
+				info = InfoPlistProcess(reference: self.ref)
 				ref.options.check()
 			}
 		}
 		
 		public var path: String!{
 			return current?.url?.path
+		}
+		
+		public enum NeededFilesKeys: UInt8, Codable, Equatable{
+			case executable = 0
+			case dmg
+			case infoPlist
+			case sharedSupport
+		}
+		
+		public var neededFilesNew: [NeededFilesKeys: [String]]{
+			//the first element of the first of this array of arrays should always be executable to look for
+			//TODO: Maybe check for the base system, this search might be more difficoult
+			return [.executable : ["/Contents/Resources/" + ref.executableName], .dmg : ["/Contents/SharedSupport/InstallESD.dmg", "/Contents/SharedSupport/SharedSupport.dmg"], .sharedSupport : ["/Contents/SharedSupport"], .infoPlist : ["/Contents/Info.plist"]]
+		}
+		
+		public func validateNew(at _app: URL?) -> InstallerAppInfo?{
+			guard var app = _app else { return nil }
+			if ref.disk.current == nil { return nil }
+			
+			print("Validating app at: \(app.path)")
+			
+			var ret = InstallerAppInfo(status: .usable, size: 0, url: app)
+			
+			let manager = FileManager.default
+			
+			var tmpURL: URL?
+			if let isAlias = FileAliasManager.process(app, resolvedURL: &tmpURL){
+				if isAlias{
+					app = tmpURL!
+				}
+			}else{
+				print("  The finder alias for \"\(app.path)\" is broken, invalid app path")
+				ret.status = .badAlias
+				ret.url = nil
+				return ret
+			}
+			
+			ret.url = app
+			
+			var info = [NeededFilesKeys: Bool]()
+			
+			for i in neededFilesNew{
+				if i.value.isEmpty { continue }
+				
+				var present = false
+				
+				for f in i.value{
+					if manager.fileExists(atPath: app.path + f){
+						present = true
+						break
+					}
+				}
+				
+				info[i.key] = present
+			}
+			
+			print(info)
+			
+			if info[.executable] == false && info[.dmg] == false{
+				print("  This app is not an installer app.")
+				ret.status = .notInstaller
+				return ret
+			}
+			
+			if info[.infoPlist] == false{
+				print("  This app doesn't have an info.plist file.")
+				ret.status = .broken
+				return ret
+			}
+			
+			print("  The app seems to be an installer app, checking the type:")
+			
+			if info[.executable] == false && info[.dmg] == true{
+				
+				let info = InfoPlist(appPath: app.path )
+				
+				if info.goesUpTo(version: 10.9){
+					ret.status = .legacy
+					print("    The app is a legacy app")
+				}else{
+					ret.status = .unsupported
+					print("    The app is an unsupported app")
+					return ret
+				}
+				
+			}
+			
+			for i in info{
+				if i.value == false{
+					if (i.key != .executable && ret.status == .legacy) || (i.key == .executable && ret.status != .legacy){
+						print("  The app is damaged")
+						ret.status = .broken
+						return ret
+					}
+				}
+			}
+			
+			guard let sz = manager.directorySize(app) else {
+				print("  Can't get the size of the app")
+				return nil
+			}
+			
+			ret.size = UInt64(sz)
+			
+			if !ref.disk.compareSize(to: UInt64(sz)){
+				print(" The app is too big to fit on the target drive")
+				ret.status = .tooBig
+				return ret
+			}
+			
+			if !self.isBigEnough(appSize: UInt64(sz)){
+				print(" The app is too small to be a proper installer app")
+				ret.status = .tooLittle
+				return ret
+			}
+			
+			print("The app seems to be valid")
+			return ret
 		}
 		
 		public func validate(at _app: URL?) -> InstallerAppInfo?{
@@ -77,6 +195,7 @@ extension CreationProcess{
 			var check: Int = needed.count
 			var isCurrentExecutable = false
 			var hasDMG = false
+			
 			for c in needed{
 				if c.isEmpty{
 					check-=1
@@ -254,10 +373,18 @@ extension CreationProcess{
 						}
 					}
 					
+					/*
 					guard let capp = self.validate(at: appURL) else {
 						print("    Skipping \(appURL.path) because it can't be validated")
 						continue
 					}
+					*/
+					
+					guard let capp = self.validateNew(at: appURL) else {
+						print("    Skipping \(appURL.path) because it can't be validated")
+						continue
+					}
+					
 					
 					if capp.url == nil{
 						print("    Skipping \(appURL.path) because it doesn't have a path setted")
@@ -278,7 +405,7 @@ extension CreationProcess{
 					}
 					
 					switch capp.status {
-					case .usable, .broken, .tooBig, .tooLittle, .unsupported:
+					case .usable, .legacy, .broken, .tooBig, .tooLittle, .unsupported:
 						log("    \(appURL.path) has been added to the apps list")
 						ret.append(capp)
 						break
@@ -297,14 +424,19 @@ extension CreationProcess{
 			return ret
 		}
 		
-		
-		public class InfoPlist: CreationProcessSection{
-			
+		public class InfoPlistProcess: InfoPlist, CreationProcessSection{
 			let ref: CreationProcess
 			
 			required init(reference: CreationProcess) {
+				let sa = reference.app?.path ?? ""
 				ref = reference
+				super.init(appPath: sa)
 			}
+			
+			
+		}
+		
+		public class InfoPlist{
 			
 			private var cache: [String: Any]!
 			private var internalBundleName: String!
@@ -346,15 +478,18 @@ extension CreationProcess{
 				}
 			}
 			
-			public func resetCache(){
+			public init(appPath: String){
 				cache = nil
 				internalBundleName = nil
 				internalBundleVersion = nil
 				
+				/*
 				guard let sa = ref.app?.path else{
 					print("can't get the target app bundle info because the user has not choosen any installer app")
 					return
-				}
+				}*/
+				
+				let sa = appPath
 				
 				if !FileManager.default.fileExists(atPath: sa + "/Contents/Info.plist") {
 					print("cant' find the needded file to get the bundle info for the selected installer app")
@@ -429,7 +564,7 @@ extension CreationProcess{
 				
 				//fallback method, really not used a lot and not that precise, but it's tested to work
 				
-				let checkList: [UInt: ([String], [String])] = [17: (["12", "Monterey"], ["10.12"]), 16: (["big sur", "10.16", "11."], []), 15: (["catalina", "10.15"], []), 14: (["mojave", "10.14"], []), 13: (["high sierra", "high", "10.13"], []), 12: (["sierra", "10.12"], ["high"]), 11: (["el capitan", "el", "capitan", "10.11"], []), 10: (["yosemite", "10.10"], []), 9: (["mavericks", "10.9"], [])]
+				let checkList: [UInt: ([String], [String])] = [17: (["12", "12.", "Monterey"], ["10.12"]), 16: (["big sur", "10.16", "11", "11."], []), 15: (["catalina", "10.15"], []), 14: (["mojave", "10.14"], []), 13: (["high sierra", "high", "10.13"], []), 12: (["sierra", "10.12"], ["high"]), 11: (["el capitan", "el", "capitan", "10.11"], []), 10: (["yosemite", "10.10"], []), 9: (["mavericks", "10.9"], []), 8: (["mountain lion", "mountain", "10.8"], []), 7: (["lion", "10.7"], ["mountain"])]
 				
 				let lc = bundleName!.lowercased()
 				

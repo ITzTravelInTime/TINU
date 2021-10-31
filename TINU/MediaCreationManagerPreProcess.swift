@@ -95,7 +95,8 @@ extension InstallMediaCreationManager{
 					}
 					break
 				case 7:
-					tCMD = self.buildCommandString(useAPFS: cvm.shared.options.execution.canUseApfs)
+					//tCMD = self.buildCommandString(useAPFS: cvm.shared.options.execution.canUseApfs)
+					tCMD = self.buildCommandStringNew(process: cvm.shared)
 					
 					log("The application that will be used is: " + cvm.shared.app.path )
 					log("The target drive is: " + cvm.shared.disk.path )
@@ -190,7 +191,7 @@ extension InstallMediaCreationManager{
 		
 		log("""
 				
-				Waiting for the \(cvm.shared.executableName) executable to finish...
+				Waiting for the \(cvm.shared.actualExecutableName) executable to finish...
 				
 				""")
 		

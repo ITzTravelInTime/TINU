@@ -181,8 +181,8 @@ class InstallingViewController: GenericViewController, ViewID{
 			return
 		}
 		
-		log("Error while trying to close " + cvm.shared.executableName + " try to stop it from the termianl or from Activity monitor")
-		let list = ["{executable}" : cvm.shared.executableName]
+		log("Error while trying to close " + cvm.shared.actualExecutableName + " try to stop it from the termianl or from Activity monitor")
+		let list = ["{executable}" : cvm.shared.actualExecutableName]
 		//msgBoxWarning("Error while trying to exit from the process", "There was an error while trying to close the creation process: \n\nFailed to stop ${executable} process")
 		msgboxWithManager(self, name: "stopError", parseList: list)
 	}

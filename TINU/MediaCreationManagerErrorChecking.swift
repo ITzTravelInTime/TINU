@@ -78,7 +78,7 @@ extension InstallMediaCreationManager{
 			log("process took \(UInt64(abs(cvm.shared.process.startTime.timeIntervalSinceNow))) seconds to finish")
 			
 			//if there is a not normal code it will be logged
-			log("\"\(cvm.shared.executableName)\" has finished, extracting output ...")
+			log("\"\(cvm.shared.actualExecutableName)\" has finished, extracting output ...")
 			
 			let result = cvm.shared.process.handle.result()
 			
@@ -118,7 +118,7 @@ extension InstallMediaCreationManager{
 			self.setActivityLabelText("activityLabel4")
 		}
 		
-		log("Checking the \(cvm.shared.executableName) process")
+		log("Checking the \(cvm.shared.actualExecutableName) process")
 		
 		guard let result = res else {
 			DispatchQueue.main.sync {
@@ -272,7 +272,7 @@ extension InstallMediaCreationManager{
 		}
 		
 		//here createinstallmedia succedes in creating the installer
-		log("\(cvm.shared.executableName) process ended with success")
+		log("\(cvm.shared.actualExecutableName) process ended with success")
 		
 		DispatchQueue.global(qos: .background).async {
 			
@@ -358,7 +358,7 @@ extension InstallMediaCreationManager{
 	}
 	
 	private func parse(messange: String) -> String{
-		return TINU.parse(messange: messange, keys: ["{executable}": cvm.shared.executableName, "{drive}": cvm.shared.disk.current.driveName])
+		return TINU.parse(messange: messange, keys: ["{executable}": cvm.shared.actualExecutableName, "{drive}": cvm.shared.disk.current.driveName])
 	}
 	
 }
