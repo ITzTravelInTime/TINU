@@ -24,7 +24,7 @@ public final class AppBanner{
 	private static let sideBorder = "\u{2551}"
 	private static let topBorder = "\u{2550}"
 	
-	private static let margin: UInt64 = 4
+	private static let margin: UInt64 = 3
 	
 	private static var width: UInt64{
 		struct MEM{
@@ -94,7 +94,7 @@ public final class AppBanner{
 			
 			var len = (width - UInt64(c.count))
 			
-			len = (len == 0) ? 1 : len
+			len = (len == 0) ? 0 : len
 			
 			MEM.cBanner += sideBorder + m + c + strFill(of: " ", length: len, startSeq: nil, endSeq: nil, forget: true) + m + sideBorder + "\n"
 		}
