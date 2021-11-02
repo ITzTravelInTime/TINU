@@ -40,6 +40,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 - Main menu overhaul (put an icon there to access the installer apps downloads)
 
+- always display cd/dvd drives as unusable in the drive select screen 
+
 # TO DO but with less priority:
 - right to left languages ui support
 - divide language files in folders one for each language rather than re-naming them according to the language to use
