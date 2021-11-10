@@ -28,8 +28,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 - contacts view controller text from json (probably requires a cutom json)
 
-- credits button in the final screen (if successful)
-
 - "Star this project on github" button in the final screen (if successful)
 
 - Make UI Sketches for the multiple installer creation process
@@ -46,8 +44,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 - right to left languages ui support
 - divide language files in folders one for each language rather than re-naming them according to the language to use
 - reimplement efi partition mounter's back end using codable classes (Work in progress)
-- download installer app window resizable
-- installer app download background dark in dark mode
 
 - write translation guidelines and how to translate to a new language
 

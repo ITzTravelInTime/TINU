@@ -126,6 +126,7 @@
 		DDD038EB1FB7366400D22695 /* ChoseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD038EA1FB7366400D22695 /* ChoseButton.swift */; };
 		DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */; };
 		DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDF14631F6730DA00953634 /* SharedVariables.swift */; };
+		DDF5ABE7273C0E9D00707FAC /* LatestVersionDownload.json in Resources */ = {isa = PBXBuildFile; fileRef = DDF5ABE6273C0E9D00707FAC /* LatestVersionDownload.json */; };
 		DDF9A5692159A05800389F78 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF9A5682159A05800389F78 /* ShadowView.swift */; };
 /* End PBXBuildFile section */
 
@@ -271,6 +272,8 @@
 		DDD038EA1FB7366400D22695 /* ChoseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoseButton.swift; sourceTree = "<group>"; };
 		DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsViewController.swift; sourceTree = "<group>"; };
 		DDDF14631F6730DA00953634 /* SharedVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedVariables.swift; sourceTree = "<group>"; };
+		DDF5ABE2273C0B2000707FAC /* LatestVersion.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LatestVersion.json; sourceTree = SOURCE_ROOT; };
+		DDF5ABE6273C0E9D00707FAC /* LatestVersionDownload.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LatestVersionDownload.json; sourceTree = "<group>"; };
 		DDF9A5682159A05800389F78 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -311,9 +314,10 @@
 				C6188D972513828E00BCBC51 /* AppDownloadsEn.json */,
 				C6A3A36924FBAC3500CC8E37 /* ErrorDecodingMessangesEn.json */,
 				C6188D992513DF3400BCBC51 /* ErrorDecodingMessangesIt.json */,
+				DDF5ABE6273C0E9D00707FAC /* LatestVersionDownload.json */,
+				C63F035D24E1091400F950B4 /* ProgressBarSettings.json */,
 				C63F036124E40F5500F950B4 /* TextAssetsEn.json */,
 				C68C79F12505205A00BBDA37 /* TextAssetsIt.json */,
-				C63F035D24E1091400F950B4 /* ProgressBarSettings.json */,
 			);
 			name = JSON;
 			sourceTree = "<group>";
@@ -527,6 +531,7 @@
 				C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */,
 				C6DF04651F4F33C500D200B1 /* AppDelegate.swift */,
 				DDC29012270FCE6900CBDE34 /* ToDo.md */,
+				DDF5ABE2273C0B2000707FAC /* LatestVersion.json */,
 				C649CC8F211A4ECF00A6B47B /* Tools */,
 				C60D39B51F5EB48000D94834 /* WindowsControllers */,
 				C60D39B71F5EB4C800D94834 /* ViewControllers */,
@@ -761,6 +766,7 @@
 				DD06444E27284B6400E362ED /* 2.png in Resources */,
 				C68C79F22505205A00BBDA37 /* TextAssetsIt.json in Resources */,
 				C6188D982513828E00BCBC51 /* AppDownloadsEn.json in Resources */,
+				DDF5ABE7273C0E9D00707FAC /* LatestVersionDownload.json in Resources */,
 				C6A3A36A24FBAC3500CC8E37 /* ErrorDecodingMessangesEn.json in Resources */,
 				C6553A931F5F83770048965D /* License.rtf in Resources */,
 				C63F035E24E1091400F950B4 /* ProgressBarSettings.json in Resources */,
