@@ -123,7 +123,7 @@ extension CreationProcess{
 				
 				let info = InfoPlist(appPath: app.path )
 				
-				if info.goesUpTo(version: 10.9){
+				if info.goesUpTo(version: 10.9) && !ref.installMac{
 					ret.status = .legacy
 					print("    The app is a legacy app")
 				}else{

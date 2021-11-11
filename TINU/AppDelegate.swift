@@ -142,6 +142,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		demoMacroEnabled = true
 		#endif
         
+		
+		DispatchQueue.global(qos: .background).async {
+			UpdateManager.checkForUpdates()
+		}
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {

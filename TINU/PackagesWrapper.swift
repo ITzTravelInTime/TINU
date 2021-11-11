@@ -119,3 +119,9 @@ public extension Alert{
 		return mycopy
 	}
 }
+
+public final class Reachability: SimpleReachability{
+	public override class var simulatedStatus: Bool?{
+		return TINU.simulateReachabilityStatus
+	}
+}

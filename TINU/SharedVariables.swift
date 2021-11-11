@@ -20,7 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import Cocoa
 
 //here there are all the variables that are accessible in all the app to determinate the status of the app and what it is doing
-let toggleRecoveryModeShadows = false
+let toggleRecoveryModeShadows = true
 
 public var look: UIManager.AppLook{
 	

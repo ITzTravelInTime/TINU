@@ -28,61 +28,30 @@ fileprivate func hIDPIPrint( _ text: Any ){
 }
 
 public final class HIDPIDetectionManager{
-	public final class PointSizeDetector: SimulatableDetectable{
+	public final class PointSizeDetector: SimulatableDetectableTemporized{
+		
+		public static var expirationInterval: TimeInterval = 60
+		public static var expiration: Date = Date()
+		public static var storedStatus: T? = nil
 		
 		public static var simulatedStatus: CGFloat?{
 			return simulateHIDPIStatus
 		}
 		
-		public static var actualStatus: CGFloat{
-			struct Mem{
-				private static var expiration: Date = Date(timeIntervalSinceReferenceDate: 0)
-				private static var storedStatus: CGFloat? = nil
-				static var status: CGFloat?{
-					get{
-						if storedStatus == nil{
-							hIDPIPrint("Currently stored status is invalid, recalculating ...")
-							return nil
-						}
-						
-						let min = Calendar.current.component(.minute, from: Date(timeIntervalSinceReferenceDate: Date() - expiration))
-						
-						hIDPIPrint("Time since last status check: \(min) minute/s")
-						
-						if min < 1 {
-							return storedStatus
-						}else{
-							hIDPIPrint("Currently stored status is expired, recalculating ...")
-							return nil
-						}
-						
-					}
-					set{
-						storedStatus = newValue
-						expiration = Date()
-					}
+		public static func calculateStatus() -> CGFloat{
+			hIDPIPrint("Calculating new status")
+				
+			var pixelMax: CGFloat = 0
+				
+			for i in NSScreen.screens{
+				if i.backingScaleFactor > pixelMax{
+					pixelMax = i.backingScaleFactor
 				}
 			}
 			
-			if Mem.status == nil{
-				hIDPIPrint("Calculating new status")
-				var pixelMax: CGFloat = 0
-				
-				for i in NSScreen.screens{
-					if i.backingScaleFactor > pixelMax{
-						pixelMax = i.backingScaleFactor
-					}
-				}
-				
-				Mem.status = pixelMax
-				
-			}else{
-				hIDPIPrint("Using stored status")
-			}
+			hIDPIPrint("Status is \(pixelMax)")
 			
-			hIDPIPrint("Status is \(Mem.status ?? 1)")
-			
-			return Mem.status ?? 1
+			return pixelMax
 		}
 		
 		public init(){ }

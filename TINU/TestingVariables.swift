@@ -91,6 +91,13 @@ public let simulateSIPStatus: Bool! = nil
 /// - nil use the actual detected HIDPI pixel size
 public let simulateHIDPIStatus: CGFloat! = nil
 
+///Simulates the detection or not of a network connection
+///
+///Values:
+/// - [bool value] simulates the ntwork conenction status
+/// - nil use the actual detected network conenction status
+public let simulateReachabilityStatus: Bool! = nil
+
 ///This variable forces a UI Style if not nil, see the AppLook enum for the oossible values
 public let simulateLook: UIManager.AppLook! = nil//.shadowsSFSymbolsFill//.shadowsOldIcons//.recovery
 

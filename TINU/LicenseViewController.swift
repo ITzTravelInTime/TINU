@@ -100,138 +100,153 @@ class LicenseViewController: ShadowViewController, ViewID {
 		
 		DispatchQueue.global(qos: .background).async {
 			
-			if showProcessLicense && cvm.shared.installMac{
-				DispatchQueue.main.async {
-					self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "macOSLicenseTitle"))
-					self.backButton.title = TextManager.getViewString(context: self, stringID: "macOSLicenseBackButton")
-				}
+			if !(showProcessLicense && cvm.shared.installMac){
 				
-				if processLicense.isEmpty{
-					if let app = cvm.shared.app.path, let volume = cvm.shared.disk.path{
-						var cmd: [String] = []
-						
-						var noAPFSSupport = true
-						
-						if let ap = cvm.shared.app.info.notSupportsAPFS(){
-							noAPFSSupport = ap
-						}
-						
-						var mojaveSupport = true
-						
-						if let ms = cvm.shared.app.info.isNotMojave(){
-							mojaveSupport = !ms
-						}
-						
-						var license = ""
-						var counter = 0
-						
-						var prios = [0,1,2]
-						
-						if noAPFSSupport{
-							prios = [1, 2, 0]
-						}
-						
-						if mojaveSupport{
-							prios = [1, 2, 0]
-						}
-						
-						while(license.isEmpty){
-							
-							switch(counter % prios.count){
-							case prios[0]:
-								cmd += ["--applicationpath", app, "--volume", volume,  "--license"]
-							case prios[1]:
-								cmd += ["--applicationpath", app, "--license"]
-							case prios[2]:
-								cmd += ["--license"]
-							default:
-								cmd = ["--volume", volume,  "--license"]
-							}
-							
-							//print("Getting installer license with the command: " + cmd)
-							
-							//license = Command.getOut(cmd: cmd) ?? ""
-							
-							let output = Command.run(cmd: app + "/Contents/Resources/" + cvm.shared.executableName, args: cmd)?.output
-							
-							//var license = ""
-							
-							license = ""
-							
-							for i in output ?? []{
-								license += i + "\n"
-							}
-							
-							if !license.isEmpty{
-								license.removeLast()
-							}
-							
-							print(license)
-							
-							counter += 1
-							
-							if counter == 20{
-								license = "Error: Impossible to get the macOS license agreement"
-							}
-						}
-						
-						print("Got license agreement")
-						
-						processLicense = license
-						
-						print("set procee license variable")
-						
-						DispatchQueue.main.sync{
-							self.licenseField.text = license
-							self.spinner.stopAnimation(self)
-							self.spinner.isHidden = true
-							self.scroller.isHidden = false
-							self.check.isEnabled = true
-						}
+				guard let rtfPath = Bundle.main.url(forResource: "License", withExtension: "rtf") else{
+					print("Get license error, skipping: license file not found")
+					DispatchQueue.main.sync {
+						let _ = self.swapCurrentViewController("ChoseDrive")
 					}
-				}else{
-					DispatchQueue.main.async{
-						self.spinner.stopAnimation(self)
+					
+					return
+				}
+					
+				do {
+					
+					let attributedStringWithRtf:NSAttributedString = try NSAttributedString(url: rtfPath, options: convertDictionary([NSAttributedString.DocumentAttributeKey.documentType.rawValue: NSAttributedString.DocumentType.rtf.rawValue]), documentAttributes: nil)
+					
+					DispatchQueue.main.async {
+						self.licenseField.text = attributedStringWithRtf.string
+						
 						self.spinner.isHidden = true
+						self.spinner.stopAnimation(self)
 						self.scroller.isHidden = false
 						
 						self.check.isEnabled = true
 					}
 					
-					self.licenseField?.string = processLicense
-				}
-			}else{
-				
-				if let rtfPath = Bundle.main.url(forResource: "License", withExtension: "rtf") {
-					do {
-						
-						let attributedStringWithRtf:NSAttributedString = try NSAttributedString(url: rtfPath, options: convertDictionary([NSAttributedString.DocumentAttributeKey.documentType.rawValue: NSAttributedString.DocumentType.rtf.rawValue]), documentAttributes: nil)
-						
-						DispatchQueue.main.sync {
-							self.licenseField.text = attributedStringWithRtf.string
-							
-							self.spinner.isHidden = true
-							self.spinner.stopAnimation(self)
-							self.scroller.isHidden = false
-							
-							self.check.isEnabled = true
-						}
-						
-					} catch let error {
-						print("Get license error, skipping: \(error)")
-						DispatchQueue.main.sync {
-							let _ = self.swapCurrentViewController("ChoseDrive")
-						}
-					}
-				}else{
-					print("Get license error, skipping: license file not found")
+				} catch let error {
+					print("Get license error, skipping: \(error)")
 					DispatchQueue.main.sync {
 						let _ = self.swapCurrentViewController("ChoseDrive")
 					}
 				}
 				
+				
+				return
+			}
+			
+			DispatchQueue.main.async {
+				self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "macOSLicenseTitle"))
+				self.backButton.title = TextManager.getViewString(context: self, stringID: "macOSLicenseBackButton")
+			}
+			
+			if !processLicense.isEmpty{
+				DispatchQueue.main.async{
+					self.licenseField.text = processLicense
+					self.spinner.stopAnimation(self)
+					self.spinner.isHidden = true
+					self.scroller.isHidden = false
+					self.check.isEnabled = true
+				}
+				return
+			}
+			
+			guard let app = cvm.shared.app.path, let volume = cvm.shared.disk.path else{
+				DispatchQueue.main.async{
+					self.licenseField.text = processLicense
+					self.spinner.stopAnimation(self)
+					self.spinner.isHidden = true
+					self.scroller.isHidden = false
+					self.check.isEnabled = true
+				}
+				return
+			}
+			
+			print("Getting the license agreement from the installer app")
+			
+			var cmd: [String] = []
+			
+			var noAPFSSupport = true
+			
+			if let ap = cvm.shared.app.info.notSupportsAPFS(){
+				noAPFSSupport = ap
+			}
+			
+			var mojaveSupport = true
+			
+			if let ms = cvm.shared.app.info.isNotMojave(){
+				mojaveSupport = !ms
+			}
+			
+			var license = ""
+			var counter = 0
+			
+			var prios = [0,1,2]
+			
+			if noAPFSSupport{
+				prios = [1, 2, 0]
+			}
+			
+			if mojaveSupport{
+				prios = [1, 2, 0]
+			}
+			
+			while(license.isEmpty){
+				
+				switch(counter % prios.count){
+				case prios[0]:
+					cmd += ["--applicationpath", app, "--volume", volume,  "--license"]
+				case prios[1]:
+					cmd += ["--applicationpath", app, "--license"]
+				case prios[2]:
+					cmd += ["--license"]
+				default:
+					cmd = ["--volume", volume,  "--license"]
+				}
+				
+				//print("Getting installer license with the command: " + cmd)
+				
+				//license = Command.getOut(cmd: cmd) ?? ""
+				
+				let output = Command.run(cmd: app + "/Contents/Resources/" + cvm.shared.executableName, args: cmd)?.output
+				
+				//var license = ""
+				
+				license = ""
+				
+				for i in output ?? []{
+					license += i + "\n"
+				}
+				
+				if !license.isEmpty{
+					license.removeLast()
+				}
+				
+				print(license)
+				
+				counter += 1
+				
+				if counter == 20{
+					license = "Error: Impossible to get the macOS license agreement"
+				}
+			}
+			
+			print("Got license agreement")
+			
+			processLicense = license
+			
+			print("set procee license variable")
+			
+			DispatchQueue.main.sync{
+				self.licenseField.text = license
+				self.spinner.stopAnimation(self)
+				self.spinner.isHidden = true
+				self.scroller.isHidden = false
+				self.check.isEnabled = true
 			}
 		}
+		
 	}
 	
 	override func viewWillAppear() {

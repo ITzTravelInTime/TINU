@@ -127,6 +127,7 @@
 		DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */; };
 		DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDF14631F6730DA00953634 /* SharedVariables.swift */; };
 		DDF5ABE7273C0E9D00707FAC /* LatestVersionDownload.json in Resources */ = {isa = PBXBuildFile; fileRef = DDF5ABE6273C0E9D00707FAC /* LatestVersionDownload.json */; };
+		DDF5ABEC273C0F8A00707FAC /* UpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF5ABEB273C0F8A00707FAC /* UpdateManager.swift */; };
 		DDF9A5692159A05800389F78 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF9A5682159A05800389F78 /* ShadowView.swift */; };
 /* End PBXBuildFile section */
 
@@ -274,6 +275,7 @@
 		DDDF14631F6730DA00953634 /* SharedVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedVariables.swift; sourceTree = "<group>"; };
 		DDF5ABE2273C0B2000707FAC /* LatestVersion.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LatestVersion.json; sourceTree = SOURCE_ROOT; };
 		DDF5ABE6273C0E9D00707FAC /* LatestVersionDownload.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LatestVersionDownload.json; sourceTree = "<group>"; };
+		DDF5ABEB273C0F8A00707FAC /* UpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateManager.swift; sourceTree = "<group>"; };
 		DDF9A5682159A05800389F78 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -345,6 +347,7 @@
 				C60C40B920CCA24000258574 /* TextsManager.swift */,
 				C63885792670D3BA00A6D1BA /* Themes.swift */,
 				C638857B26725BEC00A6D1BA /* UIManager.swift */,
+				DDF5ABEB273C0F8A00707FAC /* UpdateManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -861,6 +864,7 @@
 				C60A461723A942E4009ADF4D /* SupportedEFIFolders.swift in Sources */,
 				C62F545926995B3D00F14304 /* DiskutilCommands.swift in Sources */,
 				DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */,
+				DDF5ABEC273C0F8A00707FAC /* UpdateManager.swift in Sources */,
 				C6C1820D1FE7605300617DC2 /* ChooseSideViewController.swift in Sources */,
 				DDD038EB1FB7366400D22695 /* ChoseButton.swift in Sources */,
 				C60C40C020CCA9DC00258574 /* CreationProcess.swift in Sources */,
@@ -1307,8 +1311,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ITzTravelInTime/TINURecovery.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.7.6;
+				branch = main;
+				kind = branch;
 			};
 		};
 		C6254B7B268933600082C7F5 /* XCRemoteSwiftPackageReference "TINUNotifications" */ = {
