@@ -57,13 +57,13 @@ public final class UpdateManager{
 	public class func checkForUpdates(){
 		
 		struct UpdateInfo: CodableLink{
-			let build: UInt64
+			let build: String
 			let link: String
 		}
 		
 		struct UpdateStruct: Codable, Equatable{
-			let stable: UpdateInfo
 			let pre_release: UpdateInfo
+			let stable: UpdateInfo
 		}
 		
 		if Recovery.status{
@@ -97,8 +97,13 @@ public final class UpdateManager{
 				return
 			}
 			
+			print("[Update] Remote text: \(textFile)")
+			
 			guard let latestInfo = UpdateStruct(fromJSONSerialisedString: textFile) else{
 				log("[Update] Can't interpretate the remote data.")
+				
+				print("[Update] json template if you want to fix the implementation: \n\n\( UpdateStruct.init(pre_release: UpdateInfo.init(build: Bundle.main.build ?? "107", link: "https://github.com/ITzTravelInTime/TINU/releases"), stable: UpdateInfo.init(build: "107", link: "https://github.com/ITzTravelInTime/TINU/releases" )).json(prettyPrinted: true) ?? "[Template error]" )" )
+				
 				return
 			}
 			
