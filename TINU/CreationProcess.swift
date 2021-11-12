@@ -43,7 +43,7 @@ protocol CreationProcessFSObject{
 
 public class CreationProcess{
 	
-	static let shared = CreationProcess()
+	static var shared = CreationProcess()
 	
 	required init(){
 		options = OptionsManager(reference: self)

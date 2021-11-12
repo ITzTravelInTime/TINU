@@ -35,12 +35,12 @@ extension InstallMediaCreationManager{
 		
 		//to have an usable UI during the install we need to use a parallel thread
 		DispatchQueue.global(qos: .background).async {
-			//cvm.shared.process.isPreCreationInProgress = true
-			cvm.shared.process.status = .preCreation
+			//self.ref!.pointee.process.isPreCreationInProgress = true
+			self.ref!.pointee.process.status = .preCreation
 			
 			var tCMD = ExecInfo(path: "", args: [], shouldNotUseSudo: true)
 			
-			//self.dname = cvm.shared.disk.current.driveName
+			//self.dname = self.ref!.pointee.disk.current.driveName
 			
 			DispatchQueue.main.sync {
 				self.setProgressValue(0)
@@ -75,7 +75,7 @@ extension InstallMediaCreationManager{
 				self.OtherOptionsBeforeformat(canFormat: &canFormat, useAPFS: &useAPFS)
 				break*/
 				case 4:
-					if cvm.shared.options.execution.canFormat{
+					if self.ref!.pointee.options.execution.canFormat{
 						success = self.formatTargetDrive()
 					}
 					break
@@ -84,7 +84,7 @@ extension InstallMediaCreationManager{
 					break
 				case 6:
 					//if the process will install mac, special operations are performed before the beginning of the "startosinstall" process
-					if cvm.shared.installMac{
+					if self.ref!.pointee.installMac{
 						DispatchQueue.main.sync {
 							self.setProgressValue(0.01)
 							//self.setActivityLabelText("Applying options")
@@ -95,11 +95,11 @@ extension InstallMediaCreationManager{
 					}
 					break
 				case 7:
-					//tCMD = self.buildCommandString(useAPFS: cvm.shared.options.execution.canUseApfs)
-					tCMD = self.buildCommandStringNew(process: cvm.shared)
+					//tCMD = self.buildCommandString(useAPFS: self.ref!.pointee.options.execution.canUseApfs)
+					tCMD = self.buildCommandStringNew(process: self.ref!.pointee)
 					
-					log("The application that will be used is: " + cvm.shared.app.path )
-					log("The target drive is: " + cvm.shared.disk.path )
+					log("The application that will be used is: " + self.ref!.pointee.app.path )
+					log("The target drive is: " + self.ref!.pointee.disk.path )
 					log("The script that will be performed is (including quotes): " + tCMD.path + " " + tCMD.args.stringLine() )
 					
 					break
@@ -108,13 +108,13 @@ extension InstallMediaCreationManager{
 				}
 				
 				if success{
-					success = (cvm.shared.disk.path != nil || (cvm.shared.disk.current.isDrive && (i < 4) ) && cvm.shared.app.path != nil && cvm.shared.disk.bSDDrive != nil)
+					success = (self.ref!.pointee.disk.path != nil || (self.ref!.pointee.disk.current.isDrive && (i < 4) ) && self.ref!.pointee.app.path != nil && self.ref!.pointee.disk.bSDDrive != nil)
 					if !success{
 						log("Data error: ")
 						let err = "[ERROR: No data available]"
-						log("    Choosen volume path is: \(cvm.shared.disk.path ?? err)")
-						log("    Choosen volume BSDID is: \(cvm.shared.disk.bSDDrive?.rawValue ?? err)")
-						log("    Choosen installer app path is: \(cvm.shared.app.path ?? err)")
+						log("    Choosen volume path is: \(self.ref!.pointee.disk.path ?? err)")
+						log("    Choosen volume BSDID is: \(self.ref!.pointee.disk.bSDDrive?.rawValue ?? err)")
+						log("    Choosen installer app path is: \(self.ref!.pointee.app.path ?? err)")
 					}
 				}
 			}
@@ -154,7 +154,7 @@ extension InstallMediaCreationManager{
 			return
 		}
 		
-		cvm.shared.process.status = .creation
+		self.ref!.pointee.process.status = .creation
 		
 		//let args = ["-c", tCMD]
 		//let exec = "/bin/zsh"
@@ -168,9 +168,9 @@ extension InstallMediaCreationManager{
 		let noFAuth = false
 		#endif
 		
-		cvm.shared.process.handle = (!info.shouldNotUseSudo || noFAuth) ? Command.start(cmd: info.path, args: info.args) : Command.Sudo.start(cmd: info.path, args: info.args)
+		self.ref!.pointee.process.handle = (!info.shouldNotUseSudo || noFAuth) ? Command.start(cmd: info.path, args: info.args) : Command.Sudo.start(cmd: info.path, args: info.args)
 		
-		if cvm.shared.process.handle == nil{
+		if self.ref!.pointee.process.handle == nil{
 			
 			//here the auth is failed or some execution error
 			DispatchQueue.main.sync {
@@ -181,7 +181,7 @@ extension InstallMediaCreationManager{
 			return
 		}
 		
-		if cvm.shared.installMac{
+		if self.ref!.pointee.installMac{
 			log("\n\nmacOS installation process started\n")
 		}else{
 			log("\n\nInstaller creation process started\n")
@@ -191,7 +191,7 @@ extension InstallMediaCreationManager{
 		
 		log("""
 				
-				Waiting for the \(cvm.shared.actualExecutableName) executable to finish...
+				Waiting for the \(self.ref!.pointee.actualExecutableName) executable to finish...
 				
 				""")
 		
@@ -218,7 +218,7 @@ extension InstallMediaCreationManager{
 		
 		//here insted just uses a timer to see if the process has finished and stops this thread
 		//assign processes variables
-		cvm.shared.process.startTime = Date()
+		self.ref!.pointee.process.startTime = Date()
 		
 		
 		DispatchQueue.main.sync {
@@ -229,7 +229,7 @@ extension InstallMediaCreationManager{
 		//2 different aproces of handeling the process end detection
 		if simulateNoTimer{
 			//code used if the timer is not used
-			cvm.shared.process.handle.process.waitUntilExit()
+			self.ref!.pointee.process.handle.process.waitUntilExit()
 			
 			DispatchQueue.main.sync {
 				self.installFinished()

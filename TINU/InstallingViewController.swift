@@ -95,7 +95,7 @@ class InstallingViewController: GenericViewController, ViewID{
 				
 				log("Everything is ready to start the creation/installation process")
 				
-				InstallMediaCreationManager.startInstallProcess()
+				InstallMediaCreationManager.startInstallProcess(ref: &cvm.shared)
 			}else{
 				
 				log("Couldn't get valid info about the installer app and/or the drive")

@@ -21,14 +21,42 @@ import Cocoa
 
 public typealias IMCM = InstallMediaCreationManager
 
-public final class InstallMediaCreationManager: ViewID{
+public class InstallMediaCreationManager: ViewID{
 	
 	public let id: String = "InstallMediaCreationManager"
 	
+	public typealias Creation = UnsafePointer<CreationProcess>?
+	
+	internal let ref: Creation
+	
+	public init(ref: Creation){
+		self.ref = ref
+		initTask()
+	}
+	
+	private init(){
+		self.ref = nil
+		
+		initTask()
+	}
+	
+	private func initTask(){
+		DispatchQueue.global(qos: .userInteractive).sync {
+			//gets fresh info about the management of the progressbar
+			IMCM.cpc = CodableCreation<ProcessConsts>.createFromDefaultFile(false)!
+		
+			if !ProcessConsts.checkInstance(IMCM.cpc){
+				fatalError("Bad progress bar settings")
+			}
+		
+			//claculates the division for the progrees bar usage outside the main process
+			IMCM.unit = IMCM.cpc.pExtDuration / Double(IMCM.preCount)
+		}
+	}
+	
 	static var cpc: ProcessConsts = CodableCreation<ProcessConsts>.createFromDefaultFile(false)!
 	
-	public static var shared = InstallMediaCreationManager()
-	
+	public static private(set) var shared: InstallMediaCreationManager = InstallMediaCreationManager()
 	
 	var lastMinute: UInt64 = 0
 	var lastSecs: UInt64 = 0
@@ -67,24 +95,10 @@ public final class InstallMediaCreationManager: ViewID{
 	
 	#endif
 	
-	init(){
-		DispatchQueue.global(qos: .userInteractive).sync {
-			//gets fresh info about the management of the progressbar
-			IMCM.cpc = CodableCreation<ProcessConsts>.createFromDefaultFile(false)!
-		
-			if !ProcessConsts.checkInstance(IMCM.cpc){
-				fatalError("Bad progress bar settings")
-			}
-		
-			//claculates the division for the progrees bar usage outside the main process
-			IMCM.unit = IMCM.cpc.pExtDuration / Double(IMCM.preCount)
-		}
-	}
-	
 	/** Prepares the UI to then start the creation process, this function needs to be executed into the main thread because if it's usage of UI */
-	class func startInstallProcess(){
+	class func startInstallProcess(ref: Creation){
 		//cleans it's own memory first
-		IMCM.shared = InstallMediaCreationManager()
+		IMCM.shared = InstallMediaCreationManager(ref: ref)
 		
 		DispatchQueue.main.sync {
 			IMCM.shared.viewController = UIManager.shared.window.contentViewController as? InstallingViewController
@@ -107,12 +121,12 @@ public final class InstallMediaCreationManager: ViewID{
 		//cvm.shared.process.isPreCreationInProgress = false
 		//cvm.shared.process.isCreationInProgress = false
 		
-		cvm.shared.process.status = res ? .doneSuccess : .doneFailure
+		ref!.pointee.process.status = res ? .doneSuccess : .doneFailure
 	}
 	
 	//this function stops the current executable from running and , it does runs sudo using the password stored in memory
 	public func stop(mustStop: Bool) -> Bool!{
-		guard let success = TaskKillManager.terminateProcess(PID: cvm.shared.process.handle.process.processIdentifier) else { return false }
+		guard let success = TaskKillManager.terminateProcess(PID: ref!.pointee.process.handle.process.processIdentifier) else { return false }
 		
 		if !success{
 			return false
@@ -121,7 +135,7 @@ public final class InstallMediaCreationManager: ViewID{
 		//if we need to stop the process...
 		if mustStop{
 				
-			cvm.shared.process.handle.process.terminate()
+			ref!.pointee.process.handle.process.terminate()
 				
 			//dispose timer, bacause it's no longer needed
 			timer.invalidate()

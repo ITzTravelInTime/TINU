@@ -43,7 +43,7 @@ extension InstallMediaCreationManager{
 			
 			#if !macOnlyMode
 			
-			if !(cvm.shared.options.list[.keepEFIMounted]?.canBeUsed() ?? false){
+			if !(self.ref!.pointee.options.list[.keepEFIMounted]?.canBeUsed() ?? false){
 				DispatchQueue.main.sync {
 					//self.setActivityLabelText("Unmounting partitions")
 					self.setActivityLabelText("activityLabel7")
@@ -78,7 +78,7 @@ extension InstallMediaCreationManager{
 			
 			//installer creation failed, bacause of an error with the advanced options
 			
-			if cvm.shared.installMac{
+			if self.ref!.pointee.installMac{
 				
 				log("\nOne or more errors detected during the execution of the options, the macOS installation process has been canceld, check the messages printed before this one for more details abut that erros\n")
 				
@@ -118,13 +118,13 @@ extension InstallMediaCreationManager{
 			cvm.shared.disk.current.path = dm.getMountPointFromPartitionBSDID(cvm.shared.disk.bSDDrive!)
 		}*/
 		
-		if let a = cvm.shared.disk.aPFSContaninerBSDDrive, cvm.shared.installMac{
-			cvm.shared.disk.current.path = a.mountPoint()
+		if let a = self.ref!.pointee.disk.aPFSContaninerBSDDrive, self.ref!.pointee.installMac{
+			self.ref!.pointee.disk.current.path = a.mountPoint()
 		}else{
-			cvm.shared.disk.current.path = cvm.shared.disk.bSDDrive?.mountPoint()
+			self.ref!.pointee.disk.current.path = self.ref!.pointee.disk.bSDDrive?.mountPoint()
 		}
 		
-		log("Disk path set to: " + (cvm.shared.disk.path ?? ""))
+		log("Disk path set to: " + (self.ref!.pointee.disk.path ?? ""))
 	}
 	
 	private func checkOperationResult(operation: SettingsRes, res: inout Bool) -> String?{
@@ -200,7 +200,7 @@ extension InstallMediaCreationManager{
 		
 		while (ok){
 			
-			if cvm.shared.process.status != .postCreation{
+			if self.ref!.pointee.process.status != .postCreation{
 				log("-------- Operation canceled by user --------")
 				return SettingsRes(result: nil, messange: "Operation canceld by the user")
 			}
@@ -211,7 +211,7 @@ extension InstallMediaCreationManager{
 			case 0:
 				#if useEFIReplacement && !macOnlyMode
 				log("+Performing EFI folder copy")
-				res = Operations.shared.mountEFIPartAndCopyEFIFolder()
+				res = Operations.shared.mountEFIPartAndCopyEFIFolder(ref: self.ref!.pointee)
 				
 				if res.result ?? false{
 					self.EFICopyEnded = true
@@ -221,23 +221,23 @@ extension InstallMediaCreationManager{
 				break
 			case 1:
 				log("+Performing README creation")
-				res = Operations.shared.createReadme()
+				res = Operations.shared.createReadme(ref: self.ref!.pointee)
 				break
 			case 2:
 				log("+Performing IABootFiles folder creation")
-				res = Operations.shared.createAIBootFiles()
+				res = Operations.shared.createAIBootFiles(ref: self.ref!.pointee)
 				break
 			case 3:
 				log("+Performing removal of IAPhysicalMedia")
-				res = Operations.shared.deleteIAPMID()
+				res = Operations.shared.deleteIAPMID(ref: self.ref!.pointee)
 				break
 			case 4:
 				log("+Perofrming disk icon creation")
-				res = Operations.shared.createIcon()
+				res = Operations.shared.createIcon(ref: self.ref!.pointee)
 				break
 			case 5:
 				log("+Performing TINU copy")
-				res = Operations.shared.createTINUCopy()
+				res = Operations.shared.createTINUCopy(ref: self.ref!.pointee)
 				ammount = 2
 				break
 			case 255:

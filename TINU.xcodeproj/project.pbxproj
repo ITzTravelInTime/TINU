@@ -1115,7 +1115,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 109;
+				CURRENT_PROJECT_VERSION = 110;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1156,7 +1156,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 109;
+				CURRENT_PROJECT_VERSION = 110;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_TESTABILITY = NO;
@@ -1311,8 +1311,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ITzTravelInTime/TINURecovery.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
 			};
 		};
 		C6254B7B268933600082C7F5 /* XCRemoteSwiftPackageReference "TINUNotifications" */ = {
@@ -1352,7 +1352,7 @@
 			repositoryURL = "https://github.com/ITzTravelInTime/SwiftLoggedPrint.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.3;
+				minimumVersion = 3.1.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

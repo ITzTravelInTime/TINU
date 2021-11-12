@@ -34,7 +34,7 @@ extension InstallMediaCreationManager{
 			***Trying to close conflicting processes
 			If those conflicting processes are running,
 			they may interfere with the success of
-			the \"\(cvm.shared.actualExecutableName)\" operation
+			the \"\(self.ref!.pointee.actualExecutableName)\" operation
 			
 			""")
 		
@@ -57,8 +57,8 @@ extension InstallMediaCreationManager{
 			return false
 		}
 		
-		guard let successb = TaskKillManager.terminateProcessWithAsk(name: cvm.shared.actualExecutableName) else{
-			log("***Failed to terminate conflicting process: \"" + cvm.shared.actualExecutableName + "\" because the user denid to close it\n\n")
+		guard let successb = TaskKillManager.terminateProcessWithAsk(name: self.ref!.pointee.actualExecutableName) else{
+			log("***Failed to terminate conflicting process: \"" + self.ref!.pointee.actualExecutableName + "\" because the user denid to close it\n\n")
 			DispatchQueue.main.sync {
 				self.viewController.goBack()
 			}
@@ -66,10 +66,10 @@ extension InstallMediaCreationManager{
 		}
 		
 		if !successb{
-			log("***Failed to close conflicting processes \(cvm.shared.actualExecutableName)!!!")
+			log("***Failed to close conflicting processes \(self.ref!.pointee.actualExecutableName)!!!")
 			DispatchQueue.main.sync {
 				//self.viewController.goToFinalScreen(title: "TINU failed to stop conflicting process \"\(sharedExecutableName)\"\nTry to restart the computer and try again", success: false)
-				self.viewController.goToFinalScreen(id: "finalScreenCFE", success: false, parseList: ["{process}" : cvm.shared.actualExecutableName])
+				self.viewController.goToFinalScreen(id: "finalScreenCFE", success: false, parseList: ["{process}" : self.ref!.pointee.actualExecutableName])
 			}
 			return false
 		}
@@ -88,7 +88,7 @@ extension InstallMediaCreationManager{
 			Those volumes may be mounted images
 			from inside the macOS installer app
 			and may interfere with the success of
-			the \"\(cvm.shared.actualExecutableName)\" operation
+			the \"\(self.ref!.pointee.actualExecutableName)\" operation
 			
 			""")
 		
@@ -122,10 +122,10 @@ extension InstallMediaCreationManager{
 		
 		if simulateFormatFail{
 			print("Process format fail simulation")
-			if cvm.shared.installMac{
+			if self.ref!.pointee.installMac{
 				//self.viewController.goToFinalScreen(title: "TINU failed to format \"\(dname)\" [SIMULATED]", success: false)
 				
-				self.viewController.goToFinalScreen(id: "finalScreenCVE", success: false, parseList: ["{volume}" : cvm.shared.disk.current.driveName])
+				self.viewController.goToFinalScreen(id: "finalScreenCVE", success: false, parseList: ["{volume}" : self.ref!.pointee.disk.current.driveName])
 			}
 			return false
 		}
@@ -139,7 +139,7 @@ extension InstallMediaCreationManager{
 		
 		log("    The disk needs to be unmounted, in order to be formatted")
 		
-		guard let unmount = InstallMediaCreationManager.unmountDiskAndGetDiskId(id: cvm.shared.disk.bSDDrive) else {
+		guard let unmount = InstallMediaCreationManager.unmountDiskAndGetDiskId(id: self.ref!.pointee.disk.bSDDrive) else {
 			log("@@@ Failed to authenticate to eject the drive!!!!\n[The app made sure that the drive has been re-mounted to let the user to use it]\n\n")
 			DispatchQueue.main.sync {
 				self.viewController.goBack()
@@ -147,7 +147,7 @@ extension InstallMediaCreationManager{
 			return false
 		}
 		
-		let tmpBSDName = cvm.shared.disk.bSDDrive?.driveID
+		let tmpBSDName = self.ref!.pointee.disk.bSDDrive?.driveID
 		
 		if !unmount || tmpBSDName == nil{
 			log("@@@ Failed to unmount the disk\n\n")
@@ -159,7 +159,7 @@ extension InstallMediaCreationManager{
 			return false
 		}
 		
-		let newVolumeName = cvm.shared.app.info.bundleName ?? (cvm.shared.installMac ? "Macintosh HD" : "macOS install media")
+		let newVolumeName = self.ref!.pointee.app.info.bundleName ?? (self.ref!.pointee.installMac ? "Macintosh HD" : "macOS install media")
 		
 		guard let res = Diskutil.eraseHFS(bsdID: tmpBSDName!, newVolumeName: newVolumeName, useAdminPrivileges: true) else {
 			log("@@@Volume format process aborted by the user, going back")
@@ -175,7 +175,7 @@ extension InstallMediaCreationManager{
 				
 				//self.viewController.goToFinalScreen(title: "TINU failed to format \"\(dname)\"", success: false)
 				
-				self.viewController.goToFinalScreen(id: "finalScreenFFE", success: false, parseList: ["{diskName}": cvm.shared.disk.current.driveName])
+				self.viewController.goToFinalScreen(id: "finalScreenFFE", success: false, parseList: ["{diskName}": self.ref!.pointee.disk.current.driveName])
 				
 				//}
 			}
@@ -183,20 +183,20 @@ extension InstallMediaCreationManager{
 			return false
 		}
 		
-		let oldPart = cvm.shared.disk.current
+		let oldPart = self.ref!.pointee.disk.current
 		let newBSD = BSDID(tmpBSDName!.rawValue + "s2")
 		let newPart = Part(bsdName: newBSD, fileSystem: .hFS, isGUID: true, hasEFI: true, size: oldPart!.size, isDrive: false, path: newBSD.mountPoint(), support: .ok)
 		
-		cvm.shared.disk.current = newPart
+		self.ref!.pointee.disk.current = newPart
 		
-		cvm.shared.options.list[.forceToFormat]?.isActivated = false
-		cvm.shared.options.list[.forceToFormat]?.isUsable = true
+		self.ref!.pointee.options.list[.forceToFormat]?.isActivated = false
+		self.ref!.pointee.options.list[.forceToFormat]?.isUsable = true
 		
 		DispatchQueue.main.async {
-			guard let name = cvm.shared.disk.current else{ return }
+			guard let name = self.ref!.pointee.disk.current else{ return }
 			let old = self.viewController.driveName.stringValue
 			
-			sharedSetSelectedCreationUI(appName: &self.viewController.appName, appImage: &self.viewController.appImage, driveName: &self.viewController.driveName, driveImage: &self.viewController.driveImage, manager: cvm.shared, useDriveName: cvm.shared.disk.current.isDrive || cvm.shared.disk.shouldErase)
+			sharedSetSelectedCreationUI(appName: &self.viewController.appName, appImage: &self.viewController.appImage, driveName: &self.viewController.driveName, driveImage: &self.viewController.driveImage, manager: self.ref!.pointee, useDriveName: self.ref!.pointee.disk.current.isDrive || self.ref!.pointee.disk.shouldErase)
 			
 			//self.viewController.driveImage.image = name.genericIcon
 			self.viewController.driveName.stringValue = old + "\n(" + TextManager.getViewString(context: self, stringID: "renamed") + " " + FileManager.default.displayName(atPath: name.path!) + ")"
@@ -274,7 +274,7 @@ extension InstallMediaCreationManager{
 				mainCMD.append("--nointeraction")
 			}
 			
-			exec = "\"\(cvm.shared.app.path!)/Contents/Resources/\(cvm.shared.executableName)\""
+			exec = "\"\(process.app.path!)/Contents/Resources/\(process.executableName)\""
 			
 		}
 		
@@ -296,7 +296,7 @@ extension InstallMediaCreationManager{
 				//replace with the test commands
 				if !scf{
 					if !process.app.info.goesUpTo(version: 14.0){
-						mainCMD.append("echo \"Install media now available at \(cvm.shared.disk.path!) \"")
+						mainCMD.append("echo \"Install media now available at \(self.ref!.pointee.disk.path!) \"")
 					}else{
 						mainCMD.append("echo \"done test\"")
 					}
@@ -315,7 +315,7 @@ extension InstallMediaCreationManager{
 	
 	func buildCommandString(useAPFS: Bool) -> ExecInfo{
 		
-		let isNotMojave = cvm.shared.app.info.goesUpTo(version: 14.0)!
+		let isNotMojave = self.ref!.pointee.app.info.goesUpTo(version: 14.0)!
 		//let isNotCatalina = cvm.shared.app.info.goesUpTo(version: 15.0)!
 		
 		//this string is used to define the main command to use, then the prefix is added
@@ -324,9 +324,9 @@ extension InstallMediaCreationManager{
 		
 		if CurrentUser.isRoot{
 			mainCMD.append("--volume")
-			mainCMD.append(cvm.shared.disk.path!)
+			mainCMD.append(self.ref!.pointee.disk.path!)
 		}else{
-			mainCMD.append("--volume \"\(cvm.shared.disk.path!)\"")
+			mainCMD.append("--volume \"\(self.ref!.pointee.disk.path!)\"")
 		}
 		
 		//mojave instalelr do not supports this argument
@@ -334,14 +334,14 @@ extension InstallMediaCreationManager{
 			//log("This is an older macOS installer app, it needs the --applicationpath argument to use " + pname)
 		if CurrentUser.isRoot{
 			mainCMD.append("--applicationpath")
-			mainCMD.append(cvm.shared.app.path!)
+			mainCMD.append(self.ref!.pointee.app.path!)
 		}else{
-			mainCMD.append("--applicationpath \"\(cvm.shared.app.path!)\"")
+			mainCMD.append("--applicationpath \"\(self.ref!.pointee.app.path!)\"")
 		}
 		//}
 		
 		//if tinu have to create a mac os installation on the selected drive
-		if cvm.shared.installMac{
+		if self.ref!.pointee.installMac{
 			
 			///Volumes/Image\ Volume/Install\ macOS\ High\ Sierra.app/Contents/Resources/startosinstall --volume /Volumes/MAC --converttoapfs NO
 			
@@ -349,8 +349,8 @@ extension InstallMediaCreationManager{
 			
 			//the command is adjusted if the version of the installer supports apfs and if the user prefers to avoid upgrading to apfs
 			
-			if !(cvm.shared.app.info.notSupportsAPFS() ?? true) || !isNotMojave{
-				let shouldConvert = useAPFS || cvm.shared.disk.aPFSContaninerBSDDrive != nil
+			if !(self.ref!.pointee.app.info.notSupportsAPFS() ?? true) || !isNotMojave{
+				let shouldConvert = useAPFS || self.ref!.pointee.disk.aPFSContaninerBSDDrive != nil
 				if CurrentUser.isRoot{
 					mainCMD.append("--converttoapfs")
 					mainCMD.append(shouldConvert ? "YES" : "NO")
@@ -366,7 +366,7 @@ extension InstallMediaCreationManager{
 			mainCMD.append("--nointeraction")
 		}
 		
-		var exec = "\"\(cvm.shared.app.path!)/Contents/Resources/\(cvm.shared.executableName)\""
+		var exec = "\"\(self.ref!.pointee.app.path!)/Contents/Resources/\(self.ref!.pointee.executableName)\""
 		
 		if CurrentUser.isRoot{
 			exec.removeFirst()
@@ -386,7 +386,7 @@ extension InstallMediaCreationManager{
 				//replace with the test commands
 				if !scf{
 					if !isNotMojave{
-						mainCMD.append("echo \"Install media now available at \(cvm.shared.disk.path!) \"")
+						mainCMD.append("echo \"Install media now available at \(self.ref!.pointee.disk.path!) \"")
 					}else{
 						mainCMD.append("echo \"done test\"")
 					}

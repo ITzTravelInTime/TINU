@@ -35,7 +35,7 @@ public final class Operations{
 	private let manager = FileManager.default
 	
 	#if useEFIReplacement && !macOnlyMode
-	func mountEFIPartAndCopyEFIFolder() -> SettingsRes{
+	func mountEFIPartAndCopyEFIFolder(ref: CreationProcess) -> SettingsRes{
 		
 		let efiRepMan = EFIFolderReplacementManager.shared
 		
@@ -55,7 +55,7 @@ public final class Operations{
 		
 		log("  Trying to mount the EFI partition of the target drive")
 		
-		let bsdid = BSDID(cvm.shared.disk.bSDDrive.driveID.rawValue + "s1")
+		let bsdid = BSDID(ref.disk.bSDDrive.driveID.rawValue + "s1")
 		
 		if !bsdid.isValid{
 			log("    EFI partition id is not valid!!")
@@ -92,9 +92,9 @@ public final class Operations{
 	}
 	#endif
 	
-	func createReadme() -> SettingsRes{
+	func createReadme(ref: CreationProcess) -> SettingsRes{
 		
-		guard let o = cvm.shared.options.list[.createReadme]?.canBeUsed() else { return SettingsRes.resTrueNil }
+		guard let o = ref.options.list[.createReadme]?.canBeUsed() else { return SettingsRes.resTrueNil }
 		
 		if !o { return SettingsRes.resTrueNil }
 		//creates a readme file into the target drive
@@ -106,7 +106,7 @@ public final class Operations{
 				
 				log("   Creating the readme file")
 				
-				guard let sv = cvm.shared.disk.path else {
+				guard let sv = ref.disk.path else {
 					log("    Error getting the directory for the README file!!")
 					ok = false
 					continue
@@ -157,15 +157,15 @@ public final class Operations{
 	}
 	
 	#if !macOnlyMode
-	func createAIBootFiles() -> SettingsRes{
+	func createAIBootFiles(ref: CreationProcess) -> SettingsRes{
 		
-		guard let o = cvm.shared.options.list[.createAIBootFiles]?.canBeUsed() else { return SettingsRes.resTrueNil }
+		guard let o = ref.options.list[.createAIBootFiles]?.canBeUsed() else { return SettingsRes.resTrueNil }
 		
-		if !(o && !cvm.shared.installMac){
+		if !(o && !ref.installMac){
 			return SettingsRes.resTrueNil
 		}
 		
-		let iaFolder = cvm.shared.disk.path + "/.IABootFiles"
+		let iaFolder = ref.disk.path + "/.IABootFiles"
 		
 		do{
 			
@@ -175,7 +175,7 @@ public final class Operations{
 				if try manager.contentsOfDirectory(atPath: iaFolder).isEmpty{
 					log(".IABootFiles folders exists, but it's emty, so it will be removed and then replaced with a custom one")
 					try manager.removeItem(atPath: iaFolder)
-					return createAIBootFiles()
+					return createAIBootFiles(ref: ref)
 				}
 				return SettingsRes.resTrueNil
 			}
@@ -187,7 +187,7 @@ public final class Operations{
 			let folders = ["/System/Library/CoreServices", "/System/Library/PrelinkedKernels", "/usr/standalone/i386"]
 			
 			for f in folders{
-				let folder = cvm.shared.disk.path + f
+				let folder = ref.disk.path + f
 				
 				if !manager.fileExists(atPath: folder){
 					log("        Folder \"\(f)\" does not exists, it's content will not be copyed inside .IABootFiles")
@@ -217,14 +217,14 @@ public final class Operations{
 	#endif
 	
 	#if !macOnlyMode
-	func deleteIAPMID() -> SettingsRes{
-		guard let o = cvm.shared.options.list[.deleteIAPhysicalMedia]?.canBeUsed() else { return SettingsRes.resTrueNil }
+	func deleteIAPMID(ref: CreationProcess) -> SettingsRes{
+		guard let o = ref.options.list[.deleteIAPhysicalMedia]?.canBeUsed() else { return SettingsRes.resTrueNil }
 		
-		if !(o && !cvm.shared.installMac){
+		if !(o && !ref.installMac){
 			return SettingsRes.resTrueNil
 		}
 		
-		let iaFile = cvm.shared.disk.path + "/.IAPhysicalMedia"
+		let iaFile = ref.disk.path + "/.IAPhysicalMedia"
 		
 		do{
 			
@@ -250,9 +250,9 @@ public final class Operations{
 	}
 	#endif
 	
-	func createIcon() -> SettingsRes{
+	func createIcon(ref: CreationProcess) -> SettingsRes{
 		
-		guard let o = cvm.shared.options.list[.createIcon]?.canBeUsed() else { return SettingsRes.resTrueNil }
+		guard let o = ref.options.list[.createIcon]?.canBeUsed() else { return SettingsRes.resTrueNil }
 		
 		if !o { return SettingsRes.resTrueNil }
 		
@@ -260,7 +260,7 @@ public final class Operations{
 		do{
 			log("   Trying to create the icon on the Bootable macOS installer")
 			
-			let origin = cvm.shared.app.path + "/Contents/Resources/InstallAssistant.icns" //"/Contents/Resources/ProductPageIcon.icns"
+			let origin = ref.app.path + "/Contents/Resources/InstallAssistant.icns" //"/Contents/Resources/ProductPageIcon.icns"
 			
 			if !manager.fileExists(atPath: origin){
 				log("   Icon creation failed, the original icon from the macOS installer app was not found")
@@ -268,7 +268,7 @@ public final class Operations{
 				return SettingsRes(result: false, messange: "TINU failed to apply the installer app icon on the target drive")
 			}
 			
-			let destination = cvm.shared.disk.path + "/.VolumeIcon"
+			let destination = ref.disk.path + "/.VolumeIcon"
 			
 			//trys to copy the volumeicon from the install app to the target volume, if it's already in place, it will be skipped
 			
@@ -291,7 +291,7 @@ public final class Operations{
 			log("       Creating the icon file")
 			try manager.copyItem(atPath: origin, toPath: destination + ".icns")
 			
-			NSWorkspace.shared.setIcon(NSImage.init(contentsOf: URL.init(fileURLWithPath: origin)), forFile: cvm.shared.disk.path!, options: NSWorkspace.IconCreationOptions.excludeQuickDrawElementsIconCreationOption)
+			NSWorkspace.shared.setIcon(NSImage.init(contentsOf: URL.init(fileURLWithPath: origin)), forFile: ref.disk.path!, options: NSWorkspace.IconCreationOptions.excludeQuickDrawElementsIconCreationOption)
 			
 			log("   Icon file created successfully")
 			
@@ -306,8 +306,8 @@ public final class Operations{
 		return SettingsRes.resTrueNil
 	}
 	
-	func createTINUCopy() -> SettingsRes{
-		guard let o = cvm.shared.options.list[.tinuCopy]?.canBeUsed() else { return SettingsRes.resTrueNil }
+	func createTINUCopy(ref: CreationProcess) -> SettingsRes{
+		guard let o = ref.options.list[.tinuCopy]?.canBeUsed() else { return SettingsRes.resTrueNil }
 		
 		if !o { return SettingsRes.resTrueNil }
 		//trys to crerate a copy of this app on the mac os install media
@@ -318,15 +318,15 @@ public final class Operations{
 			var path = ""
 			
 			//if we have to put the app on a mac os installation, we need to use the app directory
-			if cvm.shared.installMac{
-				try manager.createDirectory(atPath: cvm.shared.disk.path + "/Applications", withIntermediateDirectories: true)
+			if ref.installMac{
+				try manager.createDirectory(atPath: ref.disk.path + "/Applications", withIntermediateDirectories: true)
 				
-				path = cvm.shared.disk.path + "/Applications/" + (Bundle.main.bundleURL.lastPathComponent)
+				path = ref.disk.path + "/Applications/" + (Bundle.main.bundleURL.lastPathComponent)
 			}else{
 				
-				path = (cvm.shared.disk.path + "/" + (Bundle.main.bundleURL.lastPathComponent))
+				path = (ref.disk.path + "/" + (Bundle.main.bundleURL.lastPathComponent))
 				
-				if (path == cvm.shared.disk.path + "/" + URL.init(fileURLWithPath: cvm.shared.app.path, isDirectory: true).lastPathComponent){
+				if (path == ref.disk.path + "/" + URL.init(fileURLWithPath: ref.app.path, isDirectory: true).lastPathComponent){
 					path = path.deletingSuffix(".app") + "_.app"
 				}
 				

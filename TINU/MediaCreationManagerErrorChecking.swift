@@ -62,7 +62,7 @@ extension InstallMediaCreationManager{
 	func installFinished(){
 		
 		//now the installer creation process has finished running, so our boolean must be false now
-		cvm.shared.process.status = .postCreation
+		self.ref!.pointee.process.status = .postCreation
 		
 		DispatchQueue.global(qos: .background).async {
 			
@@ -75,12 +75,12 @@ extension InstallMediaCreationManager{
 				
 			}
 			
-			log("process took \(UInt64(abs(cvm.shared.process.startTime.timeIntervalSinceNow))) seconds to finish")
+			log("process took \(UInt64(abs(self.ref!.pointee.process.startTime.timeIntervalSinceNow))) seconds to finish")
 			
 			//if there is a not normal code it will be logged
-			log("\"\(cvm.shared.actualExecutableName)\" has finished, extracting output ...")
+			log("\"\(self.ref!.pointee.actualExecutableName)\" has finished, extracting output ...")
 			
-			let result = cvm.shared.process.handle.result()
+			let result = self.ref!.pointee.process.handle.result()
 			
 			log("Output extracted: ")
 			
@@ -118,7 +118,7 @@ extension InstallMediaCreationManager{
 			self.setActivityLabelText("activityLabel4")
 		}
 		
-		log("Checking the \(cvm.shared.actualExecutableName) process")
+		log("Checking the \(self.ref!.pointee.actualExecutableName) process")
 		
 		guard let result = res else {
 			DispatchQueue.main.sync {
@@ -132,7 +132,7 @@ extension InstallMediaCreationManager{
 		//gets the termination status for comparison
 		let rc = simulateAbnormalExitcode ? 1 : result.exitCode
 		
-		if cvm.shared.installMac{
+		if self.ref!.pointee.installMac{
 			//probably this will end up never executing
 			DispatchQueue.main.sync {
 				//102030100
@@ -272,7 +272,7 @@ extension InstallMediaCreationManager{
 		}
 		
 		//here createinstallmedia succedes in creating the installer
-		log("\(cvm.shared.actualExecutableName) process ended with success")
+		log("\(self.ref!.pointee.actualExecutableName) process ended with success")
 		
 		DispatchQueue.global(qos: .background).async {
 			
@@ -358,7 +358,7 @@ extension InstallMediaCreationManager{
 	}
 	
 	private func parse(messange: String) -> String{
-		return TINU.parse(messange: messange, keys: ["{executable}": cvm.shared.actualExecutableName, "{drive}": cvm.shared.disk.current.driveName])
+		return TINU.parse(messange: messange, keys: ["{executable}": self.ref!.pointee.actualExecutableName, "{drive}": self.ref!.pointee.disk.current.driveName])
 	}
 	
 }
