@@ -39,7 +39,7 @@ It allows you to easily create a macOS install media without messing around with
 # Building/Compiling requirements: 
 - To compile a copy this app using the source code provided in this repo, Xcode 12.x or newer on a machine running at least Catalina is needed.
 
-# Frequently asked questions
+# Frequently asked questions (FAQs):
 https://github.com/ITzTravelInTime/TINU/wiki/FAQs
 
 # Useful links and contacts:
@@ -53,6 +53,8 @@ Thread (English-German) on hackintosh-forum.de:
 - https://www.hackintosh-forum.de/index.php/Thread/33630-TINU/ 
 
 Contact the project creator (ITzTravelInTime aka Pietro):
+- Twitter:
+    https://twitter.com/piecaruso97
 - Reddit profile:          
     https://www.reddit.com/user/ITzTravelInTime
 - email:                  
@@ -84,9 +86,9 @@ Contact the project creator (ITzTravelInTime aka Pietro):
 - Apple for macOS, system icons and installer apps (and their createinstallmedia executable).
 - Special thanks to:
 Francesco Perchiazzi, Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa, Ermanno Nicoletti, Tommaso Dimatore, Michele Vitiello Bonaventura, Massimiliano Faralli, Davide Dessì, Giorgio Dall'Aglio, Peter Paul Chato, Antonio De Masi, the Facebook group ["Italian Hackintosh group!!"](https://www.facebook.com/groups/Italia.hackintosh/), the Telegram group ["Hackintosh Italia"](https://t.me/Hackintoshitalia) and the community from hackintosh-forum.de .
+- Matthew Elvey for README copyediting.
 - Gianmarco Gargiulo for the current app icon and usb drive image.
 - Thomas Tempelmann for help with the UI, grammar and the code.
-- Matthew Elvey for copyediting.
 - Pietro Caruso (ITzTravelInTime) project creator, maintainer and main developer.
 
 # Legal info:
