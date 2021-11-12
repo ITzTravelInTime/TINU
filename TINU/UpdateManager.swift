@@ -62,12 +62,12 @@ public final class UpdateManager{
 		}
 		
 		struct UpdateStruct: Codable, Equatable{
-			let pre_release: UpdateInfo
+			let pre_release: UpdateInfo?
 			let stable: UpdateInfo
 		}
 		
 		if Recovery.status{
-			log("[Update] We are in a recovery environment, let's skip update chacks ...")
+			log("[Update] We are in a recovery environment, let's skip update checks ...")
 			return
 		}
 		
@@ -97,7 +97,7 @@ public final class UpdateManager{
 				return
 			}
 			
-			print("[Update] Remote text: \(textFile)")
+			print("[Update] Remote text: \n\(textFile)")
 			
 			guard let latestInfo = UpdateStruct(fromJSONSerialisedString: textFile) else{
 				log("[Update] Can't interpretate the remote data.")
@@ -108,7 +108,10 @@ public final class UpdateManager{
 			}
 			
 			log("[Update] Latest release version info: \n  link: \(latestInfo.stable.link) \n  build number: \(latestInfo.stable.build)")
-			log("[Update] Latest pre-release version info: \n  link: \(latestInfo.pre_release.link) \n  build number: \(latestInfo.pre_release.build)")
+			
+			if let pre = latestInfo.pre_release{
+				log("[Update] Latest pre-release version info: \n  link: \(pre.link) \n  build number: \(pre.build)")
+			}
 			
 		}
 		
