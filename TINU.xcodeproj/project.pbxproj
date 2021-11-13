@@ -328,10 +328,7 @@
 			isa = PBXGroup;
 			children = (
 				C60C40BB20CCA2BB00258574 /* App.swift */,
-				C60C40BF20CCA9DC00258574 /* CreationProcess.swift */,
-				C6FFB5D72681AAF300CD19CE /* CreationProcessDiskInfo.swift */,
-				C60C40C120CCAA9900258574 /* CreationProcessInstallerAppManager.swift */,
-				C6FFB5D92681AF6D00CD19CE /* CreationProcessManagement.swift */,
+				DDE56DBB273F39BD00B36794 /* CreationProcessInfo */,
 				C60C40C320CCACB600258574 /* DecodeEncode.swift */,
 				C6BEA10124A3A5AE008997CF /* DiagnosticsModeManager.swift */,
 				C6B74D0920B8E76A001CAD4D /* EFIFolderReplacementManager.swift */,
@@ -601,6 +598,17 @@
 				C62BD175271BE2E800F4ADAD /* AppIcon.png */,
 			);
 			path = Screenshots;
+			sourceTree = "<group>";
+		};
+		DDE56DBB273F39BD00B36794 /* CreationProcessInfo */ = {
+			isa = PBXGroup;
+			children = (
+				C60C40BF20CCA9DC00258574 /* CreationProcess.swift */,
+				C6FFB5D72681AAF300CD19CE /* CreationProcessDiskInfo.swift */,
+				C60C40C120CCAA9900258574 /* CreationProcessInstallerAppManager.swift */,
+				C6FFB5D92681AF6D00CD19CE /* CreationProcessManagement.swift */,
+			);
+			name = CreationProcessInfo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

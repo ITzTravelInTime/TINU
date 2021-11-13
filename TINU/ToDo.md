@@ -17,7 +17,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 # TO DO:
-
 - continue with ui revision
 
 - remove partitions unmount hardcode (detect the partitions to unmount)
@@ -32,7 +31,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 - Make UI Sketches for the multiple installer creation process
 
-- Lion/mountain lion installer creation
+- Lion/mountain lion installer creation (WIP)
 
 - Installer to dmg creation (check free space on the computer first, use hdiutil, modifiy the requirements screen for this, avoid the drive select screen)
 
@@ -42,14 +41,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 # TO DO but with less priority:
 - right to left languages ui support
+
 - divide language files in folders one for each language rather than re-naming them according to the language to use
-- reimplement efi partition mounter's back end using codable classes (Work in progress)
 
 - write translation guidelines and how to translate to a new language
 
 - it's better to no longer mention directly hackintosh and hackintoshing in the tool, since it can be couse of possible problems maybe?
 
-- send notitifcation if the tinu version is not up to date (use a json file containing the reference link and the reference information to get)
+- send notitifcation if the tinu version is not up to date (use a json file containing the reference link and the reference information to get) (WIP)
 
 - initial screen more like a home menu with more features ready to use + help section in this new home screen (which includes con tact us and help info and faqs)
 

@@ -72,41 +72,46 @@ public class CreationProcess{
 		
 		//InstallMediaCreationManager.shared.OtherOptionsBeforeformat(canFormat: &canFormat, useAPFS: &apfs)
 		
-		if !options.execution.canFormat{
-			print("Getting drive info about the used volume")
-			
-			guard let s = disk.current.path else{
-				print("The selected volume mount point is empty")
-				return false
-			}
-			
-			var sv = s
-			
-			if !FileManager.default.directoryExistsAtPath(sv){
-				guard let sb = disk.bSDDrive else{
-					print("Can't get the device id!!")
-					return false
-				}
-				
-				guard let sd = sb.mountPoint() else{
-					print("Can't get the mount point!!")
-					return false
-				}
-				
-				sv = sd
-				disk.current.path = sv
-				print("Corrected the name of the target volume")
-				
-			}
-			
-			print("Mount point: \(sv)")
-			
-		}else{
+		if options.execution.canFormat{
 			print("A drive has been selected or a partition that needs format")
 			useDriveIcon = true
+			
+			print("Everything is ready to start the installer creation process")
+			return true
 		}
 		
+		print("Getting drive info about the used volume")
+		
+		guard let s = disk.current.path else{
+			print("The selected volume mount point is empty")
+			return false
+		}
+		
+		if FileManager.default.directoryExistsAtPath(s){
+			print("Mount point: \(s)")
+			
+			print("Everything is ready to start the installer creation process")
+			return true
+		}
+		
+		guard let sb = disk.bSDDrive else{
+			print("Can't get the device id!!")
+			return false
+		}
+		
+		guard let sd = sb.mountPoint() else{
+			print("Can't get the mount point!!")
+			return false
+		}
+		
+		disk.current.path = sd
+		
+		print("Corrected the name of the target volume")
+		
+		print("Mount point: \(sd)")
+		
 		print("Everything is ready to start the installer creation process")
+		
 		return true
 	}
 	
@@ -122,6 +127,7 @@ public class CreationProcess{
 			log(res)
 			return res
 		*/
+		
 		if installMac{
 			return "startosinstall"
 		}
