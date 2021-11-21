@@ -36,6 +36,7 @@ public final class UpdateManager{
 		struct UpdateInfo: CodableLink{
 			let build: String
 			let link: String
+			let version: String
 		}
 		
 		struct UpdateStruct: Codable, Equatable{

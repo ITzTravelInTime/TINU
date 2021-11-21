@@ -1,10 +1,12 @@
 {
 	"stable": {
 		"build" : "107",
-		"link" : "https://github.com/ITzTravelInTime/TINU/releases/download/3.0.1_(107)/TINU.zip"
+		"link" : "https://github.com/ITzTravelInTime/TINU/releases/download/3.0.1_(107)/TINU.zip",
+		"version" : "3.0.1"
 	},
 	"pre_release": {
 		"build" : "107",
-		"link" : "https://github.com/ITzTravelInTime/TINU/releases/download/3.0.1_(107)/TINU.zip"
+		"link" : "https://github.com/ITzTravelInTime/TINU/releases/download/3.0.1_(107)/TINU.zip",
+		"version" : "3.0.1"
 	}
 }
