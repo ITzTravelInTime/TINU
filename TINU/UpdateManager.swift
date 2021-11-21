@@ -28,20 +28,7 @@ fileprivate protocol CodableLink: Codable, Equatable{
 public final class UpdateManager{
 	
 	private class func getVersionInfoLink() -> String?{
-		
-		struct UpdateLink: CodableLink{
-			let link: String
-		}
-		
-		guard let file = Bundle.main.path(forResource: "LatestVersionDownload", ofType: "json") else{
-			return nil
-		}
-		
-		guard let link = UpdateLink(fromFileAtPath: file)?.link else{
-			return nil
-		}
-		
-		return link
+		return RemoteResourcesURLsManager.list["updates"]
 	}
 	
 	public class func checkForUpdates(){

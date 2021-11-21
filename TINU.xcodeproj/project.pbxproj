@@ -75,6 +75,8 @@
 		C660D1A0252C7A160027FCA0 /* ConfigMenuAppsEn.json in Resources */ = {isa = PBXBuildFile; fileRef = C660D19F252C7A160027FCA0 /* ConfigMenuAppsEn.json */; };
 		C660D1A2252C94860027FCA0 /* ConfigMenuAppsIt.json in Resources */ = {isa = PBXBuildFile; fileRef = C660D1A1252C94860027FCA0 /* ConfigMenuAppsIt.json */; };
 		C6636D2F2747F8B2008B1C07 /* TINUSerialization in Frameworks */ = {isa = PBXBuildFile; productRef = C6636D2E2747F8B2008B1C07 /* TINUSerialization */; };
+		C6636D352749D61F008B1C07 /* RemoteURLs.json in Resources */ = {isa = PBXBuildFile; fileRef = C6636D342749D61F008B1C07 /* RemoteURLs.json */; };
+		C6636D372749D680008B1C07 /* RemoteReourcesURLsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6636D362749D680008B1C07 /* RemoteReourcesURLsManager.swift */; };
 		C66411052077A80100454292 /* OtherWindowsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66411042077A80100454292 /* OtherWindowsControllers.swift */; };
 		C676D197215EB20E00E900E9 /* MediaCreationManagerMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676D196215EB20E00E900E9 /* MediaCreationManagerMain.swift */; };
 		C682BBE320FFB23600410370 /* Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C682BBE220FFB23600410370 /* Operations.swift */; };
@@ -127,7 +129,6 @@
 		DDD038EB1FB7366400D22695 /* ChoseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD038EA1FB7366400D22695 /* ChoseButton.swift */; };
 		DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */; };
 		DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDF14631F6730DA00953634 /* SharedVariables.swift */; };
-		DDF5ABE7273C0E9D00707FAC /* LatestVersionDownload.json in Resources */ = {isa = PBXBuildFile; fileRef = DDF5ABE6273C0E9D00707FAC /* LatestVersionDownload.json */; };
 		DDF5ABEC273C0F8A00707FAC /* UpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF5ABEB273C0F8A00707FAC /* UpdateManager.swift */; };
 		DDF9A5692159A05800389F78 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF9A5682159A05800389F78 /* ShadowView.swift */; };
 /* End PBXBuildFile section */
@@ -215,6 +216,8 @@
 		C660D19F252C7A160027FCA0 /* ConfigMenuAppsEn.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ConfigMenuAppsEn.json; sourceTree = "<group>"; };
 		C660D1A1252C94860027FCA0 /* ConfigMenuAppsIt.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ConfigMenuAppsIt.json; sourceTree = "<group>"; };
 		C6636D332749CFB2008B1C07 /* AppDownloadsEn.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = AppDownloadsEn.json; sourceTree = "<group>"; };
+		C6636D342749D61F008B1C07 /* RemoteURLs.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RemoteURLs.json; sourceTree = "<group>"; };
+		C6636D362749D680008B1C07 /* RemoteReourcesURLsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteReourcesURLsManager.swift; sourceTree = "<group>"; };
 		C66411042077A80100454292 /* OtherWindowsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherWindowsControllers.swift; sourceTree = "<group>"; };
 		C676D196215EB20E00E900E9 /* MediaCreationManagerMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCreationManagerMain.swift; sourceTree = "<group>"; };
 		C682BBE220FFB23600410370 /* Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operations.swift; sourceTree = "<group>"; };
@@ -276,7 +279,6 @@
 		DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsViewController.swift; sourceTree = "<group>"; };
 		DDDF14631F6730DA00953634 /* SharedVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedVariables.swift; sourceTree = "<group>"; };
 		DDF5ABE2273C0B2000707FAC /* LatestVersion.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = LatestVersion.json; path = RemoteResources/Json/LatestVersion.json; sourceTree = SOURCE_ROOT; };
-		DDF5ABE6273C0E9D00707FAC /* LatestVersionDownload.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LatestVersionDownload.json; sourceTree = "<group>"; };
 		DDF5ABEB273C0F8A00707FAC /* UpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateManager.swift; sourceTree = "<group>"; };
 		DDF9A5682159A05800389F78 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -319,8 +321,8 @@
 				C6188D972513828E00BCBC51 /* AppDownloadsEn.json */,
 				C6A3A36924FBAC3500CC8E37 /* ErrorDecodingMessangesEn.json */,
 				C6188D992513DF3400BCBC51 /* ErrorDecodingMessangesIt.json */,
-				DDF5ABE6273C0E9D00707FAC /* LatestVersionDownload.json */,
 				C63F035D24E1091400F950B4 /* ProgressBarSettings.json */,
+				C6636D342749D61F008B1C07 /* RemoteURLs.json */,
 				C63F036124E40F5500F950B4 /* TextAssetsEn.json */,
 				C68C79F12505205A00BBDA37 /* TextAssetsIt.json */,
 			);
@@ -343,6 +345,7 @@
 				C60C40B720CC9E4800258574 /* IconsManager.swift */,
 				C6F68E8A20D0277B00F7A0F4 /* PackagesWrapper.swift */,
 				C63F035F24E3D19300F950B4 /* ProgressBarValuesManager.swift */,
+				C6636D362749D680008B1C07 /* RemoteReourcesURLsManager.swift */,
 				C63DD0272265D921007944A5 /* TaskKillManager.swift */,
 				C60C40B920CCA24000258574 /* TextsManager.swift */,
 				C63885792670D3BA00A6D1BA /* Themes.swift */,
@@ -795,6 +798,7 @@
 				C660D1A2252C94860027FCA0 /* ConfigMenuAppsIt.json in Resources */,
 				C62BD176271BE2E800F4ADAD /* AppIcon.png in Resources */,
 				C660D1A0252C7A160027FCA0 /* ConfigMenuAppsEn.json in Resources */,
+				C6636D352749D61F008B1C07 /* RemoteURLs.json in Resources */,
 				C660D1992529BB260027FCA0 /* EFIPMTextAssetsIt.json in Resources */,
 				DD223ED827149C5D0048EA0F /* 3.png in Resources */,
 				C63F036224E40F5500F950B4 /* TextAssetsEn.json in Resources */,
@@ -807,7 +811,6 @@
 				DD06444E27284B6400E362ED /* 2.png in Resources */,
 				C68C79F22505205A00BBDA37 /* TextAssetsIt.json in Resources */,
 				C6188D982513828E00BCBC51 /* AppDownloadsEn.json in Resources */,
-				DDF5ABE7273C0E9D00707FAC /* LatestVersionDownload.json in Resources */,
 				C6A3A36A24FBAC3500CC8E37 /* ErrorDecodingMessangesEn.json in Resources */,
 				C6553A931F5F83770048965D /* License.rtf in Resources */,
 				C63F035E24E1091400F950B4 /* ProgressBarSettings.json in Resources */,
@@ -874,6 +877,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C621CFA71F4F6A6500CC6D5B /* MainWindowController.swift in Sources */,
+				C6636D372749D680008B1C07 /* RemoteReourcesURLsManager.swift in Sources */,
 				C621CFAC1F4F7DF400CC6D5B /* DriveView.swift in Sources */,
 				C6BEA10224A3A5AE008997CF /* DiagnosticsModeManager.swift in Sources */,
 				C65AA61F1F4F497A00C43223 /* ClassExtensions.swift in Sources */,

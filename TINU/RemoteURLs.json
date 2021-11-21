@@ -1,0 +1,7 @@
+{
+	"urls" : {
+		"updates": "https://raw.githubusercontent.com/ITzTravelInTime/TINU/development/RemoteResources/Json/LatestVersion.json",
+		"installerAppDownloads" : "https://raw.githubusercontent.com/ITzTravelInTime/TINU/development/RemoteResources/Json/AppDownloadsEn.json"
+	}
+
+}
