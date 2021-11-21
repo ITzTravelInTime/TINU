@@ -32,6 +32,10 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		if cvm.shared.process.status.isBusy(){
+			fatalError("Sanity check: Process still results busy!!")
+		}
         
         if let w = UIManager.shared.window{
             w.isClosingEnabled = true
@@ -82,6 +86,16 @@ class MainCreationFinishedViewController: GenericViewController, ViewID{
 		
 		Notifications.justSendWith(id: "processEnd" + suffix, icon: nil)
     }
+	
+	override func viewDidAppear() {
+		super.viewDidAppear()
+		
+		if cvm.shared.process.status.isBusy(){
+			fatalError("Sanity check: Process still results busy!!")
+		}
+		
+		cvm.shared.maker = nil
+	}
 
     @IBAction func exit(_ sender: Any) {
         NSApplication.shared.terminate(self)

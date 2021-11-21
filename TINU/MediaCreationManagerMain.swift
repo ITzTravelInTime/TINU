@@ -29,16 +29,22 @@ public class InstallMediaCreationManager: ViewID{
 	
 	internal let ref: Creation
 	
-	public init(ref: Creation){
+	public init(ref: Creation, controller: InstallingViewController){
 		self.ref = ref
 		initTask()
+		
+		DispatchQueue.main.sync {
+			self.viewController = controller
+			self.viewController.setProgressMax(IMCM.cpc.pMaxVal)
+		}
 	}
 	
+	/*
 	private init(){
 		self.ref = nil
-		
 		initTask()
 	}
+	*/
 	
 	private func initTask(){
 		DispatchQueue.global(qos: .userInteractive).sync {
@@ -56,7 +62,7 @@ public class InstallMediaCreationManager: ViewID{
 	
 	static var cpc: ProcessConsts = CodableCreation<ProcessConsts>.createFromDefaultFile(false)!
 	
-	public static private(set) var shared: InstallMediaCreationManager = InstallMediaCreationManager()
+	//public static private(set) var shared: InstallMediaCreationManager = InstallMediaCreationManager()
 	
 	var lastMinute: UInt64 = 0
 	var lastSecs: UInt64 = 0
@@ -96,6 +102,7 @@ public class InstallMediaCreationManager: ViewID{
 	#endif
 	
 	/** Prepares the UI to then start the creation process, this function needs to be executed into the main thread because if it's usage of UI */
+	/*
 	class func startInstallProcess(ref: Creation){
 		//cleans it's own memory first
 		IMCM.shared = InstallMediaCreationManager(ref: ref)
@@ -115,6 +122,8 @@ public class InstallMediaCreationManager: ViewID{
 		
 		IMCM.shared.install()
 	}
+	*/
+	
 	
 	//this functrion just sets those 2 long ones to false
 	public func makeProcessNotInExecution(withResult res: Bool){

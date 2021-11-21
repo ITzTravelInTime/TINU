@@ -19,7 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 import Foundation
 import TINURecovery
-import SwiftLoggedPrint
+import TINUSerialization
 
 fileprivate protocol CodableLink: Codable, Equatable{
 	var link: String { get  }
@@ -33,25 +33,15 @@ public final class UpdateManager{
 			let link: String
 		}
 		
-		guard let folder = Bundle.main.path(forResource: "LatestVersionDownload", ofType: "json") else{
+		guard let file = Bundle.main.path(forResource: "LatestVersionDownload", ofType: "json") else{
 			return nil
 		}
 		
-		do{
-			guard let tempData = try String(data: Data(contentsOf: URL(fileURLWithPath: folder ) ), encoding: .utf8) else{
-				return nil
-			}
-			
-			guard let link = UpdateLink(fromJSONSerialisedString: tempData)?.link else{
-				return nil
-			}
-			
-			return link
-			
-		}catch{
+		guard let link = UpdateLink(fromFileAtPath: file)?.link else{
 			return nil
 		}
 		
+		return link
 	}
 	
 	public class func checkForUpdates(){
@@ -81,41 +71,16 @@ public final class UpdateManager{
 			return
 		}
 		
-		guard let url = URL(string: urlContents) else{
-			log("[Update] Can't generate a valid url for requesting update info")
+		guard let info = UpdateStruct.init(fromRemoteFileAtUrl: urlContents)else{
+			log("[Update] Can't get remote structure for update information.")
 			return
 		}
-
-		let task = URLSession.shared.dataTask(with:url) { (data, response, error) in
-			if let e = error {
-				log("[Update] Error while getting the update information from the stored update link: \(e.localizedDescription)")
-				return
-			}
-			   
-			guard let textFile = String(data: data!, encoding: .utf8) else{
-				log("[Update] Can't convert the data got remotely into a valid string.")
-				return
-			}
-			
-			print("[Update] Remote text: \n\(textFile)")
-			
-			guard let latestInfo = UpdateStruct(fromJSONSerialisedString: textFile) else{
-				log("[Update] Can't interpretate the remote data.")
-				
-				print("[Update] json template if you want to fix the implementation: \n\n\( UpdateStruct.init(pre_release: UpdateInfo.init(build: Bundle.main.build ?? "107", link: "https://github.com/ITzTravelInTime/TINU/releases"), stable: UpdateInfo.init(build: "107", link: "https://github.com/ITzTravelInTime/TINU/releases" )).json(prettyPrinted: true) ?? "[Template error]" )" )
-				
-				return
-			}
-			
-			log("[Update] Latest release version info: \n  link: \(latestInfo.stable.link) \n  build number: \(latestInfo.stable.build)")
-			
-			if let pre = latestInfo.pre_release{
-				log("[Update] Latest pre-release version info: \n  link: \(pre.link) \n  build number: \(pre.build)")
-			}
-			
+		
+		log("[Update] Obtained update info: \(info.stable)")
+		
+		if let beta = info.pre_release{
+			log("[Update] Obtained pre-release update info: \(beta)")
 		}
-		
-		task.resume()
-		
+
 	}
 }

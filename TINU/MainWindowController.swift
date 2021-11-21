@@ -72,8 +72,8 @@ public class mainWindowController: GenericWindowController {
     
     @objc func windowShouldClose(_ sender: Any) -> Bool {
 		print("main Window should close called")
-		if cvm.shared.process.status == .creation {
-			if let d = InstallMediaCreationManager.shared.stopWithAsk(){
+		if cvm.shared.process.status == .creation && cvm.shared.maker != nil {
+			if let d = cvm.shared.maker?.stopWithAsk(){
 				return d
 			}else{
 				return false

@@ -29,15 +29,6 @@
         }
       },
       {
-        "package": "SwiftLoggedPrint",
-        "repositoryURL": "https://github.com/ITzTravelInTime/SwiftLoggedPrint.git",
-        "state": {
-          "branch": null,
-          "revision": "99e88579542a17863435d78c71c499679a3f397e",
-          "version": "3.1.2"
-        }
-      },
-      {
         "package": "TINUNotifications",
         "repositoryURL": "https://github.com/ITzTravelInTime/TINUNotifications.git",
         "state": {
@@ -47,12 +38,12 @@
         }
       },
       {
-        "package": "TINURecovery",
-        "repositoryURL": "https://github.com/ITzTravelInTime/TINURecovery.git",
+        "package": "TINUSerialization",
+        "repositoryURL": "https://github.com/ITzTravelInTime/TINUSerialization",
         "state": {
-          "branch": null,
-          "revision": "f5d4077abe3f9b5d58b7fe84f4dc31763433546b",
-          "version": "4.0.0"
+          "branch": "main",
+          "revision": "b726f5a07b638bc9b035ccc2202248090fcde12d",
+          "version": null
         }
       }
     ]

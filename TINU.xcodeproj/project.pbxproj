@@ -74,6 +74,7 @@
 		C660D19E2529F0A70027FCA0 /* EFIPartitionMounterTextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C660D19D2529F0A70027FCA0 /* EFIPartitionMounterTextManager.swift */; };
 		C660D1A0252C7A160027FCA0 /* ConfigMenuAppsEn.json in Resources */ = {isa = PBXBuildFile; fileRef = C660D19F252C7A160027FCA0 /* ConfigMenuAppsEn.json */; };
 		C660D1A2252C94860027FCA0 /* ConfigMenuAppsIt.json in Resources */ = {isa = PBXBuildFile; fileRef = C660D1A1252C94860027FCA0 /* ConfigMenuAppsIt.json */; };
+		C6636D2F2747F8B2008B1C07 /* TINUSerialization in Frameworks */ = {isa = PBXBuildFile; productRef = C6636D2E2747F8B2008B1C07 /* TINUSerialization */; };
 		C66411052077A80100454292 /* OtherWindowsControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66411042077A80100454292 /* OtherWindowsControllers.swift */; };
 		C676D197215EB20E00E900E9 /* MediaCreationManagerMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = C676D196215EB20E00E900E9 /* MediaCreationManagerMain.swift */; };
 		C682BBE320FFB23600410370 /* Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C682BBE220FFB23600410370 /* Operations.swift */; };
@@ -213,6 +214,7 @@
 		C660D19D2529F0A70027FCA0 /* EFIPartitionMounterTextManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EFIPartitionMounterTextManager.swift; sourceTree = "<group>"; };
 		C660D19F252C7A160027FCA0 /* ConfigMenuAppsEn.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ConfigMenuAppsEn.json; sourceTree = "<group>"; };
 		C660D1A1252C94860027FCA0 /* ConfigMenuAppsIt.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ConfigMenuAppsIt.json; sourceTree = "<group>"; };
+		C6636D332749CFB2008B1C07 /* AppDownloadsEn.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = AppDownloadsEn.json; sourceTree = "<group>"; };
 		C66411042077A80100454292 /* OtherWindowsControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherWindowsControllers.swift; sourceTree = "<group>"; };
 		C676D196215EB20E00E900E9 /* MediaCreationManagerMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCreationManagerMain.swift; sourceTree = "<group>"; };
 		C682BBE220FFB23600410370 /* Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operations.swift; sourceTree = "<group>"; };
@@ -273,7 +275,7 @@
 		DDD038EA1FB7366400D22695 /* ChoseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoseButton.swift; sourceTree = "<group>"; };
 		DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsViewController.swift; sourceTree = "<group>"; };
 		DDDF14631F6730DA00953634 /* SharedVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedVariables.swift; sourceTree = "<group>"; };
-		DDF5ABE2273C0B2000707FAC /* LatestVersion.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LatestVersion.json; sourceTree = SOURCE_ROOT; };
+		DDF5ABE2273C0B2000707FAC /* LatestVersion.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = LatestVersion.json; path = RemoteResources/Json/LatestVersion.json; sourceTree = SOURCE_ROOT; };
 		DDF5ABE6273C0E9D00707FAC /* LatestVersionDownload.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LatestVersionDownload.json; sourceTree = "<group>"; };
 		DDF5ABEB273C0F8A00707FAC /* UpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateManager.swift; sourceTree = "<group>"; };
 		DDF9A5682159A05800389F78 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6636D2F2747F8B2008B1C07 /* TINUSerialization in Frameworks */,
 				C6254B80268933740082C7F5 /* Command in Frameworks */,
 				C6254B8626897EA20082C7F5 /* SwiftCPUDetect in Frameworks */,
 				C6254B83268933950082C7F5 /* CommandSudo in Frameworks */,
@@ -448,6 +451,31 @@
 			name = JSON;
 			sourceTree = "<group>";
 		};
+		C6636D302749CEDE008B1C07 /* RemoteResources */ = {
+			isa = PBXGroup;
+			children = (
+				C6636D322749CF02008B1C07 /* Images */,
+				C6636D312749CEF4008B1C07 /* Json */,
+			);
+			path = RemoteResources;
+			sourceTree = "<group>";
+		};
+		C6636D312749CEF4008B1C07 /* Json */ = {
+			isa = PBXGroup;
+			children = (
+				DDF5ABE2273C0B2000707FAC /* LatestVersion.json */,
+				C6636D332749CFB2008B1C07 /* AppDownloadsEn.json */,
+			);
+			path = Json;
+			sourceTree = "<group>";
+		};
+		C6636D322749CF02008B1C07 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		C6A4283726B23D0C00921658 /* Diskutil */ = {
 			isa = PBXGroup;
 			children = (
@@ -498,6 +526,7 @@
 		C6DF04591F4F33C500D200B1 = {
 			isa = PBXGroup;
 			children = (
+				C6636D302749CEDE008B1C07 /* RemoteResources */,
 				C6DF04641F4F33C500D200B1 /* TINU */,
 				C6DF04761F4F33C500D200B1 /* TINUTests */,
 				C6DF04811F4F33C500D200B1 /* TINUUITests */,
@@ -531,7 +560,6 @@
 				C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */,
 				C6DF04651F4F33C500D200B1 /* AppDelegate.swift */,
 				DDC29012270FCE6900CBDE34 /* ToDo.md */,
-				DDF5ABE2273C0B2000707FAC /* LatestVersion.json */,
 				C649CC8F211A4ECF00A6B47B /* Tools */,
 				C60D39B51F5EB48000D94834 /* WindowsControllers */,
 				C60D39B71F5EB4C800D94834 /* ViewControllers */,
@@ -636,6 +664,7 @@
 				C6254B82268933950082C7F5 /* CommandSudo */,
 				C6254B8526897EA20082C7F5 /* SwiftCPUDetect */,
 				C6BF64832692B61E00A0B094 /* SwiftLoggedPrint */,
+				C6636D2E2747F8B2008B1C07 /* TINUSerialization */,
 			);
 			productName = TINU;
 			productReference = C6DF04621F4F33C500D200B1 /* TINU.app */;
@@ -739,6 +768,7 @@
 				C6254B81268933950082C7F5 /* XCRemoteSwiftPackageReference "CommandSudo" */,
 				C6254B8426897EA20082C7F5 /* XCRemoteSwiftPackageReference "SwiftCPUDetect" */,
 				C6BF64822692B61E00A0B094 /* XCRemoteSwiftPackageReference "SwiftLoggedPrint" */,
+				C6636D2D2747F8B1008B1C07 /* XCRemoteSwiftPackageReference "TINUSerialization" */,
 			);
 			productRefGroup = C6DF04631F4F33C500D200B1 /* Products */;
 			projectDirPath = "";
@@ -1355,12 +1385,20 @@
 				minimumVersion = 1.2.0;
 			};
 		};
+		C6636D2D2747F8B1008B1C07 /* XCRemoteSwiftPackageReference "TINUSerialization" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ITzTravelInTime/TINUSerialization";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		C6BF64822692B61E00A0B094 /* XCRemoteSwiftPackageReference "SwiftLoggedPrint" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ITzTravelInTime/SwiftLoggedPrint.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.1.2;
+				minimumVersion = 3.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1390,6 +1428,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C6254B8426897EA20082C7F5 /* XCRemoteSwiftPackageReference "SwiftCPUDetect" */;
 			productName = SwiftCPUDetect;
+		};
+		C6636D2E2747F8B2008B1C07 /* TINUSerialization */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C6636D2D2747F8B1008B1C07 /* XCRemoteSwiftPackageReference "TINUSerialization" */;
+			productName = TINUSerialization;
 		};
 		C6BF64832692B61E00A0B094 /* SwiftLoggedPrint */ = {
 			isa = XCSwiftPackageProductDependency;

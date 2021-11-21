@@ -69,8 +69,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		}else if cvm.shared.process.status == .creation{
 			var spd: Bool!
 				
-			spd = InstallMediaCreationManager.shared.stopWithAsk()
+			//spd = InstallMediaCreationManager.shared.stopWithAsk()
 				
+			spd = (cvm.shared.maker != nil) ? cvm.shared.maker?.stopWithAsk() : true
+			
 			guard let stopped = spd else{
 				print("Terminate cancelled")
 				return NSApplication.TerminateReply.terminateCancel
@@ -151,13 +153,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
         
-		if cvm.shared.process.status != .creation{
+		if cvm.shared.process.status != .creation || cvm.shared.maker == nil{
 			return
 		}
 			
 			let list = ["{executable}" : cvm.shared.executableName]
 			
-			guard let s = InstallMediaCreationManager.shared.stop() else{
+			//guard let s = InstallMediaCreationManager.shared.stop() else{
+		
+			guard let s = cvm.shared.maker?.stop() else{
 				//msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
 				
 				msgboxWithManager(self, name: "stopFailed", parseList: list)

@@ -26,6 +26,7 @@ fileprivate struct AppDownloadManager: CodableDefaults, Codable, Equatable{
 		var DownloadLink: String
 		var DownloadLinkAlternate: String!
 		var image: String!
+		var imageURL: URL!
 	}
 	
 	let downloads: [AppDownload]
@@ -61,49 +62,57 @@ public class DownloadAppViewController: ShadowViewController, ViewID {
 		
 		self.scroller.hasHorizontalScroller = false
 		
-		let apps = CodableCreation<AppDownloadManager>.createFromDefaultFile()!.downloads
-		let segmentHeight: CGFloat = 100
-		let segmentOffset: CGFloat = 20
-		let segmentEdge:   CGFloat = 15
+		self.plain = NSView(frame: CGRect(x: 0, y: 0, width: self.scroller.frame.width - 15, height: 10))
 		
-		plain = NSView(frame: CGRect(x: 0, y: 0, width: self.scroller.frame.width - 15, height: (segmentHeight + segmentOffset) * CGFloat(apps.count) + segmentOffset))
-		
-		var tmp: CGFloat = segmentOffset
-		for app in apps.reversed(){
-			let segment = DownloadAppItem(frame: CGRect(x: segmentEdge, y: tmp, width: plain.frame.size.width - segmentOffset, height: segmentHeight))
-			
-			//segment.isLast = (app == apps.last!)
-			
-			segment.associtaed = app
-			
-			plain.addSubview(segment)
-			
-			tmp += segmentHeight + segmentOffset
-		}
-		
-		plain.backgroundColor = scroller.backgroundColor//NSColor.windowBackgroundColor
+		self.plain.backgroundColor = self.scroller.backgroundColor//NSColor.windowBackgroundColor
 		//scroller.backgroundColor = plain.backgroundColor
 		//scroller.contentView.backgroundColor = plain.backgroundColor
 		
-    }
-	
-	override public func viewDidAppear() {
-		super.viewDidAppear()
-		if self.presentingViewController == nil{
-		//if self.window != sharedWindow{
-			closeButton.title = TextManager.getViewString(context: self, stringID: "backButton")
-			closeButton.image = NSImage(named: NSImage.stopProgressTemplateName)
-		}else{
-			closeButton.image = NSImage(named: NSImage.goLeftTemplateName)
+		DispatchQueue.global(qos: .background).async {
+			let /*var*/ apps = /*AppDownloadManager.init(fromRemoteFileAtUrl: "")?.downloads ??*/  CodableCreation<AppDownloadManager>.createFromDefaultFile()!.downloads
+			
+			DispatchQueue.main.sync {
+				
+				let segmentHeight: CGFloat = 100
+				let segmentOffset: CGFloat = 20
+				let segmentEdge:   CGFloat = 15
+				
+				//self.plain = NSView(frame: CGRect(x: 0, y: 0, width: self.scroller.frame.width - 15, height: (segmentHeight + segmentOffset) * CGFloat(apps.count) + segmentOffset))
+				
+				self.plain?.frame.size.height = (segmentHeight + segmentOffset) * CGFloat(apps.count) + segmentOffset
+				
+				var tmp: CGFloat = segmentOffset
+				for app in apps.reversed(){
+					let segment = DownloadAppItem(frame: CGRect(x: segmentEdge, y: tmp, width: self.plain.frame.size.width - segmentOffset, height: segmentHeight))
+					
+					//segment.isLast = (app == apps.last!)
+					
+					segment.associtaed = app
+					
+					self.plain.addSubview(segment)
+					
+					tmp += segmentHeight + segmentOffset
+				}
+				
+				if self.presentingViewController == nil{
+				//if self.window != sharedWindow{
+					self.closeButton.title = TextManager.getViewString(context: self, stringID: "backButton")
+					self.closeButton.image = NSImage(named: NSImage.stopProgressTemplateName)
+				}else{
+					self.closeButton.image = NSImage(named: NSImage.goLeftTemplateName)
+				}
+				
+				self.scroller.documentView = self.plain!
+				
+				self.spinner.stopAnimation(self)
+				self.spinner.isHidden = true
+				
+				self.window.maxSize = CGSize(width: self.view.frame.width, height: self.plain.frame.height + self.scroller.frame.origin.y + (self.view.frame.size.height - self.scroller.frame.origin.y - self.scroller.frame.size.height))
+				self.window.minSize = CGSize(width: self.view.frame.width, height: 300)
+				
+			}
 		}
 		
-		self.scroller.documentView = plain!
-		
-		spinner.stopAnimation(self)
-		spinner.isHidden = true
-		
-		self.window.maxSize = CGSize(width: self.view.frame.width, height: plain.frame.height + scroller.frame.origin.y + (self.view.frame.size.height - scroller.frame.origin.y - scroller.frame.size.height))
-		self.window.minSize = CGSize(width: self.view.frame.width, height: 300)
 	}
 	
 	/*

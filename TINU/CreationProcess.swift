@@ -51,6 +51,7 @@ public class CreationProcess{
 		disk = DiskInfo(reference: self)
 	}
 	
+	var maker  : InstallMediaCreationManager! = nil
 	let process: Management = Management()
 	var disk   : DiskInfo! = nil
 	var app    : InstallerAppManager! = nil

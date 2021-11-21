@@ -19,8 +19,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 import Cocoa
 
-class InstallingViewController: GenericViewController, ViewID{
-	let id: String = "InstallingViewController"
+public class InstallingViewController: GenericViewController, ViewID{
+	public let id: String = "InstallingViewController"
 	
 	@IBOutlet weak var driveName: NSTextField!
 	@IBOutlet weak var driveImage: NSImageView!
@@ -41,7 +41,7 @@ class InstallingViewController: GenericViewController, ViewID{
 	
 	@IBOutlet weak var progress: NSProgressIndicator!
 	
-	override func viewDidLoad() {
+	public override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do view setup here.
 		
@@ -95,7 +95,12 @@ class InstallingViewController: GenericViewController, ViewID{
 				
 				log("Everything is ready to start the creation/installation process")
 				
-				InstallMediaCreationManager.startInstallProcess(ref: &cvm.shared)
+				//InstallMediaCreationManager.startInstallProcess(ref: &cvm.shared)
+				//DispatchQueue.main.sync {
+					cvm.shared.maker = .init(ref: &cvm.shared, controller: self)
+				//}
+				
+				cvm.shared.maker?.install()
 			}else{
 				
 				log("Couldn't get valid info about the installer app and/or the drive")
@@ -133,7 +138,9 @@ class InstallingViewController: GenericViewController, ViewID{
 		cvm.shared.disk.current = nil
 		cvm.shared.app.current = nil
 		
-		InstallMediaCreationManager.shared.makeProcessNotInExecution(withResult: success)
+		//InstallMediaCreationManager.shared.makeProcessNotInExecution(withResult: success)
+		cvm.shared.maker?.makeProcessNotInExecution(withResult: success)
+		
 		self.swapCurrentViewController("MainDone")
 	}
 	
@@ -174,7 +181,15 @@ class InstallingViewController: GenericViewController, ViewID{
 			spd = true
 		}*/
 		
-		guard let stopped = (cvm.shared.process.status == .creation ? InstallMediaCreationManager.shared.stopWithAsk() : true ) else { return }
+		//guard let stopped = (cvm.shared.process.status == .creation ? InstallMediaCreationManager.shared.stopWithAsk() : true ) else { return }
+		
+		if cvm.shared.maker == nil{
+			log("The " + cvm.shared.actualExecutableName + " process seems to be already closed")
+			goBack()
+			return
+		}
+		
+		guard let stopped = (cvm.shared.process.status == .creation ? cvm.shared.maker?.stopWithAsk() : true ) else { return }
 		
 		if stopped{
 			goBack()
