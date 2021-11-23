@@ -20,6 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import Cocoa
 import TINURecovery
 import Command
+import TINUSerialization
 
 class ChooseSideViewController: GenericViewController, ViewID {
 	let id: String = "ChooseSideViewController"
@@ -55,6 +56,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		efiButton?.isHidden = true
 		
 		Command.Printer.enabled = sharedEnableDebugPrints
+		TINUSerialization.Printer.printDebugLines = sharedEnableDebugPrints
 		
 		#if demo
 		print("You have successfully enbled the \"demo\" macro!")
