@@ -26,37 +26,15 @@ public struct ViewString: Codable, Equatable{
 	public let alerts: TextManagementStructs.ViewStrings<TINUNotifications.Alert>?
 }
 
-public struct TINUTextsManagerStruct: TextManagerGet, CodableDefaults, Codable, Equatable{
+public struct TINUTextsManagerStruct: TextManagerProtocol, CodableDefaults, Codable, Equatable{
 	
 	private var readme: TextManagementStructs.InstallerInstallation<TextManagementStructs.MessangeFormatSpecificsMachine<String>>
 	private var helpfoulMessange: TextManagementStructs.InstallerInstallation<String>
 	private var optionsDescs: TextManagementStructs.InstallerInstallation<CreationProcess.OptionsManager.DescriptionList>
 	
-	private let viewStrings: TextManagementStructs.ViewStringsAlbum<String>
-	//private let views: TextManagementStructs.Album<ViewString>
+	public let viewStrings: TextManagementStructs.ViewStringsAlbum<String>
 	
-	private var remAsset = getLanguageFile(fileName: TINUTextsManagerStruct.defaultResourceFileName, fextension: TINUTextsManagerStruct.defaultResourceFileExtension)
-	
-	public func getViewString(context: ViewID, stringID: String) -> String!{
-		
-		let asset = remAsset ?? TINUTextsManagerStruct.defaultResourceFileName + "En." + TINUTextsManagerStruct.defaultResourceFileExtension
-		
-		guard let view = viewStrings[context.id] else{
-			
-			print("The assets file \"\(asset)\" file doesn't contain the text for the view \"\(context.id)\"")
-			
-			return nil
-		}
-		
-		guard let ret = view.getString(stringID) else{
-			
-			print("The assets file \"\(asset)\" doesn't contain the text for the View entity \"\(stringID)\"")
-			
-			return nil
-		}
-		
-		return ret
-	}
+	public private(set) static var remAsset: String? = getLanguageFile(fileName: TINUTextsManagerStruct.defaultResourceFileName, fextension: TINUTextsManagerStruct.defaultResourceFileExtension)
 	
 	public var optionsDescpriptions: CreationProcess.OptionsManager.DescriptionList! {
 		return optionsDescs.appropriateValue
@@ -75,4 +53,4 @@ public struct TINUTextsManagerStruct: TextManagerGet, CodableDefaults, Codable, 
 	
 }
 
-public let TextManager: TINUTextsManagerStruct! = CodableCreation<TINUTextsManagerStruct>.createFromDefaultFile()
+public let TextManager: TINUTextsManagerStruct! = TINUTextsManagerStruct.init()!//.createFromDefaultFile()

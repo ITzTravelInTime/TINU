@@ -20,27 +20,26 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import Foundation
 import TINUSerialization
 
-public protocol CodableDefaults{
+public protocol CodableDefaults: Codable{
 	static var defaultResourceFileExtension: String { get }
 	static var defaultResourceFileName: String { get }
 }
 
-public struct CodableCreation<T: CodableDefaults & Codable & Equatable>{
+public extension CodableDefaults{
 	
-	public static func createFromDefaultFile(_ useLanguage: Bool = true) -> T!{
-		
+	init?(_ useLanguage: Bool = true){
 		var path: String!
 		
 		if useLanguage{
-			path = getLanguageFile(fileName: T.defaultResourceFileName, fextension: T.defaultResourceFileExtension)
+			path = getLanguageFile(fileName: Self.defaultResourceFileName, fextension: Self.defaultResourceFileExtension)
 		}else{
-			path = Bundle.main.path(forResource: T.defaultResourceFileName, ofType: T.defaultResourceFileExtension)
+			path = Bundle.main.path(forResource: Self.defaultResourceFileName, ofType: Self.defaultResourceFileExtension)
 		}
 		
 		if path == nil{
 			return nil
 		}
 		
-		return T.init(fromFileAtPath: path!)
+		self.init(fromFileAtPath: path!)
 	}
 }

@@ -36,8 +36,32 @@ public protocol AlternateValueSupport{
 	var appropriateValue: T { get }
 }
 
-public protocol TextManagerGet{
-	func getViewString(context: ViewID, stringID: String) -> String!
+public protocol TextManagerProtocol: CodableDefaults{
+	var viewStrings: TextManagementStructs.ViewStringsAlbum<String> {get}
+	static var remAsset: String? {get}
+}
+
+public extension TextManagerProtocol{
+	func getViewString(context: ViewID, stringID: String) -> String!{
+		
+		let asset = Self.remAsset ?? Self.defaultResourceFileName + "En." + Self.defaultResourceFileExtension
+		
+		guard let view = viewStrings[context.id] else{
+			
+			print("The assets file \"\(asset)\" file doesn't contain the text for the view \"\(context.id)\"")
+			
+			return nil
+		}
+		
+		guard let ret = view.getString(stringID) else{
+			
+			print("The assets file \"\(asset)\" doesn't contain the text for the View entity \"\(stringID)\"")
+			
+			return nil
+		}
+		
+		return ret
+	}
 }
 
 public final class TextManagementStructs{

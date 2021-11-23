@@ -69,7 +69,7 @@ public class DownloadAppViewController: ShadowViewController, ViewID {
 		//scroller.contentView.backgroundColor = plain.backgroundColor
 		
 		DispatchQueue.global(qos: .background).async {
-			let apps = AppDownloadManager.init(fromRemoteFileAtUrl: RemoteResourcesURLsManager.list["installerAppDownloads"] ?? "")?.downloads ??  CodableCreation<AppDownloadManager>.createFromDefaultFile()!.downloads
+			let apps = AppDownloadManager.init(fromRemoteFileAtUrl: RemoteResourcesURLsManager.list["installerAppDownloads"] ?? "")?.downloads ??  AppDownloadManager.init()!.downloads//.createFromDefaultFile()!.downloads
 			
 			DispatchQueue.main.sync {
 				

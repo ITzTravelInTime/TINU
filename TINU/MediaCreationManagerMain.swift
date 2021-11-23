@@ -49,7 +49,7 @@ public class InstallMediaCreationManager: ViewID{
 	private func initTask(){
 		DispatchQueue.global(qos: .userInteractive).sync {
 			//gets fresh info about the management of the progressbar
-			IMCM.cpc = CodableCreation<ProcessConsts>.createFromDefaultFile(false)!
+			IMCM.cpc = ProcessConsts.init(false)!//.createFromDefaultFile(false)!
 		
 			if !ProcessConsts.checkInstance(IMCM.cpc){
 				fatalError("Bad progress bar settings")
@@ -60,7 +60,7 @@ public class InstallMediaCreationManager: ViewID{
 		}
 	}
 	
-	static var cpc: ProcessConsts = CodableCreation<ProcessConsts>.createFromDefaultFile(false)!
+	static var cpc: ProcessConsts = ProcessConsts.init(false)!//.createFromDefaultFile(false)!
 	
 	//public static private(set) var shared: InstallMediaCreationManager = InstallMediaCreationManager()
 	

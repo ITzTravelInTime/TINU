@@ -19,6 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 import Foundation
 import Command
+import TINUSerialization
 
 public extension Diskutil{
 final class Info{
@@ -52,6 +53,7 @@ final class Info{
 				}
 				
 			}
+			
 			
 			if let dict = try Decode.plistToDictionary(from: _out) as? [String: Any]{
 				return dict[named]

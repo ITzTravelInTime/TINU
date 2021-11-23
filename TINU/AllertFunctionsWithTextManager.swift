@@ -20,7 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import Cocoa
 import TINUNotifications
 
-public func msgboxWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon.normalImage()){
+public func msgboxWithManagerGeneric(_ manager: TextManagerProtocol, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon.normalImage()){
 	var title = manager.getViewString(context: handle, stringID: name + "Title")
 	var content = manager.getViewString(context: handle, stringID: name)
 	
@@ -39,7 +39,7 @@ public func msgboxWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID
 	Alert(message: title!, description: content!, style: .init(from: style), icon: icon).displayingOnWindow().justSend()
 }
 
-public func dialogWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon.normalImage()) -> Bool{
+public func dialogWithManagerGeneric(_ manager: TextManagerProtocol, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon.normalImage()) -> Bool{
 	
 	var title = manager.getViewString(context: handle, stringID: name + "Title")
 	var content = manager.getViewString(context: handle, stringID: name)
@@ -62,7 +62,7 @@ public func dialogWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID
 	return Alert(message: title!, description: content!, style: .init(from: style), icon: icon).addingButton(title: yes!).addingButton(title: no!).displayingOnWindow().send().ok()
 }
 
-public func dialogGenericWithManagerGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = nil) -> NSAlert{
+public func dialogGenericWithManagerGeneric(_ manager: TextManagerProtocol, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = nil) -> NSAlert{
 	
 	var title = manager.getViewString(context: handle, stringID: name + "Title")
 	var content = manager.getViewString(context: handle, stringID: name)
@@ -110,7 +110,7 @@ public func dialogGenericWithManagerGeneric(_ manager: TextManagerGet, _ handle:
 	return Alert(message: title!, description: content!, style: .init(from: style), icon: icon, buttons: buttons).displayingOnWindow().create()
 }
 
-@inline(__always) public func dialogGenericWithManagerBoolGeneric(_ manager: TextManagerGet, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon.normalImage()) -> Bool{
+@inline(__always) public func dialogGenericWithManagerBoolGeneric(_ manager: TextManagerProtocol, _ handle: ViewID, name: String, parseList: [String: String]! = nil, style: NSAlert.Style = NSAlert.Style.warning, icon: NSImage? = IconsManager.shared.warningIcon.normalImage()) -> Bool{
 	return dialogGenericWithManager(handle, name: name, parseList: parseList, style: style, icon: icon).runModal().ok()
 }
 

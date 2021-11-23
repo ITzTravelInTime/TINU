@@ -204,7 +204,7 @@ extension InstallMediaCreationManager{
 			log("Sub process exit code produced:         \(rc)")
 			log("Probable process outcome:               \(success ? "Positive" : "Negative")")
 			
-			let errorsList: [CheckItem] =  CodableCreation<CheckItemCollection>.createFromDefaultFile()!.itemsList
+			let errorsList: [CheckItem] =  CheckItemCollection.init()!.itemsList//.createFromDefaultFile()!.itemsList
 			
 			var valueList: [CheckItem.CheckValues: String?] = [:]
 			

@@ -23,7 +23,7 @@ import Command
 #if (!macOnlyMode && TINU) || (!TINU && isTool)
 public class EFIPartitionToolInterface{
 	
-	private static let appMenu: EFIPartitionToolTypes.ConfigMenuApps = CodableCreation<EFIPartitionToolTypes.ConfigMenuApps>.createFromDefaultFile()!
+	private static let appMenu: EFIPartitionToolTypes.ConfigMenuApps = EFIPartitionToolTypes.ConfigMenuApps.init()!//.createFromDefaultFile()!
 	
 	public class EFIPartitionItem: ShadowView, ViewID{
 		
@@ -377,7 +377,7 @@ public class EFIPartitionToolInterface{
 						if NSWorkspace.shared.openFile(configLocation, withApplication: item.installedAppName){ return }
 						
 						let list = ["{appName}" : item.installedAppName]
-						if dialogWithManagerGeneric(EFIPMTextManager as TextManagerGet, self, name: "download", parseList: list){
+						if dialogWithManagerGeneric(EFIPMTextManager as TextManagerProtocol, self, name: "download", parseList: list){
 							NSWorkspace.shared.open(URL(string: item.download)!)
 						}
 						break
