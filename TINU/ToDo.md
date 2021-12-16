@@ -39,6 +39,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 - always display cd/dvd drives as unusable in the drive select screen 
 
+- concurrent multithreaded installer app scanning.
+
 # TO DO but with less priority:
 - right to left languages ui support
 
