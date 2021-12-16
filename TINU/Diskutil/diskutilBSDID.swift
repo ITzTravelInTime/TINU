@@ -60,8 +60,9 @@ public struct BSDID: Codable, Hashable, Equatable, RawRepresentable{
 	public init?(fromMountPoint mp: Path){
 		assert(!mp.isEmpty, "The mount point should be a valid mount point!")
 		assert(FileManager.default.directoryExistsAtPath(mp), "The mount point should be a path to something accessible!")
-		do{
-			if let dict = try Decode.plistToDictionary(from: dm.getPlist(for: mp) ?? "") as? [String: Any]{
+		//do{
+			//if let dict = try Decode.plistToDictionary(from: dm.getPlist(for: mp) ?? "") as? [String: Any]{
+		if let dict = [String: Any].init(fromPlistSerializedString: dm.getPlist(for: mp) ?? ""){
 				if var str = (dict["DeviceIdentifier"] as? String){
 					
 					if str.starts(with: "/dev/"){
@@ -74,11 +75,12 @@ public struct BSDID: Codable, Hashable, Equatable, RawRepresentable{
 					return
 				}
 			}
+		/*
 		}catch let err{
 			log("Failed to get the BSDID. Produced error: ")
 			log(err.localizedDescription)
 		}
-		
+		*/
 		return nil
 	}
 	

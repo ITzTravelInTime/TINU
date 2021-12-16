@@ -21,6 +21,8 @@ import Foundation
 import Command
 import TINUSerialization
 
+
+
 public extension Diskutil{
 final class Info{
 	
@@ -32,7 +34,7 @@ final class Info{
 	}
 	
 	class func getProperty(for id: BSDID, named: String) -> Any?{
-		do{
+		//do{
 			/*
 			if id.rawValue.isEmpty{
 				return nil
@@ -54,7 +56,11 @@ final class Info{
 				
 			}
 			
+			if let dict = [String: Any].init(fromPlistSerializedString: _out) {
+				return dict[named]
+			}
 			
+			/*
 			if let dict = try Decode.plistToDictionary(from: _out) as? [String: Any]{
 				return dict[named]
 			}
@@ -62,8 +68,10 @@ final class Info{
 		}catch let err{
 			print("Getting diskutil info property decoding error: \(err.localizedDescription)")
 		}
+		*/
 		
 		return nil
+		
 	}
 	
 	class func resetCache(){

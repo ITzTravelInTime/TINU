@@ -496,8 +496,10 @@ extension CreationProcess{
 					return
 				}
 				
-				do{
-					let result = try Decode.plistToDictionary(from: try String.init(contentsOfFile: sa + "/Contents/Info.plist")) as? [String: Any]
+				//do{
+					//let result = try Decode.plistToDictionary(from: try String.init(contentsOfFile: sa + "/Contents/Info.plist")) as? [String: Any]
+					
+					let result = [String: Any].init(fromFileAtPath: sa + "/Contents/Info.plist")
 					
 					if let r = result{
 						
@@ -508,11 +510,13 @@ extension CreationProcess{
 						print("App bundle info not found or nil")
 						return
 					}
+				
+				/*
 				}catch let error{
 					print("error while getting the bundle info of the target app: \(error)")
 					return
 				}
-				
+				*/
 			}
 			
 			//gets something from the Info.plist file lof the installer app

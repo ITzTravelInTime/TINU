@@ -21,6 +21,7 @@ import Foundation
 import AppKit
 import TINUNotifications
 import TINURecovery
+import TINUSerialization
 import SwiftCPUDetect
 import SwiftLoggedPrint
 
@@ -125,3 +126,6 @@ public final class Reachability: SimpleReachability{
 		return TINU.simulateReachabilityStatus
 	}
 }
+
+extension Dictionary: GenericCodable {  }
+extension Array: GenericCodable { }
