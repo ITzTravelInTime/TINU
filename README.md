@@ -93,7 +93,7 @@ Francesco Perchiazzi, Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa, Er
 
 # Legal info:
 TINU is the open tool to create bootable macOS installers.
-Copyright (C) 2017-2021 Pietro Caruso (ITzTravelInTime)
+Copyright (C) 2017-2022 Pietro Caruso (ITzTravelInTime)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
