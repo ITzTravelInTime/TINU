@@ -20,6 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import Foundation
 import TINURecovery
 import TINUSerialization
+import TINUNotifications
 
 fileprivate protocol CodableLink: Codable, Equatable{
 	var link: String { get  }
@@ -36,12 +37,64 @@ public final class UpdateManager{
 		struct UpdateInfo: CodableLink{
 			let build: String
 			let link: String
+			let pageLink: String?
 			let version: String
+			let description: String?
+			
+			func check(build: UInt64){
+				guard let updateBuildNumber = self.build.lowercased().uInt64Value else{
+					log("[Update] the update info is invalid!")
+					return
+				}
+				
+				if let simulated = simulateUpdateStatus{
+					if simulated{
+						log("[Update] simulating no opdate available")
+						return
+					}
+				}else if build >= updateBuildNumber{
+					log("[Update] the current copy of the app is up to date.")
+					return
+				}
+				
+				log("[Update] new update found!")
+				
+				let versionString = "\(version) (\(updateBuildNumber))"
+				
+				let notification = TINUNotifications.Notification(id: "TINU_update_notification_\(arc4random())", message: "Version \(versionString) is now available", description: "")
+				
+				notification.description = description != nil ? "New in version \(versionString):\n\n\(description ?? "")" : "For more info on the update click this messange to check it out."
+				
+				notification.allowsSpam = true
+			
+				/*
+				//if #available(macOS 11.0, *) {} else {
+					notification.actionButtonTitle = "More ..."
+					notification.displayActionSelector = true
+				//}
+				*/
+				 
+				//notification.addAction(id: "MORE_INFO_ID", displayName: "More info")
+				notification.addAction(id: "DIRECT_DOWNLOAD", displayName: "Download Now")
+				
+				notification.userTag = [:]
+				notification.userTag!["BrowserLink"] = pageLink
+				notification.userTag!["DirectDownloadLink"] = link
+				
+				notification.justSend()
+				
+				log("[Update] update notification should have been sent.")
+			}
 		}
 		
 		struct UpdateStruct: Codable, Equatable{
 			let pre_release: UpdateInfo?
 			let stable: UpdateInfo
+		}
+		
+		guard let version = Bundle.main.version?.lowercased(), let build = Bundle.main.build?.lowercased().uInt64Value else {
+			log("[Update] Can't get app bundle information.")
+			return
 		}
 		
 		if Recovery.status{
@@ -59,16 +112,28 @@ public final class UpdateManager{
 			return
 		}
 		
-		guard let info = UpdateStruct.init(fromRemoteFileAtUrl: urlContents)else{
+		guard let info = UpdateStruct.init(fromRemoteFileAtUrl: urlContents) else{
 			log("[Update] Can't get remote structure for update information.")
 			return
 		}
 		
 		log("[Update] Obtained update info: \(info.stable)")
 		
+		/*
 		if let beta = info.pre_release{
 			log("[Update] Obtained pre-release update info: \(beta)")
 		}
+		*/
+		
+		if let pre = info.pre_release, (version.contains("beta") || version.contains("alpha") || (version.contains("release") && version.contains("candidate"))){
+			log("[Update] checking updates for pre-release builds")
+			pre.check(build: build)
+		}else{
+			log("[Update] checking updates for release builds")
+			info.stable.check(build: build)
+		}
+		
+		
 
 	}
 }

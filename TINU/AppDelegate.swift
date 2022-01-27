@@ -55,6 +55,24 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		return true
 	}
 	
+	func userNotificationCenter(_ center: NSUserNotificationCenter, didActivate notification: NSUserNotification){
+		
+		var tag: String?
+		
+		if notification.additionalActivationAction?.identifier == "DIRECT_DOWNLOAD"{
+			tag = ((notification.userInfo?["DirectDownloadLink"]) ?? ( notification.userInfo?["BrowserLink"])) as? String
+		}else if notification.activationType == .contentsClicked{
+			tag = ((notification.userInfo?["BrowserLink"]) ?? ( notification.userInfo?["DirectDownloadLink"])) as? String
+		}
+		
+		if let tg = tag{
+			print("[Notification] Opening extanal link: \(tg)")
+			NSWorkspace.shared.open(URL(string: tg)!)
+		}
+		
+		NSUserNotificationCenter.default.removeDeliveredNotification(notification)
+	}
+	
 	func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true
     }
@@ -176,8 +194,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 				log("Quit error 1")
 			}
     }
-    
-	
     
     @IBAction func installMacActivate(_ sender: Any) {
         swichMode(isInstall: !cvm.shared.installMac)

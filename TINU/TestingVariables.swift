@@ -98,6 +98,15 @@ public let simulateHIDPIStatus: CGFloat! = nil
 /// - nil use the actual detected network conenction status
 public let simulateReachabilityStatus: Bool! = nil
 
+///Simulates the availability of updates
+///
+///Values:
+/// - [bool value] simulates the update availability status
+/// - nil use the actual update status
+public let simulateUpdateStatus: Bool! = nil
+
+
+
 ///This variable forces a UI Style if not nil, see the AppLook enum for the oossible values
 public let simulateLook: UIManager.AppLook! = nil//.shadowsSFSymbolsFill//.shadowsOldIcons//.recovery
 

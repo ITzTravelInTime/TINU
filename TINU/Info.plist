@@ -34,5 +34,7 @@
 	<string>NSApplication</string>
 	<key>NSSystemAdministrationUsageDescription</key>
 	<string>TINU needs to perform privileged operations in order to successfully create bootable macOS installers</string>
+	<key>NSUserNotificationAlertStyle</key>
+	<string>alert</string>
 </dict>
 </plist>

@@ -41,6 +41,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 - concurrent multithreaded installer app scanning.
 
+- installer app download list with remote pictures (and so remove those from the built in assets).
+
 # TO DO but with less priority:
 - right to left languages ui support
 

@@ -54,6 +54,7 @@ public final class App{
 			simulateSIPStatus != nil,
 			simulateHIDPIStatus != nil,
 			simulateReachabilityStatus != nil,
+			simulateUpdateStatus != nil,
 			simulateLook != nil
 		]
 		

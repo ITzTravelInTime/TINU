@@ -2,11 +2,15 @@
 	"stable": {
 		"build" : "107",
 		"link" : "https://github.com/ITzTravelInTime/TINU/releases/download/3.0.1_(107)/TINU.zip",
-		"version" : "3.0.1"
+		"pageLink" : "https://github.com/ITzTravelInTime/TINU/releases/tag/3.0.1_(107)",
+		"version" : "3.0.1",
+		"description" : "- Improves some messages and alerts, so some things are now explained better and with more details.\n- Now you can use the mouse scroll wheel to scroll horizontally when needed.\n- Improved UI outlines thanks to screen pixel size detection.\n- Improved the size requirements for drives and installer apps.\n- Bug fixes."
 	},
 	"pre_release": {
 		"build" : "107",
 		"link" : "https://github.com/ITzTravelInTime/TINU/releases/download/3.0.1_(107)/TINU.zip",
-		"version" : "3.0.1"
+		"pageLink" : "https://github.com/ITzTravelInTime/TINU/releases/tag/3.0.1_(107)",
+		"version" : "3.0.1",
+		"description" : "- Improves some messages and alerts, so some things are now explained better and with more details.\n- Now you can use the mouse scroll wheel to scroll horizontally when needed.\n- Improved UI outlines thanks to screen pixel size detection.\n- Improved the size requirements for drives and installer apps.\n- Bug fixes."
 	}
 }
