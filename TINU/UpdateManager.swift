@@ -63,7 +63,7 @@ public final class UpdateManager{
 				
 				let notification = TINUNotifications.Notification(id: "TINU_update_notification_\(arc4random())", message: "Version \(versionString) is now available", description: "")
 				
-				notification.description = description != nil ? "New in version \(versionString):\n\n\(description ?? "")" : "For more info on the update click this messange to check it out."
+				notification.description = description ?? "For more info on the update click this messange to check it out."
 				
 				notification.allowsSpam = true
 			

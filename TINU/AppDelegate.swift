@@ -61,7 +61,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		
 		if notification.additionalActivationAction?.identifier == "DIRECT_DOWNLOAD"{
 			tag = ((notification.userInfo?["DirectDownloadLink"]) ?? ( notification.userInfo?["BrowserLink"])) as? String
-		}else if notification.activationType == .contentsClicked{
+		}else if notification.activationType == .contentsClicked || notification.activationType == .actionButtonClicked{
 			tag = ((notification.userInfo?["BrowserLink"]) ?? ( notification.userInfo?["DirectDownloadLink"])) as? String
 		}
 		
