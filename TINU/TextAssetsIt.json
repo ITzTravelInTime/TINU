@@ -434,7 +434,7 @@
 				"quit2Key" : ""
 			}
 		},
-		"UpdateNamanger":{
+		"UpdateProtocol":{
 			"unmutable" : { },
 			"notifications" : {
 				"updateNotification":{

@@ -110,6 +110,8 @@
 		C6FFB5D82681AAF300CD19CE /* CreationProcessDiskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FFB5D72681AAF300CD19CE /* CreationProcessDiskInfo.swift */; };
 		C6FFB5DA2681AF6D00CD19CE /* CreationProcessManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6FFB5D92681AF6D00CD19CE /* CreationProcessManagement.swift */; };
 		DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBF01F71BFE600C94D9B /* LogViewController.swift */; };
+		DD02486627A587A00067E014 /* GitHubApiUptader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD02486527A587A00067E014 /* GitHubApiUptader.swift */; };
+		DD02486927A59F2D0067E014 /* RemoteUpdateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD02486827A59F2D0067E014 /* RemoteUpdateProtocol.swift */; };
 		DD06444E27284B6400E362ED /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = DD06444D27284B6400E362ED /* 2.png */; };
 		DD223ED527149C5D0048EA0F /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = DD223ECD27149C5D0048EA0F /* 1.png */; };
 		DD223ED627149C5D0048EA0F /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = DD223ECE27149C5D0048EA0F /* 4.png */; };
@@ -260,6 +262,8 @@
 		C6FFB5D72681AAF300CD19CE /* CreationProcessDiskInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationProcessDiskInfo.swift; sourceTree = "<group>"; };
 		C6FFB5D92681AF6D00CD19CE /* CreationProcessManagement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationProcessManagement.swift; sourceTree = "<group>"; };
 		DD01EBF01F71BFE600C94D9B /* LogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
+		DD02486527A587A00067E014 /* GitHubApiUptader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubApiUptader.swift; sourceTree = "<group>"; };
+		DD02486827A59F2D0067E014 /* RemoteUpdateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUpdateProtocol.swift; sourceTree = "<group>"; };
 		DD06444D27284B6400E362ED /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		DD223ECD27149C5D0048EA0F /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		DD223ECE27149C5D0048EA0F /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
@@ -352,7 +356,7 @@
 				C60C40B920CCA24000258574 /* TextsManager.swift */,
 				C63885792670D3BA00A6D1BA /* Themes.swift */,
 				C638857B26725BEC00A6D1BA /* UIManager.swift */,
-				DDF5ABEB273C0F8A00707FAC /* UpdateManager.swift */,
+				DD02486727A587AF0067E014 /* Updates */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -616,6 +620,16 @@
 				C691BFEF1F6DFBDB00589EF8 /* TestingVariables.swift */,
 			);
 			name = SharedCode;
+			sourceTree = "<group>";
+		};
+		DD02486727A587AF0067E014 /* Updates */ = {
+			isa = PBXGroup;
+			children = (
+				DDF5ABEB273C0F8A00707FAC /* UpdateManager.swift */,
+				DD02486827A59F2D0067E014 /* RemoteUpdateProtocol.swift */,
+				DD02486527A587A00067E014 /* GitHubApiUptader.swift */,
+			);
+			name = Updates;
 			sourceTree = "<group>";
 		};
 		DD223EDC27149D0A0048EA0F /* Screenshots */ = {
@@ -914,6 +928,7 @@
 				C60D39B21F5E4AFC00D94834 /* ContactsViewController.swift in Sources */,
 				C6D82A6A20D802E700A5B5BE /* OptionsObject.swift in Sources */,
 				C6D82A6C20D80C7600A5B5BE /* OptionsManager.swift in Sources */,
+				DD02486627A587A00067E014 /* GitHubApiUptader.swift in Sources */,
 				C60A461723A942E4009ADF4D /* SupportedEFIFolders.swift in Sources */,
 				C62F545926995B3D00F14304 /* DiskutilCommands.swift in Sources */,
 				DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */,
@@ -939,6 +954,7 @@
 				C60D48CD1F585F7F00ABF26E /* MainCreationFinished.swift in Sources */,
 				C60C40C220CCAA9900258574 /* CreationProcessInstallerAppManager.swift in Sources */,
 				C63F036024E3D19300F950B4 /* ProgressBarValuesManager.swift in Sources */,
+				DD02486927A59F2D0067E014 /* RemoteUpdateProtocol.swift in Sources */,
 				DD7C7CC5235E26DC000CC2E0 /* DarkModeDetection.swift in Sources */,
 				DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */,
 				C60C40C420CCACB600258574 /* DecodeEncode.swift in Sources */,

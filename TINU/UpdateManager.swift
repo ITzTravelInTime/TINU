@@ -25,119 +25,51 @@ import AppKit
 
 public final class UpdateManager{
 	
-	static var shoudDisplayUpdateNotification: Bool = true
+	static var displayNotification: Bool = true
+	static var updateCacheData: [String: Any] = [:]
 	
-	struct UpdateInfo: ViewID, Codable, Equatable{
-		let build: String
-		let link: String
-		let pageLink: String
-		let version: String
-		let description: String
+	struct UpdateStruct: RemoteUpdateProtocol{
 		
-		public var id: String{
-			return  "UpdateNamanger"
-		}
-		
-		func openWebPageOrDirectDownload(){
-			var toBeOpened: URL!
+		struct UpdateInfo: RemoteUpdateVersionProtocol{
+			let build: String
+			let link: String
+			let pageLink: String
+			let version: String
+			let description: String
 			
-			if let url = URL(string: pageLink){
-				toBeOpened = url
-			}else if let url = URL(string: link){
-				toBeOpened = url
+			var name: String{
+				return version + " (" + build + ")"
 			}
-				
-			if let open = toBeOpened{
-				NSWorkspace.shared.open(open)
-			}
-		}
-		
-		func openDirectDownloadOrWebpage(){
 			
-			var toBeOpened: URL!
-			
-			if let url = URL(string: link){
-				toBeOpened = url
-			}else if let url = URL(string: pageLink){
-				toBeOpened = url
+			var body: String{
+				return description
 			}
-				
-			if let open = toBeOpened{
-				NSWorkspace.shared.open(open)
+			
+			var html_url: URL?{
+				return URL(string: pageLink)
+			}
+			
+			var tag_name: String{
+				return version + "_(" + build + ")"
+			}
+			
+			func getDirectDownloadUrl() -> URL? {
+				return URL(string: link)
 			}
 		}
 		
-		func shouldUpdateToThisBuild() -> Bool{
-			
-			guard let build = Bundle.main.build?.lowercased().uInt64Value else {
-				log("[Update] Can't get app bundle build number information.")
-				return false
-			}
-			
-			guard let updateBuildNumber = self.build.lowercased().uInt64Value else{
-				log("[Update] the update info is invalid!")
-				return false
-			}
-			
-			if let simulated = simulateUpdateStatus{
-				if !simulated{
-					log("[Update] simulating no update available")
-					return false
-				}
-			}else if build >= updateBuildNumber{
-				log("[Update] the current copy of the app is up to date.")
-				return false
-			}
-			
-			log("[Update] new update found!")
-			
-			return true
+		static var classID: String{
+			return "UpdateOld"
 		}
 		
-		func checkAndSendUpdateNotification(shouldSendUpToDateNotification: Bool = false, shouldSendUpdateNotificationAnyway: Bool = false){
-			
-			if !shouldUpdateToThisBuild(){
-				
-				if !shouldSendUpToDateNotification{
-					return
-				}
-				
-				guard let notification = TextManager.getNotification(context: self, id: "alreadyUpToDateNotification") else{
-					
-					log("[Update] Error while loading the update notification froim file.")
-					return
-					
-				}
-				
-				notification.userTag = ["shouldOpenUpdateLinks": "false"]
-				notification.allowsSpam = true
-				notification.justSend()
-				
-				return
-			}else if !shoudDisplayUpdateNotification && !shouldSendUpdateNotificationAnyway{
-				log("[Update] Avoiding showing the update notification.")
-				return
+		static var fetchURL: URL?{
+			if let str =  RemoteResourcesURLsManager.list["updates"]{
+				return URL(string: str)
 			}
 			
-			guard let notification = TextManager.getNotification(context: self, id: "updateNotification") else{
-				
-				log("[Update] Error while loading the update notification froim file.")
-				return
-				
-			}
-			
-			
-			notification.message = parse(messange: notification.message, keys: ["{version}": "\(version) (\(build))"])
-			notification.description = parse(messange: notification.description, keys: ["{description}": description])
-			notification.allowsSpam = true
-			notification.userTag = ["shouldOpenUpdateLinks": "true"]
-			notification.justSend()
-			
-			log("[Update] update notification should have been sent.")
+			return nil
 		}
-	}
-	
-	struct UpdateStruct: Codable, Equatable{
+		
 		let pre_release: UpdateInfo?
 		let stable: UpdateInfo
 		
@@ -148,44 +80,15 @@ public final class UpdateManager{
 			
 			return stable
 		}
+		
+		func getLatestRelease() -> UpdateInfo {
+			return stable
+		}
+		
+		func getLatestPreRelease() -> UpdateInfo? {
+			return pre_release
+		}
+		
 	}
 	
-	class func getUpdateData(forceRefetch force: Bool = false) -> UpdateStruct!{
-		
-		struct MEM{
-			static var updateData: UpdateStruct! = nil
-		}
-		
-		if Recovery.status{
-			log("[Update] We are in a recovery environment, let's skip update checks ...")
-			return nil
-		}
-		
-		if !Reachability.status{
-			log("[Update] The computer seems to not be connected to a network, updates will not be checked.")
-			return nil
-		}
-		
-		if MEM.updateData != nil && !force{
-			return MEM.updateData
-		}
-		
-		guard let urlContents = getVersionInfoLink() else {
-			log("[Update] Can't get the link for the update information.")
-			return nil
-		}
-		
-		guard let info = UpdateStruct.init(fromRemoteFileAtUrl: urlContents) else{
-			log("[Update] Can't get remote structure for update information.")
-			return nil
-		}
-		
-		MEM.updateData = info
-		
-		return info
-	}
-	
-	private class func getVersionInfoLink() -> String?{
-		return RemoteResourcesURLsManager.list["updates"]
-	}
 }

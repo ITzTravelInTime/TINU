@@ -148,7 +148,7 @@ public final class App{
 			}
 			
 			#if !isTool && TINU
-				UpdateManager.shoudDisplayUpdateNotification = getBool(key: Keys.sendUpdateNotifications)
+				UpdateManager.displayNotification = getBool(key: Keys.sendUpdateNotifications)
 			#else
 				#if EFIPM
 					setBool(key: Keys.startsAsMenuKey, variable: &startsAsMenu)

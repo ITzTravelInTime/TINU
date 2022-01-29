@@ -43,23 +43,26 @@ class UpdatesSubmenu: NSMenu {
 		openPreReleaseUpdatePage.isEnabled = false
 		sendUpdateNotificationSwitcher.isEnabled = true
 		
-		sendUpdateNotificationSwitcher.state = UpdateManager.shoudDisplayUpdateNotification ? .on : .off
+		sendUpdateNotificationSwitcher.state = UpdateManager.displayNotification ? .on : .off
 		
 		checkForUpdatesAndSetMenuItems()
 	}
 	
 	private func checkForUpdatesAndSetMenuItems(){
 		DispatchQueue.global(qos: .background).async {
-			let update = UpdateManager.getUpdateData()
+			guard let update: UpdateManager.UpdateStruct = UpdateManager.UpdateStruct.getUpdateData() else{
+				DispatchQueue.main.sync {
+					self.openReleaseUpdatePage.isEnabled = false
+					self.openPreReleaseUpdatePage.isEnabled = false
+				}
+				return
+			}
 			
 			DispatchQueue.main.sync {
-				if let canRelease = update?.stable.shouldUpdateToThisBuild(){
-					self.openReleaseUpdatePage.isEnabled = canRelease || App.isPreRelase
-				}else{
-					self.openReleaseUpdatePage.isEnabled = false
-				}
 				
-				if let canPreRelease = update?.pre_release?.shouldUpdateToThisBuild(){
+				self.openReleaseUpdatePage.isEnabled = update.getLatestRelease().isNewerVersion() || App.isPreRelase
+				
+				if let canPreRelease = update.getLatestPreRelease()?.isNewerVersion(){
 					self.openPreReleaseUpdatePage.isEnabled = canPreRelease
 				}else{
 					self.openPreReleaseUpdatePage.isEnabled = false
@@ -71,23 +74,23 @@ class UpdatesSubmenu: NSMenu {
 	}
 	
 	@IBAction func checkForUpdates(_ sender: Any) {
-		UpdateManager.getUpdateData(forceRefetch: true)?.update.checkAndSendUpdateNotification(shouldSendUpToDateNotification: true, shouldSendUpdateNotificationAnyway: true)
+		UpdateManager.UpdateStruct.getUpdateData(forceRefetch: true)?.update.checkAndSendUpdateNotification(sendNotificatinAlways: true)
 		checkForUpdatesAndSetMenuItems()
 	}
 	
 	@IBAction func openReleaseUpdatePage(_ sender: Any) {
-		UpdateManager.getUpdateData()?.stable.openWebPageOrDirectDownload()
+		UpdateManager.UpdateStruct.getUpdateData()?.getLatestRelease().openWebPageOrDirectDownload()
 	}
 	
 	@IBAction func openPreReleaseUpdatePage(_ sender: Any) {
-		UpdateManager.getUpdateData()?.pre_release?.openWebPageOrDirectDownload()
+		UpdateManager.UpdateStruct.getUpdateData()?.getLatestPreRelease()?.openWebPageOrDirectDownload()
 	}
 	
 	@IBAction func switchUpdateNotificationStatus(_ sender: Any){
 		
-		UpdateManager.shoudDisplayUpdateNotification.toggle()
-		App.Settings.setBool(key: App.Settings.Keys.sendUpdateNotifications, variable: UpdateManager.shoudDisplayUpdateNotification)
+		UpdateManager.displayNotification.toggle()
+		App.Settings.setBool(key: App.Settings.Keys.sendUpdateNotifications, variable: UpdateManager.displayNotification)
 		
-		sendUpdateNotificationSwitcher.state = UpdateManager.shoudDisplayUpdateNotification ? .on : .off
+		sendUpdateNotificationSwitcher.state = UpdateManager.displayNotification ? .on : .off
 	}
 }

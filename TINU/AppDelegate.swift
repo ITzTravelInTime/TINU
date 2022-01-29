@@ -60,9 +60,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		
 		if (notification.userInfo?["shouldOpenUpdateLinks"] as? String) == "true"{
 			if notification.additionalActivationAction?.identifier == "DIRECT_DOWNLOAD"{
-				UpdateManager.getUpdateData().update.openDirectDownloadOrWebpage()
+				UpdateManager.UpdateStruct.getUpdateData().update.openDirectDownloadOrWebpage()
 			}else if notification.activationType == .contentsClicked || notification.activationType == .actionButtonClicked{
-				UpdateManager.getUpdateData().update.openWebPageOrDirectDownload()
+				UpdateManager.UpdateStruct.getUpdateData().update.openWebPageOrDirectDownload()
 			}
 		}
 		
@@ -157,7 +157,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		demoMacroEnabled = true
 		#endif
         
-		UpdateManager.getUpdateData(forceRefetch: true)?.update.checkAndSendUpdateNotification()
+		UpdateManager.UpdateStruct.getUpdateData(forceRefetch: true)?.update.checkAndSendUpdateNotification()
     }
 	
 	
