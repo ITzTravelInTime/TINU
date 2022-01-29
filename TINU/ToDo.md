@@ -43,6 +43,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 - installer app download list with remote pictures (and so remove those from the built in assets).
 
+- rebuild update system using github api.
+
 # TO DO but with less priority:
 - right to left languages ui support
 
