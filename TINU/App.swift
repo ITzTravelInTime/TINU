@@ -55,6 +55,7 @@ public final class App{
 			simulateHIDPIStatus != nil,
 			simulateReachabilityStatus != nil,
 			simulateUpdateStatus != nil,
+			simulateReleaseStatus != nil,
 			simulateLook != nil
 		]
 		
@@ -67,6 +68,33 @@ public final class App{
 			print("This copy of \(Bundle.main.name ?? "TINU") is running in a testing mode")
 			break
 			
+		}
+		
+		return MEM.checked
+	}
+	
+	class var isPreRelase: Bool{
+		
+		struct MEM{
+			static var checked: Bool! = nil
+		}
+		
+		if MEM.checked == nil{
+			
+			
+			if let simulate = simulateReleaseStatus{
+				
+				MEM.checked = !simulate
+				
+			}else{
+				
+				if let version = Bundle.main.version?.lowercased() {
+					MEM.checked = isTesting || (version.contains("beta") || version.contains("alpha") || (version.contains("release") && version.contains("candidate")) || version.contains("rc") || version.contains("pre-release"))
+				}else{
+					MEM.checked = isTesting
+				}
+				
+			}
 		}
 		
 		return MEM.checked
@@ -103,6 +131,7 @@ public final class App{
 		public enum Keys: String, Codable, Equatable, CaseIterable, RawRepresentable{
 			#if !isTool && TINU
 			case test = "test"
+			case sendUpdateNotifications = "sendUpdateNotifications"
 			#else
 			#if EFIPM
 			case startsAsMenuKey = "startsAsMenuItem"
@@ -114,14 +143,17 @@ public final class App{
 		
 		//this function gets saved settings, should be called only once at app startapp
 		public class func check(){
-			if !Recovery.status {
-				#if !isTool && TINU
-				#else
-					#if EFIPM
-						setBool(key: Keys.startsAsMenuKey, variable: &startsAsMenu)
-					#endif
-				#endif
+			if Recovery.status {
+				return
 			}
+			
+			#if !isTool && TINU
+				UpdateManager.shoudDisplayUpdateNotification = getBool(key: Keys.sendUpdateNotifications)
+			#else
+				#if EFIPM
+					setBool(key: Keys.startsAsMenuKey, variable: &startsAsMenu)
+				#endif
+			#endif
 		}
 		
 		//those functions are used to manage settings from the app load, the key is the "id" of the setting, and the value is the variable that will store the setting value, it needs to be initialized to the default value for the variable
@@ -135,38 +167,38 @@ public final class App{
 			return true
 		}
 		
-		public class func get<T>(key: Keys, defaultValue: T) -> T{
+		public class func getVal<T>(key: Keys, defaultValue: T) -> T{
 			var variable: T = defaultValue
 			let _ = get(key: key, variable: &variable)
 			return variable
 		}
 		
 		public class func getBool(key: Keys, defaultValue: Bool = false) -> Bool{
-			return get(key: key, defaultValue: defaultValue)
+			return getVal(key: key, defaultValue: defaultValue)
 		}
 		
 		public class func getString(key: Keys, defaultValue: String = "") -> String{
-			return get(key: key, defaultValue: defaultValue)
+			return getVal(key: key, defaultValue: defaultValue)
 		}
 		
 		public class func getInt(key: Keys, defaultValue: Int = 0) -> Int{
-			return get(key: key, defaultValue: defaultValue)
+			return getVal(key: key, defaultValue: defaultValue)
 		}
 		
-		public class func set<T>(key: Keys, variable: T){
+		public class func setVal<T>(key: Keys, variable: T){
 			defaults.set(variable, forKey: key.rawValue)
 		}
 		
 		public class func setBool(key: Keys, variable: Bool){
-			set(key: key, variable: variable)
+			setVal(key: key, variable: variable)
 		}
 		
 		public class func setString(key: Keys, variable: String){
-			set(key: key, variable: variable)
+			setVal(key: key, variable: variable)
 		}
 		
 		public class func setInt(key: Keys, variable: Int){
-			set(key: key, variable: variable)
+			setVal(key: key, variable: variable)
 		}
 		
 	}

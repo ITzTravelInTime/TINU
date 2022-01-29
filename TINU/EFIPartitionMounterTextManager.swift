@@ -19,7 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import Foundation
 
 public struct EFIPMTextManagerStruct: TextManagerProtocol, CodableDefaults, Codable, Equatable{
-	public let viewStrings: TextManagementStructs.ViewStringsAlbum<String>
+	public let viewStrings: TextManagementStructs.ViewStringsAlbum
 	
 	public private(set) static var remAsset: String? = getLanguageFile(fileName: EFIPMTextManagerStruct.defaultResourceFileName, fextension: EFIPMTextManagerStruct.defaultResourceFileExtension)
 	

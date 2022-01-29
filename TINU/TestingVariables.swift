@@ -103,8 +103,14 @@ public let simulateReachabilityStatus: Bool! = nil
 ///Values:
 /// - [bool value] simulates the update availability status
 /// - nil use the actual update status
-public let simulateUpdateStatus: Bool! = nil
+public let simulateUpdateStatus: Bool! = true
 
+///Simulates the availability of updates
+///
+///Values:
+/// - [bool value] simulates the relase [true] or pre release [false] status
+/// - nil use the actual relase status
+public let simulateReleaseStatus: Bool! = nil
 
 
 ///This variable forces a UI Style if not nil, see the AppLook enum for the oossible values

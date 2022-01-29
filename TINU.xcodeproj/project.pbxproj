@@ -118,6 +118,7 @@
 		DD223ED927149C5D0048EA0F /* 8.png in Resources */ = {isa = PBXBuildFile; fileRef = DD223ED127149C5D0048EA0F /* 8.png */; };
 		DD223EDA27149C5D0048EA0F /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = DD223ED227149C5D0048EA0F /* 6.png */; };
 		DD223EDB27149C5D0048EA0F /* 7.png in Resources */ = {isa = PBXBuildFile; fileRef = DD223ED327149C5D0048EA0F /* 7.png */; };
+		DD2B2E4F27A4A47F0056FB73 /* UpdatesSubmenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2B2E4E27A4A47F0056FB73 /* UpdatesSubmenu.swift */; };
 		DD3AC14C1FBB974C00C71F53 /* OtherOptionCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC14B1FBB974C00C71F53 /* OtherOptionCheckBox.swift */; };
 		DD5016061F993D4500FB1407 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5016051F993D4500FB1407 /* GenericViewController.swift */; };
 		DD75F56D2729BC6000A26474 /* HIDPIDetectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD75F56C2729BC6000A26474 /* HIDPIDetectionManager.swift */; };
@@ -267,6 +268,7 @@
 		DD223ED127149C5D0048EA0F /* 8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 8.png; sourceTree = "<group>"; };
 		DD223ED227149C5D0048EA0F /* 6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6.png; sourceTree = "<group>"; };
 		DD223ED327149C5D0048EA0F /* 7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 7.png; sourceTree = "<group>"; };
+		DD2B2E4E27A4A47F0056FB73 /* UpdatesSubmenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesSubmenu.swift; sourceTree = "<group>"; };
 		DD3AC14B1FBB974C00C71F53 /* OtherOptionCheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherOptionCheckBox.swift; sourceTree = "<group>"; };
 		DD5016051F993D4500FB1407 /* GenericViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericViewController.swift; sourceTree = "<group>"; };
 		DD75F56C2729BC6000A26474 /* HIDPIDetectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDPIDetectionManager.swift; sourceTree = "<group>"; };
@@ -564,6 +566,7 @@
 				C6DF04651F4F33C500D200B1 /* AppDelegate.swift */,
 				DDC29012270FCE6900CBDE34 /* ToDo.md */,
 				C649CC8F211A4ECF00A6B47B /* Tools */,
+				DD2B2E5027A4A48D0056FB73 /* Submenus */,
 				C60D39B51F5EB48000D94834 /* WindowsControllers */,
 				C60D39B71F5EB4C800D94834 /* ViewControllers */,
 				C60D39B61F5EB4A000D94834 /* OtherCode */,
@@ -629,6 +632,14 @@
 				C62BD175271BE2E800F4ADAD /* AppIcon.png */,
 			);
 			path = Screenshots;
+			sourceTree = "<group>";
+		};
+		DD2B2E5027A4A48D0056FB73 /* Submenus */ = {
+			isa = PBXGroup;
+			children = (
+				DD2B2E4E27A4A47F0056FB73 /* UpdatesSubmenu.swift */,
+			);
+			name = Submenus;
 			sourceTree = "<group>";
 		};
 		DDE56DBB273F39BD00B36794 /* CreationProcessInfo */ = {
@@ -957,6 +968,7 @@
 				C6422DBA269C33340047DF36 /* diskutilBSDID.swift in Sources */,
 				C6254B5E26855A620082C7F5 /* OptionsExecution.swift in Sources */,
 				C6188D96251306FC00BCBC51 /* AllertFunctionsWithTextManager.swift in Sources */,
+				DD2B2E4F27A4A47F0056FB73 /* UpdatesSubmenu.swift in Sources */,
 				C6F0E84326A7A81E00308B9F /* LogWindowController.swift in Sources */,
 				C64E563B1F522854007B8CEE /* InstallingViewController.swift in Sources */,
 				C61A3654205DA3F400350BE9 /* DownloadAppViewController.swift in Sources */,

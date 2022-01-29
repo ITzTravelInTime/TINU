@@ -84,6 +84,7 @@ public func print( _ str: Any){
 	LogManager.debug("\(str)")
 }
 
+typealias UINotification = TINUNotifications.Notification
 
 public final class Notifications: ViewID{
 	public let id: String = "NotificationsManager"

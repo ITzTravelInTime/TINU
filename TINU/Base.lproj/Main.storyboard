@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19162"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -63,6 +63,46 @@
                                             </menu>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="JDX-r4-tVp"/>
+                                        <menuItem title="Updates" id="aUL-5h-hBv">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Updates" autoenablesItems="NO" id="fhk-bS-8rc" customClass="UpdatesSubmenu" customModule="TINU" customModuleProvider="target">
+                                                <items>
+                                                    <menuItem title="Look for updates" enabled="NO" id="FMW-Fr-5NW">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="checkForUpdates:" target="fhk-bS-8rc" id="0zR-ic-MPF"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="1aO-kX-Wun"/>
+                                                    <menuItem title="Get the latest Release version" enabled="NO" id="hsB-sn-YvL">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="openReleaseUpdatePage:" target="fhk-bS-8rc" id="emJ-aR-QXn"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Get the latest Pre-Release version" enabled="NO" id="N3j-nZ-aej">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="openPreReleaseUpdatePage:" target="fhk-bS-8rc" id="l3R-W4-81G"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="BLC-7N-e2p"/>
+                                                    <menuItem title="Send notifications when new updates are available" state="on" id="Flt-sq-SlW">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="switchUpdateNotificationStatus:" target="fhk-bS-8rc" id="JIP-tg-96V"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                                <connections>
+                                                    <outlet property="checkForUpdatesMenuItem" destination="FMW-Fr-5NW" id="nVS-EN-Cw8"/>
+                                                    <outlet property="openPreReleaseUpdatePage" destination="N3j-nZ-aej" id="yXu-wH-Sl6"/>
+                                                    <outlet property="openReleaseUpdatePage" destination="hsB-sn-YvL" id="Hc1-dk-DWb"/>
+                                                    <outlet property="sendUpdateNotificationSwitcher" destination="Flt-sq-SlW" id="5H0-IG-VNC"/>
+                                                </connections>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="9aQ-hl-GcQ"/>
                                         <menuItem title="Diagnostic Mode" keyEquivalent="d" id="qpo-04-kkH">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                             <connections>
@@ -431,7 +471,7 @@
                 </customObject>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-685" y="98"/>
+            <point key="canvasLocation" x="-632" y="68"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -611,7 +651,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L9S-67-FyL">
-                                <rect key="frame" x="409" y="25" width="118" height="32"/>
+                                <rect key="frame" x="408" y="25" width="119" height="32"/>
                                 <buttonCell key="cell" type="push" title="Contact us" bezelStyle="rounded" image="NSListViewTemplate" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="quU-KF-LqR">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -667,7 +707,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fr8-GD-yes">
-                                <rect key="frame" x="13" y="25" width="87" height="32"/>
+                                <rect key="frame" x="13" y="25" width="88" height="32"/>
                                 <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" image="NSStopProgressTemplate" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dA4-Vh-7dJ">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="systemBold"/>
@@ -686,7 +726,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jwm-Ad-YWq">
-                                <rect key="frame" x="282" y="25" width="129" height="32"/>
+                                <rect key="frame" x="280" y="25" width="130" height="32"/>
                                 <buttonCell key="cell" type="push" title="Source code" bezelStyle="rounded" image="NSListViewTemplate" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C2J-4U-6T1">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -715,7 +755,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gIY-z1-fOV">
-                                <rect key="frame" x="185" y="25" width="99" height="32"/>
+                                <rect key="frame" x="182" y="25" width="100" height="32"/>
                                 <buttonCell key="cell" type="push" title="License" bezelStyle="rounded" image="NSListViewTemplate" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6Pb-re-MWT">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -834,7 +874,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cOR-Pu-tTy">
-                                <rect key="frame" x="13" y="25" width="87" height="32"/>
+                                <rect key="frame" x="13" y="25" width="88" height="32"/>
                                 <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" image="NSStopProgressTemplate" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mo2-Gg-3xB">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="systemBold"/>
@@ -1082,7 +1122,7 @@
                                 </scroller>
                             </scrollView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ic3-30-1WJ">
-                                <rect key="frame" x="265" y="25" width="90" height="32"/>
+                                <rect key="frame" x="265" y="25" width="91" height="32"/>
                                 <buttonCell key="cell" type="push" title="Agree" bezelStyle="rounded" image="NSMenuOnStateTemplate" imagePosition="right" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="FYN-or-Twm">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="systemBold"/>
@@ -1151,7 +1191,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HGy-Sc-j6F">
-                                <rect key="frame" x="13" y="25" width="82" height="32"/>
+                                <rect key="frame" x="13" y="25" width="83" height="32"/>
                                 <buttonCell key="cell" type="push" title="Back" bezelStyle="rounded" image="NSStopProgressTemplate" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tdV-vD-PRM">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="systemBold"/>
@@ -1360,7 +1400,7 @@ Gw
                                 </scroller>
                             </scrollView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4HJ-Oc-oNv">
-                                <rect key="frame" x="236" y="25" width="149" height="32"/>
+                                <rect key="frame" x="235" y="25" width="150" height="32"/>
                                 <buttonCell key="cell" type="push" title="Set default options" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aqu-C3-g9T">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -1370,7 +1410,7 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r0D-ie-R4Z">
-                                <rect key="frame" x="525" y="25" width="82" height="32"/>
+                                <rect key="frame" x="524" y="25" width="83" height="32"/>
                                 <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" image="NSMenuOnStateTemplate" imagePosition="right" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="a0x-CO-HTC">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="systemBold"/>
@@ -1605,7 +1645,7 @@ Gw
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             </progressIndicator>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qTs-ee-xCZ">
-                                <rect key="frame" x="256" y="25" width="108" height="32"/>
+                                <rect key="frame" x="256" y="25" width="109" height="32"/>
                                 <buttonCell key="cell" type="push" title="Show log" bezelStyle="rounded" image="NSListViewTemplate" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KmI-hj-gwg">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -1812,7 +1852,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b96-xh-wHk">
-                                <rect key="frame" x="528" y="25" width="78" height="32"/>
+                                <rect key="frame" x="527" y="25" width="79" height="32"/>
                                 <buttonCell key="cell" type="push" title="Quit" bezelStyle="rounded" image="NSStopProgressTemplate" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jGf-Z4-UwF">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="systemBold"/>
@@ -1825,7 +1865,7 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FaU-vg-drK">
-                                <rect key="frame" x="14" y="25" width="112" height="32"/>
+                                <rect key="frame" x="14" y="25" width="113" height="32"/>
                                 <buttonCell key="cell" type="push" title="Show Log" bezelStyle="rounded" image="NSListViewTemplate" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EkR-ry-Rdr">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -1835,7 +1875,7 @@ Gw
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jmd-d2-LIT">
-                                <rect key="frame" x="427" y="25" width="101" height="32"/>
+                                <rect key="frame" x="425" y="25" width="102" height="32"/>
                                 <buttonCell key="cell" type="push" title="Main menu" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nYR-DT-CGo">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -2115,7 +2155,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K28-pf-5AF">
-                                <rect key="frame" x="13" y="25" width="82" height="32"/>
+                                <rect key="frame" x="13" y="25" width="83" height="32"/>
                                 <buttonCell key="cell" type="push" title="Back" bezelStyle="rounded" image="NSStopProgressTemplate" imagePosition="left" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="r7I-fo-ahn">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="systemBold"/>
@@ -2265,13 +2305,13 @@ Gw
         <image name="NSFolder" width="32" height="32"/>
         <image name="NSGoLeftTemplate" width="10" height="14"/>
         <image name="NSGoRightTemplate" width="10" height="14"/>
-        <image name="NSListViewTemplate" width="16" height="12"/>
-        <image name="NSMenuOnStateTemplate" width="14" height="13"/>
+        <image name="NSListViewTemplate" width="17" height="12"/>
+        <image name="NSMenuOnStateTemplate" width="15" height="13"/>
         <image name="NSMultipleDocuments" width="32" height="32"/>
         <image name="NSNetwork" width="32" height="32"/>
         <image name="NSRefreshTemplate" width="14" height="16"/>
-        <image name="NSShareTemplate" width="15" height="17"/>
-        <image name="NSStopProgressTemplate" width="14" height="13"/>
+        <image name="NSShareTemplate" width="16" height="17"/>
+        <image name="NSStopProgressTemplate" width="15" height="13"/>
         <image name="Removable" width="1024" height="1024"/>
         <image name="warning" width="409.60000610351562" height="409.60000610351562"/>
     </resources>

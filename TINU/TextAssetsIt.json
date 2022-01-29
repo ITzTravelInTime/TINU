@@ -434,6 +434,27 @@
 				"quit2Key" : ""
 			}
 		},
+		"UpdateNamanger":{
+			"unmutable" : { },
+			"notifications" : {
+				"updateNotification":{
+					"id" : "TINU_update_notification",
+					"message" : "Nuovo aggiornamento ver. ${version}",
+					"description" : "Novità (in inglese):\n${description}",
+					"actions" : [
+						{
+							"id" : "DIRECT_DOWNLOAD",
+							"displayName" : "Scarica ora"
+						}
+					]
+				},
+				"alreadyUpToDateNotification":{
+					"id" : "TINU_already_update_notification",
+					"message" : "TINU è aggiornato.",
+					"description" : "Stai già usando l'ultima versione di TINU, non ci sono altri aggiornamenti disponibili."
+				}
+			}
+		},
 		"template":{
 			"mutable" : {
 				"item" : {

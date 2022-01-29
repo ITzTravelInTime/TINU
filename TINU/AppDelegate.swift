@@ -47,6 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 	@IBOutlet weak var toolsMenuItem: NSMenuItem!
 	@IBOutlet weak var efiMounterMenuItem: NSMenuItem!
 	
+	
 	#if sudoStartup
 	private var useChange = true
 	#endif
@@ -57,17 +58,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 	
 	func userNotificationCenter(_ center: NSUserNotificationCenter, didActivate notification: NSUserNotification){
 		
-		var tag: String?
-		
-		if notification.additionalActivationAction?.identifier == "DIRECT_DOWNLOAD"{
-			tag = ((notification.userInfo?["DirectDownloadLink"]) ?? ( notification.userInfo?["BrowserLink"])) as? String
-		}else if notification.activationType == .contentsClicked || notification.activationType == .actionButtonClicked{
-			tag = ((notification.userInfo?["BrowserLink"]) ?? ( notification.userInfo?["DirectDownloadLink"])) as? String
-		}
-		
-		if let tg = tag{
-			print("[Notification] Opening extanal link: \(tg)")
-			NSWorkspace.shared.open(URL(string: tg)!)
+		if (notification.userInfo?["shouldOpenUpdateLinks"] as? String) == "true"{
+			if notification.additionalActivationAction?.identifier == "DIRECT_DOWNLOAD"{
+				UpdateManager.getUpdateData().update.openDirectDownloadOrWebpage()
+			}else if notification.activationType == .contentsClicked || notification.activationType == .actionButtonClicked{
+				UpdateManager.getUpdateData().update.openWebPageOrDirectDownload()
+			}
 		}
 		
 		NSUserNotificationCenter.default.removeDeliveredNotification(notification)
@@ -133,7 +129,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		
 		InstallMacOSItem.isHidden = rec
 		
-        
         if !rec{
 			print("Verbose mode not usable under recovery")
         }
@@ -162,11 +157,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		demoMacroEnabled = true
 		#endif
         
-		
-		DispatchQueue.global(qos: .background).async {
-			UpdateManager.checkForUpdates()
-		}
+		UpdateManager.getUpdateData(forceRefetch: true)?.update.checkAndSendUpdateNotification()
     }
+	
+	
     
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application

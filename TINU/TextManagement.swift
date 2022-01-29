@@ -37,31 +37,80 @@ public protocol AlternateValueSupport{
 }
 
 public protocol TextManagerProtocol: CodableDefaults{
-	var viewStrings: TextManagementStructs.ViewStringsAlbum<String> {get}
+	var viewStrings: TextManagementStructs.ViewStringsAlbum {get}
 	static var remAsset: String? {get}
 }
 
 public extension TextManagerProtocol{
-	func getViewString(context: ViewID, stringID: String) -> String!{
-		
-		let asset = Self.remAsset ?? Self.defaultResourceFileName + "En." + Self.defaultResourceFileExtension
+	func getViewString(context: ViewID, stringID id: String) -> String!{
 		
 		guard let view = viewStrings[context.id] else{
 			
-			print("The assets file \"\(asset)\" file doesn't contain the text for the view \"\(context.id)\"")
+			let asset = Self.remAsset ?? Self.defaultResourceFileName + "En." + Self.defaultResourceFileExtension
+			
+			print("The assets file \"\(asset)\" file doesn't contain the assets for the view \"\(context.id)\"")
 			
 			return nil
 		}
 		
-		guard let ret = view.getString(stringID) else{
+		guard let ret = view.getString(id) else{
 			
-			print("The assets file \"\(asset)\" doesn't contain the text for the View entity \"\(stringID)\"")
+			let asset = Self.remAsset ?? Self.defaultResourceFileName + "En." + Self.defaultResourceFileExtension
+			
+			print("The assets file \"\(asset)\" doesn't contain the string entry \"\(id)\" for the View entity \"\(context.id)\"")
 			
 			return nil
 		}
 		
 		return ret
 	}
+	
+	internal func getAlert(context: ViewID, id: String) -> Alert!{
+		
+		guard let view = viewStrings[context.id] else{
+			
+			let asset = Self.remAsset ?? Self.defaultResourceFileName + "En." + Self.defaultResourceFileExtension
+			
+			print("The assets file \"\(asset)\" file doesn't contain the assets for the view \"\(context.id)\"")
+			
+			return nil
+		}
+		
+		guard let ret = view.getAlert(id) else{
+			
+			let asset = Self.remAsset ?? Self.defaultResourceFileName + "En." + Self.defaultResourceFileExtension
+			
+			print("The assets file \"\(asset)\" doesn't contain the alert entry \"\(id)\" for the View entity \"\(context.id)\"")
+			
+			return nil
+		}
+		
+		return ret
+	}
+	
+	internal func getNotification(context: ViewID, id: String) -> UINotification!{
+		
+		guard let view = viewStrings[context.id] else{
+			
+			let asset = Self.remAsset ?? Self.defaultResourceFileName + "En." + Self.defaultResourceFileExtension
+			
+			print("The assets file \"\(asset)\" file doesn't contain the assets for the view \"\(context.id)\"")
+			
+			return nil
+		}
+		
+		guard let ret = view.getNotification(id) else{
+			
+			let asset = Self.remAsset ?? Self.defaultResourceFileName + "En." + Self.defaultResourceFileExtension
+			
+			print("The assets file \"\(asset)\" doesn't contain the notification entry \"\(id)\" for the View entity \"\(context.id)\"")
+			
+			return nil
+		}
+		
+		return ret
+	}
+	
 }
 
 public final class TextManagementStructs{
@@ -92,20 +141,34 @@ public final class TextManagementStructs{
 		}
 	}
 	
-	public struct ViewStrings<T: Codable & Equatable>: Codable & Equatable{
-		let mutable: [String: InstallerInstallation<T>]!
-		let unmutable: [String: T]
+	public struct ViewStrings: Codable & Equatable{
+		private let mutable: [String: InstallerInstallation<String>]!
+		private let unmutable: [String: String]
+		private let notifications: [String: UINotification]!
+		private let mutableAlerts: [String: InstallerInstallation<Alert>]!
+		private let alerts: [String: Alert ]!
 		
-		func getString(_ id: String) -> T!{
+		func getString(_ id: String) -> String!{
 			if let s = mutable?[id]{
 				return s.appropriateValue
 			}
 			
 			return unmutable[id]
 		}
+		
+		func getAlert(_ id: String) -> Alert!{
+			if let s = mutableAlerts?[id]{
+				return s.appropriateValue
+			}
+			
+			return alerts?[id]
+		}
+		
+		func getNotification(_ id: String) -> UINotification!{
+			return self.notifications?[id]
+		}
 	}
 	
-	public typealias Album<T: Codable & Equatable> = [String: T]
-	public typealias ViewStringsAlbum<T: Codable & Equatable> = Album<ViewStrings<T>>
+	public typealias ViewStringsAlbum = [String: ViewStrings]
 	
 }

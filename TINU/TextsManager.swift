@@ -18,13 +18,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 import Foundation
-import TINUNotifications
-
-public struct ViewString: Codable, Equatable{
-	public let strings: TextManagementStructs.ViewStrings<String>
-	public let notifications: TextManagementStructs.ViewStrings<TINUNotifications.Notification>?
-	public let alerts: TextManagementStructs.ViewStrings<TINUNotifications.Alert>?
-}
 
 public struct TINUTextsManagerStruct: TextManagerProtocol, CodableDefaults, Codable, Equatable{
 	
@@ -32,7 +25,7 @@ public struct TINUTextsManagerStruct: TextManagerProtocol, CodableDefaults, Coda
 	private var helpfoulMessange: TextManagementStructs.InstallerInstallation<String>
 	private var optionsDescs: TextManagementStructs.InstallerInstallation<CreationProcess.OptionsManager.DescriptionList>
 	
-	public let viewStrings: TextManagementStructs.ViewStringsAlbum<String>
+	public let viewStrings: TextManagementStructs.ViewStringsAlbum
 	
 	public private(set) static var remAsset: String? = getLanguageFile(fileName: TINUTextsManagerStruct.defaultResourceFileName, fextension: TINUTextsManagerStruct.defaultResourceFileExtension)
 	
