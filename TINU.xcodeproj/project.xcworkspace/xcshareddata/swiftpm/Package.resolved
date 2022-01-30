@@ -47,6 +47,15 @@
         }
       },
       {
+        "package": "TINURecovery",
+        "repositoryURL": "https://github.com/ITzTravelInTime/TINURecovery.git",
+        "state": {
+          "branch": null,
+          "revision": "174fd77843d7158ca8e8e4b4835b7552df0170db",
+          "version": "4.0.1"
+        }
+      },
+      {
         "package": "TINUSerialization",
         "repositoryURL": "https://github.com/ITzTravelInTime/TINUSerialization",
         "state": {

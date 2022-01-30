@@ -18,9 +18,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 */
 
 import Foundation
-import TINURecovery
-import TINUSerialization
-import TINUNotifications
 import AppKit
 
 public final class UpdateManager{
@@ -72,14 +69,6 @@ public final class UpdateManager{
 		
 		let pre_release: UpdateInfo?
 		let stable: UpdateInfo
-		
-		var update: UpdateInfo{
-			if let pre = pre_release, App.isPreRelase{
-				return pre
-			}
-			
-			return stable
-		}
 		
 		func getLatestRelease() -> UpdateInfo {
 			return stable

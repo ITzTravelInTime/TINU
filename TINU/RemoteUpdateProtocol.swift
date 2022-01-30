@@ -32,7 +32,7 @@ protocol RemoteUpdateProtocol: Codable, Equatable{
 	associatedtype T: RemoteUpdateVersionProtocol
 	static var classID: String {get}
 	static var fetchURL: URL? {get}
-	var update: T {get}
+	//var update: T {get}
 	
 	func getLatestRelease() -> T
 	func getLatestPreRelease() -> T?
@@ -184,5 +184,13 @@ extension RemoteUpdateProtocol{
 		UpdateManager.updateCacheData[Self.classID] = info
 		
 		return info
+	}
+	
+	var update: T{
+		if let pre = getLatestPreRelease(), App.isPreRelase{
+			return pre
+		}
+		
+		return getLatestRelease()
 	}
 }
