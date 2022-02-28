@@ -19,16 +19,17 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 import Foundation
 import AppKit
+import TINUSerialization
 
-protocol RemoteUpdateVersionProtocol: Codable, Equatable, ViewID{
+protocol RemoteUpdateVersionProtocol: /*Codable, Equatable,*/ ViewID{
 	var name: String {get}
 	var body: String {get}
-	var html_url: URL? {get}
+	var html_url: String? {get}
 	var tag_name: String {get}
 	func getDirectDownloadUrl() -> URL?
 }
 
-protocol RemoteUpdateProtocol: Codable, Equatable{
+protocol RemoteUpdateProtocol /*: Codable, Equatable*/{
 	associatedtype T: RemoteUpdateVersionProtocol
 	static var classID: String {get}
 	static var fetchURL: URL? {get}
@@ -36,6 +37,8 @@ protocol RemoteUpdateProtocol: Codable, Equatable{
 	
 	func getLatestRelease() -> T
 	func getLatestPreRelease() -> T?
+	init?(fromRemoteTextAt url: URL, descapeCharacters: Bool)
+	init?(fromRemoteTextAt url: URL)
 	
 	//func openWebPageOrDirectDownload()
 	//func openDirectDownloadOrWebpage()
@@ -85,7 +88,7 @@ extension RemoteUpdateVersionProtocol{
 		var toBeOpened: URL!
 		
 		if let url = self.html_url{
-			toBeOpened = url
+			toBeOpened = URL(string: url)
 		}else if let url = self.getDirectDownloadUrl(){
 			toBeOpened = url
 		}
@@ -102,7 +105,7 @@ extension RemoteUpdateVersionProtocol{
 		if let url = self.getDirectDownloadUrl(){
 			toBeOpened = url
 		}else if let url = self.html_url{
-			toBeOpened = url
+			toBeOpened = URL(string: url)
 		}
 			
 		if let open = toBeOpened{
@@ -143,8 +146,8 @@ extension RemoteUpdateVersionProtocol{
 		}
 		
 		
-		notification.message = parse(messange: notification.message, keys: ["{version}": name])
-		notification.description = parse(messange: notification.description, keys: ["{description}": body])
+		notification.message = notification.message.parsed(usingKeys: ["{version}": name])
+		notification.description = notification.description.parsed(usingKeys: ["{description}": body])
 		notification.allowsSpam = true
 		notification.userTag = ["shouldOpenUpdateLinks": "true"]
 		notification.justSend()
@@ -155,20 +158,22 @@ extension RemoteUpdateVersionProtocol{
 
 extension RemoteUpdateProtocol{
 	
-	static func getUpdateData(forceRefetch force: Bool = false) -> Self!{
-		
-		if Recovery.status{
-			log("[Update] We are in a recovery environment, let's skip update checks ...")
-			return nil
-		}
+	
+	
+	static func getUpdateData(forceRefetch force: Bool = false, descapeCharacters: Bool = false) -> Self!{
 		
 		if !Reachability.status{
 			log("[Update] The computer seems to not be connected to a network, updates will not be checked.")
 			return nil
 		}
 		
-		if let data = UpdateManager.updateCacheData[Self.classID] as? Self, !force{
-			return data
+		if let data = UpdateManager.updateCacheData[Self.classID], let obj = data.info as? Self, !force{
+			return obj
+		}
+		
+		if Recovery.status{
+			log("[Update] We are in a recovery environment, let's skip update checks ...")
+			return nil
 		}
 		
 		guard let urlContents = Self.fetchURL else {
@@ -176,18 +181,37 @@ extension RemoteUpdateProtocol{
 			return nil
 		}
 		
-		guard let info = Self.init(fromRemoteFileAt: urlContents) else{
-			log("[Update] Can't get remote structure for update information.")
+		guard let info = Self.init(fromRemoteTextAt: urlContents, descapeCharacters: descapeCharacters) else{
+			DispatchQueue.global(qos: .background).async {
+				log("[Update] Can't get remote structure for update information.")
+				log("[Update] Update serialized string:\n" + (String.init(fromRemoteFileAt: urlContents) ?? "[No serialized data available]"))
+			}
 			return nil
 		}
 		
-		UpdateManager.updateCacheData[Self.classID] = info
+		UpdateManager.updateCacheData[Self.classID] = .init(info: info, cachedPreRelease: nil, cachedRelease: nil)
 		
 		return info
 	}
 	
 	var update: T{
-		if let pre = getLatestPreRelease(), App.isPreRelase{
+		
+		let rel = UpdateManager.updateCacheData[Self.classID]?.cachedRelease ?? getLatestRelease()
+		let prerel = UpdateManager.updateCacheData[Self.classID]?.cachedPreRelease ?? getLatestPreRelease()
+		
+		if UpdateManager.updateCacheData[Self.classID] == nil{
+			UpdateManager.updateCacheData[Self.classID] = .init(info: self, cachedPreRelease: prerel, cachedRelease: rel)
+		}else{
+			if UpdateManager.updateCacheData[Self.classID]!.cachedRelease == nil{
+				UpdateManager.updateCacheData[Self.classID]!.cachedRelease = rel
+			}
+			
+			if UpdateManager.updateCacheData[Self.classID]!.cachedPreRelease == nil{
+				UpdateManager.updateCacheData[Self.classID]!.cachedPreRelease = prerel
+			}
+		}
+		
+		if let pre = prerel as? T, App.isPreRelase{
 			return pre
 		}
 		

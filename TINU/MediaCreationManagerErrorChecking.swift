@@ -358,7 +358,7 @@ extension InstallMediaCreationManager{
 	}
 	
 	private func parse(messange: String) -> String{
-		return TINU.parse(messange: messange, keys: ["{executable}": self.ref!.pointee.actualExecutableName, "{drive}": self.ref!.pointee.disk.current.driveName])
+		return messange.parsed(usingKeys: ["{executable}": self.ref!.pointee.actualExecutableName, "{drive}": self.ref!.pointee.disk.current.driveName])
 	}
 	
 }

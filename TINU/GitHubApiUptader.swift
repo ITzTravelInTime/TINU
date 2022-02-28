@@ -19,28 +19,223 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 import Foundation
 import AppKit
-
-protocol GitHubItemProtocol: Codable, Equatable{
-	var id: UInt64 {get}
-	var node_id: String {get}
-	var html_url: URL? {get}
-	var url: URL {get}
-}
-
-protocol GitHubNamedItemProtocol: GitHubItemProtocol{
-	var name: String {get}
-}
+import TINUSerialization
 
 extension UpdateManager{
-	struct GitHubApiUpdateStruct: RemoteUpdateProtocol, RawRepresentable{
+	struct GithubStruct: RemoteUpdateProtocol{
 		
-		init?(rawValue: [Release]) {
+		let releases: [Release]
+		
+		static var classID: String{
+			return "GitHubUpdateStructV2"
+		}
+		
+		static var fetchURL: URL?{
+			if let str =  RemoteResourcesURLsManager.list["GitHubApiUpdates"]{
+				return URL(string: str)
+			}
+			
+			return nil
+		}
+		
+		func getLatestRelease() -> Release {
+			
+			var ret = releases.first!
+			
+			for i in releases{
+				if i.build <= ret.build{
+					continue
+				}
+				
+				ret = i
+			}
+			
+			return ret
+		}
+		
+		func getLatestPreRelease() -> Release? {
+			var ret: Release?
+			
+			for i in releases{
+				if i.build <= ret?.build ?? 0 || !i.isPreRelease{
+					continue
+				}
+				
+				ret = i
+			}
+			
+			return ret
+		}
+		
+		init?(fromRemoteTextAt url: URL, descapeCharacters: Bool) {
+			guard let list = [[String: Any]].init(fromRemoteFileAt: url, descapeCharacters: descapeCharacters) else{
+				return nil
+			}
+			
+			if list.isEmpty{
+				return nil
+			}
+			
+			var rel = [Release]()
+			
+			for i in list{
+				guard let release = Release(fromDictionary: i) else{
+					return nil
+				}
+				
+				rel.append(release)
+			}
+			
+			releases = rel
+		}
+		
+		init?(fromRemoteTextAt url: URL) {
+			self.init(fromRemoteTextAt: url, descapeCharacters: false)
+		}
+		
+		
+		struct Release: RemoteUpdateVersionProtocol{
+			let name: String
+			
+			let body: String
+			
+			let html_url: String?
+			let assetUrl: URL
+			
+			let tag_name: String
+			
+			let build: UInt
+			let isPreRelease: Bool
+			
+			func getDirectDownloadUrl() -> URL? {
+				return assetUrl
+			}
+			
+			init?(fromDictionary dict: [String: Any]){
+				if let url = dict["html_url"] as? String{
+					self.html_url = url
+				}else{
+					self.html_url = nil
+				}
+				
+				if let name = dict["name"] as? String{
+					self.name = name
+				}else{
+					return nil
+				}
+				
+				if let body = dict["body"] as? String{
+					self.body = body
+				}else{
+					return nil
+				}
+				
+				if let pre = dict["prerelease"] as? Bool{
+					self.isPreRelease = pre
+				}else{
+					return nil
+				}
+				
+				if let tag = dict["tag_name"] as? String{
+					self.tag_name = tag
+					
+					if tag.contains("(") && tag.last! == ")"{
+						guard let bbtag = tag.split(separator: "(").last else{
+							return nil
+						}
+						
+						var btag = "\(bbtag)"
+						
+						btag.removeLast()
+						
+						guard let bld = btag.uIntValue else{
+							return nil
+						}
+						
+						self.build = bld
+					}else if tag == "10_PUBLIC"{
+						
+						self.build = 1
+						
+					}else{
+						guard let bbtag = tag.split(separator: "_").last else{
+							return nil
+						}
+							
+						let btag = "\(bbtag.last!)"
+						
+						guard let bld = btag.uIntValue else{
+							return nil
+						}
+						
+						self.build = bld
+					}
+					
+				}else{
+					return nil
+				}
+				
+				if let assets = dict["assets"] as? [[String: Any]] {
+					
+					if assets.isEmpty{
+						return nil
+					}
+					
+					var link: URL?
+					
+					for i in assets{
+						guard let type = i["content_type"] as? String else{
+							continue
+						}
+						
+						if !type.lowercased().contains("application"){
+							continue
+						}
+						
+						guard let url = i["browser_download_url"] as? String else{
+							continue
+						}
+						
+						link = URL(string: url)
+					}
+					
+					if let l = link{
+						self.assetUrl = l
+					}else{
+						return nil
+					}
+					
+				}else{
+					return nil
+				}
+				
+			}
+		}
+	}
+}
+
+/*
+extension UpdateManager{
+	struct GitHubApiUpdateStruct: RemoteUpdateProtocol, RawRepresentable{
+		init?(fromRemoteTextAt url: URL) {
+			self.init(fromRemoteTextAt: url, descapeCharacters: false)
+		}
+		
+		init?(rawValue: RawValue) {
 			self.rawValue = rawValue
 		}
 		
-		var rawValue: [Release]
+		var rawValue: RawValue
 		
 		typealias RawValue = [Release]
+		
+		init?(fromRemoteTextAt url: URL, descapeCharacters: Bool){
+			guard let value = RawValue.init(fromRemoteFileAt: url, descapeCharacters: descapeCharacters) else{
+				return nil
+			}
+			
+			self.init(rawValue: value)
+		}
 		
 		static var classID: String{
 			return "GitHubUpdateStruct"
@@ -63,8 +258,8 @@ extension UpdateManager{
 				return cached
 			}
 			
-			var latest: Release? = nil
-			
+			//var latest: Release? = nil
+			/*
 			for i in rawValue{
 				if i.prerelease{
 					continue
@@ -75,15 +270,19 @@ extension UpdateManager{
 					continue
 				}
 				
+				/*
 				if ((last.published_at ?? last.created_at).date()?.timeIntervalSinceReferenceDate ?? 0) > ((i.published_at ?? i.created_at).date()?.timeIntervalSinceReferenceDate ?? 0){
 					continue
-				}
+				}*/
 				
 				latest = i
 			}
 			
 			Self.cachedRelease = latest ?? rawValue.first
 			return latest ?? rawValue.first!
+			 */
+			
+			return rawValue.first!
 		}
 		
 		func getLatestPreRelease() -> Release? {
@@ -93,8 +292,9 @@ extension UpdateManager{
 				return nil
 			}
 			
-			var latest: Release? = nil
+			//var latest: Release? = nil
 			
+			/*
 			for i in rawValue{
 				if !i.prerelease{
 					continue
@@ -105,106 +305,64 @@ extension UpdateManager{
 					continue
 				}
 				
+				/*
 				if ((last.published_at ?? last.created_at).date()?.timeIntervalSinceReferenceDate ?? 0) > ((i.published_at ?? i.created_at).date()?.timeIntervalSinceReferenceDate ?? 0){
 					continue
-				}
+				}*/
 				
 				latest = i
 			}
 			
 			Self.cachedRelease = latest
 			return latest
+			 */ return rawValue.first
 		}
 		
+		
+		struct Release: RemoteUpdateVersionProtocol, RawRepresentable{
+			init?(rawValue: [String : Any]) {
+				self.rawValue = rawValue
+			}
+			
+			typealias RawValue = [String: Any]
+			
+			var name: String{
+				return rawValue["name"]! as! String
+			}
+			
+			var body: String{
+				return rawValue["body"]! as! String
+			}
+			
+			var html_url: String?{
+				return rawValue["html_url"] as? String
+			}
+			
+			var tag_name: String{
+				return rawValue["tag_name"]! as! String
+			}
+			
+			func getDirectDownloadUrl() -> URL? {
+				return URL(string: self.url)
+			}
+			
+			var id: UInt64{
+				return rawValue["id"]! as! UInt64
+			}
+			
+			var node_id: String{
+				return rawValue["node_id"]! as! String
+			}
+			
+			var url: String {
+				return rawValue["url"]! as! String
+			}
+			
+			var rawValue: RawValue
+		}
 		
 		typealias T = Release
 		
-		struct Release: RemoteUpdateVersionProtocol, GitHubNamedItemProtocol{
-			
-			struct User: GitHubItemProtocol{
-				let login: String
-				let id: UInt64
-				let node_id: String
-				let url: URL
-				let html_url: URL?
-				let gravatar_id: String
-				let followers_url: URL
-				let following_url: URL
-				let gists_url: URL
-				let starred_url: URL
-				let subscriptions_url: URL
-				let organizations_url: URL
-				let repos_url: URL
-				let events_url: URL
-				let received_events_url: URL
-				let type: String
-				let site_admin: Bool
-			}
-			
-			struct Asset: GitHubNamedItemProtocol{
-				let name: String
-				let id: UInt64
-				let node_id: String
-				let html_url: URL?
-				let url: URL
-				let label: String?
-				let uploader: User
-				let content_type: String
-				let state: String
-				let size: UInt64
-				let download_count: UInt64
-				let created_at: ISODate
-				let updated_at: ISODate
-				let browser_download_url: URL
-			}
-			
-			struct ISODate: RawRepresentable, Codable, Equatable{
-				var rawValue: String
-				
-				typealias RawValue = String
-				
-				func date() -> Date?{
-					let dateFormatter = DateFormatter()
-					dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssZ"
-					return dateFormatter.date(from: rawValue)
-				}
-			}
-			
-			let url: URL
-			let assets_url: URL
-			let upload_url: URL
-			let html_url: URL?
-			let id: UInt64
-			
-			let author: User
-			
-			let node_id: String
-			let tag_name: String
-			let target_commitish: String
-			let name: String
-			let draft: Bool
-			let prerelease: Bool
-			let created_at: ISODate
-			let published_at: ISODate?
-			
-			let assets: [Asset]
-			
-			let tarball_url: URL
-			let zipball_url: URL
-			
-			let body: String
-			
-			let reactions: [String: UInt64]
-			
-			func getDirectDownloadUrl() -> URL? {
-				return self.assets.first?.browser_download_url
-			}
-			
-			
-			
-			
-		}
-		
-		
 	}
 }
+*/

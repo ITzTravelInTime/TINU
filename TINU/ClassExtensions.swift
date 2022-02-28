@@ -272,6 +272,35 @@ public extension String{
 		return true
 	}
 	
+	func parsed(usingKeys keys: [String: String]) -> String{
+		/*
+		var ret = ""
+		for piece in self.split(separator: "$"){
+			var s = String(piece)
+			
+			for key in keys{
+				if s.starts(with: key.key){
+					s.deletePrefix(key.key)
+					s = key.value + s
+					break
+				}
+			}
+			
+			ret += s
+		}*/
+		
+		var ret = self
+		
+		for i in keys{
+			ret = ret.replacingOccurrences(of: "$" + i.key, with: i.value)
+		}
+		
+		return ret
+	}
+	
+	mutating func parse(usingKeys keys: [String: String]){
+		self = self.parsed(usingKeys: keys)
+	}
 }
 
 extension Bundle {

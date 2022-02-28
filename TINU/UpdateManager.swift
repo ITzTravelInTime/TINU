@@ -22,62 +22,15 @@ import AppKit
 
 public final class UpdateManager{
 	
-	static var displayNotification: Bool = true
-	static var updateCacheData: [String: Any] = [:]
+	typealias Default = GithubStruct
 	
-	struct UpdateStruct: RemoteUpdateProtocol{
-		
-		struct UpdateInfo: RemoteUpdateVersionProtocol{
-			let build: String
-			let link: String
-			let pageLink: String
-			let version: String
-			let description: String
-			
-			var name: String{
-				return version + " (" + build + ")"
-			}
-			
-			var body: String{
-				return description
-			}
-			
-			var html_url: URL?{
-				return URL(string: pageLink)
-			}
-			
-			var tag_name: String{
-				return version + "_(" + build + ")"
-			}
-			
-			func getDirectDownloadUrl() -> URL? {
-				return URL(string: link)
-			}
-		}
-		
-		static var classID: String{
-			return "UpdateOld"
-		}
-		
-		static var fetchURL: URL?{
-			if let str =  RemoteResourcesURLsManager.list["updates"]{
-				return URL(string: str)
-			}
-			
-			return nil
-		}
-		
-		let pre_release: UpdateInfo?
-		let stable: UpdateInfo
-		
-		func getLatestRelease() -> UpdateInfo {
-			return stable
-		}
-		
-		func getLatestPreRelease() -> UpdateInfo? {
-			return pre_release
-		}
-		
+	struct CacheItem{
+		var info: Any
+		var cachedPreRelease: RemoteUpdateVersionProtocol?
+		var cachedRelease: RemoteUpdateVersionProtocol?
 	}
+	
+	static var displayNotification: Bool = true
+	static var updateCacheData: [String: CacheItem] = [:]
 	
 }

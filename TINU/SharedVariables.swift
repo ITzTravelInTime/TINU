@@ -23,7 +23,7 @@ import Cocoa
 let toggleRecoveryModeShadows = true
 
 public var look: UIManager.AppLook{
-	
+	/*
 	struct MEM{
 		static var result: UIManager.AppLook! = nil
 	}
@@ -53,5 +53,8 @@ public var look: UIManager.AppLook{
 	
 	MEM.result = ret ?? .shadowsOldIcons
 	return MEM.result!
+	 */
+	
+	return .status
 }
 

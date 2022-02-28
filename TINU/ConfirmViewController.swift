@@ -152,9 +152,7 @@ class ConfirmViewController: GenericViewController, ViewID {
 			}
 			*/
 			
-			let reps = ["{driveName}" : driveName.stringValue]
-			
-			warningField.stringValue = parse(messange: TextManager.getViewString(context: self, stringID: "warningText"), keys: reps)
+			warningField.stringValue = TextManager.getViewString(context: self, stringID: "warningText").parsed(usingKeys: ["{driveName}" : driveName.stringValue])
 			
 		}
 	}

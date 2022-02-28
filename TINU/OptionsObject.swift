@@ -21,7 +21,7 @@ import Foundation
 
 extension CreationProcess.OptionsManager{
 	//other options
-	public struct Object{
+	public struct Object: Codable, Equatable{
 		let id: ID
 		let description: Description
 		
@@ -39,7 +39,7 @@ extension CreationProcess.OptionsManager{
 		}
 		
 		func canBeUsed() -> Bool{
-			return isActivated && isVisible
+			return canBeUsed(self.id)
 		}
 		
 		func copy() -> Object{

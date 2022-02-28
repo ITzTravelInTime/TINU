@@ -60,9 +60,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		
 		if (notification.userInfo?["shouldOpenUpdateLinks"] as? String) == "true"{
 			if notification.additionalActivationAction?.identifier == "DIRECT_DOWNLOAD"{
-				UpdateManager.UpdateStruct.getUpdateData().update.openDirectDownloadOrWebpage()
+				UpdateManager.Default.getUpdateData().update.openDirectDownloadOrWebpage()
 			}else if notification.activationType == .contentsClicked || notification.activationType == .actionButtonClicked{
-				UpdateManager.UpdateStruct.getUpdateData().update.openWebPageOrDirectDownload()
+				UpdateManager.Default.getUpdateData().update.openWebPageOrDirectDownload()
 			}
 		}
 		
@@ -157,7 +157,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		demoMacroEnabled = true
 		#endif
         
-		UpdateManager.UpdateStruct.getUpdateData(forceRefetch: true)?.update.checkAndSendUpdateNotification()
+		
+		
+		//UpdateManager.UpdateStruct.getUpdateData(forceRefetch: true)?.update.checkAndSendUpdateNotification()
+		
+		//UpdateManager.GitHubApiUpdateStruct.getUpdateData(forceRefetch: true, descapeCharacters: false)?.update.checkAndSendUpdateNotification()
+		
+		//print( [String: Any].init(fromRemoteFileAt: URL(string: "https://api.github.com/repos/ITzTravelInTime/TINU/releases/latest")! )!)
+		
+		//let gupd = UpdateManager.GithubStruct.init(fromRemoteTextAt: URL(string: "https://api.github.com/repos/ITzTravelInTime/TINU/releases")!)
+		
+		//print(gupd?.releases ?? "nil")
+		
+		let upd = UpdateManager.GithubStruct.getUpdateData(forceRefetch: true)!
+			
+		upd.update.checkAndSendUpdateNotification()
     }
 	
 	

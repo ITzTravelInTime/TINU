@@ -19,25 +19,6 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 import AppKit
 
-public func parse(messange: String, keys: [String: String]) -> String{
-	var ret = ""
-	for piece in messange.split(separator: "$"){
-		var s = String(piece)
-		
-		for key in keys{
-			if s.starts(with: key.key){
-				s.deletePrefix(key.key)
-				s = key.value + s
-				break
-			}
-		}
-		
-		ret += s
-	}
-	
-	return ret
-}
-
 public func strFill(of section: String, length: UInt64, startSeq: String! = nil, endSeq: String! = nil, forget: Bool = false) -> String{
 	struct FillData: Equatable, Hashable{
 		let section: String

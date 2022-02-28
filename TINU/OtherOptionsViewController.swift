@@ -109,10 +109,8 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 						sections.last!!.image.contentTintColor = .systemGray
 						sections.last!!.imageColor = sections.last!!.image.contentTintColor!
 					}
-					
-					let rep = ["{bootloader}" : i.rawValue]
 				
-					sections.last!!.name.stringValue = parse(messange: TextManager.getViewString(context: self, stringID: "bootloaderSection" ), keys: rep)
+					sections.last!!.name.stringValue = TextManager.getViewString(context: self, stringID: "bootloaderSection" ).parsed(usingKeys: ["{bootloader}" : i.rawValue])
 					
 					switch i{
 					case .clover:

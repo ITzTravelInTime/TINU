@@ -31,8 +31,8 @@ public func msgboxWithManagerGeneric(_ manager: TextManagerProtocol, _ handle: V
 	}
 	
 	if let list = parseList{
-		title = parse(messange: title!, keys: list)
-		content = parse(messange: content!, keys: list)
+		title?.parse(usingKeys: list)
+		content?.parse(usingKeys: list)
 	}
 	
 	//msgBoxWithCustomIcon(title!, content!, style, icon)
@@ -54,8 +54,8 @@ public func dialogWithManagerGeneric(_ manager: TextManagerProtocol, _ handle: V
 	}
 	
 	if let list = parseList{
-		title = parse(messange: title!, keys: list)
-		content = parse(messange: content!, keys: list)
+		title?.parse(usingKeys: list)
+		content?.parse(usingKeys: list)
 	}
 	
 	//return dialogCustomWithCustomIcon(question: title!, text: content!, style: style, mainButtonText: yes!, secondButtonText: no!, icon: icon)
@@ -101,8 +101,8 @@ public func dialogGenericWithManagerGeneric(_ manager: TextManagerProtocol, _ ha
 	}
 	
 	if let list = parseList{
-		title = parse(messange: title!, keys: list)
-		content = parse(messange: content!, keys: list)
+		title?.parse(usingKeys: list)
+		content?.parse(usingKeys: list)
 	}
 	
 	//return genericDialogCreate(message: title!, informative: content!, style: style, icon: icon, buttons: buttons, accessoryView: nil)

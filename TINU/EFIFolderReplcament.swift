@@ -86,21 +86,20 @@ public class EFIReplacementView: NSView, ViewID{
 		expLabel.frame.size = NSSize(width: self.frame.size.width - 10 , height: fieldHeigth * 4)
 		expLabel.font = NSFont.systemFont(ofSize: 13)
 		
-			let replaceList = ["{drive}": cvm.shared.disk?.current?.driveName ?? "[error getting drive name]", "{bootloader}": bootloader.rawValue]
-			
-			/*
-			titleLabel.stringValue = "\(bootloader.rawValue) EFI folder installer"
-			expLabel.stringValue = "This option automatically installs the selected \(bootloader.rawValue) EFI folder inside the EFI partition of the drive \"\(drive)\".\nOnly UEFI 64Bits \(bootloader.rawValue) EFI folders are supported."
-			*/
-			
-			let desc = TextManager!.getViewString(context: self, stringID: "desc")!
-			expLabel.stringValue = parse(messange: desc, keys: replaceList)
-			
-			let title = TextManager!.getViewString(context: self, stringID: "title")!
-			titleLabel.stringValue = parse(messange: title, keys: replaceList)
+		let replaceList = ["{drive}": cvm.shared.disk?.current?.driveName ?? "[error getting drive name]", "{bootloader}": bootloader.rawValue]
+		
+		/*
+		 titleLabel.stringValue = "\(bootloader.rawValue) EFI folder installer"
+		 expLabel.stringValue = "This option automatically installs the selected \(bootloader.rawValue) EFI folder inside the EFI partition of the drive \"\(drive)\".\nOnly UEFI 64Bits \(bootloader.rawValue) EFI folders are supported."
+		 */
+		
+		let desc = TextManager!.getViewString(context: self, stringID: "desc")!
+		expLabel.stringValue = desc.parsed(usingKeys: replaceList)
+		
+		let title = TextManager!.getViewString(context: self, stringID: "title")!
+		titleLabel.stringValue = title.parsed(usingKeys: replaceList)
 		
 		self.addSubview(expLabel)
-		
 		
 		//efi folder check
 		pathLabel.isEditable = false
@@ -274,9 +273,7 @@ public class EFIReplacementView: NSView, ViewID{
 				
 				//this is still imprecise because it doesn't accounts for the usage of the h as the first letter, but for now it's enough
 				
-				let replist = ["{bootloader}" : t]
-				
-				pathLabel.stringValue =  parse(messange: TextManager.getViewString(context: self, stringID: "alreadyChoosen"), keys: replist)
+				pathLabel.stringValue =  TextManager.getViewString(context: self, stringID: "alreadyChoosen").parsed(usingKeys: ["{bootloader}" : t])
 				
 				//pathLabel.stringValue = "You have alreay chosen " + (t.first!.isVowel() ? "an " : "a ") + t + " EFI folder"
 				

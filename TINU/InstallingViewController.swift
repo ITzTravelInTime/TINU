@@ -151,7 +151,7 @@ public class InstallingViewController: GenericViewController, ViewID{
 		var etitle = TextManager.getViewString(context: self, stringID: id)!
 		
 		if let list = parseList{
-			etitle = parse(messange: etitle, keys: list)
+			etitle.parse(usingKeys: list)
 		}
 		
 		goToFinalScreen(title: etitle, success: success)
@@ -229,8 +229,7 @@ public class InstallingViewController: GenericViewController, ViewID{
 	}
 	
 	public func setActivityLabelText(_ texta: String){
-		let list = ["{executable}" : cvm.shared.executableName]
-		let text = parse(messange: TextManager.getViewString(context: self, stringID: texta)!, keys: list)
+		let text = TextManager.getViewString(context: self, stringID: texta)!.parsed(usingKeys: ["{executable}" : cvm.shared.executableName])
 		self.activityLabel.stringValue = text
 		print("Set activity label text: \(text)")
 	}

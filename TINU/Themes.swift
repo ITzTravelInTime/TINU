@@ -19,9 +19,20 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 import Foundation
 import AppKit
+import TINURecovery
 
 extension UIManager{
-	public enum AppLook: String, Codable, Equatable, CaseIterable, RawRepresentable{
+	public enum AppLook: String, Codable, Equatable, CaseIterable, RawRepresentable, SimulatableDetectableOneTime{
+		public init() {
+			self = .noShadowsOldIcons
+		}
+		
+		
+		public static var storedStatus: Self?
+		public static var simulatedStatus: Self?{
+			return simulateLook
+		}
+		
 		case noShadowsOldIcons = ""
 		case recovery = "recovery"
 		case noShadowsSFSymbols = "symbols"
@@ -47,6 +58,24 @@ extension UIManager{
 		
 		func usesFilledSFSymbols() -> Bool{
 			return self.rawValue.contains("symbols.fill")
+		}
+		
+		public static func calculateStatus() -> Self {
+			var ret: Self! = nil
+			
+			if (Recovery.status && !toggleRecoveryModeShadows && (ret == nil)){
+				print("Recovery theme will be used")
+				ret = .recovery
+			}
+			
+			if #available(macOS 11.0, *), ret == nil {
+				print("Shadows SF Symbols theme will be used")
+				ret = .shadowsSFSymbolsFill
+			}else{
+				print("Shadows Old Icons theme will be used")
+			}
+			
+			return ret
 		}
 	}
 }

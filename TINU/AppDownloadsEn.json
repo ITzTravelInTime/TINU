@@ -35,7 +35,7 @@
 			"DownloadLinkAlternate" : "http:\/\/updates-http.cdn-apple.com\/2019\/cert\/061-41424-20191024-218af9ec-cf50-4516-9011-228c78eda3d2\/InstallMacOSX.dmg",
 			"DownloadLink" : "",
 			"name" : "Mac OS X El Capitan",
-			"image" : "El_Capitan",
+			"image" : "ElCapitan",
 			"version" : "10.11.6"
 		},
 		{

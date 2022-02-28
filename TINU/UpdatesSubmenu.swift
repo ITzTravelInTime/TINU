@@ -50,7 +50,7 @@ class UpdatesSubmenu: NSMenu {
 	
 	private func checkForUpdatesAndSetMenuItems(){
 		DispatchQueue.global(qos: .background).async {
-			guard let update: UpdateManager.UpdateStruct = UpdateManager.UpdateStruct.getUpdateData() else{
+			guard let update: UpdateManager.Default = UpdateManager.Default.getUpdateData() else{
 				DispatchQueue.main.sync {
 					self.openReleaseUpdatePage.isEnabled = false
 					self.openPreReleaseUpdatePage.isEnabled = false
@@ -60,13 +60,9 @@ class UpdatesSubmenu: NSMenu {
 			
 			DispatchQueue.main.sync {
 				
-				self.openReleaseUpdatePage.isEnabled = update.getLatestRelease().isNewerVersion() || App.isPreRelase
+				self.openReleaseUpdatePage.isEnabled    = update.getLatestRelease().isNewerVersion() || App.isPreRelase
 				
-				if let canPreRelease = update.getLatestPreRelease()?.isNewerVersion(){
-					self.openPreReleaseUpdatePage.isEnabled = canPreRelease
-				}else{
-					self.openPreReleaseUpdatePage.isEnabled = false
-				}
+				self.openPreReleaseUpdatePage.isEnabled = update.getLatestPreRelease()?.isNewerVersion() ?? false
 			}
 			
 			
@@ -74,16 +70,16 @@ class UpdatesSubmenu: NSMenu {
 	}
 	
 	@IBAction func checkForUpdates(_ sender: Any) {
-		UpdateManager.UpdateStruct.getUpdateData(forceRefetch: true)?.update.checkAndSendUpdateNotification(sendNotificatinAlways: true)
+		UpdateManager.Default.getUpdateData(forceRefetch: true)?.update.checkAndSendUpdateNotification(sendNotificatinAlways: true)
 		checkForUpdatesAndSetMenuItems()
 	}
 	
 	@IBAction func openReleaseUpdatePage(_ sender: Any) {
-		UpdateManager.UpdateStruct.getUpdateData()?.getLatestRelease().openWebPageOrDirectDownload()
+		UpdateManager.Default.getUpdateData()?.getLatestRelease().openWebPageOrDirectDownload()
 	}
 	
 	@IBAction func openPreReleaseUpdatePage(_ sender: Any) {
-		UpdateManager.UpdateStruct.getUpdateData()?.getLatestPreRelease()?.openWebPageOrDirectDownload()
+		UpdateManager.Default.getUpdateData()?.getLatestPreRelease()?.openWebPageOrDirectDownload()
 	}
 	
 	@IBAction func switchUpdateNotificationStatus(_ sender: Any){

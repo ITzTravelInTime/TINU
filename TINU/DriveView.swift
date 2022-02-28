@@ -318,13 +318,13 @@ class DriveView: ShadowView, ViewID {
 		
 		print(list)
 		
-		self.warnText = parse(messange: TextManager.getViewString(context: self, stringID: id + "Warn") ?? "", keys: list)
+		self.warnText = (TextManager.getViewString(context: self, stringID: id + "Warn") ?? "").parsed(usingKeys: list)
 		
 		if self.warnText.isEmpty{
 			self.warnText = current!.displayName
 		}
 		
-		self.toolTip = parse(messange: TextManager.getViewString(context: self, stringID: id + "ToolTip") ?? "", keys: list)
+		self.toolTip = (TextManager.getViewString(context: self, stringID: id + "ToolTip") ?? "").parsed(usingKeys: list)
 		
 		if self.toolTip == nil{
 			self.toolTip = ""
