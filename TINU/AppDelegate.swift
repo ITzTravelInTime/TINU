@@ -169,9 +169,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		
 		//print(gupd?.releases ?? "nil")
 		
-		let upd = UpdateManager.GithubStruct.getUpdateData(forceRefetch: true)!
-			
-		upd.update.checkAndSendUpdateNotification()
+		UpdateManager.GithubStruct.getUpdateData(forceRefetch: true)?.update.checkAndSendUpdateNotification()
     }
 	
 	

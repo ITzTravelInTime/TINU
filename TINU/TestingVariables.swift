@@ -103,7 +103,7 @@ public let simulateReachabilityStatus: Bool! = nil
 ///Values:
 /// - [bool value] simulates the update availability status
 /// - nil use the actual update status
-public let simulateUpdateStatus: Bool! = true
+public let simulateUpdateStatus: Bool! = nil
 
 ///Simulates the availability of updates
 ///
@@ -119,4 +119,4 @@ public let simulateLook: UIManager.AppLook! = nil//.shadowsSFSymbolsFill//.shado
 //non ui testing conditions
 
 ///Enables some disabled debug prints
-public let sharedEnableDebugPrints: Bool = true
+public let sharedEnableDebugPrints: Bool = false
