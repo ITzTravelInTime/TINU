@@ -30,6 +30,8 @@ class ChooseSideViewController: GenericViewController, ViewID {
     @IBOutlet weak var installButton: ChoseButton!
 	
 	@IBOutlet weak var efiButton: ChoseButton!
+	
+	@IBOutlet weak var appDownloadButton: ChoseButton!
     
     @IBOutlet weak var titleField: NSTextField!
 	
@@ -54,6 +56,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 		createUSBButton?.isHidden = true
 		installButton?.isHidden = true
 		efiButton?.isHidden = true
+		appDownloadButton?.isHidden = true
 		
 		Command.Printer.enabled = sharedEnableDebugPrints
 		TINUSerialization.Printer.printDebugLines = sharedEnableDebugPrints
@@ -144,11 +147,33 @@ class ChooseSideViewController: GenericViewController, ViewID {
 				}
 			}
 			
+			var count: CGFloat = 0
+			
+			self.installButton?.isEnabled = Recovery.status
+			
+			#if macOnlyMode
+				efiButton.isEnabled = false
+			#endif
+			
+			for cc in self.view.subviews.reversed(){
+				guard let c = cc as? ChoseButton else{
+					continue
+				}
+				
+				if !c.isEnabled{
+					continue
+				}
+				
+				count += 1
+			}
+			
 			self.createUSBButton?.cImage.image = Icon(path: nil, symbol: SFSymbol(name: "externaldrive.badge.plus"), imageName: !look.isRecovery() ? "drive" : nil, alternative: IconsManager.shared.removableDiskIcon.themedImage()).themedImage()
 			
 			self.installButton?.cImage.image = Icon(path: nil, symbol: SFSymbol(name: "desktopcomputer"), imageName: NSImage.computerName).themedImage()
 			
 			self.efiButton?.cImage.image = Icon(path: nil, symbol: SFSymbol(name: "tray"), imageName: "EFIIcon").themedImage()
+			
+			self.appDownloadButton?.cImage.image = Icon(path: nil, symbol: SFSymbol(name: "square.and.arrow.down"), imageName: "InstallApp").themedImage()
 			
 			self.createUSBButton?.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstaller")//"Create a bootable\nmacOS installer"
 			
@@ -156,21 +181,21 @@ class ChooseSideViewController: GenericViewController, ViewID {
 			
 			self.efiButton?.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openEFIMounter")//"Use \nEFI Partition Mounter"
 			
+			self.appDownloadButton?.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openAppDownloads")
+			
 			var spacing: CGFloat = 22
-			let buttonSize = CGSize(width: 180, height: 180)
 			
-			if !Recovery.status{
-				self.installButton?.isEnabled = false
-				spacing = (self.view.frame.size.width - (buttonSize.width * 2)) / 3
-				spacing *= 1.2//1.05
-			}else{
-				self.installButton?.isEnabled = true
-				spacing = (self.view.frame.size.width - (buttonSize.width * 3)) / 4
-			}
+			let size = (self.view.frame.width - (spacing * (count + 3))) / count
 			
-			#if macOnlyMode
-			efiButton.isEnabled = false
-			#endif
+			let buttonSize = CGSize(width: size, height: size)//CGSize(width: 140, height: 140)
+			
+			//if !Recovery.status{
+				//spacing = (self.view.frame.size.width - (buttonSize.width * 3)) / 4
+			//}else{
+				//spacing = (self.view.frame.size.width - (buttonSize.width * 4)) / 5
+			//}
+			
+			spacing = (self.view.frame.size.width - (buttonSize.width * count)) / (count + 1)
 			
 			for v in self.background.subviews{
 				for vv in self.background.subviews{
@@ -190,7 +215,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 			for c in self.view.subviews.reversed(){
 				guard let b = c as? ChoseButton else{ continue }
 				
-				b.isHidden = !b.isEnabled
+				b.isHidden.toggle()
 				
 				b.removeFromSuperview()
 				
@@ -239,6 +264,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 			}
 		
 			self.background.frame.origin = NSPoint(x: self.view.frame.width / 2 - self.background.frame.size.width / 2, y: self.view.frame.height / 2 - self.background.frame.size.height / 2)
+			
 			self.background.backgroundColor = .transparent
 			
 			self.view.addSubview(self.background)
@@ -263,6 +289,12 @@ class ChooseSideViewController: GenericViewController, ViewID {
 	@IBAction func openEFIMounter(_ sender: Any){
 		if let apd = NSApp.delegate as? AppDelegate{
 			apd.openEFIPartitionTool(sender)
+		}
+	}
+	
+	@IBAction func openAppDownloads(_ sender: Any){
+		if let apd = NSApp.delegate as? AppDelegate{
+			apd.openDownloadMacApp(sender)
 		}
 	}
 	

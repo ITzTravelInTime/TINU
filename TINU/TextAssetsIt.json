@@ -132,6 +132,7 @@
 				"openEFIMounter" : "Usa\nEFI Partition Mounter",
 				"openInstallation" : "Installa macOS",
 				"openInstaller" : "Crea un supporto di\ninstallazione di macOS",
+				"openAppDownloads" : "Ottieni\nun'installer di macOS",
 				"SIPDialogTitle" : "TINU ha bisgno di privilegi speciali!",
 				"SIPDialog" : "Su questo computer è attiva la SIP (System Integrity Protection), quindi, per far funzionare TINU, sono richiesti privilegi speciali (Questo accade perché da Catalina in poi la sicurezza del sistema operativo è stata rinforzata).\n\nPoi scegliere di usare la mod. diagnostica con privilegi di amministratore per dare a TINU i permessi di accesso necessari (questo grazie al fatto che il terminale fornisce tali privilegi, però questo richiede l'inserimento della password di amministratore una o due volte, e che poi l'intera app funzioni come root) oppure puoi disattivare la SIP (scelta sconsigliata).\n\nSe hai delle preoccupazioni riguardo la sicurezza puoi sempre consultare il codice sorgente visto che l'app è software libero ed open source (Puoi trovare un collegamento al codice sorgente nella finestra \"Info su TINU\").",
 				"SIPDialog1" : "Usa la mod. diagnostica",

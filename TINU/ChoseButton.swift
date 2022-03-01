@@ -121,9 +121,9 @@ struct EmulatedTextField{
 		cTitle.isSelectable = false
 		
 		if look.usesSFSymbols(){
-			cTitle.font = NSFont.systemFont(ofSize: 13)
+			cTitle.font = NSFont.systemFont(ofSize: 12)
 		}else{
-			cTitle.font = NSFont.boldSystemFont(ofSize: 13)
+			cTitle.font = NSFont.boldSystemFont(ofSize: 12)
 		}
 		
 		cTitle.usesSingleLineMode = false

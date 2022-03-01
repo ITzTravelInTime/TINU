@@ -1,6 +1,12 @@
 {
 	"downloads" : [
 		{
+			"DownloadLink" : "macappstores://apps.apple.com/it/app/macos-monterey/id1576738294",
+			"name" : "macOS Monterey",
+			"image" : "Monterey",
+			"version" : "12.x"
+		},
+		{
 			"DownloadLink" : "macappstores:\/\/itunes.apple.com\/app\/macos-big-sur\/id1526878132",
 			"name" : "macOS Big Sur",
 			"image" : "Big_Sur",

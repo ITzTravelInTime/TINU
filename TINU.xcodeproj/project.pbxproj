@@ -272,6 +272,7 @@
 		DD2B2E4E27A4A47F0056FB73 /* UpdatesSubmenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesSubmenu.swift; sourceTree = "<group>"; };
 		DD3AC14B1FBB974C00C71F53 /* OtherOptionCheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherOptionCheckBox.swift; sourceTree = "<group>"; };
 		DD5016051F993D4500FB1407 /* GenericViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericViewController.swift; sourceTree = "<group>"; };
+		DD71339A27CE002D009C33F0 /* Monterey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Monterey.png; sourceTree = "<group>"; };
 		DD73FC4427CD296400989B7B /* ElCapitan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ElCapitan.png; sourceTree = "<group>"; };
 		DD73FC4527CD296500989B7B /* MountainLion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MountainLion.png; sourceTree = "<group>"; };
 		DD73FC4627CD296500989B7B /* Sierra.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sierra.png; sourceTree = "<group>"; };
@@ -497,6 +498,7 @@
 				DD73FC4927CD296500989B7B /* Mojave.png */,
 				DD73FC4527CD296500989B7B /* MountainLion.png */,
 				DD73FC4B27CD296500989B7B /* Yosemite.png */,
+				DD71339A27CE002D009C33F0 /* Monterey.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
