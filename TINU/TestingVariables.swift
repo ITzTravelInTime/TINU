@@ -117,7 +117,7 @@ public let simulateReleaseStatus: Bool! = nil
 public let simulateLook: UIManager.AppLook! = nil//.shadowsSFSymbolsFill//.shadowsOldIcons//.recovery
 
 ///This variable forces the app to use remote app downloads just from the local file copy
-public let simulateOnlyLocalInstallerAppDownloadList: Bool = true
+public let simulateOnlyLocalInstallerAppDownloadList: Bool = false
 
 //non ui testing conditions
 

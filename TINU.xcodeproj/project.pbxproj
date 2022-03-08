@@ -39,7 +39,6 @@
 		C6254B80268933740082C7F5 /* Command in Frameworks */ = {isa = PBXBuildFile; productRef = C6254B7F268933740082C7F5 /* Command */; };
 		C6254B83268933950082C7F5 /* CommandSudo in Frameworks */ = {isa = PBXBuildFile; productRef = C6254B82268933950082C7F5 /* CommandSudo */; };
 		C6254B8626897EA20082C7F5 /* SwiftCPUDetect in Frameworks */ = {isa = PBXBuildFile; productRef = C6254B8526897EA20082C7F5 /* SwiftCPUDetect */; };
-		C62BD176271BE2E800F4ADAD /* AppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = C62BD175271BE2E800F4ADAD /* AppIcon.png */; };
 		C62F545726995A7400F14304 /* DiskutilBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62F545626995A7400F14304 /* DiskutilBase.swift */; };
 		C62F545926995B3D00F14304 /* DiskutilCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62F545826995B3D00F14304 /* DiskutilCommands.swift */; };
 		C6322574221C1883003A56D4 /* FilesystemObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6322573221C1883003A56D4 /* FilesystemObserver.swift */; };
@@ -110,14 +109,6 @@
 		DD01EBF11F71BFE600C94D9B /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD01EBF01F71BFE600C94D9B /* LogViewController.swift */; };
 		DD02486627A587A00067E014 /* GitHubApiUptader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD02486527A587A00067E014 /* GitHubApiUptader.swift */; };
 		DD02486927A59F2D0067E014 /* RemoteUpdateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD02486827A59F2D0067E014 /* RemoteUpdateProtocol.swift */; };
-		DD06444E27284B6400E362ED /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = DD06444D27284B6400E362ED /* 2.png */; };
-		DD223ED527149C5D0048EA0F /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = DD223ECD27149C5D0048EA0F /* 1.png */; };
-		DD223ED627149C5D0048EA0F /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = DD223ECE27149C5D0048EA0F /* 4.png */; };
-		DD223ED727149C5D0048EA0F /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = DD223ECF27149C5D0048EA0F /* 5.png */; };
-		DD223ED827149C5D0048EA0F /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = DD223ED027149C5D0048EA0F /* 3.png */; };
-		DD223ED927149C5D0048EA0F /* 8.png in Resources */ = {isa = PBXBuildFile; fileRef = DD223ED127149C5D0048EA0F /* 8.png */; };
-		DD223EDA27149C5D0048EA0F /* 6.png in Resources */ = {isa = PBXBuildFile; fileRef = DD223ED227149C5D0048EA0F /* 6.png */; };
-		DD223EDB27149C5D0048EA0F /* 7.png in Resources */ = {isa = PBXBuildFile; fileRef = DD223ED327149C5D0048EA0F /* 7.png */; };
 		DD2B2E4F27A4A47F0056FB73 /* UpdatesSubmenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2B2E4E27A4A47F0056FB73 /* UpdatesSubmenu.swift */; };
 		DD3AC14C1FBB974C00C71F53 /* OtherOptionCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3AC14B1FBB974C00C71F53 /* OtherOptionCheckBox.swift */; };
 		DD5016061F993D4500FB1407 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5016051F993D4500FB1407 /* GenericViewController.swift */; };
@@ -126,7 +117,6 @@
 		DD7C7CC5235E26DC000CC2E0 /* DarkModeDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7C7CC4235E26DC000CC2E0 /* DarkModeDetection.swift */; };
 		DDA7FB601F96AE510029F4F2 /* RuntimeCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA7FB5F1F96AE510029F4F2 /* RuntimeCode.swift */; };
 		DDA7FB621F96B13F0029F4F2 /* GenericWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA7FB611F96B13F0029F4F2 /* GenericWindowController.swift */; };
-		DDC29013270FCE6900CBDE34 /* ToDo.md in Resources */ = {isa = PBXBuildFile; fileRef = DDC29012270FCE6900CBDE34 /* ToDo.md */; };
 		DDCC4ED51FB5C2A7007FBB6F /* OtherOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCC4ED41FB5C2A7007FBB6F /* OtherOptionsViewController.swift */; };
 		DDD038EB1FB7366400D22695 /* ChoseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD038EA1FB7366400D22695 /* ChoseButton.swift */; };
 		DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */; };
@@ -831,27 +821,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD223ED627149C5D0048EA0F /* 4.png in Resources */,
 				C647B3AF211D18950024B9A1 /* EFIPartitionMounterTool.storyboard in Resources */,
 				C6188D9A2513DF3400BCBC51 /* ErrorDecodingMessangesIt.json in Resources */,
-				DD223ED927149C5D0048EA0F /* 8.png in Resources */,
 				C6DF046D1F4F33C500D200B1 /* Main.storyboard in Resources */,
-				DD223EDA27149C5D0048EA0F /* 6.png in Resources */,
 				C660D1A2252C94860027FCA0 /* ConfigMenuAppsIt.json in Resources */,
 				DD73FC4F27CD333900989B7B /* AppDownloadsEn.json in Resources */,
-				C62BD176271BE2E800F4ADAD /* AppIcon.png in Resources */,
 				C660D1A0252C7A160027FCA0 /* ConfigMenuAppsEn.json in Resources */,
 				C6636D352749D61F008B1C07 /* RemoteURLs.json in Resources */,
 				C660D1992529BB260027FCA0 /* EFIPMTextAssetsIt.json in Resources */,
-				DD223ED827149C5D0048EA0F /* 3.png in Resources */,
 				C63F036224E40F5500F950B4 /* TextAssetsEn.json in Resources */,
-				DD223ED727149C5D0048EA0F /* 5.png in Resources */,
-				DD223EDB27149C5D0048EA0F /* 7.png in Resources */,
 				C691BFEE1F6DEEA800589EF8 /* Assets.xcassets in Resources */,
 				C660D19C2529BB780027FCA0 /* EFIPMTextAssetsEn.json in Resources */,
-				DDC29013270FCE6900CBDE34 /* ToDo.md in Resources */,
-				DD223ED527149C5D0048EA0F /* 1.png in Resources */,
-				DD06444E27284B6400E362ED /* 2.png in Resources */,
 				C68C79F22505205A00BBDA37 /* TextAssetsIt.json in Resources */,
 				C6A3A36A24FBAC3500CC8E37 /* ErrorDecodingMessangesEn.json in Resources */,
 				C6553A931F5F83770048965D /* License.rtf in Resources */,
