@@ -1378,7 +1378,7 @@
 			repositoryURL = "https://github.com/ITzTravelInTime/TINURecovery.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.1.1;
+				minimumVersion = 4.1.2;
 			};
 		};
 		C6254B7B268933600082C7F5 /* XCRemoteSwiftPackageReference "TINUNotifications" */ = {
@@ -1402,7 +1402,7 @@
 			repositoryURL = "https://github.com/ITzTravelInTime/CommandSudo.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.15;
+				minimumVersion = 1.1.16;
 			};
 		};
 		C6254B8426897EA20082C7F5 /* XCRemoteSwiftPackageReference "SwiftCPUDetect" */ = {
@@ -1418,7 +1418,7 @@
 			repositoryURL = "https://github.com/ITzTravelInTime/TINUSerialization";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.1;
+				minimumVersion = 0.0.2;
 			};
 		};
 		C6BF64822692B61E00A0B094 /* XCRemoteSwiftPackageReference "SwiftLoggedPrint" */ = {
