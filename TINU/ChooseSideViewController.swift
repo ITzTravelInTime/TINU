@@ -37,9 +37,9 @@ class ChooseSideViewController: GenericViewController, ViewID {
 	
 	@IBOutlet weak var spinner: NSProgressIndicator!
 	
-	let background = NSView()
+	@IBInspectable var usesSameRowForChoseButtons: Bool = true
 	
-	private var count = 0
+	let background = NSView()
 	
 	#if sudoStartup
 	private static var _already_prompted = false
@@ -150,6 +150,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 			var count: CGFloat = 0
 			
 			self.installButton?.isEnabled = Recovery.status
+			self.appDownloadButton?.isEnabled = !Recovery.status
 			
 			#if macOnlyMode
 				efiButton.isEnabled = false
@@ -185,7 +186,14 @@ class ChooseSideViewController: GenericViewController, ViewID {
 			
 			var spacing: CGFloat = 22
 			
-			let size = (self.view.frame.width - (spacing * (count + 3))) / count
+			let mcount: CGFloat = count > 3 ? 3 : count
+			
+			var size = (self.view.frame.width - (spacing * (mcount + 1))) / mcount
+			
+			if size > 170{
+				size = 170
+				spacing = (self.view.frame.size.width - (size * mcount)) / (mcount + 1)
+			}
 			
 			let buttonSize = CGSize(width: size, height: size)//CGSize(width: 140, height: 140)
 			
@@ -194,8 +202,6 @@ class ChooseSideViewController: GenericViewController, ViewID {
 			//}else{
 				//spacing = (self.view.frame.size.width - (buttonSize.width * 4)) / 5
 			//}
-			
-			spacing = (self.view.frame.size.width - (buttonSize.width * count)) / (count + 1)
 			
 			for v in self.background.subviews{
 				for vv in self.background.subviews{
@@ -206,22 +212,33 @@ class ChooseSideViewController: GenericViewController, ViewID {
 			
 			self.background.removeFromSuperview()
 			
-			self.background.frame.size.height = buttonSize.height + 40
+			//self.background.frame.size.height = 40
 			
-			self.background.frame.size.width = spacing//(!sharedIsOnRecovery ? (spacing * 1.25) : spacing)
+			//self.background.frame.size.width = spacing//(!sharedIsOnRecovery ? (spacing * 1.25) : spacing)
 			
-			self.count = 0
+			let rest: CGFloat = CGFloat(UInt(count) % 3)
+			let nrows: CGFloat = self.usesSameRowForChoseButtons ? 1 : (CGFloat(UInt(count) / 3) + (rest != 0 ? 1 : 0))
+			
+			var setted: CGFloat = -1
+			
+			self.background.frame.size.width = (count > 3 && !self.usesSameRowForChoseButtons ) ? ((spacing * 4) + (buttonSize.width * 3)) : (spacing * (count + 1) + (buttonSize.width * count))
+										
+			self.background.frame.size.height = (spacing * ( nrows + 1 ) + buttonSize.height * nrows)
+			
+			let itmpPos: CGPoint = .init(x: /*self.background.frame.width - buttonSize.width -*/ spacing, y: self.background.frame.height - buttonSize.height - spacing)
+			
+			var tmpPos = itmpPos
 			
 			for c in self.view.subviews.reversed(){
 				guard let b = c as? ChoseButton else{ continue }
+				
+				setted += 1
 				
 				b.isHidden.toggle()
 				
 				b.removeFromSuperview()
 				
 				if !b.isEnabled { continue }
-				
-				self.count += 1
 				
 				//b.frame.size = installButton.frame.size
 				
@@ -248,7 +265,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 				shadowView.frame.size = buttonSize
 				b.frame.size = buttonSize
 				b.frame.origin = CGPoint.zero
-				shadowView.frame.origin = NSPoint(x: self.background.frame.width, y: 20)
+				shadowView.frame.origin = tmpPos
 				shadowView.needsLayout = true
 				//shadowView.layer?.masksToBounds = true
 				
@@ -260,20 +277,51 @@ class ChooseSideViewController: GenericViewController, ViewID {
 				shadowView.updateLayer()
 				b.updateLayer()
 				
-				self.background.frame.size.width += buttonSize.width + spacing//((!sharedIsOnRecovery && count == 1) ? (spacing * 1.25) : spacing)
+				//self.background.frame.size.width += buttonSize.width + spacing//((!sharedIsOnRecovery && count == 1) ? (spacing * 1.25) : spacing)
+				
+				if UInt(setted + 1) % 3 == 0 && setted != 0 && !self.usesSameRowForChoseButtons{
+					tmpPos.y -= buttonSize.height + spacing
+					tmpPos.x = itmpPos.x
+				}else{
+					tmpPos.x += buttonSize.width + spacing
+				}
+				
+			}
+			
+			if nrows > 1 {
+				let ammount = (spacing + buttonSize.height) * (nrows - 1)
+				self.view.frame.size.height += ammount
+				var frame = self.window.frame
+				frame.size.height += ammount
+				frame.origin.y -= ammount / 2
+				
+				self.window.setFrame(frame, display: true)
+			}
+			
+			if self.usesSameRowForChoseButtons && count >= 4{
+				let ammount = (spacing + buttonSize.width) * (count - 3)
+				
+				var frame = self.window.frame
+				frame.size.width += ammount
+				frame.origin.x -= ammount / 2
+				
+				self.window.setFrame(frame, display: true)
 			}
 		
-			self.background.frame.origin = NSPoint(x: self.view.frame.width / 2 - self.background.frame.size.width / 2, y: self.view.frame.height / 2 - self.background.frame.size.height / 2)
+			self.background.frame.origin = CGPoint(x: self.view.frame.width / 2 - self.background.frame.size.width / 2, y: self.view.frame.height / 2 - self.background.frame.size.height / 2)
 			
 			self.background.backgroundColor = .transparent
 			
 			self.view.addSubview(self.background)
 			
-			self.createUSBButton?.isHidden = false
-			self.installButton?.isHidden = false
-			self.efiButton?.isHidden = false
-			
 			self.stopAnimationAndShowbuttons()
+			
+			for c in self.view.subviews.reversed(){
+				guard let _ = c as? ChoseButton else{ continue }
+				
+				c.isHidden = false
+			}
+			
 		}
 	}
 	

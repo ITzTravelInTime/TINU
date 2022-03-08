@@ -25,7 +25,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 - credits view controller text from json (probably requires a custom json)
 
-- contacts view controller text from json (probably requires a cutom json)
+- contacts view controller text from json (probably requires a custom json)
 
 - "Star this project on github" button in the final screen (if successful)
 
@@ -35,28 +35,26 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 - Installer to dmg creation (check free space on the computer first, use hdiutil, modifiy the requirements screen for this, avoid the drive select screen)
 
-- Main menu overhaul (put an icon there to access the installer apps downloads)
-
 - always display cd/dvd drives as unusable in the drive select screen 
 
 - concurrent multithreaded installer app scanning.
 
 - installer app download list with remote pictures (and so remove those from the built in assets).
 
+- dmg/iso to usb drive for compete with rufus.
+
+- Having 3 images, one next to the other in a chosebutton for more descriptive icons
+
 # TO DO but with less priority:
-- right to left languages ui support
+- right to left languages ui support 
 
 - divide language files in folders one for each language rather than re-naming them according to the language to use
 
 - write translation guidelines and how to translate to a new language
 
-- it's better to no longer mention directly hackintosh and hackintoshing in the tool, since it can be couse of possible problems maybe?
+- it might be better to no longer mention directly hackintosh and hackintoshing in the tool, since it can be couse of possible problems (maybe?)
 
-- send notitifcation if the tinu version is not up to date (use a json file containing the reference link and the reference information to get) (WIP)
-
-- initial screen more like a home menu with more features ready to use + help section in this new home screen (which includes con tact us and help info and faqs)
-
-- dynamic contact us window using the text assets or a json file (maybe the second option is the better one)
+- help section in the home screen (which includes tutorials, faqs and something to create a new issue)
 
 - take the user to contact us in case of problems
 

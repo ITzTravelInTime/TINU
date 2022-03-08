@@ -56,7 +56,8 @@ public final class App{
 			simulateReachabilityStatus != nil,
 			simulateUpdateStatus != nil,
 			simulateReleaseStatus != nil,
-			simulateLook != nil
+			simulateLook != nil,
+			simulateOnlyLocalInstallerAppDownloadList
 		]
 		
 		MEM.checked = false

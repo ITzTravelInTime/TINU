@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/ITzTravelInTime/CommandSudo.git",
         "state": {
           "branch": null,
-          "revision": "423d0015b6fb22fe9bae1a8c89fb2cb15bac3bdd",
-          "version": "1.1.14"
+          "revision": "7727f323a24b85073d887b2682cae25a0833c8c8",
+          "version": "1.1.15"
         }
       },
       {
@@ -38,6 +38,15 @@
         }
       },
       {
+        "package": "TINUIOKit",
+        "repositoryURL": "https://github.com/ITzTravelInTime/TINUIORegistry",
+        "state": {
+          "branch": null,
+          "revision": "fb0200474b3e8b962cef6a0438420a32e62df944",
+          "version": "0.0.2"
+        }
+      },
+      {
         "package": "TINUNotifications",
         "repositoryURL": "https://github.com/ITzTravelInTime/TINUNotifications.git",
         "state": {
@@ -47,12 +56,21 @@
         }
       },
       {
+        "package": "TINURecovery",
+        "repositoryURL": "https://github.com/ITzTravelInTime/TINURecovery.git",
+        "state": {
+          "branch": null,
+          "revision": "049e06e6cd257fab5448f830feeef1574d2a7790",
+          "version": "4.1.1"
+        }
+      },
+      {
         "package": "TINUSerialization",
         "repositoryURL": "https://github.com/ITzTravelInTime/TINUSerialization",
         "state": {
-          "branch": "main",
-          "revision": "e1c5a901d36d0f79e50663b1747c3dd173e4895e",
-          "version": null
+          "branch": null,
+          "revision": "9bf196b2b56ee63ae9dffa072798346813a17235",
+          "version": "0.0.1"
         }
       }
     ]

@@ -21,12 +21,20 @@ import Cocoa
 
 fileprivate struct AppDownloadManager: CodableDefaults, Codable, Equatable{
 	fileprivate struct AppDownload: Codable, Equatable{
-		var name: String
-		var version: String
-		var DownloadLink: String
-		var DownloadLinkAlternate: String!
-		var image: String!
-		var imageURL: URL!
+		let name: String
+		let version: String
+		let DownloadLink: String
+		let DownloadLinkAlternate: String!
+		private let imageURL: URL!
+		//private let image: String!
+		
+		var localImageName: String{
+			return "InstallApp"
+		}
+		
+		var remoteImageUrl: URL?{
+			return imageURL
+		}
 	}
 	
 	let downloads: [AppDownload]
@@ -69,7 +77,17 @@ public class DownloadAppViewController: ShadowViewController, ViewID {
 		//scroller.contentView.backgroundColor = plain.backgroundColor
 		
 		DispatchQueue.global(qos: .background).async {
-			let apps = AppDownloadManager.init(fromRemoteFileAtUrl: RemoteResourcesURLsManager.list["installerAppDownloads"] ?? "")?.downloads ??  AppDownloadManager.init()!.downloads//.createFromDefaultFile()!.downloads
+			//let apps = /*AppDownloadManager.init(fromRemoteFileAtUrl: RemoteResourcesURLsManager.list["installerAppDownloads"] ?? "")?.downloads ??*/  //AppDownloadManager.init()!.downloads //.createFromDefaultFile()!.downloads
+			
+			var apps: [AppDownloadManager.AppDownload] = AppDownloadManager.init()?.downloads ?? []
+			
+			if let link = RemoteResourcesURLsManager.list["installerAppDownloads"],  !simulateOnlyLocalInstallerAppDownloadList{
+				
+				if let list = AppDownloadManager.init(fromRemoteFileAtUrl: link)?.downloads{
+					apps = list
+				}
+													  
+			}
 			
 			DispatchQueue.main.sync {
 				
@@ -153,7 +171,13 @@ fileprivate class DownloadAppItem: ShadowView, ViewID{
 		icon.imageScaling = .scaleProportionallyUpOrDown
 		icon.isEditable = false
 		
-		icon.image = NSImage(named: associtaed.image)!
+		icon.image = NSImage(named: associtaed.localImageName)!
+		
+		DispatchQueue.main.async {
+			if let url = self.associtaed.remoteImageUrl{
+				self.icon.downloaded(from: url)
+			}
+		}
 		
 		self.addSubview(icon)
 		

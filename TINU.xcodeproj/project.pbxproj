@@ -1201,7 +1201,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 111;
+				CURRENT_PROJECT_VERSION = 112;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1242,7 +1242,7 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 111;
+				CURRENT_PROJECT_VERSION = 112;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_TESTABILITY = NO;
@@ -1398,7 +1398,7 @@
 			repositoryURL = "https://github.com/ITzTravelInTime/TINURecovery.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
+				minimumVersion = 4.1.1;
 			};
 		};
 		C6254B7B268933600082C7F5 /* XCRemoteSwiftPackageReference "TINUNotifications" */ = {
@@ -1422,7 +1422,7 @@
 			repositoryURL = "https://github.com/ITzTravelInTime/CommandSudo.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.13;
+				minimumVersion = 1.1.15;
 			};
 		};
 		C6254B8426897EA20082C7F5 /* XCRemoteSwiftPackageReference "SwiftCPUDetect" */ = {
@@ -1437,8 +1437,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ITzTravelInTime/TINUSerialization";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.1;
 			};
 		};
 		C6BF64822692B61E00A0B094 /* XCRemoteSwiftPackageReference "SwiftLoggedPrint" */ = {

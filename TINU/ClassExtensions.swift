@@ -458,3 +458,34 @@ extension Date {
 
 }
 
+extension NSImageView {
+	func downloaded(from url: URL, scaling: NSImageScaling = .scaleProportionallyUpOrDown) {
+		
+		if Recovery.status{
+			return
+		}
+		
+		if !Reachability.status{
+			return
+		}
+		
+		self.imageScaling = scaling
+		URLSession.shared.dataTask(with: url) { data, response, error in
+			guard
+				let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+				let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+				let data = data, error == nil,
+				let image = NSImage(data: data)
+				else { return }
+			DispatchQueue.main.async() { [weak self] in
+				self?.image = image
+			}
+		}.resume()
+	}
+	
+	func downloaded(from link: String, scaling: NSImageScaling = .scaleProportionallyUpOrDown) {
+		guard let url = URL(string: link) else { return }
+		downloaded(from: url, scaling: scaling)
+	}
+}
+
