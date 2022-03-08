@@ -71,9 +71,12 @@ extension UIManager{
 			if #available(macOS 11.0, *), ret == nil {
 				print("Shadows SF Symbols theme will be used")
 				ret = .shadowsSFSymbolsFill
-			}else{
+			}else if ret == nil{
+				ret = .shadowsOldIcons
 				print("Shadows Old Icons theme will be used")
 			}
+			
+			
 			
 			return ret
 		}
