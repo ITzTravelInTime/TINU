@@ -23,37 +23,87 @@ import Command
 
 extension InstallMediaCreationManager{
 	
-	private struct CheckItem: Codable, Equatable{
-		enum Operations: UInt8, Codable, Equatable{
-			case contains = 0
-			case equal = 1
-			case different = 2
-		}
-		
-		enum CheckValues: UInt8, Codable, Equatable{
-			case fe = 0
-			case me = 1
-			case le = 2
-			case lo = 3
-			case llo = 4
-			case tt = 5
-			case rc = 6
-			case px = 7
-		}
-		
-		//var valuesToCheck: [String] = []
-		var chackValues: [CheckValues] = []
-		let stringsToCheck: [String?]
-		let printMessage: String
-		let message: String
-		let notError: Bool
-		
-		var operation: Operations = .contains
-		
-		var isBack = false
-	}
-	
 	private struct CheckItemCollection: CodableDefaults, Codable, Equatable{
+		
+		struct CheckItem: Codable, Equatable{
+			enum Operations: UInt8, Codable, Equatable{
+				case contains = 0
+				case equal = 1
+				case different = 2
+			}
+			
+			enum CheckValues: UInt8, Codable, Equatable{
+				case firstErrorOutputLine = 0
+				case secondErrorOutpuLine = 1
+				case lastErrorOutpuLine = 2
+				case lastOutputLine = 3
+				case lastOutputLineLowercased = 4
+				case customDebugText = 5
+				case mainProcessExitCode = 6
+				case nestedProcessExitCode = 7
+			}
+			
+			//var valuesToCheck: [String] = []
+			var chackValues: [CheckValues] = []
+			let stringsToCheck: [String?]
+			let printMessage: String
+			let message: String
+			let notError: Bool
+			
+			var operation: Operations = .contains
+			
+			var isBack = false
+			
+			func checkMatch(_ stringsToCheck: [String?]) -> Bool{
+				
+				let valuesToCheck = self.stringsToCheck
+				
+				stringsfor: for ss in stringsToCheck{
+					guard let s = ss else {
+						continue stringsfor
+					}
+					
+					if s == "" || s == " "{
+						continue stringsfor
+					}
+					
+					valuefor: for ovalueToCheck in valuesToCheck{
+						
+						guard let valueToCheck = ovalueToCheck else {
+							continue valuefor
+						}
+						
+						if valueToCheck == "" || valueToCheck == " "{
+							continue valuefor
+						}
+						
+						switch operation{
+						case .contains:
+							if s.contains(valueToCheck){
+								return true
+							}
+							break
+						case .different:
+							
+							if s != valueToCheck{
+								return true
+							}
+							break
+						case .equal:
+							
+							if s == valueToCheck{
+								return true
+							}
+							break
+						}
+						
+					}
+				}
+				
+				return false
+			}
+		}
+		
 		let itemsList: [CheckItem]
 		internal static let defaultResourceFileName = "ErrorDecodingMessanges"
 		internal static let defaultResourceFileExtension = "json"
@@ -78,7 +128,7 @@ extension InstallMediaCreationManager{
 			log("process took \(UInt64(abs(self.ref!.pointee.process.startTime.timeIntervalSinceNow))) seconds to finish")
 			
 			//if there is a not normal code it will be logged
-			log("\"\(self.ref!.pointee.actualExecutableName)\" has finished, extracting output ...")
+			log("\"\(self.ref!.pointee.executableName)\" has finished, extracting output ...")
 			
 			let result = self.ref!.pointee.process.handle.result()
 			
@@ -109,8 +159,6 @@ extension InstallMediaCreationManager{
 		}
 	}
 	
-	
-	
 	private func analizeError(_ res: Command.Result?){
 		
 		DispatchQueue.main.sync {
@@ -118,7 +166,7 @@ extension InstallMediaCreationManager{
 			self.setActivityLabelText("activityLabel4")
 		}
 		
-		log("Checking the \(self.ref!.pointee.actualExecutableName) process")
+		log("Checking the \(self.ref!.pointee.executableName) process")
 		
 		guard let result = res else {
 			DispatchQueue.main.sync {
@@ -130,13 +178,13 @@ extension InstallMediaCreationManager{
 		}
 		
 		//gets the termination status for comparison
-		let rc = simulateAbnormalExitcode ? 1 : result.exitCode
+		let mainProcessExitCode = simulateAbnormalExitcode ? 1 : result.exitCode
 		
 		if self.ref!.pointee.installMac{
-			//probably this will end up never executing
+			//probably this will never end up executing
 			DispatchQueue.main.sync {
 				//102030100
-				if (rc == 0){
+				if (mainProcessExitCode == 0){
 					//self.viewController.goToFinalScreen(title: "macOS installed successfully", success: true)
 					self.viewController.goToFinalScreen(id: "finalScreenMIS", success: true)
 				}else{
@@ -151,30 +199,27 @@ extension InstallMediaCreationManager{
 		
 		DispatchQueue.global(qos: .background).async {
 			
-			var px = 0, fe: String!, me: String!, le: String!, lo: String!, llo: String!, tt: String!
+			var valueList: [CheckItemCollection.CheckItem.CheckValues: String?] = [:]
 			
-			if !simulateCreateinstallmediaFailCustomMessage.isEmpty && simulateAbnormalExitcode{
-				tt = simulateCreateinstallmediaFailCustomMessage
-			}
+			valueList[.mainProcessExitCode] = "\(mainProcessExitCode)"
 			
-			fe = result.error.first
-			if result.error.indices.contains(1){
-				me = result.error[1]
-			}else{
-				me = nil
-			}
-			le = result.error.last
+			valueList[.lastOutputLine] = result.output.last
+			valueList[.lastOutputLineLowercased] = valueList[.lastOutputLine]??.lowercased()
 			
+			valueList[.firstErrorOutputLine] = result.error.first
+			valueList[.secondErrorOutpuLine] = result.error.indices.contains(1) ? result.error[1] : nil
+			valueList[.lastErrorOutpuLine] = result.error.last
 			
-			//fo = self.output.first
-			lo = result.output.last
+			valueList[.customDebugText] = (!simulateCreateinstallmediaFailCustomMessage.isEmpty && simulateAbnormalExitcode) ? simulateCreateinstallmediaFailCustomMessage : nil
 			
-			llo = result.output.last?.lowercased()
+			var nestedProcessExitCode = 0
 			
-			var mol = 1
-			var opened = false
-			
-			if !(le ?? "osascript").contains("osascript"){
+			if let last = valueList[.firstErrorOutputLine]!, last.contains("osascript") || last.contains("execution error"){
+				
+				/*
+				var mol = 1
+				var opened = false
+				
 				for c in le.reversed(){
 					if c == ")"{
 						px = 0
@@ -193,29 +238,27 @@ extension InstallMediaCreationManager{
 						opened = false
 						break
 					}
+				}*/
+				
+				var end = "\(last.split(separator: "(").last ?? "")"
+				
+				if end.reversed().starts(with: ")"){
+					end.removeLast()
+					
+					nestedProcessExitCode = end.intValue ?? 0
 				}
+				
 			}
 			
+			valueList[.nestedProcessExitCode] = "\(nestedProcessExitCode)"
 			
-			let success = ((rc == 0) && (px == 0)) || (CurrentUser.isRoot && (px == 102030100) && (rc == 0)) //add rc to the root case
+			
+			let success = ((mainProcessExitCode == 0) && (nestedProcessExitCode == 0)) || (CurrentUser.isRoot && (nestedProcessExitCode == 102030100) && (mainProcessExitCode == 0)) //add rc to the root case
 			
 			log("Current user:                           \(CurrentUser.name)")
-			log("Main process exit code:                 \(px)")
-			log("Sub process exit code produced:         \(rc)")
+			log("Main process exit code:                 \(nestedProcessExitCode)")
+			log("Sub process exit code produced:         \(mainProcessExitCode)")
 			log("Probable process outcome:               \(success ? "Positive" : "Negative")")
-			
-			let errorsList: [CheckItem] =  CheckItemCollection.init()!.itemsList//.createFromDefaultFile()!.itemsList
-			
-			var valueList: [CheckItem.CheckValues: String?] = [:]
-			
-			valueList[.px] = "\(px)"
-			valueList[.rc] = "\(rc)"
-			valueList[.fe] = fe
-			valueList[.me] = me
-			valueList[.le] = le
-			valueList[.lo] = lo
-			valueList[.llo] = llo
-			valueList[.tt] = tt
 			
 			//sanity check print just so see how the json should look like
 			//print(CodableCreation<CheckItemCollection>.getEncoded(CheckItemCollection(itemsList: errorsList))!)
@@ -223,15 +266,17 @@ extension InstallMediaCreationManager{
 			//checks the conditions of the errorlist array to see if the operation has been complited with success
 			print("Checking errors: ")
 			
-			for item in errorsList{
+			for item in CheckItemCollection.init()?.itemsList ?? []{
 				
 				var values: [String?] = []
 				
 				for nvalue in item.chackValues{
 					
-					if let value = valueList[nvalue] {
-						values.append(value)
+					guard let value = valueList[nvalue]  else {
+						continue
 					}
+					
+					values.append(value)
 					
 				}
 				
@@ -239,7 +284,7 @@ extension InstallMediaCreationManager{
 				print("    Strings to check against: \"\(values)\"")
 				print("    Operation to perform: \(item.operation)")
 				
-				if !self.checkMatch(values, item.stringsToCheck, operation: item.operation){
+				if !item.checkMatch(values){
 					continue
 				}
 				
@@ -256,7 +301,7 @@ extension InstallMediaCreationManager{
 		
 	}
 	
-	private func performPostProcess( _ item: CheckItem){
+	private func performPostProcess( _ item: CheckItemCollection.CheckItem){
 		
 		if !item.notError{
 			if item.isBack{
@@ -272,7 +317,7 @@ extension InstallMediaCreationManager{
 		}
 		
 		//here createinstallmedia succedes in creating the installer
-		log("\(self.ref!.pointee.actualExecutableName) process ended with success")
+		log("\(self.ref!.pointee.executableName) process ended with success")
 		
 		DispatchQueue.global(qos: .background).async {
 			
@@ -311,54 +356,8 @@ extension InstallMediaCreationManager{
 		}
 	}
 	
-	private func checkMatch(_ stringsToCheck: [String?], _ valuesToCheck: [String?], operation: CheckItem.Operations) -> Bool{
-		stringsfor: for ss in stringsToCheck{
-			guard let s = ss else {
-				continue stringsfor
-			}
-			
-			if s == "" || s == " "{
-				continue stringsfor
-			}
-			
-			valuefor: for ovalueToCheck in valuesToCheck{
-				
-				guard let valueToCheck = ovalueToCheck else {
-					continue valuefor
-				}
-				
-				if valueToCheck == "" || valueToCheck == " "{
-					continue valuefor
-				}
-				
-				switch operation{
-				case .contains:
-					if s.contains(valueToCheck){
-						return true
-					}
-					break
-				case .different:
-					
-					if s != valueToCheck{
-						return true
-					}
-					break
-				case .equal:
-					
-					if s == valueToCheck{
-						return true
-					}
-					break
-				}
-				
-			}
-		}
-		
-		return false
-	}
-	
 	private func parse(messange: String) -> String{
-		return messange.parsed(usingKeys: ["{executable}": self.ref!.pointee.actualExecutableName, "{drive}": self.ref!.pointee.disk.current.driveName])
+		return messange.parsed(usingKeys: ["{executable}": self.ref!.pointee.executableName, "{drive}": self.ref!.pointee.disk.current.driveName])
 	}
 	
 }

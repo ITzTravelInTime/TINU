@@ -20,10 +20,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import Cocoa
 import TINURecovery
 
-public struct SFSymbol: Hashable, Copying, Codable, Equatable{
+public struct SFSymbol: Hashable, Codable, Copying, Equatable{
 	
 	private let name: String
 	public var description: String? = nil
+	
+	@available(macOS 11.0, *) public static var defaultWeight: NSFont.Weight = .light
 	
 	public init(name: String, description: String? = nil){
 		self.name = name
@@ -101,13 +103,13 @@ public struct SFSymbol: Hashable, Copying, Codable, Equatable{
 	
 	public func image(accessibilityDescription: String? = nil) -> NSImage?{
 		if #available(macOS 11.0, *) {
-			return NSImage(systemSymbolName: self.name, accessibilityDescription: accessibilityDescription)?.withSymbolWeight(.light)
+			return NSImage(systemSymbolName: self.name, accessibilityDescription: accessibilityDescription)?.withSymbolWeight(Self.defaultWeight)
 		} else {
 			return nil
 		}
 	}
 	
-	public func justImage(accessibilityDescription: String? = nil) -> NSImage?{
+	public func imageWithSystemDefaultWeight(accessibilityDescription: String? = nil) -> NSImage?{
 		if #available(macOS 11.0, *) {
 			return NSImage(systemSymbolName: self.name, accessibilityDescription: accessibilityDescription)
 		} else {

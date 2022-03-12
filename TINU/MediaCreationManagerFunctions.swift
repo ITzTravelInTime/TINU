@@ -34,7 +34,7 @@ extension InstallMediaCreationManager{
 			***Trying to close conflicting processes
 			If those conflicting processes are running,
 			they may interfere with the success of
-			the \"\(self.ref!.pointee.actualExecutableName)\" operation
+			the \"\(self.ref!.pointee.executableName)\" operation
 			
 			""")
 		
@@ -57,8 +57,8 @@ extension InstallMediaCreationManager{
 			return false
 		}
 		
-		guard let successb = TaskKillManager.terminateProcessWithAsk(name: self.ref!.pointee.actualExecutableName) else{
-			log("***Failed to terminate conflicting process: \"" + self.ref!.pointee.actualExecutableName + "\" because the user denid to close it\n\n")
+		guard let successb = TaskKillManager.terminateProcessWithAsk(name: self.ref!.pointee.executableName) else{
+			log("***Failed to terminate conflicting process: \"" + self.ref!.pointee.executableName + "\" because the user denid to close it\n\n")
 			DispatchQueue.main.sync {
 				self.viewController.goBack()
 			}
@@ -66,10 +66,10 @@ extension InstallMediaCreationManager{
 		}
 		
 		if !successb{
-			log("***Failed to close conflicting processes \(self.ref!.pointee.actualExecutableName)!!!")
+			log("***Failed to close conflicting processes \(self.ref!.pointee.executableName)!!!")
 			DispatchQueue.main.sync {
 				//self.viewController.goToFinalScreen(title: "TINU failed to stop conflicting process \"\(sharedExecutableName)\"\nTry to restart the computer and try again", success: false)
-				self.viewController.goToFinalScreen(id: "finalScreenCFE", success: false, parseList: ["{process}" : self.ref!.pointee.actualExecutableName])
+				self.viewController.goToFinalScreen(id: "finalScreenCFE", success: false, parseList: ["{process}" : self.ref!.pointee.executableName])
 			}
 			return false
 		}
@@ -88,7 +88,7 @@ extension InstallMediaCreationManager{
 			Those volumes may be mounted images
 			from inside the macOS installer app
 			and may interfere with the success of
-			the \"\(self.ref!.pointee.actualExecutableName)\" operation
+			the \"\(self.ref!.pointee.executableName)\" operation
 			
 			""")
 		
@@ -274,7 +274,7 @@ extension InstallMediaCreationManager{
 				mainCMD.append("--nointeraction")
 			}
 			
-			exec = "\"\(process.app.path!)/Contents/Resources/\(process.executableName)\""
+			exec = "\"\(process.app.path!)/Contents/Resources/\(process.installerAppProcessExecutableName)\""
 			
 		}
 		
@@ -366,7 +366,7 @@ extension InstallMediaCreationManager{
 			mainCMD.append("--nointeraction")
 		}
 		
-		var exec = "\"\(self.ref!.pointee.app.path!)/Contents/Resources/\(self.ref!.pointee.executableName)\""
+		var exec = "\"\(self.ref!.pointee.app.path!)/Contents/Resources/\(self.ref!.pointee.installerAppProcessExecutableName)\""
 		
 		if CurrentUser.isRoot{
 			exec.removeFirst()

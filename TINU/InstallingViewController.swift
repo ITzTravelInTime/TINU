@@ -184,7 +184,7 @@ public class InstallingViewController: GenericViewController, ViewID{
 		//guard let stopped = (cvm.shared.process.status == .creation ? InstallMediaCreationManager.shared.stopWithAsk() : true ) else { return }
 		
 		if cvm.shared.maker == nil{
-			log("The " + cvm.shared.actualExecutableName + " process seems to be already closed")
+			log("The " + cvm.shared.executableName + " process seems to be already closed")
 			goBack()
 			return
 		}
@@ -196,8 +196,8 @@ public class InstallingViewController: GenericViewController, ViewID{
 			return
 		}
 		
-		log("Error while trying to close " + cvm.shared.actualExecutableName + " try to stop it from the termianl or from Activity monitor")
-		let list = ["{executable}" : cvm.shared.actualExecutableName]
+		log("Error while trying to close " + cvm.shared.executableName + " try to stop it from the termianl or from Activity monitor")
+		let list = ["{executable}" : cvm.shared.executableName]
 		//msgBoxWarning("Error while trying to exit from the process", "There was an error while trying to close the creation process: \n\nFailed to stop ${executable} process")
 		msgboxWithManager(self, name: "stopError", parseList: list)
 	}
@@ -229,7 +229,7 @@ public class InstallingViewController: GenericViewController, ViewID{
 	}
 	
 	public func setActivityLabelText(_ texta: String){
-		let text = TextManager.getViewString(context: self, stringID: texta)!.parsed(usingKeys: ["{executable}" : cvm.shared.executableName])
+		let text = TextManager.getViewString(context: self, stringID: texta)!.parsed(usingKeys: ["{executable}" : cvm.shared.installerAppProcessExecutableName])
 		self.activityLabel.stringValue = text
 		print("Set activity label text: \(text)")
 	}

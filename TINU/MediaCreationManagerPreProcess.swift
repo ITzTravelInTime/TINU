@@ -191,7 +191,7 @@ extension InstallMediaCreationManager{
 		
 		log("""
 				
-				Waiting for the \(self.ref!.pointee.actualExecutableName) executable to finish...
+				Waiting for the \(self.ref!.pointee.executableName) executable to finish...
 				
 				""")
 		

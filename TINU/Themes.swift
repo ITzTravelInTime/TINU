@@ -76,7 +76,7 @@ extension UIManager{
 				print("Shadows Old Icons theme will be used")
 			}
 			
-			
+			assert(ret != nil, "The theme can't be nil")
 			
 			return ret
 		}

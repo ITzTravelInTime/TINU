@@ -41,9 +41,9 @@ public class LogWindowController: NSWindowController, ViewID, NSSharingServicePi
 		
 		//Do not use the SFSymbols class for this
 		if #available(OSX 11.0, *) {
-			self.saveLogItem.image = SFSymbol(name: "tray.and.arrow.down").justImage()
-			self.shareLogItem.image = SFSymbol(name: "square.and.arrow.up").justImage()
-			self.copyLogItem.image = SFSymbol(name: "doc.on.clipboard").justImage()
+			self.saveLogItem.image = SFSymbol(name: "tray.and.arrow.down").imageWithSystemDefaultWeight()
+			self.shareLogItem.image = SFSymbol(name: "square.and.arrow.up").imageWithSystemDefaultWeight()
+			self.copyLogItem.image = SFSymbol(name: "doc.on.clipboard").imageWithSystemDefaultWeight()
 		} else {
 			self.saveLogItem.image = IconsManager.shared.internalDiskIcon.themedImage()
 			self.copyLogItem.image = NSImage(named: NSImage.multipleDocumentsName)

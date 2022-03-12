@@ -57,6 +57,9 @@ public class CreationProcess{
 	var app    : InstallerAppManager! = nil
 	var options: OptionsManager! = nil
 	
+	internal var storedInstallerAppExecutableName: String! = nil
+	internal var storedExecutableName: String! = nil
+	
 	func checkProcessReadySate(_ useDriveIcon: inout Bool) -> Bool {
 		
 		if let sa = app.path{
@@ -116,40 +119,42 @@ public class CreationProcess{
 		return true
 	}
 	
-	public var installMac: Bool = false
+	public var installMac: Bool = false{
+		didSet{
+			storedInstallerAppExecutableName = nil
+			storedExecutableName = nil
+		}
+	}
 
 	//this variable returns the name of the current executable used by the app
-	public var executableName: String{
-		/*
-			var res = "createinstallmedia"
-			if sharedInstallMac{
-				res = "startosinstall"
-			}
-			log(res)
-			return res
-		*/
-		
-		if installMac{
-			return "startosinstall"
+	public var installerAppProcessExecutableName: String{
+		if let stored = storedInstallerAppExecutableName{
+			return stored
 		}
 		
-		//TODO: add some optimized check (possibly with stuff like caching, maybe using the cache of the app variable) to know if the alternate executable exists
-		//only on yosemite use the dedicated executable provvided by the macOS 12+ installer app
+		if installMac{
+			storedInstallerAppExecutableName = "startosinstall"
+		}
+		
 		if #available(macOS 10.10, *){ if #available(macOS 10.11, *){ } else{
 			if app.info.supports(version: 17) ?? false{
-				return "createinstallmedia_yosemite"
+				storedInstallerAppExecutableName = "createinstallmedia_yosemite"
 			}
 		}}
 		
-		return "createinstallmedia"
+		storedInstallerAppExecutableName = storedInstallerAppExecutableName ?? "createinstallmedia"
+		
+		return storedInstallerAppExecutableName!
 	}
 	
-	public var actualExecutableName: String{
-		if app.current.status == .legacy{
-			return "asr"
+	public var executableName: String{
+		if let exec = storedExecutableName{
+			return exec
 		}
 		
-		return executableName
+		storedExecutableName = (app.current.status == .legacy) ? "asr" : installerAppProcessExecutableName
+		
+		return storedExecutableName!
 	}
 }
 

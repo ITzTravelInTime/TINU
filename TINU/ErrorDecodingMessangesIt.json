@@ -148,14 +148,13 @@
 		},
 		{
 			"isBack" : true,
-			"operation" : 0,
+			"operation" : 1,
 			"message" : "",
 			"stringsToCheck" : [
-				"execution error:",
-				"(-128)"
+				"-128"
 			],
 			"chackValues" : [
-				2
+				7
 			],
 			"printMessage" : "Apple script operation cancelled, going to previous screen",
 			"notError" : false

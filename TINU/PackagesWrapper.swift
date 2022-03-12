@@ -38,8 +38,11 @@ public final class SIPManager: SIP, ViewID {
 	private static let ref = SIPManager()
 	
 	public override class var simulatedStatus: SIP.SIPStatus?{
-		//TODO: Fix this
-		return TINU.simulateSIPStatus != nil ? ( TINU.simulateSIPStatus! ? 0 : 0x7f ) : nil
+		guard let simulate = TINU.simulateSIPStatus else{
+			return nil
+		}
+		
+		return simulate ? 0 : 0x7f
 	}
 	
 	public class func checkStatusAndLetTheUserKnow(){

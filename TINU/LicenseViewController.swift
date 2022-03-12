@@ -209,7 +209,7 @@ class LicenseViewController: ShadowViewController, ViewID {
 				
 				//license = Command.getOut(cmd: cmd) ?? ""
 				
-				let output = Command.run(cmd: app + "/Contents/Resources/" + cvm.shared.executableName, args: cmd)?.output
+				let output = Command.run(cmd: app + "/Contents/Resources/" + cvm.shared.installerAppProcessExecutableName, args: cmd)?.output
 				
 				//var license = ""
 				

@@ -124,9 +124,6 @@ class ChooseSideViewController: GenericViewController, ViewID {
 					
 					Alert.window = self.window
 					
-					//todo: localize this
-					//let alert = Alert(message: "TINU needs be re-opened using diagnostics mode!", description: "SIP (System Integrity Protection) is currently enabled, and it will prevent TINU from working (this is due to a problem introduced in Catalina).\n\nYou can avoid this by chosing to use the diagnostics mode with administrator privileges (because it avoids this issue by using the privileges provvided by the terminal).").adding(button: .init(text: "Use diagnostics mode", keyEquivalent: "\r")).adding(button: .init(text: "Continue anyway")).send().isFirstButton()
-					
 					let alert = dialogGenericWithManagerBool(self, name: "SIPDialog")
 					
 					if alert{
@@ -190,8 +187,8 @@ class ChooseSideViewController: GenericViewController, ViewID {
 			
 			var size = (self.view.frame.width - (spacing * (mcount + 1))) / mcount
 			
-			if size > 170{
-				size = 170
+			if size > 160{
+				size = 160
 				spacing = (self.view.frame.size.width - (size * mcount)) / (mcount + 1)
 			}
 			

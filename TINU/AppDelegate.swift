@@ -181,7 +181,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 			return
 		}
 			
-			let list = ["{executable}" : cvm.shared.executableName]
+			let list = ["{executable}" : cvm.shared.installerAppProcessExecutableName]
 			
 			//guard let s = InstallMediaCreationManager.shared.stop() else{
 		

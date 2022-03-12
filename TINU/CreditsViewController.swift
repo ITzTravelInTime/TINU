@@ -40,8 +40,6 @@ public class CreditsViewController: GenericViewController, ViewID {
 		
 		print("Setting up CrditsViewController")
 		
-		//TODO: use the bundle cpu arch support from the swiftcpdetect library
-		
 		versionLabel.stringValue = TextManager.getViewString(context: self, stringID: "version") + Bundle.main.version! + " (" + Bundle.main.build! + ") ( "
 		
 		for arch in SwiftCPUDetect.CpuArchitecture.currentExecutableArchitectures() {

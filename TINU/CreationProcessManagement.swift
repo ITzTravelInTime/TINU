@@ -22,7 +22,6 @@ import Command
 
 extension CreationProcess{
 	
-	//TODO: put this into it's own file
 	class Management {
 		
 		enum Status: UInt8, CaseIterable, Codable, Equatable{

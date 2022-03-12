@@ -25,7 +25,12 @@ extension CreationProcess{
 		//static let shared = InstallerAppManager()
 		
 		let ref: CreationProcess
-		public private(set) var info: InfoPlist
+		public private(set) var info: InfoPlist{
+			didSet{
+				ref.storedInstallerAppExecutableName = nil
+				ref.storedExecutableName = nil
+			}
+		}
 		
 		required init(reference: CreationProcess) {
 			ref = reference
@@ -35,7 +40,7 @@ extension CreationProcess{
 		public var neededFiles: [[String]]{
 			//the first element of the first of this array of arrays should always be executable to look for
 			//TODO: Maybe check for the base system, this search might be more difficoult
-			return [["/Contents/Resources/" + ref.executableName], ["/Contents/SharedSupport/InstallESD.dmg", "/Contents/SharedSupport/SharedSupport.dmg"],["/Contents/Info.plist"],["/Contents/SharedSupport"]]
+			return [["/Contents/Resources/" + ref.installerAppProcessExecutableName], ["/Contents/SharedSupport/InstallESD.dmg", "/Contents/SharedSupport/SharedSupport.dmg"],["/Contents/Info.plist"],["/Contents/SharedSupport"]]
 		}
 		
 		public var current: InstallerAppInfo!{
@@ -59,7 +64,7 @@ extension CreationProcess{
 		public var neededFilesNew: [NeededFilesKeys: [String]]{
 			//the first element of the first of this array of arrays should always be executable to look for
 			//TODO: Maybe check for the base system, this search might be more difficoult
-			return [.executable : ["/Contents/Resources/" + ref.executableName], .dmg : ["/Contents/SharedSupport/InstallESD.dmg", "/Contents/SharedSupport/SharedSupport.dmg"], .sharedSupport : ["/Contents/SharedSupport"], .infoPlist : ["/Contents/Info.plist"]]
+			return [.executable : ["/Contents/Resources/" + ref.installerAppProcessExecutableName], .dmg : ["/Contents/SharedSupport/InstallESD.dmg", "/Contents/SharedSupport/SharedSupport.dmg"], .sharedSupport : ["/Contents/SharedSupport"], .infoPlist : ["/Contents/Info.plist"]]
 		}
 		
 		public func validateNew(at _app: URL?) -> InstallerAppInfo?{
@@ -218,7 +223,7 @@ extension CreationProcess{
 					print(" The app is not valid because it lacks one of those required files/folders: ")
 					for d in c{
 						print("    \(d)")
-						if d.contains(ref.executableName){
+						if d.contains(ref.installerAppProcessExecutableName){
 							isCurrentExecutable.toggle()
 							break
 						}

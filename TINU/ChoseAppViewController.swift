@@ -139,7 +139,6 @@ class ChoseAppViewController: GenericViewController, ViewID {
 			let replist = ["{fileName}" : ((open.urls.first?.lastPathComponent != nil) ? ", \"\(open.urls.first!.lastPathComponent)\"," : "")]
 			
 			guard let capp = cvm.shared.app.validate(at: open.urls.first!) else {
-				//TODO: change this dialog to indicate generic opening erros
 				msgboxWithManager(self, name: "errorOpening")
 				return
 			}

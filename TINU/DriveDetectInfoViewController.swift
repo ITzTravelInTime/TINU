@@ -102,7 +102,7 @@ extension DriveDetectInfoViewController{
 		}else{
 			text.append("• TINU will detect only disk devices that are usable to create a bootable macOS installer.")	// again, no need to be redundant
 			
-			text.append("• Make sure that the chosen disk does not contain the partition from which you have booted the system and that it's not the internal SSD or hard disk of your Mac.")	// TODO: TINU could look into the ioregistry to see whether the chosen disk is internal or external, or simply run "diskutil list" and fetch the info from there.
+			text.append("• Make sure that the chosen disk does not contain the partition from which you have booted the system and that it's not the internal SSD or hard disk of your Mac.")
 			
 			text.append("• Make sure that the disk device (drive) or the partition you want to use is at least 8 GB. If your drive is big enough but the partition you want to use is not, you have to use Disk Utility to create a partition of at least 8 GB on that drive, or you have resize the partition you want to use.")
 		}
