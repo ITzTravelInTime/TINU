@@ -84,7 +84,7 @@ extension InstallMediaCreationManager{
 				
 			}else{
 				
-				log("\nOne or more errors detected during the execution of the advanced options, your bootable macOS installer will probably not work properly, so we sugegst you to restart the whole install media creation process and eventually to format the target drive using terminal or disk utility before using TINU, check the messages printed before this one for more details abut that erros\n")
+				log("\nOne or more errors detected during the execution of the advanced options, your bootable macOS installer will probably not work properly, so we suggest you to restart the whole install media creation process and eventually to format the target drive using terminal or disk utility before using TINU, check the messages printed before this one for more details abut that erros\n")
 				
 			}
 			
