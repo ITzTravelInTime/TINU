@@ -45,62 +45,16 @@ public class EFIPartitionMounterWindowController: NSWindowController, NSToolbarD
 		#endif
 	}
 	
-	
-	
 	override public func windowDidLoad() {
 		super.windowDidLoad()
         
 		toolBar.delegate = self
 		
-		/*
-        #if TINU
-        
-		self.window?.title += ": EFI partition mounter"
-        
-        #else
-        
-        
-        self.window?.title = "EFI partition mounter"
-        
-        //self.window = (NSStoryboard(name: "EFIPartitionMounterStoryboard", bundle: Bundle.main).instantiateController(withIdentifier: "EFIMounterWindow") as! NSWindowController).window
-        
-        #endif
-		*/
-		
-			//print(toolBar.items)
-		
-		/*
-		#if TINU
-		menuBarModeToolBarItem.isEnabled = false
-		for i in 0..<toolBar.items.count{
-			if toolBar.items[i].itemIdentifier == menuBarModeToolBarItem.itemIdentifier{
-				toolBar.removeItem(at: i)
-			}
-		}
-		#endif
-		*/
-		
 		guard let controller = self.window?.contentViewController as? EFIPartitionMounterViewController else { return }
 		self.window?.title = EFIPMTextManager.getViewString(context: controller, stringID: "title")
 		self.reloadToolBarItem.label = EFIPMTextManager.getViewString(context: controller, stringID: "refreshButton")
 		
-		/*
-		//TODO: Use Tcon for this
-		if controller.barMode{
-			menuBarModeToolBarItem.label = EFIPMTextManager.getViewString(context: controller, stringID: "windowMode")
-			if #available(macOS 11.0, *) {
-				menuBarModeToolBarItem.image = NSImage(systemSymbolName: "menubar.arrow.down.rectangle", accessibilityDescription: nil)
-			} else {
-				menuBarModeToolBarItem.image = NSImage(named: "menubar.arrow.down.rectangle")
-			}
-		}else{
-			menuBarModeToolBarItem.label = EFIPMTextManager.getViewString(context: controller, stringID: "toolbarMode")
-			if #available(macOS 11.0, *) {
-				menuBarModeToolBarItem.image = NSImage(systemSymbolName: "menubar.arrow.up.rectangle", accessibilityDescription: nil)
-			} else {
-				menuBarModeToolBarItem.image = NSImage(named: "menubar.arrow.up.rectangle")
-			}
-		}*/
+		self.window?.isFullScreenEnaled = false
 		
 		DispatchQueue.global(qos: .userInteractive).async {
 			var ok = false

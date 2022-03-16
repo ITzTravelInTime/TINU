@@ -122,21 +122,38 @@ extension NSWindow{
             self.toggleFullScreen(true)
         }
     }
-    
+	
     public var isFullScreenEnaled: Bool{
         set{
-            if newValue{
-                self.styleMask.insert(.resizable)
-                self.standardWindowButton(.zoomButton)?.isEnabled = true
-            }else{
-                self.styleMask.remove([.resizable])
-                self.standardWindowButton(.zoomButton)?.isEnabled = false
-            }
+            canFullScreen = newValue
+			isZoomButtonEnabled = newValue
         }
         get{
-            return self.styleMask.contains(.resizable) && (self.standardWindowButton(.zoomButton)?.isEnabled)!
+            return canFullScreen && isZoomButtonEnabled
         }
     }
+	
+	public var canFullScreen: Bool{
+		set{
+			if newValue{
+				self.styleMask.insert(.resizable)
+			}else{
+				self.styleMask.remove(.resizable)
+			}
+		}
+		get{
+			return self.styleMask.contains(.resizable)
+		}
+	}
+	
+	public var isZoomButtonEnabled: Bool{
+		set{
+			self.standardWindowButton(.zoomButton)?.isEnabled = newValue
+		}
+		get{
+			return self.standardWindowButton(.zoomButton)?.isEnabled ?? false
+		}
+	}
     
     public var isMiniaturizeEnaled: Bool{
         set{

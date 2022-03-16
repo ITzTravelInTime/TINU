@@ -41,6 +41,14 @@ public class InstallingViewController: GenericViewController, ViewID{
 	
 	@IBOutlet weak var progress: NSProgressIndicator!
 	
+	override public func viewWillDisappear() {
+		SPM.shared.cancelSleepPrevention()
+	}
+	
+	deinit{
+		SPM.shared.cancelSleepPrevention()
+	}
+	
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do view setup here.
@@ -50,6 +58,7 @@ public class InstallingViewController: GenericViewController, ViewID{
 		self.cancelButton.title = TextManager.getViewString(context: self, stringID: "cancelButton")
         self.showLogButton.title = TextManager.getViewString(context: self, stringID: "showLogButton")
         self.descriptionField.stringValue = TextManager.getViewString(context: self, stringID: "descriptionField")
+		
 		self.descriptionField.isHidden = true
 		
 		self.showTitleLabel()
@@ -85,6 +94,10 @@ public class InstallingViewController: GenericViewController, ViewID{
 		sharedSetSelectedCreationUI(appName: &appName, appImage: &appImage, driveName: &driveName, driveImage: &driveImage, manager: cvm.shared, useDriveName: cvm.shared.disk.current.isDrive || cvm.shared.disk.shouldErase)
 		
 		print("process window opened")
+		
+		if !SPM.shared.activateSleepPrevention(){
+			goBack()
+		}
 		
 		DispatchQueue.global(qos: .background).async{
 			var drive = false
@@ -141,6 +154,8 @@ public class InstallingViewController: GenericViewController, ViewID{
 		//InstallMediaCreationManager.shared.makeProcessNotInExecution(withResult: success)
 		cvm.shared.maker?.makeProcessNotInExecution(withResult: success)
 		
+		SPM.shared.cancelSleepPrevention()
+		
 		self.swapCurrentViewController("MainDone")
 	}
 	
@@ -168,6 +183,9 @@ public class InstallingViewController: GenericViewController, ViewID{
 		restoreWindow()
 		
 		cvm.shared.process.status = .configuration
+		
+		SPM.shared.cancelSleepPrevention()
+		
 		self.swapCurrentViewController("Confirm")
 	}
 	

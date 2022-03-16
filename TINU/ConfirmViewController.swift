@@ -91,14 +91,8 @@ class ConfirmViewController: GenericViewController, ViewID {
 	func setUI(){
 		var drive = false
 		
-		var state = false
-		
 		//just to simulate a failure to get data for the drive and the app
-		if !simulateConfirmGetDataFail{
-			state = !cvm.shared.checkProcessReadySate(&drive)
-		}else{
-			state = true
-		}
+		let state = (!simulateConfirmGetDataFail) ? !cvm.shared.checkProcessReadySate(&drive) : true
 		
 		fail = state
 		

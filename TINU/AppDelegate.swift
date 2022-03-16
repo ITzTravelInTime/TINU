@@ -180,25 +180,25 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 		if cvm.shared.process.status != .creation || cvm.shared.maker == nil{
 			return
 		}
-			
-			let list = ["{executable}" : cvm.shared.installerAppProcessExecutableName]
-			
-			//guard let s = InstallMediaCreationManager.shared.stop() else{
 		
-			guard let s = cvm.shared.maker?.stop() else{
-				//msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
-				
-				msgboxWithManager(self, name: "stopFailed", parseList: list)
-				log("Quit error 2")
-				return
-			}
+		let list = ["{executable}" : cvm.shared.installerAppProcessExecutableName]
+		
+		//guard let s = InstallMediaCreationManager.shared.stop() else{
+		
+		guard let s = cvm.shared.maker?.stop() else{
+			//msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
 			
-			if !s{
-				//msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
-					
-				msgboxWithManager(self, name: "stopFailed", parseList: list)
-				log("Quit error 1")
-			}
+			msgboxWithManager(self, name: "stopFailed", parseList: list)
+			log("Quit error 2")
+			return
+		}
+		
+		if !s{
+			//msgBoxWarning("Error while trying to quit", "There was an error while trying to qui from the app: \n\nFailed to stop " + sharedExecutableName + " process")
+			
+			msgboxWithManager(self, name: "stopFailed", parseList: list)
+			log("Quit error 1")
+		}
     }
     
     @IBAction func installMacActivate(_ sender: Any) {

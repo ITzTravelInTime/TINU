@@ -33,19 +33,22 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 - Lion/mountain lion installer creation (WIP)
 
-- Installer to dmg creation (check free space on the computer first, use hdiutil, modifiy the requirements screen for this, avoid the drive select screen)
-
 - always display cd/dvd drives as unusable in the drive select screen 
 
 - concurrent multithreaded installer app scanning.
 
-- installer app download list with remote pictures (and so remove those from the built in assets).
+- use appropriate sfsymbols with custom colors for drive ok/not ok badge
+
+- check for rosetta on apple silicon
+
+- Downloads with top bar like efi partition mounter
+
+# TO DO but with less priority:
 
 - dmg/iso to usb drive for compete with rufus.
 
-- Having 3 images, one next to the other in a chosebutton for more descriptive icons
+- Installer to dmg creation (check free space on the computer first, use hdiutil, modifiy the requirements screen for this, avoid the drive select screen)
 
-# TO DO but with less priority:
 - right to left languages ui support 
 
 - divide language files in folders one for each language rather than re-naming them according to the language to use

@@ -121,6 +121,7 @@
 		DDD038EB1FB7366400D22695 /* ChoseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDD038EA1FB7366400D22695 /* ChoseButton.swift */; };
 		DDDCF67C1F63330B00CF7FE4 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */; };
 		DDDF14641F6730DA00953634 /* SharedVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDF14631F6730DA00953634 /* SharedVariables.swift */; };
+		DDE350C127E1F2A800FDA6B6 /* SleepPreventionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE350C027E1F2A800FDA6B6 /* SleepPreventionManager.swift */; };
 		DDF5ABEC273C0F8A00707FAC /* UpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF5ABEB273C0F8A00707FAC /* UpdateManager.swift */; };
 		DDF9A5692159A05800389F78 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF9A5682159A05800389F78 /* ShadowView.swift */; };
 /* End PBXBuildFile section */
@@ -283,6 +284,7 @@
 		DDD038EA1FB7366400D22695 /* ChoseButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoseButton.swift; sourceTree = "<group>"; };
 		DDDCF67B1F63330B00CF7FE4 /* CreditsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsViewController.swift; sourceTree = "<group>"; };
 		DDDF14631F6730DA00953634 /* SharedVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedVariables.swift; sourceTree = "<group>"; };
+		DDE350C027E1F2A800FDA6B6 /* SleepPreventionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepPreventionManager.swift; sourceTree = "<group>"; };
 		DDF5ABEB273C0F8A00707FAC /* UpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateManager.swift; sourceTree = "<group>"; };
 		DDF9A5682159A05800389F78 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -349,6 +351,7 @@
 				C6F68E8A20D0277B00F7A0F4 /* PackagesWrapper.swift */,
 				C63F035F24E3D19300F950B4 /* ProgressBarValuesManager.swift */,
 				C6636D362749D680008B1C07 /* RemoteReourcesURLsManager.swift */,
+				DDE350C027E1F2A800FDA6B6 /* SleepPreventionManager.swift */,
 				C63DD0272265D921007944A5 /* TaskKillManager.swift */,
 				C60C40B920CCA24000258574 /* TextsManager.swift */,
 				C63885792670D3BA00A6D1BA /* Themes.swift */,
@@ -968,6 +971,7 @@
 				C647B39F211CF2C40024B9A1 /* EFIPartitionMounterModel.swift in Sources */,
 				C6B74D0A20B8E76A001CAD4D /* EFIFolderReplacementManager.swift in Sources */,
 				C6B74D0C20BA2A79001CAD4D /* EFIPartition.swift in Sources */,
+				DDE350C127E1F2A800FDA6B6 /* SleepPreventionManager.swift in Sources */,
 				DDA7FB621F96B13F0029F4F2 /* GenericWindowController.swift in Sources */,
 				C638857A2670D3BA00A6D1BA /* Themes.swift in Sources */,
 				C698B47E204CDAE5007B3CD8 /* MacrosReference.swift in Sources */,
@@ -1103,7 +1107,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Osize";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 			};
@@ -1161,7 +1165,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
-				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Osize";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 			};
@@ -1200,6 +1204,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG useEFIReplacement TINU sudoStartup";
+				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = on;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1241,9 +1246,10 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "useEFIReplacement TINU sudoStartup";
+				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = on;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 			};

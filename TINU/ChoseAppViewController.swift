@@ -84,28 +84,29 @@ class ChoseAppViewController: GenericViewController, ViewID {
     }
     
     @IBAction func next(_ sender: Any) {
-        if !empty || opened {
-            /*if sharedInstallMac{
-             openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
-             }else{*/
+        if !(!empty || opened) {
+			NSApplication.shared.terminate(self)
+			return
+		}
+		
+		/*if sharedInstallMac{
+		 openSubstituteWindow(windowStoryboardID: "Confirm", sender: sender)
+		 }else{*/
+		
+		
+		if cvm.shared.installMac{
+			showProcessLicense = true
+			swapCurrentViewController("License")
+		}else{
 			
-			
-			if cvm.shared.installMac{
-				showProcessLicense = true
-				swapCurrentViewController("License")
-			}else{
-				
-				cvm.shared.options.check()
-				let _ = self.swapCurrentViewController("Confirm")
-			}
-			
-            //openSubstituteWindow(windowStoryboardID: "Customize", sender: sender)
-            //}
-			
-        }else{
-            NSApplication.shared.terminate(self)
-        }
-    }
+			cvm.shared.options.check()
+			let _ = self.swapCurrentViewController("Confirm")
+		}
+		
+		//openSubstituteWindow(windowStoryboardID: "Customize", sender: sender)
+		//}
+		
+	}
 	
     @IBAction func refreshPressed(_ sender: Any) {
         //loadApps()
@@ -144,29 +145,29 @@ class ChoseAppViewController: GenericViewController, ViewID {
 			}
 			
 			switch capp.status{
-				case .usable, .legacy:
-					if capp.url != nil {
-						cvm.shared.app.current = capp
-						
-						self.opened = true
-						
-						self.next(self)
-					}else{
-						msgboxWithManager(self, name: "invalidAliasDialog", parseList: replist)
-					}
-					return
-				case .broken, .notInstaller:
-					msgboxWithManager(self, name: "invalidAppDialog", parseList: replist)
-					return
-				case .tooBig:
-					msgboxWithManager(self, name: "invalidAppDialogSize", parseList: replist)
-					return
-				case .tooLittle:
-					msgboxWithManager(self, name: "invalidAppDialogLSize", parseList: replist)
-					return
-				case .badAlias:
+			case .usable, .legacy:
+				if capp.url != nil {
+					cvm.shared.app.current = capp
+					
+					self.opened = true
+					
+					self.next(self)
+				}else{
 					msgboxWithManager(self, name: "invalidAliasDialog", parseList: replist)
-					return
+				}
+				return
+			case .broken, .notInstaller:
+				msgboxWithManager(self, name: "invalidAppDialog", parseList: replist)
+				return
+			case .tooBig:
+				msgboxWithManager(self, name: "invalidAppDialogSize", parseList: replist)
+				return
+			case .tooLittle:
+				msgboxWithManager(self, name: "invalidAppDialogLSize", parseList: replist)
+				return
+			case .badAlias:
+				msgboxWithManager(self, name: "invalidAliasDialog", parseList: replist)
+				return
 			case .unsupported:
 				msgboxWithManager(self, name: "invalidAppDialog", parseList: replist)
 				return

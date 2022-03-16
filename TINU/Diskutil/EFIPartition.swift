@@ -98,9 +98,9 @@ public class EFIPartition: Codable, Equatable, Hashable, RawRepresentable{
 			if !p.unmount(){
 				log("      Unmounting EFI partition \(p.rawValue) failed!!!")
 				return false
-			}else{
-				log("      Unmounting EFI partition \(p.rawValue) was successfoul")
 			}
+			
+			log("      Unmounting EFI partition \(p.rawValue) was successfoul")
 		}
 		
 		log("All EFI partitions successfully unmounted")

@@ -61,31 +61,30 @@ public final class TaskKillManager: ViewID{
 				log("Provvided PID for \"\(name)\" is not a valid integer")
 			}
 			
-			
-			if recalculate {
-				
-				log("Provvided PID for \"\(name)\" is not usable")
-				
-				if maxCicles > 0{
-					maxCicles -= 1
-				}else{
-					log("Can't get a valid PID for process \"" + name + "\"")
-					return true
-				}
-				
-				log("Recalculating provvided PID for \"\(name)\"...")
-				if let npid = getPid(name: name){
-					cpid = npid
-					log("Provvided PID for \"\(name)\" recalculated and changed to \"\(cpid!)\"")
-				}else{
-					log("Process \"" + name + "\" is not in execution")
-					return nil
-				}
-				
-			}else{
+			if !recalculate{
 				log("Provvided PID for \"\(name)\" is correct")
 				pid = cpid
+				continue
 			}
+			
+			log("Provvided PID for \"\(name)\" is not usable")
+			
+			if maxCicles > 0{
+				maxCicles -= 1
+			}else{
+				log("Can't get a valid PID for process \"" + name + "\"")
+				return true
+			}
+			
+			log("Recalculating provvided PID for \"\(name)\"...")
+			if let npid = getPid(name: name){
+				cpid = npid
+				log("Provvided PID for \"\(name)\" recalculated and changed to \"\(cpid!)\"")
+			}else{
+				log("Process \"" + name + "\" is not in execution")
+				return nil
+			}
+			
 		}
 		
 		return recalculate
