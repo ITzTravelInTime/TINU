@@ -98,6 +98,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 			}
         }
 		
+		SPM.shared.cancelSleepPrevention()
         return NSApplication.TerminateReply.terminateNow
     }
     
@@ -207,26 +208,30 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     
     public func swichMode(isInstall: Bool){
 		
-		if !(cvm.shared.process.status.isBusy()){
-			
-			cvm.shared.installMac = isInstall
-			/*
-            if sharedInstallMac{
-                InstallMacOSItem.title = "Use TINU to create a bootable macOS installer"
-            }else{
-                InstallMacOSItem.title = "Use TINU to install macOS"
-            }*/
-			
-			InstallMacOSItem.title = TextManager.getViewString(context: self, stringID: "switchText")
-			
-			UIManager.shared.window.contentViewController?.swapCurrentViewController("Info")
-			
-            //restoreOtherOptions()
-            
-            //eraseReplacementFilesData()
-			
-			cvm.shared.disk.current = nil
-        }
+		if (cvm.shared.process.status.isBusy()){
+			return
+		}
+		
+		SPM.shared.cancelSleepPrevention()
+		
+		cvm.shared.installMac = isInstall
+		
+		/*
+		 if sharedInstallMac{
+		 InstallMacOSItem.title = "Use TINU to create a bootable macOS installer"
+		 }else{
+		 InstallMacOSItem.title = "Use TINU to install macOS"
+		 }*/
+		
+		InstallMacOSItem.title = TextManager.getViewString(context: self, stringID: "switchText")
+		
+		UIManager.shared.window.contentViewController?.swapCurrentViewController("Info")
+		
+		//restoreOtherOptions()
+		
+		//eraseReplacementFilesData()
+		
+		cvm.shared.disk.current = nil
 		
     }
     

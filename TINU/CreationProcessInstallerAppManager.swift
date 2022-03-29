@@ -24,7 +24,15 @@ extension CreationProcess{
 		
 		//static let shared = InstallerAppManager()
 		
+		public enum NeededFilesKeys: UInt8, Codable, Equatable{
+			case executable = 0
+			case dmg
+			case infoPlist
+			case sharedSupport
+		}
+		
 		let ref: CreationProcess
+		
 		public private(set) var info: InfoPlist{
 			didSet{
 				ref.storedInstallerAppExecutableName = nil
@@ -37,10 +45,20 @@ extension CreationProcess{
 			info = InfoPlistProcess(reference: reference)
 		}
 		
-		public var neededFiles: [[String]]{
+		private var neededFiles: [[String]]{
 			//the first element of the first of this array of arrays should always be executable to look for
 			//TODO: Maybe check for the base system, this search might be more difficoult
 			return [["/Contents/Resources/" + ref.installerAppProcessExecutableName], ["/Contents/SharedSupport/InstallESD.dmg", "/Contents/SharedSupport/SharedSupport.dmg"],["/Contents/Info.plist"],["/Contents/SharedSupport"]]
+		}
+		
+		private var neededFilesNew: [NeededFilesKeys: [String]]{
+			//the first element of the first of this array of arrays should always be executable to look for
+			//TODO: Maybe check for the base system, this search might be more difficoult
+			return [.executable : ["/Contents/Resources/" + ref.installerAppProcessExecutableName], .dmg : ["/Contents/SharedSupport/InstallESD.dmg", "/Contents/SharedSupport/SharedSupport.dmg"], .sharedSupport : ["/Contents/SharedSupport"], .infoPlist : ["/Contents/Info.plist"]]
+		}
+		
+		private var folderNamesBlackList: [String]{
+			return ["home", "net", "usr", "bin", "sbin", "etc", "var", "temp", "opt", "dev", "tmp", "etc", "cores", "Volumes", "Network", "Library", "System" ]
 		}
 		
 		public var current: InstallerAppInfo!{
@@ -54,17 +72,8 @@ extension CreationProcess{
 			return current?.url?.path
 		}
 		
-		public enum NeededFilesKeys: UInt8, Codable, Equatable{
-			case executable = 0
-			case dmg
-			case infoPlist
-			case sharedSupport
-		}
-		
-		public var neededFilesNew: [NeededFilesKeys: [String]]{
-			//the first element of the first of this array of arrays should always be executable to look for
-			//TODO: Maybe check for the base system, this search might be more difficoult
-			return [.executable : ["/Contents/Resources/" + ref.installerAppProcessExecutableName], .dmg : ["/Contents/SharedSupport/InstallESD.dmg", "/Contents/SharedSupport/SharedSupport.dmg"], .sharedSupport : ["/Contents/SharedSupport"], .infoPlist : ["/Contents/Info.plist"]]
+		public func defaultValidate(at app: URL?) -> InstallerAppInfo?{
+			return validateNew(at: app)
 		}
 		
 		public func validateNew(at _app: URL?) -> InstallerAppInfo?{
@@ -78,6 +87,7 @@ extension CreationProcess{
 			let manager = FileManager.default
 			
 			var tmpURL: URL?
+			
 			if let isAlias = FileAliasManager.process(app, resolvedURL: &tmpURL){
 				if isAlias{
 					app = tmpURL!
@@ -128,7 +138,13 @@ extension CreationProcess{
 				
 				let info = InfoPlist(appPath: app.path )
 				
-				if info.goesUpTo(version: 10.9) && !ref.installMac{
+				guard let isLegacyVersion = info.goesUpTo(version: 10.9) else{
+					ret.status = .error
+					print("    The app version detection error")
+					return ret
+				}
+				
+				if isLegacyVersion && !ref.installMac{
 					ret.status = .legacy
 					print("    The app is a legacy app")
 				}else{
@@ -136,16 +152,17 @@ extension CreationProcess{
 					print("    The app is an unsupported app")
 					return ret
 				}
-				
 			}
 			
 			for i in info{
-				if i.value == false{
-					if (i.key != .executable && ret.status == .legacy) || (i.key == .executable && ret.status != .legacy){
-						print("  The app is damaged")
-						ret.status = .broken
-						return ret
-					}
+				if i.value != false{
+					continue
+				}
+				
+				if (i.key != .executable && ret.status == .legacy) || (i.key == .executable && ret.status != .legacy){
+					print("  The app is damaged")
+					ret.status = .broken
+					return ret
 				}
 			}
 			
@@ -233,7 +250,6 @@ extension CreationProcess{
 						isCurrentExecutable.toggle()
 					}
 					
-					//break
 				}
 			}
 			
@@ -330,7 +346,15 @@ extension CreationProcess{
 				do{
 						
 					for content in (try fm.contentsOfDirectory(at: p, includingPropertiesForKeys: nil, options: []).filter{ fm.directoryExistsAtPath($0.path) }){
+						
 						print("    " + content.path)
+						
+						let ext = content.pathExtension, lastComp = content.lastPathComponent
+						
+						if ext == "app" || lastComp.starts(with: ".") || self.folderNamesBlackList.contains(lastComp){
+							continue
+						}
+						
 						foldersURLS.append(content)
 					}
 						
@@ -341,6 +365,8 @@ extension CreationProcess{
 			}
 			
 			var ret = [InstallerAppInfo]()
+			
+			foldersURLS.removeDuplicates()
 			
 			for dir in foldersURLS{
 				
@@ -367,14 +393,14 @@ extension CreationProcess{
 					continue
 				}
 				
+				let dsk = ref.disk?.path ?? ""
+				
 				appfor: for appURL in appURLs {
 					
-					if let dsk = ref.disk?.path{
-						if !dsk.isEmpty{
-							if appURL.path.starts(with: (dsk)){
-								print("    Skipping \(appURL.path) because it belongs to the chosen drive")
-								continue
-							}
+					if !dsk.isEmpty{
+						if appURL.path.starts(with: dsk){
+							print("    Skipping \(appURL.path) because it belongs to the chosen drive")
+							continue
 						}
 					}
 					
@@ -385,7 +411,7 @@ extension CreationProcess{
 					}
 					*/
 					
-					guard let capp = self.validateNew(at: appURL) else {
+					guard let capp = self.defaultValidate(at: appURL) else {
 						print("    Skipping \(appURL.path) because it can't be validated")
 						continue
 					}

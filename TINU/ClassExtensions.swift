@@ -506,3 +506,20 @@ extension NSImageView {
 	}
 }
 
+extension Array where Element: Hashable{
+	func removingDuplicates() -> Self{
+		var ret = [Element]()
+		
+		for i in self{
+			if !ret.contains(i){
+				ret.append(i)
+			}
+		}
+		
+		return ret
+	}
+	
+	mutating func removeDuplicates(){
+		self = self.removingDuplicates()
+	}
+}
