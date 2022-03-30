@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1955,7 +1955,7 @@ Gw
                                 <toolbarItem implicitItemIdentifier="FD0C7701-C2F5-4702-9A01-ABCBC134D1F6" label="Share" paletteLabel="Share" image="NSShareTemplate" sizingBehavior="auto" id="zgF-8l-bYF">
                                     <nil key="toolTip"/>
                                     <button key="view" verticalHuggingPriority="750" id="4JQ-le-Uo9">
-                                        <rect key="frame" x="6" y="14" width="27" height="23"/>
+                                        <rect key="frame" x="5" y="14" width="28" height="23"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="NSShareTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UqS-Le-FBu">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -2289,13 +2289,21 @@ Gw
         <scene sceneID="Jwu-ci-4cB">
             <objects>
                 <windowController storyboardIdentifier="DownloadApp" id="VTe-PZ-3Hj" customClass="DownloadAppWindowController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="TINU: Download a macOS installer app from the App Store" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="HOO-gR-4yR">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
+                    <window key="window" title="TINU: Download a macOS installer app from the App Store" separatorStyle="shadow" autorecalculatesKeyViewLoop="NO" restorable="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="HOO-gR-4yR">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="245" y="310" width="620" height="400"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1050"/>
                         <value key="minSize" type="size" width="620" height="300"/>
-                        <value key="maxSize" type="size" width="620" height="10000"/>
+                        <value key="maxSize" type="size" width="620" height="100000"/>
+                        <toolbar key="toolbar" implicitIdentifier="96740EC2-6111-4F81-9CBE-D2F7A9B50952" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="dfF-M6-qzL">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="H0j-4v-P5o"/>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="H0j-4v-P5o"/>
+                            </defaultToolbarItems>
+                        </toolbar>
                         <connections>
                             <outlet property="delegate" destination="VTe-PZ-3Hj" id="CfV-lF-k8e"/>
                         </connections>
@@ -2310,7 +2318,7 @@ Gw
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="QVO-av-bhQ"/>
+        <segue reference="fLT-cJ-H3F"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="AppIcon" width="256" height="256"/>

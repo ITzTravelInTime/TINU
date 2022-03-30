@@ -36,11 +36,13 @@ public class DriveDetectInfoWindowController: GenericWindowController {
 	
 }
 
-public class DownloadAppWindowController: GenericWindowController {
+public class DownloadAppWindowController: NSWindowController {
 	
 	override public func windowDidLoad() {
 		super.windowDidLoad()
-		self.window?.title += ": Download a macOS installer app from the App Store"
+		
+		self.window?.isFullScreenEnaled = true
+		self.window?.collectionBehavior.insert(.fullScreenNone)
 	}
 	
 	convenience init() {

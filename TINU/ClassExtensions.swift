@@ -475,29 +475,72 @@ extension Date {
 
 }
 
-extension NSImageView {
-	func downloaded(from url: URL, scaling: NSImageScaling = .scaleProportionallyUpOrDown) {
+extension NSImage{
+	convenience init?(from url: URL) {
 		
 		if Recovery.status{
-			return
+			return nil
 		}
 		
 		if !Reachability.status{
-			return
+			return nil
 		}
 		
+		var data: Data?
+		var response: URLResponse?
+		var error: Error?
+
+		let semaphore = DispatchSemaphore(value: 0)
+
+		let dataTask = URLSession.shared.dataTask(with: URLRequest(url: url)) {
+			data = $0
+			response = $1
+			error = $2
+
+			semaphore.signal()
+		}
+		
+		dataTask.resume()
+
+		_ = semaphore.wait(timeout: .distantFuture)
+		
+		if let e = error {
+			print("Error while getting the data from the stored link: \(e.localizedDescription)")
+			return nil
+		}
+		
+		guard let safeResponse = response, (safeResponse.mimeType?.hasPrefix("image") ?? false) else{
+			print("Invalid or missing url request response")
+			return nil
+		}
+		
+		guard let safeData = data else{
+			print("Didn't get any remote data!")
+			return nil
+		}
+		
+		self.init(data: safeData)
+	}
+	
+	convenience init?(from link: String) {
+		guard let url = URL(string: link) else { return nil }
+		
+		self.init(from: url)
+	}
+}
+
+extension NSImageView {
+	func downloaded(from url: URL, scaling: NSImageScaling = .scaleProportionallyUpOrDown) {
 		self.imageScaling = scaling
-		URLSession.shared.dataTask(with: url) { data, response, error in
-			guard
-				let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-				let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-				let data = data, error == nil,
-				let image = NSImage(data: data)
-				else { return }
-			DispatchQueue.main.async() { [weak self] in
-				self?.image = image
+		DispatchQueue.global(qos: .userInteractive).async {
+			let image = NSImage(from: url)
+			
+			DispatchQueue.main.async {
+				self.image = image
 			}
-		}.resume()
+		}
+		
+		
 	}
 	
 	func downloaded(from link: String, scaling: NSImageScaling = .scaleProportionallyUpOrDown) {

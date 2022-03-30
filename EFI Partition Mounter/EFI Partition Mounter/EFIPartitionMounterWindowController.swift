@@ -54,7 +54,8 @@ public class EFIPartitionMounterWindowController: NSWindowController, NSToolbarD
 		self.window?.title = EFIPMTextManager.getViewString(context: controller, stringID: "title")
 		self.reloadToolBarItem.label = EFIPMTextManager.getViewString(context: controller, stringID: "refreshButton")
 		
-		self.window?.isFullScreenEnaled = false
+		self.window?.isFullScreenEnaled = true
+		self.window?.collectionBehavior.insert(.fullScreenNone)
 		
 		DispatchQueue.global(qos: .userInteractive).async {
 			var ok = false

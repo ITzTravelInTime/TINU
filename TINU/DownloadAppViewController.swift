@@ -68,8 +68,6 @@ public class DownloadAppViewController: ShadowViewController, ViewID {
 		
 		self.showTitleLabel()
 		
-		self.setShadowViewsTopBottomOnly(respectTo: scroller, topBottomViewsShadowRadius: 5)
-		
 		setOtherViews(respectTo: scroller)
 		
 		self.scroller.hasHorizontalScroller = false
@@ -98,6 +96,22 @@ public class DownloadAppViewController: ShadowViewController, ViewID {
 			}
 		}
 		
+	}
+	
+	override public func viewWillAppear() {
+		super.viewWillAppear()
+		
+		if self.window.isSheet{
+			self.setShadowViewsTopBottomOnly(respectTo: scroller, topBottomViewsShadowRadius: 5)
+			return
+		}
+		
+		self.closeButton.isHidden = true
+		self.scroller.frame.size.height = self.view.frame.size.height - self.copyright.frame.size.height
+		self.scroller.frame.origin.y = self.copyright.frame.size.height
+		
+		self.window.title = self.titleLabel.stringValue
+		self.hideTitleLabel()
 	}
 	
 	/*

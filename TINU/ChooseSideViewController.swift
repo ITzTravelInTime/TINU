@@ -166,19 +166,14 @@ class ChooseSideViewController: GenericViewController, ViewID {
 			}
 			
 			self.createUSBButton?.cImage.image = Icon(path: nil, symbol: SFSymbol(name: "externaldrive.badge.plus"), imageName: !look.isRecovery() ? "drive" : nil, alternative: IconsManager.shared.removableDiskIcon.themedImage()).themedImage()
-			
 			self.installButton?.cImage.image = Icon(path: nil, symbol: SFSymbol(name: "desktopcomputer"), imageName: NSImage.computerName).themedImage()
-			
 			self.efiButton?.cImage.image = Icon(path: nil, symbol: SFSymbol(name: "tray"), imageName: "EFIIcon").themedImage()
-			
 			self.appDownloadButton?.cImage.image = Icon(path: nil, symbol: SFSymbol(name: "square.and.arrow.down"), imageName: "InstallApp").themedImage()
 			
+			
 			self.createUSBButton?.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstaller")//"Create a bootable\nmacOS installer"
-			
 			self.installButton?.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openInstallation")//"Install macOS"
-			
 			self.efiButton?.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openEFIMounter")//"Use \nEFI Partition Mounter"
-			
 			self.appDownloadButton?.cTitle.stringValue = TextManager.getViewString(context: self, stringID: "openAppDownloads")
 			
 			var spacing: CGFloat = 22
