@@ -72,11 +72,11 @@ extension CreationProcess{
 			return current?.url?.path
 		}
 		
-		public func defaultValidate(at app: URL?) -> InstallerAppInfo?{
+		public func validate(at app: URL?) -> InstallerAppInfo?{
 			return validateNew(at: app)
 		}
 		
-		public func validateNew(at _app: URL?) -> InstallerAppInfo?{
+		private func validateNew(at _app: URL?) -> InstallerAppInfo?{
 			guard var app = _app else { return nil }
 			if ref.disk.current == nil { return nil }
 			
@@ -189,7 +189,7 @@ extension CreationProcess{
 			return ret
 		}
 		
-		public func validate(at _app: URL?) -> InstallerAppInfo?{
+		private func validateOld(at _app: URL?) -> InstallerAppInfo?{
 			
 			var ret = InstallerAppInfo(status: .usable, size: 0, url: nil)
 			
@@ -411,11 +411,10 @@ extension CreationProcess{
 					}
 					*/
 					
-					guard let capp = self.defaultValidate(at: appURL) else {
+					guard let capp = self.validate(at: appURL) else {
 						print("    Skipping \(appURL.path) because it can't be validated")
 						continue
 					}
-					
 					
 					if capp.url == nil{
 						print("    Skipping \(appURL.path) because it doesn't have a path setted")
@@ -469,9 +468,9 @@ extension CreationProcess{
 		
 		public class InfoPlist{
 			
-			private var cache: [String: Any]!
-			private var internalBundleName: String!
-			private var internalBundleVersion: String!
+			private var cache: [String: Any]?
+			private var internalBundleName: String?
+			private var internalBundleVersion: String?
 			
 			deinit {
 				cache = nil
@@ -495,7 +494,7 @@ extension CreationProcess{
 			}
 			
 			//this is used for the app version
-			public var bundleVersion: String!{
+			public var bundleVersion: String?{
 				if cache == nil{
 					return nil
 				}
@@ -551,7 +550,7 @@ extension CreationProcess{
 			}
 			
 			//gets something from the Info.plist file lof the installer app
-			public func item(itemKey: String) -> String!{
+			public func item(itemKey: String) -> String?{
 				if cache == nil{
 					return nil
 				}
@@ -577,7 +576,7 @@ extension CreationProcess{
 			}
 			
 			//returns the version number of the mac os installer app, returns nil if it was not found, returns an epty string if it's an unrecognized version
-			public func versionString() -> String!{
+			public func versionString() -> String?{
 				print("Detecting app version")
 				if bundleVersion != nil{
 					var subVer = String(bundleVersion!.prefix(3))
@@ -628,7 +627,7 @@ extension CreationProcess{
 				return ""
 			}
 			
-			public func versionNumber() -> Float!{
+			public func versionNumber() -> Float?{
 				guard let v: String = versionString() else {return nil}
 				
 				if v.isEmpty{ return nil }
@@ -639,39 +638,44 @@ extension CreationProcess{
 			}
 			
 			//returns if the version of the installer app is the spcified version or a newer one
-			public func supports(version: Float) -> Bool!{
+			public func supports(version: Float) -> Bool?{
 				guard let ver: Float = versionNumber() else { return nil }
 				return ver >= version
 			}
 			
 			//returns if the installer app version is earlyer than the specified one
-			public func goesUpTo(version: Float) -> Bool!{
+			public func goesUpTo(version: Float) -> Bool?{
 				guard let ver: Float = versionNumber() else { return nil }
 				return ver < version
 			}
 			
 			//checks if the selected macOS installer application version has apfs support
-			@inline(__always) public func notSupportsAPFS() -> Bool!{
+			@inline(__always) public func notSupportsAPFS() -> Bool?{
 				print("Checking if the installer app supports APFS")
 				return goesUpTo(version: 13)
 			}
 			
 			//checks if the installer app is a macOS mojave app
-			@inline(__always) public func isNotMojave() -> Bool!{
+			@inline(__always) public func isNotMojave() -> Bool?{
 				print("Checking if the installer app is MacOS Mojave")
 				return goesUpTo(version: 14)
 			}
 			
 			//checks if the selected mac os installer application does support using tinu from the recovery
-			@inline(__always) public func notSupportsTINU() -> Bool!{
+			@inline(__always) public func notSupportsTINU() -> Bool?{
 				print("Checking if the isntaller app supports TINU on recovery")
 				return goesUpTo(version: 11)
 			}
 			
 			#if !macOnlyMode
-			@inline(__always) public func supportsIAEdit() -> Bool!{
+			@inline(__always) public func supportsIAEdit() -> Bool?{
 				print("Checking if the installer app supports the creation of .IABootFiles folder")
-				return !goesUpTo(version: 13.4) && goesUpTo(version: 14.0)
+				
+				guard let upToHSFour = goesUpTo(version: 13.4), let upToMJ = goesUpTo(version: 14.0) else{
+					return nil
+				}
+				
+				return !upToHSFour && upToMJ
 			}
 			#endif
 			

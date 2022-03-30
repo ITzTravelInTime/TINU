@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ITzTravelInTime/SwiftCPUDetect.git",
       "state" : {
-        "revision" : "c55818e68209491c91b8f7bf1a9b042614658467",
-        "version" : "1.3.0"
+        "branch" : "main",
+        "revision" : "e80ddadbd1214bd03d0c001d631bf755e95e9ad3"
       }
     },
     {

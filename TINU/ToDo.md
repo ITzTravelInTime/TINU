@@ -23,9 +23,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 - menu items text from json
 
-- credits view controller text from json (probably requires a custom json)
+- credits view controller text from json (probably requires a reimplementation)
 
-- contacts view controller text from json (probably requires a custom json)
+- contacts view controller text from json (probably requires a reimplementation)
 
 - "Star this project on github" button in the final screen (if successful)
 
@@ -39,7 +39,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 - use appropriate sfsymbols with custom colors for drive ok/not ok badge
 
-- check for rosetta on apple silicon
+- check for rosetta on apple silicon and force the older installer creations to use rosetta, if necessary prompt users to install rosetta.
 
 - Downloads with top bar like efi partition mounter
 

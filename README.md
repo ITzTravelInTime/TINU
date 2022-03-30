@@ -68,6 +68,8 @@ Contact the project creator (ITzTravelInTime aka Pietro):
 - https://github.com/ITzTravelInTime/SwiftLoggedPrint
 - https://github.com/ITzTravelInTime/TINUNotifications
 - https://github.com/ITzTravelInTime/TINURecovery
+- https://github.com/ITzTravelInTime/TINUIORegistry
+- https://github.com/ITzTravelInTime/TINUSerialization
 
 # Repository rules:
 - Respect the GNU GPL V2 license please!

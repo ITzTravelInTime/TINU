@@ -574,12 +574,12 @@
 				C6DE523A247EB6EA00FBD2E1 /* TINU.entitlements */,
 				C6DF046E1F4F33C500D200B1 /* Info.plist */,
 				C691BFED1F6DEEA800589EF8 /* Assets.xcassets */,
+				DDC29012270FCE6900CBDE34 /* ToDo.md */,
 				C600803C251A910800FE35E2 /* JSON */,
 				C6553A941F5F83DC0048965D /* Resources */,
 				C6DF046B1F4F33C500D200B1 /* Main.storyboard */,
 				C698B47D204CDAE5007B3CD8 /* MacrosReference.swift */,
 				C6DF04651F4F33C500D200B1 /* AppDelegate.swift */,
-				DDC29012270FCE6900CBDE34 /* ToDo.md */,
 				C649CC8F211A4ECF00A6B47B /* Tools */,
 				DD2B2E5027A4A48D0056FB73 /* Submenus */,
 				C60D39B51F5EB48000D94834 /* WindowsControllers */,
@@ -1415,8 +1415,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ITzTravelInTime/SwiftCPUDetect.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.0;
+				branch = main;
+				kind = branch;
 			};
 		};
 		C6636D2D2747F8B1008B1C07 /* XCRemoteSwiftPackageReference "TINUSerialization" */ = {

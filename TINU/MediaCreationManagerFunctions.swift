@@ -240,7 +240,7 @@ extension InstallMediaCreationManager{
 				mainCMD.append("--volume \"\(process.disk.path!)\"")
 			}
 			
-			if process.app.info.goesUpTo(version: 14.0) {
+			if process.app.info.goesUpTo(version: 14.0) ?? true {
 				if CurrentUser.isRoot{
 					mainCMD.append("--applicationpath")
 					mainCMD.append(process.app.path!)
@@ -257,7 +257,7 @@ extension InstallMediaCreationManager{
 				
 				//the command is adjusted if the version of the installer supports apfs and if the user prefers to avoid upgrading to apfs
 				
-				if !(process.app.info.notSupportsAPFS() ?? true) || !process.app.info.goesUpTo(version: 14.0){
+				if !(process.app.info.notSupportsAPFS() ?? true) || !(process.app.info.goesUpTo(version: 14.0) ?? true){
 					let shouldConvert = process.options.execution.canUseApfs || process.disk.aPFSContaninerBSDDrive != nil
 					if CurrentUser.isRoot{
 						mainCMD.append("--converttoapfs")
@@ -295,7 +295,7 @@ extension InstallMediaCreationManager{
 				
 				//replace with the test commands
 				if !scf{
-					if !process.app.info.goesUpTo(version: 14.0){
+					if !(process.app.info.goesUpTo(version: 14.0) ?? false){
 						mainCMD.append("echo \"Install media now available at \(self.ref!.pointee.disk.path!) \"")
 					}else{
 						mainCMD.append("echo \"done test\"")

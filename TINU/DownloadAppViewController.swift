@@ -26,7 +26,11 @@ fileprivate struct AppDownloadManager: CodableDefaults, Codable, Equatable{
 		let DownloadLink: String
 		let DownloadLinkAlternate: String!
 		private let imageURL: URL!
-		//private let image: String!
+		
+		//future stuff for downloading apps from the app sotre or the settings directly.
+		let downloadCommand: String!
+		let downloadCommandMinVersion: String!
+		let downloadCommandMaxVersion: String!
 		
 		var localImageName: String{
 			return "InstallApp"
@@ -76,7 +80,7 @@ public class DownloadAppViewController: ShadowViewController, ViewID {
 		//scroller.backgroundColor = plain.backgroundColor
 		//scroller.contentView.backgroundColor = plain.backgroundColor
 		
-		DispatchQueue.global(qos: .background).async {
+		DispatchQueue.global(qos: .background).async { [self] in
 			//let apps = /*AppDownloadManager.init(fromRemoteFileAtUrl: RemoteResourcesURLsManager.list["installerAppDownloads"] ?? "")?.downloads ??*/  //AppDownloadManager.init()!.downloads //.createFromDefaultFile()!.downloads
 			
 			var apps: [AppDownloadManager.AppDownload] = AppDownloadManager.init()?.downloads ?? []
@@ -90,44 +94,7 @@ public class DownloadAppViewController: ShadowViewController, ViewID {
 			}
 			
 			DispatchQueue.main.sync {
-				
-				let segmentHeight: CGFloat = 100
-				let segmentOffset: CGFloat = 20
-				let segmentEdge:   CGFloat = 15
-				
-				//self.plain = NSView(frame: CGRect(x: 0, y: 0, width: self.scroller.frame.width - 15, height: (segmentHeight + segmentOffset) * CGFloat(apps.count) + segmentOffset))
-				
-				self.plain?.frame.size.height = (segmentHeight + segmentOffset) * CGFloat(apps.count) + segmentOffset
-				
-				var tmp: CGFloat = segmentOffset
-				for app in apps.reversed(){
-					let segment = DownloadAppItem(frame: CGRect(x: segmentEdge, y: tmp, width: self.plain.frame.size.width - segmentOffset, height: segmentHeight))
-					
-					//segment.isLast = (app == apps.last!)
-					
-					segment.associtaed = app
-					
-					self.plain.addSubview(segment)
-					
-					tmp += segmentHeight + segmentOffset
-				}
-				
-				if self.presentingViewController == nil{
-				//if self.window != sharedWindow{
-					self.closeButton.title = TextManager.getViewString(context: self, stringID: "backButton")
-					self.closeButton.image = NSImage(named: NSImage.stopProgressTemplateName)
-				}else{
-					self.closeButton.image = NSImage(named: NSImage.goLeftTemplateName)
-				}
-				
-				self.scroller.documentView = self.plain!
-				
-				self.spinner.stopAnimation(self)
-				self.spinner.isHidden = true
-				
-				self.window.maxSize = CGSize(width: self.view.frame.width, height: self.plain.frame.height + self.scroller.frame.origin.y + (self.view.frame.size.height - self.scroller.frame.origin.y - self.scroller.frame.size.height))
-				self.window.minSize = CGSize(width: self.view.frame.width, height: 300)
-				
+				self.displayElementsAndSetUI(apps: apps)
 			}
 		}
 		
@@ -147,7 +114,49 @@ public class DownloadAppViewController: ShadowViewController, ViewID {
 			self.window.sheetParent?.endSheet(self.window)
 		}
 	}
+	
+	private func displayElementsAndSetUI(apps: [AppDownloadManager.AppDownload]){
+		
+		let segmentHeight: CGFloat = 100
+		let segmentOffset: CGFloat = 20
+		let segmentEdge:   CGFloat = 15
+		
+		//self.plain = NSView(frame: CGRect(x: 0, y: 0, width: self.scroller.frame.width - 15, height: (segmentHeight + segmentOffset) * CGFloat(apps.count) + segmentOffset))
+		
+		self.plain?.frame.size.height = (segmentHeight + segmentOffset) * CGFloat(apps.count) + segmentOffset
+		
+		var tmp: CGFloat = segmentOffset
+		for app in apps.reversed(){
+			let segment = DownloadAppItem(frame: CGRect(x: segmentEdge, y: tmp, width: self.plain.frame.size.width - segmentOffset, height: segmentHeight))
+			
+			//segment.isLast = (app == apps.last!)
+			
+			segment.associtaed = app
+			
+			self.plain.addSubview(segment)
+			
+			tmp += segmentHeight + segmentOffset
+		}
+		
+		if self.presentingViewController == nil{
+		//if self.window != sharedWindow{
+			self.closeButton.title = TextManager.getViewString(context: self, stringID: "backButton")
+			self.closeButton.image = NSImage(named: NSImage.stopProgressTemplateName)
+		}else{
+			self.closeButton.image = NSImage(named: NSImage.goLeftTemplateName)
+		}
+		
+		self.scroller.documentView = self.plain!
+		
+		self.spinner.stopAnimation(self)
+		self.spinner.isHidden = true
+		
+		self.window.maxSize = CGSize(width: self.view.frame.width, height: self.plain.frame.height + self.scroller.frame.origin.y + (self.view.frame.size.height - self.scroller.frame.origin.y - self.scroller.frame.size.height))
+		self.window.minSize = CGSize(width: self.view.frame.width, height: 300)
+		
+	}
 }
+
 
 fileprivate class DownloadAppItem: ShadowView, ViewID{
 	let id: String = "DownloadAppItem"
