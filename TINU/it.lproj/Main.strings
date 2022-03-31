@@ -574,3 +574,19 @@
 
 /* Class = "NSButtonCell"; title = "License"; ObjectID = "6Pb-re-MWT"; */
 "6Pb-re-MWT.title" = "Licenza";
+
+/* Class = "NSMenuItem"; title = "Updates"; ObjectID = "aUL-5h-hBv"; */
+"aUL-5h-hBv.title" = "Aggiornamenti";
+
+/* Class = "NSMenuItem"; title = "Look for updates"; ObjectID = "FMW-Fr-5NW"; */
+"FMW-Fr-5NW.title" = "Trova nuovi aggiornamenti";
+
+/* Class = "NSMenuItem"; title = "Get the latest Release version"; ObjectID = "hsB-sn-YvL"; */
+"hsB-sn-YvL.title" = "Ottieni l'ultima versione stabile";
+
+/* Class = "NSMenuItem"; title = "Get the latest Pre-Release version"; ObjectID = "N3j-nZ-aej"; */
+"N3j-nZ-aej.title" = "Ottieni l'ultima versione di anteprima";
+
+/* Class = "NSMenuItem"; title = "Send notifications when new updates are available"; ObjectID = "Flt-sq-SlW"; */
+"Flt-sq-SlW.title" = "Invia notifiche se ci sono nuovi aggiornamenti";
+

@@ -107,9 +107,9 @@ extension CreationProcess{
 				case runningThisAppFrom
 				case undefined
 			}
-			public let disk: Diskutil.Disk
-			public var partition: Diskutil.Partition! = nil
-			public var state: UsableState
+			let disk: Diskutil.Disk
+			var partition: Diskutil.Partition! = nil
+			var state: UsableState
 		}
 		
 		func getUsableDriveListAll() -> [DriveListItem]?{

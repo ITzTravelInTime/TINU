@@ -67,8 +67,8 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Updates" autoenablesItems="NO" id="fhk-bS-8rc" customClass="UpdatesSubmenu" customModule="TINU" customModuleProvider="target">
                                                 <items>
-                                                    <menuItem title="Look for updates" enabled="NO" id="FMW-Fr-5NW">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    <menuItem title="Look for updates" enabled="NO" keyEquivalent="u" id="FMW-Fr-5NW">
+                                                        <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                                         <connections>
                                                             <action selector="checkForUpdates:" target="fhk-bS-8rc" id="0zR-ic-MPF"/>
                                                         </connections>
@@ -403,12 +403,12 @@
                                 <menu key="submenu" title="Tools" autoenablesItems="NO" id="zyp-Xz-sYh">
                                     <items>
                                         <menuItem title="EFI partition mounter" keyEquivalent="e" id="h6A-oj-VQy">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                             <connections>
                                                 <action selector="openEFIPartitionTool:" target="Voe-Tx-rLC" id="fJv-q6-pEO"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Download a macOS Installer" keyEquivalent="d" id="SkF-ZK-107">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                             <connections>
                                                 <action selector="openDownloadMacApp:" target="Voe-Tx-rLC" id="qdi-pe-FGC"/>
                                             </connections>
@@ -1187,7 +1187,7 @@ Gw
             <objects>
                 <viewController storyboardIdentifier="DownloadAppVC" id="HKf-Ty-Hk6" customClass="DownloadAppViewController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="K2a-hs-GqV">
-                        <rect key="frame" x="0.0" y="0.0" width="620" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="363"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HGy-Sc-j6F">
@@ -1201,14 +1201,14 @@ Gw
                                 </connections>
                             </button>
                             <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SLp-8D-gcU">
-                                <rect key="frame" x="0.0" y="72" width="620" height="412"/>
+                                <rect key="frame" x="0.0" y="72" width="450" height="219"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" copiesOnScroll="NO" id="sSe-QN-wB5">
-                                    <rect key="frame" x="0.0" y="0.0" width="605" height="412"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="435" height="219"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hhe-KO-kp4">
-                                            <rect key="frame" x="0.0" y="0.0" width="590" height="397"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="420" height="204"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
                                     </subviews>
@@ -1219,13 +1219,13 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="rpo-Xx-vV6">
-                                    <rect key="frame" x="605" y="0.0" width="15" height="412"/>
+                                    <rect key="frame" x="435" y="0.0" width="15" height="219"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
                             <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="5ch-8S-tgF">
-                                <rect key="frame" x="294" y="252" width="32" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <rect key="frame" x="208" y="166" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             </progressIndicator>
                         </subviews>
                         <constraints>
@@ -1242,7 +1242,7 @@ Gw
                 </viewController>
                 <customObject id="0w3-XL-bny" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1393" y="165"/>
+            <point key="canvasLocation" x="1308" y="252"/>
         </scene>
         <!--Chose App View Controller-->
         <scene sceneID="wtj-r9-1Hy">
@@ -2289,13 +2289,13 @@ Gw
         <scene sceneID="Jwu-ci-4cB">
             <objects>
                 <windowController storyboardIdentifier="DownloadApp" id="VTe-PZ-3Hj" customClass="DownloadAppWindowController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="TINU: Download a macOS installer app from the App Store" separatorStyle="shadow" autorecalculatesKeyViewLoop="NO" restorable="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="HOO-gR-4yR">
+                    <window key="window" title="TINU: Download a macOS installer app" separatorStyle="shadow" autorecalculatesKeyViewLoop="NO" restorable="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="HOO-gR-4yR">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="245" y="310" width="620" height="400"/>
+                        <rect key="contentRect" x="245" y="310" width="450" height="390"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1050"/>
-                        <value key="minSize" type="size" width="620" height="300"/>
-                        <value key="maxSize" type="size" width="620" height="100000"/>
+                        <value key="minSize" type="size" width="450" height="390"/>
+                        <value key="maxSize" type="size" width="450" height="100000"/>
                         <toolbar key="toolbar" implicitIdentifier="96740EC2-6111-4F81-9CBE-D2F7A9B50952" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="dfF-M6-qzL">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="H0j-4v-P5o"/>
@@ -2314,7 +2314,7 @@ Gw
                 </windowController>
                 <customObject id="8Ym-W7-XPP" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1393" y="-495"/>
+            <point key="canvasLocation" x="1289" y="-319"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
