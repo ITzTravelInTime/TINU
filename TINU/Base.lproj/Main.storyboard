@@ -2290,13 +2290,13 @@ Gw
             <objects>
                 <windowController storyboardIdentifier="DownloadApp" id="VTe-PZ-3Hj" customClass="DownloadAppWindowController" customModule="TINU" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="TINU: Download a macOS installer app" separatorStyle="shadow" autorecalculatesKeyViewLoop="NO" restorable="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="HOO-gR-4yR">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="245" y="310" width="450" height="390"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1050"/>
                         <value key="minSize" type="size" width="450" height="390"/>
                         <value key="maxSize" type="size" width="450" height="100000"/>
-                        <toolbar key="toolbar" implicitIdentifier="96740EC2-6111-4F81-9CBE-D2F7A9B50952" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="dfF-M6-qzL">
+                        <toolbar key="toolbar" implicitIdentifier="96740EC2-6111-4F81-9CBE-D2F7A9B50952" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="small" id="dfF-M6-qzL">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="H0j-4v-P5o"/>
                             </allowedToolbarItems>
@@ -2314,7 +2314,7 @@ Gw
                 </windowController>
                 <customObject id="8Ym-W7-XPP" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1289" y="-319"/>
+            <point key="canvasLocation" x="1308" y="-314"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

@@ -10,9 +10,9 @@ This software is intended to be used to create a bootable macOS installer for co
 
 It allows you to easily create a macOS install media without messing around with command line stuff and without using Disk Utility, and also detects and prevents the most common errors with the creation of bootable vanilla macOS installers.
 
-# For the latest Source code check out the development branch!
+## For the latest Source code check out the development branch!
 
-# Features:
+## Features:
 - No need for guides or instructions! Just follow the very simple on-screen indications to very easily start the bootable macOS installer creation process.
 - Fully open: You can see how this program works and you can freely contribute to it! (See the `Repository rules` and the `Note that` sections of this page)
 - Support for multiple languages (currently just Italian and English, but more will be added with future updates once the system which allows it gets improved)
@@ -28,21 +28,23 @@ It allows you to easily create a macOS install media without messing around with
 
  (To suggest a new feature please contact us.)
 
-# Requirements:
-- A computer that runs Mac OS X Yosemite or a more recent version (Mac OS X El Capitan is required to use TINU inside a macOS Recovery/Installer OS).
-- A drive or a free partition of least 8 GB (9+ for Catalina, 12+ for Big Sur and newer versions) that you want to turn into a macOS/Mac OS X installer (NOTE: partitions are usable only if they belong to a drive which uses the GUID partition format).
-- A copy of a macOS/Mac OS X installer app (Mavericks or newer versions are supported), it's recommended to have the app placed into the /Applications folder or in the root of a volume connected to your computer (excepted the drive/volume you want to turn into your macOS install media).
+## Requirements:
+- A computer that runs Mac OS X Yosemite or later.
+- A drive or a partition (to turn into a macOS installer) of least 8 GB (9+ GB for a Catalina installer or 12+ GB for installers of Big Sur and later macOS versions).
+	NOTE: partitions are usable only if they belong to a drive which uses the GUID partition format.
+- A copy of a `".app"` macOS/Mac OS X installer (Mavericks or newer versions are supported), it's recommended to have the app placed into the /Applications folder or in the root of a volume connected to your computer (excepted the drive/volume you want to turn into your macOS install media).
 
-# Download:
-- You can download the pre-made executable of the app here: https://github.com/ITzTravelInTime/TINU/releases
+## Download:
+- You can download a copy of the app here: https://github.com/ITzTravelInTime/TINU/releases
 
-# Building/Compiling requirements: 
-- To compile a copy this app using the source code provided in this repo, Xcode 12.x or newer on a machine running at least Catalina is needed.
+## Building/Compiling requirements: 
+- Xcode 12.0 or newer.
+- An internet connection.
 
-# Frequently asked questions (FAQs):
+## Frequently asked questions (FAQs):
 https://github.com/ITzTravelInTime/TINU/wiki/FAQs
 
-# Useful links and contacts:
+## Useful links and contacts:
 Thread (English) on insanelymac.com:
 - http://www.insanelymac.com/forum/topic/326959-tinu-the-macos-installer-creator-app-mac-app/
 
@@ -60,7 +62,7 @@ Contact the project creator (ITzTravelInTime aka Pietro):
 - email:                  
     piecaruso97@gmail.com
     
-# Swift packages used:
+## Swift packages used:
 
 - https://github.com/ITzTravelInTime/Command
 - https://github.com/ITzTravelInTime/CommandSudo
@@ -71,29 +73,28 @@ Contact the project creator (ITzTravelInTime aka Pietro):
 - https://github.com/ITzTravelInTime/TINUIORegistry
 - https://github.com/ITzTravelInTime/TINUSerialization
 
-# Repository rules:
-- Respect the GNU GPL V2 license please!
-- If you want to create your own modified fork of TINU please let the project maintainers know!
-- If you believe that your changes may help with the main branch, create your own fork, apply your changes to it and then create a pull/merge request to the main branch here to let the changes be applyed more easily by the repository maintainers, and also have you credited for your work.
+## Repository rules:
+- Respect the GNU GPL license please!
+- If you want to create your own modified fork of TINU please let the project maintainers know! In this way your changes/fixes can be integrated into the main repo of the app.
+- If you believe that your changes may help with the project, create your own fork, apply your changes to it and then create a pull/merge request to the default branch here to let the changes be applyed more easily by the repository maintainers, and also have you credited by github for your work.
 - Create an issue here on GitHub for any problems, bugs, bug fixes, spelling or grammar errors, mis-placements or just for suggestions (ones from designers and developers are always especially welcome).
 
-# Note that:
-- We (the project creator and other people involved with active development) assume no responsibility for any use of this app or source code; use them at your own risk!
-- We (the project creator and other people involved with active development) do not guarantee support to you; this is only an open source project done in our free time, not a product released by a company!
-- This project is born only for educational and demonstrative purposes, it's not intended to be used for commercial purposes.
-- This is a no-profit project, born only to let people to create macOS install media in a simpler way and also to let them learn how to create these kind of apps.
-- Changes to the provided source code are documented using git, so for any info about any changes made please see the commit history here on the repo.
+## Note that:
+- We (the project creator and other people involved with the project) assume no responsibility for any use of this app or source code; use them at your own risk!
+- We (the project creator and other people involved with the project) do not guarantee support to you; this is only an open source project done in our free time, not a product released by a company!
+- This project is born only for educational and demonstrative purposes, it's not intended to be used for commercial purposes. It's released in the hope that it could be useful to you.
+- Changes to the provided source code are documented using the git commit history, so for any detailed info about any changes made please use that.
 
-# Credits:
-- Apple for macOS, system icons and installer apps (and their createinstallmedia executable).
-- Special thanks to:
+## Credits:
+- Apple for macOS, system icons and macOS installer apps (and their createinstallmedia executable).
+- Special thanks (for their help/feedback) to:
 Francesco Perchiazzi, Nicola Tomarelli, Roberto Sciortino, Raffaele Sonnessa, Ermanno Nicoletti, Tommaso Dimatore, Michele Vitiello Bonaventura, Massimiliano Faralli, Davide Dessì, Giorgio Dall'Aglio, Peter Paul Chato, Antonio De Masi, the Facebook group ["Italian Hackintosh group!!"](https://www.facebook.com/groups/Italia.hackintosh/), the Telegram group ["Hackintosh Italia"](https://t.me/Hackintoshitalia) and the community from hackintosh-forum.de .
 - Matthew Elvey for README copyediting.
 - Gianmarco Gargiulo for the current app icon and usb drive image.
-- Thomas Tempelmann for help with the UI, grammar and the code.
+- Thomas Tempelmann for help with some UI/code bugs and some grammar/spelling mistakes.
 - Pietro Caruso (ITzTravelInTime) project creator, maintainer and main developer.
 
-# Legal info:
+## Legal info:
 TINU is the open tool to create bootable macOS installers.
 Copyright (C) 2017-2022 Pietro Caruso (ITzTravelInTime)
 
