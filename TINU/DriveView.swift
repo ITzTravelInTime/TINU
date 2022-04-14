@@ -248,12 +248,9 @@ class DriveView: ShadowView, ViewID {
     }
     
 	override func mouseDown(with event: NSEvent) {
-		for c in (self.superview?.subviews)!{
-			guard let d = c as? DriveView else { continue }
+		for case let d as DriveView in self.superview?.subviews ?? [] where d != self{
 			
-			if d != self{
-				d.setDefaultAspect()
-			}
+			d.setDefaultAspect()
 		}
 		
 		if self.isEnabled{

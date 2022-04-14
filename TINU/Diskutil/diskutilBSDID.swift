@@ -98,9 +98,11 @@ public struct BSDID: Codable, Hashable, Equatable, RawRepresentable{
 		
 		for cc in self.rawValue{
 			let c = String(cc)
+			
 			if c.lowercased() == "s"{
 				ns += 1
 			}
+			
 			if ns == 1{
 				if let _ = Int(c){
 					tmpBSDName += c

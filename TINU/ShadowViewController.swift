@@ -97,11 +97,10 @@ public class ShadowViewController: AppViewController{
 			refView.layer?.zPosition = startZpos
 		}
 		
-		for v in self.view.subviews{
-			if v != refView && v != bottomView && v != topView{
-				v.wantsLayer = true
-				v.layer?.zPosition = startZpos + 2
-			}
+		for v in self.view.subviews where v != refView && v != bottomView && v != topView{
+			
+			v.wantsLayer = true
+			v.layer?.zPosition = startZpos + 2
 		}
 		
 	}

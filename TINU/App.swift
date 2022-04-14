@@ -62,13 +62,10 @@ public final class App{
 		
 		MEM.checked = false
 		
-		for tc in testingConditions{
-			if !tc { continue }
-				
+		for tc in testingConditions where tc{
 			MEM.checked = true
 			print("This copy of \(Bundle.main.name ?? "TINU") is running in a testing mode")
 			break
-			
 		}
 		
 		return MEM.checked

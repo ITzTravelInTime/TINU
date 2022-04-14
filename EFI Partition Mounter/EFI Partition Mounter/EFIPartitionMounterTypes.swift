@@ -53,8 +53,7 @@ public final class EFIPartitionToolTypes{
 		case openCoreConfigLocation = "/EFI/OC/config.plist"
 		
 		public init?(_ path: String){
-			for loc in EFIPartitionToolTypes.ConfigLocations.allCases{
-				if !FileManager.default.fileExists(atPath: path + loc.rawValue) { continue }
+			for loc in EFIPartitionToolTypes.ConfigLocations.allCases where FileManager.default.fileExists(atPath: path + loc.rawValue){
 				
 				print("This EFI Partition has a \(loc.rawValue.split(separator: "/")[2]) config file")
 				

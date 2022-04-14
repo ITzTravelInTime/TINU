@@ -210,10 +210,8 @@ class OtherOptionsViewController: GenericViewController, ViewID {
 		if let sections = sectionsScrollView.documentView?.subviews as? [SettingsSectionItem]{
 		
 		if !sections.isEmpty{
-			for s in sections{
-				if s.isSelected{
-					s.addSettingsToScrollView()
-				}
+			for s in sections where s.isSelected{
+				s.addSettingsToScrollView()
 			}
 		}
 		

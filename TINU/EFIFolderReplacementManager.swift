@@ -27,7 +27,7 @@ import Foundation
 		static var shared: EFIFolderReplacementManager! { return sharedi }
 		static var sharedi: EFIFolderReplacementManager! = nil
 		
-		private var sharedEFIFolderTempData: [String : Data?]! = nil
+		private var sharedEFIFolderTempData: [String : Data?]? = nil
 		private var firstDir = ""
 		private let refData = Data.init()
 		
@@ -44,7 +44,8 @@ import Foundation
 		}
 		
 		public var filesCount: Double!{
-			return Double(sharedEFIFolderTempData.count)
+			guard let count = sharedEFIFolderTempData?.count else {return nil}
+			return Double(count)
 		}
 		
 		public var missingFileFromOpenedFolder: String!{
@@ -121,7 +122,8 @@ import Foundation
 			}
 			
 			isUsingStoredEFIFolder = true
-			for f in sharedEFIFolderTempData{
+			
+			for f in sharedEFIFolderTempData ?? [:]{
 				
 				let file = URL(fileURLWithPath: cp.path + f.key)
 				
@@ -193,18 +195,14 @@ import Foundation
 			
 			isUsingStoredEFIFolder = true
 				
-			for i in sharedEFIFolderTempData.keys{
-				//in some instances
-				if sharedEFIFolderTempData == nil{
-					break
-				}
+			for i in sharedEFIFolderTempData!.keys{
 				
 				print("Removing value from the saved EFI folder: \(i)")
-				sharedEFIFolderTempData[i] = nil
-				sharedEFIFolderTempData.removeValue(forKey: i)
+				sharedEFIFolderTempData![i] = nil
+				sharedEFIFolderTempData?.removeValue(forKey: i)
 			}
 			
-			sharedEFIFolderTempData.removeAll()
+			sharedEFIFolderTempData?.removeAll()
 			sharedEFIFolderTempData = nil
 			
 			print("Saved EFI folder cleaned and reset")
@@ -281,6 +279,10 @@ import Foundation
 			
 			isUsingStoredEFIFolder = true
 			
+			if sharedEFIFolderTempData == nil{
+				sharedEFIFolderTempData = [:]
+			}
+			
 			var cont = [String]()
 			
 			do{
@@ -292,7 +294,7 @@ import Foundation
 			}
 			
 			for d in cont{
-				let file =  (dir + "/" + d)
+				let file = (dir + "/" + d)
 				
 				var id: ObjCBool = false;
 				
@@ -326,7 +328,7 @@ import Foundation
 					r = scanDir(file)
 					isUsingStoredEFIFolder = true
 					
-					sharedEFIFolderTempData[name] = refData
+					sharedEFIFolderTempData![name] = refData
 					
 					print("Finished scanning EFI Folder's Directory on: \n    \(file)")
 					continue
@@ -339,7 +341,7 @@ import Foundation
 				print("        Item is file")
 				
 				do{
-					sharedEFIFolderTempData[name] = try Data.init(contentsOf: URL(fileURLWithPath: file))
+					sharedEFIFolderTempData![name] = try Data.init(contentsOf: URL(fileURLWithPath: file))
 				}catch let error{
 					print("Open efi fodler error: \(error.localizedDescription)")
 					r = false
@@ -367,7 +369,7 @@ import Foundation
 				return nil
 			}
 			
-			if sharedEFIFolderTempData.isEmpty{
+			if sharedEFIFolderTempData?.isEmpty ?? true{
 				print("Saved EFI folder is empty")
 				isUsingStoredEFIFolder = false
 				return false
@@ -377,7 +379,8 @@ import Foundation
 			
 			for c in contentToCheck{
 				for i in c{
-					res = res || sharedEFIFolderTempData[i] == nil
+					//safe to assume the dictionary is not nil or empty here
+					res = res || sharedEFIFolderTempData![i] == nil
 					missingFile = i
 				}
 				

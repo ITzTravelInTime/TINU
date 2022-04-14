@@ -24,13 +24,17 @@ fileprivate struct AppDownloadManager: CodableDefaults, Codable, Equatable{
 		let name: String
 		let version: String
 		let DownloadLink: String
-		let DownloadLinkAlternate: String!
-		private let imageURL: URL!
+		let DownloadLinkAlternate: String?
+		private let imageURL: URL?
 		
 		//future stuff for downloading apps from the app sotre or the settings directly.
-		let downloadCommand: String!
-		let downloadCommandMinVersion: String!
-		let downloadCommandMaxVersion: String!
+		struct DownloadCommand: Codable, Equatable{
+			let executableText: String
+			let minVersion: String
+			let maxVersion: String!
+		}
+		
+		let downloadCommands: [DownloadCommand]?
 		
 		var localImageName: String{
 			return "InstallApp"
@@ -140,6 +144,7 @@ public class DownloadAppViewController: ShadowViewController, ViewID {
 		self.plain?.frame.size.height = (segmentHeight + segmentOffset) * CGFloat(apps.count) + segmentOffset
 		
 		var tmp: CGFloat = segmentOffset
+		
 		for app in apps.reversed(){
 			let segment = DownloadAppItem(frame: CGRect(x: segmentEdge, y: tmp, width: self.plain.frame.size.width - segmentOffset, height: segmentHeight))
 			

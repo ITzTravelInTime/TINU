@@ -278,10 +278,10 @@ class ChoseAppViewController: GenericViewController, ViewID {
 			
 			print("Taking care of the UI")
 			
-			for capp in appList {
-				print("    Adding app to UI: \(capp.url!.path)")
-				
-				DispatchQueue.main.sync {
+			DispatchQueue.main.sync {
+				for capp in appList {
+					
+					print("    Adding app to UI: \(capp.url!.path)")
 					
 					let drive = DriveView(frame: NSRect(x: 0, y: h, width: DriveView.itemSize.width, height: DriveView.itemSize.height))
 					drive.current = capp as UIRepresentable
@@ -289,7 +289,6 @@ class ChoseAppViewController: GenericViewController, ViewID {
 					drive.isEnabled = capp.status == .usable || capp.status == .legacy
 					
 					drives.append(drive)
-					
 				}
 				
 			}

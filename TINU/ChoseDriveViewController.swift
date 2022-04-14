@@ -228,6 +228,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 					self.scoller.hasHorizontalScroller = true
 					
 					var temp: CGFloat = 20
+					
 					for d in drives{
 						d.frame.origin.x = temp
 						

@@ -235,35 +235,33 @@ public final class TaskKillManager: ViewID{
 			}
 			
 			if let bid = par{
-				for id in ids{
-					if eq ? bid == id : bid.contains(id) {
-						var answer = false
+				for id in ids where (eq ? (bid == id) : bid.contains(id)){
+					var answer = false
+					
+					var name = ""
+					
+					if let ln = info.localizedName{
+						name = ln
+					}else if let en = info.executableURL?.lastPathComponent{
+						name = en
+					}else{
+						name = "\(info.processIdentifier)"
+					}
+					
+					DispatchQueue.main.sync {
+						answer = dialogGenericWithManagerBool(shared, name: "quit", parseList: ["{name}": name])
+					}
+					
+					ff = name
+					
+					if answer{
 						
-						var name = ""
-						
-						if let ln = info.localizedName{
-							name = ln
-						}else if let en = info.executableURL?.lastPathComponent{
-							name = en
-						}else{
-							name = "\(info.processIdentifier)"
+						if !info.forceTerminate(){
+							return false
 						}
 						
-						DispatchQueue.main.sync {
-							answer = dialogGenericWithManagerBool(shared, name: "quit", parseList: ["{name}": name])
-						}
-						
-						ff = name
-						
-						if answer{
-							
-							if !info.forceTerminate(){
-								return false
-							}
-							
-						}else{
-							return nil
-						}
+					}else{
+						return nil
 					}
 				}
 			}

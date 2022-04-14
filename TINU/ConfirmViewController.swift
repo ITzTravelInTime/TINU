@@ -129,7 +129,9 @@ class ConfirmViewController: GenericViewController, ViewID {
 			self.showFailureLabel()
 			
 			titleLabel.stringValue = TextManager.getViewString(context: self, stringID: "failureTitle")
-		}else{
+			
+			return
+		}//else{
 			
 			if cvm.shared.disk.current.isDrive || cvm.shared.disk.shouldErase{
 				self.setTitleLabel(text: TextManager.getViewString(context: self, stringID: "titleDrive"))
@@ -148,7 +150,7 @@ class ConfirmViewController: GenericViewController, ViewID {
 			
 			warningField.stringValue = TextManager.getViewString(context: self, stringID: "warningText").parsed(usingKeys: ["{driveName}" : driveName.stringValue])
 			
-		}
+		//}
 	}
     
     @IBOutlet weak var info: NSTextField!

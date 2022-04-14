@@ -49,32 +49,32 @@ public struct SFSymbol: Hashable, Codable, Copying, Equatable{
 			return copy()
 		}
 		
-		let segmented = self.name.split(separator: ".")
-		
+			let segmented = self.name.split(separator: ".")
+			
 			for i in (0...segmented.count).reversed(){
-			var str = ""
-			
-			for k in 0..<i{
-				str += ".\(segmented[k])"
+				var str = ""
+				
+				for k in 0..<i{
+					str += ".\(segmented[k])"
+				}
+				
+				if !str.isEmpty{
+					str.removeFirst()
+				}
+				
+				str += ".\(attribute)"
+				
+				if i <= segmented.count{
+					for k in i..<segmented.count{
+						str += ".\(segmented[k])"
+					}
+				}
+				
+				//Really unefficient way of checking if a symbol exists
+				if NSImage(systemSymbolName: str, accessibilityDescription: nil) != nil{
+					return SFSymbol(name: str, description: description)
+				}
 			}
-			
-			if !str.isEmpty{
-				str.removeFirst()
-			}
-			
-			str += ".\(attribute)"
-			
-			if i <= segmented.count{
-			for k in i..<segmented.count{
-				str += ".\(segmented[k])"
-			}
-			}
-			
-			//Really unefficient way of checking if a symbol exists
-			if NSImage(systemSymbolName: str, accessibilityDescription: nil) != nil{
-				return SFSymbol(name: str, description: description)
-			}
-		}
 			
 		}
 		

@@ -118,11 +118,10 @@ extension CreationProcess{
 			print("Detecting drives and partitions")
 			
 			//just need to know which is the boot volume, to not allow the user to choose it
-			let boot = BSDID(fromMountPoint: "/")!
-			var boot_drives = [boot.driveID]
+			var boot_drives = [BSDID(fromMountPoint: "/")!.driveID]
 			let execp = Bundle.main.executablePath!
 			
-			print("Boot volume BSDID: \(boot)")
+			print("Boot volume BSDID: \(boot_drives.first!.driveID.rawValue)")
 			
 			//new Codable-Based storage devices search
 			guard let data = Diskutil.List() else { return nil }
@@ -130,10 +129,7 @@ extension CreationProcess{
 			print("Successfully got diskutil data")
 			
 			//Retives the boot-volume virtual disks
-			for disk in data.allDisksAndPartitions{
-				if disk.DeviceIdentifier != boot_drives.first!{
-					continue
-				}
+			for disk in data.allDisksAndPartitions where disk.DeviceIdentifier == boot_drives.first!{
 				
 				guard let stores = disk.APFSPhysicalStores else { continue }
 				
@@ -156,6 +152,7 @@ extension CreationProcess{
 				}
 				
 				ret.append(DriveListItem(disk: disk, partition: nil, state: .undefined))
+				
 				let diskIndex = ret.count - 1
 				
 				if !meetsRequirements(size: disk.Size){
@@ -246,21 +243,17 @@ extension CreationProcess{
 			var ret = [DriveListItem]()
 			
 			//just need to know which is the boot volume, to not allow the user to choose it
-			let boot = BSDID(fromMountPoint: "/")!
-			var boot_drive = [boot.driveID]
+			var boot_drive = [BSDID(fromMountPoint: "/")!.driveID]
 			let execp = Bundle.main.executablePath!
 			
-			print("Boot volume BSDID: \(boot)")
+			print("Boot volume BSDID: \(boot_drive.first!.rawValue)")
 			
 			//new Codable-Based storage devices search
 			guard let data = Diskutil.List() else { return nil }
 			
 			log("Analyzing diskutil data to detect usable storage devices")
 			
-			for d in data.allDisksAndPartitions{
-				if d.DeviceIdentifier != boot_drive.first!{
-					continue
-				}
+			for d in data.allDisksAndPartitions where d.DeviceIdentifier == boot_drive.first!{
 				
 				guard let stores = d.APFSPhysicalStores else { continue }
 				
@@ -288,13 +281,9 @@ extension CreationProcess{
 				#if noUnmounted
 				var ref: Diskutil.Partition?
 				
-				if !d.isMounted(){
-					for p in d.Partitions ?? []{
-						if p.isMounted(){
-							ref = p
-							break
-						}
-					}
+				for p in d.Partitions ?? [] where p.isMounted() && !d.isMounted(){
+					ref = p
+					break
 				}
 				
 				if ref == nil{

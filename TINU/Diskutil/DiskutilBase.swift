@@ -84,13 +84,12 @@ public final class Diskutil{
 		public let OSInternal: Bool?
 		
 		public var content: DiskContentStrings{
-			if Content != nil{
-				for c in DiskContentStrings.allCases{
-					if c.rawValue == Content{
-						return c
-					}
-				}
+			
+			for c in DiskContentStrings.allCases where Content != nil && c.rawValue == Content{
+				
+				return c
 			}
+			
 			return .unusable
 		}
 		
@@ -111,10 +110,8 @@ public final class Diskutil{
 		}
 		
 		public func getEFIPartition() -> Partition?{
-			for part in Partitions ?? []{
-				if part.content == .eFI{
-					return part
-				}
+			for part in Partitions ?? [] where part.content == .eFI{
+				return part
 			}
 			
 			return nil
@@ -130,19 +127,18 @@ public final class Diskutil{
 			if APFSPhysicalStores == nil{ return nil }
 			if APFSPhysicalStores!.isEmpty { return nil }
 			
-			for d in record.allDisksAndPartitions{
-				if d.DeviceIdentifier == APFSPhysicalStores!.first!.DeviceIdentifier{
-					return d
-				}
+			for d in record.allDisksAndPartitions where d.DeviceIdentifier == APFSPhysicalStores!.first!.DeviceIdentifier{
+					
+				return d
 			}
 			
 			return nil
 		}
 		
 		public func eject(useAdminPrivileges: Bool = true) -> Bool?{
-			for p in Partitions ?? []{
-				if p.isMounted(){
-					return Diskutil.eject(mountedDiskAtPath: p.mountPoint!)
+			for p in Partitions ?? [] where p.isMounted(){
+				if !Diskutil.eject(mountedDiskAtPath: p.mountPoint!){
+					return nil
 				}
 			}
 			
@@ -182,12 +178,8 @@ public final class Diskutil{
 		}
 		
 		public var content: PartitionContentStrings{
-			if Content != nil{
-				for c in PartitionContentStrings.allCases{
-					if Content == c.rawValue{
-						return c
-					}
-				}
+			for c in PartitionContentStrings.allCases where Content != nil && Content == c.rawValue{
+				return c
 			}
 			
 			return PartitionContentStrings.unusable

@@ -153,15 +153,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 				efiButton.isEnabled = false
 			#endif
 			
-			for cc in self.view.subviews.reversed(){
-				guard let c = cc as? ChoseButton else{
-					continue
-				}
-				
-				if !c.isEnabled{
-					continue
-				}
-				
+			for case let c as ChoseButton in self.view.subviews.reversed() where c.isEnabled{
 				count += 1
 			}
 			
@@ -195,6 +187,7 @@ class ChooseSideViewController: GenericViewController, ViewID {
 				//spacing = (self.view.frame.size.width - (buttonSize.width * 4)) / 5
 			//}
 			
+			//might be better a recursive function perhaps
 			for v in self.background.subviews{
 				for vv in self.background.subviews{
 					vv.removeFromSuperview()
@@ -221,8 +214,8 @@ class ChooseSideViewController: GenericViewController, ViewID {
 			
 			var tmpPos = itmpPos
 			
-			for c in self.view.subviews.reversed(){
-				guard let b = c as? ChoseButton else{ continue }
+			for case let b as ChoseButton in self.view.subviews.reversed(){
+				//guard let b = c as? ChoseButton else{ continue }
 				
 				setted += 1
 				
@@ -308,8 +301,8 @@ class ChooseSideViewController: GenericViewController, ViewID {
 			
 			self.stopAnimationAndShowbuttons()
 			
-			for c in self.view.subviews.reversed(){
-				guard let _ = c as? ChoseButton else{ continue }
+			for case let c as ChoseButton in self.view.subviews.reversed(){
+				//guard let _ = c as? ChoseButton else{ continue }
 				
 				c.isHidden = false
 			}

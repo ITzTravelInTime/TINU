@@ -124,12 +124,9 @@ public class SettingsSectionItem: NSView{
 	}
 	
 	public func makeSelected(){
-		
-		for vv in (self.superview?.subviews)!{
-			if let v = vv as? SettingsSectionItem{
-				if v != self{
-					v.makeNormal()
-				}
+		for vv in self.superview?.subviews ?? []{
+			if let v = vv as? SettingsSectionItem, v != self{
+				v.makeNormal()
 			}
 		}
 		
@@ -165,6 +162,7 @@ public class SettingsSectionItem: NSView{
 			var count: CGFloat = 0
 			
 			for i in cvm.shared.options.list.sorted(by: { $0.0.rawValue > $1.0.rawValue }){
+				
 				if !(i.value.isVisible && (i.value.isAdvanced == isAdvanced)){
 					SettingsSectionItem.surface.frame.size.height -= itemHeigth
 					continue

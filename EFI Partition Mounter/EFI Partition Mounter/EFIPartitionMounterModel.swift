@@ -42,11 +42,7 @@ public final class EFIPartitionMounterModel{
 		
 		print("Looking for drives with EFI partitions")
 		
-		for disk in diskutilData.allDisksAndPartitions{
-			
-			if disk.APFSVolumes	!= nil{
-				continue
-			}
+		for disk in diskutilData.allDisksAndPartitions where disk.APFSVolumes == nil{
 			
 			print("  Scanning disk \(disk.DeviceIdentifier)")
 			
@@ -108,20 +104,12 @@ public final class EFIPartitionMounterModel{
 			result[disk.DeviceIdentifier] = res
 		}
 		
-		for disk in diskutilData.allDisksAndPartitions{
-			
-			if disk.APFSVolumes	== nil{
-				continue
-			}
+		for disk in diskutilData.allDisksAndPartitions where disk.APFSVolumes != nil{
 			
 			guard let store = disk.APFSPhysicalStores?.first?.DeviceIdentifier.driveID else { continue }
 			if result[store] == nil{ continue }
 			
-			for apfsVolume in disk.APFSVolumes ?? []{
-				
-				if apfsVolume.OSInternal ?? false{
-					continue
-				}
+			for apfsVolume in disk.APFSVolumes ?? [] where !(apfsVolume.OSInternal ?? false){
 				
 				var part = EFIPartitionToolTypes.PartitionStandard()
 				

@@ -40,9 +40,9 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
         
         #if isTool
         
-        print("checking command line arguments")
+        print("Checking command line arguments: ")
         for i in CommandLine.arguments {
-            print(i)
+            print("    " + i)
             switch i {
             case "-diagnostics":
                 if let delegate = NSApplication.shared().delegate as? AppDelegate{
@@ -56,7 +56,7 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
                 break
             }
         }
-        print("command line args checked")
+        print("Command line args checked.")
 		
         if startsAsMenu{
             startsAsMenu.toggle()
@@ -311,9 +311,10 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
 			
 			//var EFIParts = [BSDID]()
 			
-			for drive in eFIData{
+			
+			DispatchQueue.main.sync {
+				for drive in eFIData{
 				
-				DispatchQueue.main.sync {
 					let item = EFIItem()
 					
 					item.titleLabel.stringValue = drive.displayName
@@ -337,7 +338,7 @@ class EFIPartitionMounterViewController: ShadowViewController, ViewID {
 					
 					if cnt != 0{
 						
-						for i in 0...cnt - 1{
+						for i in 0..<cnt{
 							let partition = drive.completeDrivePartitions[i]
 							
 							let part = PartItem()

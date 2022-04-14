@@ -76,11 +76,7 @@ public extension Diskutil{
 			new.apfsContainersPool = []
 			new.coreStorageContainersPool = []
 			
-			for d in new.AllDisksAndPartitions{
-				
-				if d.isVolume(){
-					continue
-				}
+			for d in new.AllDisksAndPartitions where !d.isVolume(){
 				
 				if d.isAPFSContainer(){
 					if !(d.APFSPhysicalStores != nil && new.apfsContainersPool != nil){
@@ -88,10 +84,10 @@ public extension Diskutil{
 					}
 					
 					var removelist = [Int]()
-					for p in 0..<new.apfsContainersPool.count{
-						if d.APFSPhysicalStores!.contains(APFSStore(DeviceIdentifier: new.apfsContainersPool[p])){
-							removelist.append(p)
-						}
+					
+					for p in 0..<new.apfsContainersPool.count where d.APFSPhysicalStores!.contains(APFSStore(DeviceIdentifier: new.apfsContainersPool[p])){
+							
+						removelist.append(p)
 					}
 					
 					for r in removelist{

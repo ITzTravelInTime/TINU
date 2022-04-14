@@ -105,12 +105,12 @@ public extension Diskutil{
 		for s in resSrc{
 			if !s.0{
 				var breaked = false
-				for r in s.1{
-					if !text.contains(r){
-						breaked = true
-						break
-					}
+				
+				for r in s.1 where !text.contains(r){
+					breaked = true
+					break
 				}
+				
 				if breaked{
 					continue
 				}

@@ -103,16 +103,13 @@ extension CreationProcess{
 			
 			var info = [NeededFilesKeys: Bool]()
 			
-			for i in neededFilesNew{
-				if i.value.isEmpty { continue }
+			for i in neededFilesNew where !i.value.isEmpty{
 				
 				var present = false
 				
-				for f in i.value{
-					if manager.fileExists(atPath: app.path + f){
-						present = true
-						break
-					}
+				for f in i.value where manager.fileExists(atPath: app.path + f){
+					present = true
+					break
 				}
 				
 				info[i.key] = present
@@ -154,16 +151,10 @@ extension CreationProcess{
 				}
 			}
 			
-			for i in info{
-				if i.value != false{
-					continue
-				}
-				
-				if (i.key != .executable && ret.status == .legacy) || (i.key == .executable && ret.status != .legacy){
-					print("  The app is damaged")
-					ret.status = .broken
-					return ret
-				}
+			for i in info where !i.value && ((i.key != .executable && ret.status == .legacy) || (i.key == .executable && ret.status != .legacy)){
+				print("  The app is damaged")
+				ret.status = .broken
+				return ret
 			}
 			
 			guard let sz = manager.directorySize(app) else {
@@ -225,25 +216,23 @@ extension CreationProcess{
 				}
 				
 				var breaked = false
-				for d in c{
-					if manager.fileExists(atPath: app.path + d){
-						check-=1
-						if URL(fileURLWithPath: app.path + d).pathExtension == "dmg"{
-							hasDMG = true
-						}
-						breaked.toggle()
-						break
+				
+				for d in c where manager.fileExists(atPath: app.path + d){
+					check-=1
+					if URL(fileURLWithPath: app.path + d).pathExtension == "dmg"{
+						hasDMG = true
 					}
+					breaked.toggle()
+					break
 				}
 				
 				if !breaked{
 					print(" The app is not valid because it lacks one of those required files/folders: ")
-					for d in c{
+					for d in c where d.contains(ref.installerAppProcessExecutableName){
 						print("    \(d)")
-						if d.contains(ref.installerAppProcessExecutableName){
-							isCurrentExecutable.toggle()
-							break
-						}
+						
+						isCurrentExecutable.toggle()
+						break
 					}
 					
 					if !isCurrentExecutable && hasDMG {
@@ -308,12 +297,9 @@ extension CreationProcess{
 			
 			let driveb = ref.disk.bSDDrive.mountPoint()
 			
-			for d in fm.mountedVolumeURLs(includingResourceValuesForKeys: [URLResourceKey.isVolumeKey], options: [.skipHiddenVolumes])!{
-				let p = d.path
+			for d in fm.mountedVolumeURLs(includingResourceValuesForKeys: [URLResourceKey.isVolumeKey], options: [.skipHiddenVolumes])! where d.path != driveb{
 				
-				if p == driveb{
-					continue
-				}
+				let p = d.path
 				
 				foldersURLS.append(d)
 				
@@ -337,9 +323,10 @@ extension CreationProcess{
 			
 			//print("This app will look for installer apps in: ")
 			
-			for pathURL in foldersURLS{
+			for pathURL in foldersURLS where pathURL != nil{
 				
-				guard let p = pathURL else { continue }
+				//guard let p = pathURL else { continue }
+				let p = pathURL!
 				
 				//print("    " + p.path)
 					
@@ -368,9 +355,10 @@ extension CreationProcess{
 			
 			foldersURLS.removeDuplicates()
 			
-			for dir in foldersURLS{
+			for dir in foldersURLS where dir != nil{
 				
-				guard let d = dir else { continue }
+				//guard let d = dir else { continue }
+				let d = dir!
 				
 				if !fm.fileExists(atPath: d.path){
 					continue
@@ -422,11 +410,10 @@ extension CreationProcess{
 					}
 					
 					var found = false
-					for a in ret{
-						if a.url == capp.url{
-							found.toggle()
-							break
-						}
+					
+					for a in ret where a.url == capp.url{
+						found.toggle()
+						break
 					}
 					
 					if found{
@@ -602,27 +589,23 @@ extension CreationProcess{
 				
 				let lc = bundleName!.lowercased()
 				
-				check: for item in checkList{
-					for s in item.value.0{
-						if lc.contains(s){
-							var correct: Bool = true
-							
-							for t in item.value.1{
-								if lc.contains(t){
-									correct = false
-									break
-								}
-							}
-							
-							if correct{
-								print("Detected app version (using the bundle name): \(item.key)")
-								return String(item.key)
-							}else{
-								continue check
-							}
-						}
+			check: for item in checkList{
+				for s in item.value.0 where lc.contains(s){
+					var correct: Bool = true
+					
+					for t in item.value.1 where lc.contains(t){
+						correct = false
+						break
+					}
+					
+					if correct{
+						print("Detected app version (using the bundle name): \(item.key)")
+						return String(item.key)
+					}else{
+						continue check
 					}
 				}
+			}
 				
 				return ""
 			}

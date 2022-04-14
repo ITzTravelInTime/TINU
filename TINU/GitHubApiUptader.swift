@@ -39,15 +39,16 @@ extension UpdateManager{
 		}
 		
 		func getLatestRelease() -> Release {
+			assert(!releases.isEmpty)
 			
-			var ret = releases.first!
+			let sorted = releases.versionSorted()
 			
-			for i in releases{
-				if i.build <= ret.build{
-					continue
+			var ret = sorted.last!
+			
+			for i in sorted{
+				if i.build > ret.build{
+					ret = i
 				}
-				
-				ret = i
 			}
 			
 			return ret
@@ -56,12 +57,11 @@ extension UpdateManager{
 		func getLatestPreRelease() -> Release? {
 			var ret: Release?
 			
-			for i in releases{
-				if i.build <= ret?.build ?? 0 || !i.isPreRelease{
-					continue
-				}
+			for i in releases.versionSorted() where i.isPreRelease{
 				
-				ret = i
+				if i.build > ret?.build ?? 0{
+					ret = i
+				}
 			}
 			
 			return ret
@@ -211,6 +211,16 @@ extension UpdateManager{
 				
 			}
 		}
+	}
+}
+
+extension Array where Element == UpdateManager.GithubStruct.Release{
+	func versionSorted() -> Self{
+		return self.sorted(by: { $0.build <= $1.build })
+	}
+	
+	mutating func versionSort(){
+		self = self.versionSorted()
 	}
 }
 

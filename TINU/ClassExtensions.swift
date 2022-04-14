@@ -74,11 +74,8 @@ extension NSViewController{
 			return
 		}
 		
-		for i in 0..<NSViewController.tmpViewController.count{
-			if NSViewController.tmpViewController[i] != self{
-				continue
-			}
-				
+		for i in 0..<NSViewController.tmpViewController.count where NSViewController.tmpViewController[i] == self{
+			
 			NSViewController.tmpViewController[i] = nil
 			NSViewController.tmpViewController.remove(at: i) //we need this too since the array is made of optional values
 			print("        Memory cleaned: \(NSViewController.tmpViewController.count) items in controls memory")
@@ -273,17 +270,8 @@ public extension String{
 			return false
 		}
 		
-		//let ref = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890"
-		for i in self{
-			if (!i.isLetter && !i.isNumber){
-				return false
-			}
-			
-			/*
-			if !ref.contains(i){
-				return false
-			}
-			*/
+		for i in self where (!i.isLetter && !i.isNumber){
+			return false
 		}
 		
 		return true
@@ -549,7 +537,7 @@ extension NSImageView {
 	}
 }
 
-extension Array where Element: Hashable{
+extension Array where Element: Equatable{
 	func removingDuplicates() -> Self{
 		var ret = [Element]()
 		
