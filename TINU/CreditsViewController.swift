@@ -42,7 +42,7 @@ public class CreditsViewController: GenericViewController, ViewID {
 		
 		versionLabel.stringValue = TextManager.getViewString(context: self, stringID: "version") + Bundle.main.version! + " (" + Bundle.main.build! + ") ( "
 		
-		for arch in SwiftCPUDetect.CpuArchitecture.currentExecutableArchitectures() {
+		for arch in SwiftCPUDetect.CpuArchitecture.AppArchitectures.current() ?? [] {
 				versionLabel.stringValue += arch.rawValue + " "
 		}
 		

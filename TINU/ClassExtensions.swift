@@ -527,8 +527,6 @@ extension NSImageView {
 				self.image = image
 			}
 		}
-		
-		
 	}
 	
 	func downloaded(from link: String, scaling: NSImageScaling = .scaleProportionallyUpOrDown) {

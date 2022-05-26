@@ -41,7 +41,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 - check for rosetta on apple silicon and force the older installer creations to use rosetta, if necessary prompt users to install rosetta.
 
-- Add repo more repo links in the contact us window
+- Add more repo links in the contact us window
 
 # TO DO but with less priority:
 

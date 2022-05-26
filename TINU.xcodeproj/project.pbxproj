@@ -790,7 +790,7 @@
 				};
 			};
 			buildConfigurationList = C6DF045D1F4F33C500D200B1 /* Build configuration list for PBXProject "TINU" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (

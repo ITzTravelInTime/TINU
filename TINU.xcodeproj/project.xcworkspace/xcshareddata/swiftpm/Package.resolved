@@ -1,79 +1,77 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "Command",
-        "repositoryURL": "https://github.com/ITzTravelInTime/Command.git",
-        "state": {
-          "branch": null,
-          "revision": "2eed73ce5907ca99be1ff9221db9ca1c7147b93e",
-          "version": "2.1.2"
-        }
-      },
-      {
-        "package": "CommandSudo",
-        "repositoryURL": "https://github.com/ITzTravelInTime/CommandSudo.git",
-        "state": {
-          "branch": null,
-          "revision": "9834208de20c4af69347c0a08a584a770bee5092",
-          "version": "1.1.16"
-        }
-      },
-      {
-        "package": "SwiftCPUDetect",
-        "repositoryURL": "https://github.com/ITzTravelInTime/SwiftCPUDetect.git",
-        "state": {
-          "branch": "main",
-          "revision": "e93176f8bff8228fea48bc18758ee8ceac77237c",
-          "version": null
-        }
-      },
-      {
-        "package": "SwiftLoggedPrint",
-        "repositoryURL": "https://github.com/ITzTravelInTime/SwiftLoggedPrint.git",
-        "state": {
-          "branch": null,
-          "revision": "5236d5d1bcf0306d316bb6ac0af9ee6f07894f2f",
-          "version": "3.2.0"
-        }
-      },
-      {
-        "package": "TINUIORegistry",
-        "repositoryURL": "https://github.com/ITzTravelInTime/TINUIORegistry",
-        "state": {
-          "branch": null,
-          "revision": "1fe4e9601c4b86d2f695ff0f6b8ef33b9a9d7ba9",
-          "version": "0.0.3"
-        }
-      },
-      {
-        "package": "TINUNotifications",
-        "repositoryURL": "https://github.com/ITzTravelInTime/TINUNotifications.git",
-        "state": {
-          "branch": "main",
-          "revision": "7cc4a8f3d57d9131dcc5f619a9329567296fd706",
-          "version": null
-        }
-      },
-      {
-        "package": "TINURecovery",
-        "repositoryURL": "https://github.com/ITzTravelInTime/TINURecovery.git",
-        "state": {
-          "branch": null,
-          "revision": "26d45ef7436c4e7f0da475d549ce358b66bbf78d",
-          "version": "4.1.2"
-        }
-      },
-      {
-        "package": "TINUSerialization",
-        "repositoryURL": "https://github.com/ITzTravelInTime/TINUSerialization",
-        "state": {
-          "branch": null,
-          "revision": "e9cee9b6332591e5737aedf0782e4a8b10be4a55",
-          "version": "0.0.2"
-        }
+  "pins" : [
+    {
+      "identity" : "command",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ITzTravelInTime/Command.git",
+      "state" : {
+        "revision" : "2eed73ce5907ca99be1ff9221db9ca1c7147b93e",
+        "version" : "2.1.2"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "commandsudo",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ITzTravelInTime/CommandSudo.git",
+      "state" : {
+        "revision" : "9834208de20c4af69347c0a08a584a770bee5092",
+        "version" : "1.1.16"
+      }
+    },
+    {
+      "identity" : "swiftcpudetect",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ITzTravelInTime/SwiftCPUDetect.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "72b97fcd2d9c06f3ec401a502f5fa1470dce5925"
+      }
+    },
+    {
+      "identity" : "swiftloggedprint",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ITzTravelInTime/SwiftLoggedPrint.git",
+      "state" : {
+        "revision" : "5236d5d1bcf0306d316bb6ac0af9ee6f07894f2f",
+        "version" : "3.2.0"
+      }
+    },
+    {
+      "identity" : "tinuioregistry",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ITzTravelInTime/TINUIORegistry",
+      "state" : {
+        "revision" : "1fe4e9601c4b86d2f695ff0f6b8ef33b9a9d7ba9",
+        "version" : "0.0.3"
+      }
+    },
+    {
+      "identity" : "tinunotifications",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ITzTravelInTime/TINUNotifications.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "7cc4a8f3d57d9131dcc5f619a9329567296fd706"
+      }
+    },
+    {
+      "identity" : "tinurecovery",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ITzTravelInTime/TINURecovery.git",
+      "state" : {
+        "revision" : "26d45ef7436c4e7f0da475d549ce358b66bbf78d",
+        "version" : "4.1.2"
+      }
+    },
+    {
+      "identity" : "tinuserialization",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ITzTravelInTime/TINUSerialization",
+      "state" : {
+        "revision" : "e9cee9b6332591e5737aedf0782e4a8b10be4a55",
+        "version" : "0.0.2"
+      }
+    }
+  ],
+  "version" : 2
 }
