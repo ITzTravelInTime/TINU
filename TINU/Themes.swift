@@ -20,6 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import Foundation
 import AppKit
 import TINURecovery
+import SwiftPackagesBase
 
 extension UIManager{
 	public enum AppLook: String, Codable, Equatable, CaseIterable, RawRepresentable, SimulatableDetectableOneTime{

@@ -81,7 +81,7 @@ extension CreationProcess{
 		}
 		
 		func compareSize(to string: String!) -> Bool{
-			guard let s = string?.uInt64Value else { return false }
+			guard let s = string?.uInt64Value() else { return false }
 			return compareSize(to: s)
 		}
 		

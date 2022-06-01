@@ -20,6 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import Cocoa
 import Command
 import CommandSudo
+import SwiftPackagesBase
 
 public final class TaskKillManager: ViewID{
 	
@@ -49,7 +50,7 @@ public final class TaskKillManager: ViewID{
 				break
 			}
 			
-			if let num = cpid?.uIntValue{
+			if let num: UInt = cpid?.uIntValue(){
 				switch num{
 				case ..<10:
 					log("Provvided PID for \"\(name)\" is form a system process, so it can't be stopped, exiting...")

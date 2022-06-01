@@ -19,6 +19,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 import Cocoa
 import TINURecovery
+import SwiftPackagesBase
 
 public struct SFSymbol: Hashable, Codable, Copying, Equatable{
 	
@@ -474,7 +475,7 @@ public final class IconsManager{
 		if id.isVolume{
 			if let mount = id.mountPoint(){
 				if !(mount.isEmpty){
-					if FileManager.default.directoryExistsAtPath(mount + "/Backups.backupdb"){
+					if FileManager.default.directoryExists(atPath: mount + "/Backups.backupdb"){
 						return timeMachineDiskIcon.themedImage()!
 					}else{
 						if FileManager.default.fileExists(atPath: mount + "/.VolumeIcon.icns"){

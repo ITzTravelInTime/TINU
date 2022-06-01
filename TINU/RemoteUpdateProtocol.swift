@@ -53,7 +53,7 @@ extension RemoteUpdateVersionProtocol{
 	
 	func isNewerVersion() -> Bool{
 		
-		guard let build = Bundle.main.build?.lowercased().uInt64Value else {
+		guard let build = Bundle.main.build?.lowercased().uInt64Value() else {
 			log("[Update] Can't get app bundle build number information.")
 			return false
 		}
@@ -64,7 +64,7 @@ extension RemoteUpdateVersionProtocol{
 			num.removeLast()
 		}
 		
-		guard let updateBuildNumber = num.lowercased().uInt64Value else{
+		guard let updateBuildNumber = num.lowercased().uInt64Value() else{
 			log("[Update] the update info is invalid!")
 			return false
 		}
@@ -157,8 +157,6 @@ extension RemoteUpdateVersionProtocol{
 }
 
 extension RemoteUpdateProtocol{
-	
-	
 	
 	static func getUpdateData(forceRefetch force: Bool = false, descapeCharacters: Bool = false) -> Self!{
 		

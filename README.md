@@ -64,14 +64,15 @@ Contact the project creator (ITzTravelInTime aka Pietro):
     
 ## Swift packages used:
 
-- https://github.com/ITzTravelInTime/Command
-- https://github.com/ITzTravelInTime/CommandSudo
-- https://github.com/ITzTravelInTime/SwiftCPUDetect
-- https://github.com/ITzTravelInTime/SwiftLoggedPrint
-- https://github.com/ITzTravelInTime/TINUNotifications
-- https://github.com/ITzTravelInTime/TINURecovery
-- https://github.com/ITzTravelInTime/TINUIORegistry
-- https://github.com/ITzTravelInTime/TINUSerialization
+- [ITzTravelInTime/Command](https://github.com/ITzTravelInTime/Command)
+- [ITzTravelInTime/CommandSudo](https://github.com/ITzTravelInTime/CommandSudo)
+- [ITzTravelInTime/SwiftCPUDetect](https://github.com/ITzTravelInTime/SwiftCPUDetect)
+- [ITzTravelInTime/SwiftLoggedPrint](https://github.com/ITzTravelInTime/SwiftLoggedPrint)
+- [ITzTravelInTime/TINUNotifications](https://github.com/ITzTravelInTime/TINUNotifications)
+- [ITzTravelInTime/TINURecovery](https://github.com/ITzTravelInTime/TINURecovery)
+- [ITzTravelInTime/TINUIORegistry](https://github.com/ITzTravelInTime/TINUIORegistry)
+- [ITzTravelInTime/TINUSerialization](https://github.com/ITzTravelInTime/TINUSerialization)
+- [ITzTravelInTime/SwiftPackagesBase](https://github.com/ITzTravelInTime/SwiftPackagesBase)
 
 ## Repository rules:
 - Respect the GNU GPL license please!

@@ -50,7 +50,7 @@ public extension Diskutil{
 		}
 		
 		if let mount = bsdID.mountPoint() {
-			if FileManager.default.directoryExistsAtPath(mount){
+			if FileManager.default.directoryExists(atPath: mount){
 				log("Partition already mounted: \(bsdID) at mount point: \(mount)")
 				return true
 			}
@@ -75,7 +75,7 @@ public extension Diskutil{
 		}
 		
 		if let mount = bsdID.mountPoint() {
-			if !FileManager.default.directoryExistsAtPath(mount){
+			if !FileManager.default.directoryExists(atPath: mount){
 				log("Partition already unmounted: \(bsdID)")
 				return true
 			}

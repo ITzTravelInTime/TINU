@@ -59,7 +59,7 @@ public struct BSDID: Codable, Hashable, Equatable, RawRepresentable{
 	
 	public init?(fromMountPoint mp: Path){
 		assert(!mp.isEmpty, "The mount point should be a valid mount point!")
-		assert(FileManager.default.directoryExistsAtPath(mp), "The mount point should be a path to something accessible!")
+		assert(FileManager.default.directoryExists(atPath: mp), "The mount point should be a path to something accessible!")
 		//do{
 			//if let dict = try Decode.plistToDictionary(from: dm.getPlist(for: mp) ?? "") as? [String: Any]{
 		if let dict = [String: Any].init(fromPlistSerializedString: dm.getPlist(for: mp) ?? ""){

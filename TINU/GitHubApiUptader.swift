@@ -20,6 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import Foundation
 import AppKit
 import TINUSerialization
+import SwiftPackagesBase
 
 extension UpdateManager{
 	struct GithubStruct: RemoteUpdateProtocol{
@@ -148,7 +149,7 @@ extension UpdateManager{
 						
 						btag.removeLast()
 						
-						guard let bld = btag.uIntValue else{
+						guard let bld: UInt = btag.uIntValue() else{
 							return nil
 						}
 						
@@ -164,7 +165,7 @@ extension UpdateManager{
 							
 						let btag = "\(bbtag.last!)"
 						
-						guard let bld = btag.uIntValue else{
+						guard let bld: UInt = btag.uIntValue() else{
 							return nil
 						}
 						

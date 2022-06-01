@@ -196,133 +196,6 @@ extension NSView {
     }
 }
 
-public extension String {
-	subscript (bounds: CountableClosedRange<Int>) -> String {
-		let start = index(startIndex, offsetBy: bounds.lowerBound)
-		let end = index(startIndex, offsetBy: bounds.upperBound)
-		return String(self[start...end])
-	}
-	
-	subscript (bounds: CountableRange<Int>) -> String {
-		let start = index(startIndex, offsetBy: bounds.lowerBound)
-		let end = index(startIndex, offsetBy: bounds.upperBound)
-		return String(self[start..<end])
-	}
-}
-
-public extension String{
-    @inline(__always) func copy()-> String{
-        return String(self)
-    }
-    
-    func deletingPrefix(_ prefix: String) -> String {
-        guard self.hasPrefix(prefix) else { return self }
-        return String(self.dropFirst(prefix.count))
-    }
-    
-    func deletingSuffix(_ suffix: String) -> String {
-        guard self.hasSuffix(suffix) else { return self }
-        return String(self.dropLast(suffix.count))
-    }
-	
-	@inline(__always) mutating func deletePrefix(_ prefix: String){
-		 self = self.deletingPrefix(prefix)
-	}
-	
-	@inline(__always) mutating func deleteSuffix(_ suffix: String){
-		self = self.deletingSuffix(suffix)
-	}
-	
-	var isInt: Bool {
-		if isEmpty { return false }
-		return Int(self) != nil
-	}
-	
-	var intValue: Int! {
-		return Int(self)
-	}
-	
-	var isUInt: Bool {
-		if isEmpty { return false }
-		return UInt(self) != nil
-	}
-	
-	var uIntValue: UInt! {
-		return UInt(self)
-	}
-	
-	var isUInt64: Bool{
-		if isEmpty { return false }
-		return UInt64(self) != nil
-	}
-	
-	var uInt64Value: UInt64! {
-		return UInt64(self)
-	}
-	
-	func contains(_ str: String) -> Bool{
-		return self.range(of: str) != nil
-	}
-	
-	var isAlphanumeric: Bool{
-		
-		if self.isEmpty{
-			return false
-		}
-		
-		for i in self where (!i.isLetter && !i.isNumber){
-			return false
-		}
-		
-		return true
-	}
-	
-	func parsed(usingKeys keys: [String: String]) -> String{
-		/*
-		var ret = ""
-		for piece in self.split(separator: "$"){
-			var s = String(piece)
-			
-			for key in keys{
-				if s.starts(with: key.key){
-					s.deletePrefix(key.key)
-					s = key.value + s
-					break
-				}
-			}
-			
-			ret += s
-		}*/
-		
-		var ret = self
-		
-		for i in keys{
-			ret = ret.replacingOccurrences(of: "$" + i.key, with: i.value)
-		}
-		
-		return ret
-	}
-	
-	mutating func parse(usingKeys keys: [String: String]){
-		self = self.parsed(usingKeys: keys)
-	}
-}
-
-extension Bundle {
-    var version: String? {
-        return infoDictionary?["CFBundleShortVersionString"] as? String
-    }
-    var build: String? {
-        return infoDictionary?["CFBundleVersion"] as? String
-    }
-    var copyright: String? {
-        return infoDictionary?["NSHumanReadableCopyright"] as? String
-    }
-	var name: String? {
-		return infoDictionary?["CFBundleName"] as? String
-	}
-}
-
 /*
 extension NSColor {
 	public convenience init?(rgbaHex: String) {
@@ -384,47 +257,6 @@ extension NSColor{
 	static let transparent = NSColor.white.withAlphaComponent(0)
 }
 
-extension FileManager {
-	
-	func fileSize(of: URL) -> Int?{
-		do {
-			let val = try of.resourceValues(forKeys: [.totalFileAllocatedSizeKey, .fileAllocatedSizeKey])
-			return val.totalFileAllocatedSize ?? val.fileAllocatedSize
-		} catch {
-			print(error)
-			return nil
-		}
-	}
-		
-	func directorySize(_ dir: URL) -> Int? { // in bytes
-		if let enumerator = self.enumerator(at: dir, includingPropertiesForKeys: [.totalFileAllocatedSizeKey, .fileAllocatedSizeKey], options: [], errorHandler: { (_, error) -> Bool in
-			print(error)
-			return false
-		}) {
-			var bytes = 0
-			for case let url_ as URL in enumerator {
-				//bytes += url_.fileSize ?? 0
-				bytes += fileSize(of: url_) ?? 0
-			}
-			return bytes
-		} else {
-			return nil
-		}
-	}
-	
-	func directoryExistsAtPath(_ path: String) -> Bool {
-		var isDirectory = ObjCBool(true)
-		let exists = self.fileExists(atPath: path, isDirectory: &isDirectory)
-		return exists && isDirectory.boolValue
-	}
-}
-
-fileprivate extension URL {
-	var fileSize: Int? { // in bytes
-		return FileManager.default.fileSize(of: self)
-	}
-}
-
 extension NSImage{
 	func withSymbolWeight( _ weight: NSFont.Weight ) -> NSImage?{
 		if #available(macOS 11.0, *) {
@@ -453,14 +285,6 @@ extension NSImage{
 
 			return nil
 		}
-}
-
-extension Date {
-
-	static func - (lhs: Date, rhs: Date) -> TimeInterval {
-		return lhs.timeIntervalSinceReferenceDate - rhs.timeIntervalSinceReferenceDate
-	}
-
 }
 
 extension NSImage{
@@ -532,23 +356,5 @@ extension NSImageView {
 	func downloaded(from link: String, scaling: NSImageScaling = .scaleProportionallyUpOrDown) {
 		guard let url = URL(string: link) else { return }
 		downloaded(from: url, scaling: scaling)
-	}
-}
-
-extension Array where Element: Equatable{
-	func removingDuplicates() -> Self{
-		var ret = [Element]()
-		
-		for i in self{
-			if !ret.contains(i){
-				ret.append(i)
-			}
-		}
-		
-		return ret
-	}
-	
-	mutating func removeDuplicates(){
-		self = self.removingDuplicates()
 	}
 }

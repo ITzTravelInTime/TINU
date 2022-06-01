@@ -64,7 +64,7 @@ public class CreationProcess{
 		
 		if let sa = app.path{
 			print("Check installer app")
-			if !FileManager.default.directoryExistsAtPath(sa){
+			if !FileManager.default.directoryExists(atPath: sa){
 				print("Missing installer app in the specified directory")
 				return false
 			}
@@ -91,7 +91,7 @@ public class CreationProcess{
 			return false
 		}
 		
-		if FileManager.default.directoryExistsAtPath(s){
+		if FileManager.default.directoryExists(atPath: s){
 			print("Mount point: \(s)")
 			
 			print("Everything is ready to start the installer creation process")

@@ -116,7 +116,7 @@ class ChoseDriveViewController: ShadowViewController, ViewID {
 				
 				let prt = Part(bsdName: d.DeviceIdentifier, fileSystem: .other, isGUID: true, hasEFI: true, size: d.Size, isDrive: false, path: d.mountPoint, support: item.state)
 				
-				prt.tmDisk = man.fileExists(atPath: d.mountPoint! + "/tmbootpicker.efi") || man.directoryExistsAtPath(d.mountPoint! + "/Backups.backupdb")
+				prt.tmDisk = man.fileExists(atPath: d.mountPoint! + "/tmbootpicker.efi") || man.directoryExists(atPath: d.mountPoint! + "/Backups.backupdb")
 				
 				log("        Item type: \(prt.isDrive ? "Drive" : "Partition")")
 				log("        Item display name is: \(prt.displayName)")

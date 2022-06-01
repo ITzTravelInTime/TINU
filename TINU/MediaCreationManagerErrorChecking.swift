@@ -245,7 +245,7 @@ extension InstallMediaCreationManager{
 				if end.reversed().starts(with: ")"){
 					end.removeLast()
 					
-					nestedProcessExitCode = end.intValue ?? 0
+					nestedProcessExitCode = end.intValue() ?? 0
 				}
 				
 			}

@@ -94,6 +94,7 @@
 		C6CE80F42521C3FB00B28413 /* StringFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CE80F32521C3FB00B28413 /* StringFunctions.swift */; };
 		C6CE80F62521C46200B28413 /* AppBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CE80F52521C46200B28413 /* AppBanner.swift */; };
 		C6CE80F825245BA300B28413 /* ExternalLinkUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6CE80F725245BA300B28413 /* ExternalLinkUI.swift */; };
+		C6D122872846ED4B00FE6A0A /* SwiftPackagesBase in Frameworks */ = {isa = PBXBuildFile; productRef = C6D122862846ED4B00FE6A0A /* SwiftPackagesBase */; };
 		C6D82A6A20D802E700A5B5BE /* OptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D82A6920D802E700A5B5BE /* OptionsObject.swift */; };
 		C6D82A6C20D80C7600A5B5BE /* OptionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D82A6B20D80C7600A5B5BE /* OptionsManager.swift */; };
 		C6DF04661F4F33C500D200B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6DF04651F4F33C500D200B1 /* AppDelegate.swift */; };
@@ -294,6 +295,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C6D122872846ED4B00FE6A0A /* SwiftPackagesBase in Frameworks */,
 				C6636D2F2747F8B2008B1C07 /* TINUSerialization in Frameworks */,
 				C6254B80268933740082C7F5 /* Command in Frameworks */,
 				C6254B8626897EA20082C7F5 /* SwiftCPUDetect in Frameworks */,
@@ -703,6 +705,7 @@
 				C6254B8526897EA20082C7F5 /* SwiftCPUDetect */,
 				C6BF64832692B61E00A0B094 /* SwiftLoggedPrint */,
 				C6636D2E2747F8B2008B1C07 /* TINUSerialization */,
+				C6D122862846ED4B00FE6A0A /* SwiftPackagesBase */,
 			);
 			productName = TINU;
 			productReference = C6DF04621F4F33C500D200B1 /* TINU.app */;
@@ -807,6 +810,7 @@
 				C6254B8426897EA20082C7F5 /* XCRemoteSwiftPackageReference "SwiftCPUDetect" */,
 				C6BF64822692B61E00A0B094 /* XCRemoteSwiftPackageReference "SwiftLoggedPrint" */,
 				C6636D2D2747F8B1008B1C07 /* XCRemoteSwiftPackageReference "TINUSerialization" */,
+				C6D122852846ED4B00FE6A0A /* XCRemoteSwiftPackageReference "SwiftPackagesBase" */,
 			);
 			productRefGroup = C6DF04631F4F33C500D200B1 /* Products */;
 			projectDirPath = "";
@@ -1384,7 +1388,7 @@
 			repositoryURL = "https://github.com/ITzTravelInTime/TINURecovery.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.1.2;
+				minimumVersion = 5.0.0;
 			};
 		};
 		C6254B7B268933600082C7F5 /* XCRemoteSwiftPackageReference "TINUNotifications" */ = {
@@ -1400,15 +1404,15 @@
 			repositoryURL = "https://github.com/ITzTravelInTime/Command.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.1.2;
+				minimumVersion = 2.1.3;
 			};
 		};
 		C6254B81268933950082C7F5 /* XCRemoteSwiftPackageReference "CommandSudo" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ITzTravelInTime/CommandSudo.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.16;
+				branch = main;
+				kind = branch;
 			};
 		};
 		C6254B8426897EA20082C7F5 /* XCRemoteSwiftPackageReference "SwiftCPUDetect" */ = {
@@ -1423,8 +1427,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ITzTravelInTime/TINUSerialization";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.2;
+				branch = main;
+				kind = branch;
 			};
 		};
 		C6BF64822692B61E00A0B094 /* XCRemoteSwiftPackageReference "SwiftLoggedPrint" */ = {
@@ -1432,7 +1436,15 @@
 			repositoryURL = "https://github.com/ITzTravelInTime/SwiftLoggedPrint.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.2.0;
+				minimumVersion = 3.3.0;
+			};
+		};
+		C6D122852846ED4B00FE6A0A /* XCRemoteSwiftPackageReference "SwiftPackagesBase" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ITzTravelInTime/SwiftPackagesBase";
+			requirement = {
+				branch = main;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1472,6 +1484,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C6BF64822692B61E00A0B094 /* XCRemoteSwiftPackageReference "SwiftLoggedPrint" */;
 			productName = SwiftLoggedPrint;
+		};
+		C6D122862846ED4B00FE6A0A /* SwiftPackagesBase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C6D122852846ED4B00FE6A0A /* XCRemoteSwiftPackageReference "SwiftPackagesBase" */;
+			productName = SwiftPackagesBase;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

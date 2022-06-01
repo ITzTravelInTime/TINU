@@ -131,5 +131,5 @@ public final class Reachability: SimpleReachability{
 	}
 }
 
-extension Dictionary: GenericCodable {  }
+extension Dictionary: GenericCodable { }
 extension Array: GenericCodable { }

@@ -20,6 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import Foundation
 import TINUSerialization
 import TINURecovery
+import SwiftPackagesBase
 
 public final class RemoteResourcesURLsManager{
 	private final class Inner: SimulatableDetectableOneTime{

@@ -157,7 +157,7 @@ extension CreationProcess{
 				return ret
 			}
 			
-			guard let sz = manager.directorySize(app) else {
+			guard let sz = manager.directorySize(atURL: app) else {
 				print("  Can't get the size of the app")
 				return nil
 			}
@@ -252,7 +252,7 @@ extension CreationProcess{
 				return ret
 			}
 			
-			guard let sz = manager.directorySize(app) else {
+			guard let sz = manager.directorySize(atURL: app) else {
 				print("  Can't get the size of the installer app at: \(app.path)")
 				return nil
 			}
@@ -332,7 +332,7 @@ extension CreationProcess{
 					
 				do{
 						
-					for content in (try fm.contentsOfDirectory(at: p, includingPropertiesForKeys: nil, options: []).filter{ fm.directoryExistsAtPath($0.path) }){
+					for content in (try fm.contentsOfDirectory(at: p, includingPropertiesForKeys: nil, options: []).filter{ fm.directoryExists(atPath: $0.path) }){
 						
 						print("    " + content.path)
 						

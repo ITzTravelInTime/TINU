@@ -20,6 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import Foundation
 import TINURecovery
 import Cocoa
+import SwiftPackagesBase
 
 fileprivate func hIDPIPrint( _ text: Any ){
 	if sharedEnableDebugPrints {
