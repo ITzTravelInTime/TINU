@@ -104,6 +104,10 @@ public final class EFIPartitionMounterModel{
 			result[disk.DeviceIdentifier] = res
 		}
 		
+		if result == nil{
+			return nil
+		}
+		
 		for disk in diskutilData.allDisksAndPartitions where disk.APFSVolumes != nil{
 			
 			guard let store = disk.APFSPhysicalStores?.first?.DeviceIdentifier.driveID else { continue }
