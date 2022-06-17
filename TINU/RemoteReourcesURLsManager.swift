@@ -29,7 +29,7 @@ public final class RemoteResourcesURLsManager{
 		}
 		
 		static func calculateStatus() -> [String: String] {
-			struct RemoteResources: Codable, Equatable{
+			struct RemoteResources: Codable, Equatable, FastCodable{
 				let urls: [String: String]
 			}
 			

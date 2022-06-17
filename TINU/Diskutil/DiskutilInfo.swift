@@ -56,7 +56,7 @@ final class Info{
 				
 			}
 			
-			if let dict = [String: Any].init(fromPlistSerializedString: _out) {
+			if let dict = [String: Any].init(fromPlistSerialisedString: _out) {
 				return dict[named]
 			}
 			

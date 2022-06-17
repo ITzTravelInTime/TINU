@@ -23,7 +23,7 @@ import TINUSerialization
 
 public extension Diskutil{
 	
-	struct List: Codable, Equatable{
+	struct List: Codable, Equatable, FastCodable{
 		
 		public let AllDisks: [BSDID]
 		private var AllDisksAndPartitions: [Disk]

@@ -20,7 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import Foundation
 import TINUSerialization
 
-public protocol CodableDefaults: Codable{
+public protocol CodableDefaults: Codable, FastCodable{
 	static var defaultResourceFileExtension: String { get }
 	static var defaultResourceFileName: String { get }
 }
